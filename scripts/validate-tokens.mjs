@@ -1,16 +1,18 @@
 /**
  * validate-tokens.mjs
  *
- * Validates registry/tokens.json (SPEC §6/§7):
- *   1. Schema validation against registry/schema/tokens.v1.json (ajv, draft 2020-12).
- *   2. Round-trip tint-fidelity test: for every family declaring
- *      method:"bootstrap-mix", recompute each non-500 step from base + weight via
- *      sRGB mix and assert it reproduces the emitted $value EXACTLY. This proves
- *      the $extensions tint relation is a faithful 2b generator of the 2a values.
+ * Validates registry/tokens.json:
+ *   1. JSON Schema (ajv, draft 2020-12).
+ *   2. Structural invariants: family nodes are pure groups (no $value); semantic.*
+ *      are all aliases; derivability block only on gray; exactly one audit block.
+ *   3. Round-trip color fidelity: every regenerable family reproduces its non-500
+ *      steps from base + tint recipe via sRGB mix (phase 1, must stay green).
+ *   4. Round-trip spacing fidelity: the scale recipe (base × factor) reproduces
+ *      every emitted spacing value.
+ *   5. Propagation: regenerating a family's base flows through the alias graph to
+ *      the semantics that reference it (proves graph fidelity for a rebrand).
  *
  * Exits non-zero on any failure.
- *
- * Usage: node scripts/validate-tokens.mjs
  */
 
 import { readFileSync } from 'node:fs';
@@ -26,28 +28,47 @@ const SCHEMA_PATH = resolve(ROOT, 'registry/schema/tokens.v1.json');
 const WHITE = [255, 255, 255];
 const BLACK = [0, 0, 0];
 
-function hexToRgb(hex) {
-  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-}
-function rgbToHex(rgb) {
-  return `#${rgb.map((c) => c.toString(16).padStart(2, '0')).join('')}`;
-}
-// mix(target, base, w): `w` fraction of target, mirroring Bootstrap/Sass mix() for
-// opaque colors. lighten -> target white, darken -> target black.
-function mix(target, base, w) {
-  return base.map((c, i) => Math.round(target[i] * w + c * (1 - w)));
+const hexToRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const rgbToHex = (rgb) => `#${rgb.map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+// mix(target, base, w): `w` fraction of target — Bootstrap/Sass mix() for opaque colors.
+const mix = (target, base, w) => base.map((c, i) => Math.round(target[i] * w + c * (1 - w)));
+
+let failures = 0;
+function fail(msg) { process.stderr.write(`✗ ${msg}\n`); failures += 1; }
+
+/** Resolve an alias chain ("{a.b.c}") to a concrete (non-alias) $value. */
+function resolveAlias(root, ref) {
+  let value = ref;
+  const seen = new Set();
+  while (typeof value === 'string' && /^\{.+\}$/.test(value)) {
+    if (seen.has(value)) throw new Error(`alias cycle at ${value}`);
+    seen.add(value);
+    let node = root;
+    for (const seg of value.slice(1, -1).split('.')) {
+      node = node?.[seg];
+      if (node === undefined) throw new Error(`unresolved alias path ${value}`);
+    }
+    value = node.$value;
+  }
+  return value;
 }
 
-function fail(msg) {
-  process.stderr.write(`✗ ${msg}\n`);
-  process.exitCode = 1;
+/** Regenerate a family's full ramp in-place from a new base hex, via the tint recipe. */
+function regenerateFamily(family, newBaseHex) {
+  const baseRgb = hexToRgb(newBaseHex);
+  const steps = family.$extensions['dev.dynamicframework.tint'].steps;
+  for (const [step, def] of Object.entries(steps)) {
+    if (def.op === 'base') { family[step].$value = newBaseHex; continue; }
+    const target = def.op === 'lighten' ? WHITE : BLACK;
+    family[step].$value = rgbToHex(mix(target, baseRgb, def.weight));
+  }
 }
 
 function main() {
   const tokens = JSON.parse(readFileSync(TOKENS_PATH, 'utf8'));
   const schema = JSON.parse(readFileSync(SCHEMA_PATH, 'utf8'));
 
-  // 1) Schema validation.
+  // 1) Schema.
   const ajv = new Ajv2020({ allErrors: true, strict: false });
   const validate = ajv.compile(schema);
   if (!validate(tokens)) {
@@ -57,42 +78,76 @@ function main() {
   }
   process.stdout.write('✓ schema valid\n');
 
-  // 2) Structural (Fix A) + round-trip tint fidelity.
-  let checked = 0;
-  let mixFamilies = 0;
+  // 2) Structural invariants.
+  const derivFamilies = [];
+  let auditCount = 0;
+  for (const [name, node] of Object.entries(tokens.color)) {
+    const ext = node.$extensions || {};
+    if (ext['dev.dynamicframework.tint'] && Object.prototype.hasOwnProperty.call(node, '$value')) {
+      fail(`color.${name}: family node must be a group (no own $value)`);
+    }
+    if (ext['dev.dynamicframework.derivability']) derivFamilies.push(name);
+    if (ext['dev.dynamicframework.audit']) auditCount += 1;
+  }
+  if (derivFamilies.join(',') !== 'gray') fail(`derivability block must be only on gray, found: [${derivFamilies}]`);
+  if (auditCount !== 1) fail(`expected exactly 1 audit block (secondary), found ${auditCount}`);
+  if (!tokens.color.secondary?.$extensions?.['dev.dynamicframework.audit']) fail('secondary must keep its audit block');
+  if (tokens.color.warning?.$extensions?.['dev.dynamicframework.audit']) fail('warning must NOT have an audit block');
+
+  let semanticLeaves = 0;
+  for (const [role, props] of Object.entries(tokens.semantic)) {
+    if (role === '$type') continue;
+    for (const [prop, t] of Object.entries(props)) {
+      if (!/^\{.+\}$/.test(t.$value)) fail(`semantic.${role}.${prop} must be an alias, got ${t.$value}`);
+      semanticLeaves += 1;
+    }
+  }
+  if (!failures) process.stdout.write(`✓ structural: family groups, derivability only on gray, 1 audit (secondary), ${semanticLeaves} semantic aliases\n`);
+
+  // 3) Round-trip color fidelity (regenerable families only).
+  let checked = 0; let mixFamilies = 0;
   for (const [name, node] of Object.entries(tokens.color)) {
     const tint = node.$extensions?.['dev.dynamicframework.tint'];
-    if (!tint) continue; // roles have no tint extension
-    // Family nodes must be pure DTCG groups: no own $value (a token, not a group).
-    if (Object.prototype.hasOwnProperty.call(node, '$value')) {
-      fail(`${name}: family node must be a group (must NOT have its own $value)`);
-    }
-    if (tint.method !== 'bootstrap-mix') continue;
+    if (!tint) continue;
+    const deriv = node.$extensions['dev.dynamicframework.derivability'];
+    if (deriv && deriv.regenerable === false) continue; // gray: not regenerable, skip
     mixFamilies += 1;
-    const baseRgb = hexToRgb(node['500'].$value); // -500 holds the literal base
+    const baseRgb = hexToRgb(node['500'].$value);
     for (const [step, def] of Object.entries(tint.steps)) {
-      if (def.op === 'base') {
-        if (!/^#[0-9a-f]{6}$/.test(node[step].$value)) {
-          fail(`${name}.${step} expected literal base hex, got ${node[step].$value}`);
-        }
-        continue;
-      }
-      const target = def.op === 'lighten' ? WHITE : BLACK;
-      const expected = rgbToHex(mix(target, baseRgb, def.weight));
-      const actual = node[step].$value;
-      if (actual !== expected) {
-        fail(`${name}.${step}: round-trip mismatch (emitted ${actual}, recomputed ${expected})`);
-      }
-      checked += 1;
+      if (def.op === 'base') continue;
+      const expected = rgbToHex(mix(def.op === 'lighten' ? WHITE : BLACK, baseRgb, def.weight));
+      if (node[step].$value !== expected) fail(`color.${name}.${step}: round-trip mismatch (${node[step].$value} vs ${expected})`);
+      else checked += 1;
     }
   }
-  if (process.exitCode === 1) {
-    process.stderr.write('Round-trip fidelity FAILED.\n');
-    process.exit(1);
+  if (!failures) process.stdout.write(`✓ round-trip color: ${checked} steps across ${mixFamilies} regenerable families reproduce exactly\n`);
+
+  // 4) Round-trip spacing fidelity.
+  const scale = tokens.spacing.$extensions['dev.dynamicframework.scale'];
+  const spacingBase = resolveAlias(tokens, scale.base);
+  let spaceChecked = 0;
+  for (const [level, { factor }] of Object.entries(scale.steps)) {
+    const expected = spacingBase.value * factor;
+    const actual = tokens.spacing[level].$value;
+    if (Math.abs(actual.value - expected) > 1e-9 || actual.unit !== spacingBase.unit) {
+      fail(`spacing.${level}: recipe mismatch (emitted ${actual.value}${actual.unit}, recomputed ${expected}${spacingBase.unit})`);
+    } else spaceChecked += 1;
   }
-  process.stdout.write(
-    `✓ round-trip fidelity: ${checked} steps across ${mixFamilies} bootstrap-mix families reproduce exactly\n`,
-  );
+  if (!failures) process.stdout.write(`✓ round-trip spacing: ${spaceChecked} levels reproduce from base × factor\n`);
+
+  // 5) Propagation: regenerate a family base and confirm it flows to the semantics.
+  const ref = tokens.semantic.primary['bg-subtle'].$value; // {color.blue.100}
+  const before = resolveAlias(tokens, ref);
+  const clone = JSON.parse(JSON.stringify(tokens));
+  const NEW_BASE = '#ff3300';
+  regenerateFamily(clone.color.blue, NEW_BASE);
+  const after = resolveAlias(clone, ref);
+  const expectedNew = rgbToHex(mix(WHITE, hexToRgb(NEW_BASE), 0.8)); // blue-100 = lighten 80%
+  if (after === before) fail('propagation: semantic did not change after regenerating the base (alias not propagating)');
+  if (after !== expectedNew) fail(`propagation: semantic resolved to ${after}, expected regenerated ${expectedNew}`);
+  if (!failures) process.stdout.write(`✓ propagation: regenerating blue base flows through ${ref} (${before} → ${after})\n`);
+
+  if (failures) { process.stderr.write(`\n${failures} check(s) FAILED.\n`); process.exit(1); }
   process.stdout.write('✓ tokens.json valid\n');
 }
 

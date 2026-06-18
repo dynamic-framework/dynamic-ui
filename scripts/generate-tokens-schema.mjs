@@ -2,13 +2,17 @@
  * generate-tokens-schema.mjs
  *
  * Generates registry/schema/tokens.v1.json — the JSON Schema that validates
- * registry/tokens.json (referenced by its `$schema` field). It encodes the
- * DTCG color-contract invariants from SPEC §6:
- *   - every color token carries $type:"color"
- *   - every ramp step has a hex $value EXCEPT -500, which is an alias {color.<fam>}
- *   - every family carries dev.dynamicframework.tint with base, space:"srgb"
- *     and 11 steps (op ∈ {lighten, darken, base}, weight ∈ [0,1])
- *   - roles are aliases (to a family OR a step)
+ * registry/tokens.json (referenced by its `$schema` field).
+ *
+ * Encodes the contract invariants:
+ *   - color families are pure groups (no own $value); every ramp step is a hex
+ *     leaf; the tint recipe lives in $extensions; derivability block ONLY where a
+ *     token deviates from its category default (today: gray) with EXACTLY
+ *     {method,regenerable,fidelity} and additionalProperties:false.
+ *   - semantic.<role>.<prop> are aliases (no hex literals).
+ *   - non-color dimensions use DTCG types (fontFamily/fontWeight/dimension/number/shadow);
+ *     spacing carries a scale recipe; radius is literal with no recipe.
+ *   - root carries the coverage manifest.
  *
  * Usage: node scripts/generate-tokens-schema.mjs
  */
@@ -22,42 +26,50 @@ const ROOT = resolve(SCRIPT_DIR, '..');
 const OUTPUT_DIR = resolve(ROOT, 'registry/schema');
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'tokens.v1.json');
 
-// Kept in sync with generate-tokens.mjs (the stable contract surface).
 const CHROMATIC = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan'];
-const GRAY = 'gray';
-const ALL_FAMILIES = [...CHROMATIC, GRAY];
+const ALL_FAMILIES = [...CHROMATIC, 'gray'];
 const ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'];
 const STEPS = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
+const SEMANTIC_PROPS = ['text-emphasis', 'bg-subtle', 'border-subtle'];
+const SPACING_LEVELS = Array.from({ length: 31 }, (_, i) => String(i));
+const RADIUS_KEYS = ['default', 'sm', 'lg', 'xl', 'xxl', 'pill'];
 
 const HEX = { type: 'string', pattern: '^#[0-9a-f]{6}$' };
-const ALIAS = { type: 'string', pattern: '^\\{color\\.[a-z]+(\\.[0-9]{2,3})?\\}$' };
+const ALIAS = { type: 'string', pattern: '^\\{[a-z]+(\\.[a-z0-9-]+)+\\}$' };
+const DIM = {
+  type: 'object',
+  required: ['value', 'unit'],
+  properties: { value: { type: 'number' }, unit: { enum: ['rem', 'px', 'em'] } },
+  additionalProperties: false,
+};
 
-const colorLeaf = (valueSchema) => ({
+const leaf = (valueSchema, typeConst) => ({
   type: 'object',
   required: ['$value'],
-  properties: { $type: { const: 'color' }, $value: valueSchema },
+  properties: { $type: typeConst ? { const: typeConst } : true, $value: valueSchema },
   additionalProperties: false,
 });
 
-function tintStepsSchema() {
-  const properties = {};
-  for (const step of STEPS) {
-    properties[step] = step === '500'
+const fromEntries = (keys, valueSchema) => Object.fromEntries(keys.map((k) => [k, valueSchema]));
+
+// ---------- color ----------
+
+const tintSteps = {
+  type: 'object',
+  required: STEPS,
+  properties: Object.fromEntries(STEPS.map((step) => [
+    step,
+    step === '500'
       ? { type: 'object', required: ['op'], properties: { op: { const: 'base' } }, additionalProperties: false }
       : {
         type: 'object',
         required: ['op', 'weight'],
-        properties: {
-          op: { enum: ['lighten', 'darken'] },
-          weight: { type: 'number', minimum: 0, maximum: 1 },
-        },
+        properties: { op: { enum: ['lighten', 'darken'] }, weight: { type: 'number', minimum: 0, maximum: 1 } },
         additionalProperties: false,
-      };
-  }
-  return {
-    type: 'object', required: STEPS, properties, additionalProperties: false,
-  };
-}
+      },
+  ])),
+  additionalProperties: false,
+};
 
 const tintExtension = {
   type: 'object',
@@ -66,37 +78,41 @@ const tintExtension = {
     base: ALIAS,
     space: { const: 'srgb' },
     method: { enum: ['bootstrap-mix', 'hand-authored'] },
-    fidelity: { enum: ['approximate'] },
-    regenerable: { type: 'boolean' },
-    note: { type: 'string' },
-    steps: tintStepsSchema(),
+    steps: tintSteps,
   },
   additionalProperties: false,
 };
 
-function familySchema() {
-  // A family is a pure DTCG group: $type + $extensions + step children, NO own
-  // $value (additionalProperties:false makes an own $value invalid). Every step,
-  // including -500, is a literal hex leaf.
-  const properties = {
+// SPEC §5: exactly {method, regenerable, fidelity}; additionalProperties:false.
+const derivabilityExtension = {
+  type: 'object',
+  required: ['method', 'regenerable', 'fidelity'],
+  properties: {
+    method: { enum: ['bootstrap-mix', 'hand-authored', 'alias', 'scalar-multiple'] },
+    regenerable: { type: 'boolean' },
+    fidelity: { enum: ['exact', 'approximate'] },
+  },
+  additionalProperties: false,
+};
+
+const familySchema = {
+  type: 'object',
+  required: ['$type', '$extensions', ...STEPS],
+  properties: {
     $type: { const: 'color' },
     $extensions: {
       type: 'object',
       required: ['dev.dynamicframework.tint'],
-      properties: { 'dev.dynamicframework.tint': tintExtension },
+      properties: {
+        'dev.dynamicframework.tint': tintExtension,
+        'dev.dynamicframework.derivability': derivabilityExtension,
+      },
       additionalProperties: false,
     },
-  };
-  for (const step of STEPS) {
-    properties[step] = colorLeaf(HEX);
-  }
-  return {
-    type: 'object',
-    required: ['$type', '$extensions', ...STEPS],
-    properties,
-    additionalProperties: false,
-  };
-}
+    ...fromEntries(STEPS, leaf(HEX, 'color')),
+  },
+  additionalProperties: false,
+};
 
 const auditExtension = {
   type: 'object',
@@ -125,33 +141,196 @@ const roleSchema = {
   additionalProperties: false,
 };
 
+// ---------- semantic ----------
+
+const semanticRole = {
+  type: 'object',
+  required: SEMANTIC_PROPS,
+  properties: fromEntries(SEMANTIC_PROPS, leaf(ALIAS, 'color')),
+  additionalProperties: false,
+};
+
+const semanticSchema = {
+  type: 'object',
+  required: ['$type', ...ROLES],
+  properties: { $type: { const: 'color' }, ...fromEntries(ROLES, semanticRole) },
+  additionalProperties: false,
+};
+
+// ---------- non-color ----------
+
+const typographySchema = {
+  type: 'object',
+  required: ['fontFamily', 'fontWeight', 'fontSize', 'lineHeight'],
+  properties: {
+    fontFamily: {
+      type: 'object',
+      required: ['$type', 'sans'],
+      properties: { $type: { const: 'fontFamily' }, sans: leaf({ type: 'array', items: { type: 'string' }, minItems: 1 }, 'fontFamily') },
+      additionalProperties: false,
+    },
+    fontWeight: {
+      type: 'object',
+      required: ['$type', 'normal', 'semibold', 'bold'],
+      properties: {
+        $type: { const: 'fontWeight' },
+        ...fromEntries(['light', 'normal', 'semibold', 'bold', 'bolder'], leaf({ type: 'integer', minimum: 1, maximum: 1000 }, 'fontWeight')),
+      },
+      additionalProperties: false,
+    },
+    fontSize: {
+      type: 'object',
+      required: ['$type', 'base'],
+      properties: {
+        $type: { const: 'dimension' },
+        ...fromEntries(['base', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4', 'display-5', 'display-6'], leaf(DIM, 'dimension')),
+      },
+      additionalProperties: false,
+    },
+    lineHeight: {
+      type: 'object',
+      required: ['$type', 'base'],
+      properties: { $type: { const: 'number' }, ...fromEntries(['base', 'sm', 'lg', 'heading'], leaf({ type: 'number' }, 'number')) },
+      additionalProperties: false,
+    },
+  },
+  additionalProperties: false,
+};
+
+const scaleExtension = {
+  type: 'object',
+  required: ['base', 'method', 'steps'],
+  properties: {
+    base: ALIAS,
+    method: { const: 'scalar-multiple' },
+    steps: {
+      type: 'object',
+      additionalProperties: {
+        type: 'object', required: ['factor'], properties: { factor: { type: 'number' } }, additionalProperties: false,
+      },
+    },
+  },
+  additionalProperties: false,
+};
+
+const spacingSchema = {
+  type: 'object',
+  required: ['$type', '$extensions', ...SPACING_LEVELS],
+  properties: {
+    $type: { const: 'dimension' },
+    $extensions: {
+      type: 'object',
+      required: ['dev.dynamicframework.scale'],
+      properties: { 'dev.dynamicframework.scale': scaleExtension },
+      additionalProperties: false,
+    },
+    ...fromEntries(SPACING_LEVELS, leaf(DIM, 'dimension')),
+  },
+  additionalProperties: false,
+};
+
+// Radius: literal dimensions only — NO recipe, NO derivability block.
+const radiusSchema = {
+  type: 'object',
+  required: ['$type', ...RADIUS_KEYS],
+  properties: { $type: { const: 'dimension' }, ...fromEntries(RADIUS_KEYS, leaf(DIM, 'dimension')) },
+  additionalProperties: false,
+};
+
+const shadowValue = {
+  type: 'object',
+  required: ['color', 'offsetX', 'offsetY', 'blur', 'spread'],
+  properties: {
+    color: { type: 'string' }, offsetX: DIM, offsetY: DIM, blur: DIM, spread: DIM,
+  },
+  additionalProperties: false,
+};
+
+const shadowSchema = {
+  type: 'object',
+  required: ['$type', 'lg'],
+  properties: { $type: { const: 'shadow' }, lg: leaf(shadowValue, 'shadow') },
+  additionalProperties: false,
+};
+
+// ---------- root extensions ----------
+
+const profile = {
+  type: 'object',
+  required: ['regenerable'],
+  properties: {
+    method: { enum: ['bootstrap-mix', 'hand-authored', 'alias', 'scalar-multiple'] },
+    regenerable: { type: 'boolean' },
+    fidelity: { enum: ['exact', 'approximate'] },
+  },
+  additionalProperties: false,
+};
+
+const coverageExtension = {
+  type: 'object',
+  required: ['categories', 'gaps'],
+  properties: {
+    categories: {
+      type: 'object',
+      required: ['color', 'typography', 'spacing', 'radius', 'shadow'],
+      additionalProperties: {
+        type: 'object',
+        required: ['state', 'defaultProfile'],
+        properties: {
+          state: { enum: ['tokenized-regenerable', 'tokenized-static', 'partial', 'not-tokenizable'] },
+          defaultProfile: profile,
+        },
+        additionalProperties: false,
+      },
+    },
+    gaps: {
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['dimension', 'state', 'reason'],
+        properties: {
+          dimension: { type: 'string' },
+          state: { enum: ['partial', 'not-tokenizable'] },
+          reason: { type: 'string' },
+          compileTimeOnly: { type: 'boolean' },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
+  additionalProperties: false,
+};
+
+const contractExtension = {
+  type: 'object',
+  required: ['schemaVersion', 'dynamicUi', 'generatedFrom'],
+  properties: {
+    schemaVersion: { type: 'string', pattern: '^1\\.\\d+\\.\\d+$' },
+    dynamicUi: { type: 'string', pattern: '^\\d+\\.\\d+\\.\\d+' },
+    generatedFrom: { const: 'scss-source' },
+  },
+  additionalProperties: false,
+};
+
 function main() {
   const colorProperties = {};
-  for (const fam of ALL_FAMILIES) colorProperties[fam] = familySchema();
+  for (const fam of ALL_FAMILIES) colorProperties[fam] = familySchema;
   for (const role of ROLES) colorProperties[role] = roleSchema;
 
   const schema = {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     $id: 'https://cdn.dynamicframework.dev/assets/tokens/schema/tokens.v1.json',
-    title: 'Dynamic UI DTCG color token contract (v1)',
+    title: 'Dynamic UI DTCG token contract (v1)',
     type: 'object',
-    required: ['$schema', '$extensions', 'color'],
+    required: ['$schema', '$extensions', 'color', 'semantic', 'typography', 'spacing', 'radius', 'shadow'],
     properties: {
       $schema: { type: 'string' },
       $extensions: {
         type: 'object',
-        required: ['dev.dynamicframework.contract'],
+        required: ['dev.dynamicframework.contract', 'dev.dynamicframework.coverage'],
         properties: {
-          'dev.dynamicframework.contract': {
-            type: 'object',
-            required: ['schemaVersion', 'dynamicUi', 'generatedFrom'],
-            properties: {
-              schemaVersion: { const: '1.0.0' },
-              dynamicUi: { type: 'string', pattern: '^\\d+\\.\\d+\\.\\d+' },
-              generatedFrom: { const: 'scss-source' },
-            },
-            additionalProperties: false,
-          },
+          'dev.dynamicframework.contract': contractExtension,
+          'dev.dynamicframework.coverage': coverageExtension,
         },
         additionalProperties: false,
       },
@@ -161,6 +340,11 @@ function main() {
         properties: colorProperties,
         additionalProperties: false,
       },
+      semantic: semanticSchema,
+      typography: typographySchema,
+      spacing: spacingSchema,
+      radius: radiusSchema,
+      shadow: shadowSchema,
     },
     additionalProperties: false,
   };
