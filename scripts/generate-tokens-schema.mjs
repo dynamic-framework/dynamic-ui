@@ -4,11 +4,11 @@
  * Generates registry/schema/tokens.v1.json — the JSON Schema that validates
  * registry/tokens.json (referenced by its `$schema` field). It encodes the
  * DTCG color-contract invariants from SPEC §6:
- *   - every color token carries $type:"color"
- *   - every ramp step has a hex $value EXCEPT -500, which is an alias {color.<fam>}
+ *   - color families are pure groups (no own $value); every ramp step is a hex
+ *     leaf — incl. -500, which holds the base, so {color.<fam>.500} is the base ref
  *   - every family carries dev.dynamicframework.tint with base, space:"srgb"
  *     and 11 steps (op ∈ {lighten, darken, base}, weight ∈ [0,1])
- *   - roles are aliases (to a family OR a step)
+ *   - roles are aliases (to a family base {color.<fam>.500} OR a step)
  *
  * Usage: node scripts/generate-tokens-schema.mjs
  */
@@ -21,6 +21,8 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, '..');
 const OUTPUT_DIR = resolve(ROOT, 'registry/schema');
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'tokens.v1.json');
+// Overridable for local/CI/alternate CDN, consistent with generate-schema.mjs.
+const CDN_BASE = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
 
 // Kept in sync with generate-tokens.mjs (the stable contract surface).
 const CHROMATIC = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan'];
@@ -132,7 +134,7 @@ function main() {
 
   const schema = {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
-    $id: 'https://cdn.dynamicframework.dev/assets/tokens/schema/tokens.v1.json',
+    $id: `${CDN_BASE}/tokens/schema/tokens.v1.json`,
     title: 'Dynamic UI DTCG color token contract (v1)',
     type: 'object',
     required: ['$schema', '$extensions', 'color'],
