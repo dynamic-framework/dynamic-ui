@@ -1,0 +1,129 @@
+// DTCG token export harness — read-only data extraction.
+//
+// This partial is NEVER imported by the component stylesheet (dynamic-ui.scss).
+// It is compiled on its own, to a throwaway temp file, by scripts/generate-tokens.mjs
+// purely to read back the Sass-resolved values that feed registry/tokens.json.
+//
+// It emits ONLY the minimal data the contract needs:
+//   PHASE 1 (color):
+//     - the resolved hex of every chromatic-family ramp step (blue..cyan)
+//     - the resolved hex of every gray ramp step
+//     - the base hex of every family (the `$colors` entry == the -500/base)
+//     - the role -> target mapping ($theme-colors-mapping)
+//   PHASE 2:
+//     - each semantic color var's var() target string (text-emphasis/bg-subtle/border-subtle)
+//     - role-ramp resolved hex (for verifying semantic -> family resolution)
+//     - typography (family, weights, sizes, line-heights), spacing scale, radius, shadow
+//
+// Compile with the project's dart-sass and the same load-path the real build uses:
+//   node_modules/.bin/sass --no-source-map --load-path=src/style --load-path=./ \
+//     scripts/tokens/_export-harness.scss <tmp>.css
+
+@import "abstracts/+import";
+
+// The 10 chromatic families, each pointing at its fully-resolved ramp map.
+$tok-families: (
+  "blue": $blues,
+  "indigo": $indigos,
+  "purple": $purples,
+  "pink": $pinks,
+  "red": $reds,
+  "orange": $oranges,
+  "yellow": $yellows,
+  "green": $greens,
+  "teal": $teals,
+  "cyan": $cyans,
+) !default;
+
+// Semantic color vars, keyed "<role>__<prop>". Value is a `var(--bs-…)` string
+// (e.g. var(--bs-primary-600)) emitted verbatim so the generator can resolve the
+// referenced family step.
+$tok-semantics: (
+  "primary__text-emphasis": $primary-text-emphasis,
+  "primary__bg-subtle": $primary-bg-subtle,
+  "primary__border-subtle": $primary-border-subtle,
+  "secondary__text-emphasis": $secondary-text-emphasis,
+  "secondary__bg-subtle": $secondary-bg-subtle,
+  "secondary__border-subtle": $secondary-border-subtle,
+  "success__text-emphasis": $success-text-emphasis,
+  "success__bg-subtle": $success-bg-subtle,
+  "success__border-subtle": $success-border-subtle,
+  "info__text-emphasis": $info-text-emphasis,
+  "info__bg-subtle": $info-bg-subtle,
+  "info__border-subtle": $info-border-subtle,
+  "warning__text-emphasis": $warning-text-emphasis,
+  "warning__bg-subtle": $warning-bg-subtle,
+  "warning__border-subtle": $warning-border-subtle,
+  "danger__text-emphasis": $danger-text-emphasis,
+  "danger__bg-subtle": $danger-bg-subtle,
+  "danger__border-subtle": $danger-border-subtle,
+  "light__text-emphasis": $light-text-emphasis,
+  "light__bg-subtle": $light-bg-subtle,
+  "light__border-subtle": $light-border-subtle,
+  "dark__text-emphasis": $dark-text-emphasis,
+  "dark__bg-subtle": $dark-bg-subtle,
+  "dark__border-subtle": $dark-border-subtle,
+) !default;
+
+dtcg-export {
+  // ---- PHASE 1: color families ----
+  @each $fam, $ramp in $tok-families {
+    @each $step-key, $val in $ramp {
+      --ramp-#{$step-key}: #{$val};
+    }
+    --base-#{$fam}: #{map-get($colors, $fam)};
+  }
+  @each $k, $v in $grays {
+    --ramp-gray-#{$k}: #{$v};
+  }
+  --base-gray: #{map-get($colors, "gray")};
+  @each $role, $target in $theme-colors-mapping {
+    --map-#{$role}: "#{$target}";
+  }
+
+  // ---- PHASE 2: semantic color targets ----
+  @each $key, $value in $tok-semantics {
+    --sem-#{$key}: #{$value};
+  }
+  // Role-ramp resolved hex (from $theme-colors-palettes: primary-*, secondary-*, …).
+  // Used to verify the generator's role-step -> family-step resolution.
+  @each $k, $v in $theme-colors-palettes {
+    --roleramp-#{$k}: #{$v};
+  }
+
+  // ---- PHASE 2: typography ----
+  --type-family-sans: #{inspect($font-family-sans-serif)};
+  --type-fw-light: #{$font-weight-light-value};
+  --type-fw-normal: #{$font-weight-normal-value};
+  --type-fw-semibold: #{$font-weight-semibold-value};
+  --type-fw-bold: #{$font-weight-bold-value};
+  --type-fw-bolder: #{$font-weight-bolder-value};
+  --type-fs-base: #{$font-size-base};
+  @each $k, $v in $font-size-values {
+    --type-fs-h#{$k}: #{$v};
+  }
+  @each $k, $v in $display-font-size-values {
+    --type-fs-display#{$k}: #{$v};
+  }
+  --type-lh-base: #{$line-height-base};
+  --type-lh-sm: #{$line-height-sm};
+  --type-lh-lg: #{$line-height-lg};
+  --type-lh-heading: #{$headings-line-height-value};
+
+  // ---- PHASE 2: spacing (scale 0–30, base = $spacer) ----
+  --space-base: #{$spacer};
+  @each $k, $v in $spacers {
+    --space-#{$k}: #{$v};
+  }
+
+  // ---- PHASE 2: radius (independent literals) ----
+  --radius-default: #{$border-radius};
+  --radius-sm: #{$border-radius-sm};
+  --radius-lg: #{$border-radius-lg};
+  --radius-xl: #{$border-radius-xl};
+  --radius-xxl: #{$border-radius-xxl};
+  --radius-pill: #{$border-radius-pill};
+
+  // ---- PHASE 2: shadow (only the Dynamic override; rest inherit Bootstrap) ----
+  --shadow-lg: #{$box-shadow-lg};
+}
