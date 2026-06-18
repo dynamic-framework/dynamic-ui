@@ -22,7 +22,7 @@
 @import "abstracts/+import";
 
 // The 10 chromatic families, each pointing at its fully-resolved ramp map.
-$_tok-families: (
+$tok-families: (
   "blue": $blues,
   "indigo": $indigos,
   "purple": $purples,
@@ -33,12 +33,12 @@ $_tok-families: (
   "green": $greens,
   "teal": $teals,
   "cyan": $cyans,
-);
+) !default;
 
 // Semantic color vars, keyed "<role>__<prop>". Value is a `var(--bs-…)` string
 // (e.g. var(--bs-primary-600)) emitted verbatim so the generator can resolve the
 // referenced family step.
-$_tok-semantics: (
+$tok-semantics: (
   "primary__text-emphasis": $primary-text-emphasis,
   "primary__bg-subtle": $primary-bg-subtle,
   "primary__border-subtle": $primary-border-subtle,
@@ -63,11 +63,11 @@ $_tok-semantics: (
   "dark__text-emphasis": $dark-text-emphasis,
   "dark__bg-subtle": $dark-bg-subtle,
   "dark__border-subtle": $dark-border-subtle,
-);
+) !default;
 
 dtcg-export {
   // ---- PHASE 1: color families ----
-  @each $fam, $ramp in $_tok-families {
+  @each $fam, $ramp in $tok-families {
     @each $step-key, $val in $ramp {
       --ramp-#{$step-key}: #{$val};
     }
@@ -82,7 +82,7 @@ dtcg-export {
   }
 
   // ---- PHASE 2: semantic color targets ----
-  @each $key, $value in $_tok-semantics {
+  @each $key, $value in $tok-semantics {
     --sem-#{$key}: #{$value};
   }
   // Role-ramp resolved hex (from $theme-colors-palettes: primary-*, secondary-*, …).
