@@ -19,6 +19,11 @@ jest.mock('../../contexts', () => ({
   }),
 }));
 
+const mockResponsivePropValue = jest.fn();
+jest.mock('../../hooks/useResponsiveProp', () => ({
+  useResponsiveProp: () => ({ responsivePropValue: mockResponsivePropValue }),
+}));
+
 describe('<DOffcanvas />', () => {
   describe('Rendering and Props', () => {
     it('should render with header, body, and footer', () => {
@@ -124,5 +129,33 @@ describe('<DOffcanvas />', () => {
       const footer = container.querySelector('.d-offcanvas-footer');
       expect(footer).toHaveClass('d-offcanvas-action-start');
     });
+  });
+});
+
+describe('Responsive openFrom', () => {
+  it('should apply the lg position when the lg breakpoint is active', () => {
+    mockResponsivePropValue.mockReturnValue('end');
+    const { container } = render(
+      <DOffcanvas name="test" openFrom={{ xs: 'bottom', lg: 'end' }} />,
+    );
+    expect(container.firstChild).toHaveClass('offcanvas-end');
+    expect(container.firstChild).not.toHaveClass('offcanvas-bottom');
+  });
+
+  it('should apply the xs position when only xs breakpoint is active', () => {
+    mockResponsivePropValue.mockReturnValue('bottom');
+    const { container } = render(
+      <DOffcanvas name="test" openFrom={{ xs: 'bottom', lg: 'end' }} />,
+    );
+    expect(container.firstChild).toHaveClass('offcanvas-bottom');
+    expect(container.firstChild).not.toHaveClass('offcanvas-end');
+  });
+
+  it('should fall back to "end" when no breakpoint matches and no xs is defined', () => {
+    mockResponsivePropValue.mockReturnValue(undefined);
+    const { container } = render(
+      <DOffcanvas name="test" openFrom={{ lg: 'start' }} />,
+    );
+    expect(container.firstChild).toHaveClass('offcanvas-end');
   });
 });

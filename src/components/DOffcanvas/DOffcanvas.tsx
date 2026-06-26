@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { motion, type Transition, type Variants } from 'framer-motion';
 
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useMemo } from 'react';
 
 import { PREFIX_BS } from '../config';
+import { useResponsiveProp, type ResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import DOffcanvasHeader from './components/DOffcanvasHeader';
 import DOffcanvasBody from './components/DOffcanvasBody';
@@ -15,7 +16,7 @@ type Props = BaseProps & PropsWithChildren<{
   name: string;
   staticBackdrop?: boolean;
   scrollable?: boolean;
-  openFrom?: OffcanvasPositionToggleFrom;
+  openFrom?: OffcanvasPositionToggleFrom | ResponsiveProp;
   transition?: Transition;
 }>;
 
@@ -63,12 +64,18 @@ function DOffcanvas(
     dataAttributes,
   }: Props,
 ) {
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedOpenFrom = useMemo<OffcanvasPositionToggleFrom>(() => {
+    if (typeof openFrom === 'string') return openFrom;
+    return (responsivePropValue(openFrom) as OffcanvasPositionToggleFrom | undefined) ?? 'end';
+  }, [openFrom, responsivePropValue]);
+
   return (
     <motion.div
       className={classNames(
         'offcanvas portal show',
         {
-          [`offcanvas-${openFrom}`]: openFrom,
+          [`offcanvas-${resolvedOpenFrom}`]: resolvedOpenFrom,
         },
         className,
       )}
@@ -80,7 +87,7 @@ function DOffcanvas(
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
-      custom={openFrom}
+      custom={resolvedOpenFrom}
       variants={variants}
       initial="hidden"
       animate="visible"

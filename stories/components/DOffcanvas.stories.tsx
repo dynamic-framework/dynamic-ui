@@ -128,6 +128,51 @@ function OpenFiltersOffcanvasButton() {
   );
 }
 
+type ResponsiveOffcanvasPayloads = {
+  responsive: Record<string, never>;
+};
+
+function ResponsiveOffcanvas({ name }: PortalProps<ResponsiveOffcanvasPayloads['responsive']>) {
+  const { closePortal } = useDPortalContext();
+
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom={{ xs: 'bottom', lg: 'end' }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Responsive offcanvas</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>
+          On mobile this panel slides in from the
+          <strong>bottom</strong>
+          . On desktop (lg+) it slides in from the
+          <strong>right</strong>
+          .
+        </p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
+        <DButton text="ok" onClick={() => closePortal()} />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveOffcanvasButton() {
+  const { openPortal } = useDPortalContext<ResponsiveOffcanvasPayloads>();
+
+  return (
+    <DButton
+      text="Open responsive offcanvas"
+      onClick={() => openPortal('responsive', {})}
+    />
+  );
+}
+
 export const RealUsageWithOpenPortal: Story = {
   parameters: {
     docs: {
@@ -523,4 +568,43 @@ export const MaterialStyleCloseIcon: Story = {
     scrollable: false,
     openFrom: 'end',
   },
+};
+
+/**
+ * `openFrom` also accepts a `ResponsiveProp` object so the offcanvas can open
+ * from different positions depending on the viewport.
+ * Resize the viewport (e.g. use the Storybook viewport toolbar) to see the
+ * position switch: **bottom** on `xs` and **end** on `lg`+.
+ */
+export const ResponsiveOpenFrom: Story = {
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+      description: {
+        story:
+          'Pass a `ResponsiveProp` object to `openFrom` to control the position per breakpoint. '
+          + 'Click the button to open the panel: it slides in from the **bottom** on mobile (`xs`) and from the **right** on desktop (`lg`+).',
+      },
+    },
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: () => (
+    <DContextProvider<ResponsiveOffcanvasPayloads>
+      portalName="dOffcanvasResponsiveStoryPortal"
+      availablePortals={{ responsive: ResponsiveOffcanvas }}
+    >
+      <OpenResponsiveOffcanvasButton />
+    </DContextProvider>
+  ),
 };
