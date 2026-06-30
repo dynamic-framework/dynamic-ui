@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 
 import {
   changeQueryString,
+  DContextProvider,
   DBadge,
   DBox,
   DIcon,
+  DOffcanvas,
   DInput,
   DInputCheck,
   DPaginator,
   getQueryString,
+  useDPortalContext,
   useItemSelection,
 } from '../../src';
+import type { PortalProps } from '../../src';
 
 import DocsTemplate from './docs/Template.mdx';
 
@@ -1284,14 +1288,125 @@ export const TransactionHistory: Story = {
   },
 };
 
-function FinancialTransactionOffcanvasComponent() {
-  const [search, setSearch] = useState('');
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [typeFilter, setTypeFilter] = useState<'all' | FinanceTransactionType>('all');
-  const [statusFilter, setStatusFilter] = useState<'all' | FinanceTransactionStatus>('all');
-  const [minAmountFilter, setMinAmountFilter] = useState('0');
+type TransactionScreeningFilters = {
+  typeFilter: 'all' | FinanceTransactionType;
+  statusFilter: 'all' | FinanceTransactionStatus;
+  minAmountFilter: string;
+};
 
+type TransactionScreeningPortalPayloads = {
+  filters: {
+    values: TransactionScreeningFilters;
+    onApply(values: TransactionScreeningFilters): void;
+    onClear(): void;
+  };
+};
+
+function TransactionScreeningFiltersOffcanvas(
+  { name, payload }: PortalProps<TransactionScreeningPortalPayloads['filters']>,
+) {
+  const { closePortal } = useDPortalContext();
+  const [typeFilter, setTypeFilter] = useState<TransactionScreeningFilters['typeFilter']>(payload.values.typeFilter);
+  const [statusFilter, setStatusFilter] = useState<TransactionScreeningFilters['statusFilter']>(payload.values.statusFilter);
+  const [minAmountFilter, setMinAmountFilter] = useState(payload.values.minAmountFilter);
+
+  useEffect(() => {
+    setTypeFilter(payload.values.typeFilter);
+    setStatusFilter(payload.values.statusFilter);
+    setMinAmountFilter(payload.values.minAmountFilter);
+  }, [payload.values.minAmountFilter, payload.values.statusFilter, payload.values.typeFilter]);
+
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable
+      openFrom="end"
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h6 className="mb-0">Advanced Filters</h6>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Type</small>
+          <select
+            className="form-select"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value as TransactionScreeningFilters['typeFilter'])}
+          >
+            <option value="all">All</option>
+            <option value="Credit">Credit</option>
+            <option value="Debit">Debit</option>
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Status</small>
+          <select
+            className="form-select"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value as TransactionScreeningFilters['statusFilter'])}
+          >
+            <option value="all">All</option>
+            <option value="Posted">Posted</option>
+            <option value="Pending">Pending</option>
+            <option value="Flagged">Flagged</option>
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
+          <DInput
+            type="number"
+            value={minAmountFilter}
+            onChange={setMinAmountFilter}
+          />
+        </div>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            payload.onApply({
+              typeFilter,
+              statusFilter,
+              minAmountFilter,
+            });
+            closePortal();
+          }}
+        >
+          Apply
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-secondary"
+          onClick={() => {
+            payload.onClear();
+            closePortal();
+          }}
+        >
+          Clear Filters
+        </button>
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function FinancialTransactionOffcanvasContent() {
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState<TransactionScreeningFilters['typeFilter']>('all');
+  const [statusFilter, setStatusFilter] = useState<TransactionScreeningFilters['statusFilter']>('all');
+  const [minAmountFilter, setMinAmountFilter] = useState('0');
+  const { openPortal } = useDPortalContext<TransactionScreeningPortalPayloads>();
+
+  const currentFilters: TransactionScreeningFilters = {
+    typeFilter,
+    statusFilter,
+    minAmountFilter,
+  };
   const minAmount = Math.max(0, Number(minAmountFilter) || 0);
+
   const rows = FINANCE_TRANSACTIONS.filter((row) => {
     const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
@@ -1318,7 +1433,19 @@ function FinancialTransactionOffcanvasComponent() {
         <button
           type="button"
           className="btn btn-outline-primary"
-          onClick={() => setIsFiltersOpen(true)}
+          onClick={() => openPortal('filters', {
+            values: currentFilters,
+            onApply: (values) => {
+              setTypeFilter(values.typeFilter);
+              setStatusFilter(values.statusFilter);
+              setMinAmountFilter(values.minAmountFilter);
+            },
+            onClear: () => {
+              setTypeFilter('all');
+              setStatusFilter('all');
+              setMinAmountFilter('0');
+            },
+          })}
         >
           Advanced Filters
         </button>
@@ -1360,93 +1487,27 @@ function FinancialTransactionOffcanvasComponent() {
               </td>
             </tr>
           ))}
+          {rows.length === 0 && (
+            <tr>
+              <td colSpan={5} className="text-center text-secondary py-4">
+                No transactions match your current filters.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
-
-      {isFiltersOpen && (
-        <>
-          <button
-            type="button"
-            className="btn position-fixed top-0 start-0 w-100 h-100 bg-dark"
-            style={{ opacity: 0.35, zIndex: 1040 }}
-            aria-label="Close filters"
-            onClick={() => setIsFiltersOpen(false)}
-          />
-          <aside
-            className="position-fixed top-0 end-0 h-100 bg-white border-start p-3"
-            style={{ width: '360px', zIndex: 1045, overflowY: 'auto' }}
-            aria-label="Advanced filters panel"
-          >
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h6 className="mb-0">Advanced Filters</h6>
-              <button
-                type="button"
-                className="btn-close"
-                aria-label="Close advanced filters"
-                onClick={() => setIsFiltersOpen(false)}
-              />
-            </div>
-
-            <div className="mb-3">
-              <small className="d-block text-secondary mb-1">Type</small>
-              <select
-                className="form-select"
-                value={typeFilter}
-                onChange={(event) => setTypeFilter(event.target.value as 'all' | FinanceTransactionType)}
-              >
-                <option value="all">All</option>
-                <option value="Credit">Credit</option>
-                <option value="Debit">Debit</option>
-              </select>
-            </div>
-
-            <div className="mb-3">
-              <small className="d-block text-secondary mb-1">Status</small>
-              <select
-                className="form-select"
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value as 'all' | FinanceTransactionStatus)}
-              >
-                <option value="all">All</option>
-                <option value="Posted">Posted</option>
-                <option value="Pending">Pending</option>
-                <option value="Flagged">Flagged</option>
-              </select>
-            </div>
-
-            <div className="mb-3">
-              <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
-              <DInput
-                type="number"
-                value={minAmountFilter}
-                onChange={setMinAmountFilter}
-              />
-            </div>
-
-            <div className="d-flex gap-2 mt-4">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setIsFiltersOpen(false)}
-              >
-                Apply
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={() => {
-                  setTypeFilter('all');
-                  setStatusFilter('all');
-                  setMinAmountFilter('0');
-                }}
-              >
-                Clear Filters
-              </button>
-            </div>
-          </aside>
-        </>
-      )}
     </DBox>
+  );
+}
+
+function FinancialTransactionOffcanvasComponent() {
+  return (
+    <DContextProvider<TransactionScreeningPortalPayloads>
+      portalName="tablePatternsTransactionFiltersPortal"
+      availablePortals={{ filters: TransactionScreeningFiltersOffcanvas }}
+    >
+      <FinancialTransactionOffcanvasContent />
+    </DContextProvider>
   );
 }
 
@@ -1455,90 +1516,8 @@ export const TransactionHistoryOffcanvas: Story = {
   parameters: {
     layout: 'fullscreen',
     docs: {
-      source: {
-        code: `function TransactionHistoryOffcanvasExample() {
-  const [search, setSearch] = useState('');
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [typeFilter, setTypeFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [minAmountFilter, setMinAmountFilter] = useState('0');
-
-  const minAmount = Math.max(0, Number(minAmountFilter) || 0);
-
-  const rows = FINANCE_TRANSACTIONS.filter((row) => {
-    const query = search.trim().toLowerCase();
-    const matchesSearch = query.length === 0
-      || row.reference.toLowerCase().includes(query)
-      || row.account.toLowerCase().includes(query);
-    const matchesType = typeFilter === 'all' || row.type === typeFilter;
-    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
-    const matchesAmount = Math.abs(row.amount) >= minAmount;
-    return matchesSearch && matchesType && matchesStatus && matchesAmount;
-  });
-
-  return (
-    <DBox style={{ width: '100%', position: 'relative' }}>
-      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
-        <div style={{ minWidth: '320px', flex: 1 }}>
-          <DInput
-            type="text"
-            value={search}
-            placeholder="Search by id, account, or reference"
-            onChange={setSearch}
-          />
-        </div>
-        <button type="button" className="btn btn-outline-primary" onClick={() => setIsFiltersOpen(true)}>
-          Advanced Filters
-        </button>
-      </div>
-
-      {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
-        <div className="d-flex gap-2 flex-wrap mb-3">
-          {typeFilter !== 'all' && <DBadge text={\`Type: \${typeFilter}\`} color="primary" />}
-          {statusFilter !== 'all' && <DBadge soft size="sm" text={\`Status: \${statusFilter}\`} color="warning" />}
-          {minAmount > 0 && <DBadge soft size="sm" text={\`Min Amount: \${USD.format(minAmount)}\`} color="secondary" />}
-        </div>
-      )}
-
-      <table className="table table-striped table-hover align-middle">
-        {/* ...rows */}
-      </table>
-
-      {isFiltersOpen && (
-        <>
-          <button
-            type="button"
-            className="btn position-fixed top-0 start-0 w-100 h-100 bg-dark"
-            style={{ opacity: 0.35, zIndex: 1040 }}
-            aria-label="Close filters"
-            onClick={() => setIsFiltersOpen(false)}
-          />
-          <aside
-            className="position-fixed top-0 end-0 h-100 bg-white border-start p-3"
-            style={{ width: '360px', zIndex: 1045, overflowY: 'auto' }}
-            aria-label="Advanced filters panel"
-          >
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h6 className="mb-0">Advanced Filters</h6>
-              <button type="button" className="btn-close" aria-label="Close advanced filters" onClick={() => setIsFiltersOpen(false)} />
-            </div>
-            {/* type, status, min amount selects */}
-            <div className="d-flex gap-2 mt-4">
-              <button type="button" className="btn btn-primary" onClick={() => setIsFiltersOpen(false)}>Apply</button>
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={() => { setTypeFilter('all'); setStatusFilter('all'); setMinAmountFilter('0'); }}
-              >
-                Clear Filters
-              </button>
-            </div>
-          </aside>
-        </>
-      )}
-    </DBox>
-  );
-}`,
+      description: {
+        story: 'Uses `DContextProvider` + `openPortal` + `DOffcanvas` to open a responsive advanced-filters panel with apply/clear actions.',
       },
     },
   },
