@@ -235,8 +235,11 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     variant: {
       control: 'select',
-      options: [undefined, 'outline', 'link'],
-      table: { category: 'Appearance' },
+      options: ['solid', 'outline', 'link', undefined],
+      table: {
+        defaultValue: { summary: 'solid' },
+        category: 'Appearance',
+      },
     },
   },
   tags: ['autodocs'],
@@ -250,7 +253,7 @@ export const Primary: Story = {
     color: 'primary',
     size: undefined,
     type: 'button',
-    variant: undefined,
+    variant: 'solid',
     loading: false,
     icon: 'ArrowLeft',
     'aria-label': 'Go back',
