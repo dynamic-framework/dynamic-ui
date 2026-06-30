@@ -235,8 +235,11 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     variant: {
       control: 'select',
-      options: [undefined, 'outline', 'link'],
-      table: { category: 'Appearance' },
+      options: ['solid', 'outline', 'link', 'soft'],
+      table: {
+        defaultValue: { summary: 'solid' },
+        category: 'Appearance',
+      },
     },
   },
   tags: ['autodocs'],
@@ -250,7 +253,7 @@ export const Primary: Story = {
     color: 'primary',
     size: undefined,
     type: 'button',
-    variant: undefined,
+    variant: 'solid',
     loading: false,
     icon: 'ArrowLeft',
     'aria-label': 'Go back',
@@ -278,6 +281,55 @@ export const Link: Story = {
     loading: false,
     icon: 'ArrowLeft',
     'aria-label': 'Go back',
+  },
+};
+
+export const Soft: Story = {
+  args: {
+    color: 'secondary',
+    size: undefined,
+    type: 'button',
+    variant: 'soft',
+    loading: false,
+    icon: 'ArrowLeft',
+    'aria-label': 'Go back',
+  },
+};
+
+export const SoftByTheme: Story = {
+  render: () => (
+    <>
+      <div className="d-flex flex-wrap gap-2 align-items-center">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButtonIcon
+            key={color}
+            color={color}
+            variant="soft"
+            icon="ArrowLeft"
+            aria-label={`Soft ${color} icon button`}
+          />
+        ))}
+      </div>
+
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light soft (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButtonIcon
+            color="light"
+            variant="soft"
+            icon="ArrowLeft"
+            aria-label="Soft light icon button"
+          />
+        </div>
+      </div>
+    </>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Soft icon button across semantic colors. Includes light variant on dark background for contrast validation.',
+      },
+    },
   },
 };
 
