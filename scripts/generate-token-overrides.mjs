@@ -413,14 +413,14 @@ const gaps = {
 const doc = {
   $schema: SCHEMA_URL,
   dynamicUi: version,
-  generatedFrom: 'src/style/abstracts/variables/_colors.scss + src/style/root/_root.scss (defs harness) + components consumption scan (full harness)',
+  generatedFrom: 'scripts/tokens/_defs-harness.scss (abstracts + root → token values & classification) + scripts/tokens/_full-harness.scss (full src/style/dynamic-ui.scss chain → var(--bs-*) reference/slot scan)',
   generatedAt,
 
   consumption: {
     note: "Este artefacto corresponde a la version de Dynamic en 'dynamicUi'. Un consumidor debe bajar el artefacto de la MISMA version que la del bundle CSS que carga (CDN versionado, p.ej. assets/2.6.0/ui-react/).",
     anchor: ':root, [data-bs-theme="dynamic"]',
     howOverrideWins: {
-      withLayers: 'Dynamic emite sus tokens sin un @layer propio (cascada base). Si el sitio usa @layer, declarar la capa del theme DESPUES de la de framework gana sin pelear especificidad (patron: @layer overrides, framework, theme, components).',
+      withLayers: 'Dynamic emite sus tokens SIN capa (cascada base), y en CSS los estilos sin capa ganan a los de cualquier @layer. Por eso, si importas Dynamic dentro de una capa (p.ej. @import url(dynamic) layer(framework)), declara tu capa de overrides DESPUES para que gane entre capas: la ultima capa declarada gana, p.ej. "@layer framework, theme;" (theme gana). Si Dynamic queda sin capa, usa el camino de withoutLayers. Detalle completo en https://docs.modyo.com/en/dynamic/customization/theming.html.',
       withoutLayers: 'Sin @layer, igualar o exceder el selector de Dynamic, en regla posterior. NUNCA :where() (especificidad 0).',
     },
     colorFormat: "Triplete 'R, G, B' SIN wrapper rgb(). El sistema hace rgb(var(--bs-X-rgb)) y rgba(var(--bs-X-rgb), a). Un hex o rgb() rompe la opacidad. Se pisan los -rgb, nunca los wrappers.",
