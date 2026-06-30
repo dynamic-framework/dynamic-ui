@@ -1,0 +1,21 @@
+// _full-harness.scss
+//
+// CONSUMPTION harness for generate-token-overrides.mjs (Dynamic UI 2.6).
+//
+// Compiles the full Dynamic UI style chain (abstracts → root → base →
+// components → helpers), mirroring src/style/dynamic-ui.scss. Its output is
+// used ONLY to extract the set of `var(--bs-*)` references that the component
+// layer CONSUMES — never for token values or classification (use the defs
+// harness for those).
+//
+// (R − D − denylist), where R = references found here and D = tokens defined
+// by the defs harness, yields the slot candidates. See generate-token-overrides.mjs.
+//
+// Compile with load paths `./` (bootstrap node_modules) and `src/style/`
+// (Dynamic partials).
+
+@import "abstracts/+import";
+@import "root/+import";
+@import "base/+import";
+@import "components/+import";
+@import "helpers/+import";

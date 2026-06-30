@@ -1,0 +1,18 @@
+// _defs-harness.scss
+//
+// DEFINITION harness for generate-token-overrides.mjs (Dynamic UI 2.6).
+//
+// Compiles ONLY the abstracts + root layers — i.e. the layer that DEFINES
+// custom properties — with NO component layer. The emitted
+// `:root, [data-bs-theme="dynamic"] { … }` block is the source of truth for
+// token VALUES and their override-behavior CLASSIFICATION.
+//
+// Because the component layer is excluded, the carousel typo
+// (`--bs---bs-ref-spacer-4`, src/style/components/_d-carousel.scss:53) never
+// reaches this output. Do NOT add component imports here.
+//
+// Compile with load paths `./` (bootstrap node_modules) and `src/style/`
+// (Dynamic partials). See generate-token-overrides.mjs.
+
+@import "abstracts/+import";
+@import "root/+import";
