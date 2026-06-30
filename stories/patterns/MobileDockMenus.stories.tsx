@@ -137,7 +137,6 @@ const GRID_DOCK_ITEMS = [
 
 function FixedGridDockMenuExample() {
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '104px' }}>
           <h5 className="mb-1">Overview</h5>
@@ -160,7 +159,6 @@ function FixedGridDockMenuExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -180,7 +178,6 @@ const H_SCROLL_DOCK_ITEMS = [
 
 function HorizontalScrollDockMenuExample() {
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '112px' }}>
           <h5 className="mb-1">Services</h5>
@@ -203,7 +200,6 @@ function HorizontalScrollDockMenuExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -246,7 +242,6 @@ function HorizontalScrollDockMenuWithGradientMaskExample() {
   }, []);
 
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '112px' }}>
           <h5 className="mb-1">Quick actions</h5>
@@ -272,7 +267,6 @@ function HorizontalScrollDockMenuWithGradientMaskExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -291,7 +285,6 @@ function ActiveStateDockMenuExample() {
   const [activeItem, setActiveItem] = useState('home');
 
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '112px' }}>
           <h5 className="mb-1">Navigation</h5>
@@ -317,7 +310,6 @@ function ActiveStateDockMenuExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -356,7 +348,6 @@ function TextOnlyDockMenuWithNotificationsExample() {
   ];
 
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '112px' }}>
           <h5 className="mb-1">Messages</h5>
@@ -391,7 +382,6 @@ function TextOnlyDockMenuWithNotificationsExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -407,7 +397,6 @@ const ICON_ONLY_DOCK_ITEMS = [
 
 function IconOnlyDockMenuExample() {
   return (
-    <MobileViewport>
       <div className="h-100 position-relative bg-gray-25">
         <div className="p-4" style={{ paddingBottom: '112px' }}>
           <h5 className="mb-1">Icon shortcuts</h5>
@@ -435,7 +424,6 @@ function IconOnlyDockMenuExample() {
           </nav>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 

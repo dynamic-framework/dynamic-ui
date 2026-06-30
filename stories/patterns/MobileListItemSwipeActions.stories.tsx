@@ -272,7 +272,6 @@ function SwipeActionsList() {
   });
 
   return (
-    <MobileViewport>
       <div className="h-100 bg-gray-25 d-flex flex-column">
         <div className="p-4 pb-2">
           <h5 className="mb-1">Recent activity</h5>
@@ -339,7 +338,6 @@ function SwipeActionsList() {
           </DListGroup>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -446,7 +444,6 @@ function IconOnlySwipeActionsList() {
   });
 
   return (
-    <MobileViewport>
       <div className="h-100 bg-gray-25 d-flex flex-column">
         <div className="p-4 pb-2">
           <h5 className="mb-1">Recent activity</h5>
@@ -522,7 +519,6 @@ function IconOnlySwipeActionsList() {
           </DListGroup>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 
@@ -633,7 +629,6 @@ function SwipeActionsWithDropdownList() {
   });
 
   return (
-    <MobileViewport>
       <div className="h-100 bg-gray-25 d-flex flex-column">
         <div className="p-4 pb-2">
           <h5 className="mb-1">Recent activity</h5>
@@ -709,7 +704,6 @@ function SwipeActionsWithDropdownList() {
           </DListGroup>
         </div>
       </div>
-    </MobileViewport>
   );
 }`;
 

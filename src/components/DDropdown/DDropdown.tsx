@@ -67,7 +67,10 @@ export default function DDropdown(
   // Ref on the rendered <ul> — used for outside-click detection in portal mode
   const menuRef = useRef<HTMLUListElement>(null);
 
-  const toggle = () => setOpen((prev) => !prev);
+  const toggle = () => {
+    setMenuCoords(null);
+    setOpen((prev) => !prev);
+  };
   const resolvedInlinePosition = placement === 'auto' ? position : placement;
 
   // Compute fixed coords from the toggle's bounding rect (portal mode only)
@@ -296,14 +299,14 @@ export default function DDropdown(
     return (
       <div ref={toggleRef} className={classNames('dropdown', className)}>
         {ToggleElement}
-        {open && createPortal(menuItems, document.body)}
+        {open && menuCoords && createPortal(menuItems, document.body)}
       </div>
     );
   }
 
   return (
     <div
-      className={classNames(`dropdown drop-${position}`, className)}
+      className={classNames(`dropdown drop-${resolvedInlinePosition}`, className)}
       ref={dropdownRef}
     >
       {ToggleElement}

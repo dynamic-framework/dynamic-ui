@@ -265,44 +265,42 @@ function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['
 
 const COVER_LIST_SOURCE = String.raw`function CoverListExample() {
   return (
-    <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Top picks</h5>
-        <small className="text-muted d-block mb-3">Card-style rows with visual emphasis</small>
-        <DListGroup className="d-flex flex-column gap-2 border-0 bg-transparent">
-          {[
-            {
-              id: '1',
-              title: 'Morning reset',
-              subtitle: '12 min guided session',
-              accent: '#0ea5e9',
-            },
-            {
-              id: '2',
-              title: 'Focus sprint',
-              subtitle: '25 min deep work timer',
-              accent: '#10b981',
-            },
-            {
-              id: '3',
-              title: 'Stretch break',
-              subtitle: '8 min mobility flow',
-              accent: '#f97316',
-            },
-          ].map((item) => (
-            <DListGroup.Item key={item.id} className="rounded-3 border bg-white p-3 shadow-sm d-block">
-              <div className="d-flex gap-3 align-items-center">
-                <div className="rounded-3" style={{ width: '64px', height: '64px', background: item.accent }} />
-                <div>
-                  <strong className="d-block">{item.title}</strong>
-                  <small className="text-muted">{item.subtitle}</small>
-                </div>
+    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
+      <h5 className="mb-1">Top picks</h5>
+      <small className="text-muted d-block mb-3">Card-style rows with visual emphasis</small>
+      <DListGroup className="d-flex flex-column gap-2 border-0 bg-transparent">
+        {[
+          {
+            id: '1',
+            title: 'Morning reset',
+            subtitle: '12 min guided session',
+            accent: '#0ea5e9',
+          },
+          {
+            id: '2',
+            title: 'Focus sprint',
+            subtitle: '25 min deep work timer',
+            accent: '#10b981',
+          },
+          {
+            id: '3',
+            title: 'Stretch break',
+            subtitle: '8 min mobility flow',
+            accent: '#f97316',
+          },
+        ].map((item) => (
+          <DListGroup.Item key={item.id} className="rounded-3 border bg-white p-3 shadow-sm d-block">
+            <div className="d-flex gap-3 align-items-center">
+              <div className="rounded-3" style={{ width: '64px', height: '64px', background: item.accent }} />
+              <div>
+                <strong className="d-block">{item.title}</strong>
+                <small className="text-muted">{item.subtitle}</small>
               </div>
-            </DListGroup.Item>
-          ))}
-        </DListGroup>
-      </div>
-    </MobileViewport>
+            </div>
+          </DListGroup.Item>
+        ))}
+      </DListGroup>
+    </div>
   );
 }`;
 
@@ -359,24 +357,22 @@ function IconListExample() {
   const { openPortal } = useDPortalContext<QuickServicePayloads>();
 
   return (
-    <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Quick services</h5>
-        <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
-        <DListGroup className="rounded-3 bg-white overflow-hidden">
-          {QUICK_SERVICES.map((item) => (
-            <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
-              <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />
-              <div className="flex-grow-1">
-                <strong className="d-block">{item.title}</strong>
-                <small className="text-muted">{item.subtitle}</small>
-              </div>
-              <DIcon icon="ChevronRight" className="text-muted" />
-            </DListGroup.Item>
-          ))}
-        </DListGroup>
-      </div>
-    </MobileViewport>
+    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
+      <h5 className="mb-1">Quick services</h5>
+      <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
+      <DListGroup className="rounded-3 bg-white overflow-hidden">
+        {QUICK_SERVICES.map((item) => (
+          <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
+            <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />
+            <div className="flex-grow-1">
+              <strong className="d-block">{item.title}</strong>
+              <small className="text-muted">{item.subtitle}</small>
+            </div>
+            <DIcon icon="ChevronRight" className="text-muted" />
+          </DListGroup.Item>
+        ))}
+      </DListGroup>
+    </div>
   );
 }
 
@@ -393,25 +389,23 @@ export const IconList = {
 
 const TEXT_ONLY_LIST_SOURCE = String.raw`function TextOnlyListExample() {
   return (
-    <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Recent notes</h5>
-        <small className="text-muted d-block mb-3">Minimal typography-first rows</small>
-        <DListGroup className="rounded-3">
-          {[
-            { id: '1', title: 'Quarterly review draft', meta: 'Edited 2h ago' },
-            { id: '2', title: 'Client onboarding checklist', meta: 'Edited yesterday' },
-            { id: '3', title: 'Design tokens migration', meta: 'Edited 2 days ago' },
-            { id: '4', title: 'Release notes v3.4', meta: 'Edited 5 days ago' },
-          ].map((item) => (
-            <DListGroup.Item key={item.id} className="px-3 py-3 border-bottom bg-white">
-              <strong className="d-block" style={{ fontSize: '15px' }}>{item.title}</strong>
-              <small className="text-muted">{item.meta}</small>
-            </DListGroup.Item>
-          ))}
-        </DListGroup>
-      </div>
-    </MobileViewport>
+    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
+      <h5 className="mb-1">Recent notes</h5>
+      <small className="text-muted d-block mb-3">Minimal typography-first rows</small>
+      <DListGroup className="rounded-3">
+        {[
+          { id: '1', title: 'Quarterly review draft', meta: 'Edited 2h ago' },
+          { id: '2', title: 'Client onboarding checklist', meta: 'Edited yesterday' },
+          { id: '3', title: 'Design tokens migration', meta: 'Edited 2 days ago' },
+          { id: '4', title: 'Release notes v3.4', meta: 'Edited 5 days ago' },
+        ].map((item) => (
+          <DListGroup.Item key={item.id} className="px-3 py-3 border-bottom bg-white">
+            <strong className="d-block" style={{ fontSize: '15px' }}>{item.title}</strong>
+            <small className="text-muted">{item.meta}</small>
+          </DListGroup.Item>
+        ))}
+      </DListGroup>
+    </div>
   );
 }`;
 
@@ -490,51 +484,49 @@ function AddActionListWithPayloadExample() {
   );
 
   return (
-    <MobileViewport>
-      <div className="h-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg, #8041c3 0%, #f8f1f4 28%, #ffffff00 100%)' }}>
-        <div className="px-4 pt-4 pb-3 text-white">
-          <DIcon icon="Dumbbell" size="2rem" hasCircle />
-          <h5 className="mb-0">Gym schedule</h5>
-          <small className="opacity-75">Tap plus to open detail with payload</small>
-        </div>
+    <div className="h-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg, #8041c3 0%, #f8f1f4 28%, #ffffff00 100%)' }}>
+      <div className="px-4 pt-4 pb-3 text-white">
+        <DIcon icon="Dumbbell" size="2rem" hasCircle />
+        <h5 className="mb-0">Gym schedule</h5>
+        <small className="opacity-75">Tap plus to open detail with payload</small>
+      </div>
 
-        <DListGroup className="gap-2 mx-3" flush>
-          {sessionsWithRandomRating.map((session) => (
-            <DListGroup.Item
-              key={session.title}
-              className="d-flex align-items-center justify-content-between rounded-3 shadow-sm bg-white"
-            >
-              <div className="d-flex align-items-center gap-2">
-                <DAvatar name={session.trainer} size="sm" />
-                <div>
-                  <strong className="d-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
-                  <small className="text-muted">
-                    {session.timeLabel}
-                    {', '}
-                    {session.mode}
-                  </small>
-                  <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--bs-warning)' }}>
-                    {'★'.repeat(session.rating)}
-                    <span className="text-muted">
-                      {'☆'.repeat(Math.max(0, 5 - session.rating))}
-                    </span>
-                  </div>
+      <DListGroup className="gap-2 mx-3" flush>
+        {sessionsWithRandomRating.map((session) => (
+          <DListGroup.Item
+            key={session.title}
+            className="d-flex align-items-center justify-content-between rounded-3 shadow-sm bg-white"
+          >
+            <div className="d-flex align-items-center gap-2">
+              <DAvatar name={session.trainer} size="sm" />
+              <div>
+                <strong className="d-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
+                <small className="text-muted">
+                  {session.timeLabel}
+                  {', '}
+                  {session.mode}
+                </small>
+                <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--bs-warning)' }}>
+                  {'★'.repeat(session.rating)}
+                  <span className="text-muted">
+                    {'☆'.repeat(Math.max(0, 5 - session.rating))}
+                  </span>
                 </div>
               </div>
+            </div>
 
-              <DButtonIcon
-                icon="Plus"
-                size="sm"
-                className="rounded-pill"
-                color="primary"
-                aria-label={'Open details for ' + session.title}
-                onClick={() => openPortal('scheduleDetail', session)}
-              />
-            </DListGroup.Item>
-          ))}
-        </DListGroup>
-      </div>
-    </MobileViewport>
+            <DButtonIcon
+              icon="Plus"
+              size="sm"
+              className="rounded-pill"
+              color="primary"
+              aria-label={'Open details for ' + session.title}
+              onClick={() => openPortal('scheduleDetail', session)}
+            />
+          </DListGroup.Item>
+        ))}
+      </DListGroup>
+    </div>
   );
 }`;
 

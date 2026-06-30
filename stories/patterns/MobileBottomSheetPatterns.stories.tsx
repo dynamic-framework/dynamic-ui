@@ -411,8 +411,7 @@ function TransferReviewMobileContent() {
   );
 }
 
-const TRANSFER_REVIEW_SOURCE = String.raw`import type { ReactNode } from 'react';
-import {
+const TRANSFER_REVIEW_SOURCE = String.raw`import {
   DButton,
   DContextProvider,
   DListGroup,
@@ -434,14 +433,6 @@ const bottomSheetStyle = {
   borderTopLeftRadius: '1rem',
   borderTopRightRadius: '1rem',
 } as const;
-
-function MobileViewport({ children }: { children: ReactNode }) {
-  return (
-    <div style={{ width: '390px', maxWidth: '100%', height: '760px', borderRadius: '1.25rem', border: '1px solid var(--bs-gray-200)', overflow: 'hidden', background: 'var(--bs-gray-25)', position: 'relative' }}>
-      {children}
-    </div>
-  );
-}
 
 function BottomSheetHandle() {
   return (
@@ -496,7 +487,6 @@ function TransferReviewMobileContent() {
   const { openPortal } = useDPortalContext<TransferReviewPayloads>();
 
   return (
-    <MobileViewport>
       <div className="p-4 d-flex flex-column h-100">
         <h5 className="mb-1">New transfer</h5>
         <small className="text-muted mb-4">From checking account</small>
@@ -519,7 +509,6 @@ function TransferReviewMobileContent() {
           />
         </div>
       </div>
-    </MobileViewport>
   );
 }
 
@@ -627,7 +616,7 @@ function CardControlsMobileContent() {
   );
 }
 
-const CARD_CONTROLS_SOURCE = String.raw`import { useState, type ReactNode } from 'react';
+const CARD_CONTROLS_SOURCE = String.raw`import { useState } from 'react';
 import {
   DButton,
   DContextProvider,
@@ -650,14 +639,6 @@ const bottomSheetStyle = {
   borderTopLeftRadius: '1rem',
   borderTopRightRadius: '1rem',
 } as const;
-
-function MobileViewport({ children }: { children: ReactNode }) {
-  return (
-    <div style={{ width: '390px', maxWidth: '100%', height: '760px', borderRadius: '1.25rem', border: '1px solid var(--bs-gray-200)', overflow: 'hidden', background: 'var(--bs-gray-25)', position: 'relative' }}>
-      {children}
-    </div>
-  );
-}
 
 function BottomSheetHandle() {
   return (
@@ -697,7 +678,6 @@ function CardControlsMobileContent() {
   const { openPortal } = useDPortalContext<CardControlsPayloads>();
 
   return (
-    <MobileViewport>
       <div className="p-4 d-flex flex-column h-100">
         <h5 className="mb-3">Cards</h5>
         <div className="card p-3 mb-3 bg-primary text-white">
@@ -715,7 +695,6 @@ function CardControlsMobileContent() {
           />
         </div>
       </div>
-    </MobileViewport>
   );
 }
 
