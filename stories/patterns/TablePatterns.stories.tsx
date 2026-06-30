@@ -1187,7 +1187,7 @@ export const TransactionHistory: Story = {
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  const rows = TRANSACTIONS.filter((row) => {
+  const rows = FINANCE_TRANSACTIONS.filter((row) => {
     const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
       || row.id.toLowerCase().includes(query)
@@ -1463,13 +1463,13 @@ export const TransactionHistoryOffcanvas: Story = {
   const [statusFilter, setStatusFilter] = useState('all');
   const [minAmountFilter, setMinAmountFilter] = useState('0');
 
-  const minAmount = Number(minAmountFilter) || 0;
+  const minAmount = Math.max(0, Number(minAmountFilter) || 0);
 
-  const rows = TRANSACTIONS.filter((row) => {
+  const rows = FINANCE_TRANSACTIONS.filter((row) => {
     const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
-      || row.id.toLowerCase().includes(query)
-      || row.reference.toLowerCase().includes(query);
+      || row.reference.toLowerCase().includes(query)
+      || row.account.toLowerCase().includes(query);
     const matchesType = typeFilter === 'all' || row.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
     const matchesAmount = Math.abs(row.amount) >= minAmount;
@@ -1685,7 +1685,7 @@ export const LoanPortfolio: Story = {
     return <DIcon icon="ArrowDown" size="0.9rem" className="text-primary" />;
   };
 
-  const rows = [...LOANS].sort((left, right) => {
+  const rows = [...PORTFOLIO_LOANS].sort((left, right) => {
     let base = 0;
     if (sortBy === 'borrower') base = left.borrower.localeCompare(right.borrower);
     if (sortBy === 'disbursed') base = left.disbursed - right.disbursed;
@@ -1837,7 +1837,11 @@ function BulkActionsComponent() {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={selectedItems.length === PAYMENT_APPROVALS.length}
+                ariaLabel="Select all payments"
+                checked={PAYMENT_APPROVALS.length > 0
+                  && selectedItems.length === PAYMENT_APPROVALS.length}
+                indeterminate={selectedItems.length > 0
+                  && selectedItems.length < PAYMENT_APPROVALS.length}
                 onChange={(event) => {
                   setSelectedItems(event.target.checked ? PAYMENT_APPROVALS : []);
                 }}
@@ -1855,6 +1859,7 @@ function BulkActionsComponent() {
               <td>
                 <DInputCheck
                   type="checkbox"
+                  ariaLabel={`Select payment ${row.id}`}
                   checked={isSelectedItem(row)}
                   onChange={() => toggleSelectedItem(row)}
                 />
@@ -1923,9 +1928,9 @@ export const BulkActions: Story = {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={selectedItems.length === PAYMENTS.length}
+                checked={selectedItems.length === PAYMENT_APPROVALS.length}
                 onChange={(event) => {
-                  setSelectedItems(event.target.checked ? PAYMENTS : []);
+                  setSelectedItems(event.target.checked ? PAYMENT_APPROVALS : []);
                 }}
               />
             </th>
@@ -1936,7 +1941,7 @@ export const BulkActions: Story = {
           </tr>
         </thead>
         <tbody>
-          {PAYMENTS.map((row) => (
+          {PAYMENT_APPROVALS.map((row) => (
             <tr key={row.id} className={isSelectedItem(row) ? 'table-active' : undefined}>
               <td>
                 <DInputCheck
