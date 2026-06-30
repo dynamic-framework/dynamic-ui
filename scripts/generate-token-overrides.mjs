@@ -27,7 +27,7 @@
 import {
   readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync,
 } from 'fs';
-import { resolve, dirname, join, basename } from 'path';
+import { resolve, dirname, join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { execFileSync } from 'child_process';
 
@@ -37,6 +37,11 @@ const OUTPUT_PATH = resolve(OUTPUT_DIR, 'token-overrides.json');
 
 const THEME_ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'];
 const SEMANTIC_SUFFIXES = ['bg-subtle', 'text-emphasis', 'border-subtle'];
+
+// Derived from CDN_BASE_URL like generate-schema.mjs / api.json, so the doc's
+// `$schema` stays aligned with the schema generator's `$id` (incl. staging/custom CDNs).
+const CDN_BASE = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
+const SCHEMA_URL = `${CDN_BASE}/schema/token-overrides.v1.json`;
 
 // ---------------------------------------------------------------------------
 // SCSS compilation (dart-sass from node_modules/.bin, never the PATH `sass`)
@@ -113,17 +118,23 @@ function isMalformedRef(name) {
 }
 
 // ---------------------------------------------------------------------------
-// Source scan (for slot referencedBy) — read base/components/helpers once
+// Source scan (for slot referencedBy) — read the style source once.
+// Includes abstracts/ and root/ so references (and the documented typos) under
+// abstracts/variables (_forms.scss, _list-group.scss) are found too.
 // ---------------------------------------------------------------------------
 function readSourceFiles() {
-  const dirs = ['base', 'components', 'helpers'].map((d) => resolve(ROOT, 'src/style', d));
+  const styleRoot = resolve(ROOT, 'src/style');
+  const dirs = ['abstracts', 'root', 'base', 'components', 'helpers'].map((d) => resolve(styleRoot, d));
   const files = [];
   const walk = (dir) => {
     if (!existsSync(dir)) return;
     for (const entry of readdirSync(dir)) {
       const p = join(dir, entry);
       if (statSync(p).isDirectory()) walk(p);
-      else if (entry.endsWith('.scss')) files.push({ name: basename(p), content: readFileSync(p, 'utf8') });
+      // Store the path relative to src/style/ (not just the basename): duplicate
+      // basenames across dirs (e.g. abstracts/variables/_breadcrumb.scss vs
+      // base/_breadcrumb.scss) would otherwise collapse into one ambiguous entry.
+      else if (entry.endsWith('.scss')) files.push({ rel: relative(styleRoot, p), content: readFileSync(p, 'utf8') });
     }
   };
   dirs.forEach(walk);
@@ -205,7 +216,9 @@ for (const [ramp, steps] of [...rampSteps.entries()].sort((a, b) => a[0].localeC
       cssVar,
       value: cls === 'follows' ? `alias:${aliasTarget(value)}` : value,
       class: cls,
-      layer: ramp === 'gray' ? 'palette' : 'palette',
+      // Ramp steps are the raw L1 scale (palette) by design — even for role
+      // ramps like primary, whose L2 entry point is the `base` node (role).
+      layer: 'palette',
     };
     if (cls === 'override-leaf') leafVars.push(cssVar);
   }
@@ -348,7 +361,9 @@ const slotCandidates = unfilled.filter((n) => !isMalformedRef(n));
 const srcFiles = readSourceFiles();
 function referencedBy(cssVar) {
   const core = cssVar.slice('--bs-'.length);
-  return srcFiles.filter((f) => f.content.includes(core)).map((f) => f.name.replace(/^_|\.scss$/g, ''))
+  // e.g. "abstracts/variables/_breadcrumb.scss" -> "abstracts/variables/breadcrumb"
+  return srcFiles.filter((f) => f.content.includes(core))
+    .map((f) => f.rel.replace(/\.scss$/, '').replace(/_([^/]+)$/, '$1'))
     .filter((v, i, a) => a.indexOf(v) === i).sort();
 }
 
@@ -396,7 +411,7 @@ const gaps = {
 // ASSEMBLE
 // ---------------------------------------------------------------------------
 const doc = {
-  $schema: 'https://cdn.dynamicframework.dev/assets/schema/token-overrides.v1.json',
+  $schema: SCHEMA_URL,
   dynamicUi: version,
   generatedFrom: 'src/style/abstracts/variables/_colors.scss + src/style/root/_root.scss (defs harness) + components consumption scan (full harness)',
   generatedAt,

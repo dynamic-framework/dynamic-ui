@@ -8,8 +8,11 @@
 // layer CONSUMES — never for token values or classification (use the defs
 // harness for those).
 //
-// (R − D − denylist), where R = references found here and D = tokens defined
-// by the defs harness, yields the slot candidates. See generate-token-overrides.mjs.
+// (R − D − denylist) yields the slot candidates, where R = references found
+// here and D = custom properties defined ANYWHERE in THIS full output (any
+// selector, not just :root). Defining D this way drops component-local Layer 3
+// tokens (defined in their own selectors) from the slot set. See
+// generate-token-overrides.mjs and scripts/tokens/README.md §1.4.
 //
 // Compile with load paths `./` (bootstrap node_modules) and `src/style/`
 // (Dynamic partials).
