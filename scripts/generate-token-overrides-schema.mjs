@@ -156,7 +156,7 @@ const schema = {
         scale: {
           type: 'object',
           properties: { note: { type: 'string' } },
-          patternProperties: { '^fs-': tokenNode },
+          patternProperties: { '^(fs|display)-': tokenNode },
           additionalProperties: false,
         },
       },

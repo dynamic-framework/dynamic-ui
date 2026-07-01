@@ -315,12 +315,13 @@ const lineHeight = {};
 for (const l of lhLevels) { const n = leaf(`--bs-lh-${l}`); if (n) lineHeight[l] = n; }
 
 const scale = {
-  note: 'RFS gotcha: --bs-fs-N -> var(--bs-rfs-fs-N). Levels with hasResponsiveRedef=true have a responsive redefinition (calc(... + ...vw)) inside an @media (min-width: 1200px). Overriding the size means also beating the media-query rule; overriding only the base value is not enough on large viewports. The overridable target is --bs-rfs-fs-N (not --bs-fs-N, which is a follows).',
+  note: 'RFS gotcha: --bs-fs-N -> var(--bs-rfs-fs-N) and --bs-fs-display-N -> var(--bs-rfs-display-N). Levels with hasResponsiveRedef=true have a responsive redefinition (calc(... + ...vw)) inside an @media (min-width: 1200px). Overriding the size means also beating the media-query rule; overriding only the base value is not enough on large viewports. The overridable target is --bs-rfs-{fs,display}-N (not --bs-fs-{,display-}N, which are follows).',
 };
 for (const name of defsOrder) {
-  const m = name.match(/^--bs-rfs-fs-([0-9a-z]+)$/);
+  // Body font sizes (--bs-rfs-fs-N) and display heading sizes (--bs-rfs-display-N).
+  const m = name.match(/^--bs-rfs-(fs|display)-([0-9a-z]+)$/);
   if (m) {
-    scale[`fs-${m[1]}`] = {
+    scale[`${m[1]}-${m[2]}`] = {
       cssVar: name,
       value: defs.get(name),
       class: 'override-leaf',
