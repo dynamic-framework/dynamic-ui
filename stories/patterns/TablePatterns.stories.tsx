@@ -1913,7 +1913,9 @@ export const BulkActions: Story = {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={selectedItems.length === PAYMENT_APPROVALS.length}
+                ariaLabel="Select all payments"
+                checked={PAYMENT_APPROVALS.length > 0 && selectedItems.length === PAYMENT_APPROVALS.length}
+                indeterminate={selectedItems.length > 0 && selectedItems.length < PAYMENT_APPROVALS.length}
                 onChange={(event) => {
                   setSelectedItems(event.target.checked ? PAYMENT_APPROVALS : []);
                 }}
@@ -1931,6 +1933,7 @@ export const BulkActions: Story = {
               <td>
                 <DInputCheck
                   type="checkbox"
+                  ariaLabel={\`Select payment \${row.id}\`}
                   checked={isSelectedItem(row)}
                   onChange={() => toggleSelectedItem(row)}
                 />
