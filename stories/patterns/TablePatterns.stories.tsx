@@ -1103,10 +1103,12 @@ function FinancialTransactionHistoryComponent() {
     <DBox style={{ width: '100%' }}>
       <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
         <div style={{ minWidth: '320px', flex: 1 }}>
+          <small className="d-block text-secondary mb-1">Search transaction</small>
           <DInput
             type="text"
             value={search}
             placeholder="Search by id, account, or reference"
+            aria-label="Search transaction"
             onChange={setSearch}
           />
         </div>
@@ -1211,6 +1213,7 @@ export const TransactionHistory: Story = {
             type="text"
             value={search}
             placeholder="Search by id, account, or reference"
+            aria-label="Search transaction"
             onChange={setSearch}
           />
         </div>
@@ -1358,7 +1361,9 @@ function TransactionScreeningFiltersOffcanvas(
           <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
           <DInput
             type="number"
+            min={0}
             value={minAmountFilter}
+            aria-label="Minimum absolute amount"
             onChange={setMinAmountFilter}
           />
         </div>
@@ -1427,6 +1432,7 @@ function FinancialTransactionOffcanvasContent() {
             type="text"
             value={search}
             placeholder="Search by id, account, or reference"
+            aria-label="Search transaction"
             onChange={setSearch}
           />
         </div>
