@@ -1574,6 +1574,11 @@ function LoanPortfolioComponent() {
     setSortDirection('desc');
   };
 
+  const getAriaSort = (field: 'borrower' | 'disbursed' | 'daysPastDue'): 'ascending' | 'descending' | 'none' => {
+    if (sortBy !== field) return 'none';
+    return sortDirection === 'asc' ? 'ascending' : 'descending';
+  };
+
   return (
     <DBox style={{ width: '100%' }}>
       <div className="d-flex justify-content-between align-items-center mb-2">
@@ -1585,7 +1590,9 @@ function LoanPortfolioComponent() {
         <caption>Credit Risk Monitoring</caption>
         <thead>
           <tr>
-            <th>
+            <th
+              aria-sort={getAriaSort('borrower')}
+            >
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
@@ -1596,7 +1603,9 @@ function LoanPortfolioComponent() {
               </button>
             </th>
             <th>Product</th>
-            <th>
+            <th
+              aria-sort={getAriaSort('disbursed')}
+            >
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
@@ -1607,7 +1616,9 @@ function LoanPortfolioComponent() {
               </button>
             </th>
             <th>Installments</th>
-            <th>
+            <th
+              aria-sort={getAriaSort('daysPastDue')}
+            >
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
@@ -1693,13 +1704,18 @@ export const LoanPortfolio: Story = {
     setSortDirection('desc');
   };
 
+  const getAriaSort = (field) => {
+    if (sortBy !== field) return 'none';
+    return sortDirection === 'asc' ? 'ascending' : 'descending';
+  };
+
   return (
     <DBox style={{ width: '100%' }}>
       <table className="table table-hover align-middle">
         <caption>Credit Risk Monitoring</caption>
         <thead>
           <tr>
-            <th>
+            <th aria-sort={getAriaSort('borrower')}>
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
@@ -1710,7 +1726,7 @@ export const LoanPortfolio: Story = {
               </button>
             </th>
             <th>Product</th>
-            <th>
+            <th aria-sort={getAriaSort('disbursed')}>
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
@@ -1721,7 +1737,7 @@ export const LoanPortfolio: Story = {
               </button>
             </th>
             <th>Installments</th>
-            <th>
+            <th aria-sort={getAriaSort('daysPastDue')}>
               <button
                 type="button"
                 className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
