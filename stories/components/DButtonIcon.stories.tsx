@@ -248,7 +248,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
 export default config;
 type Story = StoryObj<typeof DButtonIcon>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     color: 'primary',
     size: undefined,
@@ -260,9 +260,9 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
+export const Outline: Story = {
   args: {
-    color: 'secondary',
+    color: 'primary',
     size: undefined,
     type: 'button',
     variant: 'outline',
@@ -274,7 +274,7 @@ export const Secondary: Story = {
 
 export const Link: Story = {
   args: {
-    color: 'secondary',
+    color: 'primary',
     size: undefined,
     type: 'button',
     variant: 'link',
@@ -286,7 +286,7 @@ export const Link: Story = {
 
 export const Soft: Story = {
   args: {
-    color: 'secondary',
+    color: 'primary',
     size: undefined,
     type: 'button',
     variant: 'soft',
@@ -296,24 +296,84 @@ export const Soft: Story = {
   },
 };
 
-export const SoftByTheme: Story = {
+export const VariantsByColor: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-2 align-items-center">
-        {THEMES.filter((color) => color !== 'light').map((color) => (
-          <DButtonIcon
-            key={color}
-            color={color}
-            variant="soft"
-            icon="ArrowLeft"
-            aria-label={`Soft ${color} icon button`}
-          />
-        ))}
+      <div className="d-flex flex-column gap-4">
+        <h6>
+          Solid
+          <small className="text-muted fw-normal"> (default variant)</small>
+        </h6>
+        <div className="d-flex flex-wrap gap-2 align-items-center">
+          {THEMES.filter((color) => color !== 'light').map((color) => (
+            <DButtonIcon
+              key={color}
+              color={color}
+              icon="ArrowLeft"
+              aria-label={`Default or Solid ${color} icon button`}
+            />
+          ))}
+        </div>
+        <h6>Outline</h6>
+        <div className="d-flex flex-wrap gap-2 align-items-center">
+          {THEMES.filter((color) => color !== 'light').map((color) => (
+            <DButtonIcon
+              key={color}
+              color={color}
+              variant="outline"
+              icon="ArrowLeft"
+              aria-label={`Outline ${color} icon button`}
+            />
+          ))}
+        </div>
+        <h6>Link</h6>
+        <div className="d-flex flex-wrap gap-2 align-items-center">
+          {THEMES.filter((color) => color !== 'light').map((color) => (
+            <DButtonIcon
+              key={color}
+              color={color}
+              variant="link"
+              icon="ArrowLeft"
+              aria-label={`Link ${color} icon button`}
+            />
+          ))}
+        </div>
+        <h6>Soft</h6>
+        <div className="d-flex flex-wrap gap-2 align-items-center">
+          {THEMES.filter((color) => color !== 'light').map((color) => (
+            <DButtonIcon
+              key={color}
+              color={color}
+              variant="soft"
+              icon="ArrowLeft"
+              aria-label={`Soft ${color} icon button`}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light soft (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <hr className="my-4" />
+      <div>
+        <p className="mb-1 small">The Light color for dark backgrounds</p>
+        <div className="d-flex gap-2 p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButtonIcon
+            variant="solid"
+            color="light"
+            icon="ArrowLeft"
+            aria-label="Default or solid light icon button"
+          />
+          <DButtonIcon
+            color="light"
+            variant="outline"
+            icon="ArrowLeft"
+            aria-label="Outline light icon button"
+          />
+          <DButtonIcon
+            color="light"
+            variant="link"
+            icon="ArrowLeft"
+            aria-label="Link light icon button"
+          />
           <DButtonIcon
             color="light"
             variant="soft"
@@ -327,7 +387,7 @@ export const SoftByTheme: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Soft icon button across semantic colors. Includes light variant on dark background for contrast validation.',
+        story: 'All variants of icon button across semantic colors. Includes light variant on dark background for contrast validation.',
       },
     },
   },
