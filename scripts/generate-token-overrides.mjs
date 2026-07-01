@@ -220,9 +220,11 @@ for (const [ramp, steps] of [...rampSteps.entries()].sort((a, b) => a[0].localeC
     const followsAlias = cls === 'follows' ? aliasTarget(value) : null;
     stepNodes[String(step)] = {
       cssVar,
-      // `value` is always the raw CSS as authored (a literal triplet, or the
-      // var(--bs-...) for follows). Aliasing is expressed via `aliasOf`,
-      // consistent with the base node, so consumers can treat value as CSS.
+      // `value` is always a valid CSS value (never a sentinel): the literal
+      // triplet for leaves, the raw var(--bs-...) for `follows`. Aliasing is
+      // surfaced via `aliasOf`, as on the base node — note the base RESOLVES
+      // its alias to a literal triplet (effective color), while follows steps
+      // keep the raw var(). In both cases `aliasOf` is the machine-readable target.
       value,
       class: cls,
       ...(followsAlias ? { aliasOf: followsAlias } : {}),
