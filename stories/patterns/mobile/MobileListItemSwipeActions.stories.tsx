@@ -9,10 +9,10 @@ import {
   DDropdown,
   DIcon,
   DListGroup,
-} from '../../src';
+} from '../../../src';
 
-import DocsTemplate from './docs/Template.mdx';
-import { useSwipeableRows } from './hooks/useSwipeableRows';
+import DocsTemplate from '../docs/Template.mdx';
+import { useSwipeableRows } from '../hooks/useSwipeableRows';
 
 type SwipeListItem = {
   id: string;
@@ -49,7 +49,7 @@ const SWIPE_LIST_ITEMS: SwipeListItem[] = [
 ];
 
 const meta: Meta<typeof DBox> = {
-  title: 'Mobile Patterns/List Item Swipe Actions',
+  title: 'Patterns/Mobile/List Item Swipe Actions',
   component: DBox,
   parameters: {
     docs: {
