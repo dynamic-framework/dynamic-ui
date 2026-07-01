@@ -1331,7 +1331,12 @@ function TransactionScreeningFiltersOffcanvas(
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h6 className="mb-0">Advanced Filters</h6>
+        <h6
+          className="mb-0"
+          id={`${name}Label`}
+        >
+          Advanced Filters
+        </h6>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <div className="mb-3">
