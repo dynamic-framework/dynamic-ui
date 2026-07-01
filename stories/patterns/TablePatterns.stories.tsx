@@ -67,15 +67,17 @@ const meta: Meta<typeof DBox> = {
   component: DBox,
   decorators: [
     (Story) => (
-      <>
-        <DocsFullWidthStyle />
-        <Story />
-      </>
+      <Story />
     ),
   ],
   parameters: {
     docs: {
-      page: DocsTemplate,
+      page: () => (
+        <>
+          <DocsFullWidthStyle />
+          <DocsTemplate />
+        </>
+      ),
       description: {
         component: 'Examples of table patterns using Bootstrap table classes and Dynamic UI components.',
       },
@@ -1195,8 +1197,8 @@ export const TransactionHistory: Story = {
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
+  const query = search.trim().toLowerCase();
   const rows = FINANCE_TRANSACTIONS.filter((row) => {
-    const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
       || row.id.toLowerCase().includes(query)
       || row.reference.toLowerCase().includes(query)
