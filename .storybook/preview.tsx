@@ -63,6 +63,11 @@ const config: Preview = {
             'Components',
             '*'
           ],
+          'Patterns',
+          [
+            'Mobile',
+            '*'
+          ],
         ],
       },
     },
