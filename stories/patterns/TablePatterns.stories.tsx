@@ -1088,8 +1088,8 @@ function FinancialTransactionHistoryComponent() {
   const [typeFilter, setTypeFilter] = useState<'all' | FinanceTransactionType>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | FinanceTransactionStatus>('all');
 
+  const query = search.trim().toLowerCase();
   const rows = FINANCE_TRANSACTIONS.filter((row) => {
-    const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
       || row.id.toLowerCase().includes(query)
       || row.reference.toLowerCase().includes(query)
@@ -1417,9 +1417,9 @@ function FinancialTransactionOffcanvasContent() {
     minAmountFilter,
   };
   const minAmount = Math.max(0, Number(minAmountFilter) || 0);
+  const query = search.trim().toLowerCase();
 
   const rows = FINANCE_TRANSACTIONS.filter((row) => {
-    const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
       || row.id.toLowerCase().includes(query)
       || row.reference.toLowerCase().includes(query)
