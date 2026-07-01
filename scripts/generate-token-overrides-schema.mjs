@@ -35,7 +35,7 @@ const tokenNode = {
     value: { type: ['string', 'null'] },
     class: behaviorClass,
     layer,
-    aliasOf: { type: 'string' },
+    aliasOf: { type: 'string', pattern: '^--bs-' },
     hasResponsiveRedef: { type: 'boolean' },
   },
   additionalProperties: false,
