@@ -93,7 +93,26 @@ const schema = {
     dynamicUi: { type: 'string' },
     generatedFrom: { type: 'string' },
     generatedAt: { type: 'string', format: 'date-time' },
-    consumption: { type: 'object' },
+    consumption: {
+      type: 'object',
+      required: ['note', 'anchor', 'howOverrideWins', 'colorFormat', 'clientVarBridge'],
+      properties: {
+        note: { type: 'string' },
+        anchor: { type: 'string' },
+        howOverrideWins: {
+          type: 'object',
+          required: ['withLayers', 'withoutLayers'],
+          properties: {
+            withLayers: { type: 'string' },
+            withoutLayers: { type: 'string' },
+          },
+          additionalProperties: false,
+        },
+        colorFormat: { type: 'string' },
+        clientVarBridge: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
     behaviorClasses: {
       type: 'object',
       required: ['override-base', 'override-leaf', 'follows', 'not-overridable'],
@@ -172,7 +191,7 @@ const schema = {
       },
       additionalProperties: false,
     },
-    gaps: { type: 'object' },
+    gaps: { type: 'object', additionalProperties: { type: 'object' } },
     componentTokens: {
       type: 'object',
       required: ['status'],

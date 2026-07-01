@@ -123,13 +123,13 @@ function isMalformedRef(name) {
 }
 
 // ---------------------------------------------------------------------------
-// Source scan (for slot referencedBy) — read the style source once.
-// Includes abstracts/ and root/ so references (and the documented typos) under
-// abstracts/variables (_forms.scss, _list-group.scss) are found too.
+// Source scan (for slot referencedBy) — read the whole src/style tree once,
+// including root-level files (e.g. _shame.scss, imported by dynamic-ui.scss)
+// and every subdir (abstracts/root/base/components/helpers), so no referencing
+// file — nor the documented typos under abstracts/variables — is missed.
 // ---------------------------------------------------------------------------
 function readSourceFiles() {
   const styleRoot = resolve(ROOT, 'src/style');
-  const dirs = ['abstracts', 'root', 'base', 'components', 'helpers'].map((d) => resolve(styleRoot, d));
   const files = [];
   const walk = (dir) => {
     if (!existsSync(dir)) return;
@@ -142,7 +142,7 @@ function readSourceFiles() {
       else if (entry.endsWith('.scss')) files.push({ rel: relative(styleRoot, p), content: readFileSync(p, 'utf8') });
     }
   };
-  dirs.forEach(walk);
+  walk(styleRoot);
   return files;
 }
 
