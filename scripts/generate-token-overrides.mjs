@@ -255,11 +255,18 @@ for (const [ramp, steps] of [...rampSteps.entries()].sort((a, b) => a[0].localeC
     steps: stepNodes,
     minimalRebrandSet,
     semanticFollowers,
-    rampMethod: 'bootstrap-mix-srgb',
-    rampWeights: [95, 90, 80, 60, 40, 20, 0, -20, -40, -60, -80],
   };
   if (hue) node.hue = hue;
-  if (kind === 'neutral') { node.method = 'hand-authored'; node.regenerable = false; }
+  if (kind === 'neutral') {
+    // gray is authored literally in $grays (not tint/shade-generated), so the
+    // mix metadata does not apply — emit hand-authored provenance instead.
+    node.method = 'hand-authored';
+    node.regenerable = false;
+  } else {
+    // role/family steps are tint-color/shade-color mixes at these weights.
+    node.rampMethod = 'bootstrap-mix-srgb';
+    node.rampWeights = [95, 90, 80, 60, 40, 20, 0, -20, -40, -60, -80];
+  }
 
   colorRamps[ramp] = node;
 
