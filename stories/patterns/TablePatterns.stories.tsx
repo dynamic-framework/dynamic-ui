@@ -1115,6 +1115,7 @@ function FinancialTransactionHistoryComponent() {
         <div>
           <small className="d-block text-secondary mb-1">Type</small>
           <select
+            aria-label="Filter by type"
             className="form-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value as 'all' | FinanceTransactionType)}
@@ -1127,6 +1128,7 @@ function FinancialTransactionHistoryComponent() {
         <div>
           <small className="d-block text-secondary mb-1">Status</small>
           <select
+            aria-label="Filter by status"
             className="form-select"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as 'all' | FinanceTransactionStatus)}
@@ -1223,6 +1225,7 @@ export const TransactionHistory: Story = {
             className="form-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value)}
+            aria-label="Filter by type"
           >
             <option value="all">All</option>
             <option value="Credit">Credit</option>
@@ -1233,6 +1236,7 @@ export const TransactionHistory: Story = {
           <small className="d-block text-secondary mb-1">Status</small>
           <select
             className="form-select"
+            aria-label="Filter by status"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
           >
@@ -1333,6 +1337,7 @@ function TransactionScreeningFiltersOffcanvas(
         <div className="mb-3">
           <small className="d-block text-secondary mb-1">Type</small>
           <select
+            aria-label="Filter by type"
             className="form-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value as TransactionScreeningFilters['typeFilter'])}
@@ -1346,6 +1351,7 @@ function TransactionScreeningFiltersOffcanvas(
         <div className="mb-3">
           <small className="d-block text-secondary mb-1">Status</small>
           <select
+            aria-label="Filter by status"
             className="form-select"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as TransactionScreeningFilters['statusFilter'])}
