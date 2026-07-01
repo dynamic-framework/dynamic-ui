@@ -47,14 +47,19 @@ const SCHEMA_URL = `${CDN_BASE}/schema/token-overrides.v1.json`;
 // SCSS compilation (dart-sass from node_modules/.bin, never the PATH `sass`)
 // ---------------------------------------------------------------------------
 function compileHarness(relPath) {
-  const sassBin = resolve(ROOT, 'node_modules/.bin/sass');
-  if (!existsSync(sassBin)) {
-    process.stderr.write('Error: dart-sass not found at node_modules/.bin/sass. Run npm ci first.\n');
+  // Run dart-sass's JS entry with the current Node binary. This is the
+  // node_modules dart-sass (the `.bin/sass` shim points here), NOT the PATH
+  // `sass` (Ruby gem). Invoking via `node sass.js` is cross-platform — it
+  // avoids the `.bin/sass` vs `sass.cmd` split and the shell needed to run a
+  // .cmd from execFileSync on Windows.
+  const sassEntry = resolve(ROOT, 'node_modules/sass/sass.js');
+  if (!existsSync(sassEntry)) {
+    process.stderr.write(`Error: dart-sass not found at ${sassEntry}. Run npm ci first.\n`);
     process.exit(1);
   }
   return execFileSync(
-    sassBin,
-    ['--no-source-map', '--load-path=./', '--load-path=src/style/', relPath],
+    process.execPath,
+    [sassEntry, '--no-source-map', '--load-path=./', '--load-path=src/style/', relPath],
     { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
   );
 }
@@ -463,7 +468,7 @@ const doc = {
   componentTokens: {
     status: 'deferred-2.6',
     deferredCount: [...Dall].filter((n) => !defs.has(n)).length, // component-local (Layer 3) tokens not enumerated in 2.6
-    note: 'Layer 3 (--bs-{componente}-{prop}, --df-*) NO se enumera en 2.6. Patron para el agente: se pisan en el selector del componente, no en :root. Para tematizar un componente puntual, inspeccionar sus vars --bs-{comp}-* / --df-* en el CSS del componente y pisarlas scoped. Enumeracion completa: candidata a un minor futuro.',
+    note: 'Layer 3 (--bs-{componente}-{prop}, p.ej. --bs-btn-bg, --bs-card-bg) NO se enumera en 2.6. Patron para el agente: se pisan en el selector del componente, no en :root. Para tematizar un componente puntual, inspeccionar sus vars --bs-{comp}-* en el CSS del componente y pisarlas scoped. Enumeracion completa: candidata a un minor futuro.',
   },
 };
 

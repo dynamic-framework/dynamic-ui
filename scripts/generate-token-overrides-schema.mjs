@@ -120,7 +120,23 @@ const schema = {
       },
       additionalProperties: false,
     },
-    typography: { type: 'object', required: ['weights', 'lineHeight', 'scale'] },
+    typography: {
+      type: 'object',
+      required: ['weights', 'lineHeight', 'scale'],
+      properties: {
+        fontFamily: tokenNode,
+        fontMonospace: tokenNode,
+        weights: { type: 'object', additionalProperties: tokenNode },
+        lineHeight: { type: 'object', additionalProperties: tokenNode },
+        scale: {
+          type: 'object',
+          properties: { note: { type: 'string' } },
+          patternProperties: { '^fs-': tokenNode },
+          additionalProperties: false,
+        },
+      },
+      additionalProperties: false,
+    },
     spacing: {
       type: 'object',
       required: ['levels'],
