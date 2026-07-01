@@ -315,7 +315,7 @@ const lineHeight = {};
 for (const l of lhLevels) { const n = leaf(`--bs-lh-${l}`); if (n) lineHeight[l] = n; }
 
 const scale = {
-  note: 'GOTCHA RFS: --bs-fs-N -> var(--bs-rfs-fs-N). Los niveles con hasResponsiveRedef=true tienen una redefinicion responsive (calc(... + ...vw)) dentro de un @media (min-width: 1200px). Pisar el tamano exige vencer tambien la regla del media query; pisar solo el valor base no alcanza en viewports grandes. El target overridable es --bs-rfs-fs-N (no --bs-fs-N, que es un follows).',
+  note: 'RFS gotcha: --bs-fs-N -> var(--bs-rfs-fs-N). Levels with hasResponsiveRedef=true have a responsive redefinition (calc(... + ...vw)) inside an @media (min-width: 1200px). Overriding the size means also beating the media-query rule; overriding only the base value is not enough on large viewports. The overridable target is --bs-rfs-fs-N (not --bs-fs-N, which is a follows).',
 };
 for (const name of defsOrder) {
   const m = name.match(/^--bs-rfs-fs-([0-9a-z]+)$/);
@@ -338,14 +338,14 @@ const typography = {
 };
 
 // spacing
-const spacing = { note: '31 niveles literales --bs-ref-spacer-0..30. En build derivan de $spacer; en runtime son literales pisables directo.', levels: {} };
+const spacing = { note: '31 literal levels --bs-ref-spacer-0..30. Derived from $spacer at build time; at runtime they are plain literals you can override directly.', levels: {} };
 for (const name of defsOrder) {
   const m = name.match(/^--bs-ref-spacer-(\d+)$/);
   if (m) spacing.levels[m[1]] = { cssVar: name, value: defs.get(name), class: 'override-leaf' };
 }
 
 // radius (variants, not a derived scale)
-const radius = { note: 'Variantes literales independientes (incluye "default" = --bs-border-radius, la mas usada), NO una escala derivada.', variants: {} };
+const radius = { note: 'Independent literal variants (including "default" = --bs-border-radius, the most used), NOT a derived scale.', variants: {} };
 for (const name of defsOrder) {
   const m = name.match(/^--bs-border-radius(-[a-z0-9]+)?$/);
   if (m) {
@@ -355,7 +355,7 @@ for (const name of defsOrder) {
 }
 
 // shadow (partial coverage — only -lg is a Dynamic override; rest inherits Bootstrap)
-const shadow = { coverage: 'partial', note: 'Solo --bs-box-shadow-lg es un override propio de Dynamic en esta version. El resto hereda defaults de Bootstrap.', variants: {} };
+const shadow = { coverage: 'partial', note: 'Only --bs-box-shadow-lg is a Dynamic-owned override in this version. The rest inherit Bootstrap defaults.', variants: {} };
 for (const name of defsOrder) {
   const m = name.match(/^--bs-box-shadow(-[a-z]+)?$/);
   if (m) {
@@ -400,8 +400,8 @@ const slotVars = slotCandidates.map((cssVar) => {
     referencedBy: refs,
     suspected: !familySemantic, // honesty: only the regular family-semantic pattern is asserted as a real slot
     ...(familySemantic
-      ? { note: 'Family-hue semantic follower no definido por Dynamic (solo los 8 theme colors lo tienen). Definible por el consumidor si usa estas clases de utilidad.' }
-      : { note: 'Referenciado pero no definido en ninguna parte. Puede ser slot del theme, var de runtime/utilidad de Bootstrap (set en el sitio de uso) o ref muerta. Verificar en referencedBy.' }),
+      ? { note: 'Family-hue semantic follower not defined by Dynamic (only the 8 theme colors have it). The consumer can define it if they use these utility classes.' }
+      : { note: 'Referenced but not defined anywhere. May be a theme slot, a Bootstrap runtime/utility var (set at the usage site), or a dead reference. Check referencedBy.' }),
   };
 });
 
@@ -413,19 +413,19 @@ const gaps = {
     state: 'broken-ramp',
     overridable: 'manual-only',
     monotonic: rampIsMonotonic('secondary'),
-    detail: 'Rampa no-monotona: el ancla de rol (--bs-secondary-rgb = gray-800) y el caso especial -500 (alias de la base) meten un tono oscuro al medio de la rampa, por lo que -500 queda mas oscuro que -600/-700. Pisar la base NO arregla la forma de la rampa.',
-    workaround: 'El agente o (1) pisa los 10 leaves a mano con una rampa coherente, o (2) declara secondary no-rebrandeable por override. NO esperar que pisar la base arregle la rampa.',
-    horizon: 'Se sanea en una version futura (refactor del ancla de rol). No disponible en esta version (ver dynamicUi).',
+    detail: 'Non-monotonic ramp: the role anchor (--bs-secondary-rgb = gray-800) and the special -500 case (alias of the base) inject a dark tone into the middle of the ramp, so -500 ends up darker than -600/-700. Overriding the base does NOT fix the ramp shape.',
+    workaround: 'The agent either (1) overrides the 10 leaves by hand with a coherent ramp, or (2) treats secondary as not rebrandable via override. Do NOT expect overriding the base to fix the ramp.',
+    horizon: 'To be fixed in a future version (role-anchor refactor). Not available in this version (see dynamicUi).',
   },
   'icons-data-uri': {
     state: 'not-overridable-by-color',
     overridable: 'replace-whole-variable',
     vars: iconVars,
-    detail: 'El color esta horneado dentro del SVG del data-URI. Pisar el rol de color (--bs-success/--bs-danger/...) NO los recolorea.',
-    workaround: 'El agente PUEDE reemplazar la variable entera con un data-URI nuevo que lleve el color nuevo horneado.',
+    detail: 'The color is baked into the data-URI SVG. Overriding the color role (--bs-success/--bs-danger/...) does NOT recolor them.',
+    workaround: 'The agent CAN replace the whole variable with a new data-URI that bakes in the new color.',
   },
-  tracking: { state: 'not-tokenized', detail: 'No existe token de letter-spacing de marca.' },
-  shadow: { state: 'partial', detail: 'Solo --bs-box-shadow-lg es override propio; el resto hereda Bootstrap.' },
+  tracking: { state: 'not-tokenized', detail: 'There is no brand letter-spacing token.' },
+  shadow: { state: 'partial', detail: 'Only --bs-box-shadow-lg is a Dynamic-owned override; the rest inherit Bootstrap.' },
 };
 
 // ---------------------------------------------------------------------------
@@ -438,21 +438,21 @@ const doc = {
   generatedAt,
 
   consumption: {
-    note: `Este artefacto corresponde a la version de Dynamic en 'dynamicUi'. Un consumidor debe bajar el artefacto de la MISMA version que la del bundle CSS que carga (CDN versionado, p.ej. assets/${version}/ui-react/).`,
+    note: `This artifact corresponds to the Dynamic version in 'dynamicUi'. A consumer must fetch the artifact of the SAME version as the CSS bundle it loads (versioned CDN, e.g. assets/${version}/ui-react/).`,
     anchor: ':root, [data-bs-theme="dynamic"]',
     howOverrideWins: {
-      withLayers: 'Dynamic emite sus tokens SIN capa (cascada base), y en CSS los estilos sin capa ganan a los de cualquier @layer. Por eso, si importas Dynamic dentro de una capa (p.ej. @import url(dynamic) layer(framework)), declara tu capa de overrides DESPUES para que gane entre capas: la ultima capa declarada gana, p.ej. "@layer framework, theme;" (theme gana). Si Dynamic queda sin capa, usa el camino de withoutLayers. Detalle completo en https://docs.modyo.com/en/dynamic/customization/theming.html.',
-      withoutLayers: 'Sin @layer, igualar o exceder el selector de Dynamic, en regla posterior. NUNCA :where() (especificidad 0).',
+      withLayers: 'Dynamic emits its tokens WITHOUT a layer (base cascade), and in CSS unlayered styles beat those in any @layer. So if you import Dynamic inside a layer (e.g. @import url(dynamic) layer(framework)), declare your overrides layer AFTER it so it wins among layers: the last declared layer wins, e.g. "@layer framework, theme;" (theme wins). If Dynamic stays unlayered, use the withoutLayers path. Full detail at https://docs.modyo.com/en/dynamic/customization/theming.html.',
+      withoutLayers: 'Without @layer, match or exceed the Dynamic selector, in a later rule. NEVER :where() (specificity 0).',
     },
-    colorFormat: "Triplete 'R, G, B' SIN wrapper rgb(). El sistema hace rgb(var(--bs-X-rgb)) y rgba(var(--bs-X-rgb), a). Un hex o rgb() rompe la opacidad. Se pisan los -rgb, nunca los wrappers.",
-    clientVarBridge: 'Para cablear marca: --bs-<rol>-rgb: var(--client-<name>-rgb). Los --client-* son del consumidor y NO viven en este artefacto; minimalRebrandSet es la lista exacta de --bs-* a cablear.',
+    colorFormat: "'R, G, B' triplet WITHOUT an rgb() wrapper. The system does rgb(var(--bs-X-rgb)) and rgba(var(--bs-X-rgb), a). A hex or rgb() breaks opacity. Override the -rgb, never the wrappers.",
+    clientVarBridge: 'To wire a brand: --bs-<role>-rgb: var(--client-<name>-rgb). The --client-* belong to the consumer and do NOT live in this artifact; minimalRebrandSet is the exact list of --bs-* to wire.',
   },
 
   behaviorClasses: {
-    'override-base': 'Pisar la base --bs-X-rgb. Arrastra --bs-X y --bs-X-500-rgb. NO recolorea el resto de la rampa.',
-    'override-leaf': 'Literal horneado. Pisar uno por uno; no sigue a la base.',
-    follows: 'Auto-deriva (alias/wrapper). NO pisar; se recolorea solo.',
-    'not-overridable': 'Valor horneado fuera de var() (data-URI). Reemplazar la variable entera o tratar como gap.',
+    'override-base': 'Override the base --bs-X-rgb. Drags --bs-X and --bs-X-500-rgb along. Does NOT recolor the rest of the ramp.',
+    'override-leaf': 'Baked literal. Override one by one; does not follow the base.',
+    follows: 'Auto-derived (alias/wrapper). Do NOT override; it recolors itself.',
+    'not-overridable': 'Baked value outside var() (data-URI). Replace the whole variable or treat as a gap.',
   },
 
   color: {
@@ -460,10 +460,10 @@ const doc = {
     hueGroups,
     rebrandScope: {
       default: 'role',
-      role: 'Pisar solo --bs-<rol>-* (el minimalRebrandSet: 1 base + 10 leaves). Otras rampas del mismo hue NO cambian.',
-      hue: 'Pisar TODAS las rampas del hueGroup + la base --bs-<hue>-rgb. Ver hueGroups.',
-      agentMustAsk: 'Si el cambio apunta a un hue que aflora en varias rampas (ver hueGroups), confirmar con el solicitante si los roles de estado (p.ej. info) siguen la marca nueva o se quedan como color de estado semantico. Sin confirmacion, aplicar el default "role".',
-      warning: "Cambiar SOLO la base de un rol (lo que sugiere la guia 'override Layer 2') deja los leaves de rampa (bg-subtle, hover/active -600/-700) en el hue viejo. Para marca fiel, pisar el minimalRebrandSet completo, no solo la base.",
+      role: 'Override only --bs-<role>-* (the minimalRebrandSet: 1 base + 10 leaves). Other ramps of the same hue do NOT change.',
+      hue: 'Override ALL ramps in the hueGroup + the base --bs-<hue>-rgb. See hueGroups.',
+      agentMustAsk: 'If the change targets a hue that surfaces in several ramps (see hueGroups), confirm with the requester whether the state roles (e.g. info) follow the new brand or stay as a semantic state color. Without confirmation, apply the "role" default.',
+      warning: "Changing ONLY a role's base (what the 'override Layer 2' guidance suggests) leaves the ramp leaves (bg-subtle, hover/active -600/-700) on the old hue. For a faithful brand, override the full minimalRebrandSet, not just the base.",
     },
   },
 
@@ -473,10 +473,10 @@ const doc = {
   shadow,
 
   slots: {
-    note: 'Vars que el codigo REFERENCIA pero NO define en ninguna parte del CSS compilado (R - Dall). suspected=false solo para el patron regular de family-hue semantic followers; el resto es candidato a verificar (slot del theme, runtime de Bootstrap, o ref muerta). Los typos malformados van en denylist, no aca.',
+    note: 'Vars the code REFERENCES but does NOT define anywhere in the compiled CSS (R - Dall). suspected=false only for the regular family-hue semantic-follower pattern; the rest are candidates to verify (theme slot, Bootstrap runtime, or dead reference). Malformed typos go in denylist, not here.',
     vars: slotVars,
     denylist,
-    denylistNote: 'Refs malformadas (doble prefijo --bs-bs- o dash inicial --bs--). Son typos del source, no slots. Conocidos: --bs---bs-ref-spacer-4 (_d-carousel.scss:53), --bs-bs-gray-400 (_forms.scss:3). Reportar como bugs de CSS aparte.',
+    denylistNote: 'Malformed refs (double prefix --bs-bs- or leading dash --bs--). These are source typos, not slots. Known: --bs---bs-ref-spacer-4 (_d-carousel.scss:53), --bs-bs-gray-400 (_forms.scss:3). Report as separate CSS bugs.',
   },
 
   gaps,
@@ -484,7 +484,7 @@ const doc = {
   componentTokens: {
     status: 'deferred',
     deferredCount: [...Dall].filter((n) => !defs.has(n)).length, // component-local (Layer 3) tokens not enumerated in this version
-    note: 'Layer 3 (--bs-{componente}-{prop}, p.ej. --bs-btn-bg, --bs-card-bg) NO se enumera en esta version (ver dynamicUi). Patron para el agente: se pisan en el selector del componente, no en :root. Para tematizar un componente puntual, inspeccionar sus vars --bs-{comp}-* en el CSS del componente y pisarlas scoped. Enumeracion completa: candidata a un minor futuro.',
+    note: 'Layer 3 (--bs-{component}-{prop}, e.g. --bs-btn-bg, --bs-card-bg) is NOT enumerated in this version (see dynamicUi). Pattern for the agent: override them in the component selector, not in :root. To theme a specific component, inspect its --bs-{comp}-* vars in the component CSS and override them scoped. Full enumeration: candidate for a future minor.',
   },
 };
 
