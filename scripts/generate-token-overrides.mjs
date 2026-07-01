@@ -217,10 +217,15 @@ for (const [ramp, steps] of [...rampSteps.entries()].sort((a, b) => a[0].localeC
     const cssVar = `--bs-${ramp}-${step}-rgb`;
     const value = steps.get(step);
     const cls = classifyRgb(cssVar, value);
+    const followsAlias = cls === 'follows' ? aliasTarget(value) : null;
     stepNodes[String(step)] = {
       cssVar,
-      value: cls === 'follows' ? `alias:${aliasTarget(value)}` : value,
+      // `value` is always the raw CSS as authored (a literal triplet, or the
+      // var(--bs-...) for follows). Aliasing is expressed via `aliasOf`,
+      // consistent with the base node, so consumers can treat value as CSS.
+      value,
       class: cls,
+      ...(followsAlias ? { aliasOf: followsAlias } : {}),
       // Ramp steps are the raw L1 scale (palette) by design — even for role
       // ramps like primary, whose L2 entry point is the `base` node (role).
       layer: 'palette',

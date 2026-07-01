@@ -97,7 +97,13 @@ const schema = {
     behaviorClasses: {
       type: 'object',
       required: ['override-base', 'override-leaf', 'follows', 'not-overridable'],
-      additionalProperties: { type: 'string' },
+      properties: {
+        'override-base': { type: 'string' },
+        'override-leaf': { type: 'string' },
+        follows: { type: 'string' },
+        'not-overridable': { type: 'string' },
+      },
+      additionalProperties: false,
     },
     color: {
       type: 'object',
