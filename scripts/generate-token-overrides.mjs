@@ -139,7 +139,9 @@ function readSourceFiles() {
       // Store the path relative to src/style/ (not just the basename): duplicate
       // basenames across dirs (e.g. abstracts/variables/_breadcrumb.scss vs
       // base/_breadcrumb.scss) would otherwise collapse into one ambiguous entry.
-      else if (entry.endsWith('.scss')) files.push({ rel: relative(styleRoot, p), content: readFileSync(p, 'utf8') });
+      // Normalize to forward slashes so referencedBy is stable across
+      // Windows/macOS/Linux (and so the `_([^/]+)$` strip below still matches).
+      else if (entry.endsWith('.scss')) files.push({ rel: relative(styleRoot, p).replace(/\\/g, '/'), content: readFileSync(p, 'utf8') });
     }
   };
   walk(styleRoot);

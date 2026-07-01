@@ -70,11 +70,14 @@ The **authoritative** shape is the JSON Schema at
 `registry/schema/token-overrides.v1.json`. Do not re-describe it field by field
 here — read the schema. Orientation only:
 
-**Dual axis per token:**
+**Per-token axes:**
 
-- `class` — runtime override behavior: `override-base` / `override-leaf` /
-  `follows` / `not-overridable`.
+- `class` — runtime override behavior (always present): `override-base` /
+  `override-leaf` / `follows` / `not-overridable`.
 - `layer` — consumer vocabulary: `palette` / `role` / `semantic` / `component`.
+  **Optional** — emitted only where the generator can categorize the token
+  (color ramps and font family). It is absent on spacing / radius / shadow /
+  weight / line-height nodes; treat a missing `layer` as "unspecified".
 
 **Top-level sections:** `color.ramps` (16 ramps: 6 role + 9 family + 1 neutral),
 `color.hueGroups` (4), `color.rebrandScope` (default `role`, plus the `warning`
@@ -103,11 +106,12 @@ selector** — something a consuming theme is expected to fill.
 > the defs pass. That yields ~699 candidates, almost all of which are
 > **component-local tokens** (`--bs-btn-*`, `--bs-card-*`, …) that *are* defined —
 > inside their own component selector. Those are exactly the **Layer 3** tokens
-> that 2.6 defers (`componentTokens.status: "deferred-2.6"`), not slots. Defining
+> that 2.6 defers (`componentTokens.status: "deferred"`), not slots. Defining
 > `D` as "defined anywhere" drops them and leaves the genuinely unfilled
 > references.
 
-Current result: **60 slots**, split into:
+Current result: **54 slots** (27 confident + 27 suspected — illustrative; the
+emitted artifact is the source of truth), split into:
 
 - `suspected: false` (**confident**) — a regular, recognizable pattern
   (family-hue semantic followers: `--bs-{hue}-bg-subtle` / `-text-emphasis` /
