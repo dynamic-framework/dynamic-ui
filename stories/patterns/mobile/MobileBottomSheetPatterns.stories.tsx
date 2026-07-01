@@ -11,9 +11,9 @@ import {
   DOffcanvas,
   type PortalProps,
   useDPortalContext,
-} from '../../src';
+} from '../../../src';
 
-import DocsTemplate from './docs/Template.mdx';
+import DocsTemplate from '../docs/Template.mdx';
 
 type AccountActionsPayloads = {
   accountActions: {
@@ -44,7 +44,7 @@ const bottomSheetStyle = {
 } as const;
 
 const meta: Meta<typeof DBox> = {
-  title: 'Mobile Patterns/Mobile Bottom Sheets',
+  title: 'Patterns/Mobile/Bottom Sheets',
   component: DBox,
   parameters: {
     docs: {

@@ -12,9 +12,9 @@ import {
   DOffcanvas,
   type PortalProps,
   useDPortalContext,
-} from '../../src';
+} from '../../../src';
 
-import DocsTemplate from './docs/Template.mdx';
+import DocsTemplate from '../docs/Template.mdx';
 
 type Story = StoryObj<typeof DBox>;
 
@@ -107,7 +107,7 @@ const bottomSheetStyle = {
 } as const;
 
 const meta: Meta<typeof DBox> = {
-  title: 'Mobile Patterns/Mobile Lists',
+  title: 'Patterns/Mobile/Lists',
   component: DBox,
   parameters: {
     docs: {
