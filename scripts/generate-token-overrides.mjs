@@ -413,7 +413,7 @@ const gaps = {
     monotonic: rampIsMonotonic('secondary'),
     detail: 'Rampa no-monotona: el ancla de rol (--bs-secondary-rgb = gray-800) y el caso especial -500 (alias de la base) meten un tono oscuro al medio de la rampa, por lo que -500 queda mas oscuro que -600/-700. Pisar la base NO arregla la forma de la rampa.',
     workaround: 'El agente o (1) pisa los 10 leaves a mano con una rampa coherente, o (2) declara secondary no-rebrandeable por override. NO esperar que pisar la base arregle la rampa.',
-    horizon: 'Se sanea en una version futura (refactor del ancla de rol). NO disponible en 2.6.',
+    horizon: 'Se sanea en una version futura (refactor del ancla de rol). No disponible en esta version (ver dynamicUi).',
   },
   'icons-data-uri': {
     state: 'not-overridable-by-color',
@@ -436,7 +436,7 @@ const doc = {
   generatedAt,
 
   consumption: {
-    note: "Este artefacto corresponde a la version de Dynamic en 'dynamicUi'. Un consumidor debe bajar el artefacto de la MISMA version que la del bundle CSS que carga (CDN versionado, p.ej. assets/2.6.0/ui-react/).",
+    note: `Este artefacto corresponde a la version de Dynamic en 'dynamicUi'. Un consumidor debe bajar el artefacto de la MISMA version que la del bundle CSS que carga (CDN versionado, p.ej. assets/${version}/ui-react/).`,
     anchor: ':root, [data-bs-theme="dynamic"]',
     howOverrideWins: {
       withLayers: 'Dynamic emite sus tokens SIN capa (cascada base), y en CSS los estilos sin capa ganan a los de cualquier @layer. Por eso, si importas Dynamic dentro de una capa (p.ej. @import url(dynamic) layer(framework)), declara tu capa de overrides DESPUES para que gane entre capas: la ultima capa declarada gana, p.ej. "@layer framework, theme;" (theme gana). Si Dynamic queda sin capa, usa el camino de withoutLayers. Detalle completo en https://docs.modyo.com/en/dynamic/customization/theming.html.',
@@ -480,9 +480,9 @@ const doc = {
   gaps,
 
   componentTokens: {
-    status: 'deferred-2.6',
-    deferredCount: [...Dall].filter((n) => !defs.has(n)).length, // component-local (Layer 3) tokens not enumerated in 2.6
-    note: 'Layer 3 (--bs-{componente}-{prop}, p.ej. --bs-btn-bg, --bs-card-bg) NO se enumera en 2.6. Patron para el agente: se pisan en el selector del componente, no en :root. Para tematizar un componente puntual, inspeccionar sus vars --bs-{comp}-* en el CSS del componente y pisarlas scoped. Enumeracion completa: candidata a un minor futuro.',
+    status: 'deferred',
+    deferredCount: [...Dall].filter((n) => !defs.has(n)).length, // component-local (Layer 3) tokens not enumerated in this version
+    note: 'Layer 3 (--bs-{componente}-{prop}, p.ej. --bs-btn-bg, --bs-card-bg) NO se enumera en esta version (ver dynamicUi). Patron para el agente: se pisan en el selector del componente, no en :root. Para tematizar un componente puntual, inspeccionar sus vars --bs-{comp}-* en el CSS del componente y pisarlas scoped. Enumeracion completa: candidata a un minor futuro.',
   },
 };
 
