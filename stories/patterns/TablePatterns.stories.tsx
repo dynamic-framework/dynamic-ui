@@ -14,6 +14,7 @@ import {
   getQueryString,
   useDPortalContext,
   useItemSelection,
+  DChip,
 } from '../../src';
 import type { PortalProps } from '../../src';
 
@@ -65,11 +66,6 @@ const ROWS = [
 const meta: Meta<typeof DBox> = {
   title: 'Patterns/Table',
   component: DBox,
-  decorators: [
-    (Story) => (
-      <Story />
-    ),
-  ],
   parameters: {
     docs: {
       page: () => (
@@ -1472,9 +1468,9 @@ function FinancialTransactionOffcanvasContent() {
 
       {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
         <div className="d-flex gap-2 flex-wrap mb-3">
-          {typeFilter !== 'all' && <DBadge text={`Type: ${typeFilter}`} color="primary" />}
-          {statusFilter !== 'all' && <DBadge soft size="sm" text={`Status: ${statusFilter}`} color="warning" />}
-          {minAmount > 0 && <DBadge soft size="sm" text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" />}
+          {typeFilter !== 'all' && <DChip text={`Type: ${typeFilter}`} color="primary" showClose onClose={() => setTypeFilter('all')} />}
+          {statusFilter !== 'all' && <DChip text={`Status: ${statusFilter}`} color="warning" showClose onClose={() => setStatusFilter('all')} />}
+          {minAmount > 0 && <DChip text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" showClose onClose={() => setMinAmountFilter('0')} />}
         </div>
       )}
 
