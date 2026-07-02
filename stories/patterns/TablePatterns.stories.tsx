@@ -1704,7 +1704,7 @@ export const TransactionHistoryOffcanvas: Story = {
   );
 }
 
-function TransactionHistoryOffcanvasContent() {
+function FinancialTransactionOffcanvasContent() {
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
