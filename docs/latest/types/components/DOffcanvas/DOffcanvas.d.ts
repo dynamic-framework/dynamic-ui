@@ -11,7 +11,7 @@ type Props = BaseProps & PropsWithChildren<{
     openFrom?: OffcanvasPositionToggleFrom;
     transition?: Transition;
 }>;
-declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, transition, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, transition, children, dataAttributes, }: Props): import("react").JSX.Element;
 declare const _default: typeof DOffcanvas & {
     Header: typeof DOffcanvasHeader;
     Body: typeof DOffcanvasBody;

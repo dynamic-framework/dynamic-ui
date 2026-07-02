@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps } from '../interface';
 export type ValidationMessages = {
     number: string;
@@ -18,6 +19,7 @@ type Props = BaseProps & {
     validationMessages?: ValidationMessages;
     enabledChecks?: ValidationCheck[];
     onChange?: (value: string) => void;
+    readonly?: boolean;
 };
-export default function DPasswordStrengthMeter({ id, label, placeholder, value, name, disabled, invalid, validationMessages, enabledChecks, className, style, dataAttributes, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DPasswordStrengthMeter({ id, label, placeholder, value, name, disabled, invalid, validationMessages, enabledChecks, className, style, dataAttributes, onChange, readonly, }: Props): import("react").JSX.Element;
 export {};

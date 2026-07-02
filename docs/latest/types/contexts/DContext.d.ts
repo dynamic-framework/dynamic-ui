@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
-import { PortalContextProps } from './DPortalContext';
+import { type PropsWithChildren } from 'react';
+import { type PortalContextProps } from './DPortalContext';
 import type { AlertThemeIconMap } from '../components/interface';
 /**
  * Currency formatting configuration used by `DContextProvider`.
@@ -99,10 +99,32 @@ export declare const DContext: import("react").Context<Context>;
  * component to configure icons, currency, language, and portal settings
  * for all descendant Dynamic UI components.
  *
+ * To enable confirmation modals you must also mount `DConfirmModalContainer`
+ * somewhere inside this provider (typically right before the closing tag of
+ * your root layout), similar to how `DToastContainer` works:
+ *
+ * ```tsx
+ * // Default: portalName="d-portal"
+ * <DContextProvider>
+ *   <App />
+ *   <DConfirmModalContainer nodeId="d-portal" />
+ * </DContextProvider>
+ * ```
+ *
+ * If you customize `portalName`, match it in `DConfirmModalContainer.nodeId`:
+ *
+ * ```tsx
+ * // Custom portalName
+ * <DContextProvider portalName="my-custom-portal">
+ *   <App />
+ *   <DConfirmModalContainer nodeId="my-custom-portal" />
+ * </DContextProvider>
+ * ```
+ *
  * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
  *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
  */
-export declare function DContextProvider<T extends Record<string, unknown>>({ language, currency, icon, iconMap, portalName, availablePortals, children, }: PropsWithChildren<Partial<DContextProviderProps<T>>>): import("react/jsx-runtime").JSX.Element;
+export declare function DContextProvider<T extends Record<string, unknown>>({ language, currency, icon, iconMap, portalName, availablePortals, children, }: PropsWithChildren<Partial<DContextProviderProps<T>>>): import("react").JSX.Element;
 /**
  * Returns the Dynamic UI context value set by `DContextProvider`.
  * Falls back to the library's built-in defaults when no `DContextProvider`

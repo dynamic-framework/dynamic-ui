@@ -5,5 +5,5 @@ type Props = BaseProps & FamilyIconProps & DBoxFileProps & {
     icon?: string | false;
     children?: ReactNode | ((openFileDialog: () => void) => ReactNode);
 };
-export default function DBoxFile({ icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, children, className, style, dataAttributes, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DBoxFile({ icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, children, className, style, dataAttributes, ...props }: Props): import("react").JSX.Element;
 export {};

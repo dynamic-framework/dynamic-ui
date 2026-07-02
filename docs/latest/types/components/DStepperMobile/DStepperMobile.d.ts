@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps } from '../interface';
 type Step = {
     label: string;
@@ -8,5 +9,5 @@ type Props = BaseProps & {
     options: Array<Step>;
     currentStep: number;
 };
-export default function DStepper({ options, currentStep, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, className, style, }: Props): import("react").JSX.Element;
 export {};

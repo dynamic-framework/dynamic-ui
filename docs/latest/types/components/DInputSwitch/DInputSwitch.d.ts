@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps } from '../interface';
 type Props = BaseProps & {
     id?: string;
@@ -12,5 +13,5 @@ type Props = BaseProps & {
     readonly?: boolean;
     onChange?: (isChecked: boolean) => void;
 };
-export default function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, invalid, valid, readonly, className, style, dataAttributes, inputClassName, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, invalid, valid, readonly, className, style, dataAttributes, inputClassName, onChange, }: Props): import("react").JSX.Element;
 export {};

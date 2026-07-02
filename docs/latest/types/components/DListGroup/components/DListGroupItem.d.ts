@@ -9,5 +9,5 @@ type Props = BaseProps & StartIconProps & EndIconProps & PropsWithChildren<{
     onClick?: () => void;
     color?: ComponentColor;
 }>;
-export default function DListGroupItem({ as, action: actionProp, active, disabled, href, onClick, color, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, children, className, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DListGroupItem({ as, action: actionProp, active, disabled, href, onClick, color, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, children, className, style, dataAttributes, }: Props): import("react").JSX.Element;
 export {};

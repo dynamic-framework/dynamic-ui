@@ -9,5 +9,5 @@ type Props = PropsWithChildren<BaseProps & {
     colsXl?: string | number;
     colsXxl?: string | number;
 }>;
-export default function DLayoutPane({ className, style, children, cols, colsXs, colsSm, colsMd, colsLg, colsXl, colsXxl, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DLayoutPane({ className, style, children, cols, colsXs, colsSm, colsMd, colsLg, colsXl, colsXxl, dataAttributes, }: Props): import("react").JSX.Element;
 export {};

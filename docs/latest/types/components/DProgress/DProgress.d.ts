@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps } from '../interface';
 type Props = BaseProps & {
     currentValue: number;
@@ -7,5 +8,5 @@ type Props = BaseProps & {
     enableStripedAnimation?: boolean;
     height?: string | number;
 };
-export default function DProgress({ className, style, currentValue, minValue, maxValue, hideCurrentValue, enableStripedAnimation, height, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DProgress({ className, style, currentValue, minValue, maxValue, hideCurrentValue, enableStripedAnimation, height, dataAttributes, }: Props): import("react").JSX.Element;
 export {};

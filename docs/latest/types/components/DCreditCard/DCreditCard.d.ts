@@ -1,3 +1,4 @@
+/// <reference types="react" />
 type CardBrand = 'visa' | 'mastercard';
 type Props = {
     className?: string;
@@ -9,5 +10,5 @@ type Props = {
     isVertical?: boolean;
     logoImage?: string;
 };
-export default function DCreditCard({ brand, name, number, holderText, logoImage, isChipVisible, className, isVertical, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DCreditCard({ brand, name, number, holderText, logoImage, isChipVisible, className, isVertical, }: Props): import("react").JSX.Element;
 export {};

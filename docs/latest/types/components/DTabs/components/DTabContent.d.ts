@@ -3,5 +3,5 @@ import type { BaseProps } from '../../interface';
 type Props = BaseProps & PropsWithChildren<{
     tab: string;
 }>;
-export default function DTabContent({ tab, children, className, style, }: Props): import("react/jsx-runtime").JSX.Element | null;
+export default function DTabContent({ tab, children, className, style, }: Props): import("react").JSX.Element | null;
 export {};

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps, ComponentColor } from '../interface';
 import { ResponsiveProp } from '../../hooks/useResponsiveProp';
 type Props = BaseProps & {
@@ -13,5 +14,5 @@ type Props = BaseProps & {
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
 };
-export default function DBadge(props: Props): import("react/jsx-runtime").JSX.Element;
+export default function DBadge(props: Props): import("react").JSX.Element;
 export {};

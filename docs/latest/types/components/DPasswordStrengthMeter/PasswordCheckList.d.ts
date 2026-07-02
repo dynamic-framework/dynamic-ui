@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { ValidationMessages, ValidationCheck } from './DPasswordStrengthMeter';
 type Props = {
     password: string;
@@ -10,5 +11,5 @@ export declare const CHECK_REGEX: {
     number: RegExp;
     specialChar: RegExp;
 };
-export default function PasswordChecksList({ password, validationMessages, enabledChecks, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function PasswordChecksList({ password, validationMessages, enabledChecks, }: Props): import("react").JSX.Element;
 export {};

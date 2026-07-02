@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.5.2
+ * dynamic-framework 2.6.0
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -898,22 +898,22 @@
   --bs-btn-link-warning-disabled-border-color: transparent;
   --bs-btn-link-warning-disabled-color: var(--bs-warning-700);
   --bs-btn-link-warning-disabled-opacity: 0.65;
-  --bs-btn-soft-warning-color: var(--bs-warning-700);
+  --bs-btn-soft-warning-color: var(--bs-warning-800);
   --bs-btn-soft-warning-bg: var(--bs-warning-50);
   --bs-btn-soft-warning-border-color: transparent;
   --bs-btn-soft-warning-box-shadow: 0 0 0 transparent;
-  --bs-btn-soft-warning-hover-color: var(--bs-warning-700);
+  --bs-btn-soft-warning-hover-color: var(--bs-warning-800);
   --bs-btn-soft-warning-hover-bg: var(--bs-warning-100);
   --bs-btn-soft-warning-hover-border-color: transparent;
-  --bs-btn-soft-warning-focus-color: var(--bs-warning-700);
+  --bs-btn-soft-warning-focus-color: var(--bs-warning-800);
   --bs-btn-soft-warning-focus-bg: var(--bs-warning-100);
   --bs-btn-soft-warning-focus-border-color: transparent;
   --bs-btn-soft-warning-focus-shadow-rgb: var(--bs-warning-500-rgb);
-  --bs-btn-soft-warning-active-color: var(--bs-warning-700);
+  --bs-btn-soft-warning-active-color: var(--bs-warning-800);
   --bs-btn-soft-warning-active-bg: var(--bs-warning-200);
   --bs-btn-soft-warning-active-border-color: transparent;
   --bs-btn-soft-warning-active-box-shadow: 0 0 0 transparent;
-  --bs-btn-soft-warning-disabled-color: var(--bs-warning-700);
+  --bs-btn-soft-warning-disabled-color: var(--bs-warning-800);
   --bs-btn-soft-warning-disabled-bg: var(--bs-warning-50);
   --bs-btn-soft-warning-disabled-border-color: transparent;
   --bs-btn-soft-warning-disabled-opacity: 0.65;
@@ -4799,7 +4799,7 @@ th {
 .form-text {
   margin-top: var(--bs-ref-spacer-1);
   font-size: var(--bs-fs-small);
-  color: var(--bs-bs-gray-400);
+  color: var(--bs-gray-400);
 }
 
 .form-control {
@@ -7326,7 +7326,7 @@ textarea.form-control-lg {
   --bs-list-group-item-padding-y: var(--bs-ref-spacer-3);
   --bs-list-group-action-color: var(--bs-gray-900);
   --bs-list-group-action-hover-color: var(--bs-gray-900);
-  --bs-list-group-action-hover-bg: var(--bs-subtle-primary);
+  --bs-list-group-action-hover-bg: var(--bs-primary-bg-subtle);
   --bs-list-group-action-active-color: var(--bs-body-color);
   --bs-list-group-action-active-bg: var(--bs-primary-100);
   --bs-list-group-disabled-color: var(--bs-gray-600);
@@ -9572,7 +9572,7 @@ body {
 .form-text {
   --bs-form-text-padding: 0 0;
   --bs-form-text-gap: var(--bs-ref-spacer-1);
-  --bs-form-text-color: var(--bs-bs-gray-400);
+  --bs-form-text-color: var(--bs-gray-400);
   display: inline-flex;
   flex-direction: row;
   gap: var(--bs-form-text-gap);
@@ -10681,6 +10681,14 @@ label {
   opacity: var(--bs-backdrop-opacity);
 }
 
+.backdrop-confirm-modal {
+  --bs-backdrop-zindex: 1064;
+  --bs-backdrop-filter: 5px;
+  --bs-backdrop-bg: transparent;
+  -webkit-backdrop-filter: blur(var(--bs-backdrop-filter));
+          backdrop-filter: blur(var(--bs-backdrop-filter));
+}
+
 .toast {
   --bs-toast-header-gap: var(--bs-ref-spacer-2);
   --bs-toast-body-gap: var(--bs-ref-spacer-2);
@@ -11356,6 +11364,14 @@ label {
 
 .d-portal .modal {
   display: block;
+}
+
+.confirm-modal {
+  --bs-modal-zindex: 1065;
+  --bs-shadow-confirm-modal: var(--bs-box-shadow-sm), 0 0 100px 30px rgba(0, 0, 0, .3);
+}
+.confirm-modal .modal-content {
+  --bs-modal-box-shadow: var(--bs-shadow-confirm-modal);
 }
 
 .d-timeline {
@@ -12879,7 +12895,7 @@ react-datepicker__navigation
 .d-carousel .d-carousel-pagination {
   bottom: var(--bs-carousel-pagination-bottom);
   position: relative;
-  margin-top: var(--bs---bs-ref-spacer-4);
+  margin-top: var(--bs-ref-spacer-4);
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -59997,4 +60013,16 @@ th {
 
 .max-w-xxl {
   max-width: 1320px;
+}
+
+.no-visible-scroll {
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-visible-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
 }

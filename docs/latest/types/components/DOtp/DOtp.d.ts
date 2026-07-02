@@ -13,4 +13,4 @@ export type PropsOtp = PropsWithChildren<{
         resendText?: string;
     };
 }>;
-export default function DOtp({ className, action, isLoading, otpSize, texts, seconds, }: PropsOtp): import("react/jsx-runtime").JSX.Element;
+export default function DOtp({ className, action, isLoading, otpSize, texts, seconds, }: PropsOtp): import("react").JSX.Element;

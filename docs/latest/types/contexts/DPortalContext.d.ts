@@ -61,7 +61,7 @@ export type PortalProps<P = unknown> = {
     payload: P;
 };
 export declare const DPortalContext: import("react").Context<PortalContextType<any> | undefined>;
-export declare function DPortalContextProvider<T extends Record<string, unknown>>({ portalName, children, availablePortals, }: PortalContextProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function DPortalContextProvider<T extends Record<string, unknown>>({ portalName, children, availablePortals, }: PortalContextProps<T>): import("react").JSX.Element;
 /**
  * Hook to open/close registered portals (modals, offcanvas, etc.).
  *

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps } from '../interface';
 type Step = {
     label: string;
@@ -15,5 +16,5 @@ type Props = BaseProps & {
     completed?: boolean;
     alignStart?: boolean;
 };
-export default function DStepper({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, completed, alignStart, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, completed, alignStart, className, style, }: Props): import("react").JSX.Element;
 export {};

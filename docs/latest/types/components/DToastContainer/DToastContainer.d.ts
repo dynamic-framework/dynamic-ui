@@ -36,4 +36,4 @@ export type DToastContainerProps = {
      */
     gutter?: number;
 };
-export default function DToastContainer({ containerClassName, position, reverseOrder, containerStyle, toastOptions, gutter, }: DToastContainerProps): import("react/jsx-runtime").JSX.Element;
+export default function DToastContainer({ containerClassName, position, reverseOrder, containerStyle, toastOptions, gutter, }: DToastContainerProps): import("react").JSX.Element;

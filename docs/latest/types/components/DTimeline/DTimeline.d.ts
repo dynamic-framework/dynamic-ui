@@ -11,5 +11,5 @@ export type DTimelineItem = {
 type Props = BaseProps & {
     items: DTimelineItem[];
 };
-export default function DTimeline({ className, style, dataAttributes, items, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DTimeline({ className, style, dataAttributes, items, }: Props): import("react").JSX.Element;
 export {};

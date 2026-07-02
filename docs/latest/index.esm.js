@@ -58,7 +58,7 @@ function useDisableBodyScrollEffect(disable) {
                 timer = window.setTimeout(() => {
                     unlock();
                     observer === null || observer === void 0 ? void 0 : observer.disconnect();
-                }, 3000);
+                }, 300);
             }
             else {
                 unlock();
@@ -143,7 +143,7 @@ function getKeyboardFocusableElements(container) {
 const DPortalContext = createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
-    const [stack, { push, pop, isEmpty }] = useStackState([]);
+    const [stack, { push, pop }] = useStackState([]);
     useDisableBodyScrollEffect(Boolean(stack.length));
     const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
@@ -164,11 +164,9 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = useCallback(() => {
-        if (isEmpty()) {
-            return;
-        }
+        // pop() is safe on empty stacks, so close remains idempotent.
         pop();
-    }, [isEmpty, pop]);
+    }, [pop]);
     const publicStack = useMemo(() => stack.map(({ name, payload }) => ({ name, payload })), [stack]);
     const value = useMemo(() => ({
         stack: publicStack,
@@ -259,6 +257,40 @@ function useDPortalContext() {
     return context;
 }
 
+function createConfirmModalStore() {
+    const listeners = new Set();
+    let entries = [];
+    function notify() {
+        listeners.forEach((listener) => listener([...entries]));
+    }
+    const store = {
+        subscribe(listener) {
+            listeners.add(listener);
+            listener([...entries]);
+            return () => {
+                listeners.delete(listener);
+            };
+        },
+        push(entry) {
+            entries = [...entries, entry];
+            notify();
+        },
+        remove(id) {
+            entries = entries.filter((e) => e.id !== id);
+            notify();
+        },
+    };
+    return store;
+}
+const ConfirmModalStoreContext = createContext(null);
+function useConfirmModalStore() {
+    const store = useContext(ConfirmModalStoreContext);
+    if (!store) {
+        throw new Error('useConfirmModal must be used within a <DContextProvider>.');
+    }
+    return store;
+}
+
 function getCssVariable(variable) {
     const computedStyle = getComputedStyle(document.documentElement);
     return computedStyle.getPropertyValue(variable).trim();
@@ -317,6 +349,28 @@ const DContext = createContext(DEFAULT_STATE);
  * component to configure icons, currency, language, and portal settings
  * for all descendant Dynamic UI components.
  *
+ * To enable confirmation modals you must also mount `DConfirmModalContainer`
+ * somewhere inside this provider (typically right before the closing tag of
+ * your root layout), similar to how `DToastContainer` works:
+ *
+ * ```tsx
+ * // Default: portalName="d-portal"
+ * <DContextProvider>
+ *   <App />
+ *   <DConfirmModalContainer nodeId="d-portal" />
+ * </DContextProvider>
+ * ```
+ *
+ * If you customize `portalName`, match it in `DConfirmModalContainer.nodeId`:
+ *
+ * ```tsx
+ * // Custom portalName
+ * <DContextProvider portalName="my-custom-portal">
+ *   <App />
+ *   <DConfirmModalContainer nodeId="my-custom-portal" />
+ * </DContextProvider>
+ * ```
+ *
  * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
  *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
  */
@@ -342,7 +396,8 @@ function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAUL
         });
     }, [setContext]);
     const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
-    return (jsx(DContext.Provider, { value: value, children: jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }));
+    const confirmStore = useMemo(() => createConfirmModalStore(), []);
+    return (jsx(ConfirmModalStoreContext.Provider, { value: confirmStore, children: jsx(DContext.Provider, { value: value, children: jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }) }));
 }
 /**
  * Returns the Dynamic UI context value set by `DContextProvider`.
@@ -1037,7 +1092,7 @@ function DBoxFile(_a) {
 }
 
 const DButton = forwardRef((props, ref) => {
-    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel, href, 'aria-label': ariaLabelProp } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel", "href", 'aria-label']);
+    const { color = 'primary', size, variant = 'solid', text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel, href, 'aria-label': ariaLabelProp } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel", "href", 'aria-label']);
     // Responsive size resolution using useResponsiveProp
     const { responsivePropValue } = useResponsiveProp(true);
     const resolvedSize = useMemo(() => {
@@ -1052,9 +1107,9 @@ const DButton = forwardRef((props, ref) => {
     const isDisabled = useMemo(() => disabled || loading, [disabled, loading]);
     const content = useMemo(() => children || text, [children, text]);
     const classes = useMemo(() => {
-        const variantClass = variant
-            ? `btn-${variant}-${color}`
-            : `btn-${color}`;
+        const variantClass = variant === 'solid'
+            ? `btn-${color}`
+            : `btn-${variant}-${color}`;
         return {
             btn: true,
             [variantClass]: true,
@@ -1112,9 +1167,9 @@ DButton.displayName = 'DButton';
 function DButtonIcon(_a) {
     var { id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
     const generateClasses = useMemo(() => {
-        const variantClass = variant
-            ? `btn-${variant}-${color}`
-            : `btn-${color}`;
+        const variantClass = !variant || variant === 'solid'
+            ? `btn-${color}`
+            : `btn-${variant}-${color}`;
         return Object.assign(Object.assign(Object.assign({ 'btn d-button-icon': true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
     }, [variant, color, size, state, loading]);
     const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
@@ -1406,6 +1461,18 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
 
 function DDatePicker(_a) {
     var { inputLabel, inputHint, inputAriaLabel, ariaLabelInputTime, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeInputLabel, minYearSelect, maxYearSelect, iconHeaderSize, iconMaterialStyle, iconInput, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors, formatHeaderDate } = _a, props = __rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "ariaLabelInputTime", "inputActionAriaLabel", "inputId", "timeId", "timeInputLabel", "minYearSelect", "maxYearSelect", "iconHeaderSize", "iconMaterialStyle", "iconInput", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors", "formatHeaderDate"]);
+    // Some test runtimes can resolve react-datepicker as a module object.
+    // Normalize to a renderable component for both function and { default } shapes.
+    const SafeDatePicker = useMemo(() => {
+        const interopDefault = DatePicker.default;
+        if (interopDefault !== undefined) {
+            return interopDefault;
+        }
+        if (typeof DatePicker === 'function') {
+            return DatePicker;
+        }
+        return DatePicker;
+    }, []);
     const pickerType = useMemo(() => {
         if (props.showQuarterYearPicker)
             return PickerType.Quarter;
@@ -1433,7 +1500,7 @@ function DDatePicker(_a) {
     ]);
     const defaultRenderCustomHeader = useCallback((headerProps) => (jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
     const renderCustomHeader = useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
-    return (jsx(DatePicker, Object.assign({}, dataAttributes, props, { calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, placeholderText: placeholder, customInput: (jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, "aria-label": ariaLabelInputTime })) })));
+    return (jsx(SafeDatePicker, Object.assign({}, dataAttributes, props, { calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, placeholderText: placeholder, customInput: (jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, "aria-label": ariaLabelInputTime })) })));
 }
 
 function DLayoutPane({ className, style, children, cols, colsXs, colsSm, colsMd, colsLg, colsXl, colsXxl, dataAttributes, }) {
@@ -1462,6 +1529,55 @@ function DLayout({ className, style, children, gap, columns, gapSm, gapMd, gapLg
 var DLayout$1 = Object.assign(DLayout, {
     Pane: DLayoutPane,
 });
+
+function normalizeValue(value) {
+    return value !== null && value !== void 0 ? value : '';
+}
+function DInputSearch(_a, ref) {
+    var { debounceMs = 300, onChange, onImmediateChange, value, defaultValue, placeholder = 'Search...' } = _a, props = __rest(_a, ["debounceMs", "onChange", "onImmediateChange", "value", "defaultValue", "placeholder"]);
+    const inputRef = useProvidedRefOrCreate(ref);
+    const isControlled = value !== undefined;
+    const onChangeRef = useRef(onChange);
+    onChangeRef.current = onChange;
+    const [internalValue, setInternalValue] = useState(normalizeValue(isControlled ? value : defaultValue));
+    // null = no keystroke has occurred yet (skip debounce on mount)
+    const [pendingValue, setPendingValue] = useState(null);
+    useEffect(() => {
+        if (!isControlled)
+            return;
+        setInternalValue(normalizeValue(value));
+    }, [isControlled, value]);
+    const handleChange = useCallback((nextValue) => {
+        if (!isControlled) {
+            setInternalValue(nextValue);
+        }
+        setPendingValue(nextValue);
+        onImmediateChange === null || onImmediateChange === void 0 ? void 0 : onImmediateChange(nextValue);
+    }, [isControlled, onImmediateChange]);
+    useEffect(() => {
+        var _a;
+        let timeoutId;
+        if (pendingValue !== null) {
+            if (debounceMs <= 0) {
+                (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, pendingValue);
+                setPendingValue(null);
+            }
+            else {
+                timeoutId = window.setTimeout(() => {
+                    var _a;
+                    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, pendingValue);
+                    setPendingValue(null);
+                }, debounceMs);
+            }
+        }
+        return () => {
+            window.clearTimeout(timeoutId);
+        };
+    }, [debounceMs, pendingValue]);
+    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef }, props, { type: "search", value: internalValue, onChange: handleChange, placeholder: placeholder })));
+}
+const ForwardedDInputSearch = forwardRef(DInputSearch);
+ForwardedDInputSearch.displayName = 'DInputSearch';
 
 function DInputMask(props, ref) {
     return (jsx(InputMask, Object.assign({ ref: ref, component: ForwardedDInput }, props)));
@@ -1565,6 +1681,64 @@ function useItemSelection({ getItemIdentifier: getItemIdentifierProp, previousSe
         resetSelectedItems,
         setSelectedItems,
     };
+}
+
+/**
+ * Hook to display a confirmation modal.
+ *
+ * Renders into the portal node specified by `DConfirmModalContainer` (typically `#d-portal`).
+ * The confirm modal floats above the portal stack and handles its own Escape key,
+ * preventing interference with underlying modals.
+ *
+ * Requires both `DContextProvider` wrapping your application AND an explicit
+ * `<DConfirmModalContainer nodeId="d-portal" />` mounted in your app.
+ *
+ * @example
+ * function App() {
+ *   return (
+ *     <DContextProvider>
+ *       <YourContent />
+ *       <DConfirmModalContainer nodeId="d-portal" />
+ *     </DContextProvider>
+ *   );
+ * }
+ *
+ * function MyComponent() {
+ *   const confirm = useConfirmModal({
+ *     title: 'Delete Account',
+ *     message: 'This action cannot be undone.',
+ *     critical: { code: 'DELETE ACCOUNT' },
+ *     onConfirm: async () => { await deleteAccount(); },
+ *   });
+ *
+ *   return <DButton onClick={confirm.open} text="Delete" color="danger" />;
+ * }
+ */
+function useConfirmModal(config) {
+    const store = useConfirmModalStore();
+    const idRef = useRef(`confirm-modal-${Math.random().toString(36).slice(2)}`);
+    const close = useCallback(() => {
+        store.remove(idRef.current);
+        queueMicrotask(() => {
+            var _a;
+            (_a = config.onClose) === null || _a === void 0 ? void 0 : _a.call(config);
+        });
+    }, [store, config]);
+    const open = useCallback(() => {
+        const handleConfirmAction = async () => {
+            try {
+                await config.onConfirm();
+                store.remove(idRef.current);
+            }
+            catch (_a) {
+                // Keep modal open on error
+            }
+        };
+        // Remove any existing entry with this id to prevent duplicates on re-entrancy
+        store.remove(idRef.current);
+        store.push(Object.assign(Object.assign({}, config), { id: idRef.current, onConfirmAction: handleConfirmAction, onCloseAction: close }));
+    }, [store, config, close]);
+    return { open };
 }
 
 function DInputCounter(_a, ref) {
@@ -1698,7 +1872,7 @@ const DEFAULT_VALIDATION_MESSAGES = {
     notMatch: 'The password confirmation and the new password do not match.',
 };
 const DEFAULT_ENABLED_CHECKS = ['uppercase', 'lowercase', 'number', 'specialChar'];
-function DPasswordStrengthMeter({ id, label = 'Password', placeholder, value = '', name, disabled = false, invalid = false, validationMessages = DEFAULT_VALIDATION_MESSAGES, enabledChecks = DEFAULT_ENABLED_CHECKS, className, style, dataAttributes, onChange, }) {
+function DPasswordStrengthMeter({ id, label = 'Password', placeholder, value = '', name, disabled = false, invalid = false, validationMessages = DEFAULT_VALIDATION_MESSAGES, enabledChecks = DEFAULT_ENABLED_CHECKS, className, style, dataAttributes, onChange, readonly = false, }) {
     const [password, setPassword] = useState(value);
     useEffect(() => {
         setPassword(value);
@@ -1707,7 +1881,7 @@ function DPasswordStrengthMeter({ id, label = 'Password', placeholder, value = '
         setPassword(newValue);
         onChange === null || onChange === void 0 ? void 0 : onChange(newValue);
     };
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx(ForwardedDInputPassword, { id: id, label: label, placeholder: placeholder, value: password, name: name, disabled: disabled, invalid: invalid, onChange: handleChange }), jsx(PasswordChecksList, { password: password, validationMessages: validationMessages, enabledChecks: enabledChecks })] })));
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx(ForwardedDInputPassword, { id: id, label: label, placeholder: placeholder, value: password, name: name, disabled: disabled, invalid: invalid, onChange: handleChange, readonly: readonly }), jsx(PasswordChecksList, { password: password, validationMessages: validationMessages, enabledChecks: enabledChecks })] })));
 }
 
 function DInputCheck(_a) {
@@ -2611,82 +2785,210 @@ function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder',
     return (jsxs("div", { className: classNames('d-credit-card', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details", children: [jsx("div", { className: "d-credit-card-number", children: number }), jsx("small", { className: "d-credit-card-holder-text", children: holderText }), jsx("span", { className: "d-credit-card-name", children: name })] })] }));
 }
 
-const getItemClass = (action) => {
-    const base = classNames({
-        'dropdown-item d-flex align-items-center': true,
-        [`dropdown-item-${action.color}`]: !!action.color,
-        disabled: action.disabled,
-    });
-    return base;
-};
-function DDropdown({ actions, dropdownToggle, className, classNameMenu, }) {
+const getItemClass = (action) => classNames({
+    'dropdown-item d-flex align-items-center': true,
+    [`dropdown-item-${action.color}`]: !!action.color,
+    disabled: action.disabled,
+});
+function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal = false, placement = 'auto', }) {
     const [open, setOpen] = useState(false);
+    const [position, setPosition] = useState('down');
+    const [menuCoords, setMenuCoords] = useState(null);
+    // Used in default (non-portal) mode: wraps the entire dropdown
     const dropdownRef = useRef(null);
-    const [position, setPosition] = useState('down'); // 🆕
-    // Cerrar al hacer click fuera
+    // Used in portal mode: ref on the toggle wrapper to read its viewport coords
+    const toggleRef = useRef(null);
+    // Ref on the rendered <ul> — used for outside-click detection in portal mode
+    const menuRef = useRef(null);
+    const toggle = () => {
+        setMenuCoords(null);
+        setOpen((prev) => !prev);
+    };
+    const resolvedInlinePosition = placement === 'auto' ? position : placement;
+    // Compute fixed coords from the toggle's bounding rect (portal mode only)
+    const computePortalCoords = useCallback(() => {
+        if (!toggleRef.current)
+            return;
+        const rect = toggleRef.current.getBoundingClientRect();
+        const spaceRight = window.innerWidth - rect.right;
+        const spaceBottom = window.innerHeight - rect.bottom;
+        const spaceTop = rect.top;
+        let resolvedPlacement;
+        if (placement === 'auto') {
+            if (spaceBottom < 150) {
+                resolvedPlacement = 'up';
+            }
+            else if (spaceRight < 150) {
+                resolvedPlacement = 'start';
+            }
+            else {
+                resolvedPlacement = 'down';
+            }
+        }
+        else {
+            resolvedPlacement = placement;
+        }
+        const openStart = resolvedPlacement === 'start';
+        const openEnd = resolvedPlacement === 'end';
+        const openUp = resolvedPlacement === 'up';
+        let availableHeight = spaceBottom;
+        if (openUp) {
+            availableHeight = spaceTop;
+        }
+        else if (openStart || openEnd) {
+            availableHeight = window.innerHeight - rect.top;
+        }
+        const verticalCoords = openUp
+            ? { bottom: window.innerHeight - rect.top + 4 }
+            : { top: openStart || openEnd ? rect.top : rect.bottom + 4 };
+        let horizontalCoords;
+        if (openStart) {
+            horizontalCoords = { right: window.innerWidth - rect.left + 4 };
+        }
+        else if (openEnd) {
+            horizontalCoords = { left: rect.right + 4 };
+        }
+        else {
+            horizontalCoords = { left: rect.left };
+        }
+        setMenuCoords(Object.assign(Object.assign(Object.assign({}, verticalCoords), horizontalCoords), { minWidth: Math.max(rect.width, 160), maxHeight: `${Math.max(availableHeight - 12, 120)}px` }));
+    }, [placement]);
+    // Outside-click: default mode
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        if (asPortal)
+            return () => { };
+        const handler = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setOpen(false);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [asPortal]);
+    // Outside-click: portal mode (must check both toggle and floating menu)
     useEffect(() => {
-        if (open && dropdownRef.current) {
-            const rect = dropdownRef.current.getBoundingClientRect();
-            const spaceBottom = window.innerHeight - rect.bottom;
-            const spaceRight = window.innerWidth - rect.right;
-            if (spaceBottom < 150) {
-                setPosition('up');
+        if (!asPortal || !open)
+            return () => { };
+        const handler = (event) => {
+            var _a, _b;
+            const target = event.target;
+            if (!((_a = toggleRef.current) === null || _a === void 0 ? void 0 : _a.contains(target)) && !((_b = menuRef.current) === null || _b === void 0 ? void 0 : _b.contains(target))) {
+                setOpen(false);
             }
-            else if (spaceRight < 150) {
-                setPosition('start');
-            }
-            else {
-                setPosition('down');
-            }
-        }
-    }, [open]);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [asPortal, open]);
+    // Auto-position: default mode
+    useEffect(() => {
+        if (asPortal || !open || !dropdownRef.current || placement !== 'auto')
+            return;
+        const rect = dropdownRef.current.getBoundingClientRect();
+        const spaceBottom = window.innerHeight - rect.bottom;
+        const spaceRight = window.innerWidth - rect.right;
+        if (spaceBottom < 150)
+            setPosition('up');
+        else if (spaceRight < 150)
+            setPosition('start');
+        else
+            setPosition('down');
+    }, [asPortal, open, placement]);
+    // Compute + track coords: portal mode
+    // Re-runs whenever the menu opens and keeps coords fresh on scroll/resize
+    useEffect(() => {
+        if (!asPortal || !open)
+            return () => { };
+        computePortalCoords();
+        const update = () => computePortalCoords();
+        window.addEventListener('scroll', update, { passive: true, capture: true });
+        window.addEventListener('resize', update, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', update, { capture: true });
+            window.removeEventListener('resize', update);
+        };
+    }, [asPortal, open, computePortalCoords]);
     let ToggleElement;
     if (dropdownToggle) {
-        if (typeof dropdownToggle === 'function') {
-            ToggleElement = dropdownToggle({ open, toggle: () => setOpen(!open) });
-        }
-        else {
-            ToggleElement = dropdownToggle;
-        }
+        ToggleElement = typeof dropdownToggle === 'function'
+            ? dropdownToggle({ open, toggle })
+            : dropdownToggle;
     }
     else {
-        ToggleElement = (jsx(DButtonIcon, { variant: "link", stopPropagationEnabled: false, "aria-label": "Toggle Dropdown", "aria-haspopup": "menu", "aria-expanded": open, onClick: () => setOpen(!open), icon: "MoreVertical" }));
+        ToggleElement = (jsx(DButtonIcon, { variant: "link", stopPropagationEnabled: false, "aria-label": "Toggle Dropdown", "aria-haspopup": "menu", "aria-expanded": open, onClick: toggle, icon: "MoreVertical" }));
     }
-    return (jsxs("div", { className: classNames(`dropdown drop-${position}`, className), ref: dropdownRef, children: [ToggleElement, jsx("ul", { style: {
-                    position: 'absolute',
-                    top: position === 'up' ? 'auto' : '100%',
-                    bottom: position === 'up' ? '100%' : 'auto',
-                    left: position === 'start' ? 'auto' : 0,
-                    right: position === 'start' ? '0' : 'auto',
-                    transform: 'translateY(4px)',
-                }, className: classNames('dropdown-menu p-2', { show: open }, classNameMenu), children: actions.map((action, index) => {
-                    if (action.isDivider) {
-                        return (jsx("hr", { className: "dropdown-divider" }, index));
-                    }
-                    return (jsx("li", { children: action.href ? (jsxs("a", { className: getItemClass(action), href: action.href, onClick: (e) => {
-                                if (action.disabled) {
-                                    e.preventDefault();
-                                }
-                                else {
-                                    setOpen(false);
-                                }
-                            }, children: [action.icon && (jsx(DIcon, { icon: action.icon, className: "me-2", size: "1rem" })), action.label] })) : (jsxs("button", { className: getItemClass(action), type: "button", onClick: () => {
-                                var _a;
-                                if (!action.disabled) {
-                                    (_a = action.onClick) === null || _a === void 0 ? void 0 : _a.call(action);
-                                    setOpen(false);
-                                }
-                            }, disabled: action.disabled, children: [action.icon && (jsx(DIcon, { icon: action.icon, className: "me-2", size: "1rem" })), action.label] })) }, index));
-                }) })] }));
+    const portalMenuStyle = asPortal && menuCoords
+        ? {
+            position: 'fixed',
+            top: menuCoords.top,
+            bottom: menuCoords.bottom,
+            left: menuCoords.left,
+            right: menuCoords.right,
+            minWidth: menuCoords.minWidth,
+            maxHeight: menuCoords.maxHeight,
+            overflowY: 'auto',
+            zIndex: 1050,
+            transform: 'none',
+        }
+        : undefined;
+    let inlineTop = '100%';
+    if (resolvedInlinePosition === 'up') {
+        inlineTop = 'auto';
+    }
+    else if (resolvedInlinePosition === 'start' || resolvedInlinePosition === 'end') {
+        inlineTop = 0;
+    }
+    let inlineLeft = 0;
+    if (resolvedInlinePosition === 'start') {
+        inlineLeft = 'auto';
+    }
+    else if (resolvedInlinePosition === 'end') {
+        inlineLeft = '100%';
+    }
+    let inlineRight = 'auto';
+    if (resolvedInlinePosition === 'start') {
+        inlineRight = '100%';
+    }
+    let inlineTransform = 'translateY(4px)';
+    if (resolvedInlinePosition === 'up') {
+        inlineTransform = 'translateY(-4px)';
+    }
+    else if (resolvedInlinePosition === 'start') {
+        inlineTransform = 'translateX(-4px)';
+    }
+    else if (resolvedInlinePosition === 'end') {
+        inlineTransform = 'translateX(4px)';
+    }
+    const inlineMenuStyle = {
+        position: 'absolute',
+        top: inlineTop,
+        bottom: resolvedInlinePosition === 'up' ? '100%' : 'auto',
+        left: inlineLeft,
+        right: inlineRight,
+        transform: inlineTransform,
+    };
+    const menuItems = (jsx("ul", { ref: menuRef, role: "menu", className: classNames('dropdown-menu p-2', { show: open }, classNameMenu), style: portalMenuStyle !== null && portalMenuStyle !== void 0 ? portalMenuStyle : inlineMenuStyle, children: actions.map((action, index) => {
+            if (action.isDivider) {
+                return jsx("hr", { className: "dropdown-divider" }, index);
+            }
+            return (jsx("li", { children: action.href ? (jsxs("a", { className: getItemClass(action), href: action.href, onClick: (e) => {
+                        if (action.disabled) {
+                            e.preventDefault();
+                        }
+                        else {
+                            setOpen(false);
+                        }
+                    }, children: [action.icon && jsx(DIcon, { icon: action.icon, className: "me-2", size: "1rem" }), action.label] })) : (jsxs("button", { className: getItemClass(action), type: "button", onClick: () => {
+                        var _a;
+                        if (!action.disabled) {
+                            (_a = action.onClick) === null || _a === void 0 ? void 0 : _a.call(action);
+                            setOpen(false);
+                        }
+                    }, disabled: action.disabled, children: [action.icon && jsx(DIcon, { icon: action.icon, className: "me-2", size: "1rem" }), action.label] })) }, index));
+        }) }));
+    if (asPortal) {
+        return (jsxs("div", { ref: toggleRef, className: classNames('dropdown', className), children: [ToggleElement, open && menuCoords && createPortal(menuItems, document.body)] }));
+    }
+    return (jsxs("div", { className: classNames(`dropdown drop-${resolvedInlinePosition}`, className), ref: dropdownRef, children: [ToggleElement, menuItems] }));
 }
 
 function useScreenshot() {
@@ -2902,28 +3204,109 @@ function render(renderable) {
         return null;
     return typeof renderable === 'function' ? renderable() : renderable;
 }
-function DDataStateWrapper({ isLoading, isError, data, onRetry, renderLoading, renderEmpty, renderError, children, }) {
+function DDataStateWrapper({ isLoading, isError, data, onRetry, messages, renderLoading, renderEmpty, renderError, children, }) {
     // 1. Loading
     if (isLoading) {
         if (renderLoading)
             return render(renderLoading);
-        return jsx(LoadingState, {});
+        return jsx(LoadingState, { ariaLabel: messages === null || messages === void 0 ? void 0 : messages.loading });
     }
     // 2. Error
     if (isError) {
         if (renderError)
             return render(renderError);
-        return (jsx(ErrorState, { onRetry: onRetry }));
+        return (jsx(ErrorState, { onRetry: onRetry, message: messages === null || messages === void 0 ? void 0 : messages.error, retryMessage: messages === null || messages === void 0 ? void 0 : messages.retry }));
     }
     // 3. Empty
     if (!(data === null || data === void 0 ? void 0 : data.length)) {
         if (renderEmpty)
             return render(renderEmpty);
-        return (jsx(EmptyState, {}));
+        return (jsx(EmptyState, { message: messages === null || messages === void 0 ? void 0 : messages.empty }));
     }
     // 4. Success
     return jsx(Fragment, { children: children(data) });
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
+function DConfirmModalUI({ entry }) {
+    const { title = 'Are you sure you want to proceed?', message = 'Please confirm if you want to continue with this action.', confirmLabel = 'Confirm', cancelLabel = 'Cancel', confirmColor = 'primary', critical, onConfirmAction, onCloseAction, } = entry;
+    const [confirmationCode, setConfirmationCode] = useState('');
+    const [internalLoading, setInternalLoading] = useState(false);
+    const isMountedRef = useRef(true);
+    useEffect(() => {
+        const cleanup = () => {
+            isMountedRef.current = false;
+        };
+        return cleanup;
+    }, []);
+    const handleClose = useCallback(() => {
+        onCloseAction();
+    }, [onCloseAction]);
+    const isConfirmDisabled = Boolean(internalLoading
+        || (critical && confirmationCode !== critical.code));
+    const handleConfirmClick = useCallback(() => {
+        setInternalLoading(true);
+        onConfirmAction()
+            .catch(() => undefined)
+            .finally(() => {
+            // Only update state if the component is still mounted.
+            // onConfirmAction() removes the entry on success, which unmounts this component.
+            if (isMountedRef.current) {
+                setInternalLoading(false);
+            }
+        });
+    }, [onConfirmAction]);
+    return (jsxs(DModal$1, { name: entry.id, size: "lg", className: `confirm-modal ${critical ? 'critical-modal' : ''}`, children: [jsx(DModal$1.Header, { onClose: handleClose, showCloseButton: true, children: jsx("h5", { className: "fw-bold", children: title }) }), jsxs(DModal$1.Body, { className: "py-3 px-5", children: [jsx("p", { className: "mb-4", children: message }), critical && (jsx(ForwardedDInput, { type: "text", label: critical.codeLabel || 'Confirmation code', placeholder: critical.inputPlaceholder, value: confirmationCode, onChange: (value) => setConfirmationCode(value), className: "mb-4", autoFocus: true }))] }), jsxs(DModal$1.Footer, { children: [jsx(DButton, { text: cancelLabel, variant: "outline", color: "secondary", onClick: handleClose, disabled: internalLoading }), jsx(DButton, { text: confirmLabel, color: confirmColor, onClick: handleConfirmClick, disabled: isConfirmDisabled, loading: internalLoading })] })] }));
+}
+
+/**
+ * Container that renders confirm modals into the specified portal node.
+ *
+ * Must be explicitly mounted by the user (typically as a sibling of app content
+ * within `DContextProvider`). The container floats above the portal stack and
+ * intercepts Escape key events to close the top confirm modal without affecting
+ * underlying modals or overlays.
+ *
+ * @example
+ * <DContextProvider>
+ *   <App />
+ *   <DConfirmModalContainer nodeId="d-portal" />
+ * </DContextProvider>
+ */
+function DConfirmModalContainer({ nodeId }) {
+    const store = useConfirmModalStore();
+    const [entries, setEntries] = useState([]);
+    useEffect(() => {
+        const unsubscribe = store.subscribe((next) => {
+            setEntries(next);
+        });
+        return unsubscribe;
+    }, [store]);
+    // Capture Escape keydown to close the top confirm modal without affecting
+    // the underlying portal stack (which also handles Escape).
+    useEffect(() => {
+        if (entries.length === 0) {
+            return () => { };
+        }
+        const handleEscapeCapture = (event) => {
+            if (event.key === 'Escape') {
+                // Close the top (last) confirm modal
+                entries[entries.length - 1].onCloseAction();
+                // Prevent the event from reaching other handlers (e.g., DPortalContextProvider)
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        };
+        document.addEventListener('keydown', handleEscapeCapture, true);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeCapture, true);
+        };
+    }, [entries]);
+    const portalNode = document.getElementById(nodeId);
+    if (!portalNode || entries.length === 0) {
+        return null;
+    }
+    return createPortal(jsx(AnimatePresence, { children: entries.map((entry) => (jsxs(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' }, children: [jsx("div", { className: "backdrop backdrop-confirm-modal", onClick: entry.onCloseAction, role: "presentation" }), jsx(DConfirmModalUI, { entry: entry })] }, entry.id))) }), portalNode);
+}
+
+export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useConfirmModal, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map

@@ -8,6 +8,7 @@ export type DropdownAction = {
     isDivider?: boolean;
     label: string;
 };
+type DropdownPlacement = 'auto' | 'down' | 'up' | 'start' | 'end';
 type Props = {
     actions: DropdownAction[];
     dropdownToggle?: ((props: {
@@ -16,6 +17,8 @@ type Props = {
     }) => React.ReactNode);
     className?: string;
     classNameMenu?: string;
+    asPortal?: boolean;
+    placement?: DropdownPlacement;
 };
-export default function DDropdown({ actions, dropdownToggle, className, classNameMenu, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal, placement, }: Props): import("react").JSX.Element;
 export {};

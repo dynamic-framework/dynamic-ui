@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps, BreakpointSize } from '../interface';
 export type Step = {
     label: string;
@@ -15,5 +16,5 @@ type Props = BaseProps & {
     completed?: boolean;
     breakpoint?: BreakpointSize;
 };
-export default function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, breakpoint, className, completed, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, breakpoint, className, completed, style, dataAttributes, }: Props): import("react").JSX.Element;
 export {};

@@ -8,4 +8,4 @@ export type DErrorBoundaryProps = PropsWithChildren<{
     onReset?: () => void;
     onError?: (error: unknown, info: ErrorInfo) => void;
 }>;
-export default function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }: DErrorBoundaryProps): import("react/jsx-runtime").JSX.Element;
+export default function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }: DErrorBoundaryProps): import("react").JSX.Element;

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { BaseProps, FamilyIconProps, PinInputMode, PinInputType } from '../interface';
 type Props = BaseProps & FamilyIconProps & {
     id?: string;
@@ -16,5 +17,5 @@ type Props = BaseProps & FamilyIconProps & {
     onChange?: (value: string) => void;
     'aria-label'?: string;
 };
-export default function DInputPin({ id: idProp, label, placeholder, type, disabled, loading, secret, characters, innerInputMode, hint, invalid, valid, className, style, dataAttributes, onChange, 'aria-label': ariaLabel, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputPin({ id: idProp, label, placeholder, type, disabled, loading, secret, characters, innerInputMode, hint, invalid, valid, className, style, dataAttributes, onChange, 'aria-label': ariaLabel, }: Props): import("react").JSX.Element;
 export {};

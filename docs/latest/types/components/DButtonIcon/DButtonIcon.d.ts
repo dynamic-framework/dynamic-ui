@@ -14,5 +14,5 @@ type Props = BaseProps & FamilyIconProps & React.ButtonHTMLAttributes<HTMLButton
     rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
     onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
-export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled, color, loading, href, target, rel, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp, ...rest }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled, color, loading, href, target, rel, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp, ...rest }: Props): import("react").JSX.Element;
 export {};
