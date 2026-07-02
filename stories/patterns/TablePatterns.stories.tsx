@@ -568,7 +568,9 @@ export const CompleteTable: Story = {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={selectedItems.length === ROWS.length}
+                ariaLabel="Select all rows"
+                checked={ROWS.length > 0 && selectedItems.length === ROWS.length}
+                indeterminate={selectedItems.length > 0 && selectedItems.length < ROWS.length}
                 onChange={(event) => {
                   setSelectedItems(event.target.checked ? ROWS : []);
                 }}
