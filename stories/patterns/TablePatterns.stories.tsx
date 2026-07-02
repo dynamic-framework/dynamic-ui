@@ -544,6 +544,86 @@ function CompleteTableComponent() {
 
 export const CompleteTable: Story = {
   render: () => <CompleteTableComponent />,
+  parameters: {
+    docs: {
+      source: {
+        code: `function CompleteTableExample() {
+  const {
+    isSelectedItem,
+    toggleSelectedItem,
+    selectedItems,
+    setSelectedItems,
+  } = useItemSelection();
+
+  const [page, setPage] = useState(1);
+  const [rows, setRows] = useState(3);
+  const totalPages = 5;
+
+  return (
+    <DBox style={{ width: '1100px' }}>
+      <table className="table table-hover">
+        <caption>List of users</caption>
+        <thead>
+          <tr>
+            <th>
+              <DInputCheck
+                type="checkbox"
+                checked={selectedItems.length === ROWS.length}
+                onChange={(event) => {
+                  setSelectedItems(event.target.checked ? ROWS : []);
+                }}
+              />
+            </th>
+            {HEADER_ENTRIES.map(([key, value]) => (
+              <th style={{ width: '25%' }} key={key}>{value}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {ROWS.map((row) => (
+            <tr key={row.id}>
+              <td>
+                <DInputCheck
+                  type="checkbox"
+                  onChange={() => toggleSelectedItem(row)}
+                  checked={isSelectedItem(row)}
+                />
+              </td>
+              {HEADER_ENTRIES.map(([key]) => (
+                <td key={\`\${row.id}-\${key}\`}>
+                  {row[key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="row">
+        <div className="col-2">
+          <small>Per Page </small>
+          <DInput
+            className="d-inline-block"
+            style={{ width: '36px' }}
+            size="sm"
+            type="number"
+            value={rows.toString()}
+            onChange={(value) => setRows(parseInt(value, 10))}
+          />
+        </div>
+        <div className="col-8">
+          <DPaginator
+            current={page}
+            onPageChange={setPage}
+            total={totalPages}
+          />
+        </div>
+      </div>
+    </DBox>
+  );
+}`,
+      },
+    },
+  },
 };
 
 function CompositionTableLoading() {
@@ -1533,6 +1613,211 @@ export const TransactionHistoryOffcanvas: Story = {
     docs: {
       description: {
         story: 'Uses `DContextProvider` + `openPortal` + `DOffcanvas` to open a responsive advanced-filters panel with apply/clear actions.',
+      },
+      source: {
+        code: `function TransactionScreeningFiltersOffcanvas({ name, payload }) {
+  const { closePortal } = useDPortalContext();
+  const [typeFilter, setTypeFilter] = useState(payload.values.typeFilter);
+  const [statusFilter, setStatusFilter] = useState(payload.values.statusFilter);
+  const [minAmountFilter, setMinAmountFilter] = useState(payload.values.minAmountFilter);
+
+  useEffect(() => {
+    setTypeFilter(payload.values.typeFilter);
+    setStatusFilter(payload.values.statusFilter);
+    setMinAmountFilter(payload.values.minAmountFilter);
+  }, [payload.values.minAmountFilter, payload.values.statusFilter, payload.values.typeFilter]);
+
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable
+      openFrom="end"
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h6 className="mb-0" id={\`\${name}Label\`}>
+          Advanced Filters
+        </h6>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Type</small>
+          <select
+            aria-label="Filter by type"
+            className="form-select"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="Credit">Credit</option>
+            <option value="Debit">Debit</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Status</small>
+          <select
+            aria-label="Filter by status"
+            className="form-select"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="Posted">Posted</option>
+            <option value="Pending">Pending</option>
+            <option value="Flagged">Flagged</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
+          <DInput
+            type="number"
+            min={0}
+            value={minAmountFilter}
+            aria-label="Minimum absolute amount"
+            onChange={setMinAmountFilter}
+          />
+        </div>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            payload.onApply({ typeFilter, statusFilter, minAmountFilter });
+            closePortal();
+          }}
+        >
+          Apply
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-secondary"
+          onClick={() => {
+            payload.onClear();
+            closePortal();
+          }}
+        >
+          Clear Filters
+        </button>
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function TransactionHistoryOffcanvasContent() {
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [minAmountFilter, setMinAmountFilter] = useState('0');
+  const { openPortal } = useDPortalContext();
+
+  const currentFilters = { typeFilter, statusFilter, minAmountFilter };
+  const minAmount = Math.max(0, Number(minAmountFilter) || 0);
+  const query = search.trim().toLowerCase();
+
+  const rows = FINANCE_TRANSACTIONS.filter((row) => {
+    const matchesSearch = query.length === 0
+      || row.id.toLowerCase().includes(query)
+      || row.reference.toLowerCase().includes(query)
+      || row.account.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || row.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    const matchesAmount = Math.abs(row.amount) >= minAmount;
+    return matchesSearch && matchesType && matchesStatus && matchesAmount;
+  });
+
+  return (
+    <DBox style={{ width: '100%', position: 'relative' }}>
+      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
+        <div style={{ minWidth: '320px', flex: 1 }}>
+          <DInput
+            type="text"
+            value={search}
+            placeholder="Search by id, account, or reference"
+            aria-label="Search transaction"
+            onChange={setSearch}
+          />
+        </div>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => openPortal('filters', {
+            values: currentFilters,
+            onApply: (values) => {
+              setTypeFilter(values.typeFilter);
+              setStatusFilter(values.statusFilter);
+              setMinAmountFilter(values.minAmountFilter);
+            },
+            onClear: () => {
+              setTypeFilter('all');
+              setStatusFilter('all');
+              setMinAmountFilter('0');
+            },
+          })}
+        >
+          Advanced Filters
+        </button>
+      </div>
+
+      {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
+        <div className="d-flex gap-2 flex-wrap mb-3">
+          {typeFilter !== 'all' && <DChip text={\`Type: \${typeFilter}\`} color="primary" showClose onClose={() => setTypeFilter('all')} />}
+          {statusFilter !== 'all' && <DChip text={\`Status: \${statusFilter}\`} color="warning" showClose onClose={() => setStatusFilter('all')} />}
+          {minAmount > 0 && <DChip text={\`Min Amount: \${USD.format(minAmount)}\`} color="secondary" showClose onClose={() => setMinAmountFilter('0')} />}
+        </div>
+      )}
+
+      <table className="table table-striped table-hover align-middle">
+        <caption>Transaction Screening</caption>
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>
+                <div className="fw-semibold">{row.id}</div>
+                <small className="text-secondary">{row.reference}</small>
+              </td>
+              <td>{row.date}</td>
+              <td>{row.account}</td>
+              <td>
+                <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
+              </td>
+              <td className={\`text-end fw-semibold \${row.amount >= 0 ? 'text-success' : 'text-danger'}\`}>
+                {USD.format(row.amount)}
+              </td>
+            </tr>
+          ))}
+          {rows.length === 0 && (
+            <tr>
+              <td colSpan={5} className="text-center text-secondary py-4">
+                No transactions match your current filters.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}
+
+export function TransactionHistoryOffcanvasExample() {
+  return (
+    <DContextProvider
+      portalName="tablePatternsTransactionFiltersPortal"
+      availablePortals={{ filters: TransactionScreeningFiltersOffcanvas }}
+    >
+      <TransactionHistoryOffcanvasContent />
+    </DContextProvider>
+  );
+}`,
       },
     },
   },
