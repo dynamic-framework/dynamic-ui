@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.2...v2.6.0) (2026-07-02)
+
+
+### Features
+
+* add new examples for DInputRange component in stories ([fcd6636](https://github.com/dynamic-framework/dynamic-ui/commit/fcd6636036adf63f685ebd2bd0e1639faea6b210))
+* add useConfirmModal hook and add some useful patterns ([#1086](https://github.com/dynamic-framework/dynamic-ui/issues/1086)) ([cf7e238](https://github.com/dynamic-framework/dynamic-ui/commit/cf7e238833f5204cd836df4a88b81a30394e11bc))
+* **DDataStateWrapper:** add customizable messages prop ([#1056](https://github.com/dynamic-framework/dynamic-ui/issues/1056)) ([a58e338](https://github.com/dynamic-framework/dynamic-ui/commit/a58e338e7f4ec38d0198485109736df41376a5ae))
+* **DInputSearch:** add new component with debounce functionality and tests ([#1059](https://github.com/dynamic-framework/dynamic-ui/issues/1059)) ([5997aa7](https://github.com/dynamic-framework/dynamic-ui/commit/5997aa7585aef9c2c0583f634bd73ed8c4d5d620))
+* **docs:** add DInputSwitch patterns stories with examples and documentation ([#1069](https://github.com/dynamic-framework/dynamic-ui/issues/1069)) ([839c341](https://github.com/dynamic-framework/dynamic-ui/commit/839c3417b4f6ad069fa5d3b4ca89f1810834eb77))
+* **docs:** add DProgress patterns story and examples ([#1078](https://github.com/dynamic-framework/dynamic-ui/issues/1078)) ([35c2ea5](https://github.com/dynamic-framework/dynamic-ui/commit/35c2ea56833d6f3e52c787c9a6887a01ffe48bf3))
+* **docs:** add mobile patterns ([#1101](https://github.com/dynamic-framework/dynamic-ui/issues/1101)) ([741bcb3](https://github.com/dynamic-framework/dynamic-ui/commit/741bcb3c743721827580796eed2326070d393488))
+* **docs:** add new examples for DInputRange component in stories ([#1068](https://github.com/dynamic-framework/dynamic-ui/issues/1068)) ([fcd6636](https://github.com/dynamic-framework/dynamic-ui/commit/fcd6636036adf63f685ebd2bd0e1639faea6b210))
+* **docs:** add transition examples for DModal and DOffcanvas ([#1098](https://github.com/dynamic-framework/dynamic-ui/issues/1098)) ([b03f93b](https://github.com/dynamic-framework/dynamic-ui/commit/b03f93b37a53122f6f1c623d668d544fa5dab232))
+* **docs:** add usage of modal and offcanvas stories with openPortal ([#1061](https://github.com/dynamic-framework/dynamic-ui/issues/1061)) ([8a956f6](https://github.com/dynamic-framework/dynamic-ui/commit/8a956f6457f62907dca04bb2e587b11b7ee8d106))
+* **docs:** change "patterns" folder name to "use-cases" ([#1082](https://github.com/dynamic-framework/dynamic-ui/issues/1082)) ([715b4eb](https://github.com/dynamic-framework/dynamic-ui/commit/715b4eb34c6ec1537ef1080169c6cb9f4ecf025c))
+* **docs:** enhance DContextProvider stories with currency and breakpoints ([#1095](https://github.com/dynamic-framework/dynamic-ui/issues/1095)) ([acf9c33](https://github.com/dynamic-framework/dynamic-ui/commit/acf9c33994eee4e82608395f6240272a70352084))
+* **docs:** enhance table patterns ([#1093](https://github.com/dynamic-framework/dynamic-ui/issues/1093)) ([5f99aaa](https://github.com/dynamic-framework/dynamic-ui/commit/5f99aaa8707abb78443513429bc61d4b0e13ffd8))
+* **docs:** reorganize Storybook navigation, rename use-cases to patterns ([#1090](https://github.com/dynamic-framework/dynamic-ui/issues/1090)) ([4a883fc](https://github.com/dynamic-framework/dynamic-ui/commit/4a883fc2ceb72fe6db2455e757e45dc39c98caab))
+* **docs:** update DButtonIcon stories to include all variants and colors ([#1116](https://github.com/dynamic-framework/dynamic-ui/issues/1116)) ([7708a65](https://github.com/dynamic-framework/dynamic-ui/commit/7708a650aa6cffb5037830a41ed1a8dd8a650236))
+* **docs:** update QuickStart and Readme node requirements ([#1080](https://github.com/dynamic-framework/dynamic-ui/issues/1080)) ([8640c76](https://github.com/dynamic-framework/dynamic-ui/commit/8640c76e1786a14ad88a1609894bf096a3929fa9))
+* export empty, error and loading state components ([#1079](https://github.com/dynamic-framework/dynamic-ui/issues/1079)) ([c67137e](https://github.com/dynamic-framework/dynamic-ui/commit/c67137e02a0c06da33bf4aae0e7ae8d70d7886e2))
+* **tokens:** add token-overrides.json artifact and CDN publication ([#1111](https://github.com/dynamic-framework/dynamic-ui/issues/1111)) ([36b5524](https://github.com/dynamic-framework/dynamic-ui/commit/36b5524323d7d11cf23ece8b48a2d186e250bf86))
+
+
+### Bug Fixes
+
+* **DButton:** adjustment warning color contrast for soft variant ([#1094](https://github.com/dynamic-framework/dynamic-ui/issues/1094)) ([a90a92f](https://github.com/dynamic-framework/dynamic-ui/commit/a90a92fda94a9438f12cf2ce78bf6e5384f1d9fd))
+* **DDatePicker:** normalize react-datepicker import for test environments ([#1091](https://github.com/dynamic-framework/dynamic-ui/issues/1091)) ([c5769ad](https://github.com/dynamic-framework/dynamic-ui/commit/c5769ad6441bf5a6ae2bfc5e6a505e8318873763))
+* **DInput:** correct action name for onIconEndClick stories ([#1088](https://github.com/dynamic-framework/dynamic-ui/issues/1088)) ([ad537a4](https://github.com/dynamic-framework/dynamic-ui/commit/ad537a492538454bf68cbd5279c4e939437850f9))
+* variable references in stylesheets ([#1117](https://github.com/dynamic-framework/dynamic-ui/issues/1117)) ([bc491ab](https://github.com/dynamic-framework/dynamic-ui/commit/bc491ab5e1c2fd2ebc3f9bcc093d3c969df5f7e8))
+
 ## [2.5.2](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.1...v2.5.2) (2026-05-28)
 
 
