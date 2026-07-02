@@ -39,6 +39,10 @@ export default {
     disableTelemetry: true,
   },
 
+  features: {
+    componentsManifest: true,
+  },
+
   staticDirs: [
     './public',
     '../dist',

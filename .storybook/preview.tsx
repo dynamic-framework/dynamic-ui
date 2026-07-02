@@ -72,7 +72,7 @@ const config: Preview = {
       },
     },
   },
-  tags: ['autodocs']
+  tags: ['autodocs', 'dev', 'test', 'manifest']
 };
 
 export default config;
