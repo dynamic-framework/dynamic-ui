@@ -34,11 +34,15 @@ jobs:
         run: |
           node scripts/generate-api.mjs
           node scripts/generate-schema.mjs
+          node scripts/generate-token-overrides.mjs
+          node scripts/generate-token-overrides-schema.mjs
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
       - name: Validate api.json against schema/v1.json
         run: npm run validate:registry
+      - name: Validate token-overrides.json against token-overrides.v1.json
+        run: npm run validate:token-overrides
       - name: Fetch existing manifest from CDN
         run: |
           HTTP_STATUS=$(curl -s -o /tmp/manifest-prev.json -w "%{http_code}" \
@@ -112,6 +116,25 @@ jobs:
             s3://dynamicframework-cdn/assets/schema/v1.json \
             --acl public-read \
             --cache-control "public, max-age=86400"
+      - name: Upload token-overrides.json to CDN (versioned)
+        run: |
+          aws s3 cp registry/token-overrides.json \
+            s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/tokens/token-overrides.json \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
+      - name: Upload token-overrides.json to CDN (latest — stable releases only)
+        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+        run: |
+          aws s3 cp registry/token-overrides.json \
+            s3://dynamicframework-cdn/assets/latest/ui-react/tokens/token-overrides.json \
+            --acl public-read \
+            --cache-control "public, max-age=300, must-revalidate"
+      - name: Upload token-overrides JSON Schema to CDN
+        run: |
+          aws s3 cp registry/schema/token-overrides.v1.json \
+            s3://dynamicframework-cdn/assets/schema/token-overrides.v1.json \
+            --acl public-read \
+            --cache-control "public, max-age=86400"
       - name: Upload manifest to CDN
         run: |
           aws s3 cp registry/manifest.json \
@@ -121,7 +144,7 @@ jobs:
       - name: Smoke test — verify versioned assets are accessible on CDN with application/json content-type
         run: |
           BASE="${{ env.CDN_BASE_URL }}/${{ steps.version.outputs.semver }}/ui-react"
-          for path in "api.json" "manifests/components.json" "manifests/docs.json"; do
+          for path in "api.json" "manifests/components.json" "manifests/docs.json" "tokens/token-overrides.json"; do
             URL="$BASE/$path"
             echo "Checking $URL"
             success=0

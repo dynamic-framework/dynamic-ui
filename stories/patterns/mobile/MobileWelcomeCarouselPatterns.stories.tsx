@@ -6,9 +6,9 @@ import {
   DButton,
   DCarousel,
   DIcon,
-} from '../../src';
+} from '../../../src';
 
-import DocsTemplate from './docs/Template.mdx';
+import DocsTemplate from '../docs/Template.mdx';
 
 type OnboardingSlide = {
   id: string;
@@ -230,7 +230,7 @@ function WelcomeOnboardingSplitActionsExample() {
 }`;
 
 const meta: Meta<typeof DBox> = {
-  title: 'Mobile Patterns/Mobile Welcome Carousel',
+  title: 'Patterns/Mobile/Welcome Carousel',
   component: DBox,
   parameters: {
     docs: {

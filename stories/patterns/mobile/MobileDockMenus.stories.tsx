@@ -12,9 +12,9 @@ import {
   DButtonIcon,
   DDropdown,
   DIcon,
-} from '../../src';
+} from '../../../src';
 
-import DocsTemplate from './docs/Template.mdx';
+import DocsTemplate from '../docs/Template.mdx';
 
 type DockItem = {
   id: string;
@@ -65,7 +65,7 @@ const TEXT_DOCK_ITEMS: TextDockItem[] = [
 ];
 
 const meta: Meta<typeof DBox> = {
-  title: 'Mobile Patterns/Mobile Dock Menus',
+  title: 'Patterns/Mobile/Dock Menus',
   component: DBox,
   parameters: {
     docs: {
@@ -559,7 +559,7 @@ function ScrollDockWithGradient() {
   useEffect(() => {
     const element = scrollRef.current;
     if (!element) {
-      return () => {};
+      return () => { };
     }
 
     const updateFadeState = () => {
