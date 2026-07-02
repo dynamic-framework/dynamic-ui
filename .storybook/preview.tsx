@@ -61,17 +61,12 @@ const config: Preview = {
           [
             'Quick Start',
             'Components',
-            [
-              '*',
-            ],
-            'Patterns',
-            [
-              '*'
-            ],
-            'Utils',
-            [
-              '*'
-            ]
+            '*'
+          ],
+          'Patterns',
+          [
+            'Mobile',
+            '*'
           ],
         ],
       },

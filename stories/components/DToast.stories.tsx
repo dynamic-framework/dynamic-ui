@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DToast from '../../src/components/DToast/DToast';
+import { DToast } from '../../src/components';
 import { DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
@@ -12,6 +12,9 @@ const config: Meta<typeof DToast> = {
     docs: {
       description: {
         component: `
+> ⚠️ To achieve the behavior of a toast it is necessary to use the **\`DToastContainer\`** and the **\`useDToast\`** hook. For detailed guidance on the **correct usage** of toasts, please refer to the [Toast Usage](/docs/design-system-components-toast-usage--docs) page in our documentation.
+
+
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)

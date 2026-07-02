@@ -17,6 +17,7 @@ function Bomb({ explode }: { explode: boolean }) {
 }
 
 // Suppress console.error for tests that intentionally throw
+// eslint-disable-next-line no-console
 const originalConsoleError = console.error;
 beforeAll(() => {
   // eslint-disable-next-line no-console

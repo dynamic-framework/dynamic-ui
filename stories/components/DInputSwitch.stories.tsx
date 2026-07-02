@@ -185,3 +185,40 @@ export const WithInputClassName: Story = {
     inputClassName: 'border-2',
   },
 };
+
+export const SeeMoreExamples: Story = {
+  name: 'See More Examples',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: { story: '' },
+      canvas: { sourceState: 'hidden' },
+      source: { code: null },
+    },
+  },
+  render: () => (
+    <div
+      className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+      role="note"
+      aria-label="See more examples"
+    >
+      <span className="fs-4" aria-hidden="true">💡</span>
+      <div>
+        <strong className="d-block mb-1">Looking for more examples?</strong>
+        <span className="text-secondary">
+          To see more examples, you can review the
+          {' '}
+          <a href="/?path=/docs/patterns-input-switch--docs" target="_parent">
+            <strong>Patterns / Input Switch</strong>
+          </a>
+          {' '}
+          stories, where you will find real-world usage patterns with descriptions
+          and full-row highlighting using CSS
+          {' '}
+          <code>:has()</code>
+          .
+        </span>
+      </div>
+    </div>
+  ),
+};

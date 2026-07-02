@@ -27,6 +27,8 @@ export {
 export type { DLayoutGap } from './DLayout';
 export { default as DIconBase } from './DIconBase';
 export { default as DInput } from './DInput';
+export { default as DInputSearch } from './DInputSearch';
+export type { DInputSearchProps } from './DInputSearch';
 export { default as DInputMask } from './DInputMask';
 export { default as DInputCounter } from './DInputCounter';
 export { default as DInputCurrency } from './DInputCurrency';
@@ -89,4 +91,12 @@ export {
   type FallbackProps,
   getErrorMessage,
 } from './DErrorBoundary';
-export { default as DDataStateWrapper } from './DDataStateWrapper';
+export {
+  default as DDataStateWrapper,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+} from './DDataStateWrapper';
+export type { DDataStateMessages } from './DDataStateWrapper';
+export { default as DConfirmModalContainer } from './DConfirmModal/DConfirmModalContainer';
+export type { ConfirmModalEntry, ConfirmModalStore } from './DConfirmModal/types';

@@ -25,6 +25,7 @@ type Props = BaseProps & {
   validationMessages?: ValidationMessages;
   enabledChecks?: ValidationCheck[];
   onChange?: (value: string) => void;
+  readonly?: boolean;
 };
 
 const DEFAULT_VALIDATION_MESSAGES: ValidationMessages = {
@@ -51,6 +52,7 @@ export default function DPasswordStrengthMeter({
   style,
   dataAttributes,
   onChange,
+  readonly = false,
 }: Props) {
   const [password, setPassword] = useState<string>(value);
 
@@ -74,6 +76,7 @@ export default function DPasswordStrengthMeter({
         disabled={disabled}
         invalid={invalid}
         onChange={handleChange}
+        readonly={readonly}
       />
 
       <PasswordChecksList

@@ -99,10 +99,10 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     },
     variant: {
       control: 'select',
-      options: [undefined, 'outline', 'link', 'soft'],
+      options: ['solid', 'outline', 'link', 'soft', undefined],
       table: {
         defaultValue: {
-          summary: 'undefined',
+          summary: 'solid',
         },
         category: 'Appearance',
       },
@@ -220,7 +220,7 @@ export const Example: Story = {
   args: {
     text: 'Default',
     color: 'primary',
-    variant: undefined,
+    variant: 'solid',
     loading: false,
     loadingText: undefined,
     iconEnd: undefined,

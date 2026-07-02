@@ -17,7 +17,7 @@ import './styles/custom.scss';
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
-  title: 'Patterns/Form Patterns',
+  title: 'Patterns/Form',
   component: DBox,
   parameters: {
     docs: {

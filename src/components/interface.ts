@@ -51,7 +51,7 @@ export type AlertThemeIconMap = {
   [state in ComponentStateColor]: string;
 };
 
-export type ButtonVariant = 'outline' | 'link' | 'soft';
+export type ButtonVariant = 'solid' | 'outline' | 'link' | 'soft';
 export type ButtonType = 'submit' | 'reset' | 'button';
 
 export type InputCheckType = 'checkbox' | 'radio';

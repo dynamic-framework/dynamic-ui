@@ -107,7 +107,7 @@ const defaultCard = {
   name: 'John Doe',
   number: '**** **** **** 1234',
   brand: 'visa',
-};
+} as const;
 
 export const Default: Story = {
   render: (args) => (

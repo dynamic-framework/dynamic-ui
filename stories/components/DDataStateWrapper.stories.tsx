@@ -1,8 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { DDataStateWrapper, DBox } from '../../src/components';
+import {
+  DDataStateWrapper,
+  DBox,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+} from '../../src/components';
 
 /**
  * \`DDataStateWrapper\` is a utility component designed to handle common data fetching states:
@@ -21,7 +30,7 @@ const meta: Meta<typeof DDataStateWrapper> = {
     docs: {
       description: {
         component:
-          'Easily manage UI transitions between different data states. Wrap your content and provide the current state flags.',
+          'Easily manage UI transitions between different data states. Wrap your content and provide the current state flags. **Standalone components:** `EmptyState`, `ErrorState`, and `LoadingState` are also available as individual exports for use outside of `DDataStateWrapper` when you need to display these states independently.',
       },
     },
   },
@@ -98,6 +107,12 @@ const meta: Meta<typeof DDataStateWrapper> = {
       },
       control: false,
     },
+    messages: {
+      description: 'Override the default built-in strings without replacing the default markup. The loading key maps to the spinner aria-label (accessibility label, not visible text); empty/error/retry map to visible UI text. All keys are optional.',
+      table: {
+        category: 'Customization',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -120,7 +135,7 @@ export const Default: Story = {
     isLoading: false,
     isError: false,
     data: [],
-    children: (data) => (
+    children: (data: unknown) => (
       <ul className="list-group">
         {(data as string[]).map((item) => (
           <li
@@ -182,6 +197,100 @@ export const Error: Story = {
 };
 
 /**
+ * Pass a `messages` object to override the hardcoded default strings without
+ * replacing the built-in markup.  All keys are optional — only supply what you
+ * need (e.g. from an i18n catalogue).
+ */
+export const CustomMessages: Story = {
+  render: function Render(args) {
+    const [state, setState] = useState({
+      isLoading: args.isLoading,
+      isError: args.isError,
+      data: args.data,
+    });
+
+    useEffect(() => {
+      setState({
+        isLoading: args.isLoading,
+        isError: args.isError,
+        data: args.data,
+      });
+    }, [args.isLoading, args.isError, args.data]);
+
+    const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
+      setState({
+        isLoading: loading,
+        isError: error,
+        data,
+      });
+    };
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <div className="d-flex gap-2 mb-3">
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => setStatus(true, false, [])}
+          >
+            Loading
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => setStatus(false, true, [])}
+          >
+            Error
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => setStatus(false, false, [])}
+          >
+            Empty
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-success btn-sm"
+            onClick={() => setStatus(false, false, ['Alpha', 'Beta', 'Gamma'])}
+          >
+            Success
+          </button>
+        </div>
+        <DDataStateWrapper
+          {...args}
+          isLoading={state.isLoading}
+          isError={state.isError}
+          data={state.data}
+        />
+      </div>
+    );
+  },
+  args: {
+    isLoading: false,
+    isError: false,
+    data: [],
+    messages: {
+      loading: 'Cargando…',
+      empty: 'Sin datos disponibles.',
+      error: 'Ocurrió un error inesperado.',
+      retry: 'Reintentar',
+    },
+    children: (data: unknown) => (
+      <ul className="list-group">
+        {(data as string[]).map((item) => (
+          <li key={item} className="list-group-item">{item}</li>
+        ))}
+      </ul>
+    ),
+  },
+  argTypes: {
+    isLoading: { control: 'boolean' },
+    isError: { control: 'boolean' },
+  },
+};
+
+/**
  * Demonstrates how to override the default states with custom components.
  * This story is interactive, allowing you to test each state using the buttons below.
  */
@@ -192,6 +301,14 @@ export const CustomTemplates: Story = {
       isError: args.isError,
       data: args.data,
     });
+
+    useEffect(() => {
+      setState({
+        isLoading: args.isLoading,
+        isError: args.isError,
+        data: args.data,
+      });
+    }, [args.isLoading, args.isError, args.data]);
 
     const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
       setState({
@@ -238,7 +355,7 @@ export const CustomTemplates: Story = {
           {...args}
           isLoading={state.isLoading}
           isError={state.isError}
-          data={state.data as unknown[]}
+          data={state.data}
         />
       </div>
     );
@@ -300,7 +417,7 @@ export const CustomTemplates: Story = {
         </button>
       </DBox>
     ),
-    children: (data) => (
+    children: (data: unknown) => (
       <div>
         Data loaded:
         {' '}
@@ -316,4 +433,51 @@ export const CustomTemplates: Story = {
       control: 'boolean',
     },
   },
+};
+
+/**
+ * Showcases the individual state components that are also available as standalone exports:
+ * - **EmptyState**: Displays when there is no data, with optional icon, message, and action button.
+ * - **ErrorState**: Displays error messages with an optional retry button.
+ * - **LoadingState**: Displays a loading spinner with accessibility support.
+ *
+ * These can be imported and used independently
+ * when you don't need the full DDataStateWrapper orchestration.
+ */
+export const StandaloneStates: Story = {
+  render: () => (
+    <div className="d-flex flex-column gap-4">
+      <div>
+        <h6 className="text-muted mb-3">EmptyState</h6>
+        <EmptyState
+          message="No items found"
+          icon="Search"
+          actionText="Create New"
+          onAction={() => undefined}
+        />
+      </div>
+      <div>
+        <h6 className="text-muted mb-3">ErrorState (Danger)</h6>
+        <ErrorState
+          message="Failed to load data. Please check your connection."
+          onRetry={() => undefined}
+          retryMessage="Retry"
+          color="danger"
+        />
+      </div>
+      <div>
+        <h6 className="text-muted mb-3">ErrorState (Warning)</h6>
+        <ErrorState
+          message="Something went wrong, but you can try again."
+          onRetry={() => undefined}
+          retryMessage="Try Again"
+          color="warning"
+        />
+      </div>
+      <div>
+        <h6 className="text-muted mb-3">LoadingState</h6>
+        <LoadingState ariaLabel="Loading your data..." />
+      </div>
+    </div>
+  ),
 };

@@ -10,7 +10,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta = {
-  title: 'Patterns/Quick Actions Patterns',
+  title: 'Patterns/Quick Actions',
   parameters: {
     docs: {
       page: DocsTemplate,
@@ -56,7 +56,7 @@ export const BasicQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary" />
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
             <h6 className="mb-1 text-center">Transfer</h6>
             <small className="text-body-secondary text-center">Send money easily</small>
           </button>
@@ -68,7 +68,7 @@ export const BasicQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-success" />
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
             <h6 className="mb-1 text-center">Pay Bills</h6>
             <small className="text-body-secondary text-center">Manage payments</small>
           </button>
@@ -80,7 +80,7 @@ export const BasicQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-info" />
+            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
             <h6 className="mb-1 text-center">Loans</h6>
             <small className="text-body-secondary text-center">Apply for credit</small>
           </button>
@@ -92,7 +92,7 @@ export const BasicQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="mb-3 text-indigo-500" />
+            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="mb-3 text-indigo  bg-gray-50-500 bg-gray-50" />
             <h6 className="mb-1 text-center">Help</h6>
             <small className="text-body-secondary text-center">Support & FAQs</small>
           </button>
@@ -121,7 +121,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary" />
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
             <h6 className="mb-1 text-center">Transfer</h6>
             <small className="text-body-secondary text-center">Send money</small>
           </button>
@@ -133,7 +133,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Download" hasCircle size="2.5rem" className="mb-3 text-success" />
+            <DIcon icon="Download" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
             <h6 className="mb-1 text-center">Deposit</h6>
             <small className="text-body-secondary text-center">Add funds</small>
           </button>
@@ -145,7 +145,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-info" />
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
             <h6 className="mb-1 text-center">Pay Bills</h6>
             <small className="text-body-secondary text-center">Manage payments</small>
           </button>
@@ -157,7 +157,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-purple" />
+            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-purple bg-gray-50" />
             <h6 className="mb-1 text-center">Cards</h6>
             <small className="text-body-secondary text-center">Manage cards</small>
           </button>
@@ -169,7 +169,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="mb-3 text-teal" />
+            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="mb-3 text-teal  bg-gray-50" />
             <h6 className="mb-1 text-center">Investments</h6>
             <small className="text-body-secondary text-center">Grow wealth</small>
           </button>
@@ -181,7 +181,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Wallet" hasCircle size="2.5rem" className="mb-3 text-orange" />
+            <DIcon icon="Wallet" hasCircle size="2.5rem" className="mb-3 text-orange bg-gray-50" />
             <h6 className="mb-1 text-center">Loans</h6>
             <small className="text-body-secondary text-center">Apply for credit</small>
           </button>
@@ -193,7 +193,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2.5rem" className="mb-3 text-indigo" />
+            <DIcon icon="Shield" hasCircle size="2.5rem" className="mb-3 text-indigo  bg-gray-50" />
             <h6 className="mb-1 text-center">Insurance</h6>
             <small className="text-body-secondary text-center">Protect assets</small>
           </button>
@@ -205,7 +205,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Headset" hasCircle size="2.5rem" className="mb-3 text-pink" />
+            <DIcon icon="Headset" hasCircle size="2.5rem" className="mb-3 text-pink  bg-gray-50" />
             <h6 className="mb-1 text-center">Support</h6>
             <small className="text-body-secondary text-center">24/7 assistance</small>
           </button>
@@ -233,7 +233,7 @@ export const WithHoverEffects: Story = {
             className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary" />
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
             <h6 className="mb-1 text-center">Transfer Money</h6>
             <small className="text-body-secondary text-center">Between accounts</small>
           </button>
@@ -244,7 +244,7 @@ export const WithHoverEffects: Story = {
             className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
-            <DIcon icon="Zap" hasCircle size="2.5rem" className="mb-3 text-warning" />
+            <DIcon icon="Zap" hasCircle size="2.5rem" className="mb-3 text-warning  bg-gray-50" />
             <h6 className="mb-1 text-center">Pay Services</h6>
             <small className="text-body-secondary text-center">Utilities & more</small>
           </button>
@@ -255,7 +255,7 @@ export const WithHoverEffects: Story = {
             className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
-            <DIcon icon="DollarSign" hasCircle size="2.5rem" className="mb-3 text-success" />
+            <DIcon icon="DollarSign" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
             <h6 className="mb-1 text-center">Request Credit</h6>
             <small className="text-body-secondary text-center">Instant approval</small>
           </button>
@@ -266,7 +266,7 @@ export const WithHoverEffects: Story = {
             className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
-            <DIcon icon="MessageCircle" hasCircle size="2.5rem" className="mb-3 text-info" />
+            <DIcon icon="MessageCircle" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
             <h6 className="mb-1 text-center">Support</h6>
             <small className="text-body-secondary text-center">We&apos;re here to help</small>
           </button>
@@ -295,7 +295,7 @@ export const WithBadges: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary" />
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
             <h6 className="mb-1 text-center">Transfer</h6>
             <small className="text-body-secondary text-center">Send money now</small>
           </button>
@@ -308,7 +308,7 @@ export const WithBadges: Story = {
             onClick={() => {}}
           >
             <DChip text="3" color="danger" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-warning" />
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-warning  bg-gray-50" />
             <h6 className="mb-1 text-center">Bills</h6>
             <small className="text-body-secondary text-center">3 bills pending</small>
           </button>
@@ -321,7 +321,7 @@ export const WithBadges: Story = {
             onClick={() => {}}
           >
             <DChip text="5" color="info" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Mail" hasCircle size="2.5rem" className="mb-3 text-info" />
+            <DIcon icon="Mail" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
             <h6 className="mb-1 text-center">Messages</h6>
             <small className="text-body-secondary text-center">5 unread</small>
           </button>
@@ -334,7 +334,7 @@ export const WithBadges: Story = {
             onClick={() => {}}
           >
             <DChip text="New" color="success" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Gift" hasCircle size="2.5rem" className="mb-3 text-success" />
+            <DIcon icon="Gift" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
             <h6 className="mb-1 text-center">Offers</h6>
             <small className="text-body-secondary text-center">Special deals</small>
           </button>
@@ -363,7 +363,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Send" hasCircle size="2rem" className="mb-2 text-primary" />
+            <DIcon icon="Send" hasCircle size="2rem" className="mb-2 text-primary bg-gray-50" />
             <small className="fw-semibold text-center">Transfer</small>
           </button>
         </DLayout.Pane>
@@ -374,7 +374,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2rem" className="mb-2 text-success" />
+            <DIcon icon="CreditCard" hasCircle size="2rem" className="mb-2 text-success bg-gray-50" />
             <small className="fw-semibold text-center">Pay</small>
           </button>
         </DLayout.Pane>
@@ -385,7 +385,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Smartphone" hasCircle size="2rem" className="mb-2 text-info" />
+            <DIcon icon="Smartphone" hasCircle size="2rem" className="mb-2 text-info bg-gray-50" />
             <small className="fw-semibold text-center">Recharge</small>
           </button>
         </DLayout.Pane>
@@ -396,7 +396,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2rem" className="mb-2 text-purple" />
+            <DIcon icon="TrendingUp" hasCircle size="2rem" className="mb-2 text-purple bg-gray-50" />
             <small className="fw-semibold text-center">Invest</small>
           </button>
         </DLayout.Pane>
@@ -407,7 +407,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2rem" className="mb-2 text-orange" />
+            <DIcon icon="Shield" hasCircle size="2rem" className="mb-2 text-orange bg-gray-50" />
             <small className="fw-semibold text-center">Insurance</small>
           </button>
         </DLayout.Pane>
@@ -418,7 +418,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Grid" hasCircle size="2rem" className="mb-2 text-secondary" />
+            <DIcon icon="Grid" hasCircle size="2rem" className="mb-2 bg-gray-50" />
             <small className="fw-semibold text-center">More</small>
           </button>
         </DLayout.Pane>
@@ -442,7 +442,7 @@ export const SidebarListBasic: Story = {
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="2rem" className="me-3 text-primary" />
+              <DIcon icon="ArrowLeftRight" hasCircle size="2rem" className="me-3 text-primary bg-gray-50" />
               <div>
                 <div className="fw-semibold">Transfer Money</div>
                 <small className="text-body-secondary">Send funds instantly</small>
@@ -451,7 +451,7 @@ export const SidebarListBasic: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Receipt" hasCircle size="2rem" className="me-3 text-success" />
+              <DIcon icon="Receipt" hasCircle size="2rem" className="me-3 text-success bg-gray-50" />
               <div>
                 <div className="fw-semibold">Pay Bills</div>
                 <small className="text-body-secondary">Manage your payments</small>
@@ -460,7 +460,7 @@ export const SidebarListBasic: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Download" hasCircle size="2rem" className="me-3 text-info" />
+              <DIcon icon="Download" hasCircle size="2rem" className="me-3 text-info bg-gray-50" />
               <div>
                 <div className="fw-semibold">Deposit Check</div>
                 <small className="text-body-secondary">Mobile deposit</small>
@@ -469,7 +469,7 @@ export const SidebarListBasic: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="2rem" className="me-3 text-warning" />
+              <DIcon icon="CreditCard" hasCircle size="2rem" className="me-3 text-warning  bg-gray-50" />
               <div>
                 <div className="fw-semibold">Request Loan</div>
                 <small className="text-body-secondary">Apply for credit</small>
@@ -478,7 +478,7 @@ export const SidebarListBasic: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="HelpCircle" hasCircle size="2rem" className="me-3 text-secondary" />
+              <DIcon icon="HelpCircle" hasCircle size="2rem" className="me-3 bg-gray-50" />
               <div>
                 <div className="fw-semibold">Help & Support</div>
                 <small className="text-body-secondary">24/7 assistance</small>
@@ -506,43 +506,43 @@ export const SidebarListWithIcons: Story = {
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary" />
+              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
               <span className="fw-medium">Dashboard</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success" />
+              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
               <span className="fw-medium">My Accounts</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info" />
+              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
               <span className="fw-medium">Transfers</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple bg-gray-50" />
               <span className="fw-medium">Payments</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-orange" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-orange bg-gray-50" />
               <span className="fw-medium">Cards</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="DollarSign" hasCircle size="1rem" className="me-3 text-teal" />
+              <DIcon icon="DollarSign" hasCircle size="1rem" className="me-3 text-teal  bg-gray-50" />
               <span className="fw-medium">Loans</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 text-secondary" />
+              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 bg-gray-50" />
               <span className="fw-medium">Settings</span>
             </div>
           </DListGroup.Item>
@@ -568,7 +568,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
-                <DIcon icon="Home" hasCircle size="1rem" className="me-3 text-primary" />
+                <DIcon icon="Home" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
                 <span className="fw-medium">Dashboard</span>
               </div>
             </div>
@@ -576,7 +576,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
-                <DIcon icon="Mail" hasCircle size="1rem" className="me-3 text-info" />
+                <DIcon icon="Mail" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
                 <span className="fw-medium">Messages</span>
               </div>
               <DChip text="5" color="danger" />
@@ -585,7 +585,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
-                <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning" />
+                <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning  bg-gray-50" />
                 <span className="fw-medium">Pending Bills</span>
               </div>
               <DChip text="3" color="warning" />
@@ -594,7 +594,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
-                <DIcon icon="List" hasCircle size="1rem" className="me-3 text-success" />
+                <DIcon icon="List" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
                 <span className="fw-medium">Transactions</span>
               </div>
             </div>
@@ -602,7 +602,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
-                <DIcon icon="Gift" hasCircle size="1rem" className="me-3 text-pink" />
+                <DIcon icon="Gift" hasCircle size="1rem" className="me-3 text-pink  bg-gray-50" />
                 <span className="fw-medium">Special Offers</span>
               </div>
               <DChip text="New" color="success" />
@@ -632,13 +632,13 @@ export const SidebarListGrouped: Story = {
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary" />
+              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
               <span className="fw-medium">Dashboard</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success" />
+              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
               <span className="fw-medium">Accounts</span>
             </div>
           </DListGroup.Item>
@@ -650,19 +650,19 @@ export const SidebarListGrouped: Story = {
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info" />
+              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
               <span className="fw-medium">Transfer</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning" />
+              <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning  bg-gray-50" />
               <span className="fw-medium">Pay Bills</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple bg-gray-50" />
               <span className="fw-medium">Loans</span>
             </div>
           </DListGroup.Item>
@@ -674,13 +674,13 @@ export const SidebarListGrouped: Story = {
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="HelpCircle" hasCircle size="1rem" className="me-3 text-secondary" />
+              <DIcon icon="HelpCircle" hasCircle size="1rem" className="me-3 bg-gray-50" />
               <span className="fw-medium">Help Center</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
-              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 text-secondary" />
+              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 bg-gray-50" />
               <span className="fw-medium">Settings</span>
             </div>
           </DListGroup.Item>

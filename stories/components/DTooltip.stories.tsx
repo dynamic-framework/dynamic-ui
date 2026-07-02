@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { PREFIX_BS } from '../../src/components/config';
 import DTooltip from '../../src/components/DTooltip/DTooltip';
-import { THEMES } from '../config/constants';
 
 const config: Meta<typeof DTooltip> = {
   title: 'Design System/Components/Tooltip',
@@ -69,16 +68,6 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
       control: 'text',
       table: { category: 'Appearance' },
     },
-    color: {
-      control: 'select',
-      type: 'string',
-      options: THEMES,
-      table: {
-        defaultValue: { summary: 'primary' },
-        category: 'Appearance',
-      },
-      description: 'The color to use.',
-    },
     Component: {
       defaultValue: 'Link',
       type: 'string',
@@ -114,7 +103,6 @@ export const Top: Story = {
     withClick: false,
     withFocus: false,
     open: true,
-    color: 'dark',
   },
 };
 
@@ -127,7 +115,6 @@ export const Right: Story = {
     withClick: false,
     withFocus: false,
     open: false,
-    color: 'secondary',
   },
 };
 
@@ -140,7 +127,6 @@ export const Bottom: Story = {
     withClick: false,
     withFocus: false,
     open: false,
-    color: 'secondary',
   },
 };
 
@@ -153,7 +139,6 @@ export const Left: Story = {
     withClick: false,
     withFocus: false,
     open: false,
-    color: 'secondary',
   },
 };
 
@@ -167,7 +152,6 @@ export const SmallTop: Story = {
     withFocus: false,
     open: false,
     size: 'sm',
-    color: 'secondary',
   },
 };
 
@@ -181,7 +165,6 @@ export const SmallRight: Story = {
     withFocus: false,
     open: false,
     size: 'sm',
-    color: 'secondary',
   },
 };
 
@@ -195,7 +178,6 @@ export const SmallBottom: Story = {
     withFocus: false,
     open: false,
     size: 'sm',
-    color: 'secondary',
   },
 };
 
@@ -209,7 +191,6 @@ export const SmallLeft: Story = {
     withFocus: false,
     open: false,
     size: 'sm',
-    color: 'secondary',
   },
 };
 
@@ -223,7 +204,6 @@ export const LargeTop: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
-    color: 'secondary',
   },
 };
 
@@ -237,7 +217,6 @@ export const LargeRight: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
-    color: 'secondary',
   },
 };
 
@@ -251,7 +230,6 @@ export const LargeBottom: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
-    color: 'secondary',
   },
 };
 
@@ -265,7 +243,6 @@ export const LargeLeft: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
-    color: 'secondary',
   },
 };
 
@@ -279,6 +256,5 @@ export const LargeText: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
-    color: 'secondary',
   },
 };

@@ -69,7 +69,7 @@ CLAUDE.md
 
 dist
 dist-transpiled
-docs
+/docs
 .jest-cache
 .developers
 

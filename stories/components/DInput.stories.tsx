@@ -276,7 +276,7 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       table: { category: 'Events' },
     },
     onIconEndClick: {
-      action: 'onIconStartClicked',
+      action: 'onIconEndClicked',
       table: { category: 'Events' },
     },
     onChange: {
