@@ -1814,7 +1814,7 @@ export function TransactionHistoryOffcanvasExample() {
       portalName="tablePatternsTransactionFiltersPortal"
       availablePortals={{ filters: TransactionScreeningFiltersOffcanvas }}
     >
-      <TransactionHistoryOffcanvasContent />
+      <FinancialTransactionOffcanvasContent />
     </DContextProvider>
   );
 }`,
