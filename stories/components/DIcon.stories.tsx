@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Meta, StoryObj } from '@storybook/react-vite';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, SVGProps } from 'react';
 
 import {
   DContextProvider,
@@ -15,6 +15,20 @@ import {
   ICONS,
   THEMES,
 } from '../config/constants';
+
+const COMMONS_ICONS = {
+  NMChevron: (props: SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  ),
+  NMShield: (props: SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 3 5 6v6c0 5 3.5 8 7 9 3.5-1 7-4 7-9V6l-7-3Z" />
+      <path d="m9.5 12 2 2 3-3" />
+    </svg>
+  ),
+};
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -32,6 +46,7 @@ The component also maintains backward compatibility with Material Design icons.
 
 - **Lucide Icons**: Modern, consistent icon library with 1000+ icons
 - **Material Design Support**: Full backward compatibility via \`materialStyle\` prop
+- **Custom Registry Support**: Plug in shared icon maps through \`iconRegistry\` in \`DContextProvider\`
 - **Customizable**: Control size, color, stroke width
 - **Accessible**: Built with accessibility in mind
 - **TypeScript**: Full type safety
@@ -537,6 +552,40 @@ export const CustomColorClasses: Story = {
     docs: {
       description: {
         story: 'Examples using custom utility classes (e.g., text-pink-500, bg-pink-500). Colors depend on your CSS utility setup.',
+      },
+    },
+  },
+};
+
+export const CustomIconRegistry: Story = {
+  render: () => (
+    <DContextProvider iconRegistry={COMMONS_ICONS}>
+      <div style={{
+        display: 'flex',
+        gap: '24px',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+      }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <DIcon icon="NMChevron" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>NMChevron (registry)</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon icon="NMShield" size="24px" color="success" hasCircle />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>NMShield (registry)</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon icon="Home" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>Home (Lucide fallback)</div>
+        </div>
+      </div>
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Uses `iconRegistry` to resolve string icon names from a shared commons map. Unknown registry names keep using the default fallback (Lucide/Material/font).',
       },
     },
   },

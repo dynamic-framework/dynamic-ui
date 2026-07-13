@@ -2,8 +2,13 @@
 
 import { render, screen } from '@testing-library/react';
 import DIcon from './DIcon';
+import { DContextProvider } from '../../contexts';
 
 describe('<DIcon />', () => {
+  function CustomIcon() {
+    return <svg data-testid="custom-svg" viewBox="0 0 24 24" />;
+  }
+
   it('should render my component', () => {
     const props = { icon: 'Heart' };
 
@@ -57,5 +62,26 @@ describe('<DIcon />', () => {
     expect(icon).toHaveClass('custom-family-class');
     expect(icon).toHaveTextContent('settings');
     expect(icon?.tagName).toBe('I');
+  });
+
+  it('should render SVG component icon directly', () => {
+    render(
+      // eslint-disable-next-line react/jsx-no-bind
+      <DIcon icon={CustomIcon} />,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+  });
+
+  it('should resolve string icon from iconRegistry in context', () => {
+    const iconRegistry = { NMChevron: CustomIcon };
+
+    render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="NMChevron" />
+      </DContextProvider>,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
   });
 });
