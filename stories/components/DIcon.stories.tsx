@@ -22,10 +22,38 @@ const COMMONS_ICONS = {
       <path d="m9 18 6-6-6-6" />
     </svg>
   ),
-  NMShield: (props: SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M12 3 5 6v6c0 5 3.5 8 7 9 3.5-1 7-4 7-9V6l-7-3Z" />
-      <path d="m9.5 12 2 2 3-3" />
+  NMSmile: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      viewBox="0 0 70 70"
+      enableBackground="new 0 0 70 70"
+      xmlSpace="preserve"
+    >
+      <g>
+        <path d="M35,3C17.355,3,3,17.355,3,35s14.355,32,32,32s32-14.355,32-32S52.645,3,35,3z M35,63C19.535,63,7,50.465,7,35
+          S19.535,7,35,7s28,12.535,28,28S50.465,63,35,63z"
+        />
+        <path d="M47.882,46.192c-0.462-0.302-1.081-0.177-1.386,0.284c-2.576,3.905-6.903,6.237-11.576,6.237
+          c-4.935,0-9.535-2.656-12.007-6.933c-0.277-0.479-0.891-0.643-1.366-0.366c-0.479,0.276-0.643,0.889-0.366,1.366
+          c2.828,4.894,8.093,7.933,13.739,7.933c5.347,0,10.299-2.668,13.246-7.136C48.47,47.117,48.343,46.497,47.882,46.192z"
+        />
+        <path d="M27.433,35.551c0.196,0.253,0.491,0.385,0.789,0.385c0.215,0,0.432-0.069,0.614-0.212c0.436-0.339,0.513-0.968,0.173-1.403
+          l-4.839-6.205c-0.185-0.237-0.468-0.379-0.769-0.385c-0.311-0.005-0.59,0.125-0.783,0.354l-4.715,5.584
+          c-0.356,0.422-0.304,1.054,0.118,1.409c0.425,0.358,1.054,0.301,1.409-0.118l3.92-4.643L27.433,35.551z"
+        />
+        <path d="M46.882,28.085c-0.194-0.229-0.5-0.357-0.783-0.354c-0.301,0.006-0.584,0.147-0.769,0.385l-4.839,6.205
+          c-0.34,0.436-0.263,1.064,0.173,1.403c0.183,0.143,0.399,0.212,0.614,0.212c0.298,0,0.593-0.132,0.789-0.385l4.082-5.233
+          l3.92,4.643c0.354,0.421,0.984,0.478,1.409,0.118c0.422-0.355,0.475-0.987,0.118-1.409L46.882,28.085z"
+        />
+        <path d="M18.663,17.111c-0.391-0.391-1.023-0.391-1.414,0c-0.4,0.4-0.785,0.811-1.152,1.229c-0.365,0.415-0.324,1.047,0.091,1.411
+          c0.19,0.167,0.426,0.249,0.66,0.249c0.277,0,0.554-0.115,0.751-0.34c0.34-0.387,0.695-0.766,1.064-1.135
+          C19.054,18.135,19.054,17.502,18.663,17.111z"
+        />
+        <path d="M13.483,23.828c-0.5-0.241-1.096-0.029-1.334,0.469c-2.461,5.126-3.184,11.028-2.037,16.621
+          c0.097,0.473,0.514,0.799,0.979,0.799c0.066,0,0.134-0.007,0.202-0.021c0.541-0.11,0.89-0.64,0.778-1.181
+          c-1.06-5.166-0.392-10.619,1.881-15.354C14.191,24.664,13.981,24.067,13.483,23.828z"
+        />
+        <path d="M36.573,55.583h-4c-0.553,0-1,0.447-1,1s0.447,1,1,1h4c0.553,0,1-0.447,1-1S37.126,55.583,36.573,55.583z" />
+      </g>
     </svg>
   ),
 };
@@ -572,7 +600,7 @@ export const CustomIconRegistry: Story = {
           <div style={{ fontSize: '12px', marginTop: '8px' }}>NMChevron (registry)</div>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <DIcon icon="NMShield" size="24px" color="success" hasCircle />
+          <DIcon icon="NMSmile" size="24px" color="success" hasCircle />
           <div style={{ fontSize: '12px', marginTop: '8px' }}>NMShield (registry)</div>
         </div>
         <div style={{ textAlign: 'center' }}>
@@ -586,6 +614,43 @@ export const CustomIconRegistry: Story = {
     docs: {
       description: {
         story: 'Uses `iconRegistry` to resolve string icon names from a shared commons map. Unknown registry names keep using the default fallback (Lucide/Material/font).',
+      },
+    },
+  },
+};
+
+export const CustomIconRegistryInInputs: StoryObj<typeof DInput> = {
+  render: () => (
+    <DContextProvider iconRegistry={COMMONS_ICONS}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        maxWidth: '420px',
+      }}
+      >
+        <DInput
+          label="Input con iconStart/iconEnd desde registry"
+          iconStart="NMChevron"
+          iconEnd="NMSmile"
+          placeholder="Busca o escribe"
+          hint="Los iconos custom se resuelven por nombre desde iconRegistry"
+        />
+
+        <DInput
+          label="Fallback mixto"
+          iconStart="NMChevron"
+          iconEnd="Search"
+          placeholder="Registry + Lucide fallback"
+          hint="iconStart viene de registry y iconEnd usa Lucide"
+        />
+      </div>
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demuestra que `iconRegistry` tambien aplica en componentes como `DInput` para `iconStart` y `iconEnd`.',
       },
     },
   },
