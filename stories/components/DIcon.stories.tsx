@@ -81,6 +81,25 @@ The component also maintains backward compatibility with Material Design icons.
 - **Accessible**: Built with accessibility in mind
 - **TypeScript**: Full type safety
 
+## Custom iconRegistry
+
+You can provide a custom icon map from a shared commons package:
+
+\`\`\`tsx
+import { DContextProvider, DIcon } from '@dynamic-framework/ui-react';
+import { NMIcons } from '@repo/algo';
+
+<DContextProvider iconRegistry={NMIcons}>
+  <DIcon icon="NMChevron" />
+</DContextProvider>
+\`\`\`
+
+Resolution order:
+
+1. If \`icon\` is an SVG component, it is rendered directly.
+2. If \`icon\` is a string and exists in \`iconRegistry\`, it uses the registry component.
+3. Otherwise, fallback applies (Lucide / Material / font classes).
+
 ## Classnames
 
 | Classname | Purpose | Applied when |
