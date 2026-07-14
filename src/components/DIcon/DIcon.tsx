@@ -58,9 +58,9 @@ export default function DIcon(
   return (
     <DIconBase
       icon={resolvedIcon}
-      familyClass={propFamilyClass || familyClass}
-      familyPrefix={propFamilyPrefix || familyPrefix}
-      materialStyle={propMaterialStyle || materialStyle}
+      familyClass={propFamilyClass ?? familyClass}
+      familyPrefix={propFamilyPrefix ?? familyPrefix}
+      materialStyle={propMaterialStyle ?? materialStyle}
       {...props}
     />
   );
