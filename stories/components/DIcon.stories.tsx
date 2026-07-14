@@ -27,6 +27,8 @@ const COMMONS_ICONS = {
       viewBox="0 0 70 70"
       enableBackground="new 0 0 70 70"
       xmlSpace="preserve"
+      fill="currentColor"
+      {...props}
     >
       <g>
         <path d="M35,3C17.355,3,3,17.355,3,35s14.355,32,32,32s32-14.355,32-32S52.645,3,35,3z M35,63C19.535,63,7,50.465,7,35
@@ -601,7 +603,7 @@ export const CustomIconRegistry: Story = {
         </div>
         <div style={{ textAlign: 'center' }}>
           <DIcon icon="NMSmile" size="24px" color="success" hasCircle />
-          <div style={{ fontSize: '12px', marginTop: '8px' }}>NMShield (registry)</div>
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>NMSmile (registry)</div>
         </div>
         <div style={{ textAlign: 'center' }}>
           <DIcon icon="Home" size="24px" />

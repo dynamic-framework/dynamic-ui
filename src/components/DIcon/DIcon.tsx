@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import type {
   BaseProps,
   ComponentColor,
+  IconComponent,
   IconValue,
 } from '../interface';
 import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
@@ -27,7 +28,7 @@ type IconContextValue = {
     familyPrefix: string;
     materialStyle: boolean;
   };
-  iconRegistry?: Record<string, IconValue>;
+  iconRegistry?: Record<string, IconComponent>;
 };
 
 export default function DIcon(

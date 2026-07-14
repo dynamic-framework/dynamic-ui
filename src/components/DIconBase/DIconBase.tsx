@@ -121,8 +121,8 @@ export default function DIconBase(
         {...dataAttributes}
       >
         {createElement(icon, {
-          width: iconSize || 24,
-          height: iconSize || 24,
+          width: resolvedSize || 24,
+          height: resolvedSize || 24,
           strokeWidth,
         })}
       </span>
