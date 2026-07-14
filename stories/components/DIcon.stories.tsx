@@ -632,19 +632,19 @@ export const CustomIconRegistryInInputs: StoryObj<typeof DInput> = {
       }}
       >
         <DInput
-          label="Input con iconStart/iconEnd desde registry"
+          label="Input with iconStart/iconEnd from registry"
           iconStart="NMChevron"
           iconEnd="NMSmile"
-          placeholder="Busca o escribe"
-          hint="Los iconos custom se resuelven por nombre desde iconRegistry"
+          placeholder="Search or type"
+          hint="Custom icons are resolved by name through iconRegistry"
         />
 
         <DInput
-          label="Fallback mixto"
+          label="Mixed fallback"
           iconStart="NMChevron"
           iconEnd="Search"
           placeholder="Registry + Lucide fallback"
-          hint="iconStart viene de registry y iconEnd usa Lucide"
+          hint="iconStart comes from registry and iconEnd uses Lucide"
         />
       </div>
     </DContextProvider>
@@ -652,7 +652,7 @@ export const CustomIconRegistryInInputs: StoryObj<typeof DInput> = {
   parameters: {
     docs: {
       description: {
-        story: 'Demuestra que `iconRegistry` tambien aplica en componentes como `DInput` para `iconStart` y `iconEnd`.',
+        story: 'Shows that `iconRegistry` also applies in components like `DInput` for `iconStart` and `iconEnd`.',
       },
     },
   },
