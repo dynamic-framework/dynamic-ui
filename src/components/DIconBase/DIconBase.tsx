@@ -16,7 +16,7 @@ import type {
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 function isIconComponent(value: IconValue): value is IconComponent {
-  return typeof value === 'function';
+  return typeof value !== 'string';
 }
 
 type Props =
