@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 import { motion, type Transition, type Variants } from 'framer-motion';
 
-import type { PropsWithChildren } from 'react';
+import { useMemo, type PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
+
+import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import DOffcanvasHeader from './components/DOffcanvasHeader';
 import DOffcanvasBody from './components/DOffcanvasBody';
@@ -15,7 +17,17 @@ type Props = BaseProps & PropsWithChildren<{
   name: string;
   staticBackdrop?: boolean;
   scrollable?: boolean;
-  openFrom?: OffcanvasPositionToggleFrom;
+  openFrom?: OffcanvasPositionToggleFrom | ResponsiveProp;
+  /**
+   * Overrides the offcanvas size on the `start`/`end` placements (defaults to `400px`).
+   * Accepts any CSS length (e.g. `'320px'`, `'50vw'`, `'100%'`) or a `ResponsiveProp` object.
+   */
+  width?: string | ResponsiveProp;
+  /**
+   * Overrides the offcanvas size on the `top`/`bottom` placements (defaults to `100%`).
+   * Accepts any CSS length (e.g. `'50vh'`, `'320px'`) or a `ResponsiveProp` object.
+   */
+  height?: string | ResponsiveProp;
   transition?: Transition;
 }>;
 
@@ -58,29 +70,50 @@ function DOffcanvas(
     staticBackdrop,
     scrollable,
     openFrom = 'end',
+    width,
+    height,
     transition,
     children,
     dataAttributes,
   }: Props,
 ) {
+  // Responsive openFrom/width/height resolution using useResponsiveProp
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedOpenFrom = useMemo((): OffcanvasPositionToggleFrom => {
+    if (typeof openFrom === 'string') return openFrom;
+    return (responsivePropValue(openFrom) as OffcanvasPositionToggleFrom) ?? 'end';
+  }, [responsivePropValue, openFrom]);
+  const resolvedWidth = useMemo(() => {
+    if (!width) return undefined;
+    if (typeof width === 'string') return width;
+    return responsivePropValue(width);
+  }, [responsivePropValue, width]);
+  const resolvedHeight = useMemo(() => {
+    if (!height) return undefined;
+    if (typeof height === 'string') return height;
+    return responsivePropValue(height);
+  }, [responsivePropValue, height]);
+
   return (
     <motion.div
       className={classNames(
         'offcanvas portal show',
         {
-          [`offcanvas-${openFrom}`]: openFrom,
+          [`offcanvas-${resolvedOpenFrom}`]: resolvedOpenFrom,
         },
         className,
       )}
       style={{
         ...style,
         transition: 'none',
+        ...(resolvedWidth && { [`--${PREFIX_BS}offcanvas-width`]: resolvedWidth }),
+        ...(resolvedHeight && { [`--${PREFIX_BS}offcanvas-height`]: resolvedHeight }),
       }}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
-      custom={openFrom}
+      custom={resolvedOpenFrom}
       variants={variants}
       initial="hidden"
       animate="visible"

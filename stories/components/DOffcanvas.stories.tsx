@@ -50,6 +50,41 @@ const config: Meta<typeof DOffcanvas> = {
       type: 'boolean',
       table: { category: 'Behavior' },
     },
+    transition: {
+      table: { category: 'Appearance' },
+    },
+    openFrom: {
+      control: 'object',
+      table: {
+        category: 'Appearance',
+        type: {
+          summary: "'start' | 'end' | 'top' | 'bottom' | ResponsiveProp",
+        },
+      },
+      description:
+        'Side the offcanvas opens from. Accepts a single value or a `ResponsiveProp` object '
+        + "(e.g. `{ xs: 'bottom', md: 'end' }`) to change placement per breakpoint.",
+    },
+    width: {
+      control: 'text',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'string | ResponsiveProp' },
+      },
+      description:
+        'Overrides the size on `start`/`end` placements (defaults to `400px`). Accepts any '
+        + "CSS length (e.g. `'320px'`, `'100%'`) or a `ResponsiveProp` object.",
+    },
+    height: {
+      control: 'text',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'string | ResponsiveProp' },
+      },
+      description:
+        'Overrides the size on `top`/`bottom` placements (defaults to `100%`). Accepts any '
+        + "CSS length (e.g. `'50vh'`, `'320px'`) or a `ResponsiveProp` object.",
+    },
   },
 };
 
@@ -435,6 +470,171 @@ export const OnlyBody: Story = {
     scrollable: false,
     openFrom: 'end',
   },
+};
+
+function ResponsiveFiltersOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom={{
+        xs: 'bottom', sm: 'start', md: 'end', lg: 'top',
+      }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+        <small>
+          Resize the viewport: opens from
+          {' '}
+          <code>bottom</code>
+          {' '}
+          below the
+          {' '}
+          <code>md</code>
+          {' '}
+          breakpoint and from
+          {' '}
+          <code>end</code>
+          {' '}
+          from
+          {' '}
+          <code>md</code>
+          {' '}
+          up.
+        </small>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Cancel"
+          color="secondary"
+          variant="outline"
+          onClick={() => closePortal()}
+        />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveFiltersOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+export const ResponsivePlacement: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+        <Story />
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`openFrom` accepts a `ResponsiveProp` object so the placement can change per breakpoint '
+          + "(e.g. `{ xs: 'bottom', md: 'end' }`), instead of a single fixed value. As with any other "
+          + 'offcanvas, it must be registered in `DContextProvider.availablePortals` and opened via '
+          + '`openPortal` — rendering it directly as JSX is not the recommended usage. '
+          + 'Resize the browser window (or Storybook viewport) to see the placement react to the '
+          + 'real breakpoint.',
+      },
+      source: {
+        code: `
+type OffcanvasPayloads = {
+  filters: {
+    description: string;
+  };
+};
+
+function ResponsiveFiltersOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas 
+      name={name} 
+      staticBackdrop={false} 
+      scrollable={false} 
+      openFrom={{
+        xs: 'bottom', sm: 'start', md: 'end', lg: 'top',
+      }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="Cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
+        <DButton text="Ok" onClick={() => closePortal()} />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveFiltersOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+function App() {
+  return (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveStoryPortal"
+      availablePortals={{ filters: ResponsiveFiltersOffcanvas }}
+    >
+      <OpenResponsiveFiltersOffcanvasButton />
+    </DContextProvider>
+  );
+}
+        `.trim(),
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
+  render: () => (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveStoryPortal"
+      availablePortals={{ filters: ResponsiveFiltersOffcanvas }}
+    >
+      <div className="d-flex flex-column gap-2 align-items-center">
+        <OpenResponsiveFiltersOffcanvasButton />
+        <pre>
+          <code>
+            {JSON.stringify({
+              openFrom:
+              {
+                xs: 'bottom',
+                sm: 'start',
+                md: 'end',
+                lg: 'top',
+              },
+            }, null, 2)}
+          </code>
+        </pre>
+      </div>
+    </DContextProvider>
+  ),
 };
 
 export const WithoutCancelX: Story = {
