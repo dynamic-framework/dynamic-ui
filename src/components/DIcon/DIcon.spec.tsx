@@ -84,4 +84,19 @@ describe('<DIcon />', () => {
 
     expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
   });
+
+  it('should fallback to default icon resolution when iconRegistry does not contain the requested icon', () => {
+    const iconRegistry = { NMChevron: CustomIcon };
+
+    const { container } = render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="Home" />
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
+    expect(screen.queryByTestId('custom-svg')).not.toBeInTheDocument();
+  });
 });
