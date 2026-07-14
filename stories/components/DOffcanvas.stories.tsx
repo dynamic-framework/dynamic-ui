@@ -66,7 +66,7 @@ const config: Meta<typeof DOffcanvas> = {
         + "(e.g. `{ xs: 'bottom', md: 'end' }`) to change placement per breakpoint.",
     },
     width: {
-      control: 'text',
+      control: 'object',
       table: {
         category: 'Appearance',
         type: { summary: 'string | ResponsiveProp' },
@@ -76,7 +76,7 @@ const config: Meta<typeof DOffcanvas> = {
         + "CSS length (e.g. `'320px'`, `'100%'`) or a `ResponsiveProp` object.",
     },
     height: {
-      control: 'text',
+      control: 'object',
       table: {
         category: 'Appearance',
         type: { summary: 'string | ResponsiveProp' },
@@ -493,17 +493,31 @@ function ResponsiveFiltersOffcanvas({ name }: PortalProps<OffcanvasPayloads['fil
           {' '}
           <code>bottom</code>
           {' '}
-          below the
+          below
           {' '}
-          <code>md</code>
+          <code>sm</code>
+          , from
           {' '}
-          breakpoint and from
+          <code>start</code>
+          {' '}
+          on
+          {' '}
+          <code>sm</code>
+          , from
           {' '}
           <code>end</code>
           {' '}
-          from
+          on
           {' '}
           <code>md</code>
+          {' '}
+          and from
+          {' '}
+          <code>top</code>
+          {' '}
+          from
+          {' '}
+          <code>lg</code>
           {' '}
           up.
         </small>

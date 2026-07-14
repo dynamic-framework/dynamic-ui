@@ -13,11 +13,13 @@ import DOffcanvasFooter from './components/DOffcanvasFooter';
 
 import type { BaseProps, OffcanvasPositionToggleFrom } from '../interface';
 
+type OffcanvasResponsivePlacement = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', OffcanvasPositionToggleFrom>>;
+
 type Props = BaseProps & PropsWithChildren<{
   name: string;
   staticBackdrop?: boolean;
   scrollable?: boolean;
-  openFrom?: OffcanvasPositionToggleFrom | ResponsiveProp;
+  openFrom?: OffcanvasPositionToggleFrom | OffcanvasResponsivePlacement;
   /**
    * Overrides the offcanvas size on the `start`/`end` placements (defaults to `400px`).
    * Accepts any CSS length (e.g. `'320px'`, `'50vw'`, `'100%'`) or a `ResponsiveProp` object.
@@ -77,11 +79,16 @@ function DOffcanvas(
     dataAttributes,
   }: Props,
 ) {
-  // Responsive openFrom/width/height resolution using useResponsiveProp
-  const { responsivePropValue } = useResponsiveProp(true);
+  // Only subscribe to breakpoint-change listeners when a responsive object is
+  // actually provided, avoiding unnecessary matchMedia subscriptions for the
+  // common case of plain string values.
+  const hasResponsiveProp = typeof openFrom === 'object'
+    || typeof width === 'object'
+    || typeof height === 'object';
+  const { responsivePropValue } = useResponsiveProp(hasResponsiveProp);
   const resolvedOpenFrom = useMemo((): OffcanvasPositionToggleFrom => {
     if (typeof openFrom === 'string') return openFrom;
-    return (responsivePropValue(openFrom) as OffcanvasPositionToggleFrom) ?? 'end';
+    return (responsivePropValue(openFrom) as OffcanvasPositionToggleFrom | undefined) ?? 'end';
   }, [responsivePropValue, openFrom]);
   const resolvedWidth = useMemo(() => {
     if (!width) return undefined;
