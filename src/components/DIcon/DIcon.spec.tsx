@@ -99,4 +99,16 @@ describe('<DIcon />', () => {
     expect(icon?.querySelector('svg')).toBeInTheDocument();
     expect(screen.queryByTestId('custom-svg')).not.toBeInTheDocument();
   });
+
+  it('should prioritize iconRegistry over Lucide when the icon name exists in both', () => {
+    const iconRegistry = { Home: CustomIcon };
+
+    render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="Home" />
+      </DContextProvider>,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+  });
 });

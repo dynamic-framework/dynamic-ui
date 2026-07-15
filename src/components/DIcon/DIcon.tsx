@@ -1,24 +1,10 @@
-import type {
-  BaseProps,
-  ComponentColor,
-  IconValue,
-} from '../interface';
-import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
+import type { IconValue } from '../interface';
+import type { DIconBaseProps } from '../DIconBase';
 
 import DIconBase from '../DIconBase';
 import { useDContext } from '../../contexts';
 
-type Props = BaseProps & {
-  icon: IconValue;
-  color?: ComponentColor;
-  size?: string | ResponsiveProp;
-  useListenerSize?: boolean;
-  hasCircle?: boolean;
-  materialStyle?: boolean;
-  familyClass?: string;
-  familyPrefix?: string;
-  strokeWidth?: number;
-};
+type Props = DIconBaseProps;
 
 export default function DIcon(
   {

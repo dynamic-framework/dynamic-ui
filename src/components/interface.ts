@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement, SVGProps } from 'react';
+import type { ComponentType, CSSProperties, SVGProps } from 'react';
 
 export type ClassMap = { [className: string]: boolean };
 export type CustomStyles = Record<string, string | undefined> | undefined;
@@ -21,7 +21,7 @@ export type BaseProps = {
   dataAttributes?: DataAttributes;
 };
 
-export type IconComponent = (props: SVGProps<SVGSVGElement>) => ReactElement | null;
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 export type IconValue = string | IconComponent;
 
 export type FamilyIconProps = {
