@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import { createElement, useMemo } from 'react';
 import * as LucideIcons from 'lucide-react';
+import { isValidElementType } from 'react-is';
 import type { CSSProperties, ComponentType } from 'react';
 import { PREFIX_BS } from '../config';
 
@@ -16,15 +17,7 @@ import type {
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 function isIconComponent(value: unknown): value is IconComponent {
-  if (typeof value === 'function') return true;
-  if (!value || typeof value !== 'object') return false;
-
-  const maybeComponentType = value as { $$typeof?: symbol };
-  const reactMemo = Symbol.for('react.memo');
-  const reactForwardRef = Symbol.for('react.forward_ref');
-
-  return maybeComponentType.$$typeof === reactMemo
-    || maybeComponentType.$$typeof === reactForwardRef;
+  return typeof value !== 'string' && isValidElementType(value);
 }
 
 type Props =
