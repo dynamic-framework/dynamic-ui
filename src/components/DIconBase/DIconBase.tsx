@@ -15,8 +15,16 @@ import type {
 } from '../interface';
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
-function isIconComponent(value: IconValue): value is IconComponent {
-  return typeof value !== 'string';
+function isIconComponent(value: unknown): value is IconComponent {
+  if (typeof value === 'function') return true;
+  if (!value || typeof value !== 'object') return false;
+
+  const maybeComponentType = value as { $$typeof?: symbol };
+  const reactMemo = Symbol.for('react.memo');
+  const reactForwardRef = Symbol.for('react.forward_ref');
+
+  return maybeComponentType.$$typeof === reactMemo
+    || maybeComponentType.$$typeof === reactForwardRef;
 }
 
 type Props =
