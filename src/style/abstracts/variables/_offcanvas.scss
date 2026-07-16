@@ -15,3 +15,11 @@ $offcanvas-separator-margin-x: var(--#{$prefix}ref-spacer-4) !default;
 
 $offcanvas-bg-color: var(--#{$prefix}white) !default;
 // scss-docs-end offcanvas-variables
+
+// custom
+// Bootstrap's default is 30vh, which cuts off top/bottom offcanvas content
+// (e.g. mobile bottom-sheet placements) and forces an inner scroll. Cover the
+// full viewport height instead, relying on `.offcanvas-body`'s own
+// `overflow-y: auto` to scroll long content while header/footer stay fixed.
+$offcanvas-vertical-height: 100% !default;
+// end custom
