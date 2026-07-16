@@ -42,8 +42,22 @@
     height: $carousel-control-height;
     background: var(--#{$prefix}primary);
     padding: var(--#{$prefix}ref-spacer-1);
-    svg {
+
+    // Only invert the default arrow icon (a bare <svg> as a direct child).
+    // Custom icons rendered via `iconArrowLeft`/`iconArrowRight` use DIcon
+    // (wrapped in a .d-icon span) and are reset below, so they are untouched here.
+    > svg {
       filter: invert(1);
+    }
+
+    // Splide's default theme applies `fill` and, for the prev arrow, a
+    // `scaleX(-1)` flip to every descendant <svg>, assuming a single arrow
+    // path reused for both directions. Since `iconArrowLeft`/`iconArrowRight`
+    // are always a DIcon with its own icon/color, cancel both so the icon
+    // keeps its intended orientation and color.
+    .d-icon svg {
+      fill: none;
+      transform: none;
     }
   }
 

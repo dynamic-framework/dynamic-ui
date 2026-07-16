@@ -166,4 +166,57 @@ describe('<DCarousel />', () => {
       </div>
     `);
   });
+
+  it('Should render custom arrow icons when iconArrowLeft/iconArrowRight are provided', () => {
+    const props: ComponentProps<typeof DCarousel> = {
+      iconArrowLeft: { icon: 'ArrowLeft', color: 'success' },
+      iconArrowRight: { icon: 'ArrowRight', color: 'danger' },
+      children: (
+        <>
+          <DCarousel.Slide>
+            Slide 1
+          </DCarousel.Slide>
+          <DCarousel.Slide>
+            Slide 2
+          </DCarousel.Slide>
+        </>
+      ),
+    };
+
+    const { container } = render(
+      <DCarousel {...props} />,
+    );
+
+    const prevButton = container.querySelector('.splide__arrow--prev');
+    const nextButton = container.querySelector('.splide__arrow--next');
+
+    expect(prevButton?.querySelector('.d-icon.d-icon-color-success')).toBeInTheDocument();
+    expect(nextButton?.querySelector('.d-icon.d-icon-color-danger')).toBeInTheDocument();
+    expect(prevButton).toHaveAttribute('aria-label', 'Previous slide');
+    expect(nextButton).toHaveAttribute('aria-label', 'Next slide');
+  });
+
+  it('Should fall back to the default arrow icon on the side without a custom icon', () => {
+    const props: ComponentProps<typeof DCarousel> = {
+      iconArrowLeft: { icon: 'ArrowLeft' },
+      children: (
+        <>
+          <DCarousel.Slide>
+            Slide 1
+          </DCarousel.Slide>
+          <DCarousel.Slide>
+            Slide 2
+          </DCarousel.Slide>
+        </>
+      ),
+    };
+
+    const { container } = render(
+      <DCarousel {...props} />,
+    );
+
+    const nextButton = container.querySelector('.splide__arrow--next');
+
+    expect(nextButton?.querySelector('svg')).toBeInTheDocument();
+  });
 });

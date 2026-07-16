@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import DCarousel from '../../src/components/DCarousel/DCarousel';
+import { DCarousel } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DCarousel> = {
@@ -44,6 +44,24 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'object',
       table: { category: 'Appearance' },
     },
+    iconArrowLeft: {
+      control: false,
+      description: 'DIcon props used to render the "previous" arrow icon (e.g. `{ icon: "ArrowLeft", color: "light" }`).',
+      table: {
+        type: { summary: 'ComponentProps<typeof DIcon>' },
+        defaultValue: { summary: 'undefined' },
+        category: 'Icon',
+      },
+    },
+    iconArrowRight: {
+      control: false,
+      description: 'DIcon props used to render the "next" arrow icon (e.g. `{ icon: "ArrowRight", color: "light" }`).',
+      table: {
+        type: { summary: 'ComponentProps<typeof DIcon>' },
+        defaultValue: { summary: 'undefined' },
+        category: 'Icon',
+      },
+    },
   },
   tags: ['autodocs'],
 };
@@ -72,6 +90,39 @@ export const Default: Story = {
     </DCarousel>
   ),
   args: {
+    options: {
+      perPage: 1,
+      width: 532,
+      updateOnMove: true,
+      gap: '0.5rem',
+      padding: '1rem',
+    },
+  },
+};
+
+export const CustomArrows: Story = {
+  render: (args) => (
+    <DCarousel
+      {...args}
+    >
+      {[1, 2, 3, 4, 5].map((el) => (
+        <DCarousel.Slide key={el}>
+          <div className="d-flex flex-column bg-light border p-3 rounded text-center">
+            <h5>{`Slide ${el}`}</h5>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+              Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+              expedita incidunt itaque odio non necessitatibus dolore molestias,
+              harum dicta a!
+            </p>
+          </div>
+        </DCarousel.Slide>
+      ))}
+    </DCarousel>
+  ),
+  args: {
+    iconArrowRight: { icon: 'CircleArrowRight', color: 'light' },
+    iconArrowLeft: { icon: 'CircleArrowLeft', color: 'light' },
     options: {
       perPage: 1,
       width: 532,
