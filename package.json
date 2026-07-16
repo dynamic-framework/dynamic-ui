@@ -110,6 +110,7 @@
     "react-datepicker": "~8.3.0",
     "react-error-boundary": "^6.1.0",
     "react-international-phone": "~4.6.0",
+    "react-is": "^19.2.7",
     "react-responsive-pagination": "~2.11.3",
     "react-select": "~5.10.2"
   },
@@ -132,6 +133,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/react-is": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "~6.9.0",
     "@typescript-eslint/parser": "~6.9.0",
     "@vitejs/plugin-react": "~4.7.0",

@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DOffcanvas from '.';
+import { DContextProvider } from '../../contexts/DContext';
 
 jest.mock('../../contexts', () => ({
   useDContext: () => ({
@@ -18,6 +19,52 @@ jest.mock('../../contexts', () => ({
     },
   }),
 }));
+
+// Matches the DS default Bootstrap breakpoints, so `DContextProvider`'s
+// `useLayoutEffect` (which reads `--bs-breakpoint-*` CSS variables) resolves
+// the same breakpoints used in a real browser.
+jest.mock('../../utils/getCssVariable', () => ({
+  __esModule: true,
+  default: (name: string) => {
+    if (name.includes('xxl')) return '1400px';
+    if (name.includes('xl')) return '1200px';
+    if (name.includes('lg')) return '992px';
+    if (name.includes('md')) return '768px';
+    if (name.includes('sm')) return '576px';
+    if (name.includes('xs')) return '0px';
+    return '';
+  },
+}));
+
+const BREAKPOINTS_WIDTH: Record<string, number> = {
+  xs: 0, sm: 576, md: 768, lg: 992, xl: 1200, xxl: 1400,
+};
+
+// Simulates a real viewport width against `(min-width: <n>px)` media queries,
+// so `useMediaBreakpointUp`/`useResponsiveProp` resolve the same way they
+// would in a real browser at that width.
+let currentViewportWidth = 0;
+
+beforeAll(() => {
+  window.matchMedia = jest.fn((query: string) => {
+    const match = /min-width:\s*(\d+)px/.exec(query);
+    const breakpointPx = match ? Number(match[1]) : 0;
+    return {
+      matches: currentViewportWidth >= breakpointPx,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    } as unknown as MediaQueryList;
+  });
+});
+
+beforeEach(() => {
+  currentViewportWidth = 0;
+});
 
 describe('<DOffcanvas />', () => {
   describe('Rendering and Props', () => {
@@ -80,6 +127,57 @@ describe('<DOffcanvas />', () => {
     it('should render with a static backdrop', () => {
       const { container } = render(<DOffcanvas name="test" staticBackdrop />);
       expect(container.firstChild).toHaveAttribute('data-bs-backdrop', 'static');
+    });
+
+    it('should resolve responsive openFrom based on the current breakpoint', () => {
+      currentViewportWidth = BREAKPOINTS_WIDTH.lg;
+      const { container } = render(
+        <DContextProvider>
+          <DOffcanvas name="test" openFrom={{ xs: 'bottom', md: 'end', lg: 'top' }} />
+        </DContextProvider>,
+      );
+      expect(container.firstChild).toHaveClass('offcanvas-top');
+      expect(container.firstChild).not.toHaveClass('offcanvas-bottom');
+      expect(container.firstChild).not.toHaveClass('offcanvas-end');
+    });
+
+    it('should fall back to "end" when no breakpoint in the responsive openFrom object matches', () => {
+      currentViewportWidth = BREAKPOINTS_WIDTH.xs;
+      const { container } = render(
+        <DContextProvider>
+          <DOffcanvas name="test" openFrom={{ md: 'top', lg: 'start' }} />
+        </DContextProvider>,
+      );
+      expect(container.firstChild).toHaveClass('offcanvas-end');
+    });
+
+    it('should inject --bs-offcanvas-width/height CSS variables when width/height are provided', () => {
+      const { container } = render(
+        <DOffcanvas name="test" openFrom="end" width="320px" height="50vh" />,
+      );
+      expect(container.firstChild).toHaveStyle({
+        '--bs-offcanvas-width': '320px',
+        '--bs-offcanvas-height': '50vh',
+      });
+    });
+
+    it('should resolve responsive width/height based on the current breakpoint', () => {
+      currentViewportWidth = BREAKPOINTS_WIDTH.md;
+      const { container } = render(
+        <DContextProvider>
+          <DOffcanvas
+            name="test"
+            openFrom="end"
+            width={{ xs: '100%', md: '320px' }}
+          />
+        </DContextProvider>,
+      );
+      expect(container.firstChild).toHaveStyle({ '--bs-offcanvas-width': '320px' });
+    });
+
+    it('should not set --bs-offcanvas-width/height when width/height are not provided', () => {
+      const { container } = render(<DOffcanvas name="test" openFrom="end" />);
+      expect(container.firstChild).not.toHaveStyle({ '--bs-offcanvas-width': '400px' });
     });
 
     it('should render a scrollable offcanvas', () => {

@@ -1,20 +1,47 @@
-import { Splide } from '@splidejs/react-splide';
+import { Splide, SplideTrack } from '@splidejs/react-splide';
 import classNames from 'classnames';
 import { forwardRef } from 'react';
 
 import type {
+  ComponentProps,
   ForwardedRef,
   PropsWithChildren,
 } from 'react';
 import type { SplideProps } from '@splidejs/react-splide';
 
+import DIcon from '../DIcon';
 import DCarouselSlide from './components/DCarouselSlide';
 
 import type { BaseProps } from '../interface';
 
+type ArrowIconProps = {
+  /** DIcon props used to render the "previous" arrow icon. */
+  iconArrowLeft?: ComponentProps<typeof DIcon>;
+  /** DIcon props used to render the "next" arrow icon. */
+  iconArrowRight?: ComponentProps<typeof DIcon>;
+};
+
 type Props =
 & SplideProps
-& PropsWithChildren<BaseProps>;
+& PropsWithChildren<BaseProps>
+& ArrowIconProps;
+
+const DEFAULT_ARROW_PATH = 'm15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z';
+
+function DefaultArrowIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 40 40"
+      width={40}
+      height={40}
+      focusable="false"
+      aria-hidden="true"
+    >
+      <path d={DEFAULT_ARROW_PATH} />
+    </svg>
+  );
+}
 
 function DCarousel(
   {
@@ -23,10 +50,16 @@ function DCarousel(
     style,
     options,
     dataAttributes,
+    iconArrowLeft,
+    iconArrowRight,
+    hasTrack: propsHasTrack,
     ...props
   }: Props,
   ref: ForwardedRef<Splide>,
 ) {
+  // Explicit `options.arrows === false` always wins, even when icon props are set.
+  const hasCustomArrows = Boolean((iconArrowLeft || iconArrowRight) && options?.arrows !== false);
+
   return (
     <Splide
       className={classNames('d-carousel', className)}
@@ -47,8 +80,32 @@ function DCarousel(
       }}
       {...dataAttributes}
       {...props}
+      // Rendering our own arrows requires taking over the track wrapper, so this
+      // must be applied after `...props` to prevent a consumer-provided `hasTrack`
+      // from re-enabling Splide's automatic track when custom arrows are active.
+      hasTrack={hasCustomArrows ? false : propsHasTrack}
     >
-      {children}
+      {hasCustomArrows ? (
+        <>
+          <SplideTrack>
+            {children}
+          </SplideTrack>
+          <div className="splide__arrows d-carousel-arrows">
+            <button
+              type="button"
+              className="splide__arrow splide__arrow--prev d-carousel-arrow d-carousel-arrow-prev"
+            >
+              {iconArrowLeft ? <DIcon {...iconArrowLeft} /> : <DefaultArrowIcon />}
+            </button>
+            <button
+              type="button"
+              className="splide__arrow splide__arrow--next d-carousel-arrow d-carousel-arrow-next"
+            >
+              {iconArrowRight ? <DIcon {...iconArrowRight} /> : <DefaultArrowIcon />}
+            </button>
+          </div>
+        </>
+      ) : children}
     </Splide>
   );
 }
