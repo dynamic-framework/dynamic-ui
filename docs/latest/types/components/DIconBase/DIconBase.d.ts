@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import type { BaseProps, ComponentColor } from '../interface';
+import type { BaseProps, ComponentColor, IconValue } from '../interface';
 import { ResponsiveProp } from '../../hooks/useResponsiveProp';
 type Props = BaseProps & {
-    icon: string;
+    icon: IconValue;
     color?: ComponentColor;
     size?: string | ResponsiveProp;
     /**
@@ -18,5 +18,6 @@ type Props = BaseProps & {
     familyPrefix?: string;
     strokeWidth?: number;
 };
+export type DIconBaseProps = Props;
 export default function DIconBase({ icon, color, style, className, size, useListenerSize, hasCircle, materialStyle, familyClass, familyPrefix, strokeWidth, dataAttributes, }: Props): import("react").JSX.Element;
 export {};

@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from 'react';
 import { type PortalContextProps } from './DPortalContext';
-import type { AlertThemeIconMap } from '../components/interface';
+import type { AlertThemeIconMap, IconComponent } from '../components/interface';
 /**
  * Currency formatting configuration used by `DContextProvider`.
  */
@@ -86,6 +86,7 @@ type Props = {
     language: string;
     currency: CurrencyProps;
     icon: IconProps;
+    iconRegistry?: Record<string, IconComponent>;
     iconMap: IconMapProps;
     breakpoints: BreakpointProps;
 };
@@ -124,7 +125,7 @@ export declare const DContext: import("react").Context<Context>;
  * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
  *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
  */
-export declare function DContextProvider<T extends Record<string, unknown>>({ language, currency, icon, iconMap, portalName, availablePortals, children, }: PropsWithChildren<Partial<DContextProviderProps<T>>>): import("react").JSX.Element;
+export declare function DContextProvider<T extends Record<string, unknown>>({ language, currency, icon, iconRegistry, iconMap, portalName, availablePortals, children, }: PropsWithChildren<Partial<DContextProviderProps<T>>>): import("react").JSX.Element;
 /**
  * Returns the Dynamic UI context value set by `DContextProvider`.
  * Falls back to the library's built-in defaults when no `DContextProvider`

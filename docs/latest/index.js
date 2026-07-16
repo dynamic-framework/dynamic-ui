@@ -5,6 +5,7 @@ var classNames = require('classnames');
 var React = require('react');
 var tslib = require('tslib');
 var LucideIcons = require('lucide-react');
+var reactIs = require('react-is');
 var reactDom = require('react-dom');
 var framerMotion = require('framer-motion');
 var fileSelector = require('file-selector');
@@ -329,6 +330,7 @@ const DEFAULT_STATE = {
         familyPrefix: 'bi-',
         materialStyle: false,
     },
+    iconRegistry: undefined,
     iconMap: {
         x: 'X',
         xLg: 'X',
@@ -394,11 +396,12 @@ const DContext = React.createContext(DEFAULT_STATE);
  * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
  *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
  */
-function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconMap = DEFAULT_STATE.iconMap, portalName = 'd-portal', availablePortals, children, }) {
+function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconRegistry = DEFAULT_STATE.iconRegistry, iconMap = DEFAULT_STATE.iconMap, portalName = 'd-portal', availablePortals, children, }) {
     const [internalContext, setInternalContext,] = React.useState({
         language,
         currency,
         icon,
+        iconRegistry,
         iconMap,
         breakpoints: DEFAULT_STATE.breakpoints,
     });
@@ -515,17 +518,21 @@ function useResponsiveProp(useListener = false) {
     return { responsivePropValue };
 }
 
+function isIconComponent(value) {
+    return typeof value !== 'string' && reactIs.isValidElementType(value);
+}
 function DIconBase({ icon, color, style, className, size, useListenerSize = false, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
     // If materialStyle is true, use Material Design icons (legacy)
-    const useMaterialIcons = materialStyle;
+    const isStringIcon = typeof icon === 'string';
+    const useMaterialIcons = materialStyle && isStringIcon;
     // Get Lucide icon component
     const LucideIcon = React.useMemo(() => {
-        if (useMaterialIcons)
+        if (!isStringIcon || useMaterialIcons)
             return null;
         // Try to find the icon in Lucide (expects PascalCase)
         const icons = LucideIcons__namespace;
         return icons[icon] || null;
-    }, [icon, useMaterialIcons]);
+    }, [icon, isStringIcon, useMaterialIcons]);
     const { responsivePropValue } = useResponsiveProp(useListenerSize);
     const resolvedSize = React.useMemo(() => {
         if (!size)
@@ -545,24 +552,35 @@ function DIconBase({ icon, color, style, className, size, useListenerSize = fals
     }, [resolvedSize]);
     // Render Material Design icon (legacy support)
     if (useMaterialIcons) {
-        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: icon })));
+        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: isStringIcon ? icon : null })));
+    }
+    if (isIconComponent(icon)) {
+        return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: React.createElement(icon, {
+                width: resolvedSize || 24,
+                height: resolvedSize || 24,
+                strokeWidth,
+            }) })));
     }
     // Render Lucide icon
     if (!LucideIcon) {
-        if (familyClass && familyPrefix) {
+        if (isStringIcon && familyClass && familyPrefix) {
             return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
         }
         // eslint-disable-next-line no-console
-        console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
+        console.warn(`Icon "${String(icon)}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
         return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
     }
     return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: jsxRuntime.jsx(LucideIcon, { size: iconSize || 24, strokeWidth: strokeWidth }) })));
 }
 
 function DIcon(_a) {
-    var { familyClass: propFamilyClass, familyPrefix: propFamilyPrefix, materialStyle: propMaterialStyle } = _a, props = tslib.__rest(_a, ["familyClass", "familyPrefix", "materialStyle"]);
-    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
-    return (jsxRuntime.jsx(DIconBase, Object.assign({ familyClass: propFamilyClass || familyClass, familyPrefix: propFamilyPrefix || familyPrefix, materialStyle: propMaterialStyle || materialStyle }, props)));
+    var { icon, familyClass: propFamilyClass, familyPrefix: propFamilyPrefix, materialStyle: propMaterialStyle } = _a, props = tslib.__rest(_a, ["icon", "familyClass", "familyPrefix", "materialStyle"]);
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconRegistry, } = useDContext();
+    const registryIcon = typeof icon === 'string'
+        ? iconRegistry === null || iconRegistry === void 0 ? void 0 : iconRegistry[icon]
+        : undefined;
+    const resolvedIcon = registryIcon || icon;
+    return (jsxRuntime.jsx(DIconBase, Object.assign({ icon: resolvedIcon, familyClass: propFamilyClass !== null && propFamilyClass !== void 0 ? propFamilyClass : familyClass, familyPrefix: propFamilyPrefix !== null && propFamilyPrefix !== void 0 ? propFamilyPrefix : familyPrefix, materialStyle: propMaterialStyle !== null && propMaterialStyle !== void 0 ? propMaterialStyle : materialStyle }, props)));
 }
 
 function DAlert({ color = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle = false, showClose, onClose, children, id, className, style, dataAttributes, }) {
@@ -1242,8 +1260,14 @@ function DCarouselSlide(_a) {
     return (jsxRuntime.jsx(reactSplide.SplideSlide, Object.assign({ className: classNames('d-carousel-slide', className) }, props)));
 }
 
+const DEFAULT_ARROW_PATH = 'm15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z';
+function DefaultArrowIcon() {
+    return (jsxRuntime.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 40 40", width: 40, height: 40, focusable: "false", "aria-hidden": "true", children: jsxRuntime.jsx("path", { d: DEFAULT_ARROW_PATH }) }));
+}
 function DCarousel$1(_a, ref) {
-    var { children, className, style, options, dataAttributes } = _a, props = tslib.__rest(_a, ["children", "className", "style", "options", "dataAttributes"]);
+    var { children, className, style, options, dataAttributes, iconArrowLeft, iconArrowRight, hasTrack: propsHasTrack } = _a, props = tslib.__rest(_a, ["children", "className", "style", "options", "dataAttributes", "iconArrowLeft", "iconArrowRight", "hasTrack"]);
+    // Explicit `options.arrows === false` always wins, even when icon props are set.
+    const hasCustomArrows = Boolean((iconArrowLeft || iconArrowRight) && (options === null || options === void 0 ? void 0 : options.arrows) !== false);
     return (jsxRuntime.jsx(reactSplide.Splide, Object.assign({ className: classNames('d-carousel', className), style: style, ref: ref, options: Object.assign(Object.assign({}, options), { classes: {
                 // Arrows
                 arrows: 'splide__arrows d-carousel-arrows',
@@ -1253,7 +1277,11 @@ function DCarousel$1(_a, ref) {
                 // Paginator
                 pagination: 'splide__pagination d-carousel-pagination',
                 page: 'splide__pagination__page d-carousel-pagination-page',
-            } }) }, dataAttributes, props, { children: children })));
+            } }) }, dataAttributes, props, { 
+        // Rendering our own arrows requires taking over the track wrapper, so this
+        // must be applied after `...props` to prevent a consumer-provided `hasTrack`
+        // from re-enabling Splide's automatic track when custom arrows are active.
+        hasTrack: hasCustomArrows ? false : propsHasTrack, children: hasCustomArrows ? (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx(reactSplide.SplideTrack, { children: children }), jsxRuntime.jsxs("div", { className: "splide__arrows d-carousel-arrows", children: [jsxRuntime.jsx("button", { type: "button", className: "splide__arrow splide__arrow--prev d-carousel-arrow d-carousel-arrow-prev", children: iconArrowLeft ? jsxRuntime.jsx(DIcon, Object.assign({}, iconArrowLeft)) : jsxRuntime.jsx(DefaultArrowIcon, {}) }), jsxRuntime.jsx("button", { type: "button", className: "splide__arrow splide__arrow--next d-carousel-arrow d-carousel-arrow-next", children: iconArrowRight ? jsxRuntime.jsx(DIcon, Object.assign({}, iconArrowRight)) : jsxRuntime.jsx(DefaultArrowIcon, {}) })] })] })) : children })));
 }
 const ForwardedDCarousel = React.forwardRef(DCarousel$1);
 ForwardedDCarousel.displayName = 'DCarousel';
@@ -2316,10 +2344,37 @@ const defaultTransition = {
     ease: 'easeInOut',
     duration: 0.3,
 };
-function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', transition, children, dataAttributes, }) {
+function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', width, height, transition, children, dataAttributes, }) {
+    // Only subscribe to breakpoint-change listeners when a responsive object is
+    // actually provided, avoiding unnecessary matchMedia subscriptions for the
+    // common case of plain string values.
+    const hasResponsiveProp = typeof openFrom === 'object'
+        || typeof width === 'object'
+        || typeof height === 'object';
+    const { responsivePropValue } = useResponsiveProp(hasResponsiveProp);
+    const resolvedOpenFrom = React.useMemo(() => {
+        var _a;
+        if (typeof openFrom === 'string')
+            return openFrom;
+        return (_a = responsivePropValue(openFrom)) !== null && _a !== void 0 ? _a : 'end';
+    }, [responsivePropValue, openFrom]);
+    const resolvedWidth = React.useMemo(() => {
+        if (!width)
+            return undefined;
+        if (typeof width === 'string')
+            return width;
+        return responsivePropValue(width);
+    }, [responsivePropValue, width]);
+    const resolvedHeight = React.useMemo(() => {
+        if (!height)
+            return undefined;
+        if (typeof height === 'string')
+            return height;
+        return responsivePropValue(height);
+    }, [responsivePropValue, height]);
     return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ className: classNames('offcanvas portal show', {
-            [`offcanvas-${openFrom}`]: openFrom,
-        }, className), style: Object.assign(Object.assign({}, style), { transition: 'none' }), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", custom: openFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
+            [`offcanvas-${resolvedOpenFrom}`]: resolvedOpenFrom,
+        }, className), style: Object.assign(Object.assign(Object.assign(Object.assign({}, style), { transition: 'none' }), (resolvedWidth && { [`--${PREFIX_BS}offcanvas-width`]: resolvedWidth })), (resolvedHeight && { [`--${PREFIX_BS}offcanvas-height`]: resolvedHeight })), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", custom: resolvedOpenFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), scrollable && ({

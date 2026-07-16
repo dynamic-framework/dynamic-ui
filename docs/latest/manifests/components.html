@@ -588,7 +588,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/70 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/70 infos</a><span class="filter-pill ok" aria-disabled="true">478 stories ok</span><a class="filter-pill ok" data-k="docs" href="#filter-docs">24 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/70 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/70 infos</a><span class="filter-pill ok" aria-disabled="true">485 stories ok</span><a class="filter-pill ok" data-k="docs" href="#filter-docs">24 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -6563,7 +6563,7 @@ dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null 
 
 href?: string
 
-iconEnd?: string
+iconEnd?: string | IconComponent
 
 iconEndAriaLabel?: string
 
@@ -6577,7 +6577,7 @@ iconEndMaterialStyle?: boolean
 
 iconEndTabIndex?: number
 
-iconStart?: string
+iconStart?: string | IconComponent
 
 iconStartAriaLabel?: string
 
@@ -7740,9 +7740,9 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCarousel</h2>
       <div class="badges">
-        
+        <label for="c-22-design-system-components-carousel-props" class="badge ok as-toggle">2 prop types</label>
         <label for="c-22-design-system-components-carousel-info" class="badge info as-toggle">1 info</label>
-        <label for="c-22-design-system-components-carousel-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-22-design-system-components-carousel-stories" class="badge ok as-toggle">5 stories</label>
         
         
       </div>
@@ -7759,7 +7759,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
   <input id="c-22-design-system-components-carousel-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-22-design-system-components-carousel-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -7772,6 +7772,25 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">2 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DCarousel/DCarousel.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * DIcon props used to render the &quot;previous&quot; arrow icon.
+ */
+iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
+
+/**
+ * DIcon props used to render the &quot;next&quot; arrow icon.
+ */
+iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -7793,6 +7812,38 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
               
               
               <pre><code>const Default = () =&gt; &lt;DCarousel
+    options={{
+      perPage: 1,
+      width: 532,
+      updateOnMove: true,
+      gap: &#39;0.5rem&#39;,
+      padding: &#39;1rem&#39;,
+    }}&gt;
+    {[1, 2, 3, 4, 5].map((el) =&gt; (
+      &lt;DCarousel.Slide key={el}&gt;
+        &lt;div className=&quot;d-flex flex-column bg-light border p-3 rounded text-center&quot;&gt;
+          &lt;h5&gt;{`Slide ${el}`}&lt;/h5&gt;
+          &lt;p&gt;
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+            Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+            expedita incidunt itaque odio non necessitatibus dolore molestias,
+            harum dicta a!
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/DCarousel.Slide&gt;
+    ))}
+&lt;/DCarousel&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Custom Arrows</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CustomArrows = () =&gt; &lt;DCarousel
+    iconArrowRight={{ icon: &#39;CircleArrowRight&#39;, color: &#39;light&#39; }}
+    iconArrowLeft={{ icon: &#39;CircleArrowLeft&#39;, color: &#39;light&#39; }}
     options={{
       perPage: 1,
       width: 532,
@@ -7943,7 +7994,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCarousel</h2>
       <div class="badges">
-        
+        <label for="c-23-patterns-carousel-props" class="badge ok as-toggle">2 prop types</label>
         <label for="c-23-patterns-carousel-info" class="badge info as-toggle">1 info</label>
         <label for="c-23-patterns-carousel-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -7962,7 +8013,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
   <input id="c-23-patterns-carousel-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-23-patterns-carousel-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -7975,6 +8026,25 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">2 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DCarousel/DCarousel.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * DIcon props used to render the &quot;previous&quot; arrow icon.
+ */
+iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
+
+/**
+ * DIcon props used to render the &quot;next&quot; arrow icon.
+ */
+iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -8883,9 +8953,9 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DContextProvider</h2>
       <div class="badges">
-        <label for="c-26-design-system-context-contextprovider-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-26-design-system-context-contextprovider-props" class="badge ok as-toggle">6 prop types</label>
         
-        <label for="c-26-design-system-context-contextprovider-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-26-design-system-context-contextprovider-stories" class="badge ok as-toggle">11 stories</label>
         
         
       </div>
@@ -8912,7 +8982,7 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">5 prop types</span>
+              <span class="badge ok">6 prop types</span>
             </div>
             <pre><code>Component: src/contexts/DContext.tsx::DContextProvider</code></pre>
             <pre><code>Props:</code></pre>
@@ -8953,6 +9023,8 @@ iconMap?: any = {
     decrease: &#39;Minus&#39;,
   },
 }
+
+iconRegistry?: any = undefined
 
 language?: any = &#39;en&#39;
 
@@ -9011,7 +9083,7 @@ portalName?: any = &#39;d-portal&#39;</code></pre>
                 <span class="badge ok">story ok</span>
               </div>
               
-              <div class="hint">By default and without additional configuration, the icons are linked to &lt;code&gt;Lucide icons&lt;/code&gt;. To share a different icon configuration we need to change the key icon This takes the settings needed to use bootstrap icons, which would be `familyClass=bi`, `familyPrefix=bi-` and `materialStyle=false` Similar settings can be used for any icon font. In the particular case of material symbols, the materialStyle property was added to place the name of the icon in the children of `&lt;i /&gt;` and not as a class. This setting can be used with any icon font that uses a similar style. See more about this in &lt;a href=&quot;?path=/docs/design-system-examples-icons--docs&quot;&gt;Examples/Icons&lt;/a&gt;</div>
+              <div class="hint">By default and without additional configuration, the icons are linked to &lt;code&gt;Lucide icons&lt;/code&gt;. To share a different icon configuration we need to change the key icon Additionally, you can provide `iconRegistry` to map string icon names to custom SVG components (for example from a shared commons package). This takes the settings needed to use bootstrap icons, which would be `familyClass=bi`, `familyPrefix=bi-` and `materialStyle=false` Similar settings can be used for any icon font. In the particular case of material symbols, the materialStyle property was added to place the name of the icon in the children of `&lt;i /&gt;` and not as a class. This setting can be used with any icon font that uses a similar style. See more about this in &lt;a href=&quot;?path=/docs/design-system-examples-icons--docs&quot;&gt;Examples/Icons&lt;/a&gt;</div>
               <pre><code>const IconSettings = () =&gt; &lt;DContextProvider /&gt;;</code></pre>
             </div>
             <div class="note ok">
@@ -9087,6 +9159,19 @@ portalName?: any = &#39;d-portal&#39;</code></pre>
     }}
   &gt;
     &lt;IconConsumptionCard /&gt;
+  &lt;/DContextProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Icon Registry Consumption</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const IconRegistryConsumption = () =&gt; (
+  &lt;DContextProvider iconRegistry={COMMONS_ICONS}&gt;
+    &lt;IconRegistryConsumptionCard /&gt;
   &lt;/DContextProvider&gt;
 );</code></pre>
             </div>
@@ -11145,9 +11230,9 @@ placement?: &#39;auto&#39; | &#39;down&#39; | &#39;up&#39; | &#39;start&#39; | &
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DIcon</h2>
       <div class="badges">
-        
+        <label for="c-33-design-system-components-icon-props" class="badge ok as-toggle">12 prop types</label>
         <label for="c-33-design-system-components-icon-info" class="badge info as-toggle">1 info</label>
-        <label for="c-33-design-system-components-icon-stories" class="badge ok as-toggle">12 stories</label>
+        <label for="c-33-design-system-components-icon-stories" class="badge ok as-toggle">14 stories</label>
         
         
       </div>
@@ -11164,7 +11249,7 @@ placement?: &#39;auto&#39; | &#39;down&#39; | &#39;up&#39; | &#39;start&#39; | &
   <input id="c-33-design-system-components-icon-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-33-design-system-components-icon-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -11177,6 +11262,45 @@ placement?: &#39;auto&#39; | &#39;down&#39; | &#39;up&#39; | &#39;start&#39; | &
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">12 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DIcon/DIcon.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string
+
+color?: string
+
+dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+familyClass?: string
+
+familyPrefix?: string
+
+hasCircle?: boolean
+
+icon: string | IconComponent
+
+materialStyle?: boolean
+
+size?: string | ResponsiveProp
+
+strokeWidth?: number
+
+style?: CSSProperties
+
+/**
+ * Enables real-time breakpoint listeners for responsive size changes.
+ * When set to true, the component will listen for size changes and update responsively.
+ * Note: Enabling this feature may have performance implications, especially
+ * in complex or frequently updated components.
+ */
+useListenerSize?: boolean</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -11555,6 +11679,73 @@ placement?: &#39;auto&#39; | &#39;down&#39; | &#39;up&#39; | &#39;start&#39; | &
       &lt;div style={{ fontSize: &#39;12px&#39;, marginTop: &#39;8px&#39; }}&gt;bg-purple-500 text-white&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Custom Icon Registry</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CustomIconRegistry = () =&gt; (
+  &lt;DContextProvider iconRegistry={COMMONS_ICONS}&gt;
+    &lt;div style={{
+      display: &#39;flex&#39;,
+      gap: &#39;24px&#39;,
+      flexWrap: &#39;wrap&#39;,
+      alignItems: &#39;center&#39;,
+    }}
+    &gt;
+      &lt;div style={{ textAlign: &#39;center&#39; }}&gt;
+        &lt;DIcon icon=&quot;NMChevron&quot; size=&quot;24px&quot; /&gt;
+        &lt;div style={{ fontSize: &#39;12px&#39;, marginTop: &#39;8px&#39; }}&gt;NMChevron (registry)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style={{ textAlign: &#39;center&#39; }}&gt;
+        &lt;DIcon icon=&quot;NMSmile&quot; size=&quot;24px&quot; color=&quot;success&quot; hasCircle /&gt;
+        &lt;div style={{ fontSize: &#39;12px&#39;, marginTop: &#39;8px&#39; }}&gt;NMSmile (registry)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style={{ textAlign: &#39;center&#39; }}&gt;
+        &lt;DIcon icon=&quot;Home&quot; size=&quot;24px&quot; /&gt;
+        &lt;div style={{ fontSize: &#39;12px&#39;, marginTop: &#39;8px&#39; }}&gt;Home (Lucide fallback)&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/DContextProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Custom Icon Registry In Inputs</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CustomIconRegistryInInputs = () =&gt; (
+  &lt;DContextProvider iconRegistry={COMMONS_ICONS}&gt;
+    &lt;div style={{
+      display: &#39;flex&#39;,
+      flexDirection: &#39;column&#39;,
+      gap: &#39;16px&#39;,
+      maxWidth: &#39;420px&#39;,
+    }}
+    &gt;
+      &lt;DInput
+        label=&quot;Input with iconStart/iconEnd from registry&quot;
+        iconStart=&quot;NMChevron&quot;
+        iconEnd=&quot;NMSmile&quot;
+        placeholder=&quot;Search or type&quot;
+        hint=&quot;Custom icons are resolved by name through iconRegistry&quot;
+      /&gt;
+
+      &lt;DInput
+        label=&quot;Mixed fallback&quot;
+        iconStart=&quot;NMChevron&quot;
+        iconEnd=&quot;Search&quot;
+        placeholder=&quot;Registry + Lucide fallback&quot;
+        hint=&quot;iconStart comes from registry and iconEnd uses Lucide&quot;
+      /&gt;
+    &lt;/div&gt;
+  &lt;/DContextProvider&gt;
 );</code></pre>
             </div>
         </div>
@@ -13848,7 +14039,7 @@ floatingLabel?: boolean = false
 
 hint?: string
 
-iconEnd?: string
+iconEnd?: string | IconComponent
 
 iconEndAriaLabel?: string
 
@@ -13868,7 +14059,7 @@ iconFamilyPrefix?: string
 
 iconMaterialStyle?: boolean
 
-iconStart?: string
+iconStart?: string | IconComponent
 
 iconStartAriaLabel?: string
 
@@ -14797,7 +14988,7 @@ className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-iconEnd?: string
+iconEnd?: string | IconComponent
 
 iconEndAriaLabel?: string
 
@@ -14811,7 +15002,7 @@ iconEndMaterialStyle?: boolean
 
 iconEndTabIndex?: number
 
-iconStart?: string
+iconStart?: string | IconComponent
 
 iconStartAriaLabel?: string
 
@@ -16778,7 +16969,7 @@ This section provides guidance specifically for using `DModal` in **inline** sce
       <div class="badges">
         <label for="c-51-design-system-components-offcanvas-props" class="badge ok as-toggle">4 prop types</label>
         <label for="c-51-design-system-components-offcanvas-info" class="badge info as-toggle">1 info</label>
-        <label for="c-51-design-system-components-offcanvas-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-51-design-system-components-offcanvas-stories" class="badge ok as-toggle">13 stories</label>
         <label for="c-51-design-system-components-offcanvas-docs" class="badge ok as-toggle">1 doc</label>
         
       </div>
@@ -17009,6 +17200,87 @@ style?: CSSProperties</code></pre>
         &lt;p&gt;Offcanvas body&lt;/p&gt;
     &lt;/DOffcanvas.Body&gt;
 &lt;/DOffcanvas&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Responsive Placement</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ResponsivePlacement = () =&gt; (
+  &lt;DContextProvider&lt;OffcanvasPayloads&gt;
+    portalName=&quot;dOffcanvasResponsiveStoryPortal&quot;
+    availablePortals={{ filters: ResponsiveFiltersOffcanvas }}
+  &gt;
+    &lt;div className=&quot;d-flex flex-column gap-2 align-items-center&quot;&gt;
+      &lt;OpenResponsiveFiltersOffcanvasButton /&gt;
+      &lt;pre&gt;
+        &lt;code&gt;
+          {JSON.stringify({
+            openFrom:
+            {
+              xs: &#39;bottom&#39;,
+              sm: &#39;start&#39;,
+              md: &#39;end&#39;,
+              lg: &#39;top&#39;,
+            },
+          }, null, 2)}
+        &lt;/code&gt;
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/DContextProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Responsive Width</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ResponsiveWidth = () =&gt; (
+  &lt;DContextProvider&lt;OffcanvasPayloads&gt;
+    portalName=&quot;dOffcanvasResponsiveWidthStoryPortal&quot;
+    availablePortals={{ filters: ResponsiveWidthOffcanvas }}
+  &gt;
+    &lt;div className=&quot;d-flex flex-column gap-2 align-items-center&quot;&gt;
+      &lt;OpenResponsiveWidthOffcanvasButton /&gt;
+      &lt;pre&gt;
+        &lt;code&gt;
+          {JSON.stringify({
+            width: { xs: &#39;100%&#39;, sm: &#39;320px&#39;, lg: &#39;480px&#39; },
+          }, null, 2)}
+        &lt;/code&gt;
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/DContextProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Responsive Height</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ResponsiveHeight = () =&gt; (
+  &lt;DContextProvider&lt;OffcanvasPayloads&gt;
+    portalName=&quot;dOffcanvasResponsiveHeightStoryPortal&quot;
+    availablePortals={{ filters: ResponsiveHeightOffcanvas }}
+  &gt;
+    &lt;div className=&quot;d-flex flex-column gap-2 align-items-center&quot;&gt;
+      &lt;OpenResponsiveHeightOffcanvasButton /&gt;
+      &lt;pre&gt;
+        &lt;code&gt;
+          {JSON.stringify({
+            height: { xs: &#39;50vh&#39;, md: &#39;75vh&#39;, lg: &#39;100%&#39; },
+          }, null, 2)}
+        &lt;/code&gt;
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/DContextProvider&gt;
+);</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
