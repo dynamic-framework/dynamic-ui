@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.6.0...v2.7.0) (2026-07-16)
+
+
+### Features
+
+* **DCarousel:** add iconArrowLeft/iconArrowRight props for custom arrows ([#1123](https://github.com/dynamic-framework/dynamic-ui/issues/1123)) ([7e84aa1](https://github.com/dynamic-framework/dynamic-ui/commit/7e84aa11f268590bc2cc5523082ad131a9e17edf))
+* **DIcon:** add custom icons support and component validation ([#1121](https://github.com/dynamic-framework/dynamic-ui/issues/1121)) ([57176f5](https://github.com/dynamic-framework/dynamic-ui/commit/57176f5e02aa80438828e8f2fa76ac3796a7c96b))
+* **DOffcanvas:** support responsive openFrom, width and height ([#1122](https://github.com/dynamic-framework/dynamic-ui/issues/1122)) ([36020fd](https://github.com/dynamic-framework/dynamic-ui/commit/36020fd4232686339c2d209be25316bcd097f645))
+
 ## [2.6.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.2...v2.6.0) (2026-07-02)
 
 
