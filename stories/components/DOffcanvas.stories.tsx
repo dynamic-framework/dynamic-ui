@@ -651,6 +651,330 @@ function App() {
   ),
 };
 
+function ResponsiveWidthOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom="end"
+      width={{ xs: '100%', sm: '320px', lg: '480px' }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+        <small>
+          Resize the viewport: below
+          {' '}
+          <code>sm</code>
+          {' '}
+          width is
+          {' '}
+          <code>100%</code>
+          , from
+          {' '}
+          <code>sm</code>
+          {' '}
+          it&apos;s
+          {' '}
+          <code>320px</code>
+          , and from
+          {' '}
+          <code>lg</code>
+          {' '}
+          up
+          {' '}
+          <code>480px</code>
+          .
+        </small>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Cancel"
+          color="secondary"
+          variant="outline"
+          onClick={() => closePortal()}
+        />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveWidthOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Width Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+export const ResponsiveWidth: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+        <Story />
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`width` accepts a `ResponsiveProp` object so the offcanvas width (on `start`/`end` '
+          + "placements) can change per breakpoint (e.g. `{ xs: '100%', md: '320px' }`), instead of a "
+          + 'single fixed value. As with any other offcanvas, it must be registered in '
+          + '`DContextProvider.availablePortals` and opened via `openPortal` — rendering it directly '
+          + 'as JSX is not the recommended usage. Resize the browser window (or Storybook viewport) '
+          + 'to see the width react to the real breakpoint.',
+      },
+      source: {
+        code: `
+type OffcanvasPayloads = {
+  filters: {
+    description: string;
+  };
+};
+
+function ResponsiveWidthOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom="end"
+      width={{ xs: '100%', sm: '320px', lg: '480px' }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="Cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
+        <DButton text="Ok" onClick={() => closePortal()} />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveWidthOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Width Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+function App() {
+  return (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveWidthStoryPortal"
+      availablePortals={{ filters: ResponsiveWidthOffcanvas }}
+    >
+      <OpenResponsiveWidthOffcanvasButton />
+    </DContextProvider>
+  );
+}
+        `.trim(),
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
+  render: () => (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveWidthStoryPortal"
+      availablePortals={{ filters: ResponsiveWidthOffcanvas }}
+    >
+      <div className="d-flex flex-column gap-2 align-items-center">
+        <OpenResponsiveWidthOffcanvasButton />
+        <pre>
+          <code>
+            {JSON.stringify({
+              width: { xs: '100%', sm: '320px', lg: '480px' },
+            }, null, 2)}
+          </code>
+        </pre>
+      </div>
+    </DContextProvider>
+  ),
+};
+
+function ResponsiveHeightOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom="bottom"
+      height={{ xs: '50vh', md: '75vh', lg: '100%' }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+        <small>
+          Resize the viewport: below
+          {' '}
+          <code>md</code>
+          {' '}
+          height is
+          {' '}
+          <code>50vh</code>
+          , from
+          {' '}
+          <code>md</code>
+          {' '}
+          it&apos;s
+          {' '}
+          <code>75vh</code>
+          , and from
+          {' '}
+          <code>lg</code>
+          {' '}
+          up
+          {' '}
+          <code>100%</code>
+          .
+        </small>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Cancel"
+          color="secondary"
+          variant="outline"
+          onClick={() => closePortal()}
+        />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveHeightOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Height Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+export const ResponsiveHeight: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+        <Story />
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`height` accepts a `ResponsiveProp` object so the offcanvas height (on `top`/`bottom` '
+          + "placements) can change per breakpoint (e.g. `{ xs: '50vh', md: '100%' }`), instead of a "
+          + 'single fixed value. As with any other offcanvas, it must be registered in '
+          + '`DContextProvider.availablePortals` and opened via `openPortal` — rendering it directly '
+          + 'as JSX is not the recommended usage. Resize the browser window (or Storybook viewport) '
+          + 'to see the height react to the real breakpoint.',
+      },
+      source: {
+        code: `
+type OffcanvasPayloads = {
+  filters: {
+    description: string;
+  };
+};
+
+function ResponsiveHeightOffcanvas({ name }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom="bottom"
+      height={{ xs: '50vh', md: '75vh', lg: '100%' }}
+    >
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="Cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
+        <DButton text="Ok" onClick={() => closePortal()} />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenResponsiveHeightOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Responsive Height Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+function App() {
+  return (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveHeightStoryPortal"
+      availablePortals={{ filters: ResponsiveHeightOffcanvas }}
+    >
+      <OpenResponsiveHeightOffcanvasButton />
+    </DContextProvider>
+  );
+}
+        `.trim(),
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
+  render: () => (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasResponsiveHeightStoryPortal"
+      availablePortals={{ filters: ResponsiveHeightOffcanvas }}
+    >
+      <div className="d-flex flex-column gap-2 align-items-center">
+        <OpenResponsiveHeightOffcanvasButton />
+        <pre>
+          <code>
+            {JSON.stringify({
+              height: { xs: '50vh', md: '75vh', lg: '100%' },
+            }, null, 2)}
+          </code>
+        </pre>
+      </div>
+    </DContextProvider>
+  ),
+};
+
 export const WithoutCancelX: Story = {
   decorators: [
     (Story) => (
