@@ -52,9 +52,13 @@
 
     // Splide's default theme applies `fill` and, for the prev arrow, a
     // `scaleX(-1)` flip to every descendant <svg>, assuming a single arrow
-    // path reused for both directions. Since `iconArrowLeft`/`iconArrowRight`
-    // are always a DIcon with its own icon/color, cancel both so the icon
-    // keeps its intended orientation and color.
+    // path reused for both directions. `iconArrowLeft`/`iconArrowRight` are
+    // typed as DIcon props, so the only <svg> rendered here is a Lucide icon,
+    // which is always stroke-based with `fill="none"` (see lucide-react
+    // defaultAttributes). Resetting to `fill: none` restores that intended
+    // stroke-only look and lets DIcon's own `color` (applied via `currentColor`
+    // on stroke) keep controlling the icon color; `transform: none` cancels
+    // the flip so the icon keeps its intended orientation.
     .d-icon svg {
       fill: none;
       transform: none;

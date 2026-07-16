@@ -219,4 +219,49 @@ describe('<DCarousel />', () => {
 
     expect(nextButton?.querySelector('svg')).toBeInTheDocument();
   });
+
+  it('Should not render arrows when options.arrows is explicitly false, even with icon props', () => {
+    const props: ComponentProps<typeof DCarousel> = {
+      iconArrowLeft: { icon: 'ArrowLeft' },
+      iconArrowRight: { icon: 'ArrowRight' },
+      options: { arrows: false },
+      children: (
+        <>
+          <DCarousel.Slide>
+            Slide 1
+          </DCarousel.Slide>
+          <DCarousel.Slide>
+            Slide 2
+          </DCarousel.Slide>
+        </>
+      ),
+    };
+
+    const { container } = render(
+      <DCarousel {...props} />,
+    );
+
+    expect(container.querySelector('.splide__arrows')).not.toBeInTheDocument();
+  });
+
+  it('Should let a consumer-provided hasTrack take precedence when no icon props are set', () => {
+    const props: ComponentProps<typeof DCarousel> = {
+      hasTrack: false,
+      children: (
+        <div className="splide__track">
+          <ul className="splide__list">
+            <li className="splide__slide">Custom track content</li>
+          </ul>
+        </div>
+      ),
+    };
+
+    const { container } = render(
+      <DCarousel {...props} />,
+    );
+
+    // Splide's own SplideTrack wrapper is not rendered; only the consumer-provided one is.
+    expect(container.querySelectorAll('.splide__track')).toHaveLength(1);
+    expect(container).toHaveTextContent('Custom track content');
+  });
 });

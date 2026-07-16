@@ -52,18 +52,19 @@ function DCarousel(
     dataAttributes,
     iconArrowLeft,
     iconArrowRight,
+    hasTrack: propsHasTrack,
     ...props
   }: Props,
   ref: ForwardedRef<Splide>,
 ) {
-  const hasCustomArrows = Boolean(iconArrowLeft || iconArrowRight);
+  // Explicit `options.arrows === false` always wins, even when icon props are set.
+  const hasCustomArrows = Boolean((iconArrowLeft || iconArrowRight) && options?.arrows !== false);
 
   return (
     <Splide
       className={classNames('d-carousel', className)}
       style={style}
       ref={ref}
-      hasTrack={!hasCustomArrows}
       options={{
         ...options,
         classes: {
@@ -79,6 +80,10 @@ function DCarousel(
       }}
       {...dataAttributes}
       {...props}
+      // Rendering our own arrows requires taking over the track wrapper, so this
+      // must be applied after `...props` to prevent a consumer-provided `hasTrack`
+      // from re-enabling Splide's automatic track when custom arrows are active.
+      hasTrack={hasCustomArrows ? false : propsHasTrack}
     >
       {hasCustomArrows ? (
         <>
