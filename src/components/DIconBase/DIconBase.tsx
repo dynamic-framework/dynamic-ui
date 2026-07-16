@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import { createElement, useMemo } from 'react';
 import * as LucideIcons from 'lucide-react';
+import { isValidElementType } from 'react-is';
 import type { CSSProperties, ComponentType } from 'react';
 import { PREFIX_BS } from '../config';
 
@@ -10,13 +11,19 @@ import type {
   ClassMap,
   ComponentColor,
   CustomStyles,
+  IconComponent,
+  IconValue,
 } from '../interface';
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
+
+function isIconComponent(value: unknown): value is IconComponent {
+  return typeof value !== 'string' && isValidElementType(value);
+}
 
 type Props =
   & BaseProps
   & {
-    icon: string;
+    icon: IconValue;
     color?: ComponentColor;
     size?: string | ResponsiveProp;
     /**
@@ -32,6 +39,8 @@ type Props =
     familyPrefix?: string;
     strokeWidth?: number;
   };
+
+export type DIconBaseProps = Props;
 
 export default function DIconBase(
   {
@@ -50,16 +59,17 @@ export default function DIconBase(
   }: Props,
 ) {
   // If materialStyle is true, use Material Design icons (legacy)
-  const useMaterialIcons = materialStyle;
+  const isStringIcon = typeof icon === 'string';
+  const useMaterialIcons = materialStyle && isStringIcon;
 
   // Get Lucide icon component
   const LucideIcon = useMemo<ComponentType<LucideIcons.LucideProps> | null>(() => {
-    if (useMaterialIcons) return null;
+    if (!isStringIcon || useMaterialIcons) return null;
 
     // Try to find the icon in Lucide (expects PascalCase)
     const icons = LucideIcons as unknown as Record<string, ComponentType<LucideIcons.LucideProps>>;
     return icons[icon] || null;
-  }, [icon, useMaterialIcons]);
+  }, [icon, isStringIcon, useMaterialIcons]);
 
   const { responsivePropValue } = useResponsiveProp(useListenerSize);
 
@@ -99,14 +109,30 @@ export default function DIconBase(
         style={generateStyleVariables}
         {...dataAttributes}
       >
-        {icon}
+        {isStringIcon ? icon : null}
       </i>
+    );
+  }
+
+  if (isIconComponent(icon)) {
+    return (
+      <span
+        className={classNames(generateClasses)}
+        style={generateStyleVariables}
+        {...dataAttributes}
+      >
+        {createElement(icon, {
+          width: resolvedSize || 24,
+          height: resolvedSize || 24,
+          strokeWidth,
+        })}
+      </span>
     );
   }
 
   // Render Lucide icon
   if (!LucideIcon) {
-    if (familyClass && familyPrefix) {
+    if (isStringIcon && familyClass && familyPrefix) {
       return (
         <i
           className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
@@ -117,7 +143,7 @@ export default function DIconBase(
     }
 
     // eslint-disable-next-line no-console
-    console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
+    console.warn(`Icon "${String(icon)}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
     return (
       <span
         className={classNames(generateClasses)}
