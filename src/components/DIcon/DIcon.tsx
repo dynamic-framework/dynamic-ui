@@ -1,12 +1,14 @@
-import type { ComponentProps } from 'react';
+import type { IconValue } from '../interface';
+import type { DIconBaseProps } from '../DIconBase';
 
 import DIconBase from '../DIconBase';
 import { useDContext } from '../../contexts';
 
-type Props = ComponentProps<typeof DIconBase>;
+type Props = DIconBaseProps;
 
 export default function DIcon(
   {
+    icon,
     familyClass: propFamilyClass,
     familyPrefix: propFamilyPrefix,
     materialStyle: propMaterialStyle,
@@ -19,13 +21,21 @@ export default function DIcon(
       familyPrefix,
       materialStyle,
     },
+    iconRegistry,
   } = useDContext();
+
+  const registryIcon: IconValue | undefined = typeof icon === 'string'
+    ? iconRegistry?.[icon]
+    : undefined;
+
+  const resolvedIcon: IconValue = registryIcon || icon;
 
   return (
     <DIconBase
-      familyClass={propFamilyClass || familyClass}
-      familyPrefix={propFamilyPrefix || familyPrefix}
-      materialStyle={propMaterialStyle || materialStyle}
+      icon={resolvedIcon}
+      familyClass={propFamilyClass ?? familyClass}
+      familyPrefix={propFamilyPrefix ?? familyPrefix}
+      materialStyle={propMaterialStyle ?? materialStyle}
       {...props}
     />
   );

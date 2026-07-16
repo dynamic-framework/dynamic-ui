@@ -18,7 +18,7 @@ import {
 } from '../components/DConfirmModal/confirmModalStore';
 
 import { PREFIX_BS } from '../components/config';
-import type { AlertThemeIconMap } from '../components/interface';
+import type { AlertThemeIconMap, IconComponent } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
 /**
@@ -110,6 +110,7 @@ type Props = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
+  iconRegistry?: Record<string, IconComponent>;
   iconMap: IconMapProps;
   breakpoints: BreakpointProps;
 };
@@ -133,6 +134,7 @@ const DEFAULT_STATE = {
     familyPrefix: 'bi-',
     materialStyle: false,
   },
+  iconRegistry: undefined,
   iconMap: {
     x: 'X',
     xLg: 'X',
@@ -205,6 +207,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     language = DEFAULT_STATE.language,
     currency = DEFAULT_STATE.currency,
     icon = DEFAULT_STATE.icon,
+    iconRegistry = DEFAULT_STATE.iconRegistry,
     iconMap = DEFAULT_STATE.iconMap,
     portalName = 'd-portal',
     availablePortals,
@@ -218,6 +221,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     language,
     currency,
     icon,
+    iconRegistry,
     iconMap,
     breakpoints: DEFAULT_STATE.breakpoints,
   });
@@ -272,6 +276,6 @@ export function DContextProvider<T extends Record<string, unknown>>(
  * is present in the tree — wrap your application with `DContextProvider`
  * to customise icons, currency, language, and portal settings.
  */
-export function useDContext() {
+export function useDContext(): Context {
   return useContext(DContext);
 }

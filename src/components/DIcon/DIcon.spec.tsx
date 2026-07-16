@@ -2,8 +2,13 @@
 
 import { render, screen } from '@testing-library/react';
 import DIcon from './DIcon';
+import { DContextProvider } from '../../contexts';
 
 describe('<DIcon />', () => {
+  function CustomIcon() {
+    return <svg data-testid="custom-svg" viewBox="0 0 24 24" />;
+  }
+
   it('should render my component', () => {
     const props = { icon: 'Heart' };
 
@@ -57,5 +62,53 @@ describe('<DIcon />', () => {
     expect(icon).toHaveClass('custom-family-class');
     expect(icon).toHaveTextContent('settings');
     expect(icon?.tagName).toBe('I');
+  });
+
+  it('should render SVG component icon directly', () => {
+    render(
+      // eslint-disable-next-line react/jsx-no-bind
+      <DIcon icon={CustomIcon} />,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+  });
+
+  it('should resolve string icon from iconRegistry in context', () => {
+    const iconRegistry = { NMChevron: CustomIcon };
+
+    render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="NMChevron" />
+      </DContextProvider>,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+  });
+
+  it('should fallback to default icon resolution when iconRegistry does not contain the requested icon', () => {
+    const iconRegistry = { NMChevron: CustomIcon };
+
+    const { container } = render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="Home" />
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
+    expect(screen.queryByTestId('custom-svg')).not.toBeInTheDocument();
+  });
+
+  it('should prioritize iconRegistry over Lucide when the icon name exists in both', () => {
+    const iconRegistry = { Home: CustomIcon };
+
+    render(
+      <DContextProvider iconRegistry={iconRegistry}>
+        <DIcon icon="Home" />
+      </DContextProvider>,
+    );
+
+    expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
   });
 });

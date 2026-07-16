@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import type { SVGProps } from 'react';
 
 import {
   DButton,
@@ -14,6 +15,20 @@ import {
   useMediaBreakpointUpMd,
 } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+
+const COMMONS_ICONS = {
+  NMChevron: (props: SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  ),
+  NMSmile: (props: SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 70 70" fill="currentColor" {...props}>
+      <path d="M35 3C17.355 3 3 17.355 3 35s14.355 32 32 32 32-14.355 32-32S52.645 3 35 3Zm0 60C19.535 63 7 50.465 7 35S19.535 7 35 7s28 12.535 28 28-12.535 28-28 28Z" />
+      <path d="M22 45a1 1 0 0 0-1.366.366 1 1 0 0 0 .366 1.366C23.828 51.626 29.093 54.665 34.739 54.665c5.347 0 10.299-2.668 13.246-7.136a1 1 0 1 0-1.67-1.101c-2.576 3.905-6.903 6.237-11.576 6.237-4.935 0-9.535-2.656-12.739-6.933Z" />
+    </svg>
+  ),
+};
 
 /**
  * Context Provider to share settings between components
@@ -33,6 +48,7 @@ Root provider used to share Dynamic UI global settings with descendants.
 - 'language' locale string consumed by UI and hooks
 - 'currency' formatting options consumed by 'useFormatCurrency' and currency components
 - 'icon' and 'iconMap' defaults consumed by 'DIcon' and components with semantic icons
+- 'iconRegistry' custom icon component map consumed by 'DIcon' when icon values are strings
 - 'portalName' and 'availablePortals' consumed by 'useDPortalContext' for modal/offcanvas flows
 - 'breakpoints' values resolved from Bootstrap CSS variables and consumed by media hooks
 
@@ -112,6 +128,9 @@ export const CurrencySettings: Story = {
  * By default and without additional configuration, the icons are linked to <code>Lucide icons</code>.
  *
  * To share a different icon configuration we need to change the key icon
+ *
+ * Additionally, you can provide `iconRegistry` to map string icon names
+ * to custom SVG components (for example from a shared commons package).
  *
  * This takes the settings needed to use bootstrap icons, which would
  * be `familyClass=bi`, `familyPrefix=bi-` and `materialStyle=false`
@@ -375,6 +394,63 @@ export const IconConsumption: Story = {
   }}
 >
   <IconConsumptionCard />
+</DContextProvider>`,
+      },
+    },
+  },
+};
+
+function IconRegistryConsumptionCard() {
+  return (
+    <div className="card p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="mb-2">iconRegistry in action</h6>
+      <p className="mb-2">
+        String icon names can resolve to custom SVG components from the registry.
+      </p>
+      <div className="d-flex align-items-center gap-3">
+        <span className="d-flex align-items-center gap-1">
+          <DIcon icon="NMChevron" />
+          <small>NMChevron (registry)</small>
+        </span>
+        <span className="d-flex align-items-center gap-1">
+          <DIcon icon="NMSmile" />
+          <small>NMSmile (registry)</small>
+        </span>
+        <span className="d-flex align-items-center gap-1">
+          <DIcon icon="Home" />
+          <small>Home (fallback)</small>
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export const IconRegistryConsumption: Story = {
+  render: () => (
+    <DContextProvider iconRegistry={COMMONS_ICONS}>
+      <IconRegistryConsumptionCard />
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `const COMMONS_ICONS = {
+  NMChevron: (props) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  ),
+  NMSmile: (props) => (
+    <svg viewBox="0 0 70 70" fill="currentColor" {...props}>
+      <path d="M35 3C17.355 3 3 17.355 3 35s14.355 32 32 32 32-14.355 32-32S52.645 3 35 3Z" />
+    </svg>
+  ),
+};
+
+<DContextProvider iconRegistry={COMMONS_ICONS}>
+  <DIcon icon="NMChevron" />
+  <DIcon icon="NMSmile" />
+  <DIcon icon="Home" />
 </DContextProvider>`,
       },
     },
