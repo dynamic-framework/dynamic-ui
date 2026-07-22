@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import {
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -20,16 +20,16 @@ export type DropdownAction = {
   label: string;
 };
 
+type ResolvedSide = 'down' | 'up' | 'start' | 'end';
+
 type MenuCoords = {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+  top: number;
+  left: number;
   minWidth: number;
   maxHeight: string;
 };
 
-type DropdownPlacement = 'auto' | 'down' | 'up' | 'start' | 'end';
+type DropdownPlacement = 'auto' | ResolvedSide;
 
 type Props = {
   actions: DropdownAction[];
@@ -40,11 +40,164 @@ type Props = {
   placement?: DropdownPlacement;
 };
 
+// Gap between the toggle and the menu.
+const GAP = 4;
+// Minimum distance the menu should keep from the viewport edges.
+const VIEWPORT_PADDING = 8;
+// Minimum usable height left for the menu before we consider a side unusable.
+const MIN_USABLE_SPACE = 120;
+
 const getItemClass = (action: DropdownAction) => classNames({
   'dropdown-item d-flex align-items-center': true,
   [`dropdown-item-${action.color}`]: !!action.color,
   disabled: action.disabled,
 });
+
+const clamp = (value: number, min: number, max: number) => {
+  if (max < min) return min;
+  return Math.min(Math.max(value, min), max);
+};
+
+/**
+ * `position: fixed` is normally relative to the viewport, but any ancestor
+ * with a `transform`, `perspective`, `filter`, `will-change` (of those) or a
+ * non-trivial `contain` establishes a new containing block, making `fixed`
+ * behave like `absolute` relative to that ancestor instead (e.g. Storybook's
+ * docs canvas wrapper, animated cards, sticky containers, etc.). We detect
+ * that ancestor so the computed coordinates can be adjusted accordingly,
+ * keeping the menu correctly anchored to the toggle in every context.
+ */
+const getFixedPositioningOffset = (fromEl: HTMLElement | null): { top: number, left: number } => {
+  let node = fromEl?.parentElement ?? null;
+  while (node && node !== document.body) {
+    const cs = window.getComputedStyle(node);
+    // Treat empty/undefined values as "unset" (jsdom returns "" rather than
+    // the CSS initial value like "none" for some of these properties).
+    const isSet = (value: string | undefined) => !!value && value !== 'none';
+    const establishesContainingBlock = isSet(cs.transform)
+      || isSet(cs.perspective)
+      || isSet(cs.filter)
+      || isSet(cs.backdropFilter)
+      || ['transform', 'perspective', 'filter'].some((prop) => cs.willChange?.includes(prop))
+      || ['layout', 'paint', 'strict', 'content'].includes(cs.contain);
+    if (establishesContainingBlock) {
+      const rect = node.getBoundingClientRect();
+      return { top: rect.top, left: rect.left };
+    }
+    node = node.parentElement;
+  }
+  return { top: 0, left: 0 };
+};
+
+/**
+ * Resolves where the menu should render (flip) and where it should sit along
+ * the cross axis (shift), so it always stays fully inside the viewport
+ * regardless of where the toggle is placed or how the viewport is resized.
+ * This mimics floating-ui's `flip` + `shift` middlewares without adding the
+ * dependency, keeping the existing Bootstrap markup/classes.
+ */
+const computeCoords = (
+  toggleRect: DOMRect,
+  menuSize: { width: number, height: number },
+  placement: DropdownPlacement,
+): MenuCoords & { resolvedSide: ResolvedSide } => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  const spaceBelow = viewportHeight - toggleRect.bottom;
+  const spaceAbove = toggleRect.top;
+  const spaceLeft = toggleRect.left;
+  const spaceRight = viewportWidth - toggleRect.right;
+
+  let side: ResolvedSide = placement === 'auto'
+    ? 'down'
+    : placement;
+  if (placement === 'auto') {
+    side = spaceBelow >= menuSize.height + GAP || spaceBelow >= spaceAbove ? 'down' : 'up';
+  }
+
+  // Flip within the current axis if the chosen side can't fit the menu but
+  // the opposite side (same axis) can.
+  if (side === 'down' && spaceBelow < menuSize.height + GAP && spaceAbove > spaceBelow) {
+    side = 'up';
+  } else if (side === 'up' && spaceAbove < menuSize.height + GAP && spaceBelow > spaceAbove) {
+    side = 'down';
+  } else if (side === 'start' && spaceLeft < menuSize.width + GAP && spaceRight > spaceLeft) {
+    side = 'end';
+  } else if (side === 'end' && spaceRight < menuSize.width + GAP && spaceLeft > spaceRight) {
+    side = 'start';
+  }
+
+  // Cross-axis fallback: e.g. a horizontally-centered toggle on a narrow
+  // viewport can't open sideways (neither `start` nor `end` fit), but there
+  // is plenty of room above/below — switch the whole axis in that case
+  // (and vice versa for `down`/`up` squeezed against a short viewport).
+  const bestVerticalSpace = Math.max(spaceBelow, spaceAbove);
+  const bestHorizontalSpace = Math.max(spaceLeft, spaceRight);
+  if (side === 'down' || side === 'up') {
+    if (bestVerticalSpace < menuSize.height + GAP && bestHorizontalSpace > bestVerticalSpace) {
+      side = spaceRight >= spaceLeft ? 'end' : 'start';
+    }
+  } else if (
+    bestHorizontalSpace < menuSize.width + GAP
+    && bestVerticalSpace > bestHorizontalSpace
+  ) {
+    side = spaceBelow >= spaceAbove ? 'down' : 'up';
+  }
+
+  if (side === 'down' || side === 'up') {
+    const top = side === 'down'
+      ? toggleRect.bottom + GAP
+      : toggleRect.top - menuSize.height - GAP;
+
+    // Shift horizontally: align with the toggle's left edge by default, but
+    // switch to the right edge (or clamp) if that would overflow the viewport.
+    let { left } = toggleRect;
+    if (left + menuSize.width > viewportWidth - VIEWPORT_PADDING) {
+      left = toggleRect.right - menuSize.width;
+    }
+    left = clamp(
+      left,
+      VIEWPORT_PADDING,
+      Math.max(viewportWidth - menuSize.width - VIEWPORT_PADDING, VIEWPORT_PADDING),
+    );
+
+    const availableHeight = side === 'down' ? spaceBelow : spaceAbove;
+
+    return {
+      top,
+      left,
+      minWidth: Math.max(toggleRect.width, 160),
+      maxHeight: `${Math.max(availableHeight - GAP - VIEWPORT_PADDING, MIN_USABLE_SPACE)}px`,
+      resolvedSide: side,
+    };
+  }
+
+  // side is 'start' or 'end'
+  const left = side === 'start'
+    ? toggleRect.left - menuSize.width - GAP
+    : toggleRect.right + GAP;
+
+  // Shift vertically: align with the toggle's top edge by default, but switch
+  // to the bottom edge (or clamp) if that would overflow the viewport.
+  let { top } = toggleRect;
+  if (top + menuSize.height > viewportHeight - VIEWPORT_PADDING) {
+    top = toggleRect.bottom - menuSize.height;
+  }
+  top = clamp(
+    top,
+    VIEWPORT_PADDING,
+    Math.max(viewportHeight - menuSize.height - VIEWPORT_PADDING, VIEWPORT_PADDING),
+  );
+
+  return {
+    top,
+    left,
+    minWidth: Math.max(toggleRect.width, 160),
+    maxHeight: `${Math.max(viewportHeight - VIEWPORT_PADDING * 2, MIN_USABLE_SPACE)}px`,
+    resolvedSide: side,
+  };
+};
 
 export default function DDropdown(
   {
@@ -57,88 +210,49 @@ export default function DDropdown(
   }: Props,
 ) {
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState<'down' | 'up' | 'start' | 'end'>('down');
-  const [menuCoords, setMenuCoords] = useState<MenuCoords | null>(null);
+  const [coords, setCoords] = useState<MenuCoords | null>(null);
+  const [resolvedSide, setResolvedSide] = useState<ResolvedSide>('down');
 
-  // Used in default (non-portal) mode: wraps the entire dropdown
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  // Used in portal mode: ref on the toggle wrapper to read its viewport coords
+  // Wraps the toggle in both modes — used to read its viewport-relative rect.
   const toggleRef = useRef<HTMLDivElement>(null);
-  // Ref on the rendered <ul> — used for outside-click detection in portal mode
+  // Ref on the rendered <ul> — used to measure its size and for outside-click detection.
   const menuRef = useRef<HTMLUListElement>(null);
 
   const toggle = () => {
-    setMenuCoords(null);
+    setCoords(null);
     setOpen((prev) => !prev);
   };
-  const resolvedInlinePosition = placement === 'auto' ? position : placement;
 
-  // Compute fixed coords from the toggle's bounding rect (portal mode only)
-  const computePortalCoords = useCallback(() => {
-    if (!toggleRef.current) return;
-    const rect = toggleRef.current.getBoundingClientRect();
-    const spaceRight = window.innerWidth - rect.right;
-    const spaceBottom = window.innerHeight - rect.bottom;
-    const spaceTop = rect.top;
-    let resolvedPlacement: DropdownPlacement;
-    if (placement === 'auto') {
-      if (spaceBottom < 150) {
-        resolvedPlacement = 'up';
-      } else if (spaceRight < 150) {
-        resolvedPlacement = 'start';
-      } else {
-        resolvedPlacement = 'down';
-      }
-    } else {
-      resolvedPlacement = placement;
-    }
-
-    const openStart = resolvedPlacement === 'start';
-    const openEnd = resolvedPlacement === 'end';
-    const openUp = resolvedPlacement === 'up';
-    let availableHeight = spaceBottom;
-    if (openUp) {
-      availableHeight = spaceTop;
-    } else if (openStart || openEnd) {
-      availableHeight = window.innerHeight - rect.top;
-    }
-
-    const verticalCoords = openUp
-      ? { bottom: window.innerHeight - rect.top + 4 }
-      : { top: openStart || openEnd ? rect.top : rect.bottom + 4 };
-
-    let horizontalCoords: Pick<MenuCoords, 'left' | 'right'>;
-    if (openStart) {
-      horizontalCoords = { right: window.innerWidth - rect.left + 4 };
-    } else if (openEnd) {
-      horizontalCoords = { left: rect.right + 4 };
-    } else {
-      horizontalCoords = { left: rect.left };
-    }
-
-    setMenuCoords({
-      ...verticalCoords,
-      ...horizontalCoords,
-      minWidth: Math.max(rect.width, 160),
-      maxHeight: `${Math.max(availableHeight - 12, 120)}px`,
+  // Measures the toggle + menu and (re)computes fixed, pixel-perfect coords
+  // with collision detection, so the menu never overflows the viewport.
+  const updatePosition = useCallback(() => {
+    if (!toggleRef.current || !menuRef.current) return;
+    const toggleRect = toggleRef.current.getBoundingClientRect();
+    const menuRect = menuRef.current.getBoundingClientRect();
+    const { resolvedSide: side, ...menuCoords } = computeCoords(
+      toggleRect,
+      { width: menuRect.width, height: menuRect.height },
+      placement,
+    );
+    // In portal mode the menu is appended to document.body, whose containing
+    // block for `fixed` is always the viewport (no adjustment needed). In
+    // inline mode the menu stays next to the toggle, so we must look for a
+    // containing-block-establishing ancestor starting from the toggle.
+    const offset = asPortal
+      ? { top: 0, left: 0 }
+      : getFixedPositioningOffset(toggleRef.current);
+    setResolvedSide(side);
+    setCoords({
+      ...menuCoords,
+      top: menuCoords.top - offset.top,
+      left: menuCoords.left - offset.left,
     });
-  }, [placement]);
+  }, [placement, asPortal]);
 
-  // Outside-click: default mode
-  useEffect(() => {
-    if (asPortal) return () => {};
-    const handler = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [asPortal]);
-
-  // Outside-click: portal mode (must check both toggle and floating menu)
-  useEffect(() => {
-    if (!asPortal || !open) return () => {};
+  // Outside-click detection (checks both the toggle and the floating menu,
+  // since in portal mode the menu isn't a DOM descendant of the toggle).
+  useLayoutEffect(() => {
+    if (!open) return () => {};
     const handler = (event: MouseEvent) => {
       const target = event.target as Node;
       if (!toggleRef.current?.contains(target) && !menuRef.current?.contains(target)) {
@@ -147,32 +261,21 @@ export default function DDropdown(
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [asPortal, open]);
+  }, [open]);
 
-  // Auto-position: default mode
-  useEffect(() => {
-    if (asPortal || !open || !dropdownRef.current || placement !== 'auto') return;
-    const rect = dropdownRef.current.getBoundingClientRect();
-    const spaceBottom = window.innerHeight - rect.bottom;
-    const spaceRight = window.innerWidth - rect.right;
-    if (spaceBottom < 150) setPosition('up');
-    else if (spaceRight < 150) setPosition('start');
-    else setPosition('down');
-  }, [asPortal, open, placement]);
-
-  // Compute + track coords: portal mode
-  // Re-runs whenever the menu opens and keeps coords fresh on scroll/resize
-  useEffect(() => {
-    if (!asPortal || !open) return () => {};
-    computePortalCoords();
-    const update = () => computePortalCoords();
-    window.addEventListener('scroll', update, { passive: true, capture: true });
-    window.addEventListener('resize', update, { passive: true });
+  // Computes the initial position synchronously (before paint, to avoid a
+  // flicker) and keeps it fresh while the menu is open and the viewport
+  // scrolls or resizes.
+  useLayoutEffect(() => {
+    if (!open) return () => {};
+    updatePosition();
+    window.addEventListener('scroll', updatePosition, { passive: true, capture: true });
+    window.addEventListener('resize', updatePosition, { passive: true });
     return () => {
-      window.removeEventListener('scroll', update, { capture: true });
-      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', updatePosition, { capture: true });
+      window.removeEventListener('resize', updatePosition);
     };
-  }, [asPortal, open, computePortalCoords]);
+  }, [open, updatePosition]);
 
   let ToggleElement: React.ReactNode;
   if (dropdownToggle) {
@@ -193,64 +296,36 @@ export default function DDropdown(
     );
   }
 
-  const portalMenuStyle: React.CSSProperties | undefined = asPortal && menuCoords
+  // Until the first measurement is available, keep the menu off-screen but
+  // measurable (visibility: hidden preserves layout, unlike display: none).
+  const menuStyle: React.CSSProperties = coords
     ? {
       position: 'fixed',
-      top: menuCoords.top,
-      bottom: menuCoords.bottom,
-      left: menuCoords.left,
-      right: menuCoords.right,
-      minWidth: menuCoords.minWidth,
-      maxHeight: menuCoords.maxHeight,
+      top: coords.top,
+      left: coords.left,
+      minWidth: coords.minWidth,
+      maxHeight: coords.maxHeight,
       overflowY: 'auto',
       zIndex: 1050,
       transform: 'none',
+      visibility: 'visible',
     }
-    : undefined;
-
-  let inlineTop: React.CSSProperties['top'] = '100%';
-  if (resolvedInlinePosition === 'up') {
-    inlineTop = 'auto';
-  } else if (resolvedInlinePosition === 'start' || resolvedInlinePosition === 'end') {
-    inlineTop = 0;
-  }
-
-  let inlineLeft: React.CSSProperties['left'] = 0;
-  if (resolvedInlinePosition === 'start') {
-    inlineLeft = 'auto';
-  } else if (resolvedInlinePosition === 'end') {
-    inlineLeft = '100%';
-  }
-
-  let inlineRight: React.CSSProperties['right'] = 'auto';
-  if (resolvedInlinePosition === 'start') {
-    inlineRight = '100%';
-  }
-
-  let inlineTransform: React.CSSProperties['transform'] = 'translateY(4px)';
-  if (resolvedInlinePosition === 'up') {
-    inlineTransform = 'translateY(-4px)';
-  } else if (resolvedInlinePosition === 'start') {
-    inlineTransform = 'translateX(-4px)';
-  } else if (resolvedInlinePosition === 'end') {
-    inlineTransform = 'translateX(4px)';
-  }
-
-  const inlineMenuStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: inlineTop,
-    bottom: resolvedInlinePosition === 'up' ? '100%' : 'auto',
-    left: inlineLeft,
-    right: inlineRight,
-    transform: inlineTransform,
-  };
+    : {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      visibility: 'hidden',
+      pointerEvents: 'none',
+      zIndex: 1050,
+      transform: 'none',
+    };
 
   const menuItems = (
     <ul
       ref={menuRef}
       role="menu"
       className={classNames('dropdown-menu p-2', { show: open }, classNameMenu)}
-      style={portalMenuStyle ?? inlineMenuStyle}
+      style={menuStyle}
     >
       {actions.map((action, index) => {
         if (action.isDivider) {
@@ -295,22 +370,14 @@ export default function DDropdown(
     </ul>
   );
 
-  if (asPortal) {
-    return (
-      <div ref={toggleRef} className={classNames('dropdown', className)}>
-        {ToggleElement}
-        {open && menuCoords && createPortal(menuItems, document.body)}
-      </div>
-    );
-  }
-
   return (
     <div
-      className={classNames(`dropdown drop-${resolvedInlinePosition}`, className)}
-      ref={dropdownRef}
+      ref={toggleRef}
+      className={classNames(`dropdown drop-${resolvedSide}`, className)}
+      style={{ display: 'inline-block' }}
     >
       {ToggleElement}
-      {menuItems}
+      {open && (asPortal ? createPortal(menuItems, document.body) : menuItems)}
     </div>
   );
 }

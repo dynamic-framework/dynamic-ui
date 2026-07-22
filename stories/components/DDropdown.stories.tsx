@@ -60,6 +60,11 @@ The dropdown automatically adjusts its position depending on the available space
       type: 'string',
       table: { category: 'Appearance' },
     },
+    asPortal: {
+      control: 'boolean',
+      description: 'If true, the dropdown menu is rendered in a portal (default: false)',
+      table: { category: 'Behavior' },
+    },
     actions: {
       control: 'object',
       description: 'List of actions displayed in the dropdown menu',
@@ -88,7 +93,7 @@ The dropdown automatically adjusts its position depending on the available space
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ height: 250 }}>
+      <div style={{ height: 350 }}>
         <Story />
       </div>
     ),
@@ -108,10 +113,12 @@ const baseActions: DropdownAction[] = [
 
 export const DisabledActions: Story = {
   args: {
+    asPortal: false,
     actions: [
       { label: 'Active action', icon: 'Check' },
       { label: 'Disabled action', disabled: true },
     ],
+    placement: 'auto',
   },
 };
 
@@ -179,5 +186,35 @@ export const WithDividers: Story = {
       { isDivider: true, label: '' },
       { label: 'Third action', icon: 'Trash2', color: 'danger' },
     ],
+  },
+};
+
+export const Placements: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '4rem',
+        padding: '4rem',
+      }}
+    >
+      {(['down', 'up', 'start', 'end'] as const).map((placement) => (
+        <div key={placement} style={{ textAlign: 'center' }}>
+          <p className="mb-2 text-capitalize">{placement}</p>
+          <DDropdown actions={baseActions} placement={placement} />
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: `Each of the 4 supported placements: \`down\`, \`up\`, \`start\` and \`end\`.
+The menu always flips and shifts as needed to stay fully inside the viewport,
+even switching axis (e.g. \`start\`/\`end\` to \`down\`/\`up\`) when there isn't
+enough room in either direction of the requested axis.`,
+      },
+    },
   },
 };
