@@ -155,17 +155,9 @@ const computeCoords = (
   }
 
   if (side === 'down' || side === 'up') {
-    let top = side === 'down'
+    const top = side === 'down'
       ? toggleRect.bottom + GAP
       : toggleRect.top - menuSize.height - GAP;
-    // Safety-net clamp: if the menu is taller than the available space on
-    // its resolved side (e.g. constrained afterwards via `maxHeight`), keep
-    // `top` inside the viewport instead of letting it render off-screen.
-    top = clamp(
-      top,
-      VIEWPORT_PADDING,
-      Math.max(viewportHeight - menuSize.height - VIEWPORT_PADDING, VIEWPORT_PADDING),
-    );
 
     // Align horizontally per the requested `alignment` (start/end/center), then
     // fall back to the opposite edge if the preferred alignment would overflow
@@ -414,7 +406,8 @@ export default function DDropdown(
   return (
     <div
       ref={toggleRef}
-      className={classNames(`dropdown drop-${resolvedSide} d-inline-block`, className)}
+      className={classNames(`dropdown drop-${resolvedSide}`, className)}
+      style={{ display: 'inline-block' }}
     >
       {ToggleElement}
       {open && (asPortal ? createPortal(menuItems, document.body) : menuItems)}
