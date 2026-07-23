@@ -260,6 +260,18 @@ export default function DDropdown(
   const updatePosition = useCallback(() => {
     if (!toggleRef.current || !menuRef.current) return;
     const toggleRect = toggleRef.current.getBoundingClientRect();
+    // If the toggle itself has scrolled completely out of the viewport
+    // (regardless of `placement`), close the menu instead of leaving it
+    // rendered detached from the toggle that opened it.
+    const toggleIsMeasured = toggleRect.width > 0 || toggleRect.height > 0;
+    const toggleIsOutOfView = toggleRect.bottom <= 0
+      || toggleRect.top >= window.innerHeight
+      || toggleRect.right <= 0
+      || toggleRect.left >= window.innerWidth;
+    if (toggleIsMeasured && toggleIsOutOfView) {
+      setOpen(false);
+      return;
+    }
     const menuRect = menuRef.current.getBoundingClientRect();
     const { resolvedSide: side, ...menuCoords } = computeCoords(
       toggleRect,
