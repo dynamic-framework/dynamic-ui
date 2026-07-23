@@ -534,4 +534,67 @@ describe('<DDropdown />', () => {
 
     jest.restoreAllMocks();
   });
+
+  it('should clamp the menu vertically for "up" placement when there is not enough room above or below', () => {
+    // Toggle positioned so that neither side has enough vertical space for
+    // the (taller) menu and space below isn't bigger than space above, so
+    // the resolved side stays "up" without flipping — `top` must still be
+    // clamped so the menu never renders off-screen.
+    Object.defineProperty(window, 'innerWidth', { value: 300, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 300, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 100,
+          height: 250,
+          top: 0,
+          right: 100,
+          bottom: 250,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 40,
+        height: 20,
+        top: 200,
+        right: 180,
+        bottom: 220,
+        left: 140,
+        x: 140,
+        y: 200,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    const { container } = render(
+      <DDropdown actions={baseActions} placement="up" />,
+    );
+
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    expect(container.querySelector('.dropdown')).toHaveClass('drop-up');
+    const top = Number((menu).style.top.replace('px', ''));
+    expect(top).toBeGreaterThanOrEqual(0);
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
+  it('should keep the display behavior overridable via className instead of an inline style', () => {
+    // The wrapper must not force `display` via an inline style (which always
+    // wins over CSS), so consumers can override it through `className`.
+    const { container } = render(
+      <DDropdown actions={baseActions} />,
+    );
+
+    const dropdown = container.querySelector('.dropdown');
+    expect(dropdown).toHaveClass('d-inline-block');
+    expect(dropdown).not.toHaveAttribute('style');
+  });
 });
