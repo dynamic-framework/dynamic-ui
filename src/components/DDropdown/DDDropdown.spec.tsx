@@ -1,6 +1,7 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -14,6 +15,18 @@ describe('<DDropdown />', () => {
     { label: 'Action 2', onClick: () => {} },
     { label: 'Action 3', isDivider: true },
   ];
+
+  const defaultInnerWidth = window.innerWidth;
+  const defaultInnerHeight = window.innerHeight;
+
+  // Several tests override window.innerWidth/innerHeight to simulate
+  // different viewports; restore them here so a leftover value can't leak
+  // into later tests (e.g. if a test throws before its own cleanup runs).
+  afterEach(() => {
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: defaultInnerWidth, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: defaultInnerHeight, configurable: true });
+  });
 
   it('should render a DDropdown', () => {
     const props: ComponentProps<typeof DDropdown> = {
@@ -167,6 +180,55 @@ describe('<DDropdown />', () => {
     expect(left + 200).toBeLessThanOrEqual(500);
 
     jest.restoreAllMocks();
+  });
+
+  it('should not flip to the horizontal axis when the vertical space is merely truncated (>= MIN_USABLE_SPACE)', () => {
+    // Both above and below have less room than the full menu height, but
+    // still at least MIN_USABLE_SPACE (120px) — since maxHeight/overflow-y
+    // already truncates the menu in that case, it should stay on the
+    // vertical axis instead of unnecessarily flipping sideways.
+    Object.defineProperty(window, 'innerWidth', { value: 300, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 300, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 100,
+          height: 250,
+          top: 0,
+          right: 100,
+          bottom: 250,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 20,
+        height: 20,
+        top: 140,
+        right: 30,
+        bottom: 160,
+        left: 10,
+        x: 10,
+        y: 140,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    const { container } = render(
+      <DDropdown actions={baseActions} placement="down" />,
+    );
+
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    expect(screen.getByRole('menu')).toBeInTheDocument();
+    expect(container.querySelector('.dropdown')).toHaveClass('drop-down');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
   });
 
   it('should fall back to vertical placement when a centered toggle has no horizontal room', () => {
@@ -472,6 +534,55 @@ describe('<DDropdown />', () => {
     Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
   });
 
+  it('should base "start"/"end" maxHeight on the remaining space below the computed top', () => {
+    // The toggle sits near the bottom, so the menu shifts to align with the
+    // toggle's bottom edge instead of its top. `maxHeight` must be derived
+    // from the space actually remaining below that (shifted) `top`, not the
+    // full viewport height, or the menu could overflow past the bottom edge.
+    Object.defineProperty(window, 'innerWidth', { value: 1000, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 400, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 100,
+          height: 200,
+          top: 0,
+          right: 100,
+          bottom: 200,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 40,
+        height: 24,
+        top: 350,
+        right: 540,
+        bottom: 374,
+        left: 500,
+        x: 500,
+        y: 350,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="start" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    // top = toggleRect.bottom - menuHeight = 374 - 200 = 174.
+    expect(menu).toHaveStyle('top: 174px');
+    // maxHeight = viewportHeight - top - VIEWPORT_PADDING = 400 - 174 - 8 = 218.
+    expect(menu).toHaveStyle('max-height: 218px');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
   it('should detect a containing-block ancestor even with multiple `contain` keywords', () => {
     // `contain` computed values can combine keywords (e.g. "layout paint"),
     // not just a single one, and must still be detected as establishing a
@@ -537,7 +648,7 @@ describe('<DDropdown />', () => {
 
   it.each(['down', 'up', 'start', 'end'] as const)(
     'should close the menu when the toggle scrolls completely out of the viewport (placement="%s")',
-    (placement) => {
+    async (placement) => {
       // Once the toggle itself is no longer visible, the menu must close
       // instead of staying pinned to a viewport edge (which would leave it
       // visible detached from the toggle that opened it), regardless of
@@ -576,9 +687,13 @@ describe('<DDropdown />', () => {
       fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
       expect(screen.getByRole('menu')).toBeInTheDocument();
 
-      // Scroll the toggle completely above the viewport.
+      // Scroll the toggle completely above the viewport. Position updates on
+      // scroll are throttled to one per animation frame, so flush it.
       toggleTop = -500;
       fireEvent.scroll(window);
+      await act(async () => {
+        await new Promise((resolve) => { requestAnimationFrame(resolve); });
+      });
 
       expect(screen.queryByRole('menu')).not.toBeInTheDocument();
 

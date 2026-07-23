@@ -144,7 +144,7 @@ const computeCoords = (
   const bestVerticalSpace = Math.max(spaceBelow, spaceAbove);
   const bestHorizontalSpace = Math.max(spaceLeft, spaceRight);
   if (side === 'down' || side === 'up') {
-    if (bestVerticalSpace < menuSize.height + GAP && bestHorizontalSpace > bestVerticalSpace) {
+    if (bestVerticalSpace < MIN_USABLE_SPACE && bestHorizontalSpace > bestVerticalSpace) {
       side = spaceRight >= spaceLeft ? 'end' : 'start';
     }
   } else if (
@@ -225,7 +225,7 @@ const computeCoords = (
     top,
     left,
     minWidth: Math.max(toggleRect.width, 160),
-    maxHeight: `${Math.max(viewportHeight - VIEWPORT_PADDING * 2, MIN_USABLE_SPACE)}px`,
+    maxHeight: `${Math.max(viewportHeight - top - VIEWPORT_PADDING, MIN_USABLE_SPACE)}px`,
     resolvedSide: side,
   };
 };
@@ -294,6 +294,17 @@ export default function DDropdown(
     });
   }, [placement, alignment, asPortal]);
 
+  // Throttles scroll/resize-triggered updates to at most once per frame,
+  // avoiding repeated forced reflows on busy/high-frequency scroll events.
+  const rafIdRef = useRef<number | null>(null);
+  const scheduleUpdatePosition = useCallback(() => {
+    if (rafIdRef.current !== null) return;
+    rafIdRef.current = window.requestAnimationFrame(() => {
+      rafIdRef.current = null;
+      updatePosition();
+    });
+  }, [updatePosition]);
+
   // Outside-click detection (checks both the toggle and the floating menu,
   // since in portal mode the menu isn't a DOM descendant of the toggle).
   useLayoutEffect(() => {
@@ -310,17 +321,21 @@ export default function DDropdown(
 
   // Computes the initial position synchronously (before paint, to avoid a
   // flicker) and keeps it fresh while the menu is open and the viewport
-  // scrolls or resizes.
+  // scrolls or resizes (throttled to one update per frame, see above).
   useLayoutEffect(() => {
     if (!open) return () => {};
     updatePosition();
-    window.addEventListener('scroll', updatePosition, { passive: true, capture: true });
-    window.addEventListener('resize', updatePosition, { passive: true });
+    window.addEventListener('scroll', scheduleUpdatePosition, { passive: true, capture: true });
+    window.addEventListener('resize', scheduleUpdatePosition, { passive: true });
     return () => {
-      window.removeEventListener('scroll', updatePosition, { capture: true });
-      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', scheduleUpdatePosition, { capture: true });
+      window.removeEventListener('resize', scheduleUpdatePosition);
+      if (rafIdRef.current !== null) {
+        window.cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
     };
-  }, [open, updatePosition]);
+  }, [open, updatePosition, scheduleUpdatePosition]);
 
   let ToggleElement: React.ReactNode;
   if (dropdownToggle) {
