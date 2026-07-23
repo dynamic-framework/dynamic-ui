@@ -586,53 +586,6 @@ describe('<DDropdown />', () => {
     Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
   });
 
-  it('should close the menu when the toggle scrolls completely out of the viewport', () => {
-    // Once the toggle itself is no longer visible, the menu must close
-    // instead of staying pinned to a viewport edge (which would leave it
-    // visible detached from the toggle that opened it).
-    let toggleTop = 100;
-    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
-      this: HTMLElement,
-    ) {
-      if (this.getAttribute('role') === 'menu') {
-        return {
-          width: 200,
-          height: 96,
-          top: 0,
-          right: 200,
-          bottom: 96,
-          left: 0,
-          x: 0,
-          y: 0,
-          toJSON: () => ({}),
-        } as DOMRect;
-      }
-      return {
-        width: 40,
-        height: 24,
-        top: toggleTop,
-        right: 240,
-        bottom: toggleTop + 24,
-        left: 200,
-        x: 200,
-        y: toggleTop,
-        toJSON: () => ({}),
-      } as DOMRect;
-    });
-
-    render(<DDropdown actions={baseActions} placement="down" />);
-    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
-    expect(screen.getByRole('menu')).toBeInTheDocument();
-
-    // Scroll the toggle completely above the viewport.
-    toggleTop = -500;
-    fireEvent.scroll(window);
-
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
-
-    jest.restoreAllMocks();
-  });
-
   it('should keep the display behavior overridable via className instead of an inline style', () => {
     // The wrapper must not force `display` via an inline style (which always
     // wins over CSS), so consumers can override it through `className`.
