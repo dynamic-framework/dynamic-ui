@@ -25,6 +25,8 @@ The dropdown automatically adjusts its position depending on the available space
 | actions          | \`DropdownAction[]\`              | List of menu actions |
 | dropdownToggle   | \`(props) => ReactNode\`          | Custom toggle renderer or element |
 | className        | \`string\`                        | Additional class names for the wrapper |
+| classNameMenu    | \`string\`                        | Additional class names for the dropdown menu |
+| asPortal         | \`boolean\`                       | If true, the dropdown menu is rendered in a portal (default: false) |
 | placement        | \`'auto' \\| 'down' \\| 'up' \\| 'start' \\| 'end'\` | Preferred side to open the menu, with automatic flip/shift to stay inside the viewport |
 | alignment        | \`'start' \\| 'end' \\| 'center'\` | Horizontal alignment of the menu relative to the toggle, applied only when the resolved placement is \`down\`/\`up\` (defaults to \`'start'\`) |
 

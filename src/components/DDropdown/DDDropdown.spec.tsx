@@ -425,4 +425,113 @@ describe('<DDropdown />', () => {
     Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
     Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
   });
+
+  it('should clamp the menu horizontally for "start"/"end" placements when no side has enough room', () => {
+    // Toggle squeezed in a corner where neither axis has enough space: the
+    // resolved side stays horizontal, but `left` must still be clamped so the
+    // menu never renders off-screen.
+    Object.defineProperty(window, 'innerWidth', { value: 200, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 200, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 300,
+          height: 300,
+          top: 0,
+          right: 300,
+          bottom: 300,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 20,
+        height: 20,
+        top: 5,
+        right: 25,
+        bottom: 25,
+        left: 5,
+        x: 5,
+        y: 5,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="start" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    const left = Number((menu).style.left.replace('px', ''));
+    expect(left).toBeGreaterThanOrEqual(0);
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
+  it('should detect a containing-block ancestor even with multiple `contain` keywords', () => {
+    // `contain` computed values can combine keywords (e.g. "layout paint"),
+    // not just a single one, and must still be detected as establishing a
+    // new containing block for `position: fixed` descendants.
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 200,
+          height: 100,
+          top: 0,
+          right: 200,
+          bottom: 100,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      if (this.dataset.testid === 'ancestor') {
+        return {
+          width: 500,
+          height: 500,
+          top: 50,
+          right: 530,
+          bottom: 550,
+          left: 30,
+          x: 30,
+          y: 50,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 40,
+        height: 24,
+        top: 150,
+        right: 170,
+        bottom: 174,
+        left: 130,
+        x: 130,
+        y: 150,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(
+      <div data-testid="ancestor" style={{ contain: 'layout paint' }}>
+        <DDropdown actions={baseActions} placement="down" />
+      </div>,
+    );
+
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    // Without the offset correction this would be top: 178px / left: 130px
+    // (the toggle's viewport-relative position); with it, the ancestor's
+    // own offset (top: 50, left: 30) must be subtracted.
+    expect(menu).toHaveStyle('top: 128px');
+    expect(menu).toHaveStyle('left: 100px');
+
+    jest.restoreAllMocks();
+  });
 });

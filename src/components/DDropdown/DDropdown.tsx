@@ -87,7 +87,7 @@ const getFixedPositioningOffset = (fromEl: HTMLElement | null): { top: number, l
       || isSet(cs.filter)
       || isSet(cs.backdropFilter)
       || ['transform', 'perspective', 'filter'].some((prop) => cs.willChange?.includes(prop))
-      || ['layout', 'paint', 'strict', 'content'].includes(cs.contain);
+      || cs.contain.split(' ').some((value) => ['layout', 'paint', 'strict', 'content'].includes(value));
     if (establishesContainingBlock) {
       const rect = node.getBoundingClientRect();
       return { top: rect.top, left: rect.left };
@@ -197,9 +197,17 @@ const computeCoords = (
   }
 
   // side is 'start' or 'end'
-  const left = side === 'start'
+  let left = side === 'start'
     ? toggleRect.left - menuSize.width - GAP
     : toggleRect.right + GAP;
+  // Safety-net clamp: in rare cases where the toggle is squeezed so tightly
+  // that no side of any axis has enough room, keep the menu inside the
+  // viewport rather than letting it render off-screen.
+  left = clamp(
+    left,
+    VIEWPORT_PADDING,
+    Math.max(viewportWidth - menuSize.width - VIEWPORT_PADDING, VIEWPORT_PADDING),
+  );
 
   // Shift vertically: align with the toggle's top edge by default, but switch
   // to the bottom edge (or clamp) if that would overflow the viewport.
