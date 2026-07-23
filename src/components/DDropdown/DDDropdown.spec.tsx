@@ -248,4 +248,181 @@ describe('<DDropdown />', () => {
     expect(menu).toHaveStyle('left: 204px');
     expect(menu).toHaveStyle('min-width: 160px');
   });
+
+  it('should align the menu to the right edge of the toggle when alignment is "end"', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 1000, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 200,
+          height: 100,
+          top: 0,
+          right: 200,
+          bottom: 100,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 40,
+        height: 24,
+        top: 100,
+        right: 440,
+        bottom: 124,
+        left: 400,
+        x: 400,
+        y: 100,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="down" alignment="end" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    // Right edge of the menu (left + width) should align with the toggle's right edge.
+    expect(menu).toHaveStyle('left: 240px');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
+  it('should center the menu on the toggle when alignment is "center"', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 1000, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 200,
+          height: 100,
+          top: 0,
+          right: 200,
+          bottom: 100,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 40,
+        height: 24,
+        top: 100,
+        right: 440,
+        bottom: 124,
+        left: 400,
+        x: 400,
+        y: 100,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="down" alignment="center" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    // Center of the menu should align with the center of the toggle: 400 + 20 - 100 = 320.
+    expect(menu).toHaveStyle('left: 320px');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
+  it('should fall back to start alignment when "end" alignment would overflow the left edge', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 1000, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 200,
+          height: 100,
+          top: 0,
+          right: 200,
+          bottom: 100,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      // Toggle sits near the left edge of the viewport.
+      return {
+        width: 40,
+        height: 24,
+        top: 100,
+        right: 50,
+        bottom: 124,
+        left: 10,
+        x: 10,
+        y: 100,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="down" alignment="end" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    // Right-aligned (50 - 200 = -150) would overflow, so it falls back to the toggle's left edge.
+    expect(menu).toHaveStyle('left: 10px');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
+  it('should keep a centered menu fully inside the viewport near an edge', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 300, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 100,
+          height: 100,
+          top: 0,
+          right: 100,
+          bottom: 100,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      // Toggle sits near the right edge of a narrow viewport.
+      return {
+        width: 40,
+        height: 24,
+        top: 100,
+        right: 290,
+        bottom: 124,
+        left: 250,
+        x: 250,
+        y: 100,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    render(<DDropdown actions={baseActions} placement="down" alignment="center" />);
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    const left = Number((menu).style.left.replace('px', ''));
+    // Centering (250 + 20 - 50 = 220) would overflow the right edge, so it must shift left
+    // enough to stay fully within the viewport.
+    expect(left).toBeGreaterThanOrEqual(0);
+    expect(left + 100).toBeLessThanOrEqual(300);
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
 });

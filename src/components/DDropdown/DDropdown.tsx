@@ -31,6 +31,13 @@ type MenuCoords = {
 
 type DropdownPlacement = 'auto' | ResolvedSide;
 
+/**
+ * Horizontal alignment of the menu relative to the toggle, applied only when
+ * the resolved placement is vertical (`down`/`up`) — mirrors Bootstrap's
+ * `dropdown-menu-end`/`dropdown-center` menu alignment options.
+ */
+export type DropdownAlignment = 'start' | 'end' | 'center';
+
 type Props = {
   actions: DropdownAction[];
   dropdownToggle?: ((props: { open: boolean, toggle: () => void }) => React.ReactNode);
@@ -38,6 +45,7 @@ type Props = {
   classNameMenu?: string;
   asPortal?: boolean;
   placement?: DropdownPlacement;
+  alignment?: DropdownAlignment;
 };
 
 // Gap between the toggle and the menu.
@@ -100,6 +108,7 @@ const computeCoords = (
   toggleRect: DOMRect,
   menuSize: { width: number, height: number },
   placement: DropdownPlacement,
+  alignment: DropdownAlignment,
 ): MenuCoords & { resolvedSide: ResolvedSide } => {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
@@ -150,12 +159,26 @@ const computeCoords = (
       ? toggleRect.bottom + GAP
       : toggleRect.top - menuSize.height - GAP;
 
-    // Shift horizontally: align with the toggle's left edge by default, but
-    // switch to the right edge (or clamp) if that would overflow the viewport.
-    let { left } = toggleRect;
-    if (left + menuSize.width > viewportWidth - VIEWPORT_PADDING) {
+    // Align horizontally per the requested `alignment` (start/end/center), then
+    // fall back to the opposite edge if the preferred alignment would overflow
+    // the viewport, and clamp as a final safety net so it never overflows.
+    let left: number;
+    if (alignment === 'end') {
       left = toggleRect.right - menuSize.width;
+    } else if (alignment === 'center') {
+      left = toggleRect.left + (toggleRect.width / 2) - (menuSize.width / 2);
+    } else {
+      left = toggleRect.left;
     }
+
+    if (left + menuSize.width > viewportWidth - VIEWPORT_PADDING && alignment !== 'end') {
+      const altLeft = toggleRect.right - menuSize.width;
+      if (altLeft >= VIEWPORT_PADDING) left = altLeft;
+    } else if (left < VIEWPORT_PADDING && alignment !== 'start') {
+      const altLeft = toggleRect.left;
+      if (altLeft + menuSize.width <= viewportWidth - VIEWPORT_PADDING) left = altLeft;
+    }
+
     left = clamp(
       left,
       VIEWPORT_PADDING,
@@ -207,6 +230,7 @@ export default function DDropdown(
     classNameMenu,
     asPortal = false,
     placement = 'auto',
+    alignment = 'start',
   }: Props,
 ) {
   const [open, setOpen] = useState(false);
@@ -233,6 +257,7 @@ export default function DDropdown(
       toggleRect,
       { width: menuRect.width, height: menuRect.height },
       placement,
+      alignment,
     );
     // In portal mode the menu is appended to document.body, whose containing
     // block for `fixed` is always the viewport (no adjustment needed). In
@@ -247,7 +272,7 @@ export default function DDropdown(
       top: menuCoords.top - offset.top,
       left: menuCoords.left - offset.left,
     });
-  }, [placement, asPortal]);
+  }, [placement, alignment, asPortal]);
 
   // Outside-click detection (checks both the toggle and the floating menu,
   // since in portal mode the menu isn't a DOM descendant of the toggle).
