@@ -406,8 +406,7 @@ export default function DDropdown(
   return (
     <div
       ref={toggleRef}
-      className={classNames(`dropdown drop-${resolvedSide}`, className)}
-      style={{ display: 'inline-block' }}
+      className={classNames(`dropdown drop-${resolvedSide} d-inline-block`, className)}
     >
       {ToggleElement}
       {open && (asPortal ? createPortal(menuItems, document.body) : menuItems)}

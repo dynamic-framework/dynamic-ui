@@ -534,4 +534,16 @@ describe('<DDropdown />', () => {
 
     jest.restoreAllMocks();
   });
+
+  it('should keep the display behavior overridable via className instead of an inline style', () => {
+    // The wrapper must not force `display` via an inline style (which always
+    // wins over CSS), so consumers can override it through `className`.
+    const { container } = render(
+      <DDropdown actions={baseActions} />,
+    );
+
+    const dropdown = container.querySelector('.dropdown');
+    expect(dropdown).toHaveClass('d-inline-block');
+    expect(dropdown).not.toHaveAttribute('style');
+  });
 });
