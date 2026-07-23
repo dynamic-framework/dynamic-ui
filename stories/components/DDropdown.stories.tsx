@@ -25,6 +25,10 @@ The dropdown automatically adjusts its position depending on the available space
 | actions          | \`DropdownAction[]\`              | List of menu actions |
 | dropdownToggle   | \`(props) => ReactNode\`          | Custom toggle renderer or element |
 | className        | \`string\`                        | Additional class names for the wrapper |
+| classNameMenu    | \`string\`                        | Additional class names for the dropdown menu |
+| asPortal         | \`boolean\`                       | If true, the dropdown menu is rendered in a portal (default: false) |
+| placement        | \`'auto' \\| 'down' \\| 'up' \\| 'start' \\| 'end'\` | Preferred side to open the menu, with automatic flip/shift to stay inside the viewport |
+| alignment        | \`'start' \\| 'end' \\| 'center'\` | Horizontal alignment of the menu relative to the toggle, applied only when the resolved placement is \`down\`/\`up\` (defaults to \`'start'\`) |
 
 ---
 
@@ -60,6 +64,11 @@ The dropdown automatically adjusts its position depending on the available space
       type: 'string',
       table: { category: 'Appearance' },
     },
+    asPortal: {
+      control: 'boolean',
+      description: 'If true, the dropdown menu is rendered in a portal (default: false)',
+      table: { category: 'Behavior' },
+    },
     actions: {
       control: 'object',
       description: 'List of actions displayed in the dropdown menu',
@@ -84,11 +93,23 @@ The dropdown automatically adjusts its position depending on the available space
       description: 'Custom element or function to render the dropdown toggle button',
       table: { category: 'Content' },
     },
+    placement: {
+      control: 'select',
+      options: ['auto', 'down', 'up', 'start', 'end'],
+      description: 'Preferred side to open the menu, with automatic flip/shift to stay inside the viewport',
+      table: { category: 'Appearance' },
+    },
+    alignment: {
+      control: 'radio',
+      options: ['start', 'end', 'center'],
+      description: 'Horizontal alignment of the menu relative to the toggle, applied only when the resolved placement is `down`/`up`',
+      table: { category: 'Appearance' },
+    },
   },
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ height: 250 }}>
+      <div style={{ height: 350 }}>
         <Story />
       </div>
     ),
@@ -108,10 +129,12 @@ const baseActions: DropdownAction[] = [
 
 export const DisabledActions: Story = {
   args: {
+    asPortal: false,
     actions: [
       { label: 'Active action', icon: 'Check' },
       { label: 'Disabled action', disabled: true },
     ],
+    placement: 'auto',
   },
 };
 
@@ -179,5 +202,66 @@ export const WithDividers: Story = {
       { isDivider: true, label: '' },
       { label: 'Third action', icon: 'Trash2', color: 'danger' },
     ],
+  },
+};
+
+export const Placements: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '4rem',
+        padding: '4rem',
+      }}
+    >
+      {(['down', 'up', 'start', 'end'] as const).map((placement) => (
+        <div key={placement} style={{ textAlign: 'center' }}>
+          <p className="mb-2 text-capitalize">{placement}</p>
+          <DDropdown actions={baseActions} placement={placement} />
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: `Each of the 4 supported placements: \`down\`, \`up\`, \`start\` and \`end\`.
+The menu always flips and shifts as needed to stay fully inside the viewport,
+even switching axis (e.g. \`start\`/\`end\` to \`down\`/\`up\`) when there isn't
+enough room in either direction of the requested axis.`,
+      },
+    },
+  },
+};
+
+export const Alignment: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '4rem',
+        padding: '4rem',
+      }}
+    >
+      {(['start', 'end', 'center'] as const).map((alignment) => (
+        <div key={alignment} style={{ textAlign: 'center' }}>
+          <p className="mb-2 text-capitalize">{alignment}</p>
+          <DDropdown actions={baseActions} placement="down" alignment={alignment} />
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: `Horizontal alignment of the menu relative to the toggle: \`start\` (default,
+left edge aligned), \`end\` (right edge aligned) and \`center\`. Only applies when the
+resolved placement is \`down\`/\`up\`. As with placement, the menu always shifts/clamps
+as needed to stay fully inside the viewport, falling back to the opposite edge if the
+preferred alignment would overflow.`,
+      },
+    },
   },
 };
