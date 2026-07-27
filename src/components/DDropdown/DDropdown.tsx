@@ -186,12 +186,17 @@ const computeCoords = (
     );
 
     const availableHeight = side === 'down' ? spaceBelow : spaceAbove;
+    // Cap strictly to the space actually available on the resolved side —
+    // MIN_USABLE_SPACE is only meant to influence the flip/shift decision
+    // above, not to force a taller box than what physically fits and
+    // overflow the viewport.
+    const maxUsableHeight = Math.max(availableHeight - GAP - VIEWPORT_PADDING, 0);
 
     return {
       top,
       left,
       minWidth: Math.max(toggleRect.width, 160),
-      maxHeight: `${Math.max(availableHeight - GAP - VIEWPORT_PADDING, MIN_USABLE_SPACE)}px`,
+      maxHeight: `${maxUsableHeight}px`,
       resolvedSide: side,
     };
   }
@@ -225,7 +230,7 @@ const computeCoords = (
     top,
     left,
     minWidth: Math.max(toggleRect.width, 160),
-    maxHeight: `${Math.max(viewportHeight - top - VIEWPORT_PADDING, MIN_USABLE_SPACE)}px`,
+    maxHeight: `${Math.max(viewportHeight - top - VIEWPORT_PADDING, 0)}px`,
     resolvedSide: side,
   };
 };

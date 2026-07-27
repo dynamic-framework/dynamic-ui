@@ -261,6 +261,59 @@ describe('<DDropdown />', () => {
     Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
   });
 
+  it('should cap maxHeight to the actually available space instead of forcing MIN_USABLE_SPACE', () => {
+    // The toggle sits close to the bottom of a short viewport, and there's
+    // more room above than below, so the menu flips to "up" — but the
+    // available space above is itself smaller than MIN_USABLE_SPACE (120px).
+    // maxHeight must be capped to that real available space, not forced up
+    // to MIN_USABLE_SPACE (which would overflow past the top of the
+    // viewport).
+    Object.defineProperty(window, 'innerWidth', { value: 100, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 100, configurable: true });
+    jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function mockRect(
+      this: HTMLElement,
+    ) {
+      if (this.getAttribute('role') === 'menu') {
+        return {
+          width: 60,
+          height: 300,
+          top: 0,
+          right: 60,
+          bottom: 300,
+          left: 0,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        } as DOMRect;
+      }
+      return {
+        width: 20,
+        height: 10,
+        top: 80,
+        right: 60,
+        bottom: 90,
+        left: 40,
+        x: 40,
+        y: 80,
+        toJSON: () => ({}),
+      } as DOMRect;
+    });
+
+    const { container } = render(
+      <DDropdown actions={baseActions} placement="down" />,
+    );
+
+    fireEvent.click(screen.getByLabelText('Toggle Dropdown'));
+    const menu = screen.getByRole('menu');
+    expect(container.querySelector('.dropdown')).toHaveClass('drop-up');
+    // spaceAbove = 80, so maxHeight = 80 - GAP(4) - VIEWPORT_PADDING(8) = 68.
+    expect(menu).toHaveStyle('max-height: 68px');
+
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+    Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+  });
+
   it('should fall back to vertical placement when a centered toggle has no horizontal room', () => {
     // 320px-wide viewport with the toggle centered: neither `start` nor `end`
     // has enough space for the menu, so it must flip to the vertical axis.
