@@ -1,0 +1,39 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './getCssVariableExamples';
+
+<Meta title="Design System/Utils/getCssVariable" />
+
+# getCssVariable
+Reads the computed value of a CSS custom property defined on the document root (`:root`).
+
+## Parameters
+
+- **variable** (`string`): The name of the CSS variable, including the leading `--`.
+
+## Returns
+
+- (`string`): The trimmed computed value of the variable, or an empty string if it is not defined.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { getCssVariable } from '@dynamic-framework/ui-react';
+
+const primaryColor = getCssVariable('--bs-primary');
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>
