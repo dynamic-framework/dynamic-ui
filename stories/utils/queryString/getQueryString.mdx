@@ -17,7 +17,7 @@ Reads a value from the current URL query string.
   - **default** (`string`): Value returned when the parameter is not present.
   - **useSearch** (`boolean`, default `true`): Whether to read from `window.location.search`.
 
-> ⚠️ **Note:** `useSearch` only defaults to `true` when `config` itself is omitted entirely. If you pass a `config` object without `useSearch`, it will be `undefined` (falsy) and the function will read from an empty string instead of the URL. Always pass `useSearch: true` explicitly when providing other options.
+> ℹ️ **Note:** `useSearch` defaults to `true` even when `config` is only partially provided (e.g. `{ default: 'x' }` without `useSearch`), so the current query string is read by default unless you explicitly pass `useSearch: false`.
 
 ## Returns
 
@@ -30,7 +30,7 @@ Reads a value from the current URL query string.
     `
 import { getQueryString } from '@dynamic-framework/ui-react';
 
-const demo = getQueryString('demo', { default: 'no value yet', useSearch: true });
+const demo = getQueryString('demo', { default: 'no value yet' });
 `
   }
   language="tsx"

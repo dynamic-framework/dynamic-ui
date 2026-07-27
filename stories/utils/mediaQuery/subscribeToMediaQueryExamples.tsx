@@ -39,7 +39,7 @@ function ExampleOfUse() {
 
     const attach = () => {
       const win = iframe.contentWindow;
-      if (!win) {
+      if (!win || mediaQueryList) {
         return;
       }
       mediaQueryList = win.matchMedia(QUERY);
@@ -47,8 +47,8 @@ function ExampleOfUse() {
       mediaQueryList.addEventListener('change', handleChange);
     };
 
-    iframe.addEventListener('load', attach);
     attach();
+    iframe.addEventListener('load', attach);
 
     return () => {
       iframe.removeEventListener('load', attach);

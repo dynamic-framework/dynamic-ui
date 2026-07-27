@@ -6,7 +6,7 @@ import {
   getQueryString,
 } from '../../../src';
 
-const readDemoValue = () => getQueryString('demo', { default: 'no value yet', useSearch: true });
+const readDemoValue = () => getQueryString('demo', { default: 'no value yet' });
 
 function ExampleOfUse() {
   const [value, setValue] = useState(readDemoValue);
