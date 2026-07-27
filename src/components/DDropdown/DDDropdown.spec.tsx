@@ -24,8 +24,16 @@ describe('<DDropdown />', () => {
   // into later tests (e.g. if a test throws before its own cleanup runs).
   afterEach(() => {
     jest.restoreAllMocks();
-    Object.defineProperty(window, 'innerWidth', { value: defaultInnerWidth, configurable: true });
-    Object.defineProperty(window, 'innerHeight', { value: defaultInnerHeight, configurable: true });
+    Object.defineProperty(window, 'innerWidth', {
+      value: defaultInnerWidth,
+      configurable: true,
+      writable: true,
+    });
+    Object.defineProperty(window, 'innerHeight', {
+      value: defaultInnerHeight,
+      configurable: true,
+      writable: true,
+    });
   });
 
   it('should render a DDropdown', () => {
@@ -44,6 +52,28 @@ describe('<DDropdown />', () => {
     expect(dropdown).toBeInTheDocument();
     expect(dropdown).toHaveClass('custom-dropdown');
     expect(toggle).toBeInTheDocument();
+  });
+
+  it.each(['down', 'up', 'start', 'end'] as const)(
+    'should render the drop-%s class before the first open (no regression to drop-down default)',
+    (placement) => {
+      // The wrapper's `drop-*` class must reflect the requested `placement`
+      // immediately, not just after the first open/measurement (which is
+      // when `resolvedSide` used to be first computed).
+      const { container } = render(
+        <DDropdown actions={baseActions} placement={placement} />,
+      );
+
+      expect(container.querySelector('.dropdown')).toHaveClass(`drop-${placement}`);
+    },
+  );
+
+  it('should render the drop-down class before the first open when placement is "auto"', () => {
+    const { container } = render(
+      <DDropdown actions={baseActions} placement="auto" />,
+    );
+
+    expect(container.querySelector('.dropdown')).toHaveClass('drop-down');
   });
 
   it('should render menu into document.body when asPortal is enabled', () => {

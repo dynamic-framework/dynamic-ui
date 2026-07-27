@@ -243,7 +243,13 @@ export default function DDropdown(
 ) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState<MenuCoords | null>(null);
-  const [resolvedSide, setResolvedSide] = useState<ResolvedSide>('down');
+  // Initialize from `placement` (falling back to 'down' for 'auto') so the
+  // wrapper's `drop-*` class reflects the requested side even before the
+  // first open/measurement, matching the previous `drop-${placement}` class
+  // behavior (relevant for Bootstrap caret/orientation styling).
+  const [resolvedSide, setResolvedSide] = useState<ResolvedSide>(
+    placement === 'auto' ? 'down' : placement,
+  );
 
   // Wraps the toggle in both modes — used to read its viewport-relative rect.
   const toggleRef = useRef<HTMLDivElement>(null);
