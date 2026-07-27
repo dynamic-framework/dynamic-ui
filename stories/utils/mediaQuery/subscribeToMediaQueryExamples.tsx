@@ -63,7 +63,7 @@ function ExampleOfUse() {
       </DCard.Header>
       <DCard.Body>
         <p className="mb-2">
-          Drag the bottom-right corner of the box below (an isolated viewport)
+          Drag the right edge of the box below (an isolated viewport)
           to resize it and see &quot;Matches&quot; update automatically, without
           clicking anything.
         </p>

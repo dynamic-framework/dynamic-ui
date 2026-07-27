@@ -41,7 +41,7 @@ function ExampleOfUse() {
       </DCard.Header>
       <DCard.Body>
         <p className="mb-2">
-          Drag the bottom-right corner to resize the box (an isolated viewport),
+          Drag the right edge to resize the box (an isolated viewport),
           then click &quot;Check now&quot; to read the match at that instant.
         </p>
         <div

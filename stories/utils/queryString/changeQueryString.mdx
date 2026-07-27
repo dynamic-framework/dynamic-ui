@@ -12,7 +12,7 @@ Adds, updates or removes parameters in the current URL query string.
 
 ## Parameters
 
-- **values** (`Record<string, string | number | null>`): Key/value pairs to set. A `null`/falsy value removes the key.
+- **values** (`Record<string, string | number | null>`): Key/value pairs to set. A falsy value (`null`, `undefined`, `''`, or **`0`**) removes the key instead of setting it — this applies even though `0` is a valid `number`, since the implementation uses a truthiness check. If you need to store a literal `0`, pass it as the string `'0'`.
 - **config** (optional):
   - **useSearch** (`boolean`, default `true`): Whether to start from the current `window.location.search`.
   - **pushState** (`boolean`, default `false`): Whether to update the browser URL via `window.history.pushState`.
