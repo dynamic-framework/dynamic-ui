@@ -75,8 +75,8 @@ export default function DOtp(
   return (
     <div className={className}>
       <p>{texts.title}</p>
-      <div className="d-flex flex-column gap-6 pb-4 px-3">
-        <div className="d-flex flex-column gap-6">
+      <div className="d-otp d-otp-content">
+        <div className="d-otp-fields">
           <DInputPin
             className="modal-otp-pin"
             characters={otpSize}
@@ -89,8 +89,8 @@ export default function DOtp(
             resendText={texts.resend}
           />
         </div>
-        <hr className="m-0" />
-        <div className="d-flex flex-column flex-lg-row gap-4 align-items-center">
+        <hr className="d-otp-divider" />
+        <div className="d-otp-footer">
           <DButton
             text={texts.submit}
             onClick={() => {
@@ -101,7 +101,7 @@ export default function DOtp(
             }}
             loading={isLoading}
           />
-          <p className="small ms-lg-auto mb-0">
+          <p className="d-otp-contact">
             {texts.contact}
           </p>
         </div>

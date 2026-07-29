@@ -15,9 +15,9 @@ export function ErrorState({
   color = 'danger',
 }: ErrorStateProps) {
   return (
-    <DAlert color={color} className="d-flex align-items-center gap-3">
-      <div className="flex-grow-1">
-        <p className="mb-0">{message ?? 'An unexpected error occurred.'}</p>
+    <DAlert color={color} className="d-error-state">
+      <div className="d-error-state-content">
+        <p className="d-error-state-message">{message ?? 'An unexpected error occurred.'}</p>
       </div>
       {onRetry && (
         <DButton

@@ -86,17 +86,17 @@ export default function DVoucher(
           {resolvedIconProps && (
             <DIcon {...resolvedIconProps} />
           )}
-          <div className="text-center">
-            <h3 className="mb-2">{title}</h3>
-            <p className="m-0">{message}</p>
+          <div className="d-voucher-title-group">
+            <h3 className="d-voucher-title">{title}</h3>
+            <p className="d-voucher-message">{message}</p>
           </div>
         </div>
         {amount && (
           <div className="d-voucher-amount">
             <div
               className={classNames(
-                'text-center fw-bold fs-3',
-                amountDetails ? 'mb-1' : 'm-0',
+                'd-voucher-amount-value',
+                { 'd-voucher-amount-value-with-details': !!amountDetails },
               )}
             >
               {amount}
@@ -105,9 +105,9 @@ export default function DVoucher(
           </div>
         )}
 
-        <hr className="my-4" />
+        <hr className="d-voucher-divider" />
         {children}
-        <hr className="my-4" />
+        <hr className="d-voucher-divider" />
 
         <div className="d-voucher-footer">
           <DButton

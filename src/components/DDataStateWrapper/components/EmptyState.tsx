@@ -15,13 +15,13 @@ export function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center p-5 text-center">
+    <div className="d-empty-state">
       <DIcon
         icon={icon}
         size="3rem"
-        className="text-secondary mb-3"
+        className="d-empty-state-icon"
       />
-      <p className="text-secondary mb-3">{message ?? 'No data available.'}</p>
+      <p className="d-empty-state-message">{message ?? 'No data available.'}</p>
       {actionText && onAction && (
         <DButton
           onClick={onAction}
