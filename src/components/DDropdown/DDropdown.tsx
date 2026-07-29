@@ -41,7 +41,7 @@ type Props = {
 };
 
 const getItemClass = (action: DropdownAction) => classNames({
-  'dropdown-item d-dropdown-item-content': true,
+  'dropdown-item d-flex align-items-center': true,
   [`dropdown-item-${action.color}`]: !!action.color,
   disabled: action.disabled,
 });
@@ -249,7 +249,7 @@ export default function DDropdown(
     <ul
       ref={menuRef}
       role="menu"
-      className={classNames('dropdown-menu', { show: open }, classNameMenu)}
+      className={classNames('dropdown-menu p-2', { show: open }, classNameMenu)}
       style={portalMenuStyle ?? inlineMenuStyle}
     >
       {actions.map((action, index) => {
