@@ -149,7 +149,7 @@ describe('<DVoucher />', () => {
     });
   });
 
-  it('calls download function when download button is clicked', async () => {
+  it('calls download function with the default file name when none is provided', async () => {
     mockDownload.mockClear();
 
     const user = userEvent.setup();
@@ -159,7 +159,7 @@ describe('<DVoucher />', () => {
     await user.click(downloadButton);
 
     await waitFor(() => {
-      expect(mockDownload).toHaveBeenCalledWith('voucher.jpg');
+      expect(mockDownload).toHaveBeenCalledWith('voucher');
     });
   });
 
@@ -167,13 +167,13 @@ describe('<DVoucher />', () => {
     mockDownload.mockClear();
 
     const user = userEvent.setup();
-    render(<DVoucher {...defaultProps} fileName="receipt-123.jpg" />);
+    render(<DVoucher {...defaultProps} fileName="receipt-123" />);
 
     const downloadButton = screen.getByText('Download');
     await user.click(downloadButton);
 
     await waitFor(() => {
-      expect(mockDownload).toHaveBeenCalledWith('receipt-123.jpg');
+      expect(mockDownload).toHaveBeenCalledWith('receipt-123');
     });
   });
 
@@ -181,13 +181,13 @@ describe('<DVoucher />', () => {
     mockShare.mockClear();
 
     const user = userEvent.setup();
-    render(<DVoucher {...defaultProps} fileName="receipt-123.jpg" />);
+    render(<DVoucher {...defaultProps} fileName="receipt-123" />);
 
     const shareButton = screen.getByText('Share');
     await user.click(shareButton);
 
     await waitFor(() => {
-      expect(mockShare).toHaveBeenCalledWith('receipt-123.jpg');
+      expect(mockShare).toHaveBeenCalledWith('receipt-123');
     });
   });
 

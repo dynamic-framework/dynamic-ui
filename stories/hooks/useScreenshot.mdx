@@ -93,12 +93,17 @@ function UploadVoucherExample() {
 | Property | Type | Description |
 | --- | --- | --- |
 | `downloadRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
-| `download` | `(fileName?: string) => Promise<void>` | Captures the node and triggers a browser download. `fileName` defaults to `'voucher.jpg'`. |
+| `download` | `(fileName?: string) => Promise<void>` | Captures the node and triggers a browser download. `fileName` defaults to `'voucher'`. |
 
 ### Custom file name
 
-Pass a `fileName` to `download()` to override the default `voucher.jpg` (e.g. to include a
-transaction id or date). This is entirely optional and backwards compatible.
+`fileName` is only the **base name** — `download` always appends the `.jpg` extension itself, so
+the downloaded file stays a valid image no matter what you pass. It never overrides, replaces, or
+validates an extension you may include; it's just concatenated as-is:
+
+- `download()` → `voucher.jpg`
+- `download('receipt-2025-01')` → `receipt-2025-01.jpg`
+- `download('receipt.png')` → `receipt.png.jpg` (the `.png` you typed is kept as part of the name, not treated as a real extension)
 
 <Source
   code={`const { download } = useScreenshotDownload();
@@ -106,8 +111,8 @@ transaction id or date). This is entirely optional and backwards compatible.
 // Falls back to "voucher.jpg"
 await download();
 
-// Custom name
-await download(\`receipt-\${transactionId}.jpg\`);`}
+// -> "receipt-1024.jpg"
+await download(\`receipt-\${transactionId}\`);`}
   language="tsx"
   dark
 />
@@ -119,11 +124,14 @@ await download(\`receipt-\${transactionId}.jpg\`);`}
 | Property | Type | Description |
 | --- | --- | --- |
 | `shareRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
-| `share` | `(fileName?: string) => Promise<void>` | Captures the node and calls the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) with the image file. `fileName` defaults to `'voucher.jpeg'`. Falls back to `window.print()` when `navigator.canShare` with files isn't supported. |
+| `share` | `(fileName?: string) => Promise<void>` | Captures the node and calls the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) with the image file. `fileName` defaults to `'voucher'`. Falls back to `window.print()` when `navigator.canShare` with files isn't supported. |
 
 ### Custom file name
 
-Just like `download`, `share` accepts an optional `fileName` for the shared image file:
+Same rule as `download`: `fileName` is the base name only, `share` always appends `.jpeg` itself:
+
+- `share()` → `voucher.jpeg`
+- `share('receipt-2025-01')` → `receipt-2025-01.jpeg`
 
 <Source
   code={`const { share } = useScreenshotWebShare();
@@ -131,8 +139,8 @@ Just like `download`, `share` accepts an optional `fileName` for the shared imag
 // Falls back to "voucher.jpeg"
 await share();
 
-// Custom name
-await share(\`receipt-\${transactionId}.jpeg\`);`}
+// -> "receipt-1024.jpeg"
+await share(\`receipt-\${transactionId}\`);`}
   language="tsx"
   dark
 />
@@ -261,6 +269,9 @@ function DecoupledLayout() {
   failure (e.g. missing ref, `html2canvas` failure, user cancelling the native share sheet on some
   browsers) — always wrap calls in a `.catch()`/`try...catch`, as `DVoucher`'s own `onError` prop does.
 - **`navigator.share` requires a user gesture** and, on most browsers, a secure context (HTTPS).
+- **Don't include an extension in `fileName`.** `download`/`share` always append their own
+  (`.jpg`/`.jpeg`) so the file remains a valid, openable image — if you pass one anyway, it's kept
+  as literal text in the name (e.g. `"receipt.png"` → `"receipt.png.jpg"`), not stripped or replaced.
 
 ## See more examples
 

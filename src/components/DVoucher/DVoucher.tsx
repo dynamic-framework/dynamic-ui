@@ -29,7 +29,7 @@ export default function DVoucher(
     message,
     downloadText = 'Download',
     shareText = 'Share',
-    fileName = 'voucher.jpg',
+    fileName = 'voucher',
     className,
     children,
   }: Props,
