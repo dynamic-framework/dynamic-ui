@@ -16,6 +16,7 @@ type Props = PropsWithChildren<{
   downloadText?: string;
   shareText?: string;
   fileName?: string;
+  hideActions?: boolean;
   onError?: (err: Error) => Promise<void> | void;
 }>;
 
@@ -30,6 +31,7 @@ export default function DVoucher(
     downloadText = 'Download',
     shareText = 'Share',
     fileName = 'voucher',
+    hideActions = false,
     className,
     children,
   }: Props,
@@ -109,24 +111,28 @@ export default function DVoucher(
 
         <hr className="my-4" />
         {children}
-        <hr className="my-4" />
 
-        <div className="d-voucher-footer">
-          <DButton
-            onClick={handleShare}
-            iconStart="Share2"
-            text={shareText}
-            variant="outline"
-            size="sm"
-          />
-          <DButton
-            onClick={handleDownload}
-            iconStart="Download"
-            text={downloadText}
-            variant="outline"
-            size="sm"
-          />
-        </div>
+        {!hideActions && (
+          <>
+            <hr className="my-4" />
+            <div className="d-voucher-footer">
+              <DButton
+                onClick={handleShare}
+                iconStart="Share2"
+                text={shareText}
+                variant="outline"
+                size="sm"
+              />
+              <DButton
+                onClick={handleDownload}
+                iconStart="Download"
+                text={downloadText}
+                variant="outline"
+                size="sm"
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

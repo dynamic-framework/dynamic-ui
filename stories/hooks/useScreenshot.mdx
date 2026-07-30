@@ -29,6 +29,10 @@ attaches `shareRef`/`downloadRef` to its root element. That means:
 Using these hooks directly, **you** decide which node is captured (ideally only the printable
 voucher content) and where the trigger buttons live.
 
+> 💡 If you're building your custom actions around `DVoucher` itself (instead of a fully custom
+> layout), set its `hideActions` prop to `true` to hide the built-in share/download buttons and
+> footer — it defaults to `false`, so existing usages keep working unchanged.
+
 ---
 
 ## `useScreenshot`

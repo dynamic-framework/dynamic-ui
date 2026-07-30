@@ -32,6 +32,7 @@ The voucher component provides:
 
 - **Amount Display**: Optional amount with supporting details
 - **Actions**: Built-in download and share buttons, with an optional "fileName" (base name only) for the generated image; the extension is always appended by the underlying hook so the file stays valid
+- **hideActions**: Hides the built-in share/download buttons (defaults to false, fully backward compatible) so you can render your own custom actions elsewhere using the exported \`useScreenshotDownload\`/\`useScreenshotWebShare\` hooks
 - **className**: Optional CSS class to style the voucher root container
 - **Content Area**: Flexible children for additional information
 - **Error Handling**: Optional error callback for failed operations
@@ -94,6 +95,11 @@ The voucher component provides:
       control: 'text',
       description: 'Optional base file name for the generated image (no extension). The correct extension is always appended by the hook, e.g. "receipt" -> "receipt.jpg" / "receipt.jpeg"',
       table: { category: 'Content', defaultValue: { summary: 'voucher' } },
+    },
+    hideActions: {
+      control: 'boolean',
+      description: 'Hides the built-in share/download buttons and footer, for when you render your own custom actions elsewhere using the exported screenshot hooks',
+      table: { category: 'Content', defaultValue: { summary: 'false' } },
     },
     onError: {
       action: 'error',
@@ -252,6 +258,35 @@ export const CustomButtonText: Story = {
         <div className="d-flex justify-content-between">
           <span className="text-muted">Merchant:</span>
           <span className="fw-medium">Example Store</span>
+        </div>
+      </div>
+    ),
+  },
+};
+
+export const HiddenActions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `Set \`hideActions\` to hide the built-in share/download buttons and footer entirely.
+This is meant to be combined with the exported \`useScreenshotDownload\`/\`useScreenshotWebShare\`
+hooks to render your own custom actions anywhere in your layout — see
+[Design System / Hooks / useScreenshot](/?path=/docs/design-system-hooks-usescreenshot--docs)
+for concrete examples.`,
+      },
+    },
+  },
+  args: {
+    icon: { icon: 'CircleCheckBig', color: 'success' },
+    title: 'Payment Successful',
+    message: 'Your transaction has been completed successfully',
+    amount: '$125.00',
+    hideActions: true,
+    children: (
+      <div className="d-flex flex-column gap-2">
+        <div className="d-flex justify-content-between">
+          <span className="text-muted">Transaction ID:</span>
+          <span className="fw-medium">TXN-123456789</span>
         </div>
       </div>
     ),

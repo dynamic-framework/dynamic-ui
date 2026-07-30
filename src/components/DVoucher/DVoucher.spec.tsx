@@ -233,6 +233,26 @@ describe('<DVoucher />', () => {
     });
   });
 
+  it('renders share and download buttons by default', () => {
+    render(<DVoucher {...defaultProps} />);
+
+    expect(screen.getByText('Share')).toBeInTheDocument();
+    expect(screen.getByText('Download')).toBeInTheDocument();
+  });
+
+  it('does not render share and download buttons when hideActions is true', () => {
+    render(<DVoucher {...defaultProps} hideActions />);
+
+    expect(screen.queryByText('Share')).not.toBeInTheDocument();
+    expect(screen.queryByText('Download')).not.toBeInTheDocument();
+  });
+
+  it('does not render the footer container when hideActions is true', () => {
+    const { container } = render(<DVoucher {...defaultProps} hideActions />);
+
+    expect(container.querySelector('.d-voucher-footer')).not.toBeInTheDocument();
+  });
+
   it('renders voucher with complete props', () => {
     const amountDetails = <span className="text-muted">USD</span>;
 
