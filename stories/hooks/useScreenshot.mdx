@@ -1,0 +1,244 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import {
+  CustomVoucherExample,
+  DecoupledLayoutExample,
+  UploadVoucherExample,
+} from './useScreenshotExamples';
+
+<Meta title="Design System/Hooks/useScreenshot" />
+
+# useScreenshot / useScreenshotDownload / useScreenshotWebShare
+
+These are the same hooks that power `DVoucher`'s **download** and **share** buttons, exported so
+you can build a fully custom layout: place the action buttons wherever you need, and capture only
+the DOM node that should look like a voucher/receipt.
+
+They rely on [`html2canvas`](https://html2canvas.hertzen.com/) to rasterize a DOM node into an image.
+
+---
+
+## ⚠️ Why you may need this instead of `DVoucher`'s built-in buttons
+
+`DVoucher` renders its share/download buttons **inside** the same container it captures, because it
+attaches `shareRef`/`downloadRef` to its root element. That means:
+
+- The buttons themselves are part of the generated image/screenshot.
+- The buttons can't be moved outside the voucher card (e.g. into a sticky footer, a modal footer,
+  or a separate toolbar) without re-implementing the capture logic.
+
+Using these hooks directly, **you** decide which node is captured (ideally only the printable
+voucher content) and where the trigger buttons live.
+
+---
+
+## `useScreenshot`
+
+The base hook. `useScreenshotDownload` and `useScreenshotWebShare` are built on top of it.
+
+### Returns
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `clipRef` | `RefObject<HTMLDivElement \| null>` | Attach to the DOM node you want to rasterize. |
+| `takeBlob` | `(type?: string) => Promise<Blob>` | Renders `clipRef.current` with `html2canvas` and resolves a `Blob` (defaults to PNG). Rejects/throws if `clipRef` isn't set. |
+
+### Example: custom action (e.g. upload instead of download/share)
+
+<Source
+  code={`import { useState } from 'react';
+import { DButton, useScreenshot } from '@dynamic-framework/ui-react';
+
+function UploadVoucherExample() {
+  const { clipRef, takeBlob } = useScreenshot();
+  const [status, setStatus] = useState('');
+
+  const handleUpload = async () => {
+    try {
+      const blob = await takeBlob('image/png');
+      const formData = new FormData();
+      formData.append('file', blob, 'voucher.png');
+      await fetch('/api/vouchers/upload', { method: 'POST', body: formData });
+      setStatus('Uploaded!');
+    } catch {
+      setStatus('Could not capture the voucher');
+    }
+  };
+
+  return (
+    <div>
+      {/* Only this node is captured, the button below is not part of the image */}
+      <div ref={clipRef} className="p-4 border rounded">
+        <h5>Invoice #1024</h5>
+        <p>$980.00</p>
+      </div>
+      <DButton text="Upload copy" onClick={handleUpload} />
+      {status && <p>{status}</p>}
+    </div>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <UploadVoucherExample />
+</Unstyled>
+
+---
+
+## `useScreenshotDownload`
+
+### Returns
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `downloadRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
+| `download` | `() => Promise<void>` | Captures the node and triggers a browser download named `voucher.jpg`. |
+
+## `useScreenshotWebShare`
+
+### Returns
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `shareRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
+| `share` | `() => Promise<void>` | Captures the node and calls the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) with the image file. Falls back to `window.print()` when `navigator.canShare` with files isn't supported. |
+
+> Both hooks manage their **own** internal ref (each calls `useScreenshot` independently). If you
+> want share and download to capture the exact same node, assign **both** `shareRef.current` and
+> `downloadRef.current` in the same ref callback, as shown below.
+
+---
+
+## Buttons outside the captured element
+
+The captured node only wraps the voucher-like content; the action buttons sit outside of it, so
+they never appear in the generated image.
+
+<Source
+  code={`import { useState } from 'react';
+import {
+  DButton,
+  useScreenshotDownload,
+  useScreenshotWebShare,
+} from '@dynamic-framework/ui-react';
+
+function CustomVoucher() {
+  const { shareRef, share } = useScreenshotWebShare();
+  const { downloadRef, download } = useScreenshotDownload();
+  const [error, setError] = useState('');
+
+  // Both hooks need to point to the same DOM node.
+  const setVoucherRef = (el: HTMLDivElement | null) => {
+    shareRef.current = el;
+    downloadRef.current = el;
+  };
+
+  const handleAction = (action: () => Promise<void>) => () => {
+    action().catch((err: Error) => setError(err.message));
+  };
+
+  return (
+    <div>
+      {/* Captured element: only the voucher-like content, no buttons inside */}
+      <div ref={setVoucherRef} className="p-4 border rounded text-center">
+        <h5>Payment Successful</h5>
+        <p>$125.00</p>
+      </div>
+
+      {/* Buttons live outside the captured node */}
+      <div className="d-flex gap-2">
+        <DButton text="Share" iconStart="Share2" onClick={handleAction(share)} />
+        <DButton text="Download" iconStart="Download" onClick={handleAction(download)} />
+      </div>
+
+      {error && <p className="text-danger">{error}</p>}
+    </div>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <CustomVoucherExample />
+</Unstyled>
+
+---
+
+## Fully decoupled layout
+
+Content and action buttons can live in entirely separate components — pass the ref callback and
+the `share`/`download` handlers down as props, or lift them up via context if the buttons live in
+an unrelated part of the tree (e.g. a page footer or a modal's footer slot).
+
+<Source
+  code={`function VoucherContent({ innerRef }: { innerRef: (el: HTMLDivElement | null) => void }) {
+  return (
+    <div ref={innerRef} className="p-4 border rounded text-center">
+      <h5>Registration Complete</h5>
+      <p>Welcome aboard!</p>
+    </div>
+  );
+}
+
+function VoucherActions({ onShare, onDownload }: { onShare: () => void; onDownload: () => void }) {
+  return (
+    <div className="d-flex gap-2 justify-content-end">
+      <DButton text="Share" onClick={onShare} />
+      <DButton text="Download" onClick={onDownload} />
+    </div>
+  );
+}
+
+function DecoupledLayout() {
+  const { shareRef, share } = useScreenshotWebShare();
+  const { downloadRef, download } = useScreenshotDownload();
+
+  const setVoucherRef = (el: HTMLDivElement | null) => {
+    shareRef.current = el;
+    downloadRef.current = el;
+  };
+
+  return (
+    <div>
+      <VoucherContent innerRef={setVoucherRef} />
+      <hr />
+      <VoucherActions onShare={() => share()} onDownload={() => download()} />
+    </div>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <DecoupledLayoutExample />
+</Unstyled>
+
+---
+
+## Tips
+
+- **Capture only what you want to see in the image.** Attach the ref to the smallest wrapper that
+  represents the printable voucher, not to a container that also includes buttons or unrelated UI.
+- **Cross-origin images** inside the captured node need CORS enabled (`allowTaint`/`useCORS` are
+  already set to `true`), otherwise `html2canvas` may render a blank/tainted area for them.
+- **Errors are your responsibility to catch.** `download()`/`share()`/`takeBlob()` reject/throw on
+  failure (e.g. missing ref, `html2canvas` failure, user cancelling the native share sheet on some
+  browsers) — always wrap calls in a `.catch()`/`try...catch`, as `DVoucher`'s own `onError` prop does.
+- **`navigator.share` requires a user gesture** and, on most browsers, a secure context (HTTPS).
+
+## See more examples
+
+<div
+  className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+  role="note"
+  aria-label="See more examples"
+>
+  <span className="fs-4" aria-hidden="true">💡</span>
+  <div>
+    <strong className="d-block mb-1">Looking for the ready-made component?</strong>
+    <span className="text-secondary">See <a href="/?path=/docs/design-system-components-voucher--docs" target="_parent"><strong>Components / Voucher</strong></a> for the default `DVoucher` implementation using these same hooks.</span>
+  </div>
+</div>
