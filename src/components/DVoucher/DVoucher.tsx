@@ -15,7 +15,7 @@ type Props = PropsWithChildren<{
   title: string;
   downloadText?: string;
   shareText?: string;
-  downloadFileName?: string;
+  fileName?: string;
   onError?: (err: Error) => Promise<void> | void;
 }>;
 
@@ -29,7 +29,7 @@ export default function DVoucher(
     message,
     downloadText = 'Download',
     shareText = 'Share',
-    downloadFileName = 'voucher.jpg',
+    fileName = 'voucher.jpg',
     className,
     children,
   }: Props,
@@ -38,7 +38,7 @@ export default function DVoucher(
   const { downloadRef, download } = useScreenshotDownload();
 
   const handleShare = () => {
-    share()
+    share(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);
@@ -50,7 +50,7 @@ export default function DVoucher(
   };
 
   const handleDownload = () => {
-    download(downloadFileName)
+    download(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);

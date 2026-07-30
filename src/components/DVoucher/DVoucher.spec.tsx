@@ -163,17 +163,31 @@ describe('<DVoucher />', () => {
     });
   });
 
-  it('calls download function with custom file name when downloadFileName is provided', async () => {
+  it('calls download function with custom file name when fileName is provided', async () => {
     mockDownload.mockClear();
 
     const user = userEvent.setup();
-    render(<DVoucher {...defaultProps} downloadFileName="receipt-123.jpg" />);
+    render(<DVoucher {...defaultProps} fileName="receipt-123.jpg" />);
 
     const downloadButton = screen.getByText('Download');
     await user.click(downloadButton);
 
     await waitFor(() => {
       expect(mockDownload).toHaveBeenCalledWith('receipt-123.jpg');
+    });
+  });
+
+  it('calls share function with custom file name when fileName is provided', async () => {
+    mockShare.mockClear();
+
+    const user = userEvent.setup();
+    render(<DVoucher {...defaultProps} fileName="receipt-123.jpg" />);
+
+    const shareButton = screen.getByText('Share');
+    await user.click(shareButton);
+
+    await waitFor(() => {
+      expect(mockShare).toHaveBeenCalledWith('receipt-123.jpg');
     });
   });
 

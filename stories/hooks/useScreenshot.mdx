@@ -119,7 +119,23 @@ await download(\`receipt-\${transactionId}.jpg\`);`}
 | Property | Type | Description |
 | --- | --- | --- |
 | `shareRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
-| `share` | `() => Promise<void>` | Captures the node and calls the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) with the image file. Falls back to `window.print()` when `navigator.canShare` with files isn't supported. |
+| `share` | `(fileName?: string) => Promise<void>` | Captures the node and calls the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) with the image file. `fileName` defaults to `'voucher.jpeg'`. Falls back to `window.print()` when `navigator.canShare` with files isn't supported. |
+
+### Custom file name
+
+Just like `download`, `share` accepts an optional `fileName` for the shared image file:
+
+<Source
+  code={`const { share } = useScreenshotWebShare();
+
+// Falls back to "voucher.jpeg"
+await share();
+
+// Custom name
+await share(\`receipt-\${transactionId}.jpeg\`);`}
+  language="tsx"
+  dark
+/>
 
 > Both hooks manage their **own** internal ref (each calls `useScreenshot` independently). If you
 > want share and download to capture the exact same node, assign **both** `shareRef.current` and

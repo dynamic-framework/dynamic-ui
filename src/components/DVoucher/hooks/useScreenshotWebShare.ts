@@ -5,10 +5,10 @@ import useScreenshot from './useScreenshot';
 export default function useScreenshotWebShare() {
   const { takeBlob, clipRef } = useScreenshot();
 
-  const share = useCallback(async () => {
+  const share = useCallback(async (fileName: string = 'voucher.jpeg') => {
     const blob = await takeBlob();
 
-    const image = new File([blob], 'voucher.jpeg', { type: 'image/jpeg' });
+    const image = new File([blob], fileName, { type: 'image/jpeg' });
 
     if (
       !navigator.canShare
