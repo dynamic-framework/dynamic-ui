@@ -289,7 +289,7 @@ export const WithRangeMinMax: Story = {
     },
   },
   args: {
-    id: 'componentId5',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -300,7 +300,7 @@ export const WithRangeMinMax: Story = {
 
 export const Floating: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId7',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
