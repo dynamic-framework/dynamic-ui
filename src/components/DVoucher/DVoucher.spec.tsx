@@ -159,7 +159,21 @@ describe('<DVoucher />', () => {
     await user.click(downloadButton);
 
     await waitFor(() => {
-      expect(mockDownload).toHaveBeenCalled();
+      expect(mockDownload).toHaveBeenCalledWith('voucher.jpg');
+    });
+  });
+
+  it('calls download function with custom file name when downloadFileName is provided', async () => {
+    mockDownload.mockClear();
+
+    const user = userEvent.setup();
+    render(<DVoucher {...defaultProps} downloadFileName="receipt-123.jpg" />);
+
+    const downloadButton = screen.getByText('Download');
+    await user.click(downloadButton);
+
+    await waitFor(() => {
+      expect(mockDownload).toHaveBeenCalledWith('receipt-123.jpg');
     });
   });
 

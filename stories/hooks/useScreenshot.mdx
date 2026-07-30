@@ -93,7 +93,24 @@ function UploadVoucherExample() {
 | Property | Type | Description |
 | --- | --- | --- |
 | `downloadRef` | `RefObject<HTMLDivElement \| null>` | Same as `clipRef`, attach it to the node to capture. |
-| `download` | `() => Promise<void>` | Captures the node and triggers a browser download named `voucher.jpg`. |
+| `download` | `(fileName?: string) => Promise<void>` | Captures the node and triggers a browser download. `fileName` defaults to `'voucher.jpg'`. |
+
+### Custom file name
+
+Pass a `fileName` to `download()` to override the default `voucher.jpg` (e.g. to include a
+transaction id or date). This is entirely optional and backwards compatible.
+
+<Source
+  code={`const { download } = useScreenshotDownload();
+
+// Falls back to "voucher.jpg"
+await download();
+
+// Custom name
+await download(\`receipt-\${transactionId}.jpg\`);`}
+  language="tsx"
+  dark
+/>
 
 ## `useScreenshotWebShare`
 

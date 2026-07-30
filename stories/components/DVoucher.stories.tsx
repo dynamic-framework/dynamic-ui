@@ -31,7 +31,7 @@ The voucher component provides:
 - Defaults: icon="CircleCheckBig", color="success", size="1rem", hasCircle=true.
 
 - **Amount Display**: Optional amount with supporting details
-- **Actions**: Built-in download and share buttons
+- **Actions**: Built-in download and share buttons, with an optional custom file name for the downloaded image (\`downloadFileName\`, defaults to \`voucher.jpg\`)
 - **className**: Optional CSS class to style the voucher root container
 - **Content Area**: Flexible children for additional information
 - **Error Handling**: Optional error callback for failed operations
@@ -89,6 +89,11 @@ The voucher component provides:
       control: 'text',
       description: 'Text for share button',
       table: { category: 'Content' },
+    },
+    downloadFileName: {
+      control: 'text',
+      description: 'Optional file name used when downloading the voucher screenshot',
+      table: { category: 'Content', defaultValue: { summary: 'voucher.jpg' } },
     },
     onError: {
       action: 'error',
@@ -237,6 +242,7 @@ export const CustomButtonText: Story = {
     amount: '$1,234.56',
     downloadText: 'Download Receipt',
     shareText: 'Share Receipt',
+    downloadFileName: 'receipt-ORD-2025-1234.jpg',
     children: (
       <div className="d-flex flex-column gap-2">
         <div className="d-flex justify-content-between">
