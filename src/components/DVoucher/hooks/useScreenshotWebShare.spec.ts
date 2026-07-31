@@ -44,4 +44,48 @@ describe('useScreenshotWebShare', () => {
     const [{ files: [sharedFile] }] = mockShare.mock.calls[0];
     expect(sharedFile.name).toBe('receipt.png.jpeg');
   });
+
+  it('falls back to the default base name when fileName is blank', async () => {
+    const { result } = renderHook(() => useScreenshotWebShare());
+    result.current.shareRef.current = document.createElement('div');
+
+    await act(async () => {
+      await result.current.share('   ');
+    });
+
+    const [{ files: [sharedFile] }] = mockShare.mock.calls[0];
+    expect(sharedFile.name).toBe('voucher.jpeg');
+  });
+
+  it('falls back to window.print when navigator.canShare is not supported', async () => {
+    const printSpy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    Object.defineProperty(navigator, 'canShare', { value: undefined, configurable: true });
+
+    const { result } = renderHook(() => useScreenshotWebShare());
+    result.current.shareRef.current = document.createElement('div');
+
+    await act(async () => {
+      await result.current.share();
+    });
+
+    expect(printSpy).toHaveBeenCalled();
+    expect(mockShare).not.toHaveBeenCalled();
+    printSpy.mockRestore();
+  });
+
+  it('falls back to window.print when navigator.canShare rejects files', async () => {
+    const printSpy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    mockCanShare.mockReturnValueOnce(false);
+
+    const { result } = renderHook(() => useScreenshotWebShare());
+    result.current.shareRef.current = document.createElement('div');
+
+    await act(async () => {
+      await result.current.share();
+    });
+
+    expect(printSpy).toHaveBeenCalled();
+    expect(mockShare).not.toHaveBeenCalled();
+    printSpy.mockRestore();
+  });
 });

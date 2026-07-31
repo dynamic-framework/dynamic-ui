@@ -19,7 +19,10 @@ export function CustomVoucherExample() {
   };
 
   const handleAction = (action: () => Promise<void>) => () => {
-    action().catch((err: Error) => setError(err.message));
+    action().catch((err: unknown) => {
+      const message = err instanceof Error ? err.message : 'Something went wrong';
+      setError(message);
+    });
   };
 
   return (

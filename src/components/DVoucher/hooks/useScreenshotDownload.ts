@@ -11,9 +11,12 @@ export default function useScreenshotDownload() {
     const link = window.document.createElement('a');
     link.style.display = 'none';
     link.href = url;
+    // Fall back to the default base name when the caller passes a blank/whitespace value,
+    // so the file is never named just ".jpg".
+    const safeFileName = fileName.trim() || 'voucher';
     // The extension is always appended by the hook to guarantee a valid image file,
     // regardless of what fileName the caller passes (e.g. "receipt.png" -> "receipt.png.jpg").
-    link.download = `${fileName}.jpg`;
+    link.download = `${safeFileName}.jpg`;
     document.body.appendChild(link);
 
     link.click();
