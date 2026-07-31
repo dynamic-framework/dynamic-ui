@@ -271,7 +271,7 @@ export const HiddenActions: Story = {
         story: `Set \`hideActions\` to hide the built-in share/download buttons and footer entirely.
 This is meant to be combined with the exported \`useScreenshotDownload\`/\`useScreenshotWebShare\`
 hooks to render your own custom actions anywhere in your layout — see
-[Design System / Hooks / useScreenshot](/?path=/docs/design-system-hooks-usescreenshot--docs)
+[Design System / Hooks / useScreenshot](/docs/design-system-hooks-usescreenshot--docs)
 for concrete examples.`,
       },
     },
