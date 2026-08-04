@@ -64,12 +64,6 @@ describe('useInputCurrency', () => {
     expect(result.current.innerValue).toBe('200.00');
   });
 
-  it('should generate style variables', () => {
-    const { result } = renderHook(() => useInputCurrency(currencyOptions, 100));
-    expect(result.current.generateStyleVariables).toHaveProperty('--bs-input-currency-component-symbol-color');
-    expect(result.current.generateSymbolStyleVariables).toHaveProperty('color');
-  });
-
   it('should call onFocus callback when input is focused', () => {
     const onFocus = jest.fn();
     const { result } = renderHook(() => useInputCurrency(currencyOptions, 100, onFocus));

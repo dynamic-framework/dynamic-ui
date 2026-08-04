@@ -46,8 +46,6 @@ function DInputCurrency(
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
-    generateStyleVariables,
-    generateSymbolStyleVariables,
   } = useInputCurrency(
     currencyOptions,
     value,
@@ -62,7 +60,6 @@ function DInputCurrency(
       ref={inputRef}
       value={innerValue}
       onChange={handleOnChange}
-      style={generateStyleVariables}
       inputMode="decimal"
       type={innerType}
       onFocus={handleOnFocus}
@@ -71,7 +68,7 @@ function DInputCurrency(
       inputStart={(
         <span
           slot="input-start"
-          style={generateSymbolStyleVariables}
+          className="d-input-currency-symbol"
         >
           {currencyCode || currencyOptions.symbol}
         </span>

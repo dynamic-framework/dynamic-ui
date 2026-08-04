@@ -41,6 +41,55 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
 | --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                   |
 | --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align             |
 | --${PREFIX_BS}input-currency-symbol-color | .input-group  | css color unit  | Color of the currency symbol |
+| --${PREFIX_BS}icon-component-color        | .d-icon       | css color unit  | Color of the \`iconStart\`/\`iconEnd\` icon |
+
+## Changing the currency symbol color
+
+The currency symbol (the \`$\`, \`CLP\`, etc. rendered via \`inputStart\`) is wrapped in a
+\`.d-input-currency-symbol\` element whose color is controlled by two chained CSS variables, defined in
+the component's stylesheet (not via inline style):
+
+- \`--${PREFIX_BS}input-currency-component-symbol-color\`: the "public" variable meant to be overridden.
+  Defaults to \`var(--${PREFIX_BS}secondary)\` when not set.
+- \`--${PREFIX_BS}input-currency-symbol-color\`: the variable actually consumed by \`.d-input-currency-symbol\`'s
+  \`color\`. Falls back to the public variable above.
+
+Since these are regular CSS custom properties (no inline style involved), you can override the public
+variable from any ancestor selector, using either \`className\` or the \`style\` prop:
+
+\`\`\`jsx
+<DInputCurrency
+  className="my-input-currency"
+/>
+\`\`\`
+\`\`\`css
+.my-input-currency {
+  --${PREFIX_BS}input-currency-component-symbol-color: #dc3545;
+}
+\`\`\`
+
+\`\`\`jsx
+<DInputCurrency
+  style={{ '--${PREFIX_BS}input-currency-component-symbol-color': '#dc3545' }}
+/>
+\`\`\`
+
+## Changing the icon color
+
+\`DInputCurrency\` also supports \`iconStart\`/\`iconEnd\` (inherited from \`DInput\`), rendered via \`DIcon\`.
+Their color is controlled by the \`--${PREFIX_BS}icon-component-color\` CSS variable (defined on the
+internal \`.d-icon\` element), which is **not** set via inline style, so it can be safely scoped with a
+regular \`className\`:
+
+\`\`\`css
+.my-input-currency .d-icon {
+  --${PREFIX_BS}icon-component-color: #dc3545;
+}
+\`\`\`
+
+\`\`\`jsx
+<DInputCurrency className="my-input-currency" iconStart="Search" />
+\`\`\`
         `,
       },
     },
@@ -291,5 +340,112 @@ export const Floating: Story = {
     minValue: 0,
     maxValue: 100000,
     floatingLabel: true,
+  },
+};
+
+export const WithIconColor: Story = {
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    iconEnd: 'Search',
+    className: 'd-input-currency-icon-color-demo',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Changes the color of the \`iconEnd\` icon using \`className\` to scope the
+\`--${PREFIX_BS}icon-component-color\` CSS variable, without affecting the currency symbol color.
+
+\`\`\`css
+.d-input-currency-icon-color-demo .d-icon {
+  --${PREFIX_BS}icon-component-color: #dc3545;
+}
+\`\`\`
+        `,
+      },
+    },
+  },
+  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
+    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
+
+    return (
+      <DContextProvider>
+        <style>
+          {`
+            .d-input-currency-icon-color-demo .d-icon {
+              --${PREFIX_BS}icon-component-color: #dc3545;
+            }
+          `}
+        </style>
+        <DInputCurrency
+          {...args}
+          value={innerValue}
+          onChange={(newValue) => {
+            setInnerValue(newValue);
+            if (args.onChange) {
+              args.onChange(newValue);
+            }
+          }}
+        />
+      </DContextProvider>
+    );
+  },
+};
+
+export const WithSymbolColor: Story = {
+  args: {
+    id: 'componentId8',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    className: 'd-input-currency-symbol-color-demo',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Changes the currency symbol color using \`className\` to scope the
+\`--${PREFIX_BS}input-currency-component-symbol-color\` CSS variable.
+
+\`\`\`css
+.d-input-currency-symbol-color-demo {
+  --${PREFIX_BS}input-currency-component-symbol-color: #dc3545;
+}
+\`\`\`
+        `,
+      },
+    },
+  },
+  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
+    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
+
+    return (
+      <DContextProvider>
+        <style>
+          {`
+            .d-input-currency-symbol-color-demo {
+              --${PREFIX_BS}input-currency-component-symbol-color: #dc3545;
+            }
+          `}
+        </style>
+        <DInputCurrency
+          {...args}
+          value={innerValue}
+          onChange={(newValue) => {
+            setInnerValue(newValue);
+            if (args.onChange) {
+              args.onChange(newValue);
+            }
+          }}
+        />
+      </DContextProvider>
+    );
   },
 };
