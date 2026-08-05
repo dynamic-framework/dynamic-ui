@@ -1,0 +1,107 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './useOtpExamples';
+
+<Meta title="Design System/Hooks/useOtp" />
+
+# useOtp
+
+Headless hook exposing the same One-Time Password (OTP) logic used internally
+by [`DOtp`](?path=/docs/design-system-components-otp--docs) — code state,
+length validation, submit action and resend countdown — **without any bundled
+markup or styles**.
+
+Use `useOtp` when the default `DOtp` component doesn't match your design and
+you need to build a fully custom UI (different layout, custom pin input,
+alerts, etc.) while reusing the exact same behavior.
+
+Internally it composes [`useCountdown`](?path=/docs/design-system-hooks-usecountdown--docs)
+for the resend timer and re-exposes `secondsLeft`/`restartCountdown`, so there
+is no need to call `useCountdown` separately.
+
+## Parameters
+
+### `UseOtpConfig`
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `action` | `() => Promise<void> \| void` | ✅ | | Called when the OTP reaches the expected length and `submit()` is invoked. |
+| `otpSize` | `number` | | `6` | Expected number of digits/characters for a valid OTP. |
+| `seconds` | `number` | | `15` | Initial countdown (in seconds) before resend becomes available. |
+
+## Return Values
+
+- **otp**: `string` — current OTP value.
+- **setOtp**: `(value: string) => void` — updates the OTP value (wire this to
+  your custom pin input's `onChange`). Also clears `invalid`/`error` so the
+  error state disappears as soon as the user edits the code.
+- **invalid**: `boolean` — `true` when `submit()` is called with an OTP
+  shorter than `otpSize`, **or** when `action` throws/rejects (e.g. the
+  backend rejected the digited code as incorrect).
+- **error**: `unknown` — the value thrown/rejected by `action`, `null`
+  otherwise. Use it to render a specific message for a wrong code, as opposed
+  to a too-short one.
+- **submit**: `() => Promise<void>` — validates the OTP length; if valid,
+  calls `action`. If `action` rejects, `submit()`'s promise rejects too (so
+  callers can still `.catch()` it for logging), and `invalid`/`error` are set.
+- **secondsLeft**: `number` — seconds remaining until resend is available.
+- **restartCountdown**: `() => void` — restarts the resend countdown (call it
+  from your "Resend" action).
+
+## Example of use `ExampleOfUse.tsx`
+
+<Source
+  code={
+    `
+import { useOtp, DInputPin, DButton, DAlert } from '@dynamic-framework/ui-react';
+
+export function ExampleOfUse() {
+  const {
+    otp, setOtp, invalid, error, submit, secondsLeft, restartCountdown,
+  } = useOtp({
+    // Simulates a backend call that rejects any code other than "1234".
+    action: () => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (otp === '1234') {
+          resolve();
+        } else {
+          reject(new Error('The code you entered is incorrect.'));
+        }
+      }, 800);
+    }),
+    otpSize: 4,
+    seconds: 10,
+  });
+
+  return (
+    <div className="d-flex flex-column gap-3" style={{ maxWidth: 360 }}>
+      <h5 className="mb-0">Enter your verification code</h5>
+      <DInputPin characters={4} onChange={setOtp} invalid={invalid} placeholder="•" />
+      {invalid && (
+        <DAlert color="danger">
+          {error instanceof Error ? error.message : 'Please enter all 4 digits.'}
+        </DAlert>
+      )}
+      <div className="d-flex justify-content-between align-items-center">
+        <DButton
+          variant="link"
+          size="sm"
+          text={secondsLeft > 0 ? \`Resend in \${secondsLeft}s\` : 'Resend code'}
+          disabled={secondsLeft > 0}
+          onClick={restartCountdown}
+        />
+        <DButton text="Verify" onClick={() => { submit().catch(() => {}); }} />
+      </div>
+    </div>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

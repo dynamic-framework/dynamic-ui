@@ -1,12 +1,9 @@
-import {
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from 'react';
+import { PropsWithChildren } from 'react';
 
 import OtpCountdown from './components/OtpCountdown';
 import DInputPin from '../DInputPin';
 import DButton from '../DButton';
+import useOtp from '../../hooks/useOtp';
 
 export type PropsOtp = PropsWithChildren<{
   action: () => Promise<void> | void;
@@ -20,6 +17,7 @@ export type PropsOtp = PropsWithChildren<{
     title?: string;
     contact?: string | React.ReactNode;
     resendText?: string;
+    invalidCode?: string;
   }
 }>;
 
@@ -28,6 +26,7 @@ const TEXT_PROPS = {
   resendText: 'Resend code',
   submit: 'Authorize and continue',
   title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
+  invalidCode: 'Invalid code, please try again.',
   contact: (
     <>
       <span>Problems with your digital token? Contact us</span>
@@ -54,23 +53,13 @@ export default function DOtp(
     seconds = 15,
   }: PropsOtp,
 ) {
-  const [otp, setOtp] = useState('');
-  const [invalid, setInvalid] = useState(false);
-
-  const handler = useCallback(async () => {
-    if (otp.length < otpSize) {
-      setInvalid(true);
-      return;
-    }
-
-    setInvalid(false);
-
-    await action();
-  }, [
-    otp.length,
-    action,
-    otpSize,
-  ]);
+  const {
+    setOtp,
+    invalid,
+    submit,
+    secondsLeft,
+    restartCountdown,
+  } = useOtp({ action, otpSize, seconds });
 
   return (
     <div className={className}>
@@ -81,11 +70,13 @@ export default function DOtp(
             className="modal-otp-pin"
             characters={otpSize}
             onChange={(e) => setOtp(e)}
-            invalid={invalid && otp.length < otpSize}
+            invalid={invalid}
+            hint={invalid ? texts.invalidCode : undefined}
             placeholder="0"
           />
           <OtpCountdown
-            seconds={seconds}
+            secondsLeft={secondsLeft}
+            restartCountdown={restartCountdown}
             resendText={texts.resend}
           />
         </div>
@@ -94,7 +85,7 @@ export default function DOtp(
           <DButton
             text={texts.submit}
             onClick={() => {
-              handler().catch((err) => {
+              submit().catch((err) => {
                 // eslint-disable-next-line no-console
                 console.error('Error in DOtp action:', err);
               });
