@@ -15,8 +15,10 @@ export type UseOtpReturn = {
   otp: string;
   /**
    * Updates the OTP value (wire this to your custom pin input's `onChange`).
-   * Also clears `invalid`/`error` so the error state disappears as soon as
-   * the user edits the code.
+   * Also clears `invalid`/`error` as soon as the value actually changes, so
+   * the error state disappears once the user edits the code (a no-op call
+   * with the same value, e.g. from an uncontrolled input re-notifying its
+   * current value, does not reset `invalid`/`error`).
    */
   setOtp: (value: string) => void;
   /**
@@ -99,9 +101,18 @@ export default function useOtp(
   const { secondsLeft, restartCountdown } = useCountdown(seconds);
 
   const setOtp = useCallback((value: string) => {
-    setInvalid(false);
-    setError(null);
-    setOtpValue(value);
+    setOtpValue((prevOtp) => {
+      // Guard against no-op calls (e.g. DInputPin re-notifying the same
+      // value when its onChange reference changes) so we don't wipe out
+      // an `invalid`/`error` state that was just set by submit().
+      if (prevOtp === value) {
+        return prevOtp;
+      }
+
+      setInvalid(false);
+      setError(null);
+      return value;
+    });
   }, []);
 
   const submit = useCallback(async () => {

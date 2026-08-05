@@ -92,6 +92,35 @@ describe('useOtp', () => {
     expect(result.current.error).toBe(null);
   });
 
+  it('should NOT clear invalid/error when setOtp is called again with the same value (no-op)', async () => {
+    // Regression test: an uncontrolled pin input (like DInputPin) may
+    // re-notify the same otp string (e.g. its onChange callback identity
+    // changed on the parent's re-render) without any real user edit. That
+    // must not wipe out an `invalid`/`error` state set by a previous
+    // submit() call.
+    const rejectionError = new Error('Wrong OTP code');
+    const action = jest.fn().mockRejectedValue(rejectionError);
+    const { result, rerender } = renderHook(() => useOtp({ action, otpSize: 6 }));
+
+    act(() => {
+      result.current.setOtp('123456');
+    });
+    rerender();
+
+    await act(async () => {
+      await expect(result.current.submit()).rejects.toThrow();
+    });
+    expect(result.current.invalid).toBe(true);
+    expect(result.current.error).toBe(rejectionError);
+
+    act(() => {
+      result.current.setOtp('123456');
+    });
+
+    expect(result.current.invalid).toBe(true);
+    expect(result.current.error).toBe(rejectionError);
+  });
+
   it('should expose a working countdown/restart pair', () => {
     const action = jest.fn();
     const { result } = renderHook(() => useOtp({ action, seconds: 2 }));
