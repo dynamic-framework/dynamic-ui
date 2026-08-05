@@ -44,6 +44,10 @@ is no need to call `useCountdown` separately.
 - **submit**: `() => Promise<void>` — validates the OTP length; if valid,
   calls `action`. If `action` rejects, `submit()`'s promise rejects too (so
   callers can still `.catch()` it for logging), and `invalid`/`error` are set.
+- **isLoading**: `boolean` — `true` while `action` is being awaited inside
+  `submit()` (the OTP already passed the length check). Wire it to your
+  submit button's `loading`/`disabled` state. It stays `false` for the
+  too-short validation failure, since `action` isn't called in that case.
 - **secondsLeft**: `number` — seconds remaining until resend is available.
 - **restartCountdown**: `() => void` — restarts the resend countdown (call it
   from your "Resend" action).
@@ -57,7 +61,7 @@ import { useOtp, DInputPin, DButton, DAlert } from '@dynamic-framework/ui-react'
 
 export function ExampleOfUse() {
   const {
-    otp, setOtp, invalid, error, submit, secondsLeft, restartCountdown,
+    otp, setOtp, invalid, error, submit, isLoading, secondsLeft, restartCountdown,
   } = useOtp({
     // Simulates a backend call that rejects any code other than "1234".
     action: () => new Promise((resolve, reject) => {
@@ -90,7 +94,7 @@ export function ExampleOfUse() {
           disabled={secondsLeft > 0}
           onClick={restartCountdown}
         />
-        <DButton text="Verify" onClick={() => { submit().catch(() => {}); }} />
+        <DButton text="Verify" loading={isLoading} onClick={() => { submit().catch(() => {}); }} />
       </div>
     </div>
   );

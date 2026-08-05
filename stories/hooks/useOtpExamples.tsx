@@ -12,6 +12,7 @@ export function ExampleOfUse() {
     invalid,
     error,
     submit,
+    isLoading,
     secondsLeft,
     restartCountdown,
   } = useOtp({
@@ -54,6 +55,7 @@ export function ExampleOfUse() {
         />
         <DButton
           text="Verify"
+          loading={isLoading}
           onClick={() => {
             submit().catch(() => {});
           }}

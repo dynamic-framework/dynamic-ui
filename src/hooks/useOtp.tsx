@@ -39,6 +39,15 @@ export type UseOtpReturn = {
    * `.catch()` it for logging), and `invalid`/`error` are set beforehand.
    */
   submit: () => Promise<void>;
+  /**
+   * `true` while `action` is being awaited inside `submit()` (i.e. the OTP
+   * passed the length check and the async action hasn't settled yet). Wire
+   * it to your submit button's loading/disabled state. It's `false` while
+   * idle and immediately after `action` settles (whether it resolves or
+   * rejects), and it's never set to `true` for the too-short/length
+   * validation failure since `action` isn't called in that case.
+   */
+  isLoading: boolean;
   /** Seconds remaining until resend is available. */
   secondsLeft: number;
   /** Restarts the resend countdown (call it from your "Resend" action). */
@@ -72,6 +81,7 @@ export type UseOtpReturn = {
  *     invalid,
  *     error,
  *     submit,
+ *     isLoading,
  *     secondsLeft,
  *     restartCountdown,
  *   } = useOtp({ action: async () => verifyOtp(otp), otpSize: 6, seconds: 15 });
@@ -80,7 +90,9 @@ export type UseOtpReturn = {
  *     <>
  *       <MyCustomPinInput value={otp} onChange={setOtp} invalid={invalid} />
  *       {invalid && <span>{error ? 'Invalid code' : 'Enter all digits'}</span>}
- *       <button onClick={() => { submit().catch(() => {}); }}>Submit</button>
+ *       <button disabled={isLoading} onClick={() => { submit().catch(() => {}); }}>
+ *         {isLoading ? 'Submitting...' : 'Submit'}
+ *       </button>
  *       <button disabled={secondsLeft > 0} onClick={restartCountdown}>
  *         Resend {secondsLeft > 0 ? `(${secondsLeft}s)` : ''}
  *       </button>
@@ -98,6 +110,7 @@ export default function useOtp(
   const [otp, setOtpValue] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [error, setError] = useState<unknown>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { secondsLeft, restartCountdown } = useCountdown(seconds);
 
   const setOtp = useCallback((value: string) => {
@@ -122,6 +135,7 @@ export default function useOtp(
       return;
     }
 
+    setIsLoading(true);
     try {
       await action();
       setInvalid(false);
@@ -130,6 +144,8 @@ export default function useOtp(
       setInvalid(true);
       setError(err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   }, [
     otp.length,
@@ -143,6 +159,7 @@ export default function useOtp(
     invalid,
     error,
     submit,
+    isLoading,
     secondsLeft,
     restartCountdown,
   };

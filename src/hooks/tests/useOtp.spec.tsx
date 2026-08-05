@@ -16,6 +16,7 @@ describe('useOtp', () => {
 
     expect(result.current.otp).toBe('');
     expect(result.current.invalid).toBe(false);
+    expect(result.current.isLoading).toBe(false);
     expect(result.current.secondsLeft).toBe(15);
   });
 
@@ -134,5 +135,64 @@ describe('useOtp', () => {
       result.current.restartCountdown();
     });
     expect(result.current.secondsLeft).toBe(2);
+  });
+
+  it('should set isLoading to true while action is pending and back to false once it resolves', async () => {
+    let resolveAction: () => void = () => {};
+    const action = jest.fn(() => new Promise<void>((resolve) => {
+      resolveAction = resolve;
+    }));
+    const { result, rerender } = renderHook(() => useOtp({ action, otpSize: 6 }));
+
+    act(() => {
+      result.current.setOtp('123456');
+    });
+    rerender();
+
+    let submitPromise: Promise<void>;
+    act(() => {
+      submitPromise = result.current.submit();
+    });
+
+    expect(result.current.isLoading).toBe(true);
+
+    await act(async () => {
+      resolveAction();
+      await submitPromise;
+    });
+
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('should set isLoading back to false when action rejects', async () => {
+    const action = jest.fn().mockRejectedValue(new Error('Wrong OTP code'));
+    const { result, rerender } = renderHook(() => useOtp({ action, otpSize: 6 }));
+
+    act(() => {
+      result.current.setOtp('123456');
+    });
+    rerender();
+
+    await act(async () => {
+      await expect(result.current.submit()).rejects.toThrow();
+    });
+
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('should NOT set isLoading when otp is shorter than otpSize (action is never called)', async () => {
+    const action = jest.fn();
+    const { result } = renderHook(() => useOtp({ action, otpSize: 6 }));
+
+    act(() => {
+      result.current.setOtp('123');
+    });
+
+    await act(async () => {
+      await result.current.submit();
+    });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(action).not.toHaveBeenCalled();
   });
 });

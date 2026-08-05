@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DOtp from './DOtp';
 
@@ -37,6 +37,27 @@ describe('DOtp', () => {
     expect(action).not.toHaveBeenCalled();
     expect(inputs[0]).toHaveClass('is-invalid');
     expect(screen.getByText('Invalid code, please try again.')).toBeInTheDocument();
+  });
+
+  it('should show the submit button as loading while action is pending, using the hook\'s internal isLoading', async () => {
+    const user = userEvent.setup();
+    let resolveAction: () => void = () => {};
+    const action = jest.fn(() => new Promise<void>((resolve) => {
+      resolveAction = resolve;
+    }));
+    render(<DOtp action={action} />);
+
+    const inputs = screen.getAllByRole('textbox');
+    await user.type(inputs[0], '123456');
+    await user.click(screen.getByText('Authorize and continue'));
+
+    const button = screen.getByRole('button', { name: 'Authorize and continue' });
+    expect(button).toHaveAttribute('aria-busy', 'true');
+
+    resolveAction();
+    await waitFor(() => {
+      expect(button).toHaveAttribute('aria-busy', 'false');
+    });
   });
 
   // Regression test: DInputPin (uncontrolled) can re-notify onChange with

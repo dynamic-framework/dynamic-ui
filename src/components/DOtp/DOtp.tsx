@@ -57,6 +57,7 @@ export default function DOtp(
     setOtp,
     invalid,
     submit,
+    isLoading: isSubmitting,
     secondsLeft,
     restartCountdown,
   } = useOtp({ action, otpSize, seconds });
@@ -90,7 +91,7 @@ export default function DOtp(
                 console.error('Error in DOtp action:', err);
               });
             }}
-            loading={isLoading}
+            loading={isLoading || isSubmitting}
           />
           <p className="small ms-lg-auto mb-0">
             {texts.contact}
