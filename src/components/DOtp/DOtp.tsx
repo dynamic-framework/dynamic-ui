@@ -23,7 +23,7 @@ export type PropsOtp = PropsWithChildren<{
 
 const TEXT_PROPS = {
   resend: 'Resend',
-  resendText: 'Resend code',
+  resendText: 'Resend',
   submit: 'Authorize and continue',
   title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
   invalidCode: 'Invalid code, please try again.',
@@ -77,7 +77,7 @@ export default function DOtp(
           <OtpCountdown
             secondsLeft={secondsLeft}
             restartCountdown={restartCountdown}
-            resendText={texts.resend}
+            resendText={texts.resendText}
           />
         </div>
         <hr className="m-0" />

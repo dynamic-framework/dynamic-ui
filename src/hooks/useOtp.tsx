@@ -23,7 +23,7 @@ export type UseOtpReturn = {
   setOtp: (value: string) => void;
   /**
    * `true` when `submit()` is called with an OTP shorter than `otpSize`, or
-   * when `action` throws/rejects (e.g. the backend rejected the digited
+   * when `action` throws/rejects (e.g. the backend rejected the entered
    * code as incorrect).
    */
   invalid: boolean;
@@ -58,7 +58,7 @@ export type UseOtpReturn = {
  * `useCountdown` separately.
  *
  * `invalid` becomes `true` both when the OTP is shorter than `otpSize` and
- * when `action` throws/rejects (e.g. the backend rejected the digited code
+ * when `action` throws/rejects (e.g. the backend rejected the entered code
  * as incorrect). In the latter case, the thrown value is exposed as `error`
  * so custom UIs can render an appropriate message (e.g. "Invalid code" vs.
  * "Enter all digits"). `invalid`/`error` are cleared automatically as soon

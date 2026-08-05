@@ -32,11 +32,12 @@ is no need to call `useCountdown` separately.
 
 - **otp**: `string` — current OTP value.
 - **setOtp**: `(value: string) => void` — updates the OTP value (wire this to
-  your custom pin input's `onChange`). Also clears `invalid`/`error` so the
-  error state disappears as soon as the user edits the code.
+  your custom pin input's `onChange`). Clears `invalid`/`error` as soon as
+  the value actually changes, so the error state disappears once the user
+  edits the code (a no-op call with the same value does not reset it).
 - **invalid**: `boolean` — `true` when `submit()` is called with an OTP
   shorter than `otpSize`, **or** when `action` throws/rejects (e.g. the
-  backend rejected the digited code as incorrect).
+  backend rejected the entered code as incorrect).
 - **error**: `unknown` — the value thrown/rejected by `action`, `null`
   otherwise. Use it to render a specific message for a wrong code, as opposed
   to a too-short one.
