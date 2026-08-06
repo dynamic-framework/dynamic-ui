@@ -48,7 +48,7 @@ export default function DOffcanvasHeader(
         {showCloseButton && (
           <button
             type="button"
-            className="d-close align-self-center"
+            className="d-close"
             aria-label="Close"
             onClick={onClose}
           >

@@ -191,7 +191,7 @@ export default function DDatePickerHeaderSelector(
           className="header-button"
           style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
-        <div className="d-flex justify-content-center flex-grow-1">
+        <div className="react-datepicker__header-year-selector">
           {showHeaderSelectors ? (
             <DSelect
               options={years}
@@ -231,7 +231,7 @@ export default function DDatePickerHeaderSelector(
             className="custom-year-selector"
           />
         )}
-        <h4 className="mb-0 fw-normal">
+        <h4 className="datepicker-top-header-title">
           {format(monthDate, formatHeaderDate, { locale })}
         </h4>
       </div>

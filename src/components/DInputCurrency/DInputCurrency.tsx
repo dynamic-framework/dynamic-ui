@@ -55,6 +55,8 @@ function DInputCurrency(
     onChange,
     onBlur,
     ref,
+    minValue,
+    maxValue,
   );
 
   return (

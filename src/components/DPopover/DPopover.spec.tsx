@@ -46,7 +46,7 @@ describe('<DPopover />', () => {
       );
 
       const popoverContent = screen.getByText('Content');
-      expect(popoverContent).toHaveClass('d-popover-content', 'w-100');
+      expect(popoverContent).toHaveClass('d-popover-content', 'd-popover-content-fill');
     });
   });
 

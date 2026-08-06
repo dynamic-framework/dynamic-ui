@@ -1,0 +1,8 @@
+// Semantic hook classes for theming. The mobile/desktop toggle itself relies on
+// Bootstrap's responsive display utilities (d-{breakpoint}-none / d-{breakpoint}-block)
+// because the breakpoint is dynamic (component prop) and CSS custom properties
+// cannot be read inside media queries.
+.d-stepper-mobile,
+.d-stepper-desktop {
+  width: 100%;
+}

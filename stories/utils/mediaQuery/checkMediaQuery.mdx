@@ -1,0 +1,46 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './checkMediaQueryExamples';
+
+<Meta title="Design System/Utils/mediaQuery/checkMediaQuery" />
+
+# checkMediaQuery
+Synchronously checks whether a media query currently matches, using `window.matchMedia`.
+
+## Parameters
+
+- **query** (`string`): A valid CSS media query, e.g. `'(min-width: 768px)'`.
+
+## Returns
+
+- (`boolean`): `true` when the media query currently matches, `false` otherwise.
+
+> This is a one-off, point-in-time check — it does **not** react to viewport
+> changes by itself. To be notified when the match changes over time, combine
+> it with `subscribeToMediaQuery` (see that doc) or use the `useMediaQuery` hook.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { checkMediaQuery } from '@dynamic-framework/ui-react';
+
+const matches = checkMediaQuery('(min-width: 768px)');
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+Resize the box below (it's an isolated viewport) and click "Check now" to read
+the match at that exact moment — notice it won't update on its own while you drag.
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

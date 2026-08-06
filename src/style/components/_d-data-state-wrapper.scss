@@ -1,0 +1,47 @@
+.d-empty-state {
+  --#{$prefix}empty-state-padding: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}empty-state-spacing: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}empty-state-color: var(--#{$prefix}secondary);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--#{$prefix}empty-state-padding);
+  text-align: center;
+}
+
+.d-empty-state-icon {
+  margin-bottom: var(--#{$prefix}empty-state-spacing);
+  color: var(--#{$prefix}empty-state-color);
+}
+
+.d-empty-state-message {
+  margin-bottom: var(--#{$prefix}empty-state-spacing);
+  color: var(--#{$prefix}empty-state-color);
+}
+
+.d-error-state {
+  --#{$prefix}error-state-gap: var(--#{$prefix}ref-spacer-3);
+
+  display: flex;
+  gap: var(--#{$prefix}error-state-gap);
+  align-items: center;
+}
+
+.d-error-state-content {
+  flex: 1 1 auto;
+}
+
+.d-error-state-message {
+  margin-bottom: 0;
+}
+
+.d-loading-state {
+  --#{$prefix}loading-state-padding: var(--#{$prefix}ref-spacer-4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--#{$prefix}loading-state-padding);
+}
