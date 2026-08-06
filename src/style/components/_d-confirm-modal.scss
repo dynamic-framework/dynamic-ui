@@ -1,0 +1,17 @@
+.confirm-modal {
+  --#{$prefix}confirm-modal-body-padding-y: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}confirm-modal-body-padding-x: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}confirm-modal-field-gap: var(--#{$prefix}ref-spacer-4);
+}
+
+.d-confirm-modal-body {
+  padding: var(--#{$prefix}confirm-modal-body-padding-y) var(--#{$prefix}confirm-modal-body-padding-x);
+}
+
+.d-confirm-modal-message {
+  margin-bottom: var(--#{$prefix}confirm-modal-field-gap);
+}
+
+.d-confirm-modal-field {
+  margin-bottom: var(--#{$prefix}confirm-modal-field-gap);
+}

@@ -114,7 +114,7 @@ export default function DPopover(
             className={classNames(
               'd-popover-content',
               {
-                'w-100': adjustContentToRender,
+                'd-popover-content-fill': adjustContentToRender,
               },
             )}
             ref={refs.setFloating}

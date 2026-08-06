@@ -1,0 +1,54 @@
+.d-otp {
+  --#{$prefix}otp-content-gap: var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}otp-content-padding-x: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}otp-content-padding-bottom: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}otp-footer-gap: var(--#{$prefix}ref-spacer-4);
+}
+
+.d-otp-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}otp-content-gap);
+  padding: 0 var(--#{$prefix}otp-content-padding-x) var(--#{$prefix}otp-content-padding-bottom);
+}
+
+.d-otp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}otp-content-gap);
+}
+
+.d-otp-divider {
+  margin: 0;
+}
+
+.d-otp-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}otp-footer-gap);
+  align-items: center;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
+}
+
+.d-otp-contact {
+  margin-bottom: 0;
+  font-size: .875em;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: auto;
+  }
+}
+
+.d-otp-countdown {
+  display: flex;
+  gap: var(--#{$prefix}ref-spacer-2);
+  align-items: center;
+}
+
+.d-otp-countdown-text {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}

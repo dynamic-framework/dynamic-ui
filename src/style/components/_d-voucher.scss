@@ -5,6 +5,9 @@
   --#{$prefix}voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}voucher-margin: 0 0 var(--#{$prefix}ref-spacer-4) 0;
+  --#{$prefix}voucher-title-margin-bottom: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}voucher-amount-value-margin: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}voucher-divider-margin: var(--#{$prefix}ref-spacer-4);
 }
 
 .d-voucher-header {
@@ -27,4 +30,31 @@
   display: flex;
   gap: var(--#{$prefix}voucher-footer-gap);
   justify-content: flex-start;
+}
+
+.d-voucher-title-group {
+  text-align: center;
+}
+
+.d-voucher-title {
+  margin-bottom: var(--#{$prefix}voucher-title-margin-bottom);
+}
+
+.d-voucher-message {
+  margin: 0;
+}
+
+.d-voucher-amount-value {
+  margin: 0;
+  font-size: var(--#{$prefix}fs-3);
+  font-weight: var(--#{$prefix}fw-bold);
+  text-align: center;
+
+  &.d-voucher-amount-value-with-details {
+    margin-bottom: var(--#{$prefix}voucher-amount-value-margin);
+  }
+}
+
+.d-voucher-divider {
+  margin: var(--#{$prefix}voucher-divider-margin) 0;
 }

@@ -1,0 +1,7 @@
+.d-error-boundary-content {
+  --#{$prefix}error-boundary-gap: var(--#{$prefix}ref-spacer-2);
+
+  display: flex;
+  gap: var(--#{$prefix}error-boundary-gap);
+  align-items: center;
+}
