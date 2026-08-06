@@ -127,7 +127,7 @@ regular \`className\`:
       table: { category: 'Content' },
     },
     value: {
-      control: 'number',
+      control: false,
       type: 'number',
       description: 'The value of the input',
       table: { category: 'Content' },
@@ -278,8 +278,14 @@ export const Default: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
+    minValue: undefined,
+    maxValue: undefined,
+    readOnly: false,
+    disabled: false,
+    loading: false,
+    invalid: false,
+    valid: false,
+    floatingLabel: false,
   },
 };
 
@@ -289,8 +295,6 @@ export const Invalid: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
     invalid: true,
   },
 };
@@ -301,8 +305,6 @@ export const Valid: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
     valid: true,
   },
 };
@@ -313,8 +315,6 @@ export const Disabled: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
     disabled: true,
   },
 };
@@ -325,20 +325,34 @@ export const WithCurrencyCode: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
     currencyCode: 'CLP',
   },
 };
 
-export const Floating: Story = {
+export const WithRangeMinMax: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'The component can receive a min and max value to limit the input value. This example shows the component with a min value of <strong>$0.00</strong> and a max value of <strong>$10,000.00</strong>.',
+      },
+    },
+  },
   args: {
     id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
     minValue: 0,
-    maxValue: 100000,
+    maxValue: 10000,
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    value: undefined,
     floatingLabel: true,
   },
 };

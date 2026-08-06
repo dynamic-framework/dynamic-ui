@@ -69,6 +69,11 @@
   }
 }
 
+.d-box-file-empty-text {
+  margin: 0;
+  text-align: center;
+}
+
 .d-box-files {
   --#{$prefix}box-file-list-gap: #{$box-file-list-gap};
   --#{$prefix}box-file-list-padding: #{$box-file-list-padding};

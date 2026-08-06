@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import currency from 'currency.js';
@@ -30,13 +31,33 @@ export default function useInputCurrency(
   onChange?: (value?: number) => void,
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void,
   ref?: ForwardedRef<HTMLInputElement>,
+  minValue?: number,
+  maxValue?: number,
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
+  const clampValue = useCallback((newValue?: number) => {
+    if (newValue === undefined) {
+      return newValue;
+    }
+
+    let clampedValue = newValue;
+
+    if (minValue !== undefined) {
+      clampedValue = Math.max(clampedValue, minValue);
+    }
+
+    if (maxValue !== undefined) {
+      clampedValue = Math.min(clampedValue, maxValue);
+    }
+
+    return clampedValue;
+  }, [minValue, maxValue]);
+
   const [innerType, setInnerType] = useState('text');
-  const [innerNumber, setInnerNumber] = useState<number | undefined>(value);
+  const [innerNumber, setInnerNumber] = useState<number | undefined>(clampValue(value));
   const [innerString, setInnerString] = useState<string | undefined>(
-    formatValue(value, currencyOptions),
+    formatValue(clampValue(value), currencyOptions),
   );
 
   const handleOnFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
@@ -48,8 +69,17 @@ export default function useInputCurrency(
   const handleOnBlur = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
     setInnerType('text');
+
+    const clampedNumber = clampValue(innerNumber);
+
+    if (clampedNumber !== innerNumber) {
+      setInnerNumber(clampedNumber);
+      setInnerString(formatValue(clampedNumber, currencyOptions));
+      onChange?.(clampedNumber);
+    }
+
     onBlur?.(event);
-  }, [onBlur]);
+  }, [onBlur, innerNumber, clampValue, currencyOptions, onChange]);
 
   const handleOnChange = useCallback((newValue?: string) => {
     const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
@@ -61,7 +91,14 @@ export default function useInputCurrency(
     }
   }, [currencyOptions, onChange, innerNumber]);
 
+  const isMountedRef = useRef(false);
+
   useEffect(() => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      return;
+    }
+
     if (value !== innerNumber) {
       setInnerNumber(value);
       setInnerString(formatValue(value, currencyOptions));

@@ -5,7 +5,7 @@ import DCurrencyText from '../../src/components/DCurrencyText/DCurrencyText';
 import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DCurrencyText> = {
-  title: 'Design System/Utils/Currency Text',
+  title: 'Design System/Components/Currency Text',
   component: DCurrencyText,
   argTypes: {
     value: {

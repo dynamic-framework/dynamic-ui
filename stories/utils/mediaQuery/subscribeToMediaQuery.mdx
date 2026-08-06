@@ -1,0 +1,59 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './subscribeToMediaQueryExamples';
+
+<Meta title="Design System/Utils/mediaQuery/subscribeToMediaQuery" />
+
+# subscribeToMediaQuery
+Subscribes to changes of a media query, invoking a callback whenever its match state changes.
+
+## Parameters
+
+- **query** (`string`): A valid CSS media query, e.g. `'(min-width: 768px)'`.
+- **callback** (`() => void`): Invoked every time the media query's match state changes.
+
+## Returns
+
+- (`() => void`): An unsubscribe function. Call it (e.g. in a `useEffect` cleanup) to stop listening.
+
+> This is the reactive counterpart of `checkMediaQuery`: use `checkMediaQuery` to
+> read the current value and `subscribeToMediaQuery` to be notified of further
+> changes. This is exactly how the `useMediaQuery` hook is built internally.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { subscribeToMediaQuery, checkMediaQuery } from '@dynamic-framework/ui-react';
+import { useEffect, useState } from 'react';
+
+const QUERY = '(min-width: 768px)';
+
+function ExampleOfUse() {
+  const [matches, setMatches] = useState(() => checkMediaQuery(QUERY));
+
+  useEffect(
+    () => subscribeToMediaQuery(QUERY, () => setMatches(checkMediaQuery(QUERY))),
+    [],
+  );
+
+  return <p>{\`Matches: \${matches}\`}</p>;
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+Drag the right edge of the box below to resize it and watch
+&quot;Matches&quot; update automatically, without any manual action.
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

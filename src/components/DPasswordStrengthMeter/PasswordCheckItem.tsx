@@ -1,5 +1,3 @@
-import classNames from 'classnames';
-
 import DIcon from '../DIcon';
 
 type Props = {
@@ -18,16 +16,13 @@ export default function PasswordCheckItem(
   const isValid = regex.test(password);
 
   return (
-    <li className="d-flex gap-2 align-items-start small text-gray-600">
+    <li className={`d-password-check-item${isValid ? ' is-valid' : ''}`}>
       <DIcon
-        className={classNames(
-          'flex-shrink-0',
-          isValid ? 'text-success' : 'text-gray-300',
-        )}
+        className="d-password-check-item-icon"
         icon={isValid ? 'CircleCheck' : 'Circle'}
         size="16px"
       />
-      <span className={classNames({ 'text-success': isValid })}>
+      <span>
         {text}
       </span>
     </li>

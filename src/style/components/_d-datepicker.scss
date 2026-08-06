@@ -215,6 +215,12 @@
     }
   }
 
+  &-year-selector {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
   &-day-selector {
     margin-bottom: var(--#{$prefix}ref-spacer-4);
 
@@ -285,6 +291,11 @@
   padding: 1rem;
   margin-bottom: 1rem;
   margin-top: -.5rem;
+}
+
+.datepicker-top-header-title {
+  margin-bottom: 0;
+  font-weight: var(--#{$prefix}fw-normal);
 }
 
 .react-datepicker__year,
