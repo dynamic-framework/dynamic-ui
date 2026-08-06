@@ -6,6 +6,29 @@ import { ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
+function renderWithState(cssText?: string) {
+  return function Render(args: ComponentProps<typeof DInputCurrency>) {
+    const { value, onChange, ...restArgs } = args;
+    const [innerValue, setInnerValue] = useState<number | undefined>(value);
+
+    return (
+      <DContextProvider>
+        {cssText && <style>{cssText}</style>}
+        <DInputCurrency
+          {...restArgs}
+          value={innerValue}
+          onChange={(newValue) => {
+            setInnerValue(newValue);
+            if (onChange) {
+              onChange(newValue);
+            }
+          }}
+        />
+      </DContextProvider>
+    );
+  };
+}
+
 const config: Meta<typeof DInputCurrency> = {
   title: 'Design System/Components/Input Currency',
   component: DInputCurrency,
@@ -40,7 +63,7 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
 | --${PREFIX_BS}form-text-gap               | .form-text    | css length unit | Space between hint elements  |
 | --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                   |
 | --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align             |
-| --${PREFIX_BS}input-currency-symbol-color | .input-group  | css color unit  | Color of the currency symbol |
+| --${PREFIX_BS}input-currency-component-symbol-color | .d-input-currency-symbol | css color unit | Color of the currency symbol (set via class or style) |
 | --${PREFIX_BS}icon-component-color        | .d-icon       | css color unit  | Color of the \`iconStart\`/\`iconEnd\` icon |
 
 ## Changing the currency symbol color
@@ -250,24 +273,7 @@ regular \`className\`:
     },
   },
   tags: ['autodocs'],
-  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
-    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
-
-    return (
-      <DContextProvider>
-        <DInputCurrency
-          {...args}
-          value={innerValue}
-          onChange={(newValue) => {
-            setInnerValue(newValue);
-            if (args.onChange) {
-              args.onChange(newValue);
-            }
-          }}
-        />
-      </DContextProvider>
-    );
-  },
+  render: renderWithState(),
 };
 
 export default config;
@@ -384,31 +390,11 @@ Changes the color of the \`iconEnd\` icon using \`className\` to scope the
       },
     },
   },
-  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
-    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
-
-    return (
-      <DContextProvider>
-        <style>
-          {`
-            .d-input-currency-icon-color-demo .d-icon {
-              --${PREFIX_BS}icon-component-color: #dc3545;
-            }
-          `}
-        </style>
-        <DInputCurrency
-          {...args}
-          value={innerValue}
-          onChange={(newValue) => {
-            setInnerValue(newValue);
-            if (args.onChange) {
-              args.onChange(newValue);
-            }
-          }}
-        />
-      </DContextProvider>
-    );
-  },
+  render: renderWithState(`
+    .d-input-currency-icon-color-demo .d-icon {
+      --${PREFIX_BS}icon-component-color: #dc3545;
+    }
+  `),
 };
 
 export const WithSymbolColor: Story = {
@@ -437,29 +423,9 @@ Changes the currency symbol color using \`className\` to scope the
       },
     },
   },
-  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
-    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
-
-    return (
-      <DContextProvider>
-        <style>
-          {`
-            .d-input-currency-symbol-color-demo {
-              --${PREFIX_BS}input-currency-component-symbol-color: #dc3545;
-            }
-          `}
-        </style>
-        <DInputCurrency
-          {...args}
-          value={innerValue}
-          onChange={(newValue) => {
-            setInnerValue(newValue);
-            if (args.onChange) {
-              args.onChange(newValue);
-            }
-          }}
-        />
-      </DContextProvider>
-    );
-  },
+  render: renderWithState(`
+    .d-input-currency-symbol-color-demo {
+      --${PREFIX_BS}input-currency-component-symbol-color: #dc3545;
+    }
+  `),
 };
