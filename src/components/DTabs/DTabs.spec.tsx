@@ -155,7 +155,7 @@ describe('<DTabs />', () => {
     );
 
     const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('flex-column', 'align-items-center');
+    expect(nav).toHaveClass('d-tabs-nav-vertical');
     expect(nav).toHaveClass('nav-pills');
   });
 
@@ -218,7 +218,7 @@ describe('<DTabs />', () => {
     );
 
     const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('flex-column');
+    expect(nav).toHaveClass('d-tabs-nav-vertical');
   });
 
   it('reacts to changes in defaultSelected prop', () => {

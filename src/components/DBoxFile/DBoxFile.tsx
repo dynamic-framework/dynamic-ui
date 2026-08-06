@@ -104,7 +104,7 @@ export default function DBoxFile(
             {typeof children === 'function'
               ? children(openFileDialog)
               : children || (
-                <p className="text-center m-0">
+                <p className="d-box-file-empty-text">
                   Drag and drop some files here, or click to select files
                 </p>
               )}
