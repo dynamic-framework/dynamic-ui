@@ -3,11 +3,10 @@ export default function getQueryString(
   config: {
     default?: string;
     useSearch?: boolean;
-  } = {
-    useSearch: true,
-  },
+  } = {},
 ): string | undefined {
-  const urlParams = new URLSearchParams(config.useSearch ? window.location.search : '');
+  const { useSearch = true, default: defaultValue } = config;
+  const urlParams = new URLSearchParams(useSearch ? window.location.search : '');
 
-  return urlParams.get(value) || config.default;
+  return urlParams.get(value) || defaultValue;
 }
