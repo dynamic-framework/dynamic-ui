@@ -1,0 +1,45 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './formatCurrencyExamples';
+
+<Meta title="Design System/Utils/formatCurrency" />
+
+# formatCurrency
+Formats a number as a currency string using `currency.js`.
+
+## Parameters
+
+- **amount** (`number`): The numeric value to format.
+- **options** (`Options` from `currency.js`): Formatting options such as `symbol`, `precision`, `separator` and `decimal`.
+
+## Returns
+
+- (`string`): The formatted currency value.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { formatCurrency } from '@dynamic-framework/ui-react';
+
+const values = [100, 234.12, -233].map((amount) => formatCurrency(amount, {
+  symbol: '$',
+  precision: 2,
+  separator: ',',
+  decimal: '.',
+}));
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

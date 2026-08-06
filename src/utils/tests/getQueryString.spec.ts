@@ -26,4 +26,8 @@ describe('getQueryString', () => {
     expect(getQueryString('foo', { useSearch: false })).toBeUndefined();
     expect(getQueryString('foo', { useSearch: false, default: 'x' })).toBe('x');
   });
+
+  it('should still read the real query string when only default is provided', () => {
+    expect(getQueryString('foo', { default: 'defaultValue' })).toBe('bar');
+  });
 });
