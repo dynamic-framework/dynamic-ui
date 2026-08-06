@@ -15,6 +15,8 @@ type Props = PropsWithChildren<{
   title: string;
   downloadText?: string;
   shareText?: string;
+  fileName?: string;
+  hideActions?: boolean;
   onError?: (err: Error) => Promise<void> | void;
 }>;
 
@@ -28,6 +30,8 @@ export default function DVoucher(
     message,
     downloadText = 'Download',
     shareText = 'Share',
+    fileName = 'voucher',
+    hideActions = false,
     className,
     children,
   }: Props,
@@ -36,7 +40,7 @@ export default function DVoucher(
   const { downloadRef, download } = useScreenshotDownload();
 
   const handleShare = () => {
-    share()
+    share(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);
@@ -48,7 +52,7 @@ export default function DVoucher(
   };
 
   const handleDownload = () => {
-    download()
+    download(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);
@@ -107,24 +111,28 @@ export default function DVoucher(
 
         <hr className="d-voucher-divider" />
         {children}
-        <hr className="d-voucher-divider" />
 
-        <div className="d-voucher-footer">
-          <DButton
-            onClick={handleShare}
-            iconStart="Share2"
-            text={shareText}
-            variant="outline"
-            size="sm"
-          />
-          <DButton
-            onClick={handleDownload}
-            iconStart="Download"
-            text={downloadText}
-            variant="outline"
-            size="sm"
-          />
-        </div>
+        {!hideActions && (
+          <>
+            <hr className="my-4" />
+            <div className="d-voucher-footer">
+              <DButton
+                onClick={handleShare}
+                iconStart="Share2"
+                text={shareText}
+                variant="outline"
+                size="sm"
+              />
+              <DButton
+                onClick={handleDownload}
+                iconStart="Download"
+                text={downloadText}
+                variant="outline"
+                size="sm"
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
