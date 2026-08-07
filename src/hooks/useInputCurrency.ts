@@ -15,9 +15,6 @@ import type {
 import type { Options } from 'currency.js';
 
 import useProvidedRefOrCreate from './useProvidedRefOrCreate';
-import { PREFIX_BS } from '../components/config';
-
-import type { CustomStyles } from '../components/interface';
 
 function formatValue(value: number | undefined, currencyOptions: Options) {
   if (value === undefined) {
@@ -84,15 +81,6 @@ export default function useInputCurrency(
     onBlur?.(event);
   }, [onBlur, innerNumber, clampValue, currencyOptions, onChange]);
 
-  const generateStyleVariables = useMemo<CustomStyles>(() => ({
-    [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
-    [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
-  }), []);
-
-  const generateSymbolStyleVariables = useMemo(() => ({
-    color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
-  }), []);
-
   const handleOnChange = useCallback((newValue?: string) => {
     const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
 
@@ -129,7 +117,5 @@ export default function useInputCurrency(
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
-    generateStyleVariables,
-    generateSymbolStyleVariables,
   };
 }

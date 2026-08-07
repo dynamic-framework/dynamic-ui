@@ -48,9 +48,7 @@ describe('<DInputCurrency />', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        <div
-          style="--bs-input-currency-component-symbol-color: var(--bs-secondary); --bs-input-currency-symbol-color: var(--bs-input-currency-component-symbol-color);"
-        >
+        <div>
           <label
             for="currencyTest"
           >
@@ -64,8 +62,8 @@ describe('<DInputCurrency />', () => {
               id="currencyTestInputStart"
             >
               <span
+                class="d-input-currency-symbol"
                 slot="input-start"
-                style="color: var(--bs-input-currency-symbol-color);"
               >
                 $
               </span>
