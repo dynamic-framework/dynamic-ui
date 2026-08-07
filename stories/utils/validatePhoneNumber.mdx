@@ -1,0 +1,39 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './validatePhoneNumberExamples';
+
+<Meta title="Design System/Utils/validatePhoneNumber" />
+
+# validatePhoneNumber
+Validates whether a string is a valid phone number, using `google-libphonenumber`.
+
+## Parameters
+
+- **phone** (`string`): The phone number to validate. It should include the country code (e.g. `+1 650-253-0000`).
+
+## Returns
+
+- (`boolean`): `true` when the number is valid, `false` otherwise (including when the number cannot be parsed).
+
+## Example of use
+
+<Source
+  code={
+    `
+import { validatePhoneNumber } from '@dynamic-framework/ui-react';
+
+const isValid = validatePhoneNumber('+1 650-253-0000');
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

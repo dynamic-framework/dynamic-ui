@@ -1,0 +1,5 @@
+.d-input-currency-symbol {
+  --#{$prefix}input-currency-symbol-color: var(--#{$prefix}input-currency-component-symbol-color, #{$input-currency-symbol-color});
+
+  color: var(--#{$prefix}input-currency-symbol-color);
+}

@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import DStepperDesktop from '../DStepperDesktop';
 import DStepperMobile from '../DStepperMobile';
 
@@ -43,13 +45,13 @@ export default function DStepper(
       style={style}
       {...dataAttributes}
     >
-      <div className={`d-block d-${breakpoint}-none`}>
+      <div className={classNames('d-stepper-mobile', `d-block d-${breakpoint}-none`)}>
         <DStepperMobile
           options={options}
           currentStep={currentStep}
         />
       </div>
-      <div className={`d-none d-${breakpoint}-block`}>
+      <div className={classNames('d-stepper-desktop', `d-none d-${breakpoint}-block`)}>
         <DStepperDesktop
           options={options}
           currentStep={currentStep}

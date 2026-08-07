@@ -11,5 +11,9 @@
     &:focus-visible {
       outline: 0;
     }
+
+    &.d-popover-content-fill {
+      width: 100%;
+    }
   }
 }

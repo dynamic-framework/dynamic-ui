@@ -64,12 +64,6 @@ describe('useInputCurrency', () => {
     expect(result.current.innerValue).toBe('200.00');
   });
 
-  it('should generate style variables', () => {
-    const { result } = renderHook(() => useInputCurrency(currencyOptions, 100));
-    expect(result.current.generateStyleVariables).toHaveProperty('--bs-input-currency-component-symbol-color');
-    expect(result.current.generateSymbolStyleVariables).toHaveProperty('color');
-  });
-
   it('should call onFocus callback when input is focused', () => {
     const onFocus = jest.fn();
     const { result } = renderHook(() => useInputCurrency(currencyOptions, 100, onFocus));
@@ -93,5 +87,98 @@ describe('useInputCurrency', () => {
   it('inputRef should have a current property (RefObject)', () => {
     const { result } = renderHook(() => useInputCurrency(currencyOptions, 100));
     expect(result.current.inputRef).toHaveProperty('current');
+  });
+
+  it('should clamp initial value above maxValue', () => {
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, 500, undefined, undefined, undefined, undefined, 0, 100),
+    );
+    expect(result.current.innerValue).toBe('100.00');
+  });
+
+  it('should clamp initial value below minValue', () => {
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, -50, undefined, undefined, undefined, undefined, 0, 100),
+    );
+    expect(result.current.innerValue).toBe('0.00');
+  });
+
+  it('should clamp value to maxValue on blur and call onChange', () => {
+    const onChange = jest.fn();
+    const { result, rerender } = renderHook(
+      ({ value }) => useInputCurrency(currencyOptions, value, undefined, onChange, undefined, undefined, 0, 100),
+      { initialProps: { value: 50 } },
+    );
+    act(() => {
+      result.current.handleOnChange('500');
+    });
+    rerender({ value: 500 });
+
+    act(() => {
+      result.current.handleOnBlur({ stopPropagation: jest.fn() } as never);
+    });
+    expect(onChange).toHaveBeenLastCalledWith(100);
+
+    rerender({ value: 100 });
+    expect(result.current.innerValue).toBe('100.00');
+  });
+
+  it('should clamp value to minValue on blur and call onChange', () => {
+    const onChange = jest.fn();
+    const { result, rerender } = renderHook(
+      ({ value }) => useInputCurrency(currencyOptions, value, undefined, onChange, undefined, undefined, 0, 100),
+      { initialProps: { value: 50 } },
+    );
+    act(() => {
+      result.current.handleOnChange('-20');
+    });
+    rerender({ value: -20 });
+
+    act(() => {
+      result.current.handleOnBlur({ stopPropagation: jest.fn() } as never);
+    });
+    expect(onChange).toHaveBeenLastCalledWith(0);
+
+    rerender({ value: 0 });
+    expect(result.current.innerValue).toBe('0.00');
+  });
+
+  it('should not call onChange on blur when value is already within range', () => {
+    const onChange = jest.fn();
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, 50, undefined, onChange, undefined, undefined, 0, 100),
+    );
+    act(() => {
+      result.current.handleOnBlur({ stopPropagation: jest.fn() } as never);
+    });
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('should not clamp values when minValue/maxValue are not defined', () => {
+    const onChange = jest.fn();
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, 999999, undefined, onChange),
+    );
+    expect(result.current.innerValue).toBe('999,999.00');
+
+    act(() => {
+      result.current.handleOnBlur({ stopPropagation: jest.fn() } as never);
+    });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(result.current.innerValue).toBe('999,999.00');
+  });
+
+  it('should only clamp against the defined bound when only minValue is provided', () => {
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, -50, undefined, undefined, undefined, undefined, 0),
+    );
+    expect(result.current.innerValue).toBe('0.00');
+  });
+
+  it('should only clamp against the defined bound when only maxValue is provided', () => {
+    const { result } = renderHook(
+      () => useInputCurrency(currencyOptions, 500, undefined, undefined, undefined, undefined, undefined, 100),
+    );
+    expect(result.current.innerValue).toBe('100.00');
   });
 });

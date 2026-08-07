@@ -22,8 +22,8 @@ export default function OtpCountdown(
   }: Props,
 ) {
   return (
-    <div className="d-flex gap-2 align-items-center">
-      <p className="mb-0 flex-1">
+    <div className="d-otp-countdown">
+      <p className="d-otp-countdown-text">
         {message ? message(secondsLeft) : defaultMessage(secondsLeft)}
       </p>
       <DButton

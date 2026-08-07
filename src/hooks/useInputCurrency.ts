@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import currency from 'currency.js';
@@ -14,9 +15,6 @@ import type {
 import type { Options } from 'currency.js';
 
 import useProvidedRefOrCreate from './useProvidedRefOrCreate';
-import { PREFIX_BS } from '../components/config';
-
-import type { CustomStyles } from '../components/interface';
 
 function formatValue(value: number | undefined, currencyOptions: Options) {
   if (value === undefined) {
@@ -33,13 +31,33 @@ export default function useInputCurrency(
   onChange?: (value?: number) => void,
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void,
   ref?: ForwardedRef<HTMLInputElement>,
+  minValue?: number,
+  maxValue?: number,
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
+  const clampValue = useCallback((newValue?: number) => {
+    if (newValue === undefined) {
+      return newValue;
+    }
+
+    let clampedValue = newValue;
+
+    if (minValue !== undefined) {
+      clampedValue = Math.max(clampedValue, minValue);
+    }
+
+    if (maxValue !== undefined) {
+      clampedValue = Math.min(clampedValue, maxValue);
+    }
+
+    return clampedValue;
+  }, [minValue, maxValue]);
+
   const [innerType, setInnerType] = useState('text');
-  const [innerNumber, setInnerNumber] = useState<number | undefined>(value);
+  const [innerNumber, setInnerNumber] = useState<number | undefined>(clampValue(value));
   const [innerString, setInnerString] = useState<string | undefined>(
-    formatValue(value, currencyOptions),
+    formatValue(clampValue(value), currencyOptions),
   );
 
   const handleOnFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
@@ -51,17 +69,17 @@ export default function useInputCurrency(
   const handleOnBlur = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
     setInnerType('text');
+
+    const clampedNumber = clampValue(innerNumber);
+
+    if (clampedNumber !== innerNumber) {
+      setInnerNumber(clampedNumber);
+      setInnerString(formatValue(clampedNumber, currencyOptions));
+      onChange?.(clampedNumber);
+    }
+
     onBlur?.(event);
-  }, [onBlur]);
-
-  const generateStyleVariables = useMemo<CustomStyles>(() => ({
-    [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
-    [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
-  }), []);
-
-  const generateSymbolStyleVariables = useMemo(() => ({
-    color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
-  }), []);
+  }, [onBlur, innerNumber, clampValue, currencyOptions, onChange]);
 
   const handleOnChange = useCallback((newValue?: string) => {
     const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
@@ -73,7 +91,14 @@ export default function useInputCurrency(
     }
   }, [currencyOptions, onChange, innerNumber]);
 
+  const isMountedRef = useRef(false);
+
   useEffect(() => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      return;
+    }
+
     if (value !== innerNumber) {
       setInnerNumber(value);
       setInnerString(formatValue(value, currencyOptions));
@@ -92,7 +117,5 @@ export default function useInputCurrency(
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
-    generateStyleVariables,
-    generateSymbolStyleVariables,
   };
 }
