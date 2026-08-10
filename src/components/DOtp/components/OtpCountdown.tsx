@@ -1,8 +1,8 @@
-import useCountdown from '../hooks/useCountdown';
 import DButton from '../../DButton';
 
 type Props = {
-  seconds: number;
+  secondsLeft: number;
+  restartCountdown: () => void;
   resendText?: string;
   message?: (secondsLeft: number) => string;
 };
@@ -15,13 +15,12 @@ const defaultMessage = (secs: number) => (
 
 export default function OtpCountdown(
   {
-    seconds,
+    secondsLeft,
+    restartCountdown,
     resendText,
     message,
   }: Props,
 ) {
-  const { secondsLeft, restartCountdown } = useCountdown(seconds);
-
   return (
     <div className="d-otp-countdown">
       <p className="d-otp-countdown-text">

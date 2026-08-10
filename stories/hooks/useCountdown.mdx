@@ -1,0 +1,63 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './useCountdownExamples';
+
+<Meta title="Design System/Hooks/useCountdown" />
+
+# useCountdown
+
+Generic seconds-based countdown hook. Starts counting down from `seconds` to
+`0` and exposes `restartCountdown` to reset and restart the timer.
+
+Useful for any cooldown/throttle UI: "resend code in Xs" patterns, session-
+expiry banners, rate-limited actions, etc. It is used internally by
+[`useOtp`](?path=/docs/design-system-hooks-useotp--docs) to power the resend
+countdown, but it is fully generic and framework-agnostic beyond that.
+
+## Parameters
+
+- **seconds**: `number` — the number of seconds the countdown starts from.
+
+## Return Values
+
+- **secondsLeft**: `number` — seconds remaining until the countdown reaches `0`.
+- **restartCountdown**: `() => void` — resets `secondsLeft` back to `seconds`
+  and restarts the timer.
+
+## Example of use `ExampleOfUse.tsx`
+
+<Source
+  code={
+    `
+import { useCountdown, DButton, DCard } from '@dynamic-framework/ui-react';
+
+export function ExampleOfUse() {
+  const { secondsLeft, restartCountdown } = useCountdown(10);
+
+  return (
+    <DCard>
+      <DCard.Body className="d-flex align-items-center gap-3">
+        <p className="mb-0">
+          {secondsLeft > 0 ? \`Resend available in \${secondsLeft}s\` : 'You can resend now'}
+        </p>
+        <DButton
+          size="sm"
+          variant="link"
+          text="Resend"
+          disabled={secondsLeft > 0}
+          onClick={restartCountdown}
+        />
+      </DCard.Body>
+    </DCard>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>
