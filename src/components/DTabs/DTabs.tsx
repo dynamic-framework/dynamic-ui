@@ -96,13 +96,36 @@ function DTabs(
     }
   };
 
-  // Focus selected tab when selected changes
+  // `options` is commonly passed as an inline array literal (e.g.
+  // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), which creates a new
+  // array (and new objects) on every parent render even when its content
+  // hasn't changed. `optionsSignature` is a primitive string derived from
+  // the data that actually matters (tab id + disabled state), memoized with
+  // `useMemo`, so it stays equal across renders as long as the tab list
+  // itself doesn't change. We use it ONLY as the effect's dependency below
+  // (not inside its body) so the effect re-runs when the tabs truly change,
+  // instead of on every unrelated re-render that merely creates a new
+  // `options` reference with identical content.
+  const optionsSignature = useMemo(
+    () => options.map((opt) => `${opt.tab}:${opt.disabled ? '1' : '0'}`).join('|'),
+    [options],
+  );
+
+  // Focus selected tab when selected changes.
+  // Depending on `options` here (instead of `optionsSignature`) would steal
+  // focus away from unrelated elements on the page (e.g. an OTP input)
+  // whenever a parent re-render passes a new `options` array reference,
+  // since `focusTab` would then be called again on every such render even
+  // though `selected` never changed. The effect still reads the live
+  // `options` array from the closure to compute `idx`, it just doesn't
+  // re-run because of it.
   useEffect(() => {
     const idx = options.findIndex((opt) => opt.tab === selected && !opt.disabled);
     if (idx !== -1) {
       focusTab(idx);
     }
-  }, [selected, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, optionsSignature]);
 
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
