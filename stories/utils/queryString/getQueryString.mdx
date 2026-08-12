@@ -1,0 +1,46 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './getQueryStringExamples';
+
+<Meta title="Design System/Utils/queryString/getQueryString" />
+
+# getQueryString
+Reads a value from the current URL query string.
+
+## Parameters
+
+- **value** (`string`): The name of the query string parameter to read.
+- **config** (optional):
+  - **default** (`string`): Value returned when the parameter is not present.
+  - **useSearch** (`boolean`, default `true`): Whether to read from `window.location.search`.
+
+> ℹ️ **Note:** `useSearch` defaults to `true` even when `config` is only partially provided (e.g. `{ default: 'x' }` without `useSearch`), so the current query string is read by default unless you explicitly pass `useSearch: false`.
+
+## Returns
+
+- (`string | undefined`): The parameter value, the provided default, or `undefined`.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { getQueryString } from '@dynamic-framework/ui-react';
+
+const demo = getQueryString('demo', { default: 'no value yet' });
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+Use the buttons below to update the `demo` query string parameter (via `changeQueryString`) and see how `getQueryString` reads it back.
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

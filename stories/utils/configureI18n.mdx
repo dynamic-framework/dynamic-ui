@@ -1,0 +1,52 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './configureI18nExamples';
+
+<Meta title="Design System/Utils/configureI18n" />
+
+# configureI18n
+Initializes `i18next` with `react-i18next`, given a set of translation resources.
+
+## Parameters
+
+- **resources** (`Resource` from `i18next`): The translation resources, keyed by language and namespace.
+- **config** (optional, `InitOptions` from `i18next`):
+  - **lng** (`string`, default `'en'`): The active language.
+  - **fallbackLng** (`string`, default `'en'`): The language to fall back to when a key is missing.
+  - Any other `i18next` `InitOptions` are also supported.
+
+## Returns
+
+- (`Promise<TFunction>`): A promise that resolves to the `i18next` translate function (`t`).
+
+## Example of use
+
+<Source
+  code={
+    `
+import { configureI18n } from '@dynamic-framework/ui-react';
+
+const resources = {
+  en: { translation: { hello: 'Hello', greet: 'Hi {name}!' } },
+  es: { translation: { hello: 'Hola', greet: '¡Hola {name}!' } },
+};
+
+const t = await configureI18n(resources, { lng: 'en' });
+t('hello'); // 'Hello'
+t('greet', { name: 'John' }); // 'Hi John!'
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+Switch the language to see `configureI18n` re-initialize `i18next` and translate the sample keys.
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

@@ -71,8 +71,8 @@ export default function DConfirmModalUI({ entry }: Props) {
         <h5 className="fw-bold">{title}</h5>
       </DModal.Header>
 
-      <DModal.Body className="py-3 px-5">
-        <p className="mb-4">{message}</p>
+      <DModal.Body className="d-confirm-modal-body">
+        <p className="d-confirm-modal-message">{message}</p>
 
         {critical && (
           <DInput
@@ -81,7 +81,7 @@ export default function DConfirmModalUI({ entry }: Props) {
             placeholder={critical.inputPlaceholder}
             value={confirmationCode}
             onChange={(value) => setConfirmationCode(value)}
-            className="mb-4"
+            className="d-confirm-modal-field"
             autoFocus
           />
         )}

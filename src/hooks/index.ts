@@ -21,3 +21,6 @@ export {
   useMediaBreakpointUpXl,
   useMediaBreakpointUpXxl,
 } from './useMediaBreakpointUp';
+export { default as useCountdown } from './useCountdown';
+export { default as useOtp } from './useOtp';
+export type { UseOtpConfig, UseOtpReturn } from './useOtp';

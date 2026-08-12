@@ -66,7 +66,7 @@ function DTabs(
   const generateClasses = useMemo(
     () => ({
       nav: true,
-      'flex-column align-items-center': vertical && variant !== 'tabs',
+      'd-tabs-nav-vertical': vertical && variant !== 'tabs',
       [`nav-${variant}`]: true,
       ...className && { [className]: true },
     }),
@@ -74,6 +74,15 @@ function DTabs(
   );
 
   const tabRefs = useRef<Array<React.RefObject<HTMLButtonElement>>>([]);
+
+  // Always holds the latest `options` without needing to be a dependency:
+  // `options` is commonly passed as an inline array literal (e.g.
+  // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), so it's a new array
+  // reference on every parent render even when its content hasn't changed.
+  // Reading it from this ref (updated synchronously on every render) lets
+  // the focus effect below react only to `selected` changing.
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
 
   useEffect(() => {
     tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef<HTMLButtonElement>());
@@ -89,20 +98,28 @@ function DTabs(
     }
   }, [options, selected]);
 
-  // Declarative focus management
-  const focusTab = (idx: number) => {
+  // Declarative focus management. Wrapped in `useCallback` with an empty
+  // dependency array since it only reads from the `tabRefs` ref, so its
+  // identity stays stable across renders and it can safely be used as an
+  // effect dependency below.
+  const focusTab = useCallback((idx: number) => {
     if (tabRefs.current[idx]?.current) {
       tabRefs.current[idx].current.focus();
     }
-  };
+  }, []);
 
-  // Focus selected tab when selected changes
+  // Focus selected tab when selected changes.
+  // Reads `options` from `optionsRef` (see comment above) instead of
+  // depending on `options` directly, so a parent re-render that merely
+  // creates a new `options` reference with identical content doesn't call
+  // `focusTab` again and steal focus away from unrelated elements on the
+  // page (e.g. an OTP input).
   useEffect(() => {
-    const idx = options.findIndex((opt) => opt.tab === selected && !opt.disabled);
+    const idx = optionsRef.current.findIndex((opt) => opt.tab === selected && !opt.disabled);
     if (idx !== -1) {
       focusTab(idx);
     }
-  }, [selected, options]);
+  }, [selected, focusTab]);
 
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
@@ -131,7 +148,7 @@ function DTabs(
         }
       }
     }
-  }, [options, vertical]);
+  }, [options, vertical, focusTab]);
 
   let tablistProps = {};
   if (ariaLabelledBy) {
@@ -152,8 +169,8 @@ function DTabs(
     <TabContext.Provider value={value}>
       <div
         className={classNames({
-          'd-flex w-100': true,
-          'flex-column': !vertical || variant === 'tabs',
+          'd-tabs': true,
+          'd-tabs-column': !vertical || variant === 'tabs',
         })}
         style={style}
         {...dataAttributes}
@@ -195,7 +212,7 @@ function DTabs(
             );
           })}
         </ul>
-        <div className="tab-content w-100">
+        <div className="d-tabs-content tab-content">
           {children}
         </div>
       </div>

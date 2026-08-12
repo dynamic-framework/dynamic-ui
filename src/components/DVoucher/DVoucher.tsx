@@ -15,6 +15,8 @@ type Props = PropsWithChildren<{
   title: string;
   downloadText?: string;
   shareText?: string;
+  fileName?: string;
+  hideActions?: boolean;
   onError?: (err: Error) => Promise<void> | void;
 }>;
 
@@ -28,6 +30,8 @@ export default function DVoucher(
     message,
     downloadText = 'Download',
     shareText = 'Share',
+    fileName = 'voucher',
+    hideActions = false,
     className,
     children,
   }: Props,
@@ -36,7 +40,7 @@ export default function DVoucher(
   const { downloadRef, download } = useScreenshotDownload();
 
   const handleShare = () => {
-    share()
+    share(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);
@@ -48,7 +52,7 @@ export default function DVoucher(
   };
 
   const handleDownload = () => {
-    download()
+    download(fileName)
       .catch(async (err: Error) => {
         if (onError) {
           await onError(err);
@@ -86,17 +90,17 @@ export default function DVoucher(
           {resolvedIconProps && (
             <DIcon {...resolvedIconProps} />
           )}
-          <div className="text-center">
-            <h3 className="mb-2">{title}</h3>
-            <p className="m-0">{message}</p>
+          <div className="d-voucher-title-group">
+            <h3 className="d-voucher-title">{title}</h3>
+            <p className="d-voucher-message">{message}</p>
           </div>
         </div>
         {amount && (
           <div className="d-voucher-amount">
             <div
               className={classNames(
-                'text-center fw-bold fs-3',
-                amountDetails ? 'mb-1' : 'm-0',
+                'd-voucher-amount-value',
+                { 'd-voucher-amount-value-with-details': !!amountDetails },
               )}
             >
               {amount}
@@ -105,26 +109,30 @@ export default function DVoucher(
           </div>
         )}
 
-        <hr className="my-4" />
+        <hr className="d-voucher-divider" />
         {children}
-        <hr className="my-4" />
 
-        <div className="d-voucher-footer">
-          <DButton
-            onClick={handleShare}
-            iconStart="Share2"
-            text={shareText}
-            variant="outline"
-            size="sm"
-          />
-          <DButton
-            onClick={handleDownload}
-            iconStart="Download"
-            text={downloadText}
-            variant="outline"
-            size="sm"
-          />
-        </div>
+        {!hideActions && (
+          <>
+            <hr className="my-4" />
+            <div className="d-voucher-footer">
+              <DButton
+                onClick={handleShare}
+                iconStart="Share2"
+                text={shareText}
+                variant="outline"
+                size="sm"
+              />
+              <DButton
+                onClick={handleDownload}
+                iconStart="Download"
+                text={downloadText}
+                variant="outline"
+                size="sm"
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
