@@ -1,0 +1,24 @@
+import type { PropsWithChildren } from 'react';
+import DTabContent from './components/DTabContent';
+import type { BaseProps } from '../interface';
+export type DTabOption = {
+    label: string | React.ReactNode;
+    tab: string;
+    disabled?: boolean;
+};
+export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
+type Props = BaseProps & PropsWithChildren<{
+    classNameTab?: string;
+    onChange?: (option: DTabOption) => void;
+    options: Array<DTabOption>;
+    defaultSelected: string;
+    vertical?: boolean;
+    variant?: TabVariant;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
+}>;
+declare function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant, dataAttributes, ariaLabel, ariaLabelledBy, }: Props): import("react").JSX.Element;
+declare const _default: typeof DTabs & {
+    Tab: typeof DTabContent;
+};
+export default _default;
