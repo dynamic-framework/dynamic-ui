@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.7.0...v2.8.0) (2026-08-12)
+
+
+### Features
+
+* **DDropdown:** enhance positioning and aligment logic and support for all placements ([#1126](https://github.com/dynamic-framework/dynamic-ui/issues/1126)) ([5f6a773](https://github.com/dynamic-framework/dynamic-ui/commit/5f6a7738ae5966a17ecc923b394ab7e9c0813b70))
+* **DInputCurrency:** add minValue and maxValue props for input value clamping ([#1135](https://github.com/dynamic-framework/dynamic-ui/issues/1135)) ([0199227](https://github.com/dynamic-framework/dynamic-ui/commit/0199227dda6fd6ba7698db7adda3f5984e04600d))
+* **docs:** add useOtp pattern stories and fix DTabs focus-stealing bug ([#1147](https://github.com/dynamic-framework/dynamic-ui/issues/1147)) ([b183799](https://github.com/dynamic-framework/dynamic-ui/commit/b1837994b7120400aff2dfea48edcc656a89b174))
+* **DVoucher:** export screenshot hooks, document usage, and support custom file names ([#1137](https://github.com/dynamic-framework/dynamic-ui/issues/1137)) ([9dfb13f](https://github.com/dynamic-framework/dynamic-ui/commit/9dfb13f8640e57d1b70d7bad148d17b955d853a0))
+* **hooks:** add useOtp headless hook and export useCountdown ([#1142](https://github.com/dynamic-framework/dynamic-ui/issues/1142)) ([028d2e1](https://github.com/dynamic-framework/dynamic-ui/commit/028d2e1cbfbf77fd36435513cf7327019f229154))
+
+
+### Bug Fixes
+
+* **DInputCurrency:** resolve symbol color with css class instead style ([#1141](https://github.com/dynamic-framework/dynamic-ui/issues/1141)) ([6622af4](https://github.com/dynamic-framework/dynamic-ui/commit/6622af4faf2e84af5f32f61b5e091fc1939dabd9))
+
 ## [2.7.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.6.0...v2.7.0) (2026-07-16)
 
 
