@@ -50,7 +50,7 @@ export type { DToastContainerProps, DToastOptions, ToastData } from './DToastCon
 export { default as DInputPhone } from './DInputPhone';
 export { default as DCreditCard } from './DCreditCard';
 export { default as DDropdown } from './DDropdown';
-export { default as DVoucher } from './DVoucher';
+export { default as DVoucher, useScreenshot, useScreenshotDownload, useScreenshotWebShare, } from './DVoucher';
 export { default as DOtp } from './DOtp';
 export { default as DErrorBoundary, useErrorBoundary, type FallbackProps, getErrorMessage, } from './DErrorBoundary';
 export { default as DDataStateWrapper, EmptyState, ErrorState, LoadingState, } from './DDataStateWrapper';

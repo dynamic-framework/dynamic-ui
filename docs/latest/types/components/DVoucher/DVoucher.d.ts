@@ -9,7 +9,9 @@ type Props = PropsWithChildren<{
     title: string;
     downloadText?: string;
     shareText?: string;
+    fileName?: string;
+    hideActions?: boolean;
     onError?: (err: Error) => Promise<void> | void;
 }>;
-export default function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText, shareText, className, children, }: Props): import("react").JSX.Element;
+export default function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText, shareText, fileName, hideActions, className, children, }: Props): import("react").JSX.Element;
 export {};

@@ -1,5 +1,5 @@
 /// <reference types="react" />
 export default function useScreenshotWebShare(): {
-    share: () => Promise<void>;
+    share: (fileName?: string) => Promise<void>;
     shareRef: import("react").RefObject<HTMLDivElement | null>;
 };

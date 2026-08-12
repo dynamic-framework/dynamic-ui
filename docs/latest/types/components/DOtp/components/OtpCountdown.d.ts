@@ -1,8 +1,9 @@
 /// <reference types="react" />
 type Props = {
-    seconds: number;
+    secondsLeft: number;
+    restartCountdown: () => void;
     resendText?: string;
     message?: (secondsLeft: number) => string;
 };
-export default function OtpCountdown({ seconds, resendText, message, }: Props): import("react").JSX.Element;
+export default function OtpCountdown({ secondsLeft, restartCountdown, resendText, message, }: Props): import("react").JSX.Element;
 export {};

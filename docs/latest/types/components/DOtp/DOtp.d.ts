@@ -11,6 +11,7 @@ export type PropsOtp = PropsWithChildren<{
         title?: string;
         contact?: string | React.ReactNode;
         resendText?: string;
+        invalidCode?: string;
     };
 }>;
 export default function DOtp({ className, action, isLoading, otpSize, texts, seconds, }: PropsOtp): import("react").JSX.Element;

@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.7.0
+ * dynamic-framework 2.8.0
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -11297,6 +11297,24 @@ label {
   --bs-chip-bg: var(--bs-black);
 }
 
+.d-tabs {
+  display: flex;
+  width: 100%;
+}
+
+.d-tabs-column {
+  flex-direction: column;
+}
+
+.d-tabs-nav-vertical {
+  flex-direction: column;
+  align-items: center;
+}
+
+.d-tabs-content {
+  width: 100%;
+}
+
 .nav-toggle-button-group {
   --bs-toggle-button-group-border-color: var(--bs-gray-50);
   --bs-toggle-button-group-border-radius: 4rem;
@@ -11685,6 +11703,11 @@ label {
   margin-right: var(--bs-ref-spacer-1);
   margin-left: auto;
 }
+.react-datepicker__header-year-selector {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
 .react-datepicker__header-day-selector {
   margin-bottom: var(--bs-ref-spacer-4);
 }
@@ -11749,6 +11772,11 @@ label {
   padding: 1rem;
   margin-bottom: 1rem;
   margin-top: -0.5rem;
+}
+
+.datepicker-top-header-title {
+  margin-bottom: 0;
+  font-weight: var(--bs-fw-normal);
 }
 
 .react-datepicker__year,
@@ -12371,6 +12399,9 @@ react-datepicker__navigation
   --bs-voucher-amount-rounded: var(--bs-ref-spacer-4);
   --bs-voucher-footer-gap: var(--bs-ref-spacer-4);
   --bs-voucher-margin: 0 0 var(--bs-ref-spacer-4) 0;
+  --bs-voucher-title-margin-bottom: var(--bs-ref-spacer-2);
+  --bs-voucher-amount-value-margin: var(--bs-ref-spacer-1);
+  --bs-voucher-divider-margin: var(--bs-ref-spacer-4);
 }
 
 .d-voucher-header {
@@ -12395,8 +12426,35 @@ react-datepicker__navigation
   justify-content: flex-start;
 }
 
+.d-voucher-title-group {
+  text-align: center;
+}
+
+.d-voucher-title {
+  margin-bottom: var(--bs-voucher-title-margin-bottom);
+}
+
+.d-voucher-message {
+  margin: 0;
+}
+
+.d-voucher-amount-value {
+  margin: 0;
+  font-size: var(--bs-fs-3);
+  font-weight: var(--bs-fw-bold);
+  text-align: center;
+}
+.d-voucher-amount-value.d-voucher-amount-value-with-details {
+  margin-bottom: var(--bs-voucher-amount-value-margin);
+}
+
+.d-voucher-divider {
+  margin: var(--bs-voucher-divider-margin) 0;
+}
+
 .d-close {
   display: flex;
+  align-self: center;
   padding: 0;
   background: transparent;
   border: 0;
@@ -12417,6 +12475,9 @@ react-datepicker__navigation
 }
 .d-popover .d-popover-content:focus-visible {
   outline: 0;
+}
+.d-popover .d-popover-content.d-popover-content-fill {
+  width: 100%;
 }
 
 .d-box-file {
@@ -12475,6 +12536,11 @@ react-datepicker__navigation
 }
 .d-box-file .d-box-content {
   max-width: var(--bs-box-file-content-max-width);
+}
+
+.d-box-file-empty-text {
+  margin: 0;
+  text-align: center;
 }
 
 .d-box-files {
@@ -13697,6 +13763,211 @@ react-datepicker__navigation
 .d-credit-card .d-credit-card-holder-text {
   display: block;
   opacity: 0.5;
+}
+
+.d-input-currency-symbol {
+  --bs-input-currency-symbol-color: var(--bs-input-currency-component-symbol-color, var(--bs-secondary));
+  color: var(--bs-input-currency-symbol-color);
+}
+
+.confirm-modal {
+  --bs-confirm-modal-body-padding-y: var(--bs-ref-spacer-3);
+  --bs-confirm-modal-body-padding-x: var(--bs-ref-spacer-5);
+  --bs-confirm-modal-field-gap: var(--bs-ref-spacer-4);
+}
+
+.d-confirm-modal-body {
+  padding: var(--bs-confirm-modal-body-padding-y) var(--bs-confirm-modal-body-padding-x);
+}
+
+.d-confirm-modal-message {
+  margin-bottom: var(--bs-confirm-modal-field-gap);
+}
+
+.d-confirm-modal-field {
+  margin-bottom: var(--bs-confirm-modal-field-gap);
+}
+
+.d-empty-state {
+  --bs-empty-state-padding: var(--bs-ref-spacer-5);
+  --bs-empty-state-spacing: var(--bs-ref-spacer-3);
+  --bs-empty-state-color: var(--bs-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bs-empty-state-padding);
+  text-align: center;
+}
+
+.d-empty-state-icon {
+  margin-bottom: var(--bs-empty-state-spacing);
+  color: var(--bs-empty-state-color);
+}
+
+.d-empty-state-message {
+  margin-bottom: var(--bs-empty-state-spacing);
+  color: var(--bs-empty-state-color);
+}
+
+.d-error-state {
+  --bs-error-state-gap: var(--bs-ref-spacer-3);
+  display: flex;
+  gap: var(--bs-error-state-gap);
+  align-items: center;
+}
+
+.d-error-state-content {
+  flex: 1 1 auto;
+}
+
+.d-error-state-message {
+  margin-bottom: 0;
+}
+
+.d-loading-state {
+  --bs-loading-state-padding: var(--bs-ref-spacer-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bs-loading-state-padding);
+}
+
+.d-error-boundary-content {
+  --bs-error-boundary-gap: var(--bs-ref-spacer-2);
+  display: flex;
+  gap: var(--bs-error-boundary-gap);
+  align-items: center;
+}
+
+.d-otp {
+  --bs-otp-content-gap: var(--bs-ref-spacer-6);
+  --bs-otp-content-padding-x: var(--bs-ref-spacer-3);
+  --bs-otp-content-padding-bottom: var(--bs-ref-spacer-4);
+  --bs-otp-footer-gap: var(--bs-ref-spacer-4);
+}
+
+.d-otp-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bs-otp-content-gap);
+  padding: 0 var(--bs-otp-content-padding-x) var(--bs-otp-content-padding-bottom);
+}
+
+.d-otp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bs-otp-content-gap);
+}
+
+.d-otp-divider {
+  margin: 0;
+}
+
+.d-otp-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bs-otp-footer-gap);
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .d-otp-footer {
+    flex-direction: row;
+  }
+}
+
+.d-otp-contact {
+  margin-bottom: 0;
+  font-size: 0.875em;
+}
+@media (min-width: 992px) {
+  .d-otp-contact {
+    margin-left: auto;
+  }
+}
+
+.d-otp-countdown {
+  display: flex;
+  gap: var(--bs-ref-spacer-2);
+  align-items: center;
+}
+
+.d-otp-countdown-text {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+.d-password-strength-meter {
+  --bs-password-strength-meter-margin-top: var(--bs-ref-spacer-2);
+  margin-top: var(--bs-password-strength-meter-margin-top);
+}
+
+.d-password-strength-bar {
+  --bs-password-strength-bar-height: 8px;
+  --bs-password-strength-bar-radius: var(--bs-border-radius-lg);
+  --bs-password-strength-bar-bg: var(--bs-gray-100);
+  --bs-password-strength-bar-margin-bottom: var(--bs-ref-spacer-2);
+  width: 100%;
+  height: var(--bs-password-strength-bar-height);
+  margin-bottom: var(--bs-password-strength-bar-margin-bottom);
+  overflow: hidden;
+  background: var(--bs-password-strength-bar-bg);
+  border-radius: var(--bs-password-strength-bar-radius);
+}
+
+.d-password-strength-bar-fill {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.d-password-strength-bar-fill.is-empty {
+  background: var(--bs-gray-200);
+}
+.d-password-strength-bar-fill.is-weak {
+  background: var(--bs-danger);
+}
+.d-password-strength-bar-fill.is-fair {
+  background: var(--bs-warning);
+}
+.d-password-strength-bar-fill.is-good {
+  background: var(--bs-info);
+}
+.d-password-strength-bar-fill.is-strong {
+  background: var(--bs-success);
+}
+
+.d-password-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bs-ref-spacer-2);
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.d-password-check-item {
+  --bs-password-check-item-color: var(--bs-gray-600);
+  display: flex;
+  gap: var(--bs-ref-spacer-2);
+  align-items: flex-start;
+  font-size: 0.875em;
+  color: var(--bs-password-check-item-color);
+}
+.d-password-check-item.is-valid {
+  color: var(--bs-success);
+}
+
+.d-password-check-item-icon {
+  flex-shrink: 0;
+  color: var(--bs-gray-300);
+}
+
+.d-password-check-item.is-valid .d-password-check-item-icon {
+  color: var(--bs-success);
+}
+
+.d-stepper-mobile,
+.d-stepper-desktop {
+  width: 100%;
 }
 
 .clearfix::after {

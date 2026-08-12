@@ -1106,7 +1106,7 @@ function DBoxFile(_a) {
                     'd-box-file-invalid': isDragInvalid,
                 }, className), style: style }, dataAttributes, { children: jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), icon && iconProp !== false && (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
-                                : children || (jsx("p", { className: "text-center m-0", children: "Drag and drop some files here, or click to select files" })) })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "Paperclip", iconEnd: "Trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
+                                : children || (jsx("p", { className: "d-box-file-empty-text", children: "Drag and drop some files here, or click to select files" })) })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "Paperclip", iconEnd: "Trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 const DButton = forwardRef((props, ref) => {
@@ -1482,9 +1482,9 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
         return (jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-year-selector', className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevYearButtonDisabled, "aria-label": prevYearAriaLabel, className: "header-button" }), jsx("p", { children: `${startYear} - ${endYear}` }), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextYearButtonDisabled, "aria-label": nextYearAriaLabel, className: "header-button" })] }));
     }
     if (pickerType === PickerType.Quarter || pickerType === PickerType.Month) {
-        return (jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, "aria-label": prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, "aria-label": nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
+        return (jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, "aria-label": prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsx("div", { className: "react-datepicker__header-year-selector", children: showHeaderSelectors ? (jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, "aria-label": nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
     }
-    return (jsxs(Fragment, { children: [jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false, className: "custom-year-selector" })), jsx("h4", { className: "mb-0 fw-normal", children: format(monthDate, formatHeaderDate, { locale }) })] }), jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, "aria-label": prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, "aria-label": nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false, className: "custom-year-selector" })), jsx("h4", { className: "datepicker-top-header-title", children: format(monthDate, formatHeaderDate, { locale }) })] }), jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, "aria-label": prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, "aria-label": nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
 }
 
 function DDatePicker(_a) {
@@ -1619,11 +1619,24 @@ function formatValue(value, currencyOptions) {
     }
     return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
 }
-function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref) {
+function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue) {
     const inputRef = useProvidedRefOrCreate(ref);
+    const clampValue = useCallback((newValue) => {
+        if (newValue === undefined) {
+            return newValue;
+        }
+        let clampedValue = newValue;
+        if (minValue !== undefined) {
+            clampedValue = Math.max(clampedValue, minValue);
+        }
+        if (maxValue !== undefined) {
+            clampedValue = Math.min(clampedValue, maxValue);
+        }
+        return clampedValue;
+    }, [minValue, maxValue]);
     const [innerType, setInnerType] = useState('text');
-    const [innerNumber, setInnerNumber] = useState(value);
-    const [innerString, setInnerString] = useState(formatValue(value, currencyOptions));
+    const [innerNumber, setInnerNumber] = useState(clampValue(value));
+    const [innerString, setInnerString] = useState(formatValue(clampValue(value), currencyOptions));
     const handleOnFocus = useCallback((event) => {
         event.stopPropagation();
         setInnerType('number');
@@ -1632,15 +1645,14 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
     const handleOnBlur = useCallback((event) => {
         event.stopPropagation();
         setInnerType('text');
+        const clampedNumber = clampValue(innerNumber);
+        if (clampedNumber !== innerNumber) {
+            setInnerNumber(clampedNumber);
+            setInnerString(formatValue(clampedNumber, currencyOptions));
+            onChange === null || onChange === void 0 ? void 0 : onChange(clampedNumber);
+        }
         onBlur === null || onBlur === void 0 ? void 0 : onBlur(event);
-    }, [onBlur]);
-    const generateStyleVariables = useMemo(() => ({
-        [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
-        [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
-    }), []);
-    const generateSymbolStyleVariables = useMemo(() => ({
-        color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
-    }), []);
+    }, [onBlur, innerNumber, clampValue, currencyOptions, onChange]);
     const handleOnChange = useCallback((newValue) => {
         const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
         if (newNumber !== innerNumber) {
@@ -1649,7 +1661,12 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
             onChange === null || onChange === void 0 ? void 0 : onChange(newNumber);
         }
     }, [currencyOptions, onChange, innerNumber]);
+    const isMountedRef = useRef(false);
     useEffect(() => {
+        if (!isMountedRef.current) {
+            isMountedRef.current = true;
+            return;
+        }
         if (value !== innerNumber) {
             setInnerNumber(value);
             setInnerString(formatValue(value, currencyOptions));
@@ -1663,8 +1680,6 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
         handleOnFocus,
         handleOnChange,
         handleOnBlur,
-        generateStyleVariables,
-        generateSymbolStyleVariables,
     };
 }
 
@@ -1769,6 +1784,149 @@ function useConfirmModal(config) {
     return { open };
 }
 
+/**
+ * Generic seconds-based countdown hook.
+ *
+ * Starts counting down from `seconds` to `0` and exposes `restartCountdown`
+ * to reset and restart the timer (e.g. for "resend code in Xs" patterns,
+ * session-expiry banners, or any other cooldown/throttle UI).
+ *
+ * @example
+ * const { secondsLeft, restartCountdown } = useCountdown(30);
+ */
+function useCountdown(seconds) {
+    const [secondsLeft, setSecondsLeft] = useState(seconds);
+    const [isActive, setIsActive] = useState(true);
+    const resetCountdown = useCallback((newSeconds = seconds) => {
+        setIsActive(false);
+        setSecondsLeft(newSeconds);
+    }, [seconds]);
+    const restartCountdown = useCallback(() => {
+        resetCountdown(seconds);
+        setIsActive(true);
+    }, [resetCountdown, seconds]);
+    useEffect(() => {
+        if (!isActive) {
+            return () => { };
+        }
+        const interval = setInterval(() => {
+            setSecondsLeft((prevSeconds) => {
+                const newSeconds = prevSeconds - 1;
+                if (newSeconds <= 0) {
+                    clearInterval(interval);
+                    setIsActive(false);
+                    return 0;
+                }
+                return newSeconds;
+            });
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isActive]);
+    return { secondsLeft, restartCountdown };
+}
+
+/**
+ * Headless hook exposing the same OTP logic used internally by `DOtp`
+ * (code state, length + correctness validation, submit action and resend
+ * countdown), without any bundled markup/styles.
+ *
+ * Use this when the default `DOtp` component doesn't match your design and
+ * you need to build a fully custom UI while reusing the same behavior.
+ *
+ * Internally composes `useCountdown` for the resend timer and re-exposes
+ * `secondsLeft`/`restartCountdown`, so there is no need to call
+ * `useCountdown` separately.
+ *
+ * `invalid` becomes `true` both when the OTP is shorter than `otpSize` and
+ * when `action` throws/rejects (e.g. the backend rejected the entered code
+ * as incorrect). In the latter case, the thrown value is exposed as `error`
+ * so custom UIs can render an appropriate message (e.g. "Invalid code" vs.
+ * "Enter all digits"). `invalid`/`error` are cleared automatically as soon
+ * as the user edits the code via `setOtp`.
+ *
+ * @example
+ * function CustomOtp() {
+ *   const {
+ *     otp,
+ *     setOtp,
+ *     invalid,
+ *     error,
+ *     submit,
+ *     isLoading,
+ *     secondsLeft,
+ *     restartCountdown,
+ *   } = useOtp({ action: async () => verifyOtp(otp), otpSize: 6, seconds: 15 });
+ *
+ *   return (
+ *     <>
+ *       <MyCustomPinInput value={otp} onChange={setOtp} invalid={invalid} />
+ *       {invalid && <span>{error ? 'Invalid code' : 'Enter all digits'}</span>}
+ *       <button disabled={isLoading} onClick={() => { submit().catch(() => {}); }}>
+ *         {isLoading ? 'Submitting...' : 'Submit'}
+ *       </button>
+ *       <button disabled={secondsLeft > 0} onClick={restartCountdown}>
+ *         Resend {secondsLeft > 0 ? `(${secondsLeft}s)` : ''}
+ *       </button>
+ *     </>
+ *   );
+ * }
+ */
+function useOtp({ action, otpSize = 6, seconds = 15, }) {
+    const [otp, setOtpValue] = useState('');
+    const [invalid, setInvalid] = useState(false);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const { secondsLeft, restartCountdown } = useCountdown(seconds);
+    const setOtp = useCallback((value) => {
+        setOtpValue((prevOtp) => {
+            // Guard against no-op calls (e.g. DInputPin re-notifying the same
+            // value when its onChange reference changes) so we don't wipe out
+            // an `invalid`/`error` state that was just set by submit().
+            if (prevOtp === value) {
+                return prevOtp;
+            }
+            setInvalid(false);
+            setError(null);
+            return value;
+        });
+    }, []);
+    const submit = useCallback(async () => {
+        if (otp.length < otpSize) {
+            setInvalid(true);
+            setError(null);
+            return;
+        }
+        setIsLoading(true);
+        try {
+            await action();
+            setInvalid(false);
+            setError(null);
+        }
+        catch (err) {
+            setInvalid(true);
+            setError(err);
+            throw err;
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }, [
+        otp.length,
+        action,
+        otpSize,
+    ]);
+    return {
+        otp,
+        setOtp,
+        invalid,
+        error,
+        submit,
+        isLoading,
+        secondsLeft,
+        restartCountdown,
+    };
+}
+
 function DInputCounter(_a, ref) {
     var { minValue, maxValue, value = minValue, invalid, iconStart: iconStartProp, iconEnd: iconEndProp, iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = __rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
     const { handleOnWheel, } = useDisableInputWheel(ref);
@@ -1811,8 +1969,8 @@ function DInputCurrency(_a, ref) {
     var { value, minValue, maxValue, currencyCode, onFocus, onBlur, onChange } = _a, props = __rest(_a, ["value", "minValue", "maxValue", "currencyCode", "onFocus", "onBlur", "onChange"]);
     const { currency: currencyOptions } = useDContext();
     const { handleOnWheel, } = useDisableInputWheel(ref);
-    const { inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur, generateStyleVariables, generateSymbolStyleVariables, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref);
-    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, style: generateStyleVariables, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, props)));
+    const { inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue);
+    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsx("span", { slot: "input-start", className: "d-input-currency-symbol", children: currencyCode || currencyOptions.symbol })) }, props)));
 }
 const ForwardedDInputCurrency = forwardRef(DInputCurrency);
 ForwardedDInputCurrency.displayName = 'DInputCurrency';
@@ -1834,26 +1992,25 @@ ForwardedDInputPassword.displayName = 'DInputPassword';
 
 function PasswordCheckItem({ password, regex, text, }) {
     const isValid = regex.test(password);
-    return (jsxs("li", { className: "d-flex gap-2 align-items-start small text-gray-600", children: [jsx(DIcon, { className: classNames('flex-shrink-0', isValid ? 'text-success' : 'text-gray-300'), icon: isValid ? 'CircleCheck' : 'Circle', size: "16px" }), jsx("span", { className: classNames({ 'text-success': isValid }), children: text })] }));
+    return (jsxs("li", { className: `d-password-check-item${isValid ? ' is-valid' : ''}`, children: [jsx(DIcon, { className: "d-password-check-item-icon", icon: isValid ? 'CircleCheck' : 'Circle', size: "16px" }), jsx("span", { children: text })] }));
 }
 
-const getColorClass = (strength, total) => {
+const getStrengthModifier = (strength, total) => {
     const percentage = total > 0 ? strength / total : 0;
     if (percentage === 0)
-        return 'bg-gray-200';
+        return 'is-empty';
     if (percentage <= 0.25)
-        return 'bg-danger';
+        return 'is-weak';
     if (percentage <= 0.5)
-        return 'bg-warning';
+        return 'is-fair';
     if (percentage <= 0.75)
-        return 'bg-info';
-    return 'bg-success';
+        return 'is-good';
+    return 'is-strong';
 };
 function PasswordStrengthBar({ strength, total }) {
     const percentage = total > 0 ? (strength / total) * 100 : 0;
-    return (jsx("div", { className: "w-100 rounded-3 overflow-hidden bg-gray-100 mb-2", style: { height: '8px' }, children: jsx("div", { className: `h-100 ${getColorClass(strength, total)}`, style: {
+    return (jsx("div", { className: "d-password-strength-bar", children: jsx("div", { className: `d-password-strength-bar-fill ${getStrengthModifier(strength, total)}`, style: {
                 width: `${percentage}%`,
-                transition: 'width 0.3s ease-in-out',
             } }) }));
 }
 
@@ -1889,7 +2046,7 @@ function PasswordChecksList({ password, validationMessages, enabledChecks, }) {
     const passwordChecks = allChecks.filter((check) => enabledChecks.includes(check.key));
     const passed = passwordChecks.filter((r) => r.regex.test(password)).length;
     const total = passwordChecks.length;
-    return (jsxs("div", { className: "mt-2", children: [jsx(PasswordStrengthBar, { strength: passed, total: total }), jsx("ul", { className: "list-unstyled m-0 d-flex flex-column gap-2", children: passwordChecks.map(({ key, regex, text }) => (jsx(PasswordCheckItem, { password: password, regex: regex, text: text }, key))) })] }));
+    return (jsxs("div", { className: "d-password-strength-meter", children: [jsx(PasswordStrengthBar, { strength: passed, total: total }), jsx("ul", { className: "d-password-check-list", children: passwordChecks.map(({ key, regex, text }) => (jsx(PasswordCheckItem, { password: password, regex: regex, text: text }, key))) })] }));
 }
 
 const DEFAULT_VALIDATION_MESSAGES = {
@@ -2239,7 +2396,7 @@ var DListGroup$1 = Object.assign(DListGroup, {
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-modal-separator" })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-modal-separator" })] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -2283,7 +2440,7 @@ var DModal$1 = Object.assign(DModal, {
 function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-offcanvas-separator" })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-offcanvas-separator" })] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
@@ -2410,7 +2567,7 @@ function DPopover({ children, renderComponent, open, setOpen, adjustContentToRen
     }
     const reference = cloneElement(triggerElement, Object.assign({ ref: refs.setReference }, getReferenceProps(triggerElement.props)));
     return (jsxs("div", Object.assign({ className: classNames('d-popover', className), style: generateStyleVariables }, dataAttributes, { children: [reference, isOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
-                        'w-100': adjustContentToRender,
+                        'd-popover-content-fill': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] })));
 }
 
@@ -2474,13 +2631,13 @@ function DStepper$1({ options, currentStep, className, style, }) {
 }
 
 function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, breakpoint = 'lg', className, completed = false, style, dataAttributes, }) {
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx("div", { className: `d-block d-${breakpoint}-none`, children: jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsx("div", { className: `d-none d-${breakpoint}-block`, children: jsx(DStepper$2, { options: options, currentStep: currentStep, vertical: vertical, iconSuccess: iconSuccess, iconSuccessFamilyClass: iconSuccessFamilyClass, iconSuccessFamilyPrefix: iconSuccessFamilyPrefix, iconSuccessMaterialStyle: iconSuccessMaterialStyle, completed: completed }) })] })));
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx("div", { className: classNames('d-stepper-mobile', `d-block d-${breakpoint}-none`), children: jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsx("div", { className: classNames('d-stepper-desktop', `d-none d-${breakpoint}-block`), children: jsx(DStepper$2, { options: options, currentStep: currentStep, vertical: vertical, iconSuccess: iconSuccess, iconSuccessFamilyClass: iconSuccessFamilyClass, iconSuccessFamilyPrefix: iconSuccessFamilyPrefix, iconSuccessMaterialStyle: iconSuccessMaterialStyle, completed: completed }) })] })));
 }
 
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
-const GAP = 2;
-function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
+const GAP$1 = 2;
+function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP$1, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = useState(open);
     const arrowRef = useRef(null);
     const { refs, context, floatingStyles, } = useFloating({
@@ -2549,8 +2706,16 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
     useEffect(() => {
         setSelected(defaultSelected);
     }, [defaultSelected]);
-    const generateClasses = useMemo(() => (Object.assign({ nav: true, 'flex-column align-items-center': vertical && variant !== 'tabs', [`nav-${variant}`]: true }, className && { [className]: true })), [vertical, variant, className]);
+    const generateClasses = useMemo(() => (Object.assign({ nav: true, 'd-tabs-nav-vertical': vertical && variant !== 'tabs', [`nav-${variant}`]: true }, className && { [className]: true })), [vertical, variant, className]);
     const tabRefs = useRef([]);
+    // Always holds the latest `options` without needing to be a dependency:
+    // `options` is commonly passed as an inline array literal (e.g.
+    // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), so it's a new array
+    // reference on every parent render even when its content hasn't changed.
+    // Reading it from this ref (updated synchronously on every render) lets
+    // the focus effect below react only to `selected` changing.
+    const optionsRef = useRef(options);
+    optionsRef.current = options;
     useEffect(() => {
         tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef());
     }, [options]);
@@ -2565,20 +2730,28 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
                 setSelected(firstEnabled.tab);
         }
     }, [options, selected]);
-    // Declarative focus management
-    const focusTab = (idx) => {
+    // Declarative focus management. Wrapped in `useCallback` with an empty
+    // dependency array since it only reads from the `tabRefs` ref, so its
+    // identity stays stable across renders and it can safely be used as an
+    // effect dependency below.
+    const focusTab = useCallback((idx) => {
         var _a;
         if ((_a = tabRefs.current[idx]) === null || _a === void 0 ? void 0 : _a.current) {
             tabRefs.current[idx].current.focus();
         }
-    };
-    // Focus selected tab when selected changes
+    }, []);
+    // Focus selected tab when selected changes.
+    // Reads `options` from `optionsRef` (see comment above) instead of
+    // depending on `options` directly, so a parent re-render that merely
+    // creates a new `options` reference with identical content doesn't call
+    // `focusTab` again and steal focus away from unrelated elements on the
+    // page (e.g. an OTP input).
     useEffect(() => {
-        const idx = options.findIndex((opt) => opt.tab === selected && !opt.disabled);
+        const idx = optionsRef.current.findIndex((opt) => opt.tab === selected && !opt.disabled);
         if (idx !== -1) {
             focusTab(idx);
         }
-    }, [selected, options]);
+    }, [selected, focusTab]);
     const handleKeyDown = useCallback((idx, e) => {
         const count = options.length;
         if (count === 0)
@@ -2607,7 +2780,7 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
                 }
             }
         }
-    }, [options, vertical]);
+    }, [options, vertical, focusTab]);
     let tablistProps = {};
     if (ariaLabelledBy) {
         tablistProps = { 'aria-labelledby': ariaLabelledBy };
@@ -2620,12 +2793,12 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
         isSelected,
     }), [isSelected]);
     return (jsx(TabContext.Provider, { value: value, children: jsxs("div", Object.assign({ className: classNames({
-                'd-flex w-100': true,
-                'flex-column': !vertical || variant === 'tabs',
+                'd-tabs': true,
+                'd-tabs-column': !vertical || variant === 'tabs',
             }), style: style }, dataAttributes, { children: [jsx("ul", Object.assign({ className: classNames(generateClasses), role: "tablist", "aria-orientation": vertical ? 'vertical' : undefined }, tablistProps, { children: options.map((option, idx) => {
                         const isTabSelected = !!option.tab && option.tab === selected;
                         return (jsx("li", { role: "presentation", className: "nav-item", children: jsx("button", { ref: tabRefs.current[idx], id: `${option.tab}Tab`, className: classNames('nav-link', { active: isTabSelected }, classNameTab), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": isTabSelected, tabIndex: isTabSelected ? 0 : -1, disabled: option.disabled, onClick: () => onSelect(option), onKeyDown: (e) => handleKeyDown(idx, e), children: option.label }) }, option.tab));
-                    }) })), jsx("div", { className: "tab-content w-100", children: children })] })) }));
+                    }) })), jsx("div", { className: "d-tabs-content tab-content", children: children })] })) }));
 }
 var DTabs$1 = Object.assign(DTabs, {
     Tab: DTabContent,
@@ -2687,11 +2860,11 @@ function useDToast() {
             if (!description) {
                 return (jsx(DToast$1, { className: classNames({
                         [`toast-${color}`]: !!color,
-                    }, 'show'), children: jsxs(DToast$1.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
+                    }, 'show'), children: jsxs(DToast$1.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
             }
             return (jsxs(DToast$1, { className: classNames({
                     [`toast-${color}`]: !!color,
-                }, 'show'), children: [jsxs(DToast$1.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { children: jsx("span", { children: description }) })] }));
+                }, 'show'), children: [jsxs(DToast$1.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { children: jsx("span", { children: description }) })] }));
         }, toastProps);
     }, [xLg]);
     return {
@@ -2713,11 +2886,10 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-function getQueryString(value, config = {
-    useSearch: true,
-}) {
-    const urlParams = new URLSearchParams(config.useSearch ? window.location.search : '');
-    return urlParams.get(value) || config.default;
+function getQueryString(value, config = {}) {
+    const { useSearch = true, default: defaultValue } = config;
+    const urlParams = new URLSearchParams(useSearch ? window.location.search : '');
+    return urlParams.get(value) || defaultValue;
 }
 
 function changeQueryString(values, { useSearch = true, pushState = false, } = {}) {
@@ -2840,89 +3012,228 @@ function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder',
     return (jsxs("div", { className: classNames('d-credit-card', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details", children: [jsx("div", { className: "d-credit-card-number", children: number }), jsx("small", { className: "d-credit-card-holder-text", children: holderText }), jsx("span", { className: "d-credit-card-name", children: name })] })] }));
 }
 
+// Gap between the toggle and the menu.
+const GAP = 4;
+// Minimum distance the menu should keep from the viewport edges.
+const VIEWPORT_PADDING = 8;
+// Minimum usable height left for the menu before we consider a side unusable.
+const MIN_USABLE_SPACE = 120;
 const getItemClass = (action) => classNames({
     'dropdown-item d-flex align-items-center': true,
     [`dropdown-item-${action.color}`]: !!action.color,
     disabled: action.disabled,
 });
-function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal = false, placement = 'auto', }) {
+const clamp = (value, min, max) => {
+    if (max < min)
+        return min;
+    return Math.min(Math.max(value, min), max);
+};
+/**
+ * `position: fixed` is normally relative to the viewport, but any ancestor
+ * with a `transform`, `perspective`, `filter`, `will-change` (of those) or a
+ * non-trivial `contain` establishes a new containing block, making `fixed`
+ * behave like `absolute` relative to that ancestor instead (e.g. Storybook's
+ * docs canvas wrapper, animated cards, sticky containers, etc.). We detect
+ * that ancestor so the computed coordinates can be adjusted accordingly,
+ * keeping the menu correctly anchored to the toggle in every context.
+ */
+const getFixedPositioningOffset = (fromEl) => {
+    var _a;
+    let node = (_a = fromEl === null || fromEl === void 0 ? void 0 : fromEl.parentElement) !== null && _a !== void 0 ? _a : null;
+    while (node && node !== document.body) {
+        const cs = window.getComputedStyle(node);
+        // Treat empty/undefined values as "unset" (jsdom returns "" rather than
+        // the CSS initial value like "none" for some of these properties).
+        const isSet = (value) => !!value && value !== 'none';
+        const establishesContainingBlock = isSet(cs.transform)
+            || isSet(cs.perspective)
+            || isSet(cs.filter)
+            || isSet(cs.backdropFilter)
+            || ['transform', 'perspective', 'filter'].some((prop) => { var _a; return (_a = cs.willChange) === null || _a === void 0 ? void 0 : _a.includes(prop); })
+            || cs.contain.split(' ').some((value) => ['layout', 'paint', 'strict', 'content'].includes(value));
+        if (establishesContainingBlock) {
+            const rect = node.getBoundingClientRect();
+            return { top: rect.top, left: rect.left };
+        }
+        node = node.parentElement;
+    }
+    return { top: 0, left: 0 };
+};
+/**
+ * Resolves where the menu should render (flip) and where it should sit along
+ * the cross axis (shift), so it always stays fully inside the viewport
+ * regardless of where the toggle is placed or how the viewport is resized.
+ * This mimics floating-ui's `flip` + `shift` middlewares without adding the
+ * dependency, keeping the existing Bootstrap markup/classes.
+ */
+const computeCoords = (toggleRect, menuSize, placement, alignment) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const spaceBelow = viewportHeight - toggleRect.bottom;
+    const spaceAbove = toggleRect.top;
+    const spaceLeft = toggleRect.left;
+    const spaceRight = viewportWidth - toggleRect.right;
+    let side = placement === 'auto'
+        ? 'down'
+        : placement;
+    if (placement === 'auto') {
+        side = spaceBelow >= menuSize.height + GAP || spaceBelow >= spaceAbove ? 'down' : 'up';
+    }
+    // Flip within the current axis if the chosen side can't fit the menu but
+    // the opposite side (same axis) can.
+    if (side === 'down' && spaceBelow < menuSize.height + GAP && spaceAbove > spaceBelow) {
+        side = 'up';
+    }
+    else if (side === 'up' && spaceAbove < menuSize.height + GAP && spaceBelow > spaceAbove) {
+        side = 'down';
+    }
+    else if (side === 'start' && spaceLeft < menuSize.width + GAP && spaceRight > spaceLeft) {
+        side = 'end';
+    }
+    else if (side === 'end' && spaceRight < menuSize.width + GAP && spaceLeft > spaceRight) {
+        side = 'start';
+    }
+    // Cross-axis fallback: e.g. a horizontally-centered toggle on a narrow
+    // viewport can't open sideways (neither `start` nor `end` fit), but there
+    // is plenty of room above/below — switch the whole axis in that case
+    // (and vice versa for `down`/`up` squeezed against a short viewport).
+    const bestVerticalSpace = Math.max(spaceBelow, spaceAbove);
+    const bestHorizontalSpace = Math.max(spaceLeft, spaceRight);
+    if (side === 'down' || side === 'up') {
+        if (bestVerticalSpace < MIN_USABLE_SPACE && bestHorizontalSpace > bestVerticalSpace) {
+            side = spaceRight >= spaceLeft ? 'end' : 'start';
+        }
+    }
+    else if (bestHorizontalSpace < menuSize.width + GAP
+        && bestVerticalSpace > bestHorizontalSpace) {
+        side = spaceBelow >= spaceAbove ? 'down' : 'up';
+    }
+    if (side === 'down' || side === 'up') {
+        const top = side === 'down'
+            ? toggleRect.bottom + GAP
+            : toggleRect.top - menuSize.height - GAP;
+        // Align horizontally per the requested `alignment` (start/end/center), then
+        // fall back to the opposite edge if the preferred alignment would overflow
+        // the viewport, and clamp as a final safety net so it never overflows.
+        let left;
+        if (alignment === 'end') {
+            left = toggleRect.right - menuSize.width;
+        }
+        else if (alignment === 'center') {
+            left = toggleRect.left + (toggleRect.width / 2) - (menuSize.width / 2);
+        }
+        else {
+            left = toggleRect.left;
+        }
+        if (left + menuSize.width > viewportWidth - VIEWPORT_PADDING && alignment !== 'end') {
+            const altLeft = toggleRect.right - menuSize.width;
+            if (altLeft >= VIEWPORT_PADDING)
+                left = altLeft;
+        }
+        else if (left < VIEWPORT_PADDING && alignment !== 'start') {
+            const altLeft = toggleRect.left;
+            if (altLeft + menuSize.width <= viewportWidth - VIEWPORT_PADDING)
+                left = altLeft;
+        }
+        left = clamp(left, VIEWPORT_PADDING, Math.max(viewportWidth - menuSize.width - VIEWPORT_PADDING, VIEWPORT_PADDING));
+        const availableHeight = side === 'down' ? spaceBelow : spaceAbove;
+        // Cap strictly to the space actually available on the resolved side —
+        // MIN_USABLE_SPACE is only meant to influence the flip/shift decision
+        // above, not to force a taller box than what physically fits and
+        // overflow the viewport.
+        const maxUsableHeight = Math.max(availableHeight - GAP - VIEWPORT_PADDING, 0);
+        return {
+            top,
+            left,
+            minWidth: Math.max(toggleRect.width, 160),
+            maxHeight: `${maxUsableHeight}px`,
+            resolvedSide: side,
+        };
+    }
+    // side is 'start' or 'end'
+    let left = side === 'start'
+        ? toggleRect.left - menuSize.width - GAP
+        : toggleRect.right + GAP;
+    // Safety-net clamp: in rare cases where the toggle is squeezed so tightly
+    // that no side of any axis has enough room, keep the menu inside the
+    // viewport rather than letting it render off-screen.
+    left = clamp(left, VIEWPORT_PADDING, Math.max(viewportWidth - menuSize.width - VIEWPORT_PADDING, VIEWPORT_PADDING));
+    // Shift vertically: align with the toggle's top edge by default, but switch
+    // to the bottom edge (or clamp) if that would overflow the viewport.
+    let { top } = toggleRect;
+    if (top + menuSize.height > viewportHeight - VIEWPORT_PADDING) {
+        top = toggleRect.bottom - menuSize.height;
+    }
+    top = clamp(top, VIEWPORT_PADDING, Math.max(viewportHeight - menuSize.height - VIEWPORT_PADDING, VIEWPORT_PADDING));
+    return {
+        top,
+        left,
+        minWidth: Math.max(toggleRect.width, 160),
+        maxHeight: `${Math.max(viewportHeight - top - VIEWPORT_PADDING, 0)}px`,
+        resolvedSide: side,
+    };
+};
+function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal = false, placement = 'auto', alignment = 'start', }) {
     const [open, setOpen] = useState(false);
-    const [position, setPosition] = useState('down');
-    const [menuCoords, setMenuCoords] = useState(null);
-    // Used in default (non-portal) mode: wraps the entire dropdown
-    const dropdownRef = useRef(null);
-    // Used in portal mode: ref on the toggle wrapper to read its viewport coords
+    const [coords, setCoords] = useState(null);
+    // Initialize from `placement` (falling back to 'down' for 'auto') so the
+    // wrapper's `drop-*` class reflects the requested side even before the
+    // first open/measurement, matching the previous `drop-${placement}` class
+    // behavior (relevant for Bootstrap caret/orientation styling).
+    const [resolvedSide, setResolvedSide] = useState(placement === 'auto' ? 'down' : placement);
+    // Wraps the toggle in both modes — used to read its viewport-relative rect.
     const toggleRef = useRef(null);
-    // Ref on the rendered <ul> — used for outside-click detection in portal mode
+    // Ref on the rendered <ul> — used to measure its size and for outside-click detection.
     const menuRef = useRef(null);
     const toggle = () => {
-        setMenuCoords(null);
+        setCoords(null);
         setOpen((prev) => !prev);
     };
-    const resolvedInlinePosition = placement === 'auto' ? position : placement;
-    // Compute fixed coords from the toggle's bounding rect (portal mode only)
-    const computePortalCoords = useCallback(() => {
-        if (!toggleRef.current)
+    // Measures the toggle + menu and (re)computes fixed, pixel-perfect coords
+    // with collision detection, so the menu never overflows the viewport.
+    const updatePosition = useCallback(() => {
+        if (!toggleRef.current || !menuRef.current)
             return;
-        const rect = toggleRef.current.getBoundingClientRect();
-        const spaceRight = window.innerWidth - rect.right;
-        const spaceBottom = window.innerHeight - rect.bottom;
-        const spaceTop = rect.top;
-        let resolvedPlacement;
-        if (placement === 'auto') {
-            if (spaceBottom < 150) {
-                resolvedPlacement = 'up';
-            }
-            else if (spaceRight < 150) {
-                resolvedPlacement = 'start';
-            }
-            else {
-                resolvedPlacement = 'down';
-            }
+        const toggleRect = toggleRef.current.getBoundingClientRect();
+        // If the toggle itself has scrolled completely out of the viewport
+        // (regardless of `placement`), close the menu instead of leaving it
+        // rendered detached from the toggle that opened it.
+        const toggleIsMeasured = toggleRect.width > 0 || toggleRect.height > 0;
+        const toggleIsOutOfView = toggleRect.bottom <= 0
+            || toggleRect.top >= window.innerHeight
+            || toggleRect.right <= 0
+            || toggleRect.left >= window.innerWidth;
+        if (toggleIsMeasured && toggleIsOutOfView) {
+            setOpen(false);
+            return;
         }
-        else {
-            resolvedPlacement = placement;
-        }
-        const openStart = resolvedPlacement === 'start';
-        const openEnd = resolvedPlacement === 'end';
-        const openUp = resolvedPlacement === 'up';
-        let availableHeight = spaceBottom;
-        if (openUp) {
-            availableHeight = spaceTop;
-        }
-        else if (openStart || openEnd) {
-            availableHeight = window.innerHeight - rect.top;
-        }
-        const verticalCoords = openUp
-            ? { bottom: window.innerHeight - rect.top + 4 }
-            : { top: openStart || openEnd ? rect.top : rect.bottom + 4 };
-        let horizontalCoords;
-        if (openStart) {
-            horizontalCoords = { right: window.innerWidth - rect.left + 4 };
-        }
-        else if (openEnd) {
-            horizontalCoords = { left: rect.right + 4 };
-        }
-        else {
-            horizontalCoords = { left: rect.left };
-        }
-        setMenuCoords(Object.assign(Object.assign(Object.assign({}, verticalCoords), horizontalCoords), { minWidth: Math.max(rect.width, 160), maxHeight: `${Math.max(availableHeight - 12, 120)}px` }));
-    }, [placement]);
-    // Outside-click: default mode
-    useEffect(() => {
-        if (asPortal)
-            return () => { };
-        const handler = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handler);
-        return () => document.removeEventListener('mousedown', handler);
-    }, [asPortal]);
-    // Outside-click: portal mode (must check both toggle and floating menu)
-    useEffect(() => {
-        if (!asPortal || !open)
+        const menuRect = menuRef.current.getBoundingClientRect();
+        const _a = computeCoords(toggleRect, { width: menuRect.width, height: menuRect.height }, placement, alignment), { resolvedSide: side } = _a, menuCoords = __rest(_a, ["resolvedSide"]);
+        // In portal mode the menu is appended to document.body, whose containing
+        // block for `fixed` is always the viewport (no adjustment needed). In
+        // inline mode the menu stays next to the toggle, so we must look for a
+        // containing-block-establishing ancestor starting from the toggle.
+        const offset = asPortal
+            ? { top: 0, left: 0 }
+            : getFixedPositioningOffset(toggleRef.current);
+        setResolvedSide(side);
+        setCoords(Object.assign(Object.assign({}, menuCoords), { top: menuCoords.top - offset.top, left: menuCoords.left - offset.left }));
+    }, [placement, alignment, asPortal]);
+    // Throttles scroll/resize-triggered updates to at most once per frame,
+    // avoiding repeated forced reflows on busy/high-frequency scroll events.
+    const rafIdRef = useRef(null);
+    const scheduleUpdatePosition = useCallback(() => {
+        if (rafIdRef.current !== null)
+            return;
+        rafIdRef.current = window.requestAnimationFrame(() => {
+            rafIdRef.current = null;
+            updatePosition();
+        });
+    }, [updatePosition]);
+    // Outside-click detection (checks both the toggle and the floating menu,
+    // since in portal mode the menu isn't a DOM descendant of the toggle).
+    useLayoutEffect(() => {
+        if (!open)
             return () => { };
         const handler = (event) => {
             var _a, _b;
@@ -2933,35 +3244,25 @@ function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal
         };
         document.addEventListener('mousedown', handler);
         return () => document.removeEventListener('mousedown', handler);
-    }, [asPortal, open]);
-    // Auto-position: default mode
-    useEffect(() => {
-        if (asPortal || !open || !dropdownRef.current || placement !== 'auto')
-            return;
-        const rect = dropdownRef.current.getBoundingClientRect();
-        const spaceBottom = window.innerHeight - rect.bottom;
-        const spaceRight = window.innerWidth - rect.right;
-        if (spaceBottom < 150)
-            setPosition('up');
-        else if (spaceRight < 150)
-            setPosition('start');
-        else
-            setPosition('down');
-    }, [asPortal, open, placement]);
-    // Compute + track coords: portal mode
-    // Re-runs whenever the menu opens and keeps coords fresh on scroll/resize
-    useEffect(() => {
-        if (!asPortal || !open)
+    }, [open]);
+    // Computes the initial position synchronously (before paint, to avoid a
+    // flicker) and keeps it fresh while the menu is open and the viewport
+    // scrolls or resizes (throttled to one update per frame, see above).
+    useLayoutEffect(() => {
+        if (!open)
             return () => { };
-        computePortalCoords();
-        const update = () => computePortalCoords();
-        window.addEventListener('scroll', update, { passive: true, capture: true });
-        window.addEventListener('resize', update, { passive: true });
+        updatePosition();
+        window.addEventListener('scroll', scheduleUpdatePosition, { passive: true, capture: true });
+        window.addEventListener('resize', scheduleUpdatePosition, { passive: true });
         return () => {
-            window.removeEventListener('scroll', update, { capture: true });
-            window.removeEventListener('resize', update);
+            window.removeEventListener('scroll', scheduleUpdatePosition, { capture: true });
+            window.removeEventListener('resize', scheduleUpdatePosition);
+            if (rafIdRef.current !== null) {
+                window.cancelAnimationFrame(rafIdRef.current);
+                rafIdRef.current = null;
+            }
         };
-    }, [asPortal, open, computePortalCoords]);
+    }, [open, updatePosition, scheduleUpdatePosition]);
     let ToggleElement;
     if (dropdownToggle) {
         ToggleElement = typeof dropdownToggle === 'function'
@@ -2971,57 +3272,30 @@ function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal
     else {
         ToggleElement = (jsx(DButtonIcon, { variant: "link", stopPropagationEnabled: false, "aria-label": "Toggle Dropdown", "aria-haspopup": "menu", "aria-expanded": open, onClick: toggle, icon: "MoreVertical" }));
     }
-    const portalMenuStyle = asPortal && menuCoords
+    // Until the first measurement is available, keep the menu off-screen but
+    // measurable (visibility: hidden preserves layout, unlike display: none).
+    const menuStyle = coords
         ? {
             position: 'fixed',
-            top: menuCoords.top,
-            bottom: menuCoords.bottom,
-            left: menuCoords.left,
-            right: menuCoords.right,
-            minWidth: menuCoords.minWidth,
-            maxHeight: menuCoords.maxHeight,
+            top: coords.top,
+            left: coords.left,
+            minWidth: coords.minWidth,
+            maxHeight: coords.maxHeight,
             overflowY: 'auto',
             zIndex: 1050,
             transform: 'none',
+            visibility: 'visible',
         }
-        : undefined;
-    let inlineTop = '100%';
-    if (resolvedInlinePosition === 'up') {
-        inlineTop = 'auto';
-    }
-    else if (resolvedInlinePosition === 'start' || resolvedInlinePosition === 'end') {
-        inlineTop = 0;
-    }
-    let inlineLeft = 0;
-    if (resolvedInlinePosition === 'start') {
-        inlineLeft = 'auto';
-    }
-    else if (resolvedInlinePosition === 'end') {
-        inlineLeft = '100%';
-    }
-    let inlineRight = 'auto';
-    if (resolvedInlinePosition === 'start') {
-        inlineRight = '100%';
-    }
-    let inlineTransform = 'translateY(4px)';
-    if (resolvedInlinePosition === 'up') {
-        inlineTransform = 'translateY(-4px)';
-    }
-    else if (resolvedInlinePosition === 'start') {
-        inlineTransform = 'translateX(-4px)';
-    }
-    else if (resolvedInlinePosition === 'end') {
-        inlineTransform = 'translateX(4px)';
-    }
-    const inlineMenuStyle = {
-        position: 'absolute',
-        top: inlineTop,
-        bottom: resolvedInlinePosition === 'up' ? '100%' : 'auto',
-        left: inlineLeft,
-        right: inlineRight,
-        transform: inlineTransform,
-    };
-    const menuItems = (jsx("ul", { ref: menuRef, role: "menu", className: classNames('dropdown-menu p-2', { show: open }, classNameMenu), style: portalMenuStyle !== null && portalMenuStyle !== void 0 ? portalMenuStyle : inlineMenuStyle, children: actions.map((action, index) => {
+        : {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            visibility: 'hidden',
+            pointerEvents: 'none',
+            zIndex: 1050,
+            transform: 'none',
+        };
+    const menuItems = (jsx("ul", { ref: menuRef, role: "menu", className: classNames('dropdown-menu p-2', { show: open }, classNameMenu), style: menuStyle, children: actions.map((action, index) => {
             if (action.isDivider) {
                 return jsx("hr", { className: "dropdown-divider" }, index);
             }
@@ -3040,10 +3314,7 @@ function DDropdown({ actions, dropdownToggle, className, classNameMenu, asPortal
                         }
                     }, disabled: action.disabled, children: [action.icon && jsx(DIcon, { icon: action.icon, className: "me-2", size: "1rem" }), action.label] })) }, index));
         }) }));
-    if (asPortal) {
-        return (jsxs("div", { ref: toggleRef, className: classNames('dropdown', className), children: [ToggleElement, open && menuCoords && createPortal(menuItems, document.body)] }));
-    }
-    return (jsxs("div", { className: classNames(`dropdown drop-${resolvedInlinePosition}`, className), ref: dropdownRef, children: [ToggleElement, menuItems] }));
+    return (jsxs("div", { ref: toggleRef, className: classNames(`dropdown drop-${resolvedSide} d-inline-block`, className), children: [ToggleElement, open && (asPortal ? createPortal(menuItems, document.body) : menuItems)] }));
 }
 
 function useScreenshot() {
@@ -3073,13 +3344,18 @@ function useScreenshot() {
 
 function useScreenshotDownload() {
     const { clipRef, takeBlob } = useScreenshot();
-    const download = useCallback(async () => {
-        const blob = await takeBlob();
+    const download = useCallback(async (fileName = 'voucher') => {
+        const blob = await takeBlob('image/jpeg');
         const url = window.URL.createObjectURL(blob);
         const link = window.document.createElement('a');
         link.style.display = 'none';
         link.href = url;
-        link.download = 'voucher.jpg';
+        // Fall back to the default base name when the caller passes a blank/whitespace value,
+        // so the file is never named just ".jpg".
+        const safeFileName = fileName.trim() || 'voucher';
+        // The extension is always appended by the hook to guarantee a valid image file,
+        // regardless of what fileName the caller passes (e.g. "receipt.png" -> "receipt.png.jpg").
+        link.download = `${safeFileName}.jpg`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -3093,11 +3369,15 @@ function useScreenshotDownload() {
 
 function useScreenshotWebShare() {
     const { takeBlob, clipRef } = useScreenshot();
-    const share = useCallback(async () => {
-        const blob = await takeBlob();
-        const image = new File([blob], 'voucher.jpeg', { type: 'image/jpeg' });
-        if (!navigator.canShare
-            && (navigator.canShare && !navigator.canShare({ files: [image] }))) {
+    const share = useCallback(async (fileName = 'voucher') => {
+        const blob = await takeBlob('image/jpeg');
+        // Fall back to the default base name when the caller passes a blank/whitespace value,
+        // so the file is never named just ".jpeg".
+        const safeFileName = fileName.trim() || 'voucher';
+        // The extension is always appended by the hook to guarantee a valid image file,
+        // regardless of what fileName the caller passes (e.g. "receipt.png" -> "receipt.png.jpeg").
+        const image = new File([blob], `${safeFileName}.jpeg`, { type: 'image/jpeg' });
+        if (!navigator.canShare || !navigator.canShare({ files: [image] })) {
             window.print();
             return;
         }
@@ -3109,11 +3389,11 @@ function useScreenshotWebShare() {
     };
 }
 
-function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText = 'Download', shareText = 'Share', className, children, }) {
+function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText = 'Download', shareText = 'Share', fileName = 'voucher', hideActions = false, className, children, }) {
     const { shareRef, share } = useScreenshotWebShare();
     const { downloadRef, download } = useScreenshotDownload();
     const handleShare = () => {
-        share()
+        share(fileName)
             .catch(async (err) => {
             if (onError) {
                 await onError(err);
@@ -3124,7 +3404,7 @@ function DVoucher({ amount, amountDetails, icon, title, onError, message, downlo
         });
     };
     const handleDownload = () => {
-        download()
+        download(fileName)
             .catch(async (err) => {
             if (onError) {
                 await onError(err);
@@ -3152,80 +3432,36 @@ function DVoucher({ amount, amountDetails, icon, title, onError, message, downlo
     return (jsx("div", { className: classNames('d-voucher', className), ref: (el) => {
             shareRef.current = el;
             downloadRef.current = el;
-        }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [resolvedIconProps && (jsx(DIcon, Object.assign({}, resolvedIconProps))), jsxs("div", { className: "text-center", children: [jsx("h3", { className: "mb-2", children: title }), jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsx("hr", { className: "my-4" }), children, jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
-}
-
-function useCountdown(seconds) {
-    const [secondsLeft, setSecondsLeft] = useState(seconds);
-    const [isActive, setIsActive] = useState(true);
-    const resetCountdown = useCallback((newSeconds = seconds) => {
-        setIsActive(false);
-        setSecondsLeft(newSeconds);
-    }, [seconds]);
-    const restartCountdown = useCallback(() => {
-        resetCountdown(seconds);
-        setIsActive(true);
-    }, [resetCountdown, seconds]);
-    useEffect(() => {
-        if (!isActive) {
-            return () => { };
-        }
-        const interval = setInterval(() => {
-            setSecondsLeft((prevSeconds) => {
-                const newSeconds = prevSeconds - 1;
-                if (newSeconds <= 0) {
-                    clearInterval(interval);
-                    setIsActive(false);
-                    return 0;
-                }
-                return newSeconds;
-            });
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [isActive]);
-    return { secondsLeft, restartCountdown };
+        }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [resolvedIconProps && (jsx(DIcon, Object.assign({}, resolvedIconProps))), jsxs("div", { className: "d-voucher-title-group", children: [jsx("h3", { className: "d-voucher-title", children: title }), jsx("p", { className: "d-voucher-message", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('d-voucher-amount-value', { 'd-voucher-amount-value-with-details': !!amountDetails }), children: amount }), amountDetails] })), jsx("hr", { className: "d-voucher-divider" }), children, !hideActions && (jsxs(Fragment, { children: [jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }))] }) }));
 }
 
 const defaultMessage = (secs) => (secs > 0
     ? `Didn't get any code? Resend in: ${secs}s`
     : "Didn't get any code?");
-function OtpCountdown({ seconds, resendText, message, }) {
-    const { secondsLeft, restartCountdown } = useCountdown(seconds);
-    return (jsxs("div", { className: "d-flex gap-2 align-items-center", children: [jsx("p", { className: "mb-0 flex-1", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsx(DButton, { text: resendText, variant: "link", className: "text-nowrap", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
+function OtpCountdown({ secondsLeft, restartCountdown, resendText, message, }) {
+    return (jsxs("div", { className: "d-otp-countdown", children: [jsx("p", { className: "d-otp-countdown-text", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsx(DButton, { text: resendText, variant: "link", className: "text-nowrap", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
 }
 
 const TEXT_PROPS = {
     resend: 'Resend',
-    resendText: 'Resend code',
+    resendText: 'Resend',
     submit: 'Authorize and continue',
     title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
+    invalidCode: 'Invalid code, please try again.',
     contact: (jsxs(Fragment, { children: [jsx("span", { children: "Problems with your digital token? Contact us" }), ' ', jsx("a", { href: "https://www.modyo.com", className: "link-primary text-nowrap", target: "_blank", rel: "noreferrer", children: "Contact us" })] })),
 };
 function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, seconds = 15, }) {
-    const [otp, setOtp] = useState('');
-    const [invalid, setInvalid] = useState(false);
-    const handler = useCallback(async () => {
-        if (otp.length < otpSize) {
-            setInvalid(true);
-            return;
-        }
-        setInvalid(false);
-        await action();
-    }, [
-        otp.length,
-        action,
-        otpSize,
-    ]);
-    return (jsxs("div", { className: className, children: [jsx("p", { children: texts.title }), jsxs("div", { className: "d-flex flex-column gap-6 pb-4 px-3", children: [jsxs("div", { className: "d-flex flex-column gap-6", children: [jsx(DInputPin, { className: "modal-otp-pin", characters: otpSize, onChange: (e) => setOtp(e), invalid: invalid && otp.length < otpSize, placeholder: "0" }), jsx(OtpCountdown, { seconds: seconds, resendText: texts.resend })] }), jsx("hr", { className: "m-0" }), jsxs("div", { className: "d-flex flex-column flex-lg-row gap-4 align-items-center", children: [jsx(DButton, { text: texts.submit, onClick: () => {
-                                    handler().catch((err) => {
+    const { setOtp, invalid, submit, isLoading: isSubmitting, secondsLeft, restartCountdown, } = useOtp({ action, otpSize, seconds });
+    return (jsxs("div", { className: className, children: [jsx("p", { children: texts.title }), jsxs("div", { className: "d-otp d-otp-content", children: [jsxs("div", { className: "d-otp-fields", children: [jsx(DInputPin, { className: "modal-otp-pin", characters: otpSize, onChange: (e) => setOtp(e), invalid: invalid, hint: invalid ? texts.invalidCode : undefined, placeholder: "0" }), jsx(OtpCountdown, { secondsLeft: secondsLeft, restartCountdown: restartCountdown, resendText: texts.resendText })] }), jsx("hr", { className: "d-otp-divider" }), jsxs("div", { className: "d-otp-footer", children: [jsx(DButton, { text: texts.submit, onClick: () => {
+                                    submit().catch((err) => {
                                         // eslint-disable-next-line no-console
                                         console.error('Error in DOtp action:', err);
                                     });
-                                }, loading: isLoading }), jsx("p", { className: "small ms-lg-auto mb-0", children: texts.contact })] })] })] }));
+                                }, loading: isLoading || isSubmitting }), jsx("p", { className: "d-otp-contact", children: texts.contact })] })] })] }));
 }
 
 function DefaultErrorBoundary({ resetErrorBoundary }) {
-    return (jsx(DAlert, { color: "danger", showClose: false, children: jsxs("div", { className: "d-flex align-items-center gap-2", children: [jsx("span", { children: "An unexpected error occurred." }), jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: "Retry" })] }) }));
+    return (jsx(DAlert, { color: "danger", showClose: false, children: jsxs("div", { className: "d-error-boundary-content", children: [jsx("span", { children: "An unexpected error occurred." }), jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: "Retry" })] }) }));
 }
 
 function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }) {
@@ -3243,15 +3479,15 @@ function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children,
 }
 
 function ErrorState({ message, onRetry, retryMessage = 'Retry', color = 'danger', }) {
-    return (jsxs(DAlert, { color: color, className: "d-flex align-items-center gap-3", children: [jsx("div", { className: "flex-grow-1", children: jsx("p", { className: "mb-0", children: message !== null && message !== void 0 ? message : 'An unexpected error occurred.' }) }), onRetry && (jsx(DButton, { onClick: onRetry, text: retryMessage, variant: "outline", iconStart: "RefreshCw" }))] }));
+    return (jsxs(DAlert, { color: color, className: "d-error-state", children: [jsx("div", { className: "d-error-state-content", children: jsx("p", { className: "d-error-state-message", children: message !== null && message !== void 0 ? message : 'An unexpected error occurred.' }) }), onRetry && (jsx(DButton, { onClick: onRetry, text: retryMessage, variant: "outline", iconStart: "RefreshCw" }))] }));
 }
 
 function EmptyState({ message, icon = 'FileText', actionText, onAction, }) {
-    return (jsxs("div", { className: "d-flex flex-column align-items-center justify-content-center p-5 text-center", children: [jsx(DIcon, { icon: icon, size: "3rem", className: "text-secondary mb-3" }), jsx("p", { className: "text-secondary mb-3", children: message !== null && message !== void 0 ? message : 'No data available.' }), actionText && onAction && (jsx(DButton, { onClick: onAction, text: actionText, variant: "outline" }))] }));
+    return (jsxs("div", { className: "d-empty-state", children: [jsx(DIcon, { icon: icon, size: "3rem", className: "d-empty-state-icon" }), jsx("p", { className: "d-empty-state-message", children: message !== null && message !== void 0 ? message : 'No data available.' }), actionText && onAction && (jsx(DButton, { onClick: onAction, text: actionText, variant: "outline" }))] }));
 }
 
 function LoadingState({ ariaLabel = 'Loading...', className }) {
-    return (jsx("div", { className: `d-flex align-items-center justify-content-center p-4 ${className || ''}`.trim(), "aria-busy": "true", "aria-live": "polite", children: jsx("span", { className: "spinner-border", role: "status", "aria-label": ariaLabel }) }));
+    return (jsx("div", { className: `d-loading-state ${className || ''}`.trim(), "aria-busy": "true", "aria-live": "polite", children: jsx("span", { className: "spinner-border", role: "status", "aria-label": ariaLabel }) }));
 }
 
 function render(renderable) {
@@ -3310,7 +3546,7 @@ function DConfirmModalUI({ entry }) {
             }
         });
     }, [onConfirmAction]);
-    return (jsxs(DModal$1, { name: entry.id, size: "lg", className: `confirm-modal ${critical ? 'critical-modal' : ''}`, children: [jsx(DModal$1.Header, { onClose: handleClose, showCloseButton: true, children: jsx("h5", { className: "fw-bold", children: title }) }), jsxs(DModal$1.Body, { className: "py-3 px-5", children: [jsx("p", { className: "mb-4", children: message }), critical && (jsx(ForwardedDInput, { type: "text", label: critical.codeLabel || 'Confirmation code', placeholder: critical.inputPlaceholder, value: confirmationCode, onChange: (value) => setConfirmationCode(value), className: "mb-4", autoFocus: true }))] }), jsxs(DModal$1.Footer, { children: [jsx(DButton, { text: cancelLabel, variant: "outline", color: "secondary", onClick: handleClose, disabled: internalLoading }), jsx(DButton, { text: confirmLabel, color: confirmColor, onClick: handleConfirmClick, disabled: isConfirmDisabled, loading: internalLoading })] })] }));
+    return (jsxs(DModal$1, { name: entry.id, size: "lg", className: `confirm-modal ${critical ? 'critical-modal' : ''}`, children: [jsx(DModal$1.Header, { onClose: handleClose, showCloseButton: true, children: jsx("h5", { className: "fw-bold", children: title }) }), jsxs(DModal$1.Body, { className: "d-confirm-modal-body", children: [jsx("p", { className: "d-confirm-modal-message", children: message }), critical && (jsx(ForwardedDInput, { type: "text", label: critical.codeLabel || 'Confirmation code', placeholder: critical.inputPlaceholder, value: confirmationCode, onChange: (value) => setConfirmationCode(value), className: "d-confirm-modal-field", autoFocus: true }))] }), jsxs(DModal$1.Footer, { children: [jsx(DButton, { text: cancelLabel, variant: "outline", color: "secondary", onClick: handleClose, disabled: internalLoading }), jsx(DButton, { text: confirmLabel, color: confirmColor, onClick: handleConfirmClick, disabled: isConfirmDisabled, loading: internalLoading })] })] }));
 }
 
 /**
@@ -3363,5 +3599,5 @@ function DConfirmModalContainer({ nodeId }) {
     return createPortal(jsx(AnimatePresence, { children: entries.map((entry) => (jsxs(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' }, children: [jsx("div", { className: "backdrop backdrop-confirm-modal", onClick: entry.onCloseAction, role: "presentation" }), jsx(DConfirmModalUI, { entry: entry })] }, entry.id))) }), portalNode);
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useConfirmModal, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
+export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useConfirmModal, useCountdown, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useOtp, useProvidedRefOrCreate, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map
