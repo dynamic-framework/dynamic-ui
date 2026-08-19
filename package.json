@@ -132,6 +132,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/google-libphonenumber": "~7.4.30",
     "@types/jest": "~29.5.12",
+    "@types/jest-axe": "^3.5.9",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
