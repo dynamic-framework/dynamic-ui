@@ -40,9 +40,10 @@
     }
   ],
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test": "jest --testPathPatterns=\\.spec\\.tsx?$",
+    "test:watch": "jest --testPathPatterns=\\.spec\\.tsx?$ --watch",
+    "test:coverage": "jest --testPathPatterns=\\.spec\\.tsx?$ --coverage",
+    "test:a11y": "jest --testPathPatterns=\\.a11y\\.test\\.tsx$",
     "test:storybook": "test-storybook",
     "build": "npm run clean && npm run build:react && npm run build:scss && npm run cp",
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
