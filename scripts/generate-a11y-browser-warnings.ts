@@ -72,6 +72,7 @@ interface ClassifiedNode {
   target: string[];
   origin: Origin;
   library?: string;
+  failureSummary?: string;
 }
 
 interface ClassifiedViolation {
@@ -146,6 +147,7 @@ function classifyViolation(violation: Result, storyTitle: string): ClassifiedVio
       target: node.target as string[],
       origin: match ? 'third-party' : 'own',
       library: match?.library,
+      failureSummary: node.failureSummary,
     };
   });
 
@@ -185,19 +187,24 @@ async function analyzeStory(
 // ─── Reporting (console + GitHub Actions annotations only) ────────────────
 
 function printWarningAnnotation(story: Story, url: string, violation: ClassifiedViolation): void {
-  const originLabel = violation.origins.includes('own') ? 'own' : 'third-party';
-  const libraries = Array.from(
-    new Set(violation.nodes.map((n) => n.library).filter(Boolean)),
-  ).join(', ');
-  const suffix = libraries ? ` via ${libraries}` : '';
-
   // GitHub Actions parses "::warning::" lines from stdout and surfaces
   // them in the run's "Annotations" section, regardless of when during
-  // the job they're printed.
-  console.log(
-    `::warning title=a11y (${originLabel}${suffix})::[${story.title} / ${story.name}] `
-      + `${violation.ruleId}: ${violation.help} — ${violation.nodes.length} node(s). ${url}`,
-  );
+  // the job they're printed. One annotation per offending node, so the
+  // exact selector + axe-core's failureSummary (actual vs. expected
+  // contrast ratio, colors involved) are visible without opening logs.
+  violation.nodes.forEach((node) => {
+    const suffix = node.library ? ` via ${node.library}` : '';
+    const selector = node.target.join(' ');
+    const detail = node.failureSummary
+      ? node.failureSummary.replace(/\s*\n\s*/g, ' ')
+      : violation.help;
+    const html = node.html.replace(/\s*\n\s*/g, ' ').slice(0, 300);
+
+    console.log(
+      `::warning title=a11y (${node.origin}${suffix})::[${story.title} / ${story.name}] `
+        + `${violation.ruleId} on "${selector}": ${detail} | element: ${html} | ${url}`,
+    );
+  });
 }
 
 // ─── Main ───────────────────────────────────────────────────────────────────
