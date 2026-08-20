@@ -100,12 +100,32 @@ const MIME_TYPES: Record<string, string> = {
 
 function startStaticServer(rootDir: string, port: number): Promise<http.Server> {
   const server = http.createServer((req, res) => {
-    const requestPath = decodeURIComponent((req.url || '/').split('?')[0]);
+    let requestPath: string;
+    try {
+      requestPath = decodeURIComponent((req.url || '/').split('?')[0]);
+    } catch {
+      // Malformed percent-encoding (e.g. a lone "%") throws a URIError.
+      res.writeHead(400);
+      res.end('Bad request');
+      return;
+    }
+
     const safePath = path.normalize(requestPath).replace(/^(\.\.[/\\])+/, '');
     let filePath = path.join(rootDir, safePath);
 
     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-      filePath = path.join(rootDir, 'index.html');
+      // Only fall back to index.html for extension-less paths (SPA/story
+      // routes). A missing asset that *does* have an extension (.js/.css/
+      // etc.) is a real 404 — serving index.html instead would return
+      // HTML with a 200 status, breaking Storybook with confusing
+      // "unexpected token '<'" runtime errors.
+      if (path.extname(safePath) === '') {
+        filePath = path.join(rootDir, 'index.html');
+      } else {
+        res.writeHead(404);
+        res.end('Not found');
+        return;
+      }
     }
 
     fs.readFile(filePath, (err, content) => {
@@ -253,8 +273,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  let ownCount = 0;
-  let thirdPartyCount = 0;
+  let ownWarnings = 0;
+  let thirdPartyWarnings = 0;
   let storiesWithViolations = 0;
   let erroredCount = 0;
 
@@ -269,8 +289,13 @@ async function main(): Promise<void> {
     } else if (violations.length > 0) {
       storiesWithViolations += 1;
       violations.forEach((violation) => {
-        if (violation.origins.includes('own')) ownCount += 1;
-        else thirdPartyCount += 1;
+        // Count per node, not per violation: a single rule violation can
+        // report a mix of "own" and "third-party" nodes, and each one
+        // needs to be reflected in its own bucket.
+        violation.nodes.forEach((node) => {
+          if (node.origin === 'own') ownWarnings += 1;
+          else thirdPartyWarnings += 1;
+        });
         printWarningAnnotation(story, url, violation);
       });
     }
@@ -282,8 +307,8 @@ async function main(): Promise<void> {
   console.log('\n── Summary ─────────────────────────────');
   console.log(`   Stories analyzed          : ${stories.length}`);
   console.log(`   Stories with violations   : ${storiesWithViolations}`);
-  console.log(`   Own component violations : ${ownCount}`);
-  console.log(`   Third-party violations    : ${thirdPartyCount}`);
+  console.log(`   Own component warnings    : ${ownWarnings}`);
+  console.log(`   Third-party warnings      : ${thirdPartyWarnings}`);
   if (erroredCount > 0) console.log(`   Stories that errored      : ${erroredCount}`);
   console.log('────────────────────────────────────────\n');
   console.log('⚠️  These checks are non-blocking (warnings only) for now.');
