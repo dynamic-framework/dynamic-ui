@@ -69,19 +69,14 @@ export const THIRD_PARTY_PATTERNS: ThirdPartyPattern[] = [
     attrPattern: /data-floating-ui-[\w-]+/,
     reason: 'DPopover/DTooltip/DDropdown use @floating-ui/react for positioning; elements it manages are tagged with data-floating-ui-* attributes.',
   },
-  {
-    library: 'react-responsive-pagination',
-    // react-responsive-pagination's own source (see
-    // node_modules/react-responsive-pagination/dist/index.js) renders
-    // disabled nav items as `<span className="page-link" aria-label="...">`
-    // with no distinguishing class — it reuses the plain Bootstrap
-    // "page-link" class that DPaginator's own SCSS also styles, so
-    // class-based matching alone would be unreliable. Scoped narrowly to
-    // the exact rule this specific markup is known to trigger.
-    storyTitlePattern: /Paginator/i,
-    ruleIds: ['aria-prohibited-attr'],
-    reason: 'DPaginator delegates page-item/page-link markup to react-responsive-pagination, which renders aria-label on a plain <span> for disabled nav items.',
-  },
+  // NOTE: react-responsive-pagination intentionally has no entry here.
+  // Its rendered markup (`<a>`/`<span className="page-link" ...>`, see
+  // node_modules/react-responsive-pagination/dist/index.js) reuses the
+  // plain "page-link" class that DPaginator's own SCSS colors — verified
+  // locally that the "Paginator / Label Arrows" color-contrast violation
+  // comes from our own `--pagination-page-control-disabled-color` token
+  // (src/style/base/_pagination.scss), not from the library. Attributing
+  // it to a third party would misclassify a real DS bug as out-of-scope.
 ];
 
 /**
