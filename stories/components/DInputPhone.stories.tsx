@@ -15,9 +15,9 @@ import {
   DBadge,
   DButton,
   DContextProvider,
+  DInputPhone,
   validatePhoneNumber,
 } from '../../src';
-import DInputPhone from '../../src/components/DInputPhone';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputPhone> = {

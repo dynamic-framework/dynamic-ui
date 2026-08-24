@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
+import { DInputSwitch } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputSwitch> = {
@@ -93,6 +93,11 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       type: 'boolean',
       table: { category: 'Behavior' },
     },
+    hint: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Content' },
+    },
     onChange: {
       action: 'onChange',
       table: { category: 'Events' },
@@ -121,23 +126,25 @@ export const Default: Story = {
   },
 };
 
-export const DefaultValid: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
     checked: false,
     disabled: false,
     valid: true,
+    hint: 'Assistive text',
   },
 };
 
-export const DefaultInvalid: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
     checked: false,
     disabled: false,
     invalid: true,
+    hint: 'Assistive text',
   },
 };
 

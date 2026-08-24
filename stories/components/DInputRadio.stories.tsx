@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
+import { DInputCheck } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCheck> = {
@@ -90,6 +90,21 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
       control: 'boolean',
       table: { category: 'Behavior' },
     },
+    hint: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Content' },
+    },
+    valid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { category: 'Behavior' },
+    },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { category: 'Behavior' },
+    },
   },
   tags: ['autodocs'],
 };
@@ -97,22 +112,30 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
 export default config;
 type Story = StoryObj<typeof DInputCheck>;
 
-export const RadioWithoutLabel: Story = {
-  args: {
-    type: 'radio',
-    checked: false,
-    disabled: false,
-    ariaLabel: 'Label',
-  },
-};
-
 export const RadioDefault: Story = {
   args: {
-    id: 'componentId2',
+    id: 'componentId1',
     type: 'radio',
     label: 'Label',
     checked: false,
     disabled: false,
+    hint: 'Assistive text',
+    valid: false,
+    invalid: false,
+    name: 'defaultRadio',
+    className: '',
+    value: 'value',
+    inputClassName: '',
+  },
+};
+
+export const RadioWithoutLabel: Story = {
+  args: {
+    id: 'componentId2',
+    type: 'radio',
+    checked: false,
+    disabled: false,
+    ariaLabel: 'Label',
   },
 };
 
@@ -135,6 +158,7 @@ export const RadioValid: Story = {
     checked: false,
     disabled: false,
     valid: true,
+    hint: 'Assistive text',
   },
 };
 
@@ -146,6 +170,7 @@ export const RadioInvalid: Story = {
     checked: false,
     disabled: false,
     invalid: true,
+    hint: 'Assistive text',
   },
 };
 

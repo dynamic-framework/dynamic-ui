@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputMask from '../../src/components/DInputMask';
+import { DInputMask } from '../../src';
 import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInputMask> = {
@@ -210,6 +210,7 @@ const config: Meta<typeof DInputMask> = {
       table: { category: 'Behavior' },
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

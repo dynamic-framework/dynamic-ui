@@ -2,9 +2,8 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
-import DInput from '../../src/components/DInput/DInput';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
-import { DContextProvider, DIcon } from '../../src';
+import { DContextProvider, DIcon, DInput } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInput> = {

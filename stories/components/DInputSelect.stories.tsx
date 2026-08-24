@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputSelect from '../../src/components/DInputSelect';
+import { DInputSelect } from '../../src';
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
-import type { DInputSelectProps } from '../../src/components/DInputSelect';
+import type { DInputSelectProps } from '../../src';
 
 const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
