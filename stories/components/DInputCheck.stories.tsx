@@ -89,6 +89,7 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     },
     indeterminate: {
       control: 'boolean',
+      description: 'Only applies when `type` is `checkbox`; ignored for `radio`.',
       table: { category: 'Behavior' },
     },
     hint: {
@@ -187,6 +188,17 @@ export const Checked: Story = {
     label: 'Label',
     checked: true,
     disabled: false,
+  },
+};
+
+export const Indeterminate: Story = {
+  args: {
+    id: 'componentId6b',
+    type: 'checkbox',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    indeterminate: true,
   },
 };
 

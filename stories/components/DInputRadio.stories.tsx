@@ -86,10 +86,6 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
       type: 'boolean',
       table: { category: 'Behavior' },
     },
-    indeterminate: {
-      control: 'boolean',
-      table: { category: 'Behavior' },
-    },
     hint: {
       control: 'text',
       type: 'string',
