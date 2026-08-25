@@ -6,6 +6,7 @@ import {
   screen,
 } from '@testing-library/react';
 import DChip from './DChip';
+import { DContextProvider } from '../../contexts';
 
 describe('<DChip />', () => {
   it('should render a chip', () => {
@@ -99,5 +100,57 @@ describe('<DChip />', () => {
 
     expect(container.firstChild).toHaveClass('extra-class');
     expect(container.firstChild).toHaveStyle({ marginTop: '10px' });
+  });
+
+  it('falls back to context icon configuration when no icon family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DChip icon="heart" text="Chip content" showClose />
+      </DContextProvider>,
+    );
+
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).toContain('material-symbols-outlined');
+      expect(icon.tagName).toBe('I');
+    });
+  });
+
+  it('prioritizes local icon family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DChip
+          icon="Heart"
+          iconMaterialStyle={false}
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+          text="Chip content"
+          showClose
+          iconCloseMaterialStyle={false}
+          iconCloseFamilyClass="bi"
+          iconCloseFamilyPrefix="bi-"
+        />
+      </DContextProvider>,
+    );
+
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).not.toContain('material-symbols-outlined');
+      expect(icon.querySelector('svg')).toBeInTheDocument();
+    });
   });
 });

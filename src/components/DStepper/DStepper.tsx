@@ -31,7 +31,7 @@ export default function DStepper(
     iconSuccess,
     iconSuccessFamilyClass,
     iconSuccessFamilyPrefix,
-    iconSuccessMaterialStyle = false,
+    iconSuccessMaterialStyle,
     vertical = false,
     breakpoint = 'lg',
     className,
@@ -66,9 +66,9 @@ export default function DStepper(
           currentStep={currentStep}
           vertical={vertical}
           iconSuccess={iconSuccess}
-          iconSuccessFamilyClass={iconSuccessFamilyClass || familyClass}
-          iconSuccessFamilyPrefix={iconSuccessFamilyPrefix || familyPrefix}
-          iconSuccessMaterialStyle={iconSuccessMaterialStyle || materialStyle}
+          iconSuccessFamilyClass={iconSuccessFamilyClass ?? familyClass}
+          iconSuccessFamilyPrefix={iconSuccessFamilyPrefix ?? familyPrefix}
+          iconSuccessMaterialStyle={iconSuccessMaterialStyle ?? materialStyle}
           completed={completed}
         />
       </div>

@@ -180,18 +180,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
             {iconStart && (
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass || familyClass}
-                familyPrefix={iconStartFamilyPrefix || familyPrefix}
-                materialStyle={iconStartMaterialStyle || materialStyle}
+                familyClass={iconStartFamilyClass ?? familyClass}
+                familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+                materialStyle={iconStartMaterialStyle ?? materialStyle}
               />
             )}
             {content}
             {iconEnd && (
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass || familyClass}
-                familyPrefix={iconEndFamilyPrefix || familyPrefix}
-                materialStyle={iconEndMaterialStyle || materialStyle}
+                familyClass={iconEndFamilyClass ?? familyClass}
+                familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+                materialStyle={iconEndMaterialStyle ?? materialStyle}
               />
             )}
           </>
@@ -241,18 +241,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
           {iconStart && (
             <DIcon
               icon={iconStart}
-              familyClass={iconStartFamilyClass || familyClass}
-              familyPrefix={iconStartFamilyPrefix || familyPrefix}
-              materialStyle={iconStartMaterialStyle || materialStyle}
+              familyClass={iconStartFamilyClass ?? familyClass}
+              familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+              materialStyle={iconStartMaterialStyle ?? materialStyle}
             />
           )}
           {content}
           {iconEnd && (
             <DIcon
               icon={iconEnd}
-              familyClass={iconEndFamilyClass || familyClass}
-              familyPrefix={iconEndFamilyPrefix || familyPrefix}
-              materialStyle={iconEndMaterialStyle || materialStyle}
+              familyClass={iconEndFamilyClass ?? familyClass}
+              familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+              materialStyle={iconEndMaterialStyle ?? materialStyle}
             />
           )}
         </>

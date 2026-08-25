@@ -102,9 +102,9 @@ export default function DBoxFile(
           {icon && iconProp !== false && (
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass || familyClass}
-              familyPrefix={iconFamilyPrefix || familyPrefix}
-              materialStyle={iconMaterialStyle || materialStyle}
+              familyClass={iconFamilyClass ?? familyClass}
+              familyPrefix={iconFamilyPrefix ?? familyPrefix}
+              materialStyle={iconMaterialStyle ?? materialStyle}
             />
           )}
           <div className="d-box-content">

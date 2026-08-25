@@ -31,11 +31,11 @@ export default function DAlert(
     icon: iconProp,
     iconFamilyClass,
     iconFamilyPrefix,
-    iconMaterialStyle = false,
+    iconMaterialStyle,
     iconClose: iconCloseProp,
     iconCloseFamilyClass,
     iconCloseFamilyPrefix,
-    iconCloseMaterialStyle = false,
+    iconCloseMaterialStyle,
     showClose,
     onClose,
     children,
@@ -81,9 +81,9 @@ export default function DAlert(
         <DIcon
           className="alert-icon"
           icon={icon}
-          familyClass={iconFamilyClass || familyClass}
-          familyPrefix={iconFamilyPrefix || familyPrefix}
-          materialStyle={iconMaterialStyle || materialStyle}
+          familyClass={iconFamilyClass ?? familyClass}
+          familyPrefix={iconFamilyPrefix ?? familyPrefix}
+          materialStyle={iconMaterialStyle ?? materialStyle}
         />
       )}
       <div className="alert-text">
@@ -98,9 +98,9 @@ export default function DAlert(
         >
           <DIcon
             icon={iconClose}
-            familyClass={iconCloseFamilyClass || familyClass}
-            familyPrefix={iconCloseFamilyPrefix || familyPrefix}
-            materialStyle={iconCloseMaterialStyle || materialStyle}
+            familyClass={iconCloseFamilyClass ?? familyClass}
+            familyPrefix={iconCloseFamilyPrefix ?? familyPrefix}
+            materialStyle={iconCloseMaterialStyle ?? materialStyle}
           />
         </button>
       )}

@@ -230,9 +230,9 @@ function DInput(
             >
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass || familyClass}
-                familyPrefix={iconStartFamilyPrefix || familyPrefix}
-                materialStyle={iconStartMaterialStyle || materialStyle}
+                familyClass={iconStartFamilyClass ?? familyClass}
+                familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+                materialStyle={iconStartMaterialStyle ?? materialStyle}
               />
             </button>
           ) : (
@@ -244,9 +244,9 @@ function DInput(
             >
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass || familyClass}
-                familyPrefix={iconStartFamilyPrefix || familyPrefix}
-                materialStyle={iconStartMaterialStyle || materialStyle}
+                familyClass={iconStartFamilyClass ?? familyClass}
+                familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+                materialStyle={iconStartMaterialStyle ?? materialStyle}
               />
             </div>
           )
@@ -265,9 +265,9 @@ function DInput(
             >
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass || familyClass}
-                familyPrefix={iconEndFamilyPrefix || familyPrefix}
-                materialStyle={iconEndMaterialStyle || materialStyle}
+                familyClass={iconEndFamilyClass ?? familyClass}
+                familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+                materialStyle={iconEndMaterialStyle ?? materialStyle}
               />
             </button>
           ) : (
@@ -279,9 +279,9 @@ function DInput(
             >
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass || familyClass}
-                familyPrefix={iconEndFamilyPrefix || familyPrefix}
-                materialStyle={iconEndMaterialStyle || materialStyle}
+                familyClass={iconEndFamilyClass ?? familyClass}
+                familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+                materialStyle={iconEndMaterialStyle ?? materialStyle}
               />
             </div>
           )

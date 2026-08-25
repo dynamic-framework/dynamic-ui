@@ -26,7 +26,7 @@ export default function DOffcanvasHeader(
     iconFamilyClass,
     iconFamilyPrefix,
     icon: iconProp,
-    iconMaterialStyle = false,
+    iconMaterialStyle,
   }: Props,
 ) {
   const {
@@ -59,9 +59,9 @@ export default function DOffcanvasHeader(
           >
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass || familyClass}
-              familyPrefix={iconFamilyPrefix || familyPrefix}
-              materialStyle={iconMaterialStyle || materialStyle}
+              familyClass={iconFamilyClass ?? familyClass}
+              familyPrefix={iconFamilyPrefix ?? familyPrefix}
+              materialStyle={iconMaterialStyle ?? materialStyle}
             />
           </button>
         )}

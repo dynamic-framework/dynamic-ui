@@ -173,6 +173,63 @@ describe('<DListGroup.Item />', () => {
       expect(item).toBeDisabled();
       expect(item).toHaveClass('disabled');
     });
+
+    it('falls back to context icon configuration when no icon family props are provided', () => {
+      const { container } = render(
+        <DContextProvider
+          icon={{
+            familyClass: 'material-symbols-outlined',
+            familyPrefix: '',
+            materialStyle: true,
+          }}
+        >
+          <DListGroup>
+            <DListGroup.Item iconStart="star" iconEnd="heart">Item</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+
+      const icons = container.querySelectorAll('.d-icon');
+      expect(icons).toHaveLength(2);
+      icons.forEach((icon) => {
+        expect(icon.className).toContain('material-symbols-outlined');
+        expect(icon.tagName).toBe('I');
+      });
+    });
+
+    it('prioritizes local icon family props over context configuration', () => {
+      const { container } = render(
+        <DContextProvider
+          icon={{
+            familyClass: 'material-symbols-outlined',
+            familyPrefix: '',
+            materialStyle: true,
+          }}
+        >
+          <DListGroup>
+            <DListGroup.Item
+              iconStart="Star"
+              iconStartMaterialStyle={false}
+              iconStartFamilyClass="bi"
+              iconStartFamilyPrefix="bi-"
+              iconEnd="Heart"
+              iconEndMaterialStyle={false}
+              iconEndFamilyClass="bi"
+              iconEndFamilyPrefix="bi-"
+            >
+              Item
+            </DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+
+      const icons = container.querySelectorAll('.d-icon');
+      expect(icons).toHaveLength(2);
+      icons.forEach((icon) => {
+        expect(icon.className).not.toContain('material-symbols-outlined');
+        expect(icon.querySelector('svg')).toBeInTheDocument();
+      });
+    });
   });
 
   describe('Events and Interaction', () => {

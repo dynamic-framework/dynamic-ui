@@ -133,9 +133,9 @@ export default function DButtonIcon(
           : (
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass || familyClass}
-              familyPrefix={iconFamilyPrefix || familyPrefix}
-              materialStyle={iconMaterialStyle || materialStyle}
+              familyClass={iconFamilyClass ?? familyClass}
+              familyPrefix={iconFamilyPrefix ?? familyPrefix}
+              materialStyle={iconMaterialStyle ?? materialStyle}
             />
           )}
       </a>
@@ -165,9 +165,9 @@ export default function DButtonIcon(
         : (
           <DIcon
             icon={icon}
-            familyClass={iconFamilyClass || familyClass}
-            familyPrefix={iconFamilyPrefix || familyPrefix}
-            materialStyle={iconMaterialStyle || materialStyle}
+            familyClass={iconFamilyClass ?? familyClass}
+            familyPrefix={iconFamilyPrefix ?? familyPrefix}
+            materialStyle={iconMaterialStyle ?? materialStyle}
           />
         )}
     </button>

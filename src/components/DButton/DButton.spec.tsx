@@ -117,6 +117,55 @@ describe('<DButton />', () => {
     expect(icons[1].querySelector('svg')).toBeInTheDocument();
   });
 
+  it('Falls back to context icon configuration when no icon family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DButton
+          text="With Icons"
+          iconStart="arrow-left"
+          iconEnd="arrow-right"
+        />
+      </DContextProvider>,
+    );
+
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).toContain('material-symbols-outlined');
+      expect(icon.tagName).toBe('I');
+    });
+  });
+
+  it('Prioritizes local icon family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DButton
+          text="With Icons"
+          iconStart="ArrowLeft"
+          iconStartMaterialStyle={false}
+          iconStartFamilyClass="bi"
+          iconStartFamilyPrefix="bi-"
+        />
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon?.className).not.toContain('material-symbols-outlined');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
+  });
+
   it('Should apply value, form, and data attributes', () => {
     const { getByRole } = render(
       <DButton

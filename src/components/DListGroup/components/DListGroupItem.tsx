@@ -114,18 +114,18 @@ export default function DListGroupItem(
       {iconStart && (
         <DIcon
           icon={iconStart}
-          familyClass={iconStartFamilyClass || familyClass}
-          familyPrefix={iconStartFamilyPrefix || familyPrefix}
-          materialStyle={iconStartMaterialStyle || materialStyle}
+          familyClass={iconStartFamilyClass ?? familyClass}
+          familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+          materialStyle={iconStartMaterialStyle ?? materialStyle}
         />
       )}
       {children}
       {iconEnd && (
         <DIcon
           icon={iconEnd}
-          familyClass={iconEndFamilyClass || familyClass}
-          familyPrefix={iconEndFamilyPrefix || familyPrefix}
-          materialStyle={iconEndMaterialStyle || materialStyle}
+          familyClass={iconEndFamilyClass ?? familyClass}
+          familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+          materialStyle={iconEndMaterialStyle ?? materialStyle}
           className="ms-auto"
         />
       )}

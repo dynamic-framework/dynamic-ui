@@ -265,9 +265,9 @@ function DInputPhone(
           >
             <DIcon
               icon={iconEnd}
-              familyClass={iconEndFamilyClass || familyClass}
-              familyPrefix={iconEndFamilyPrefix || familyPrefix}
-              materialStyle={iconEndMaterialStyle || materialStyle}
+              familyClass={iconEndFamilyClass ?? familyClass}
+              familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+              materialStyle={iconEndMaterialStyle ?? materialStyle}
             />
           </button>
         )}

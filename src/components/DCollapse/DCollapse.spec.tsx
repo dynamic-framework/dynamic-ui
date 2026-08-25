@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import { ComponentProps } from 'react';
 import DCollapse from '.';
+import { DContextProvider } from '../../contexts';
 
 describe('<DCollapse />', () => {
   const HeaderMock = <>Header Content</>;
@@ -141,5 +142,50 @@ describe('<DCollapse />', () => {
 
     fireEvent.click(toggleButton);
     expect(toggleButton.innerHTML).toContain('chevron-up');
+  });
+
+  it('falls back to context icon configuration when no icon family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DCollapse Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.collapse-icon');
+    expect(icon?.className).toContain('material-symbols-outlined');
+    expect(icon?.tagName).toBe('I');
+  });
+
+  it('prioritizes local icon family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DCollapse
+          Component={HeaderMock}
+          iconMaterialStyle={false}
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+        >
+          {BodyMock}
+        </DCollapse>
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.collapse-icon');
+    expect(icon?.className).not.toContain('material-symbols-outlined');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 });

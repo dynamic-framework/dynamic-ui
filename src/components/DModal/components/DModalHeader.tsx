@@ -26,7 +26,7 @@ export default function DModalHeader(
     iconFamilyClass,
     iconFamilyPrefix,
     icon: iconProp,
-    iconMaterialStyle = false,
+    iconMaterialStyle,
   }: Props,
 ) {
   const {
@@ -58,9 +58,9 @@ export default function DModalHeader(
           >
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass || familyClass}
-              familyPrefix={iconFamilyPrefix || familyPrefix}
-              materialStyle={iconMaterialStyle || materialStyle}
+              familyClass={iconFamilyClass ?? familyClass}
+              familyPrefix={iconFamilyPrefix ?? familyPrefix}
+              materialStyle={iconMaterialStyle ?? materialStyle}
             />
           </button>
         )}

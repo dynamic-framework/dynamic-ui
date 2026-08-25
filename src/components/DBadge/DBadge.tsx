@@ -77,18 +77,18 @@ export default function DBadge(props: Props) {
       {iconStart && (
         <DIcon
           icon={iconStart}
-          familyClass={iconFamilyClass || familyClass}
-          familyPrefix={iconFamilyPrefix || familyPrefix}
-          materialStyle={iconMaterialStyle || materialStyle}
+          familyClass={iconFamilyClass ?? familyClass}
+          familyPrefix={iconFamilyPrefix ?? familyPrefix}
+          materialStyle={iconMaterialStyle ?? materialStyle}
         />
       )}
       <span>{text}</span>
       {iconEnd && (
         <DIcon
           icon={iconEnd}
-          familyClass={iconFamilyClass || familyClass}
-          familyPrefix={iconFamilyPrefix || familyPrefix}
-          materialStyle={iconMaterialStyle || materialStyle}
+          familyClass={iconFamilyClass ?? familyClass}
+          familyPrefix={iconFamilyPrefix ?? familyPrefix}
+          materialStyle={iconMaterialStyle ?? materialStyle}
         />
       )}
     </span>
