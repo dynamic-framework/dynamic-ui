@@ -23,7 +23,7 @@ const mockRecords = [
   'May statement',
 ];
 
-const meta: Meta<typeof DInputSearch> = {
+const meta = {
   title: 'Design System/Components/Input Search',
   component: DInputSearch,
   tags: ['autodocs'],
@@ -69,11 +69,11 @@ const meta: Meta<typeof DInputSearch> = {
       table: { category: 'Events' },
     },
   },
-};
+} satisfies Meta<typeof DInputSearch>;
 
 export default meta;
 
-type Story = StoryObj<typeof DInputSearch>;
+type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   args: {

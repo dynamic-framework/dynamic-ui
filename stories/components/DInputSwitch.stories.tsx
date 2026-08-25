@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputSwitch> = {
+const meta = {
   title: 'Design System/Components/Input Switch',
   component: DInputSwitch,
   parameters: {
@@ -99,10 +99,10 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputSwitch>;
 
-export default config;
-type Story = StoryObj<typeof DInputSwitch>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const WithoutLabel: Story = {
   args: {

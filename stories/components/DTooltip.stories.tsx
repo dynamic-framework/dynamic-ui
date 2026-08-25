@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import { PREFIX_BS } from '../../src/components/config';
 import DTooltip from '../../src/components/DTooltip/DTooltip';
 
-const config: Meta<typeof DTooltip> = {
+const meta = {
   title: 'Design System/Components/Tooltip',
   component: DTooltip,
   parameters: {
@@ -89,10 +89,10 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DTooltip>;
 
-export default config;
-type Story = StoryObj<typeof DTooltip>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Top: Story = {
   args: {

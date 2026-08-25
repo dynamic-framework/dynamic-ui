@@ -7,7 +7,7 @@ import {
   DContextProvider,
 } from '../../src';
 
-const config: Meta<typeof DBadge> = {
+const meta = {
   title: 'Design System/Components/Badge',
   component: DBadge,
   parameters: {
@@ -117,10 +117,10 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBadge>;
 
-export default config;
-type Story = StoryObj<typeof DBadge>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

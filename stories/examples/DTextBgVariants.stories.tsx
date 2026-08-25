@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-const config: Meta = {
+const meta = {
   title: 'Design System/Examples/Text Background Variants',
   parameters: {
     layout: 'centered',
@@ -19,10 +19,10 @@ These classes can be applied to various components like cards, badges, toasts, a
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta;
 
-export default config;
-type Story = StoryObj;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const AllVariants: Story = {
   render: () => (

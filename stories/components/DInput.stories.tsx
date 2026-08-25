@@ -7,7 +7,7 @@ import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInput> = {
+const meta = {
   title: 'Design System/Components/Input',
   component: DInput,
   parameters: {
@@ -297,10 +297,10 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInput>;
 
-export default config;
-type Story = StoryObj<typeof DInput>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

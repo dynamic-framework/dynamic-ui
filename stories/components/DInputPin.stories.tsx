@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DInputPin from '../../src/components/DInputPin/DInputPin';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputPin> = {
+const meta = {
   title: 'Design System/Components/Input Pin',
   component: DInputPin,
   parameters: {
@@ -142,10 +142,10 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputPin>;
 
-export default config;
-type Story = StoryObj<typeof DInputPin>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

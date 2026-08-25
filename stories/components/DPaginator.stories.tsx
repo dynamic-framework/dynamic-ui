@@ -1,12 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { ComponentProps } from 'react';
 
 import DPaginator from '../../src/components/DPaginator/DPaginator';
 import { PREFIX_BS } from '../../src/components/config';
 
-type Story = StoryObj<typeof DPaginator>;
-
-const meta: Meta<typeof DPaginator> = {
+const meta = {
   title: 'Design System/Components/Paginator',
   component: DPaginator,
   parameters: {
@@ -29,7 +26,7 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
 | --${PREFIX_BS}pagination-page-border-radius          | .pagination | css border radius unit | Radius page item             |
 | --${PREFIX_BS}pagination-page-control-color          | .pagination | css color unit         | Page control color           |
 | --${PREFIX_BS}pagination-page-control-disabled-color | .pagination | css color unit         | Page control disabled color  |
-       `,
+`,
       },
     },
   },
@@ -129,28 +126,24 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
     },
   },
   tags: ['autodocs'],
-  render: function Render(props: ComponentProps<typeof DPaginator>) {
-    return (
-      <DPaginator
-        {...props}
-      />
-    );
-  },
   decorators: [
     (Story) => (
-      <div style={{ width: '800' }}>
+      <div style={{ width: 800 }}>
         <Story />
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DPaginator>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     total: 20,
     maxWidth: 400,
+    current: 1,
+    onPageChange: () => {},
   },
 };
 
@@ -160,6 +153,8 @@ export const LabelArrows: Story = {
     nextLabel: 'Next',
     previousLabel: 'Previous',
     maxWidth: 200,
+    current: 1,
+    onPageChange: () => {},
   },
 };
 
@@ -168,6 +163,8 @@ export const NoArrows: Story = {
     renderNav: false,
     total: 20,
     maxWidth: 200,
+    current: 1,
+    onPageChange: () => {},
   },
 };
 
@@ -176,6 +173,7 @@ export const CustomCurrentPage: Story = {
     total: 20,
     current: 10,
     maxWidth: 200,
+    onPageChange: () => {},
   },
 };
 
@@ -183,5 +181,7 @@ export const CustomMaxWidth: Story = {
   args: {
     total: 20,
     maxWidth: 400,
+    current: 1,
+    onPageChange: () => {},
   },
 };

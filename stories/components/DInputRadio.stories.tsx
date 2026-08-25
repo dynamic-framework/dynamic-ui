@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputCheck> = {
+const meta = {
   title: 'Design System/Components/Input Radio',
   component: DInputCheck,
   parameters: {
@@ -92,10 +92,10 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputCheck>;
 
-export default config;
-type Story = StoryObj<typeof DInputCheck>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const RadioWithoutLabel: Story = {
   args: {

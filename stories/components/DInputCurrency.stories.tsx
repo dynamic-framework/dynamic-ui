@@ -29,7 +29,7 @@ function renderWithState(cssText?: string) {
   };
 }
 
-const config: Meta<typeof DInputCurrency> = {
+const meta = {
   title: 'Design System/Components/Input Currency',
   component: DInputCurrency,
   parameters: {
@@ -274,10 +274,10 @@ regular \`className\`:
   },
   tags: ['autodocs'],
   render: renderWithState(),
-};
+} satisfies Meta<typeof DInputCurrency>;
 
-export default config;
-type Story = StoryObj<typeof DInputCurrency>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

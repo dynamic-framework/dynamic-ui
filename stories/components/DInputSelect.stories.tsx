@@ -6,7 +6,7 @@ import { PREFIX_BS } from '../../src/components/config';
 
 import type { DInputSelectProps } from '../../src/components/DInputSelect';
 
-const config: Meta<typeof DInputSelect> = {
+const meta = {
   title: 'Design System/Components/Input Select',
   component: DInputSelect,
   parameters: {
@@ -241,10 +241,10 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputSelect>;
 
-export default config;
-type Story = StoryObj<typeof DInputSelect>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

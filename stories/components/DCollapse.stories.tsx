@@ -7,7 +7,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
-const config: Meta<typeof DCollapse> = {
+const meta = {
   title: 'Design System/Components/Collapse',
   component: DCollapse,
   parameters: {
@@ -111,10 +111,10 @@ const config: Meta<typeof DCollapse> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCollapse>;
 
-export default config;
-type Story = StoryObj<typeof DCollapse>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const HeaderText: Story = {
   decorators: [
