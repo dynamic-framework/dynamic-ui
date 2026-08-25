@@ -11,6 +11,7 @@ import type {
   EndIconProps,
   StartIconProps,
 } from '../../interface';
+import { useDContext } from '../../../contexts';
 
 type Props =
 & BaseProps
@@ -49,6 +50,14 @@ export default function DListGroupItem(
     dataAttributes,
   }: Props,
 ) {
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
+
   const Tag = useMemo(() => {
     if (href) {
       return 'a';
@@ -105,18 +114,18 @@ export default function DListGroupItem(
       {iconStart && (
         <DIcon
           icon={iconStart}
-          familyClass={iconStartFamilyClass}
-          familyPrefix={iconStartFamilyPrefix}
-          materialStyle={iconStartMaterialStyle}
+          familyClass={iconStartFamilyClass || familyClass}
+          familyPrefix={iconStartFamilyPrefix || familyPrefix}
+          materialStyle={iconStartMaterialStyle || materialStyle}
         />
       )}
       {children}
       {iconEnd && (
         <DIcon
           icon={iconEnd}
-          familyClass={iconEndFamilyClass}
-          familyPrefix={iconEndFamilyPrefix}
-          materialStyle={iconEndMaterialStyle}
+          familyClass={iconEndFamilyClass || familyClass}
+          familyPrefix={iconEndFamilyPrefix || familyPrefix}
+          materialStyle={iconEndMaterialStyle || materialStyle}
           className="ms-auto"
         />
       )}

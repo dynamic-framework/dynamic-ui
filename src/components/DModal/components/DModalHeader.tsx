@@ -12,7 +12,7 @@ type Props =
 & PropsWithChildren<{
   showCloseButton?: boolean;
   icon?: string;
-  materialStyle?: boolean;
+  iconMaterialStyle?: boolean;
   onClose?: () => void;
 }>;
 
@@ -26,10 +26,15 @@ export default function DModalHeader(
     iconFamilyClass,
     iconFamilyPrefix,
     icon: iconProp,
-    materialStyle = false,
+    iconMaterialStyle = false,
   }: Props,
 ) {
   const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
     iconMap: {
       xLg,
     },
@@ -53,9 +58,9 @@ export default function DModalHeader(
           >
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={materialStyle}
+              familyClass={iconFamilyClass || familyClass}
+              familyPrefix={iconFamilyPrefix || familyPrefix}
+              materialStyle={iconMaterialStyle || materialStyle}
             />
           </button>
         )}

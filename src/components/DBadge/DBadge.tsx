@@ -5,6 +5,7 @@ import type { BaseProps, ComponentColor } from '../interface';
 import DIcon from '../DIcon';
 
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
+import { useDContext } from '../../contexts';
 
 type Props =
   & BaseProps
@@ -40,6 +41,14 @@ export default function DBadge(props: Props) {
     dataAttributes,
   } = props;
 
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
+
   // Responsive size resolution using useResponsiveProp
   const { responsivePropValue } = useResponsiveProp(true);
   const resolvedSize = useMemo(() => {
@@ -68,18 +77,18 @@ export default function DBadge(props: Props) {
       {iconStart && (
         <DIcon
           icon={iconStart}
-          familyClass={iconFamilyClass}
-          familyPrefix={iconFamilyPrefix}
-          materialStyle={iconMaterialStyle}
+          familyClass={iconFamilyClass || familyClass}
+          familyPrefix={iconFamilyPrefix || familyPrefix}
+          materialStyle={iconMaterialStyle || materialStyle}
         />
       )}
       <span>{text}</span>
       {iconEnd && (
         <DIcon
           icon={iconEnd}
-          familyClass={iconFamilyClass}
-          familyPrefix={iconFamilyPrefix}
-          materialStyle={iconMaterialStyle}
+          familyClass={iconFamilyClass || familyClass}
+          familyPrefix={iconFamilyPrefix || familyPrefix}
+          materialStyle={iconMaterialStyle || materialStyle}
         />
       )}
     </span>

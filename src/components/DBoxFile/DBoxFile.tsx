@@ -33,7 +33,14 @@ export default function DBoxFile(
     ...props
   }: Props,
 ) {
-  const { iconMap: { upload } } = useDContext();
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+    iconMap: { upload },
+  } = useDContext();
   const icon = useMemo(() => iconProp || upload, [iconProp, upload]);
 
   const {
@@ -95,9 +102,9 @@ export default function DBoxFile(
           {icon && iconProp !== false && (
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={iconMaterialStyle}
+              familyClass={iconFamilyClass || familyClass}
+              familyPrefix={iconFamilyPrefix || familyPrefix}
+              materialStyle={iconMaterialStyle || materialStyle}
             />
           )}
           <div className="d-box-content">

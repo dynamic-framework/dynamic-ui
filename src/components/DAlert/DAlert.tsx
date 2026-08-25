@@ -46,6 +46,11 @@ export default function DAlert(
   }: Props,
 ) {
   const {
+    icon: {
+      materialStyle,
+      familyClass,
+      familyPrefix,
+    },
     iconMap: {
       alert,
       xLg,
@@ -76,9 +81,9 @@ export default function DAlert(
         <DIcon
           className="alert-icon"
           icon={icon}
-          familyClass={iconFamilyClass}
-          familyPrefix={iconFamilyPrefix}
-          materialStyle={iconMaterialStyle}
+          familyClass={iconFamilyClass || familyClass}
+          familyPrefix={iconFamilyPrefix || familyPrefix}
+          materialStyle={iconMaterialStyle || materialStyle}
         />
       )}
       <div className="alert-text">
@@ -93,9 +98,9 @@ export default function DAlert(
         >
           <DIcon
             icon={iconClose}
-            familyClass={iconCloseFamilyClass}
-            familyPrefix={iconCloseFamilyPrefix}
-            materialStyle={iconCloseMaterialStyle}
+            familyClass={iconCloseFamilyClass || familyClass}
+            familyPrefix={iconCloseFamilyPrefix || familyPrefix}
+            materialStyle={iconCloseMaterialStyle || materialStyle}
           />
         </button>
       )}

@@ -25,6 +25,7 @@ import type {
   StartIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
+import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -99,6 +100,14 @@ function DInput(
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event.currentTarget.value);
@@ -221,9 +230,9 @@ function DInput(
             >
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-                materialStyle={iconStartMaterialStyle}
+                familyClass={iconStartFamilyClass || familyClass}
+                familyPrefix={iconStartFamilyPrefix || familyPrefix}
+                materialStyle={iconStartMaterialStyle || materialStyle}
               />
             </button>
           ) : (
@@ -235,9 +244,9 @@ function DInput(
             >
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-                materialStyle={iconStartMaterialStyle}
+                familyClass={iconStartFamilyClass || familyClass}
+                familyPrefix={iconStartFamilyPrefix || familyPrefix}
+                materialStyle={iconStartMaterialStyle || materialStyle}
               />
             </div>
           )
@@ -256,9 +265,9 @@ function DInput(
             >
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-                materialStyle={iconEndMaterialStyle}
+                familyClass={iconEndFamilyClass || familyClass}
+                familyPrefix={iconEndFamilyPrefix || familyPrefix}
+                materialStyle={iconEndMaterialStyle || materialStyle}
               />
             </button>
           ) : (
@@ -270,9 +279,9 @@ function DInput(
             >
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-                materialStyle={iconEndMaterialStyle}
+                familyClass={iconEndFamilyClass || familyClass}
+                familyPrefix={iconEndFamilyPrefix || familyPrefix}
+                materialStyle={iconEndMaterialStyle || materialStyle}
               />
             </div>
           )

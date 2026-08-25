@@ -4,6 +4,7 @@ import DStepperDesktop from '../DStepperDesktop';
 import DStepperMobile from '../DStepperMobile';
 
 import type { BaseProps, BreakpointSize } from '../interface';
+import { useDContext } from '../../contexts';
 
 export type Step = {
   label: string;
@@ -37,8 +38,16 @@ export default function DStepper(
     completed = false,
     style,
     dataAttributes,
-  } : Props,
+  }: Props,
 ) {
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
+
   return (
     <div
       className={className}
@@ -57,9 +66,9 @@ export default function DStepper(
           currentStep={currentStep}
           vertical={vertical}
           iconSuccess={iconSuccess}
-          iconSuccessFamilyClass={iconSuccessFamilyClass}
-          iconSuccessFamilyPrefix={iconSuccessFamilyPrefix}
-          iconSuccessMaterialStyle={iconSuccessMaterialStyle}
+          iconSuccessFamilyClass={iconSuccessFamilyClass || familyClass}
+          iconSuccessFamilyPrefix={iconSuccessFamilyPrefix || familyPrefix}
+          iconSuccessMaterialStyle={iconSuccessMaterialStyle || materialStyle}
           completed={completed}
         />
       </div>

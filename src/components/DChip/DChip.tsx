@@ -50,6 +50,11 @@ export default function DChip(
     [color],
   );
   const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
     iconMap: {
       xLg,
     },
@@ -65,9 +70,9 @@ export default function DChip(
         <div className="d-chip-icon-container">
           <DIcon
             icon={icon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={iconMaterialStyle}
+            familyClass={iconFamilyClass || familyClass}
+            familyPrefix={iconFamilyPrefix || familyPrefix}
+            materialStyle={iconMaterialStyle || materialStyle}
           />
         </div>
       )}
@@ -81,9 +86,9 @@ export default function DChip(
         >
           <DIcon
             icon={iconClose}
-            familyClass={iconCloseFamilyClass}
-            familyPrefix={iconCloseFamilyPrefix}
-            materialStyle={iconCloseMaterialStyle}
+            familyClass={iconCloseFamilyClass || familyClass}
+            familyPrefix={iconCloseFamilyPrefix || familyPrefix}
+            materialStyle={iconCloseMaterialStyle || materialStyle}
           />
         </button>
       )}
