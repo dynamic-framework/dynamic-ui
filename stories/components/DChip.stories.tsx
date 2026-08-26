@@ -235,9 +235,6 @@ export const MaterialIcon: Story = {
       description: {
         story: 'Chips using Material Icons instead of default Icons.',
       },
-      canvas: {
-        sourceState: 'shown',
-      },
     },
   },
 };

@@ -409,7 +409,7 @@ export const AsAnchor: Story = {
  * and the flag `materialStyle=true` or use the flags directly over the
  * `DButtonIcon` component as a props
  */
-export const MaterialSecondaryIconRight: Story = {
+export const IconMaterialSyntax: Story = {
   render: (args: ComponentProps<typeof DButtonIcon>) => (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}

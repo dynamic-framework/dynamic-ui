@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
-import { ICONS, THEMES } from '../config/constants';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
 import {
   DContextProvider,
 } from '../../src';
@@ -263,5 +263,30 @@ export const Rounded: Story = {
         story: 'Badges with rounded styling (pill shape).',
       },
     },
+  },
+};
+
+export const MaterialIconsSyntax: Story = {
+  args: {
+    color: 'primary',
+    text: 'Badge',
+    iconStart: 'home',
+    iconMaterialStyle: true,
+    iconFamilyClass: 'material-symbols-outlined',
+    iconEnd: 'star',
+  },
+};
+
+export const MaterialIconsSyntaxFromContext: Story = {
+  render: (args) => (
+    <DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}>
+      <DBadge {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    color: 'primary',
+    text: 'Badge',
+    iconStart: 'home',
+    iconEnd: 'star',
   },
 };
