@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { PREFIX_BS } from '../../src/components/config';
-import DTooltip from '../../src/components/DTooltip/DTooltip';
+import { DButton, DTooltip } from '../../src';
 
 const config: Meta<typeof DTooltip> = {
   title: 'Design System/Components/Tooltip',
@@ -87,6 +87,11 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
       type: 'number',
       table: { category: 'Appearance' },
     },
+    size: {
+      control: 'select',
+      options: [undefined, 'sm', 'lg'],
+      table: { category: 'Appearance' },
+    },
   },
   tags: ['autodocs'],
 };
@@ -94,7 +99,7 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
 export default config;
 type Story = StoryObj<typeof DTooltip>;
 
-export const Top: Story = {
+export const Default: Story = {
   args: {
     placement: 'top',
     Component: 'Text',
@@ -103,150 +108,64 @@ export const Top: Story = {
     withClick: false,
     withFocus: false,
     open: true,
+    childrenClassName: '',
+    className: '',
+    dataAttributes: {},
+    offSet: 10,
+    padding: 10,
+    size: undefined,
+    style: { maxWidth: '200px' },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Base case: hover-triggered tooltip positioned above its trigger. Use this as the starting point for most tooltips, then explore the `placement` and `size` controls to adapt it to your layout.',
+      },
+    },
   },
 };
 
-export const Right: Story = {
-  args: {
-    placement: 'right',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-  },
-};
-
-export const Bottom: Story = {
-  args: {
-    placement: 'bottom',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-  },
-};
-
-export const Left: Story = {
-  args: {
-    placement: 'left',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-  },
-};
-
-export const SmallTop: Story = {
+export const ClickTriggered: Story = {
   args: {
     placement: 'top',
     Component: 'Text',
     children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
+    withHover: false,
+    withClick: true,
     withFocus: false,
     open: false,
-    size: 'sm',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Opens and closes on click instead of hover (`withClick`). Use this for touch-friendly UIs or when the tooltip content itself needs to remain visible while the user interacts with the page.',
+      },
+    },
   },
 };
 
-export const SmallRight: Story = {
-  args: {
-    placement: 'right',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'sm',
-  },
-};
-
-export const SmallBottom: Story = {
-  args: {
-    placement: 'bottom',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'sm',
-  },
-};
-
-export const SmallLeft: Story = {
-  args: {
-    placement: 'left',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'sm',
-  },
-};
-
-export const LargeTop: Story = {
+export const FocusAccessible: Story = {
   args: {
     placement: 'top',
-    Component: 'Text',
+    // `withFocus` only works when the trigger is a real focusable element
+    // (link, button, input...), not plain text without a tabIndex.
+    Component: <DButton type="button">Focus me</DButton>,
     children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
-    withFocus: false,
+    withFocus: true,
     open: false,
-    size: 'lg',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Also opens when the trigger receives keyboard focus (`withFocus`). Enable this whenever the trigger is a focusable element (link, button, input) so the tooltip is accessible without a mouse. Press Tab in the canvas to focus the button and see it appear.',
+      },
+    },
   },
 };
 
-export const LargeRight: Story = {
-  args: {
-    placement: 'right',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'lg',
-  },
-};
-
-export const LargeBottom: Story = {
-  args: {
-    placement: 'bottom',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'lg',
-  },
-};
-
-export const LargeLeft: Story = {
-  args: {
-    placement: 'left',
-    Component: 'Text',
-    children: 'Lorem Ipsum',
-    withHover: true,
-    withClick: false,
-    withFocus: false,
-    open: false,
-    size: 'lg',
-  },
-};
-
-export const LargeText: Story = {
+export const LongContent: Story = {
   args: {
     placement: 'left',
     Component: 'Text',
@@ -256,5 +175,12 @@ export const LargeText: Story = {
     withFocus: false,
     open: false,
     size: 'lg',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Verifies the tooltip wraps and resizes correctly with long content, staying readable and properly positioned instead of overflowing the viewport.',
+      },
+    },
   },
 };
