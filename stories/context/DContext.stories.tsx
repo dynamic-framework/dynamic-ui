@@ -141,7 +141,7 @@ export const CurrencySettings: Story = {
  * to place the name of the icon in the children of `<i />` and not as a class.
  * This setting can be used with any icon font that uses a similar style.
  *
- * See more about this in <a href="?path=/docs/design-system-examples-icons--docs">Examples/Icons</a>
+ * See more about this in <a href="?path=/docs/design-system-components-icon-usage--docs">Components/Icon/Usage</a>
  */
 export const IconSettings: Story = {
   parameters: {

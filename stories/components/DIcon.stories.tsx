@@ -128,7 +128,7 @@ Icon names use **PascalCase** (e.g., \`Home\`, \`Settings\`, \`User\`)
 
 ## Migration Guide
 
-See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating from Bootstrap Icons.
+See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icons-v2-0-0--docs) for migrating from Bootstrap Icons.
         `,
       },
       controls: {

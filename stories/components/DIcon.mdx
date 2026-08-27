@@ -1,0 +1,191 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import {
+  ExampleLucideIcons,
+  ExampleIconRegistry,
+  ExampleDirectSvgIcon,
+  ExampleBootstrapIcons,
+  ExampleMaterialIcons,
+} from './DIconExamples';
+
+<Meta title="Design System/Components/Icon/Usage" />
+
+## Icons
+
+The `DIcon` component is a versatile icon component. It can render icons from four different sources, resolved in the following order of priority:
+
+1. **`iconRegistry`** — a custom map of `name -> SVG component` configured on `DContextProvider`.
+2. **Direct SVG/React component** — passing a component directly as the `icon` prop.
+3. **[Lucide Icons](https://lucide.dev)** — the default and recommended source. Pass the PascalCase name of any [Lucide icon](https://lucide.dev/icons/) (e.g. `"User"`, `"Home"`, `"Settings"`).
+4. **Legacy icon fonts** — Bootstrap-style or Material-style class-based fonts, used as a fallback when the string doesn't match a Lucide icon name.
+
+If none of the above resolve the icon, `DIcon` renders a `"?"` placeholder and logs a console warning.
+
+### Lucide Icons (default)
+
+No configuration is required. Just use the PascalCase icon name:
+
+<Unstyled>
+  <ExampleLucideIcons />
+</Unstyled>
+
+<Source
+  code={`
+<DIcon icon="User" />
+<DIcon icon="Home" />
+<DIcon icon="Settings" />
+<DIcon icon="Heart" />
+  `}
+  language="jsx"
+/>
+
+### Custom SVG Registry (`iconRegistry`)
+
+The `DContextProvider` accepts an `iconRegistry` prop: a `Record<string, IconComponent>`, where `IconComponent` is `ComponentType<SVGProps<SVGSVGElement>>`. This lets you plug in your own SVG icon components (e.g. a shared design-system icon set) and reference them by name, just like Lucide icons.
+
+**Important:** `iconRegistry` only works with SVG React components — it does **not** work with icon-font syntax (Bootstrap classes, Material icon names, Font Awesome, etc.). If you need custom icon fonts, use the `icon` object on `DContextProvider` (see below) instead.
+
+<Source
+  code={`
+import type { SVGProps } from 'react';
+import { DContextProvider, DIcon } from '@dynamic-framework/ui-react';
+
+const MyIcons = {
+  Logo: (props: SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" {...props}>
+      <path d="..." />
+    </svg>
+  ),
+};
+
+<DContextProvider iconRegistry={MyIcons}>
+  <DIcon icon="Logo" />
+</DContextProvider>
+  `}
+  language="jsx"
+/>
+
+<Unstyled>
+  <ExampleIconRegistry />
+</Unstyled>
+
+Note that names not found in the registry (like `"User"`) still fall through to Lucide, since resolution order is preserved.
+
+You can also pass an SVG component directly as the `icon` prop, without registering it:
+
+<Source
+  code={`
+<DIcon icon={MyIcons.Logo} />
+  `}
+  language="jsx"
+/>
+
+<Unstyled>
+  <ExampleDirectSvgIcon />
+</Unstyled>
+
+### Legacy Icon Fonts (Bootstrap / Material style)
+
+When a string `icon` doesn't match a Lucide name (and isn't found in `iconRegistry`), `DIcon` falls back to class-based icon fonts. This is configured via the `icon` object on `DContextProvider`:
+
+- `familyPrefix`: The prefix for the icon class (e.g., `bi-` for Bootstrap).
+- `familyClass`: The class for the icon family (e.g., `bi` for Bootstrap icons).
+- `materialStyle`: A boolean flag that determines how the icon is rendered. If `true`, the icon name is rendered as the content of the tag (Material Icons style). If `false`, the icon is rendered via a CSS class (Bootstrap/Font Awesome style).
+
+<Source
+  code={`
+<DContextProvider
+  icon={{
+    familyClass: 'bi',
+    familyPrefix: 'bi-',
+    materialStyle: false,
+  }}
+>
+  <DIcon icon="user" />
+</DContextProvider>
+  `}
+  language="jsx"
+/>
+
+<Unstyled>
+  <ExampleBootstrapIcons />
+</Unstyled>
+
+#### Material Style Flag
+
+This flag comes in handy when you have icon fonts that need to be included as the content of the tag.
+
+Following example show the output of `DIcon` component with and without the `materialStyle` flag.
+
+<Source
+  code={`
+  // Disabled Material Style Flag (default)
+<i class="bi bi-user"></i>
+  `}
+  language="html"
+/>
+
+<Source
+  code={`
+  // Enabled Material Style Flag
+<i class="material-symbols-outlined">user</i>
+  `}
+  language="html"
+/>
+
+<Unstyled>
+  <ExampleMaterialIcons />
+</Unstyled>
+
+
+## Example Usage
+
+#### Bootstrap Icons
+
+```jsx
+<DContextProvider
+  icon={{
+    familyPrefix: 'bi-',
+    familyClass: 'bi',
+    materialStyle: false,
+  }}
+>
+  <DIcon icon="user" />
+</DContextProvider>
+```
+
+#### Font Awesome Icons
+
+To use Font Awesome icons, configure the `DContextProvider` as follows:
+
+```jsx
+<DContextProvider
+  icon={{
+    familyPrefix: 'fa-',
+    familyClass: 'fa-solid',
+    materialStyle: false,
+  }}
+>
+  <DIcon icon="user" />
+</DContextProvider>
+```
+
+#### Material Icons
+
+To use Material icons, configure the `DContextProvider` as follows:
+
+```jsx
+<DContextProvider
+  icon={{
+    familyPrefix: '',
+    familyClass: 'material-symbols-outlined',
+    materialStyle: true,
+  }}
+>
+  <DIcon icon="user" />
+</DContextProvider>
+```
+
