@@ -155,7 +155,7 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
       control: 'select',
       options: ['Map', ...ICONS],
       type: { name: 'string', required: true },
-      description: 'Icon name in PascalCase (e.g., Home, Settings, User)',
+      description: 'Icon name in PascalCase (e.g., Home, Settings, User), or an SVG component',
       table: { category: 'Content' },
     },
     color: {
@@ -164,6 +164,21 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
       type: 'string',
       description: 'Color of the icon (theme-based)',
       table: { category: 'Appearance' },
+    },
+    size: {
+      control: 'text',
+      type: 'string',
+      description: 'Icon size (css length unit), or a responsive object keyed by breakpoint (e.g., { xs: "16", md: "32" })',
+      table: { category: 'Appearance' },
+    },
+    useListenerSize: {
+      type: 'boolean',
+      control: 'boolean',
+      description: 'Enables real-time breakpoint listeners for responsive size changes',
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     strokeWidth: {
       type: 'number',
@@ -194,9 +209,17 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
     },
     familyClass: {
       type: 'string',
-      description: 'Icon font family class (for Material Design or custom icon sets)',
+      control: 'text',
+      description: 'Icon font family class (for Material Design or custom icon sets). Resolved via DContextProvider when not set (default: "bi")',
       table: {
-        defaultValue: { summary: 'material-symbols-outlined' },
+        category: 'Icon',
+      },
+    },
+    familyPrefix: {
+      type: 'string',
+      control: 'text',
+      description: 'Icon font class prefix (e.g., "bi-" for Bootstrap Icons). Resolved via DContextProvider when not set (default: "bi-")',
+      table: {
         category: 'Icon',
       },
     },
