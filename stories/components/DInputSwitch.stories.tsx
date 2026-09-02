@@ -68,6 +68,12 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       type: 'string',
       table: { category: 'Content' },
     },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'The ARIA label for the input, used when there is no visible label',
+      table: { category: 'HTML Attributes' },
+    },
     checked: {
       control: 'boolean',
       type: 'boolean',
