@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   DDataStateWrapper,
   DInputSearch,
-} from '../../src/components';
+} from '../../src';
 
 const mockRecords = [
   'Life policy #1021',
@@ -35,6 +35,12 @@ const meta: Meta<typeof DInputSearch> = {
     },
   },
   argTypes: {
+    id: {
+      control: 'text',
+      type: 'string',
+      description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
+    },
     label: {
       control: 'text',
       description: 'Input label.',
@@ -45,10 +51,40 @@ const meta: Meta<typeof DInputSearch> = {
       description: 'Input placeholder.',
       table: { category: 'Content' },
     },
+    hint: {
+      control: 'text',
+      type: 'string',
+      description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
+    },
     debounceMs: {
       control: 'number',
       description: 'Debounce delay in milliseconds for onChange.',
       table: { category: 'Behavior' },
+    },
+    disabled: {
+      control: 'boolean',
+      type: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
+    },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
+    },
+    valid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     value: {
       control: false,
@@ -75,11 +111,43 @@ export default meta;
 
 type Story = StoryObj<typeof DInputSearch>;
 
-export const Playground: Story = {
+export const Default: Story = {
   args: {
     label: 'Search',
     placeholder: 'Search policy, account, or transaction',
     debounceMs: 300,
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Search',
+    placeholder: 'Search policy, account, or transaction',
+    debounceMs: 300,
+    hint: 'Assistive text',
+    invalid: true,
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    id: 'componentId3',
+    label: 'Search',
+    placeholder: 'Search policy, account, or transaction',
+    debounceMs: 300,
+    hint: 'Assistive text',
+    valid: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    id: 'componentId4',
+    label: 'Search',
+    placeholder: 'Search policy, account, or transaction',
+    debounceMs: 300,
+    disabled: true,
   },
 };
 

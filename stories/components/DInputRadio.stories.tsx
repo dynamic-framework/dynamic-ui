@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
+import { DInputCheck } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCheck> = {
@@ -47,10 +47,17 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
     className: {
       control: 'text',
       type: 'string',
+      description: 'The class name for the wrapper div',
       table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
+    },
+    inputClassName: {
+      control: 'text',
+      type: 'string',
+      description: 'The class name for the input element',
       table: { category: 'Appearance' },
     },
     type: {
@@ -74,6 +81,7 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
     ariaLabel: {
       control: 'text',
       type: 'string',
+      description: 'The ARIA label for the input, used when there is no visible label',
       table: { category: 'HTML Attributes' },
     },
     checked: {
@@ -86,9 +94,24 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
       type: 'boolean',
       table: { category: 'Behavior' },
     },
-    indeterminate: {
+    hint: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Content' },
+    },
+    valid: {
       control: 'boolean',
+      type: 'boolean',
       table: { category: 'Behavior' },
+    },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { category: 'Behavior' },
+    },
+    onChange: {
+      action: 'onChange',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],
@@ -97,8 +120,26 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
 export default config;
 type Story = StoryObj<typeof DInputCheck>;
 
-export const RadioWithoutLabel: Story = {
+export const Default: Story = {
   args: {
+    id: 'componentId1',
+    type: 'radio',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    hint: 'Assistive text',
+    valid: false,
+    invalid: false,
+    name: 'defaultRadio',
+    className: '',
+    value: 'value',
+    inputClassName: '',
+  },
+};
+
+export const WithoutLabel: Story = {
+  args: {
+    id: 'componentId2',
     type: 'radio',
     checked: false,
     disabled: false,
@@ -106,19 +147,9 @@ export const RadioWithoutLabel: Story = {
   },
 };
 
-export const RadioDefault: Story = {
+export const Hint: Story = {
   args: {
-    id: 'componentId2',
-    type: 'radio',
-    label: 'Label',
-    checked: false,
-    disabled: false,
-  },
-};
-
-export const RadioHint: Story = {
-  args: {
-    id: 'componentId2',
+    id: 'componentId3',
     type: 'radio',
     label: 'Label',
     hint: 'Assistive text',
@@ -127,31 +158,33 @@ export const RadioHint: Story = {
   },
 };
 
-export const RadioValid: Story = {
-  args: {
-    id: 'componentId3',
-    type: 'radio',
-    label: 'Label',
-    checked: false,
-    disabled: false,
-    valid: true,
-  },
-};
-
-export const RadioInvalid: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId4',
     type: 'radio',
     label: 'Label',
     checked: false,
     disabled: false,
-    invalid: true,
+    valid: true,
+    hint: 'Assistive text',
   },
 };
 
-export const RadioChecked: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId5',
+    type: 'radio',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    invalid: true,
+    hint: 'Assistive text',
+  },
+};
+
+export const Checked: Story = {
+  args: {
+    id: 'componentId6',
     type: 'radio',
     label: 'Label',
     checked: true,
@@ -159,9 +192,9 @@ export const RadioChecked: Story = {
   },
 };
 
-export const RadioDisabled: Story = {
+export const Disabled: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId7',
     type: 'radio',
     label: 'Label',
     checked: false,
@@ -169,9 +202,9 @@ export const RadioDisabled: Story = {
   },
 };
 
-export const RadioCheckedDisabled: Story = {
+export const CheckedDisabled: Story = {
   args: {
-    id: 'componentId7',
+    id: 'componentId8',
     type: 'radio',
     label: 'Label',
     checked: true,
