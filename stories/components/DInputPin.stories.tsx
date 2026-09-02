@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputPin from '../../src/components/DInputPin/DInputPin';
+import { DInputPin } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const meta = {

@@ -2,10 +2,9 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
-import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
+import { DInputCounter, DContextProvider } from '../../src';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProvider } from '../../src';
 
 const meta = {
   title: 'Design System/Components/Input Counter',
@@ -215,6 +214,7 @@ export const Invalid: Story = {
     invalid: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+    hint: 'Assistive text',
   },
 };
 
@@ -228,6 +228,7 @@ export const Valid: Story = {
     valid: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+    hint: 'Assistive text',
   },
 };
 

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputRange from '../../src/components/DInputRange/DInputRange';
+import { DInputRange } from '../../src';
 
 const meta = {
   title: 'Design System/Components/Input Range',

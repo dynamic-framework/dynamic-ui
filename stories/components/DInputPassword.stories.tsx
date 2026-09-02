@@ -2,10 +2,9 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
-import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
+import { DInputPassword, DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProvider } from '../../src';
 
 const meta = {
   title: 'Design System/Components/Input Password',
@@ -180,6 +179,7 @@ export const Invalid: Story = {
     value: undefined,
     invalid: true,
     iconEndAriaLabel: 'show/hide password',
+    hint: 'Assistive text',
   },
 };
 
@@ -191,6 +191,7 @@ export const Valid: Story = {
     value: undefined,
     valid: true,
     iconEndAriaLabel: 'show/hide password',
+    hint: 'Assistive text',
   },
 };
 
