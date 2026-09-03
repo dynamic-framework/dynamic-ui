@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DBox from '../../src/components/DBox/DBox';
 
-const config: Meta<typeof DBox> = {
+const meta = {
   title: 'Design System/Components/Box',
   component: DBox,
   parameters: {
@@ -40,10 +40,10 @@ Think of it as a pre-styled <code>div</code> that provides a consistent containe
       control: false,
     },
   },
-};
+} satisfies Meta<typeof DBox>;
 
-export default config;
-type Story = StoryObj<typeof DBox>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

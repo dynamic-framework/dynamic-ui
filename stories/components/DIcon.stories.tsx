@@ -60,7 +60,7 @@ const COMMONS_ICONS = {
   ),
 };
 
-const meta: Meta<typeof DIcon> = {
+const meta = {
   title: 'Design System/Components/Icon',
   component: DIcon,
   parameters: {
@@ -225,10 +225,10 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DIcon>;
 
 export default meta;
-type Story = StoryObj<typeof DIcon>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

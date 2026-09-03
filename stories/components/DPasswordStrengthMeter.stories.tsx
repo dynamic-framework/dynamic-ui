@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import DPasswordStrengthMeter from '../../src/components/DPasswordStrengthMeter/DPasswordStrengthMeter';
 
-const config: Meta<typeof DPasswordStrengthMeter> = {
+const meta = {
   title: 'Design System/Components/Password Strength Meter',
   component: DPasswordStrengthMeter,
   parameters: {
@@ -195,10 +195,10 @@ The strength bar color is calculated based on the percentage of passed checks:
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DPasswordStrengthMeter>;
 
-export default config;
-type Story = StoryObj<typeof DPasswordStrengthMeter>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

@@ -2,12 +2,11 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
-import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
+import { DInputCounter, DContextProvider } from '../../src';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProvider } from '../../src';
 
-const config: Meta<typeof DInputCounter> = {
+const meta = {
   title: 'Design System/Components/Input Counter',
   component: DInputCounter,
   parameters: {
@@ -190,10 +189,10 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputCounter>;
 
-export default config;
-type Story = StoryObj<typeof DInputCounter>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -215,6 +214,7 @@ export const Invalid: Story = {
     invalid: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+    hint: 'Assistive text',
   },
 };
 
@@ -228,6 +228,7 @@ export const Valid: Story = {
     valid: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+    hint: 'Assistive text',
   },
 };
 

@@ -43,7 +43,7 @@ const bottomSheetStyle = {
   borderTopRightRadius: '1rem',
 } as const;
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Mobile/Bottom Sheets',
   component: DBox,
   parameters: {
@@ -62,11 +62,11 @@ Open each example in its own Storybook canvas:
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 function MobileViewport(
   {

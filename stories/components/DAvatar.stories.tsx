@@ -5,7 +5,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import DAvatar from '../../src/components/DAvatar/DAvatar';
 import { AVATAR_SIZE } from '../config/constants';
 
-const config: Meta<typeof DAvatar> = {
+const meta = {
   title: 'Design System/Components/Avatar',
   component: DAvatar,
   parameters: {
@@ -75,10 +75,10 @@ const config: Meta<typeof DAvatar> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DAvatar>;
 
-export default config;
-type Story = StoryObj<typeof DAvatar>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

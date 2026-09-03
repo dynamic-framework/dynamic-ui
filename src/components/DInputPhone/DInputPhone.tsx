@@ -34,6 +34,7 @@ import type {
 import type { Merge } from '../../types';
 import { useProvidedRefOrCreate } from '../../hooks';
 import { validatePhoneNumber } from '../../utils';
+import { useDContext } from '../../contexts';
 
 type OnChangeType = {
   phone: string;
@@ -108,6 +109,14 @@ function DInputPhone(
 
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
 
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(value);
@@ -256,9 +265,9 @@ function DInputPhone(
           >
             <DIcon
               icon={iconEnd}
-              familyClass={iconEndFamilyClass}
-              familyPrefix={iconEndFamilyPrefix}
-              materialStyle={iconEndMaterialStyle}
+              familyClass={iconEndFamilyClass ?? familyClass}
+              familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+              materialStyle={iconEndMaterialStyle ?? materialStyle}
             />
           </button>
         )}
