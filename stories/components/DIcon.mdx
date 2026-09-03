@@ -15,14 +15,17 @@ import {
 
 ## Icons
 
-The `DIcon` component is a versatile icon component. It can render icons from four different sources, resolved in the following order of priority:
+The `DIcon` component is a versatile icon component. It can render icons from four different sources.
 
-1. **`iconRegistry`** — a custom map of `name -> SVG component` configured on `DContextProvider`.
-2. **Direct SVG/React component** — passing a component directly as the `icon` prop.
-3. **[Lucide Icons](https://lucide.dev)** — the default and recommended source. Pass the PascalCase name of any [Lucide icon](https://lucide.dev/icons/) (e.g. `"User"`, `"Home"`, `"Settings"`).
-4. **Legacy icon fonts** — Bootstrap-style or Material-style class-based fonts, used as a fallback when the string doesn't match a Lucide icon name.
+Passing an **SVG/React component** directly as the `icon` prop always renders that component: the resolution below applies only to a **string** `icon`, which is resolved in this order of priority:
 
-If none of the above resolve the icon, `DIcon` renders a `"?"` placeholder and logs a console warning.
+1. **`iconRegistry`** — a custom map of `name -> SVG component` configured on `DContextProvider`. A match replaces the string with its component.
+2. **[Lucide Icons](https://lucide.dev)** — the default and recommended source. Pass the PascalCase name of any [Lucide icon](https://lucide.dev/icons/) (e.g. `"User"`, `"Home"`, `"Settings"`).
+3. **Legacy icon fonts** — Bootstrap-style class-based fonts, used as a fallback when the string doesn't match a registry entry or a Lucide icon name.
+
+The `materialStyle` flag is the exception to that order: when it's `true`, every string `icon` is rendered as Material-style icon-font content and Lucide is never consulted. `iconRegistry` still wins, because a registry match turns the string into a component before that check.
+
+If a string resolves to none of the above and no icon font family is configured, `DIcon` renders a `"?"` placeholder and logs a console warning.
 
 ### Lucide Icons (default)
 
@@ -89,7 +92,7 @@ You can also pass an SVG component directly as the `icon` prop, without register
 
 ### Legacy Icon Fonts (Bootstrap / Material style)
 
-When a string `icon` doesn't match a Lucide name (and isn't found in `iconRegistry`), `DIcon` falls back to class-based icon fonts. This is configured via the `icon` object on `DContextProvider`:
+When a string `icon` isn't found in `iconRegistry` and doesn't match a Lucide name, `DIcon` falls back to class-based icon fonts. They are also used for every string `icon` when `materialStyle` is `true`, which skips the Lucide lookup entirely. This is configured via the `icon` object on `DContextProvider`:
 
 - `familyPrefix`: The prefix for the icon class (e.g., `bi-` for Bootstrap).
 - `familyClass`: The class for the icon family (e.g., `bi` for Bootstrap icons).
@@ -116,7 +119,7 @@ When a string `icon` doesn't match a Lucide name (and isn't found in `iconRegist
 
 #### Material Style Flag
 
-This flag comes in handy when you have icon fonts that need to be included as the content of the tag.
+This flag comes in handy when you have icon fonts that need to be included as the content of the tag. Keep in mind that it applies to every string `icon` in its scope, so Lucide names are not resolved while it's enabled.
 
 The following examples show the output of the `DIcon` component with and without the `materialStyle` flag.
 
