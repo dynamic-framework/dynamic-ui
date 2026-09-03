@@ -51,6 +51,7 @@ it('falls back to context icon configuration when no icon family props are provi
 
   const icon = container.querySelector('.d-icon');
   expect(icon?.className).toContain('material-symbols-outlined');
+  expect(icon).toHaveTextContent('upload');
   expect(icon?.tagName).toBe('I');
 });
 

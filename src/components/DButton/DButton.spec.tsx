@@ -140,6 +140,8 @@ describe('<DButton />', () => {
       expect(icon.className).toContain('material-symbols-outlined');
       expect(icon.tagName).toBe('I');
     });
+    expect(icons[0]).toHaveTextContent('arrow-left');
+    expect(icons[1]).toHaveTextContent('arrow-right');
   });
 
   it('Prioritizes local icon family props over context configuration', () => {

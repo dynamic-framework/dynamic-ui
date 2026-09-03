@@ -224,6 +224,7 @@ describe('<DOffcanvas />', () => {
 
       const icon = container.querySelector('.d-icon');
       expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('x-lg-icon');
       expect(icon?.tagName).toBe('I');
     });
 
@@ -246,6 +247,56 @@ describe('<DOffcanvas />', () => {
           iconMaterialStyle={false}
           iconFamilyClass="bi"
           iconFamilyPrefix="bi-"
+        />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).not.toContain('material-symbols-outlined');
+      expect(icon?.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('still honors the deprecated materialStyle prop', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'x-lg-icon',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: false,
+        },
+      });
+
+      const { container } = render(
+        <DOffcanvas.Header
+          showCloseButton
+          materialStyle
+        />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('x-lg-icon');
+      expect(icon?.tagName).toBe('I');
+    });
+
+    it('prioritizes iconMaterialStyle over the deprecated materialStyle prop', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'X',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        },
+      });
+
+      const { container } = render(
+        <DOffcanvas.Header
+          showCloseButton
+          materialStyle
+          iconMaterialStyle={false}
         />,
       );
 

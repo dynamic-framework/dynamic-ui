@@ -128,6 +128,7 @@ describe('<DStepperDesktop />', () => {
 
     const iconElement = container.querySelector('.d-step-check .d-step-icon');
     expect(iconElement?.className).toContain('material-symbols-outlined');
+    expect(iconElement).toHaveTextContent('Check');
     expect(iconElement?.tagName).toBe('I');
   });
 

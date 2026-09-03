@@ -161,6 +161,7 @@ describe('<DCollapse />', () => {
 
     const icon = container.querySelector('.collapse-icon');
     expect(icon?.className).toContain('material-symbols-outlined');
+    expect(icon).toHaveTextContent('ChevronDown');
     expect(icon?.tagName).toBe('I');
   });
 

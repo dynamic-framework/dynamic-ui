@@ -206,6 +206,8 @@ describe('<DBadge />', () => {
       expect(icon.className).toContain('material-symbols-outlined');
       expect(icon.tagName).toBe('I');
     });
+    expect(icons[0]).toHaveTextContent('star');
+    expect(icons[1]).toHaveTextContent('heart');
   });
 
   it('Prioritizes local icon family props over context configuration', () => {

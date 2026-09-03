@@ -362,6 +362,7 @@ describe('<DInputPhone />', () => {
 
       const icon = container.querySelector('.d-icon');
       expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('search');
       expect(icon?.tagName).toBe('I');
     });
 

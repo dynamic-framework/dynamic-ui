@@ -186,6 +186,7 @@ describe('<DButtonIcon />', () => {
 
     const icon = container.querySelector('.d-icon');
     expect(icon?.className).toContain('material-symbols-outlined');
+    expect(icon).toHaveTextContent('check');
     expect(icon?.tagName).toBe('I');
   });
 

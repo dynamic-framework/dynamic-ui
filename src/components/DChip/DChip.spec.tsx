@@ -121,6 +121,8 @@ describe('<DChip />', () => {
       expect(icon.className).toContain('material-symbols-outlined');
       expect(icon.tagName).toBe('I');
     });
+    expect(icons[0]).toHaveTextContent('heart');
+    expect(icons[1]).toHaveTextContent('X');
   });
 
   it('prioritizes local icon family props over context configuration', () => {

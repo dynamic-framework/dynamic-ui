@@ -277,6 +277,8 @@ describe('', () => {
       expect(icon.className).toContain('material-symbols-outlined');
       expect(icon.tagName).toBe('I');
     });
+    expect(icons[0]).toHaveTextContent('search');
+    expect(icons[1]).toHaveTextContent('heart');
   });
 
   it('prioritizes local icon family props over context configuration', () => {
