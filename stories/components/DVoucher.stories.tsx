@@ -3,7 +3,7 @@ import DVoucher from '../../src/components/DVoucher';
 import DBox from '../../src/components/DBox';
 import { DContextProvider } from '../../src';
 
-const meta: Meta<typeof DVoucher> = {
+const meta = {
   title: 'Design System/Components/Voucher',
   component: DVoucher,
   parameters: {
@@ -116,10 +116,10 @@ The voucher component provides:
       },
     },
   },
-};
+} satisfies Meta<typeof DVoucher>;
 
 export default meta;
-type Story = StoryObj<typeof DVoucher>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

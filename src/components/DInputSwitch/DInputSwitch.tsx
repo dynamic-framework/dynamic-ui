@@ -22,6 +22,7 @@ type Props =
   inputClassName?: string;
   invalid?: boolean;
   valid?: boolean;
+  hint?: string;
   readonly?: boolean;
   onChange?: (isChecked: boolean) => void;
 };
@@ -36,6 +37,7 @@ export default function DInputSwitch(
     disabled,
     invalid = false,
     valid = false,
+    hint,
     readonly,
     className,
     style,
@@ -47,6 +49,17 @@ export default function DInputSwitch(
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
   const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(checked);
+
+  const ariaDescribedby = useMemo(() => (
+    [
+      !!hint && `${id}Hint`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  ), [
+    id,
+    hint,
+  ]);
 
   useEffect(() => {
     setInternalIsChecked(checked);
@@ -81,6 +94,7 @@ export default function DInputSwitch(
         checked={internalIsChecked}
         disabled={disabled}
         aria-label={ariaLabel}
+        {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       />
       {label && (
         <label
@@ -89,6 +103,14 @@ export default function DInputSwitch(
         >
           {label}
         </label>
+      )}
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
       )}
     </div>
   );

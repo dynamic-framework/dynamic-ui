@@ -47,7 +47,7 @@ export default function DCollapse(
     iconClose: iconCloseProp,
     iconFamilyClass,
     iconFamilyPrefix,
-    iconMaterialStyle = false,
+    iconMaterialStyle,
     dataAttributes,
   }: Props,
 ) {
@@ -68,6 +68,11 @@ export default function DCollapse(
   }, [defaultCollapsed]);
 
   const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
     iconMap: {
       chevronDown,
       chevronUp,
@@ -93,12 +98,13 @@ export default function DCollapse(
           {Component}
         </div>
         <DIcon
+          className="collapse-icon"
           color="primary"
           size="1.25rem"
           icon={collapsed ? iconOpen : iconClose}
-          familyClass={iconFamilyClass}
-          familyPrefix={iconFamilyPrefix}
-          materialStyle={iconMaterialStyle}
+          familyClass={iconFamilyClass ?? familyClass}
+          familyPrefix={iconFamilyPrefix ?? familyPrefix}
+          materialStyle={iconMaterialStyle ?? materialStyle}
         />
       </button>
       <div

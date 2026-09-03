@@ -1,9 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { useState, type ComponentProps } from 'react';
 
-import DInputCurrency from '../../src/components/DInputCurrency/DInputCurrency';
+import { DInputCurrency, DContextProvider } from '../../src';
 import { ICONS } from '../config/constants';
-import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 function renderWithState(cssText?: string) {
@@ -29,7 +28,7 @@ function renderWithState(cssText?: string) {
   };
 }
 
-const config: Meta<typeof DInputCurrency> = {
+const meta = {
   title: 'Design System/Components/Input Currency',
   component: DInputCurrency,
   parameters: {
@@ -274,10 +273,10 @@ regular \`className\`:
   },
   tags: ['autodocs'],
   render: renderWithState(),
-};
+} satisfies Meta<typeof DInputCurrency>;
 
-export default config;
-type Story = StoryObj<typeof DInputCurrency>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -302,6 +301,7 @@ export const Invalid: Story = {
     placeholder: 'Placeholder',
     value: undefined,
     invalid: true,
+    hint: 'Assistive text',
   },
 };
 
@@ -312,6 +312,7 @@ export const Valid: Story = {
     placeholder: 'Placeholder',
     value: undefined,
     valid: true,
+    hint: 'Assistive text',
   },
 };
 

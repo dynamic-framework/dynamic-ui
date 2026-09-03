@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DListGroup, { DListGroupItem } from '../../src/components/DListGroup';
 
-const config: Meta<typeof DListGroup> = {
+const meta = {
   title: 'Design System/Components/List Group',
   component: DListGroup,
   subcomponents: { DListGroupItem },
@@ -50,10 +50,10 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DListGroup>;
 
-export default config;
-type Story = StoryObj<typeof DListGroup>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (
