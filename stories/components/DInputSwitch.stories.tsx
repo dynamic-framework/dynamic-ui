@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
+import { DInputSwitch } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputSwitch> = {
+const meta = {
   title: 'Design System/Components/Input Switch',
   component: DInputSwitch,
   parameters: {
@@ -68,6 +68,12 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       type: 'string',
       table: { category: 'Content' },
     },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'The ARIA label for the input, used when there is no visible label',
+      table: { category: 'HTML Attributes' },
+    },
     checked: {
       control: 'boolean',
       type: 'boolean',
@@ -93,16 +99,21 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       type: 'boolean',
       table: { category: 'Behavior' },
     },
+    hint: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Content' },
+    },
     onChange: {
       action: 'onChange',
       table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputSwitch>;
 
-export default config;
-type Story = StoryObj<typeof DInputSwitch>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const WithoutLabel: Story = {
   args: {
@@ -121,23 +132,25 @@ export const Default: Story = {
   },
 };
 
-export const DefaultValid: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
     checked: false,
     disabled: false,
     valid: true,
+    hint: 'Assistive text',
   },
 };
 
-export const DefaultInvalid: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
     checked: false,
     disabled: false,
     invalid: true,
+    hint: 'Assistive text',
   },
 };
 

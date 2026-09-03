@@ -5,7 +5,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import DChip from '../../src/components/DChip/DChip';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
 
-const config: Meta<typeof DChip> = {
+const meta = {
   title: 'Design System/Components/Chip',
   component: DChip,
   parameters: {
@@ -123,10 +123,10 @@ const config: Meta<typeof DChip> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DChip>;
 
-export default config;
-type Story = StoryObj<typeof DChip>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -234,9 +234,6 @@ export const MaterialIcon: Story = {
     docs: {
       description: {
         story: 'Chips using Material Icons instead of default Icons.',
-      },
-      canvas: {
-        sourceState: 'shown',
       },
     },
   },

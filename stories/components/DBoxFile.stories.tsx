@@ -7,7 +7,7 @@ import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { DButton, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DBoxFile> = {
+const meta = {
   title: 'Design System/Components/Box File',
   component: DBoxFile,
   parameters: {
@@ -169,11 +169,11 @@ The component's behavior is inspired by the [React Dropzone](https://react-dropz
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBoxFile>;
 
-export default config;
+export default meta;
 
-type Story = StoryObj<typeof DBoxFile>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -213,6 +213,15 @@ export const WithCustomIcon: Story = {
         code: '<DBoxFile icon="Paperclip" />',
       },
     },
+  },
+};
+
+export const WithCustomIconMaterialSyntax: Story = {
+  args: {
+    accept: {},
+    icon: 'cloud_upload',
+    iconMaterialStyle: true,
+    iconFamilyClass: 'material-symbols-outlined',
   },
 };
 

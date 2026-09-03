@@ -20,7 +20,7 @@ const fourPlanFeatures = [
   },
 ];
 
-const meta: Meta = {
+const meta = {
   title: 'Patterns/Plan Comparator',
   parameters: {
     docs: {
@@ -33,11 +33,12 @@ This story showcases a plan comparator design, which can be used to compare diff
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const FourPlans: StoryObj = {
+export const FourPlans: Story = {
   render: () => (
     <DBox>
       <table className="plan-comparator-table">

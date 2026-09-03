@@ -19,7 +19,7 @@ import {
 
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/OTP',
   component: DBox,
   parameters: {
@@ -37,11 +37,11 @@ so you can try both the success and the "invalid code" paths.`,
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 function simulateVerify(code: string, validCode = '1234', delay = 800) {
   return new Promise<void>((resolve, reject) => {

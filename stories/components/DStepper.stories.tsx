@@ -6,7 +6,7 @@ import DStepper from '../../src/components/DStepper/DStepper';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 import { DContextProvider, DStepperMobile } from '../../src';
 
-const config: Meta<typeof DStepper> = {
+const meta = {
   title: 'Design System/Components/Stepper',
   component: DStepper,
   parameters: {
@@ -97,10 +97,10 @@ provides a simpler alternative for scenarios where responsive behavior is not ne
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DStepper>;
 
-export default config;
-type Story = StoryObj<typeof DStepper>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [
