@@ -16,8 +16,6 @@ import {
 
 import DocsTemplate from '../docs/Template.mdx';
 
-type Story = StoryObj<typeof DBox>;
-
 type SchedulePayloads = {
   scheduleDetail: {
     title: string;
@@ -106,7 +104,7 @@ const bottomSheetStyle = {
   borderTopRightRadius: '1rem',
 } as const;
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Mobile/Lists',
   component: DBox,
   parameters: {
@@ -126,9 +124,10 @@ Open each example in its own Storybook canvas:
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
 function MobileViewport(
   {

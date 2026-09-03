@@ -7,16 +7,19 @@ import {
 import userEvent from '@testing-library/user-event';
 import DModal from '.';
 
+const mockUseDContext = jest.fn(() => ({
+  iconMap: {
+    xLg: 'x-lg-icon',
+  },
+  icon: {
+    familyClass: 'bi',
+    familyPrefix: 'bi',
+    materialStyle: false,
+  },
+}));
+
 jest.mock('../../contexts', () => ({
-  useDContext: () => ({
-    iconMap: {
-      xLg: 'x-lg-icon',
-    },
-    icon: {
-      familyClass: 'bi',
-      familyPrefix: 'bi',
-    },
-  }),
+  useDContext: () => mockUseDContext(),
 }));
 
 describe('<DModal />', () => {
@@ -121,6 +124,105 @@ describe('<DModal />', () => {
 
       await user.click(closeButton);
       expect(handleClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('falls back to context icon configuration when no icon family props are provided', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'x-lg-icon',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        },
+      });
+
+      const { container } = render(
+        <DModal.Header showCloseButton />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('x-lg-icon');
+      expect(icon?.tagName).toBe('I');
+    });
+
+    it('prioritizes local icon family props over context configuration', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'x-lg-icon',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        },
+      });
+
+      const { container } = render(
+        <DModal.Header
+          showCloseButton
+          icon="X"
+          iconMaterialStyle={false}
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+        />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).not.toContain('material-symbols-outlined');
+      expect(icon?.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('still honors the deprecated materialStyle prop', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'x-lg-icon',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: false,
+        },
+      });
+
+      const { container } = render(
+        <DModal.Header
+          showCloseButton
+          materialStyle
+        />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('x-lg-icon');
+      expect(icon?.tagName).toBe('I');
+    });
+
+    it('prioritizes iconMaterialStyle over the deprecated materialStyle prop', () => {
+      mockUseDContext.mockReturnValueOnce({
+        iconMap: {
+          xLg: 'X',
+        },
+        icon: {
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        },
+      });
+
+      const { container } = render(
+        <DModal.Header
+          showCloseButton
+          materialStyle
+          iconMaterialStyle={false}
+        />,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).not.toContain('material-symbols-outlined');
+      expect(icon?.querySelector('svg')).toBeInTheDocument();
     });
   });
 

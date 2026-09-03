@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DStepperMobile from '../../src/components/DStepperMobile/DStepperMobile';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DStepperMobile> = {
+const meta = {
   title: 'Design System/Components/Stepper Mobile',
   component: DStepperMobile,
   parameters: {
@@ -51,10 +51,10 @@ const config: Meta<typeof DStepperMobile> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DStepperMobile>;
 
-export default config;
-type Story = StoryObj<typeof DStepperMobile>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [

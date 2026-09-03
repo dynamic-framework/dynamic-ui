@@ -1,5 +1,7 @@
 # Icon Migration Guide: Bootstrap Icons → Lucide Icons
 
+> **Introduced in:** `v2.0.0` ([`refactor icons to lucide`](https://github.com/dynamic-framework/dynamic-ui/commit/5b233bb7cfe161bca956f9c6dc269ba4c6783a64)) — part of the `v2.0.0` breaking changes release ([CHANGELOG](https://github.com/dynamic-framework/dynamic-ui/blob/master/CHANGELOG.md#200-2025-12-18)).
+
 ## Overview
 
 We have migrated from Bootstrap Icons to [Lucide Icons](https://lucide.dev) for better React integration, smaller bundle size, and more consistent icon design. The `DIcon` component API remains the same, but icon names have changed.
@@ -23,7 +25,7 @@ We have migrated from Bootstrap Icons to [Lucide Icons](https://lucide.dev) for 
 ## Key Differences
 
 1. **Icon names are now PascalCase** instead of kebab-case
-2. **No more `-fill` suffix** - Lucide uses `strokeWidth` prop instead
+2. **No `-fill` variants** — Lucide is an outline-only icon set with no `fill`/`outline` pairs. Bootstrap's `-fill` suffix has no direct equivalent; use the base icon name and adjust `strokeWidth` or `color` if you need a bolder look.
 3. **Material Design icons still supported** via `materialStyle` prop
 
 ## Common Icon Name Mappings
@@ -39,14 +41,12 @@ We have migrated from Bootstrap Icons to [Lucide Icons](https://lucide.dev) for 
 | `bell` | `Bell` | |
 | `calendar` | `Calendar` | |
 | `clock` | `Clock` | |
-| `heart`, `heart-fill` | `Heart` | Use `fill` prop for filled version |
-| `star`, `star-fill` | `Star` | Use `fill` prop for filled version |
+| `heart`, `heart-fill` | `Heart` | No filled variant in Lucide; both map to the same outline icon |
+| `star`, `star-fill` | `Star` | No filled variant in Lucide; both map to the same outline icon |
 | `check` | `Check` | |
-| `check-circle` | `CheckCircle` | |
-| `check-circle-fill` | `CircleCheck` | |
+| `check-circle`, `check-circle-fill` | `CheckCircle` | Alias of `CircleCheckBig`; both Bootstrap variants map to the same icon |
 | `x` | `X` | |
-| `x-circle` | `XCircle` | |
-| `x-circle-fill` | `CircleX` | |
+| `x-circle`, `x-circle-fill` | `XCircle` | Alias of `CircleX`; both Bootstrap variants map to the same icon |
 | `arrow-left` | `ArrowLeft` | |
 | `arrow-right` | `ArrowRight` | |
 | `chevron-left` | `ChevronLeft` | |
@@ -86,7 +86,6 @@ We have migrated from Bootstrap Icons to [Lucide Icons](https://lucide.dev) for 
 | `globe` | `Globe` | |
 | `map` | `Map` | |
 | `bookmark` | `Bookmark` | |
-| `bookmarks` | `Bookmarks` | |
 | `tag` | `Tag` | |
 | `fire` | `Flame` | |
 | `lightning` | `Zap` | |
@@ -118,6 +117,7 @@ Or configure globally via `DContextProvider`:
 <DContextProvider
   icon={{
     familyClass: 'material-symbols-outlined',
+    familyPrefix: '',
     materialStyle: true,
   }}
 >
@@ -174,7 +174,7 @@ function MyComponent() {
   return (
     <>
       <DButton iconStart="Home" text="Home" />
-      <DBadge iconStart="CircleCheck" text="Success" />
+      <DBadge iconStart="CheckCircle" text="Success" />
       <DListGroup>
         <DListGroup.Item iconStart="User" iconEnd="ChevronRight">
           Profile
