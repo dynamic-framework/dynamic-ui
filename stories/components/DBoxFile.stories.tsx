@@ -216,6 +216,15 @@ export const WithCustomIcon: Story = {
   },
 };
 
+export const WithCustomIconMaterialSyntax: Story = {
+  args: {
+    accept: {},
+    icon: 'cloud_upload',
+    iconMaterialStyle: true,
+    iconFamilyClass: 'material-symbols-outlined',
+  },
+};
+
 export const AcceptingSpecificFiles: Story = {
   args: {
     accept: { 'application/pdf': ['.pdf'] },

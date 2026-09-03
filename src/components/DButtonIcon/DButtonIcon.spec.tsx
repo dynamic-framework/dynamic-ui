@@ -2,6 +2,7 @@
 
 import { fireEvent, render } from '@testing-library/react';
 import DButtonIcon from './DButtonIcon';
+import { DContextProvider } from '../../contexts';
 
 describe('<DButtonIcon />', () => {
   it('Should render base icon button', () => {
@@ -168,5 +169,47 @@ describe('<DButtonIcon />', () => {
     expect(anchor).toHaveAttribute('href', 'https://example.com');
     expect(anchor).toHaveAttribute('target', '_blank');
     expect(anchor).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
+  it('Falls back to context icon configuration when no icon family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DButtonIcon icon="check" />
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon?.className).toContain('material-symbols-outlined');
+    expect(icon).toHaveTextContent('check');
+    expect(icon?.tagName).toBe('I');
+  });
+
+  it('Prioritizes local icon family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DButtonIcon
+          icon="Check"
+          iconMaterialStyle={false}
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+        />
+      </DContextProvider>,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon?.className).not.toContain('material-symbols-outlined');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 });
