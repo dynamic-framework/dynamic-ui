@@ -128,7 +128,7 @@ Icon names use **PascalCase** (e.g., \`Home\`, \`Settings\`, \`User\`)
 
 ## Migration Guide
 
-See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating from Bootstrap Icons.
+See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icons-v2-0-0--docs) for migrating from Bootstrap Icons.
         `,
       },
       controls: {
@@ -155,8 +155,11 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
       control: 'select',
       options: ['Map', ...ICONS],
       type: { name: 'string', required: true },
-      description: 'Icon name in PascalCase (e.g., Home, Settings, User)',
-      table: { category: 'Content' },
+      description: 'Icon name in PascalCase (e.g., Home, Settings, User), or an SVG component',
+      table: {
+        category: 'Content',
+        type: { summary: 'string | IconComponent' },
+      },
     },
     color: {
       control: 'select',
@@ -164,6 +167,23 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
       type: 'string',
       description: 'Color of the icon (theme-based)',
       table: { category: 'Appearance' },
+    },
+    size: {
+      control: 'object',
+      description: 'Icon size (css length unit), or a `ResponsiveProp` object keyed by breakpoint (e.g. `{ xs: "16", md: "32" }`)',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'string | ResponsiveProp' },
+      },
+    },
+    useListenerSize: {
+      type: 'boolean',
+      control: 'boolean',
+      description: 'Enables real-time breakpoint listeners for responsive size changes',
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     strokeWidth: {
       type: 'number',
@@ -194,9 +214,17 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
     },
     familyClass: {
       type: 'string',
-      description: 'Icon font family class (for Material Design or custom icon sets)',
+      control: 'text',
+      description: 'Icon font family class (for Material Design or custom icon sets). Resolved via DContextProvider when not set (default: "bi")',
       table: {
-        defaultValue: { summary: 'material-symbols-outlined' },
+        category: 'Icon',
+      },
+    },
+    familyPrefix: {
+      type: 'string',
+      control: 'text',
+      description: 'Icon font class prefix (e.g., "bi-" for Bootstrap Icons). Resolved via DContextProvider when not set (default: "bi-")',
+      table: {
         category: 'Icon',
       },
     },
