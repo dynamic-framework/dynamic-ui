@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import DCurrencyText from '../../src/components/DCurrencyText/DCurrencyText';
 import { DContextProvider } from '../../src';
 
-const config: Meta<typeof DCurrencyText> = {
+const meta = {
   title: 'Design System/Components/Currency Text',
   component: DCurrencyText,
   argTypes: {
@@ -31,10 +31,10 @@ const config: Meta<typeof DCurrencyText> = {
       table: { category: 'HTML Attributes' },
     },
   },
-};
+} satisfies Meta<typeof DCurrencyText>;
 
-export default config;
-type Story = StoryObj<typeof DCurrencyText>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args: ComponentProps<typeof DCurrencyText>) => (

@@ -3,7 +3,7 @@ import { DCarousel, DButton, DBox } from '../../src';
 
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DCarousel> = {
+const meta = {
   title: 'Patterns/Carousel',
   component: DCarousel,
   parameters: {
@@ -27,10 +27,10 @@ Carousels are perfect for highlighting multiple offers, campaigns, or featured c
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCarousel>;
 
 export default meta;
-type Story = StoryObj<typeof DCarousel>;
+type Story = StoryObj<typeof meta>;
 
 const SAMPLE_IMAGE = 'https://cdn.modyo.cloud/uploads/a55c865c-fbb8-4eaf-b245-10008e0ace70/original/banner-ahorro-programado.png';
 

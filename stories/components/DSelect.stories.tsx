@@ -8,7 +8,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import type { OptionEmoji, OptionIcon } from '../../src/components/DSelect';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 
-const config: Meta<typeof DSelect> = {
+const meta = {
   title: 'Design System/Components/Select',
   component: DSelect,
   parameters: {
@@ -519,10 +519,10 @@ To understand in more detail the aspects covered by this component, review the f
     ),
   ],
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DSelect>;
 
-export default config;
-type Story = StoryObj<typeof DSelect>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 const OPTIONS = [
   { label: 'Option 1', value: '1' },

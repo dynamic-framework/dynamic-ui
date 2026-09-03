@@ -20,7 +20,7 @@ import {
  * It provides sensible defaults for each state (like a spinner for loading) but allows
  * full customization through render props.
  */
-const meta: Meta<typeof DDataStateWrapper> = {
+const meta = {
   title: 'Design System/Components/Data State Wrapper',
   component: DDataStateWrapper,
   tags: [
@@ -121,11 +121,11 @@ const meta: Meta<typeof DDataStateWrapper> = {
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DDataStateWrapper>;
 
 export default meta;
 
-type Story = StoryObj<typeof DDataStateWrapper>;
+type Story = StoryObj<typeof meta>;
 
 /**
  * The basic state showing the empty view by default.
