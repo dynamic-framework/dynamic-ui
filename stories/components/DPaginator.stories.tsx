@@ -143,7 +143,6 @@ export const Default: Story = {
     total: 20,
     maxWidth: 400,
     current: 1,
-    onPageChange: () => {},
   },
 };
 
