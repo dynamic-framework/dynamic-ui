@@ -6,7 +6,7 @@ import { DInputCounter, DContextProvider } from '../../src';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputCounter> = {
+const meta = {
   title: 'Design System/Components/Input Counter',
   component: DInputCounter,
   parameters: {
@@ -189,10 +189,10 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputCounter>;
 
-export default config;
-type Story = StoryObj<typeof DInputCounter>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

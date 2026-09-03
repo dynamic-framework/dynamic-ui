@@ -6,7 +6,7 @@ import { DInputPassword, DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputPassword> = {
+const meta = {
   title: 'Design System/Components/Input Password',
   component: DInputPassword,
   parameters: {
@@ -157,10 +157,10 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputPassword>;
 
-export default config;
-type Story = StoryObj<typeof DInputPassword>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

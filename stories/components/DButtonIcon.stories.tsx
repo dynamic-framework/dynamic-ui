@@ -14,7 +14,7 @@ import {
   THEMES,
 } from '../config/constants';
 
-const config: Meta<typeof DButtonIcon> = {
+const meta = {
   title: 'Design System/Components/Button Icon',
   component: DButtonIcon,
   parameters: {
@@ -243,10 +243,10 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DButtonIcon>;
 
-export default config;
-type Story = StoryObj<typeof DButtonIcon>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

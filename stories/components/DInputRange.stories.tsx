@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DInputRange } from '../../src';
 
-const config: Meta<typeof DInputRange> = {
+const meta = {
   title: 'Design System/Components/Input Range',
   component: DInputRange,
   parameters: {
@@ -97,10 +97,10 @@ To understand in more detail the aspects covered by this component, review the f
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DInputRange>;
 
-export default config;
-type Story = StoryObj<typeof DInputRange>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const WithoutLabel: Story = {
   args: {

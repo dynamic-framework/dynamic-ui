@@ -19,7 +19,7 @@ const TRANSITION_PRESETS: TransitionPreset[] = [
   { label: 'None', value: { ease: 'linear', duration: 0 } },
 ];
 
-const config: Meta<typeof DOffcanvas> = {
+const meta = {
   title: 'Design System/Components/Offcanvas',
   component: DOffcanvas,
   parameters: {
@@ -86,10 +86,10 @@ const config: Meta<typeof DOffcanvas> = {
         + "CSS length (e.g. `'50vh'`, `'320px'`) or a `ResponsiveProp` object.",
     },
   },
-};
+} satisfies Meta<typeof DOffcanvas>;
 
-export default config;
-type Story = StoryObj<typeof DOffcanvas>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 type OffcanvasPayloads = {
   filters: {
