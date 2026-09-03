@@ -210,6 +210,7 @@ const meta = {
       table: { category: 'Behavior' },
     },
   },
+  tags: ['autodocs'],
 } satisfies Meta<typeof DInputMask>;
 
 export default meta;
