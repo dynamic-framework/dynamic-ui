@@ -17,12 +17,12 @@ import {
 } from '@floating-ui/react';
 import classNames from 'classnames';
 
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
 
 import type { BaseProps, ComponentSize } from '../interface';
 
-export type Props = BaseProps & PropsWithChildren<{
+export type Props = BaseProps & {
   /** CSS class applied to the wrapper element that surrounds `Component` (the trigger). */
   childrenClassName?: string;
   /**
@@ -55,7 +55,12 @@ export type Props = BaseProps & PropsWithChildren<{
    * and interaction handlers to this node.
    */
   Component: ReactNode;
-}>;
+  /**
+   * Floating content rendered inside the tooltip body. Keep it short and
+   * non-critical: the tooltip is only visible while it is open.
+   */
+  children?: ReactNode;
+};
 
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;

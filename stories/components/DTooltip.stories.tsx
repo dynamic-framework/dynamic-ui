@@ -69,15 +69,18 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
       table: { category: 'Appearance' },
     },
     Component: {
-      defaultValue: 'Link',
-      type: 'string',
-      control: 'text',
-      table: { category: 'Content' },
+      table: {
+        type: { summary: 'ReactNode' },
+        category: 'Content',
+      },
+      control: false,
     },
     children: {
+      table: {
+        type: { summary: 'ReactNode' },
+        category: 'Content',
+      },
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
     },
     offSet: {
       type: 'number',
@@ -89,8 +92,11 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
     },
     size: {
       control: 'select',
-      options: [undefined, 'sm', 'lg'],
-      table: { category: 'Appearance' },
+      options: ['sm', 'lg'],
+      table: {
+        category: 'Appearance',
+        defaultValue: { summary: 'undefined' },
+      },
     },
   },
   tags: ['autodocs'],
@@ -107,13 +113,12 @@ export const Default: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     childrenClassName: '',
     className: '',
     dataAttributes: {},
     offSet: 10,
     padding: 10,
-    size: undefined,
     style: { maxWidth: '200px' },
   },
   parameters: {
