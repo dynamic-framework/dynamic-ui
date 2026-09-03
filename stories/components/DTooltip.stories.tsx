@@ -80,7 +80,7 @@ The Bootstrap documentation provides details on the default [Tooltip CSS Variabl
         type: { summary: 'ReactNode' },
         category: 'Content',
       },
-      control: 'text',
+      control: false,
     },
     offSet: {
       type: 'number',
