@@ -17,7 +17,7 @@ import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
-const config: Meta<typeof DDatePicker> = {
+const meta = {
   title: 'Design System/Components/Datepicker',
   component: DDatePicker,
   decorators: [
@@ -316,7 +316,7 @@ const config: Meta<typeof DDatePicker> = {
       table: { category: 'Behavior' },
     },
   },
-};
+} satisfies Meta<typeof DDatePicker>;
 
 function ControlledDatePicker(props: ComponentProps<typeof DDatePicker>) {
   const {
@@ -371,8 +371,8 @@ function ControlledDateRangePicker(props: ComponentProps<typeof DDatePicker>) {
   );
 }
 
-export default config;
-type Story = StoryObj<typeof DDatePicker>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: ControlledDatePicker,

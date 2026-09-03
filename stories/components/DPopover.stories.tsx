@@ -4,7 +4,7 @@ import DPopover from '../../src/components/DPopover/DPopover';
 import DButton from '../../src/components/DButton';
 import { DCard } from '../../src';
 
-const config: Meta<typeof DPopover> = {
+const meta = {
   title: 'Design System/Components/Popover',
   component: DPopover,
   argTypes: {
@@ -33,10 +33,10 @@ const config: Meta<typeof DPopover> = {
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DPopover>;
 
-export default config;
-type Story = StoryObj<typeof DPopover>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 function ButtonRenderComponent(toggle: boolean) {
   return (

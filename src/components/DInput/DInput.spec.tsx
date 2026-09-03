@@ -6,6 +6,7 @@ import {
   screen,
 } from '@testing-library/react';
 import DInput from './DInput';
+import { DContextProvider } from '../../contexts';
 
 describe('', () => {
   it('should render my component', () => {
@@ -251,5 +252,63 @@ describe('', () => {
     const iconEnd = await screen.findByRole('button');
     fireEvent.click(iconEnd);
     expect(handleIconEndClick).toHaveBeenCalledWith('value');
+  });
+
+  it('falls back to context icon configuration when no icon family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DInput
+          label="Input label"
+          iconStart="search"
+          iconEnd="heart"
+        />
+      </DContextProvider>,
+    );
+
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).toContain('material-symbols-outlined');
+      expect(icon.tagName).toBe('I');
+    });
+    expect(icons[0]).toHaveTextContent('search');
+    expect(icons[1]).toHaveTextContent('heart');
+  });
+
+  it('prioritizes local icon family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DInput
+          label="Input label"
+          iconStart="Search"
+          iconStartMaterialStyle={false}
+          iconStartFamilyClass="bi"
+          iconStartFamilyPrefix="bi-"
+          iconEnd="Heart"
+          iconEndMaterialStyle={false}
+          iconEndFamilyClass="bi"
+          iconEndFamilyPrefix="bi-"
+        />
+      </DContextProvider>,
+    );
+
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).not.toContain('material-symbols-outlined');
+      expect(icon.querySelector('svg')).toBeInTheDocument();
+    });
   });
 });
