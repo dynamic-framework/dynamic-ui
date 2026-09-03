@@ -114,12 +114,6 @@ export const Default: Story = {
     withClick: false,
     withFocus: false,
     open: false,
-    childrenClassName: '',
-    className: '',
-    dataAttributes: {},
-    offSet: 10,
-    padding: 10,
-    style: { maxWidth: '200px' },
   },
   parameters: {
     docs: {

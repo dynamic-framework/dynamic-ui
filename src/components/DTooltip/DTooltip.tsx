@@ -51,8 +51,10 @@ export type Props = BaseProps & {
    */
   placement?: Placement;
   /**
-   * Element that triggers the tooltip; the tooltip attaches its reference
-   * and interaction handlers to this node.
+   * Element that triggers the tooltip. It is rendered inside a wrapper `<div>`
+   * that holds the Floating UI reference and the interaction handlers, so the
+   * trigger area is that wrapper rather than this node itself. Style it with
+   * `childrenClassName`.
    */
   Component: ReactNode;
   /**
