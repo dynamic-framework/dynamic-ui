@@ -430,3 +430,27 @@ Changes the currency symbol color using \`className\` to scope the
     }
   `),
 };
+
+export const WithoutSymbol: Story = {
+  args: {
+    id: 'componentId9',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    value: undefined,
+    inputStart: null,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+By default \`DInputCurrency\` renders the currency symbol via \`inputStart\`. Passing
+\`inputStart={null}\` removes it, showing the input without any leading symbol.
+
+\`\`\`jsx
+<DInputCurrency inputStart={null} />
+\`\`\`
+        `,
+      },
+    },
+  },
+};
