@@ -1,9 +1,9 @@
-import type { SVGProps } from 'react';
+import type { ReactNode, SVGProps } from 'react';
 
 import DIcon from '../../src/components/DIcon';
 import { DContextProvider } from '../../src/contexts/DContext';
 
-function IconLabel({ label, children }: { label: string; children: React.ReactNode }) {
+function IconLabel({ label, children }: { label: string; children: ReactNode }) {
   const [main, parenthetical] = label.split(/\s*(?=\()/);
 
   return (

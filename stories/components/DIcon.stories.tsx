@@ -156,7 +156,10 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
       options: ['Map', ...ICONS],
       type: { name: 'string', required: true },
       description: 'Icon name in PascalCase (e.g., Home, Settings, User), or an SVG component',
-      table: { category: 'Content' },
+      table: {
+        category: 'Content',
+        type: { summary: 'string | IconComponent' },
+      },
     },
     color: {
       control: 'select',
@@ -166,10 +169,12 @@ See the [Icon Migration Guide (v2.0.0)](?path=/docs/design-system-migration-icon
       table: { category: 'Appearance' },
     },
     size: {
-      control: 'text',
-      type: 'string',
-      description: 'Icon size (css length unit), or a responsive object keyed by breakpoint (e.g., { xs: "16", md: "32" })',
-      table: { category: 'Appearance' },
+      control: 'object',
+      description: 'Icon size (css length unit), or a `ResponsiveProp` object keyed by breakpoint (e.g. `{ xs: "16", md: "32" }`)',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'string | ResponsiveProp' },
+      },
     },
     useListenerSize: {
       type: 'boolean',
