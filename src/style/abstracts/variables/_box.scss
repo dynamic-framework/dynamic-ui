@@ -1,0 +1,7 @@
+// Box (DBox)
+
+$box-component-bg: var(--#{$prefix}white) !default;
+$box-component-border: 0 !default;
+$box-component-border-radius: var(--#{$prefix}border-radius) !default;
+$box-component-padding: var(--#{$prefix}ref-spacer-4) !default;
+$box-component-shadow: var(--#{$prefix}box-shadow-sm) !default;

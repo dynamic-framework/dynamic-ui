@@ -7,6 +7,7 @@
     "skipLibCheck": true
   },
   "exclude": [
-    "src/**/*.spec.tsx"
+    "src/**/*.spec.tsx",
+    "src/**/*.a11y.test.tsx"
   ]
 }

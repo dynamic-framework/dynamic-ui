@@ -4,7 +4,7 @@ import { DToast } from '../../src/components';
 import { DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DToast> = {
+const meta = {
   title: 'Design System/Components/Toast',
   component: DToast,
   parameters: {
@@ -45,10 +45,10 @@ The Bootstrap documentation provides details on the default [Toast CSS Variables
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DToast>;
 
-export default config;
-type Story = StoryObj<typeof DToast>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [

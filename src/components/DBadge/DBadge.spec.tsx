@@ -2,6 +2,7 @@
 
 import { render, screen } from '@testing-library/react';
 import DBadge from './DBadge';
+import { DContextProvider } from '../../contexts';
 
 describe('<DBadge />', () => {
   it('Should render badge', () => {
@@ -183,5 +184,54 @@ describe('<DBadge />', () => {
 
     const badge = screen.getByText('Badge content').parentElement!;
     expect(badge).toHaveAttribute('data-test', 'badge');
+  });
+
+  it('Falls back to context icon configuration when no icon family props are provided', () => {
+    render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DBadge text="Badge content" iconStart="star" iconEnd="heart" />
+      </DContextProvider>,
+    );
+
+    const badge = screen.getByText('Badge content').parentElement!;
+    const icons = badge.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((icon) => {
+      expect(icon.className).toContain('material-symbols-outlined');
+      expect(icon.tagName).toBe('I');
+    });
+    expect(icons[0]).toHaveTextContent('star');
+    expect(icons[1]).toHaveTextContent('heart');
+  });
+
+  it('Prioritizes local icon family props over context configuration', () => {
+    render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DBadge
+          text="Badge content"
+          iconStart="Star"
+          iconMaterialStyle={false}
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+        />
+      </DContextProvider>,
+    );
+
+    const badge = screen.getByText('Badge content').parentElement!;
+    const icon = badge.querySelector('.d-icon');
+    expect(icon?.className).not.toContain('material-symbols-outlined');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 });

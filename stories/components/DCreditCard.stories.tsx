@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import { PREFIX_BS } from '../../src/components/config';
 import DCreditCard from '../../src/components/DCreditCard/DCreditCard';
 
-const config: Meta<typeof DCreditCard> = {
+const meta = {
   title: 'Design System/Components/Credit Card',
   component: DCreditCard,
   parameters: {
@@ -97,11 +97,11 @@ To understand in more detail the aspects covered by this component, you can cust
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCreditCard>;
 
-export default config;
+export default meta;
 
-type Story = StoryObj<typeof DCreditCard>;
+type Story = StoryObj<typeof meta>;
 
 const defaultCard = {
   name: 'John Doe',

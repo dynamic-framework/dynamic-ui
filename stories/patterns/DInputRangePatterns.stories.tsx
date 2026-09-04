@@ -9,7 +9,7 @@ import {
 
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Input Range',
   component: DBox,
   parameters: {
@@ -21,11 +21,11 @@ const meta: Meta<typeof DBox> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 export const LiveValueBadge: Story = {
   parameters: {

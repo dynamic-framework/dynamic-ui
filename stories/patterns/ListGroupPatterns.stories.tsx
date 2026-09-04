@@ -31,7 +31,7 @@ function CustomDocs(props: DocsContainerProps) {
   );
 }
 
-const meta: Meta<typeof DListGroup> = {
+const meta = {
   title: 'Patterns/List Group',
   component: DListGroup,
   parameters: {
@@ -57,10 +57,10 @@ These patterns use \`DListGroup\` as the foundation to create organized, scannab
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DListGroup>;
 
 export default meta;
-type Story = StoryObj<typeof DListGroup>;
+type Story = StoryObj<typeof meta>;
 
 export const AccountList: Story = {
   parameters: {

@@ -1,0 +1,62 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './sanitizeHrefExamples';
+
+<Meta title="Design System/Utils/url/sanitizeHref" />
+
+# sanitizeHref
+Validates a `href` value and returns it only if it is safe to render as a link, preventing XSS via unsafe URL schemes (e.g. `javascript:`, `data:`) and scheme-relative URLs (e.g. `//evil.com`, `/\evil.com`).
+
+Use it whenever a `href` comes from a source you don't fully control (CMS content, an external API, user input), before passing it to an `<a>`, `<DButton>`, `<DButtonIcon>`, `<DDropdown>` or `<DListGroup.Item>` action.
+
+## Parameters
+
+- **href** (`string`): The raw URL or path to validate. It is trimmed and every tab, line feed and carriage return is removed before validating, because the URL parser ignores those characters too and they would otherwise hide an unsafe value from the checks.
+
+## Returns
+
+- (`string | undefined`): The sanitized `href` when safe, `undefined` otherwise.
+
+### When it's considered safe
+
+- **Absolute paths**: starts with a single separator (e.g. `/accounts/42`). A leading `\` is normalized to `/` in the returned value, since that is how the browser resolves it.
+- **Allowed schemes**: `http:`, `https:`, `mailto:`, `tel:` (e.g. `https://example.com`, `mailto:test@example.com`, `tel:+123456789`).
+
+### When it's rejected (`undefined`)
+
+| Case | Example | Why |
+| --- | --- | --- |
+| Empty / whitespace-only | `''`, `'   '` | Nothing to render. |
+| Scheme-relative URL | `//evil.com`, `/\evil.com`, `\\evil.com` | The browser resolves it with the current protocol; commonly used to redirect to an attacker-controlled host. A leading `\` counts as a separator because browsers resolve it as `/`. |
+| Scheme-relative URL hidden behind ignored characters | `/<TAB>/evil.com`, `/<LF>/evil.com` | The URL parser drops those characters, so the value resolves to `//evil.com`. |
+| Dangerous scheme | `javascript:alert(1)`, `data:text/html,<script>` | Can execute arbitrary script or load unexpected content in the context of the page. |
+| Unparseable / scheme-less relative value | `#anchor`, `relative/path` | Cannot be validated against the allow-list of schemes, so it's rejected rather than assumed safe. |
+
+> ⚠️ **Note:** In-page anchors (`#anchor`) and scheme-less relative paths (`relative/path`) are currently rejected. If your use case needs to support them, handle that case explicitly before or after calling `sanitizeHref`.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { sanitizeHref } from '@dynamic-framework/ui-react';
+
+const safeHref = sanitizeHref(userProvidedHref);
+
+if (safeHref) {
+  // render <a href={safeHref}>
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>
