@@ -1,1 +1,12 @@
-$box-shadow-lg: 0 10px 10px rgba(0, 0, 0, .02) !default;
+// Shadows
+//
+// Bootstrap's shadow scale, declared here explicitly so the elevation ramp is
+// visible in one place and can be retuned quickly. Keep it monotonic:
+// `sm` < default < `lg`, otherwise the `.shadow-*` / `.hover:shadow-*`
+// utilities stop matching what Bootstrap's docs show.
+//
+// scss-docs-start box-shadow-variables
+$box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !default;
+$box-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075) !default;
+$box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175) !default;
+// scss-docs-end box-shadow-variables

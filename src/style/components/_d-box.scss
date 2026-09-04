@@ -1,9 +1,9 @@
 .d-box {
-  --#{$prefix}box-component-bg: #{var(--#{$prefix}white)};
-  --#{$prefix}box-component-border: 0;
-  --#{$prefix}box-component-border-radius: #{var(--#{$prefix}border-radius)};
-  --#{$prefix}box-component-padding: #{var(--#{$prefix}ref-spacer-4)};
-  --#{$prefix}box-component-shadow: #{var(--#{$prefix}box-shadow-lg)};
+  --#{$prefix}box-component-bg: #{$box-component-bg};
+  --#{$prefix}box-component-border: #{$box-component-border};
+  --#{$prefix}box-component-border-radius: #{$box-component-border-radius};
+  --#{$prefix}box-component-padding: #{$box-component-padding};
+  --#{$prefix}box-component-shadow: #{$box-component-shadow};
 
   padding: var(--#{$prefix}box-component-padding);
   background-color: var(--#{$prefix}box-component-bg);
