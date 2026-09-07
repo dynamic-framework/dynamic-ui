@@ -583,12 +583,12 @@ function DIcon(_a) {
     return (jsxRuntime.jsx(DIconBase, Object.assign({ icon: resolvedIcon, familyClass: propFamilyClass !== null && propFamilyClass !== void 0 ? propFamilyClass : familyClass, familyPrefix: propFamilyPrefix !== null && propFamilyPrefix !== void 0 ? propFamilyPrefix : familyPrefix, materialStyle: propMaterialStyle !== null && propMaterialStyle !== void 0 ? propMaterialStyle : materialStyle }, props)));
 }
 
-function DAlert({ color = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle = false, showClose, onClose, children, id, className, style, dataAttributes, }) {
-    const { iconMap: { alert, xLg, }, } = useDContext();
+function DAlert({ color = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }) {
+    const { icon: { materialStyle, familyClass, familyPrefix, }, iconMap: { alert, xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || alert[color], [alert, iconProp, color]);
     const iconClose = React.useMemo(() => (iconCloseProp || xLg), [iconCloseProp, xLg]);
     const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${color}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [color, showClose, className]);
-    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames(generateClasses), style: style, role: "alert", id: id }, dataAttributes, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] })));
+    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames(generateClasses), style: style, role: "alert", id: id }, dataAttributes, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass !== null && iconCloseFamilyClass !== void 0 ? iconCloseFamilyClass : familyClass, familyPrefix: iconCloseFamilyPrefix !== null && iconCloseFamilyPrefix !== void 0 ? iconCloseFamilyPrefix : familyPrefix, materialStyle: iconCloseMaterialStyle !== null && iconCloseMaterialStyle !== void 0 ? iconCloseMaterialStyle : materialStyle }) }))] })));
 }
 
 function DAvatar({ id, size, image, name: nameProp, useNameAsInitials = false, className, style, dataAttributes, }) {
@@ -610,6 +610,7 @@ function DAvatar({ id, size, image, name: nameProp, useNameAsInitials = false, c
 
 function DBadge(props) {
     const { text, soft = false, color = 'primary', id, rounded, className, size, style, iconStart, iconEnd, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, dataAttributes, } = props;
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     // Responsive size resolution using useResponsiveProp
     const { responsivePropValue } = useResponsiveProp(true);
     const resolvedSize = React.useMemo(() => {
@@ -626,7 +627,7 @@ function DBadge(props) {
         'rounded-pill': !!rounded,
         [`badge-${resolvedSize}`]: !!resolvedSize,
     }), [rounded, soft, color, resolvedSize]);
-    return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, dataAttributes, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("span", { children: text }), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }))] })));
+    return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, dataAttributes, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })), jsxRuntime.jsx("span", { children: text }), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle }))] })));
 }
 
 function DBox({ className, style, children, dataAttributes, }) {
@@ -658,6 +659,7 @@ function DInput(_a, ref) {
     const inputRef = useProvidedRefOrCreate(ref);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const handleOnChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
     }, [onChange]);
@@ -720,7 +722,7 @@ function DInput(_a, ref) {
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
-                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (onIconStartClick ? (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel || (typeof iconStart === 'string' ? iconStart : 'start icon'), tabIndex: iconStartTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })) : (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Start`, "aria-hidden": "true", tabIndex: -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) }))), dynamicComponent, (iconEnd && !loading) && (onIconEndClick ? (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel || (typeof iconEnd === 'string' ? iconEnd : 'end icon'), tabIndex: iconEndTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })) : (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}End`, "aria-hidden": "true", tabIndex: -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) }))), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", "data-testid": "loading-spinner", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (onIconStartClick ? (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel || (typeof iconStart === 'string' ? iconStart : 'start icon'), tabIndex: iconStartTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) })) : (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Start`, "aria-hidden": "true", tabIndex: -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) }))), dynamicComponent, (iconEnd && !loading) && (onIconEndClick ? (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel || (typeof iconEnd === 'string' ? iconEnd : 'end icon'), tabIndex: iconEndTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) })) : (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}End`, "aria-hidden": "true", tabIndex: -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) }))), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", "data-testid": "loading-spinner", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 const ForwardedDInput = React.forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
@@ -1116,7 +1118,7 @@ function useDBoxFile(props) {
 
 function DBoxFile(_a) {
     var { icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, children, className, style, dataAttributes } = _a, props = tslib.__rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "children", "className", "style", "dataAttributes"]);
-    const { iconMap: { upload } } = useDContext();
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { upload }, } = useDContext();
     const icon = React.useMemo(() => iconProp || upload, [iconProp, upload]);
     const { inputRef, rootRef, isDragValid, isDragInvalid, acceptAttr, files, handleFileSelect, handleDrop, handleDragEnter, handleDragLeave, handleClick, handleKeyDown, handleRemoveFile, openFileDialog, } = useDBoxFile(props);
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("section", Object.assign({ className: classNames('d-box-file', {
@@ -1124,13 +1126,14 @@ function DBoxFile(_a) {
                     'd-box-file-disabled': props.disabled,
                     'd-box-file-valid': isDragValid,
                     'd-box-file-invalid': isDragInvalid,
-                }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), icon && iconProp !== false && (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
+                }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), icon && iconProp !== false && (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
                                 : children || (jsxRuntime.jsx("p", { className: "d-box-file-empty-text", children: "Drag and drop some files here, or click to select files" })) })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "Paperclip", iconEnd: "Trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 const DButton = React.forwardRef((props, ref) => {
     const { color = 'primary', size, variant = 'solid', text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel, href, 'aria-label': ariaLabelProp } = props, rest = tslib.__rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel", "href", 'aria-label']);
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     // Responsive size resolution using useResponsiveProp
     const { responsivePropValue } = useResponsiveProp(true);
     const resolvedSize = React.useMemo(() => {
@@ -1184,7 +1187,7 @@ const DButton = React.forwardRef((props, ref) => {
                     ref.current = node;
             }, className: classNames(classes, className), style: Object.assign(Object.assign({}, style), (loading && buttonWidth
                 ? { minWidth: `${buttonWidth}px` }
-                : undefined)), "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, { children: [loading && (jsxRuntime.jsxs("span", { className: "btn-loading", children: [jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsxRuntime.jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
+                : undefined)), "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, { children: [loading && (jsxRuntime.jsxs("span", { className: "btn-loading", children: [jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsxRuntime.jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle })), content, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }))] }))] })));
     }
     return (jsxRuntime.jsxs("button", Object.assign({ ref: (node) => {
             buttonRef.current = node;
@@ -1198,12 +1201,13 @@ const DButton = React.forwardRef((props, ref) => {
         // eslint-disable-next-line react/button-has-type
         type: type, className: classNames(classes, className), style: Object.assign(Object.assign({}, style), (loading && buttonWidth
             ? { minWidth: `${buttonWidth}px` }
-            : undefined)), disabled: isDisabled, "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, rest, { children: [loading && (jsxRuntime.jsxs("span", { className: "btn-loading", children: [jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsxRuntime.jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
+            : undefined)), disabled: isDisabled, "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, rest, { children: [loading && (jsxRuntime.jsxs("span", { className: "btn-loading", children: [jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsxRuntime.jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle })), content, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }))] }))] })));
 });
 DButton.displayName = 'DButton';
 
 function DButtonIcon(_a) {
     var { id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = tslib.__rest(_a, ["id", "icon", "size", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const generateClasses = React.useMemo(() => {
         const variantClass = !variant || variant === 'solid'
             ? `btn-${color}`
@@ -1227,11 +1231,11 @@ function DButtonIcon(_a) {
     if (href) {
         return (jsxRuntime.jsx("a", Object.assign({ id: id, href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": ariaLabel, "aria-disabled": isDisabled }, dataAttributes, { children: loading
                 ? (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-                : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
+                : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
     }
     return (jsxRuntime.jsx("button", Object.assign({ className: classNames(generateClasses, className), style: style, disabled: state === 'disabled' || loading, onClick: clickHandler, "aria-label": ariaLabel }, dataAttributes, rest, { children: loading
             ? (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-            : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
+            : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
 }
 
 function DCardHeader({ className, style, children, }) {
@@ -1294,12 +1298,12 @@ function DChip({ color = 'primary', text, icon, iconFamilyClass, iconFamilyPrefi
         'd-chip': true,
         [`d-chip-${color}`]: !!color,
     }), [color]);
-    const { iconMap: { xLg, }, } = useDContext();
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
     const iconClose = React.useMemo(() => iconCloseProp || xLg, [iconCloseProp, xLg]);
-    return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: [icon && (jsxRuntime.jsx("div", { className: "d-chip-icon-container", children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }) })), jsxRuntime.jsx("span", { children: text }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-chip-icon-container", onClick: onClose, "aria-label": closeAriaLabel, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] })));
+    return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: [icon && (jsxRuntime.jsx("div", { className: "d-chip-icon-container", children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle }) })), jsxRuntime.jsx("span", { children: text }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-chip-icon-container", onClick: onClose, "aria-label": closeAriaLabel, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass !== null && iconCloseFamilyClass !== void 0 ? iconCloseFamilyClass : familyClass, familyPrefix: iconCloseFamilyPrefix !== null && iconCloseFamilyPrefix !== void 0 ? iconCloseFamilyPrefix : familyPrefix, materialStyle: iconCloseMaterialStyle !== null && iconCloseMaterialStyle !== void 0 ? iconCloseMaterialStyle : materialStyle }) }))] })));
 }
 
-function DCollapse({ id, className, style, Component, defaultCollapsed = true, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, dataAttributes, }) {
+function DCollapse({ id, className, style, Component, defaultCollapsed = true, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, dataAttributes, }) {
     const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
     const onChangeCollapse = () => {
         setCollapsed((prev) => {
@@ -1313,10 +1317,10 @@ function DCollapse({ id, className, style, Component, defaultCollapsed = true, o
     React.useEffect(() => {
         setCollapsed(defaultCollapsed);
     }, [defaultCollapsed]);
-    const { iconMap: { chevronDown, chevronUp, }, } = useDContext();
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { chevronDown, chevronUp, }, } = useDContext();
     const iconOpen = React.useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
     const iconClose = React.useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
-    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames('collapse-container', className), style: style }, dataAttributes, { children: [jsxRuntime.jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsxRuntime.jsx("div", { className: "flex-grow-1", children: Component }), jsxRuntime.jsx(DIcon, { color: "primary", size: "1.25rem", icon: collapsed ? iconOpen : iconClose, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })] }), jsxRuntime.jsx("div", { className: classNames('collapse-body-wrapper', {
+    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames('collapse-container', className), style: style }, dataAttributes, { children: [jsxRuntime.jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsxRuntime.jsx("div", { className: "flex-grow-1", children: Component }), jsxRuntime.jsx(DIcon, { className: "collapse-icon", color: "primary", size: "1.25rem", icon: collapsed ? iconOpen : iconClose, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })] }), jsxRuntime.jsx("div", { className: classNames('collapse-body-wrapper', {
                     show: !collapsed,
                 }), children: jsxRuntime.jsx("div", { className: "collapse-body", children: children }) })] })));
 }
@@ -2107,9 +2111,9 @@ function DInputCheck(_a) {
     ]);
     React.useEffect(() => {
         if (innerRef.current) {
-            innerRef.current.indeterminate = Boolean(indeterminate);
+            innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
         }
-    }, [indeterminate]);
+    }, [indeterminate, type]);
     React.useEffect(() => {
         if (innerRef.current) {
             innerRef.current.checked = checked;
@@ -2302,10 +2306,18 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
                 }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
-function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, invalid = false, valid = false, readonly, className, style, dataAttributes, inputClassName, onChange, }) {
+function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, invalid = false, valid = false, hint, readonly, className, style, dataAttributes, inputClassName, onChange, }) {
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const [internalIsChecked, setInternalIsChecked] = React.useState(checked);
+    const ariaDescribedby = React.useMemo(() => ([
+        !!hint && `${id}Hint`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [
+        id,
+        hint,
+    ]);
     React.useEffect(() => {
         setInternalIsChecked(checked);
     }, [checked]);
@@ -2314,10 +2326,10 @@ function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, i
         setInternalIsChecked(value);
         onChange === null || onChange === void 0 ? void 0 : onChange(value);
     }, [onChange]);
-    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('form-check form-switch', className) }, dataAttributes, { children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
+    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('form-check form-switch', className) }, dataAttributes, { children: [jsxRuntime.jsx("input", Object.assign({ id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
                     'is-invalid': invalid,
                     'is-valid': valid,
-                }, inputClassName), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] })));
+                }, inputClassName), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }, ariaDescribedby && { 'aria-describedby': ariaDescribedby })), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
 function DInputRange(_a, ref) {
@@ -2358,6 +2370,7 @@ const ForwardedDInputRange = React.forwardRef(DInputRange);
 ForwardedDInputRange.displayName = 'DInputRange';
 
 function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href, onClick, color, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, children, className, style, dataAttributes, }) {
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const Tag = React.useMemo(() => {
         if (href) {
             return 'a';
@@ -2386,7 +2399,7 @@ function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href,
         }
         return Object.assign(Object.assign({}, active && { 'aria-current': true }), disabled && { 'aria-disabled': true });
     }, [Tag, active, disabled]);
-    return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), children, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle, className: "ms-auto" }))] })));
+    return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle })), children, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle, className: "ms-auto" }))] })));
 }
 
 function DListGroup$1({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
@@ -2413,10 +2426,11 @@ var DListGroup = Object.assign(DListGroup$1, {
     Item: DListGroupItem,
 });
 
-function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
-    const { iconMap: { xLg, }, } = useDContext();
+function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, iconMaterialStyle, materialStyle: materialStyleProp, }) {
+    var _a;
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-modal-separator" })] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-modal-separator" })] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -2457,10 +2471,11 @@ var DModal = Object.assign(DModal$1, {
     Footer: DModalFooter,
 });
 
-function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
-    const { iconMap: { xLg, }, } = useDContext();
+function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, iconMaterialStyle, materialStyle: materialStyleProp, }) {
+    var _a;
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-offcanvas-separator" })] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-offcanvas-separator" })] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
@@ -2601,8 +2616,8 @@ function DProgress({ className, style, currentValue, minValue = 0, maxValue = 10
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames('progress', className), style: Object.assign({ height }, style) }, dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": "Progress bar", style: { width: formatProgress }, "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
 }
 
-function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, completed, alignStart = false, className, style, }) {
-    const { iconMap: { check, }, } = useDContext();
+function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical = false, completed, alignStart = false, className, style, }) {
+    const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { check, }, } = useDContext();
     const icon = React.useMemo(() => iconSuccessProp || check, [check, iconSuccessProp]);
     if (currentStep < 1 || currentStep > options.length) {
         throw new Error('Current step should be in the range from 1 to options length');
@@ -2617,7 +2632,7 @@ function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSu
             }), children: [jsxRuntime.jsx("div", { className: "d-step-value", children: jsxRuntime.jsxs("div", { className: classNames({
                             'd-step-icon-container': true,
                             'd-step-check': value < currentStep || completed,
-                        }), children: [((value < currentStep) || completed) && (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconSuccessFamilyClass, familyPrefix: iconSuccessFamilyPrefix, materialStyle: iconSuccessMaterialStyle, className: "d-step-icon" })), value] }) }), jsxRuntime.jsxs("div", { className: "d-step-text-container", children: [jsxRuntime.jsx("div", { className: "d-step-label", children: label }), description && (jsxRuntime.jsx("div", { className: "d-step-description", children: description }))] })] }, value))) }));
+                        }), children: [((value < currentStep) || completed) && (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconSuccessFamilyClass !== null && iconSuccessFamilyClass !== void 0 ? iconSuccessFamilyClass : familyClass, familyPrefix: iconSuccessFamilyPrefix !== null && iconSuccessFamilyPrefix !== void 0 ? iconSuccessFamilyPrefix : familyPrefix, materialStyle: iconSuccessMaterialStyle !== null && iconSuccessMaterialStyle !== void 0 ? iconSuccessMaterialStyle : materialStyle, className: "d-step-icon" })), value] }) }), jsxRuntime.jsxs("div", { className: "d-step-text-container", children: [jsxRuntime.jsx("div", { className: "d-step-label", children: label }), description && (jsxRuntime.jsx("div", { className: "d-step-description", children: description }))] })] }, value))) }));
 }
 
 function DStepper$1({ options, currentStep, className, style, }) {
@@ -2650,13 +2665,20 @@ function DStepper$1({ options, currentStep, className, style, }) {
     return (jsxRuntime.jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsxRuntime.jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsxRuntime.jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsxRuntime.jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-step-label", children: currentOption.label }), jsxRuntime.jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
 }
 
-function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, breakpoint = 'lg', className, completed = false, style, dataAttributes, }) {
-    return (jsxRuntime.jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsxRuntime.jsx("div", { className: classNames('d-stepper-mobile', `d-block d-${breakpoint}-none`), children: jsxRuntime.jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsxRuntime.jsx("div", { className: classNames('d-stepper-desktop', `d-none d-${breakpoint}-block`), children: jsxRuntime.jsx(DStepper$2, { options: options, currentStep: currentStep, vertical: vertical, iconSuccess: iconSuccess, iconSuccessFamilyClass: iconSuccessFamilyClass, iconSuccessFamilyPrefix: iconSuccessFamilyPrefix, iconSuccessMaterialStyle: iconSuccessMaterialStyle, completed: completed }) })] })));
+function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical = false, breakpoint = 'lg', className, completed = false, style, dataAttributes, }) {
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
+    return (jsxRuntime.jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsxRuntime.jsx("div", { className: classNames('d-stepper-mobile', `d-block d-${breakpoint}-none`), children: jsxRuntime.jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsxRuntime.jsx("div", { className: classNames('d-stepper-desktop', `d-none d-${breakpoint}-block`), children: jsxRuntime.jsx(DStepper$2, { options: options, currentStep: currentStep, vertical: vertical, iconSuccess: iconSuccess, iconSuccessFamilyClass: iconSuccessFamilyClass !== null && iconSuccessFamilyClass !== void 0 ? iconSuccessFamilyClass : familyClass, iconSuccessFamilyPrefix: iconSuccessFamilyPrefix !== null && iconSuccessFamilyPrefix !== void 0 ? iconSuccessFamilyPrefix : familyPrefix, iconSuccessMaterialStyle: iconSuccessMaterialStyle !== null && iconSuccessMaterialStyle !== void 0 ? iconSuccessMaterialStyle : materialStyle, completed: completed }) })] })));
 }
 
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP$1 = 2;
+/**
+ * Tooltip is an abstraction component that wraps any element (`Component`) and displays
+ * floating contextual content (`children`) positioned relative to it using Floating UI.
+ * Use it to add short, non-critical hints or descriptions triggered by hover, focus, or
+ * click, without altering the surrounding layout.
+ */
 function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP$1, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = React.useState(open);
     const arrowRef = React.useRef(null);
@@ -2939,11 +2961,132 @@ function validatePhoneNumber(phone) {
     }
 }
 
+const SAFE_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:']);
+/**
+ * Characters the URL parser drops before resolving a URL, so they cannot be used to hide a
+ * scheme-relative prefix or a dangerous scheme (e.g. `/<TAB>/evil.com`, `java<TAB>script:`).
+ */
+const IGNORED_CHARS$1 = /[\t\n\r]/g;
+/**
+ * Two leading separators in any combination. Browsers treat a leading `\` exactly like a
+ * leading `/`, so `//`, `/\`, `\/` and `\\` all resolve to a scheme-relative URL.
+ */
+const SCHEME_RELATIVE = /^[/\\]{2}/;
+const LEADING_SEPARATOR = /^[/\\]/;
+/**
+ * Validates a `href` value and returns it only if it is safe to render as a link,
+ * preventing XSS through unsafe URL schemes and scheme-relative URLs.
+ *
+ * Before validating, the value is trimmed and every tab, line feed and carriage return is
+ * removed, because the URL parser ignores those characters too and they would otherwise
+ * hide an unsafe value from the checks below.
+ *
+ * A `href` is considered safe when it is either:
+ * - An absolute path starting with a single separator (e.g. `/accounts/42`). A leading `\`
+ *   is normalized to `/` in the returned value, since that is how the browser resolves it.
+ * - A URL using one of the allowed schemes: `http:`, `https:`, `mailto:`, `tel:`.
+ *
+ * A `href` is rejected (returns `undefined`) when it is:
+ * - Empty or made only of whitespace/ignored characters (`''`, `'   '`).
+ * - Scheme-relative (starts with two separators, e.g. `//evil.com`, `/\evil.com`,
+ *   `/<TAB>/evil.com`), since the browser would resolve it using the current protocol and it
+ *   can be used to redirect to an attacker-controlled host.
+ * - Using a disallowed/dangerous scheme, such as `javascript:` or `data:`
+ *   (e.g. `javascript:alert(1)`, `data:text/html,<script>...</script>`).
+ * - Not parseable as an absolute URL and not an absolute path, such as bare fragments
+ *   (`#anchor`) or scheme-less relative paths (`relative/path`). These cannot be validated
+ *   against `SAFE_SCHEMES`, so they are rejected rather than assumed safe.
+ *
+ * @param href - The raw URL or path to validate, typically coming from user input,
+ * a CMS, or an external API.
+ * @returns The sanitized `href` when safe, `undefined` otherwise.
+ *
+ * @example
+ * sanitizeHref('/accounts/42'); // '/accounts/42'
+ * sanitizeHref('https://example.com'); // 'https://example.com'
+ * sanitizeHref('mailto:test@example.com'); // 'mailto:test@example.com'
+ * sanitizeHref('//evil.com'); // undefined
+ * sanitizeHref('/\\evil.com'); // undefined
+ * sanitizeHref('javascript:alert(1)'); // undefined
+ */
+function sanitizeHref(href) {
+    const normalized = href.trim().replace(IGNORED_CHARS$1, '');
+    if (!normalized)
+        return undefined;
+    if (SCHEME_RELATIVE.test(normalized))
+        return undefined;
+    if (LEADING_SEPARATOR.test(normalized))
+        return `/${normalized.slice(1)}`;
+    try {
+        const { protocol } = new URL(normalized);
+        return SAFE_SCHEMES.has(protocol) ? normalized : undefined;
+    }
+    catch (_a) {
+        return undefined;
+    }
+}
+
+/**
+ * Characters the URL parser drops before resolving a URL, so they cannot be used to hide a
+ * scheme-relative prefix (e.g. `/<TAB>/evil.com`).
+ */
+const IGNORED_CHARS = /[\t\n\r]/g;
+/**
+ * Leading separators. Browsers treat a leading `\` exactly like a leading `/`, so both have
+ * to be stripped to prevent scheme-relative URLs (`//evil.com`, `/\evil.com`, `\\evil.com`).
+ */
+const LEADING_SEPARATORS = /^[/\\]+/;
+/**
+ * Builds an internal URL from a `path` and a set of query `params`, normalizing leading
+ * separators to prevent scheme-relative URLs (e.g. `//accounts` and `/\accounts` both become
+ * `/accounts`).
+ *
+ * The `path` is trimmed and every tab, line feed and carriage return is removed before
+ * building the result, because the URL parser ignores those characters too and they would
+ * otherwise hide a scheme-relative prefix (`/<TAB>/evil.com` resolves to `//evil.com`).
+ *
+ * Handles the special case where `path` is the literal string `'#'`, which happens when
+ * a Liquid template variable used as a link target is left unconfigured; in that case the
+ * params are ignored and `'#'` is returned as-is instead of building a broken URL.
+ *
+ * @param path - The path to build the URL from. Leading separators are stripped before
+ * building the result (`/accounts`, `//accounts` and `\accounts` are all treated as `accounts`).
+ * @param params - Key/value pairs serialized as the query string.
+ * @returns The resulting URL:
+ * - `'#'` when `path` normalizes to `'#'` (`'#'`, `'/#'`), ignoring the params.
+ * - `'/'` when `path` is empty and there are no params.
+ * - `'/?<query>'` when `path` is empty and there are params.
+ * - `'<path>'` or `'<path>?<query>'` when `path` starts with `#`, since a fragment must not be
+ *   prefixed with `/` (it would navigate away from the current document).
+ * - `'/<path>'` or `'/<path>?<query>'` otherwise.
+ *
+ * @example
+ * buildUrl('accounts', { account_id: '42' }); // '/accounts?account_id=42'
+ * buildUrl('//accounts', {}); // '/accounts'
+ * buildUrl('#', { account_id: '42' }); // '#'
+ * buildUrl('#accounts', { account_id: '42' }); // '#accounts?account_id=42'
+ * buildUrl('', { tab: 'movimientos' }); // '/?tab=movimientos'
+ */
+function buildUrl(path, params) {
+    const normalizedPath = path
+        .trim()
+        .replace(IGNORED_CHARS, '')
+        .replace(LEADING_SEPARATORS, '');
+    if (normalizedPath === '#')
+        return '#';
+    const query = new URLSearchParams(Object.entries(params).map(([key, value]) => [key, String(value)])).toString();
+    if (normalizedPath === '')
+        return query ? `/?${query}` : '/';
+    const prefix = normalizedPath.startsWith('#') ? '' : '/';
+    return `${prefix}${normalizedPath}${query ? `?${query}` : ''}`;
+}
+
 function DInputPhone(_a, ref) {
     var { id: idProp, style, className, label = '', disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconEndClick, countrySelectorProps, filteredCountries, defaultCountry = 'cl' } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconEndClick", "countrySelectorProps", "filteredCountries", "defaultCountry"]);
     const innerRef = useProvidedRefOrCreate(ref);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const handleOnIconEndClick = React.useCallback(() => {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
     }, [onIconEndClick, value]);
@@ -3017,7 +3160,7 @@ function DInputPhone(_a, ref) {
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
-                }), children: [jsxRuntime.jsx(reactInternationalPhone.CountrySelector, Object.assign({}, countrySelectorProps, { selectedCountry: country.iso2, onSelect: ({ iso2 }) => setCountry(iso2), countries: countries, disabled: disabled || loading, className: classNames('input-group-text', countrySelectorProps === null || countrySelectorProps === void 0 ? void 0 : countrySelectorProps.className) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                }), children: [jsxRuntime.jsx(reactInternationalPhone.CountrySelector, Object.assign({}, countrySelectorProps, { selectedCountry: country.iso2, onSelect: ({ iso2 }) => setCountry(iso2), countries: countries, disabled: disabled || loading, className: classNames('input-group-text', countrySelectorProps === null || countrySelectorProps === void 0 ? void 0 : countrySelectorProps.className) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 const ForwardedDInputPhone = React.forwardRef(DInputPhone);
 ForwardedDInputPhone.displayName = 'DInputPhone';
@@ -3696,12 +3839,14 @@ exports.DVoucher = DVoucher;
 exports.EmptyState = EmptyState;
 exports.ErrorState = ErrorState;
 exports.LoadingState = LoadingState;
+exports.buildUrl = buildUrl;
 exports.changeQueryString = changeQueryString;
 exports.checkMediaQuery = checkMediaQuery;
 exports.configureI18n = configureI8n;
 exports.formatCurrency = formatCurrency;
 exports.getCssVariable = getCssVariable;
 exports.getQueryString = getQueryString;
+exports.sanitizeHref = sanitizeHref;
 exports.subscribeToMediaQuery = subscribeToMediaQuery;
 exports.useConfirmModal = useConfirmModal;
 exports.useCountdown = useCountdown;

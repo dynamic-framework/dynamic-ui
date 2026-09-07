@@ -4,4 +4,6 @@ export { default as getQueryString } from './getQueryString';
 export { default as changeQueryString } from './changeQueryString';
 export { default as getCssVariable } from './getCssVariable';
 export { default as validatePhoneNumber } from './validatePhoneNumber';
+export { default as sanitizeHref } from './sanitizeHref';
+export { default as buildUrl } from './buildUrl';
 export * from './mediaQuery';

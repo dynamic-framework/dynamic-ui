@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.8.0
+ * dynamic-framework 2.9.0
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -480,7 +480,7 @@
   --bs-border-radius-pill: 50rem;
   --bs-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  --bs-box-shadow-lg: 0 10px 10px rgba(0, 0, 0, 0.02);
+  --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
   --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
   --bs-focus-ring-width: 0.25rem;
   --bs-focus-ring-opacity: 0.25;
@@ -4799,7 +4799,7 @@ th {
 .form-text {
   margin-top: var(--bs-ref-spacer-1);
   font-size: var(--bs-fs-small);
-  color: var(--bs-gray-400);
+  color: var(--bs-gray-500);
 }
 
 .form-control {
@@ -9529,8 +9529,8 @@ body {
 }
 
 .form-check .form-text {
-  --bs-form-text-padding: 0 var(--bs-ref-spacer-2);
   display: flex;
+  padding-inline: var(--bs-ref-spacer-2);
 }
 .form-check:has(.form-check-input.is-valid) .form-text {
   color: var(--bs-form-valid-border-color);
@@ -9567,18 +9567,6 @@ body {
   display: flex;
   gap: var(--bs-list-group-item-gap);
   align-items: center;
-}
-
-.form-text {
-  --bs-form-text-padding: 0 0;
-  --bs-form-text-gap: var(--bs-ref-spacer-1);
-  --bs-form-text-color: var(--bs-gray-400);
-  display: inline-flex;
-  flex-direction: row;
-  gap: var(--bs-form-text-gap);
-  align-items: center;
-  padding: var(--bs-form-text-padding);
-  color: var(--bs-form-text-color);
 }
 
 .input-group-text + .form-control {
@@ -11485,7 +11473,7 @@ label {
   --bs-box-component-border: 0;
   --bs-box-component-border-radius: var(--bs-border-radius);
   --bs-box-component-padding: var(--bs-ref-spacer-4);
-  --bs-box-component-shadow: var(--bs-box-shadow-lg);
+  --bs-box-component-shadow: var(--bs-box-shadow-sm);
   padding: var(--bs-box-component-padding);
   background-color: var(--bs-box-component-bg);
   border: var(--bs-box-component-border);
@@ -60247,11 +60235,6 @@ react-datepicker__navigation
 .text-muted {
   --bs-text-muted: var(--bs-gray-500);
   color: var(--bs-text-muted) !important;
-}
-
-.form-text {
-  --bs-form-text: var(--bs-gray-500);
-  color: var(--bs-form-text) !important;
 }
 
 .spinner-border {

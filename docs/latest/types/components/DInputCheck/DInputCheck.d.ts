@@ -12,6 +12,7 @@ type Props = ComponentPropsWithoutRef<'input'> & BaseProps & {
     invalid?: boolean;
     valid?: boolean;
     hint?: string;
+    /** Only applies when `type` is `checkbox`; ignored for `radio`. */
     indeterminate?: boolean;
     value?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;

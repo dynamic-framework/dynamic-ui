@@ -588,7 +588,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">70/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">9/497 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">35 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">69/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">10/496 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -646,7 +646,7 @@
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   15 | import { useConfirmModal } from &#39;../../src/hooks&#39;;
   16 |
-&gt; 17 | const meta: Meta = {
+&gt; 17 | const meta = {
      | ^
   18 |   title: &#39;Patterns/Confirm Modal&#39;,
   19 |   parameters: {
@@ -669,7 +669,7 @@ import DOffcanvas from &#39;../../src/components/DOffcanvas/DOffcanvas&#39;;
 import type { PortalProps } from &#39;../../src&#39;;
 import { useConfirmModal } from &#39;../../src/hooks&#39;;
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Confirm Modal&#39;,
   parameters: {
     layout: &#39;centered&#39;,
@@ -682,9 +682,10 @@ const meta: Meta = {
       &lt;/DContextProvider&gt;
     ),
   ],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 function SimpleConfirmContent() {
   const [result, setResult] = useState&lt;string&gt;(&#39;&#39;);
@@ -722,7 +723,7 @@ function SimpleConfirmContent() {
  * Simple confirmation modal example.
  * Shows how to use `useConfirmModal` for basic confirmations.
  */
-export const SimpleConfirm: StoryObj = {
+export const SimpleConfirm: Story = {
   render: () =&gt; &lt;SimpleConfirmContent /&gt;,
   parameters: {
     docs: {
@@ -800,7 +801,7 @@ function CriticalDeleteContent() {
  * Critical confirmation with code validation.
  * User must type the exact confirmation code before the confirm button is enabled.
  */
-export const CriticalDelete: StoryObj = {
+export const CriticalDelete: Story = {
   render: () =&gt; &lt;CriticalDeleteContent /&gt;,
   parameters: {
     docs: {
@@ -902,7 +903,7 @@ function DeleteContactContent() {
  * Mimics the iOS experience when deleting a contact or account.
  * Requires typing &quot;DELETE&quot; to confirm the action.
  */
-export const DeleteContact: StoryObj = {
+export const DeleteContact: Story = {
   render: () =&gt; &lt;DeleteContactContent /&gt;,
   parameters: {
     docs: {
@@ -1045,7 +1046,7 @@ function MultipleActionsContent() {
  * Multi-action confirmation example.
  * Different actions with different confirmation requirements.
  */
-export const MultipleActions: StoryObj = {
+export const MultipleActions: Story = {
   render: () =&gt; &lt;MultipleActionsContent /&gt;,
   parameters: {
     docs: {
@@ -1291,7 +1292,7 @@ function ContactListContent() {
  * Contact list with per-row dropdown actions.
  * Each row has an Edit (no-op) and a Delete action that opens a personalized confirmation modal.
  */
-export const ContactList: StoryObj = {
+export const ContactList: Story = {
   render: () =&gt; &lt;ContactListContent /&gt;,
 };
 
@@ -1380,7 +1381,7 @@ function ConfirmOnModalContent() {
  * Click **Close** inside the form modal to trigger the discard confirmation
  * on top of the already-open modal.
  */
-export const ConfirmOnModal: StoryObj = {
+export const ConfirmOnModal: Story = {
   name: &#39;Confirm on top of a Modal&#39;,
   decorators: [
     (Story) =&gt; (
@@ -1520,7 +1521,7 @@ function ConfirmOnOffcanvasContent() {
  * Click **Discard** or the ✕ button inside the settings panel to trigger
  * the discard confirmation on top of the already-open offcanvas.
  */
-export const ConfirmOnOffcanvas: StoryObj = {
+export const ConfirmOnOffcanvas: Story = {
   name: &#39;Confirm on top of an Offcanvas&#39;,
   decorators: [
     (Story) =&gt; (
@@ -1697,7 +1698,7 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DAlert</h2>
       <div class="badges">
-        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">6 prop types</label>
+        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">4 prop types</label>
         <label for="c-1-design-system-components-alert-info" class="badge info as-toggle">1 info</label>
         <label for="c-1-design-system-components-alert-stories" class="badge ok as-toggle">9 stories</label>
         
@@ -1733,7 +1734,7 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">6 prop types</span>
+              <span class="badge ok">4 prop types</span>
             </div>
             <pre><code>Component: src/components/DAlert/DAlert.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
@@ -1742,10 +1743,6 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
 color?: any = &#39;success&#39;
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
-
-iconCloseMaterialStyle?: any = false
-
-iconMaterialStyle?: any = false
 
 style?: CSSProperties</code></pre>
           </div>
@@ -2070,7 +2067,7 @@ useNameAsInitials?: boolean = false</code></pre>
       <div class="badges">
         <label for="c-3-design-system-components-badge-props" class="badge ok as-toggle">14 prop types</label>
         <label for="c-3-design-system-components-badge-info" class="badge info as-toggle">1 info</label>
-        <label for="c-3-design-system-components-badge-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-3-design-system-components-badge-stories" class="badge ok as-toggle">11 stories</label>
         
         
       </div>
@@ -2284,6 +2281,32 @@ text?: string</code></pre>
     &lt;DBadge color=&quot;danger&quot; text=&quot;Soft Rounded&quot; soft rounded /&gt;
   &lt;/div&gt;
 );</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Material Icons Syntax</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const MaterialIconsSyntax = () =&gt; &lt;DBadge
+    color=&quot;primary&quot;
+    text=&quot;Badge&quot;
+    iconStart=&quot;home&quot;
+    iconMaterialStyle
+    iconFamilyClass=&quot;material-symbols-outlined&quot;
+    iconEnd=&quot;star&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Material Icons Syntax From Context</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const MaterialIconsSyntaxFromContext = () =&gt; &lt;DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}&gt;
+    &lt;DBadge color=&quot;primary&quot; text=&quot;Badge&quot; iconStart=&quot;home&quot; iconEnd=&quot;star&quot; /&gt;
+&lt;/DContextProvider&gt;;</code></pre>
             </div>
         </div>
     
@@ -6375,7 +6398,7 @@ text?: string</code></pre>
       <div class="badges">
         <label for="c-19-design-system-components-box-file-props" class="badge ok as-toggle">24 prop types</label>
         <label for="c-19-design-system-components-box-file-info" class="badge info as-toggle">1 info</label>
-        <label for="c-19-design-system-components-box-file-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-19-design-system-components-box-file-stories" class="badge ok as-toggle">11 stories</label>
         
         
       </div>
@@ -6505,6 +6528,19 @@ value?: Array&lt;string&gt;</code></pre>
               
               
               <pre><code>const WithCustomIcon = () =&gt; &lt;DBoxFile accept={{}} icon=&quot;Paperclip&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Custom Icon Material Syntax</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithCustomIconMaterialSyntax = () =&gt; &lt;DBoxFile
+    accept={{}}
+    icon=&quot;cloud_upload&quot;
+    iconMaterialStyle
+    iconFamilyClass=&quot;material-symbols-outlined&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -7420,12 +7456,12 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Material Secondary Icon Right</span>
+                <span class="ex-name">Icon Material Syntax</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               <div class="hint">To use buttons with Material Symbols style use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DButtonIcon` component as a props</div>
-              <pre><code>const MaterialSecondaryIconRight = () =&gt; &lt;DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}&gt;
+              <pre><code>const IconMaterialSyntax = () =&gt; &lt;DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}&gt;
     &lt;DButtonIcon
         color=&quot;primary&quot;
         size={undefined}
@@ -9027,7 +9063,7 @@ iconFamilyClass?: string
 
 iconFamilyPrefix?: string
 
-iconMaterialStyle?: boolean = false
+iconMaterialStyle?: boolean
 
 style?: CSSProperties</code></pre>
           </div>
@@ -9295,7 +9331,7 @@ portalName?: any = &#39;d-portal&#39;</code></pre>
                 <span class="badge ok">story ok</span>
               </div>
               
-              <div class="hint">By default and without additional configuration, the icons are linked to &lt;code&gt;Lucide icons&lt;/code&gt;. To share a different icon configuration we need to change the key icon Additionally, you can provide `iconRegistry` to map string icon names to custom SVG components (for example from a shared commons package). This takes the settings needed to use bootstrap icons, which would be `familyClass=bi`, `familyPrefix=bi-` and `materialStyle=false` Similar settings can be used for any icon font. In the particular case of material symbols, the materialStyle property was added to place the name of the icon in the children of `&lt;i /&gt;` and not as a class. This setting can be used with any icon font that uses a similar style. See more about this in &lt;a href=&quot;?path=/docs/design-system-examples-icons--docs&quot;&gt;Examples/Icons&lt;/a&gt;</div>
+              <div class="hint">By default and without additional configuration, the icons are linked to &lt;code&gt;Lucide icons&lt;/code&gt;. To share a different icon configuration we need to change the key icon Additionally, you can provide `iconRegistry` to map string icon names to custom SVG components (for example from a shared commons package). This takes the settings needed to use bootstrap icons, which would be `familyClass=bi`, `familyPrefix=bi-` and `materialStyle=false` Similar settings can be used for any icon font. In the particular case of material symbols, the materialStyle property was added to place the name of the icon in the children of `&lt;i /&gt;` and not as a class. This setting can be used with any icon font that uses a similar style. See more about this in &lt;a href=&quot;?path=/docs/design-system-components-icon-usage--docs&quot;&gt;Components/Icon/Usage&lt;/a&gt;</div>
               <pre><code>const IconSettings = () =&gt; &lt;DContextProvider /&gt;;</code></pre>
             </div>
             <div class="note ok">
@@ -12255,7 +12291,7 @@ valid?: any = false</code></pre>
       <div class="badges">
         <label for="c-37-design-system-components-input-check-props" class="badge ok as-toggle">17 prop types</label>
         <label for="c-37-design-system-components-input-check-info" class="badge info as-toggle">1 info</label>
-        <label for="c-37-design-system-components-input-check-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-37-design-system-components-input-check-stories" class="badge ok as-toggle">10 stories</label>
         
         
       </div>
@@ -12307,6 +12343,9 @@ hint?: string
 
 id?: string
 
+/**
+ * Only applies when `type` is `checkbox`; ignored for `radio`.
+ */
 indeterminate?: boolean
 
 inputClassName?: string
@@ -12343,35 +12382,48 @@ value?: string</code></pre>
           
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Without Label</span>
+                <span class="ex-name">Default</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxWithoutLabel = () =&gt; &lt;DInputCheck type=&quot;checkbox&quot; checked={false} disabled={false} ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Checkbox Default</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const CheckboxDefault = () =&gt; &lt;DInputCheck
-    id=&quot;componentId2&quot;
+              <pre><code>const Default = () =&gt; &lt;DInputCheck
+    id=&quot;componentId1&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
     checked={false}
-    disabled={false} /&gt;;</code></pre>
+    disabled={false}
+    indeterminate={false}
+    invalid={false}
+    valid={false}
+    hint=&quot;&quot;
+    name=&quot;checkbox&quot;
+    value=&quot;value&quot;
+    className=&quot;&quot;
+    inputClassName=&quot;&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Hint</span>
+                <span class="ex-name">Without Label</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxHint = () =&gt; &lt;DInputCheck
+              <pre><code>const WithoutLabel = () =&gt; &lt;DInputCheck
+    id=&quot;componentId2&quot;
+    type=&quot;checkbox&quot;
+    checked={false}
+    disabled={false}
+    ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Hint</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Hint = () =&gt; &lt;DInputCheck
     id=&quot;componentId3&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
@@ -12381,74 +12433,91 @@ value?: string</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Valid</span>
+                <span class="ex-name">Valid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxValid = () =&gt; &lt;DInputCheck
+              <pre><code>const Valid = () =&gt; &lt;DInputCheck
     id=&quot;componentId4&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
     checked={false}
     disabled={false}
-    valid /&gt;;</code></pre>
+    valid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Invalid</span>
+                <span class="ex-name">Invalid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxInvalid = () =&gt; &lt;DInputCheck
+              <pre><code>const Invalid = () =&gt; &lt;DInputCheck
     id=&quot;componentId5&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
     checked={false}
     disabled={false}
-    invalid /&gt;;</code></pre>
+    invalid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Checked</span>
+                <span class="ex-name">Checked</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxChecked = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
+              <pre><code>const Checked = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Disabled</span>
+                <span class="ex-name">Indeterminate</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+              <pre><code>const Indeterminate = () =&gt; &lt;DInputCheck
+    id=&quot;componentId6b&quot;
+    type=&quot;checkbox&quot;
+    label=&quot;Label&quot;
+    checked={false}
+    disabled={false}
+    indeterminate /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox Checked Disabled</span>
+                <span class="ex-name">Disabled</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxCheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+              <pre><code>const Disabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Checkbox With Input Class Name</span>
+                <span class="ex-name">Checked Disabled</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const CheckboxWithInputClassName = () =&gt; &lt;DInputCheck
+              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Input Class Name</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithInputClassName = () =&gt; &lt;DInputCheck
     id=&quot;componentId9&quot;
     type=&quot;checkbox&quot;
     label=&quot;Custom styled input&quot;
     checked={false}
-    inputClassName=&quot;border-2&quot; /&gt;;</code></pre>
+    inputClassName=&quot;border-2 border-info-500&quot; /&gt;;</code></pre>
             </div>
         </div>
     
@@ -12521,6 +12590,9 @@ hint?: string
 
 id?: string
 
+/**
+ * Only applies when `type` is `checkbox`; ignored for `radio`.
+ */
 indeterminate?: boolean
 
 inputClassName?: string
@@ -12557,36 +12629,48 @@ value?: string</code></pre>
           
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Without Label</span>
+                <span class="ex-name">Default</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioWithoutLabel = () =&gt; &lt;DInputCheck type=&quot;radio&quot; checked={false} disabled={false} ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Radio Default</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const RadioDefault = () =&gt; &lt;DInputCheck
-    id=&quot;componentId2&quot;
+              <pre><code>const Default = () =&gt; &lt;DInputCheck
+    id=&quot;componentId1&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
     checked={false}
-    disabled={false} /&gt;;</code></pre>
+    disabled={false}
+    hint=&quot;Assistive text&quot;
+    valid={false}
+    invalid={false}
+    name=&quot;defaultRadio&quot;
+    className=&quot;&quot;
+    value=&quot;value&quot;
+    inputClassName=&quot;&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Hint</span>
+                <span class="ex-name">Without Label</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioHint = () =&gt; &lt;DInputCheck
+              <pre><code>const WithoutLabel = () =&gt; &lt;DInputCheck
     id=&quot;componentId2&quot;
+    type=&quot;radio&quot;
+    checked={false}
+    disabled={false}
+    ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Hint</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Hint = () =&gt; &lt;DInputCheck
+    id=&quot;componentId3&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
     hint=&quot;Assistive text&quot;
@@ -12595,60 +12679,62 @@ value?: string</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Valid</span>
+                <span class="ex-name">Valid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioValid = () =&gt; &lt;DInputCheck
-    id=&quot;componentId3&quot;
-    type=&quot;radio&quot;
-    label=&quot;Label&quot;
-    checked={false}
-    disabled={false}
-    valid /&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Radio Invalid</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const RadioInvalid = () =&gt; &lt;DInputCheck
+              <pre><code>const Valid = () =&gt; &lt;DInputCheck
     id=&quot;componentId4&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
     checked={false}
     disabled={false}
-    invalid /&gt;;</code></pre>
+    valid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Checked</span>
+                <span class="ex-name">Invalid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioChecked = () =&gt; &lt;DInputCheck id=&quot;componentId5&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
+              <pre><code>const Invalid = () =&gt; &lt;DInputCheck
+    id=&quot;componentId5&quot;
+    type=&quot;radio&quot;
+    label=&quot;Label&quot;
+    checked={false}
+    disabled={false}
+    invalid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Disabled</span>
+                <span class="ex-name">Checked</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+              <pre><code>const Checked = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Radio Checked Disabled</span>
+                <span class="ex-name">Disabled</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const RadioCheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+              <pre><code>const Disabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Checked Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
             </div>
         </div>
     
@@ -12756,7 +12842,8 @@ value?: any = minValue</code></pre>
     maxValue={20}
     invalid
     iconStartAriaLabel=&quot;decrease action&quot;
-    iconEndAriaLabel=&quot;increase action&quot; /&gt;;</code></pre>
+    iconEndAriaLabel=&quot;increase action&quot;
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12773,7 +12860,8 @@ value?: any = minValue</code></pre>
     maxValue={20}
     valid
     iconStartAriaLabel=&quot;decrease action&quot;
-    iconEndAriaLabel=&quot;increase action&quot; /&gt;;</code></pre>
+    iconEndAriaLabel=&quot;increase action&quot;
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12846,7 +12934,7 @@ value?: any = minValue</code></pre>
       <div class="badges">
         
         <label for="c-40-design-system-components-input-currency-info" class="badge info as-toggle">1 info</label>
-        <label for="c-40-design-system-components-input-currency-stories" class="badge err as-toggle">9/9 story errors</label>
+        <label for="c-40-design-system-components-input-currency-stories" class="badge err as-toggle">10/10 story errors</label>
         
         
       </div>
@@ -12888,13 +12976,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12905,13 +12993,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12922,13 +13010,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12939,13 +13027,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12956,13 +13044,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12973,13 +13061,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -12990,13 +13078,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13007,13 +13095,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13024,13 +13112,30 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  274 |   },
-  275 |   tags: [&#39;autodocs&#39;],
-&gt; 276 |   render: renderWithState(),
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  277 | };
-  278 |
-  279 | export default config;</code></pre>
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
+            </div>
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">Without Symbol</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Expected render to be an arrow function or function expression
+  273 |   },
+  274 |   tags: [&#39;autodocs&#39;],
+&gt; 275 |   render: renderWithState(),
+      |           ^^^^^^^^^^^^^^^^^
+  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  277 |
+  278 | export default meta;</code></pre>
             </div>
           
           
@@ -13393,7 +13498,8 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     placeholder=&quot;Placeholder&quot;
     value={undefined}
     invalid
-    iconEndAriaLabel=&quot;show/hide password&quot; /&gt;;</code></pre>
+    iconEndAriaLabel=&quot;show/hide password&quot;
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -13408,7 +13514,8 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     placeholder=&quot;Placeholder&quot;
     value={undefined}
     valid
-    iconEndAriaLabel=&quot;show/hide password&quot; /&gt;;</code></pre>
+    iconEndAriaLabel=&quot;show/hide password&quot;
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14066,7 +14173,7 @@ value?: any = &#39;0&#39;</code></pre>
       <div class="badges">
         <label for="c-46-design-system-components-input-search-props" class="badge ok as-toggle">5 prop types</label>
         <label for="c-46-design-system-components-input-search-info" class="badge info as-toggle">1 info</label>
-        <label for="c-46-design-system-components-input-search-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-46-design-system-components-input-search-stories" class="badge ok as-toggle">5 stories</label>
         
         
       </div>
@@ -14130,15 +14237,59 @@ placeholder?: any = &#39;Search...&#39;</code></pre>
           
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Playground</span>
+                <span class="ex-name">Default</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const Playground = () =&gt; &lt;DInputSearch
+              <pre><code>const Default = () =&gt; &lt;DInputSearch
     label=&quot;Search&quot;
     placeholder=&quot;Search policy, account, or transaction&quot;
     debounceMs={300} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Invalid</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Invalid = () =&gt; &lt;DInputSearch
+    id=&quot;componentId2&quot;
+    label=&quot;Search&quot;
+    placeholder=&quot;Search policy, account, or transaction&quot;
+    debounceMs={300}
+    hint=&quot;Assistive text&quot;
+    invalid /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Valid</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Valid = () =&gt; &lt;DInputSearch
+    id=&quot;componentId3&quot;
+    label=&quot;Search&quot;
+    placeholder=&quot;Search policy, account, or transaction&quot;
+    debounceMs={300}
+    hint=&quot;Assistive text&quot;
+    valid /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;DInputSearch
+    id=&quot;componentId4&quot;
+    label=&quot;Search&quot;
+    placeholder=&quot;Search policy, account, or transaction&quot;
+    debounceMs={300}
+    disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14515,7 +14666,7 @@ valueExtractor?: (item: T) =&gt; string | number</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputSwitch</h2>
       <div class="badges">
-        <label for="c-48-design-system-components-input-switch-props" class="badge ok as-toggle">14 prop types</label>
+        <label for="c-48-design-system-components-input-switch-props" class="badge ok as-toggle">15 prop types</label>
         <label for="c-48-design-system-components-input-switch-info" class="badge info as-toggle">1 info</label>
         <label for="c-48-design-system-components-input-switch-stories" class="badge ok as-toggle">10 stories</label>
         
@@ -14551,7 +14702,7 @@ valueExtractor?: (item: T) =&gt; string | number</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">14 prop types</span>
+              <span class="badge ok">15 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputSwitch/DInputSwitch.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
@@ -14564,6 +14715,8 @@ className?: string
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
 disabled?: boolean
+
+hint?: string
 
 id?: string
 
@@ -14617,21 +14770,33 @@ valid?: boolean = false</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Default Valid</span>
+                <span class="ex-name">Valid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const DefaultValid = () =&gt; &lt;DInputSwitch id=&quot;componentId3&quot; label=&quot;Label&quot; checked={false} disabled={false} valid /&gt;;</code></pre>
+              <pre><code>const Valid = () =&gt; &lt;DInputSwitch
+    id=&quot;componentId3&quot;
+    label=&quot;Label&quot;
+    checked={false}
+    disabled={false}
+    valid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Default Invalid</span>
+                <span class="ex-name">Invalid</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const DefaultInvalid = () =&gt; &lt;DInputSwitch id=&quot;componentId4&quot; label=&quot;Label&quot; checked={false} disabled={false} invalid /&gt;;</code></pre>
+              <pre><code>const Invalid = () =&gt; &lt;DInputSwitch
+    id=&quot;componentId4&quot;
+    label=&quot;Label&quot;
+    checked={false}
+    disabled={false}
+    invalid
+    hint=&quot;Assistive text&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -17914,13 +18079,7 @@ texts?: any = {
               </div>
               
               
-              <pre><code>const Default = function Render(props: ComponentProps&lt;typeof DPaginator&gt;) {
-  return (
-    &lt;DPaginator
-      {...props}
-    /&gt;
-  );
-};</code></pre>
+              <pre><code>const Default = () =&gt; &lt;DPaginator total={20} maxWidth={400} current={1} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -17929,13 +18088,13 @@ texts?: any = {
               </div>
               
               
-              <pre><code>const LabelArrows = function Render(props: ComponentProps&lt;typeof DPaginator&gt;) {
-  return (
-    &lt;DPaginator
-      {...props}
-    /&gt;
-  );
-};</code></pre>
+              <pre><code>const LabelArrows = () =&gt; &lt;DPaginator
+    total={20}
+    nextLabel=&quot;Next&quot;
+    previousLabel=&quot;Previous&quot;
+    maxWidth={200}
+    current={1}
+    onPageChange={() =&gt; {}} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -17944,13 +18103,12 @@ texts?: any = {
               </div>
               
               
-              <pre><code>const NoArrows = function Render(props: ComponentProps&lt;typeof DPaginator&gt;) {
-  return (
-    &lt;DPaginator
-      {...props}
-    /&gt;
-  );
-};</code></pre>
+              <pre><code>const NoArrows = () =&gt; &lt;DPaginator
+    renderNav={false}
+    total={20}
+    maxWidth={200}
+    current={1}
+    onPageChange={() =&gt; {}} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -17959,13 +18117,7 @@ texts?: any = {
               </div>
               
               
-              <pre><code>const CustomCurrentPage = function Render(props: ComponentProps&lt;typeof DPaginator&gt;) {
-  return (
-    &lt;DPaginator
-      {...props}
-    /&gt;
-  );
-};</code></pre>
+              <pre><code>const CustomCurrentPage = () =&gt; &lt;DPaginator total={20} current={10} maxWidth={200} onPageChange={() =&gt; {}} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -17974,13 +18126,7 @@ texts?: any = {
               </div>
               
               
-              <pre><code>const CustomMaxWidth = function Render(props: ComponentProps&lt;typeof DPaginator&gt;) {
-  return (
-    &lt;DPaginator
-      {...props}
-    /&gt;
-  );
-};</code></pre>
+              <pre><code>const CustomMaxWidth = () =&gt; &lt;DPaginator total={20} maxWidth={400} current={1} onPageChange={() =&gt; {}} /&gt;;</code></pre>
             </div>
         </div>
     
@@ -19440,7 +19586,7 @@ iconSuccessFamilyClass?: string
 
 iconSuccessFamilyPrefix?: string
 
-iconSuccessMaterialStyle?: boolean = false
+iconSuccessMaterialStyle?: boolean
 
 options: Array&lt;Step&gt;
 
@@ -19654,7 +19800,7 @@ iconSuccessFamilyClass?: string
 
 iconSuccessFamilyPrefix?: string
 
-iconSuccessMaterialStyle?: boolean = false
+iconSuccessMaterialStyle?: boolean
 
 options: Array&lt;Step&gt;
 
@@ -21071,7 +21217,7 @@ style?: CSSProperties</code></pre>
 <article
   class="card 
   no-error 
-  has-info 
+  no-info 
   no-story-error
   no-doc-error"
   role="listitem"
@@ -21080,22 +21226,22 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DTooltip</h2>
       <div class="badges">
-        <label for="c-67-design-system-components-tooltip-props" class="badge ok as-toggle">9 prop types</label>
-        <label for="c-67-design-system-components-tooltip-info" class="badge info as-toggle">1 info</label>
-        <label for="c-67-design-system-components-tooltip-stories" class="badge ok as-toggle">13 stories</label>
+        <label for="c-67-design-system-components-tooltip-props" class="badge ok as-toggle">14 prop types</label>
+        
+        <label for="c-67-design-system-components-tooltip-stories" class="badge ok as-toggle">4 stories</label>
         
         
       </div>
     </div>
     <div class="meta" title="./stories/components/DTooltip.stories.tsx">design-system-components-tooltip · ./stories/components/DTooltip.stories.tsx</div>
     
-    
+    <div class="hint">Tooltip is an abstraction component that wraps any element (`Component`) and displays floating contextual content (`children`) positioned relative to it using Floating UI. Use it to add short, non-critical hints or descriptions triggered by hover, focus, or click, without altering the surrounding layout.</div>
     
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-67-design-system-components-tooltip-info" class="tg tg-info" type="checkbox" hidden />
+  
   <input id="c-67-design-system-components-tooltip-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
@@ -21104,39 +21250,82 @@ style?: CSSProperties</code></pre>
   <div class="panels">
     
     
-        <div class="panel panel-info">
-          
-    <div class="note info">
-      <div class="note-title">Info</div>
-      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
-    </div>
-        </div>
     
         <div class="panel panel-props">
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">9 prop types</span>
+              <span class="badge ok">14 prop types</span>
             </div>
             <pre><code>Component: src/components/DTooltip/DTooltip.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Floating content rendered inside the tooltip body. Keep it short and
+ * non-critical: the tooltip is only visible while it is open.
+ */
+children?: ReactNode
+
+/**
+ * CSS class applied to the wrapper element that surrounds `Component` (the trigger).
+ */
+childrenClassName?: string
+
+className?: string
+
+/**
+ * Element that triggers the tooltip. It is rendered inside a wrapper `&lt;div&gt;`
+ * that holds the Floating UI reference and the interaction handlers, so the
+ * trigger area is that wrapper rather than this node itself. Style it with
+ * `childrenClassName`.
+ */
+Component: ReactNode
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-offSet?: any = ARROW_HEIGHT + GAP
+/**
+ * Distance in pixels between the trigger and the floating tooltip.
+ * Defaults to arrow height + gap.
+ */
+offSet?: number = ARROW_HEIGHT + GAP
 
-open?: any = false
+/**
+ * Controls the initial open state of the tooltip.
+ */
+open?: boolean = false
 
-placement?: any = &#39;top&#39;
+/**
+ * Virtual padding, in pixels, used to keep the tooltip within the viewport boundaries.
+ */
+padding?: number
+
+/**
+ * Preferred position of the tooltip relative to the trigger element.
+ * Flips automatically if there isn&#39;t enough space.
+ */
+placement?: Placement = &#39;top&#39;
+
+/**
+ * Size of the tooltip content. Omit for the default size.
+ */
+size?: &#39;sm&#39; | &#39;lg&#39;
 
 style?: CSSProperties
 
-withClick?: any = false
+/**
+ * When true, the tooltip toggles open/closed when the trigger element is clicked.
+ */
+withClick?: boolean = false
 
-withFocus?: any = false
+/**
+ * When true, the tooltip opens when the trigger element receives keyboard focus
+ * (recommended for accessibility).
+ */
+withFocus?: boolean = false
 
-withHover?: any = true</code></pre>
+/**
+ * When true, the tooltip opens when the pointer hovers over the trigger element.
+ */
+withHover?: boolean = true</code></pre>
           </div>
         </div>
     
@@ -21148,34 +21337,19 @@ withHover?: any = true</code></pre>
                 <div class="row">
                   <span class="ex-name">Imports</span>
                 </div>
-                <pre><code>import { DTooltip } from "@dynamic-framework/ui-react";</code></pre>
+                <pre><code>import { DButton, DTooltip } from "@dynamic-framework/ui-react";</code></pre>
               </div>
           
           
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Top</span>
+                <span class="ex-name">Default</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const Top = () =&gt; &lt;DTooltip
+              <pre><code>const Default = () =&gt; &lt;DTooltip
     placement=&quot;top&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Right</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const Right = () =&gt; &lt;DTooltip
-    placement=&quot;right&quot;
     Component=&quot;Text&quot;
     withHover
     withClick={false}
@@ -21184,170 +21358,42 @@ withHover?: any = true</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Bottom</span>
+                <span class="ex-name">Click Triggered</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const Bottom = () =&gt; &lt;DTooltip
-    placement=&quot;bottom&quot;
+              <pre><code>const ClickTriggered = () =&gt; &lt;DTooltip
+    placement=&quot;top&quot;
     Component=&quot;Text&quot;
-    withHover
-    withClick={false}
+    withHover={false}
+    withClick
     withFocus={false}
     open={false}&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Left</span>
+                <span class="ex-name">Focus Accessible</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const Left = () =&gt; &lt;DTooltip
-    placement=&quot;left&quot;
-    Component=&quot;Text&quot;
+              <pre><code>const FocusAccessible = () =&gt; &lt;DTooltip
+    placement=&quot;top&quot;
+    Component={&lt;DButton type=&quot;button&quot;&gt;Focus me&lt;/DButton&gt;}
     withHover
     withClick={false}
-    withFocus={false}
+    withFocus
     open={false}&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">Small Top</span>
+                <span class="ex-name">Long Content</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const SmallTop = () =&gt; &lt;DTooltip
-    placement=&quot;top&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;sm&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Small Right</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const SmallRight = () =&gt; &lt;DTooltip
-    placement=&quot;right&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;sm&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Small Bottom</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const SmallBottom = () =&gt; &lt;DTooltip
-    placement=&quot;bottom&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;sm&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Small Left</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const SmallLeft = () =&gt; &lt;DTooltip
-    placement=&quot;left&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;sm&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Large Top</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const LargeTop = () =&gt; &lt;DTooltip
-    placement=&quot;top&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;lg&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Large Right</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const LargeRight = () =&gt; &lt;DTooltip
-    placement=&quot;right&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;lg&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Large Bottom</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const LargeBottom = () =&gt; &lt;DTooltip
-    placement=&quot;bottom&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;lg&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Large Left</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const LargeLeft = () =&gt; &lt;DTooltip
-    placement=&quot;left&quot;
-    Component=&quot;Text&quot;
-    withHover
-    withClick={false}
-    withFocus={false}
-    open={false}
-    size=&quot;lg&quot;&gt;Lorem Ipsum&lt;/DTooltip&gt;;</code></pre>
-            </div>
-            <div class="note ok">
-              <div class="row">
-                <span class="ex-name">Large Text</span>
-                <span class="badge ok">story ok</span>
-              </div>
-              
-              
-              <pre><code>const LargeText = () =&gt; &lt;DTooltip
+              <pre><code>const LongContent = () =&gt; &lt;DTooltip
     placement=&quot;left&quot;
     Component=&quot;Text&quot;
     withHover
@@ -21648,7 +21694,7 @@ shareText?: any = &#39;Share&#39;</code></pre>
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   21 | ];
   22 |
-&gt; 23 | const meta: Meta = {
+&gt; 23 | const meta = {
      | ^
   24 |   title: &#39;Patterns/Plan Comparator&#39;,
   25 |   parameters: {
@@ -21677,7 +21723,7 @@ const fourPlanFeatures = [
   },
 ];
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Plan Comparator&#39;,
   parameters: {
     docs: {
@@ -21690,11 +21736,12 @@ This story showcases a plan comparator design, which can be used to compare diff
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
-export const FourPlans: StoryObj = {
+export const FourPlans: Story = {
   render: () =&gt; (
     &lt;DBox&gt;
       &lt;table className=&quot;plan-comparator-table&quot;&gt;
@@ -21924,7 +21971,7 @@ export const FourPlans: StoryObj = {
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   10 | import DocsTemplate from &#39;./docs/Template.mdx&#39;;
   11 |
-&gt; 12 | const meta: Meta = {
+&gt; 12 | const meta = {
      | ^
   13 |   title: &#39;Patterns/Quick Actions&#39;,
   14 |   parameters: {
@@ -21942,7 +21989,7 @@ import {
 
 import DocsTemplate from &#39;./docs/Template.mdx&#39;;
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Quick Actions&#39;,
   parameters: {
     docs: {
@@ -21965,10 +22012,10 @@ Quick actions provide users with fast access to frequently used features like tr
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 export const BasicQuickActions: Story = {
   parameters: {
@@ -23329,7 +23376,7 @@ export const SidebarListGrouped: Story = {
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   1 | import { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
   2 |
-&gt; 3 | const config: Meta = {
+&gt; 3 | const meta = {
     | ^
   4 |   title: &#39;Design System/Examples/Text Background Variants&#39;,
   5 |   parameters: {
@@ -23338,7 +23385,7 @@ export const SidebarListGrouped: Story = {
 ./stories/examples/DTextBgVariants.stories.tsx:
 import { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
 
-const config: Meta = {
+const meta = {
   title: &#39;Design System/Examples/Text Background Variants&#39;,
   parameters: {
     layout: &#39;centered&#39;,
@@ -23357,10 +23404,10 @@ These classes can be applied to various components like cards, badges, toasts, a
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
-export default config;
-type Story = StoryObj;
+export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 export const AllVariants: Story = {
   render: () =&gt; (
@@ -23745,7 +23792,7 @@ export const AlertMessages: Story = {
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   15 | import { useConfirmModal } from &#39;../../src/hooks&#39;;
   16 |
-&gt; 17 | const meta: Meta = {
+&gt; 17 | const meta = {
      | ^
   18 |   title: &#39;Patterns/Confirm Modal&#39;,
   19 |   parameters: {
@@ -23768,7 +23815,7 @@ import DOffcanvas from &#39;../../src/components/DOffcanvas/DOffcanvas&#39;;
 import type { PortalProps } from &#39;../../src&#39;;
 import { useConfirmModal } from &#39;../../src/hooks&#39;;
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Confirm Modal&#39;,
   parameters: {
     layout: &#39;centered&#39;,
@@ -23781,9 +23828,10 @@ const meta: Meta = {
       &lt;/DContextProvider&gt;
     ),
   ],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 function SimpleConfirmContent() {
   const [result, setResult] = useState&lt;string&gt;(&#39;&#39;);
@@ -23821,7 +23869,7 @@ function SimpleConfirmContent() {
  * Simple confirmation modal example.
  * Shows how to use `useConfirmModal` for basic confirmations.
  */
-export const SimpleConfirm: StoryObj = {
+export const SimpleConfirm: Story = {
   render: () =&gt; &lt;SimpleConfirmContent /&gt;,
   parameters: {
     docs: {
@@ -23899,7 +23947,7 @@ function CriticalDeleteContent() {
  * Critical confirmation with code validation.
  * User must type the exact confirmation code before the confirm button is enabled.
  */
-export const CriticalDelete: StoryObj = {
+export const CriticalDelete: Story = {
   render: () =&gt; &lt;CriticalDeleteContent /&gt;,
   parameters: {
     docs: {
@@ -24001,7 +24049,7 @@ function DeleteContactContent() {
  * Mimics the iOS experience when deleting a contact or account.
  * Requires typing &quot;DELETE&quot; to confirm the action.
  */
-export const DeleteContact: StoryObj = {
+export const DeleteContact: Story = {
   render: () =&gt; &lt;DeleteContactContent /&gt;,
   parameters: {
     docs: {
@@ -24144,7 +24192,7 @@ function MultipleActionsContent() {
  * Multi-action confirmation example.
  * Different actions with different confirmation requirements.
  */
-export const MultipleActions: StoryObj = {
+export const MultipleActions: Story = {
   render: () =&gt; &lt;MultipleActionsContent /&gt;,
   parameters: {
     docs: {
@@ -24390,7 +24438,7 @@ function ContactListContent() {
  * Contact list with per-row dropdown actions.
  * Each row has an Edit (no-op) and a Delete action that opens a personalized confirmation modal.
  */
-export const ContactList: StoryObj = {
+export const ContactList: Story = {
   render: () =&gt; &lt;ContactListContent /&gt;,
 };
 
@@ -24479,7 +24527,7 @@ function ConfirmOnModalContent() {
  * Click **Close** inside the form modal to trigger the discard confirmation
  * on top of the already-open modal.
  */
-export const ConfirmOnModal: StoryObj = {
+export const ConfirmOnModal: Story = {
   name: &#39;Confirm on top of a Modal&#39;,
   decorators: [
     (Story) =&gt; (
@@ -24619,7 +24667,7 @@ function ConfirmOnOffcanvasContent() {
  * Click **Discard** or the ✕ button inside the settings panel to trigger
  * the discard confirmation on top of the already-open offcanvas.
  */
-export const ConfirmOnOffcanvas: StoryObj = {
+export const ConfirmOnOffcanvas: Story = {
   name: &#39;Confirm on top of an Offcanvas&#39;,
   decorators: [
     (Story) =&gt; (
@@ -24826,7 +24874,7 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   21 | ];
   22 |
-&gt; 23 | const meta: Meta = {
+&gt; 23 | const meta = {
      | ^
   24 |   title: &#39;Patterns/Plan Comparator&#39;,
   25 |   parameters: {
@@ -24855,7 +24903,7 @@ const fourPlanFeatures = [
   },
 ];
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Plan Comparator&#39;,
   parameters: {
     docs: {
@@ -24868,11 +24916,12 @@ This story showcases a plan comparator design, which can be used to compare diff
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
-export const FourPlans: StoryObj = {
+export const FourPlans: Story = {
   render: () =&gt; (
     &lt;DBox&gt;
       &lt;table className=&quot;plan-comparator-table&quot;&gt;
@@ -25102,7 +25151,7 @@ export const FourPlans: StoryObj = {
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   10 | import DocsTemplate from &#39;./docs/Template.mdx&#39;;
   11 |
-&gt; 12 | const meta: Meta = {
+&gt; 12 | const meta = {
      | ^
   13 |   title: &#39;Patterns/Quick Actions&#39;,
   14 |   parameters: {
@@ -25120,7 +25169,7 @@ import {
 
 import DocsTemplate from &#39;./docs/Template.mdx&#39;;
 
-const meta: Meta = {
+const meta = {
   title: &#39;Patterns/Quick Actions&#39;,
   parameters: {
     docs: {
@@ -25143,10 +25192,10 @@ Quick actions provide users with fast access to frequently used features like tr
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 export const BasicQuickActions: Story = {
   parameters: {
@@ -26507,7 +26556,7 @@ export const SidebarListGrouped: Story = {
       <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
   1 | import { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
   2 |
-&gt; 3 | const config: Meta = {
+&gt; 3 | const meta = {
     | ^
   4 |   title: &#39;Design System/Examples/Text Background Variants&#39;,
   5 |   parameters: {
@@ -26516,7 +26565,7 @@ export const SidebarListGrouped: Story = {
 ./stories/examples/DTextBgVariants.stories.tsx:
 import { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
 
-const config: Meta = {
+const meta = {
   title: &#39;Design System/Examples/Text Background Variants&#39;,
   parameters: {
     layout: &#39;centered&#39;,
@@ -26535,10 +26584,10 @@ These classes can be applied to various components like cards, badges, toasts, a
     },
   },
   tags: [&#39;autodocs&#39;],
-};
+} satisfies Meta;
 
-export default config;
-type Story = StoryObj;
+export default meta;
+type Story = StoryObj&lt;typeof meta&gt;;
 
 export const AllVariants: Story = {
   render: () =&gt; (
@@ -27146,10 +27195,234 @@ import { DTabs, DLayout, DBox } from &#39;../src&#39;;
   aria-label="Docs">
   <div class="head">
     <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Design System/Components/Icon/Usage</h2>
+      <div class="badges">
+        
+        <label for="doc-1-design-system-components-icon-usage-docs-content" class="badge ok as-toggle">view content</label>
+      </div>
+    </div>
+    <div class="meta" title="./stories/components/DIcon.mdx">design-system-components-icon-usage--docs · ./stories/components/DIcon.mdx</div>
+    
+  </div>
+
+  <!-- Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="doc-1-design-system-components-icon-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-content">
+          <div class="mdx-content">
+            <pre><code>import {
+  Meta,
+  Unstyled,
+  Source,
+} from &#39;@storybook/addon-docs/blocks&#39;;
+import {
+  ExampleLucideIcons,
+  ExampleIconRegistry,
+  ExampleDirectSvgIcon,
+  ExampleBootstrapIcons,
+  ExampleMaterialIcons,
+} from &#39;./DIconExamples&#39;;
+
+&lt;Meta title=&quot;Design System/Components/Icon/Usage&quot; /&gt;
+
+## Icons
+
+The `DIcon` component is a versatile icon component. It can render icons from four different sources.
+
+Passing an **SVG/React component** directly as the `icon` prop always renders that component: the resolution below applies only to a **string** `icon`, which is resolved in this order of priority:
+
+1. **`iconRegistry`** — a custom map of `name -&gt; SVG component` configured on `DContextProvider`. A match replaces the string with its component.
+2. **[Lucide Icons](https://lucide.dev)** — the default and recommended source. Pass the PascalCase name of any [Lucide icon](https://lucide.dev/icons/) (e.g. `&quot;User&quot;`, `&quot;Home&quot;`, `&quot;Settings&quot;`).
+3. **Legacy icon fonts** — Bootstrap-style class-based fonts, used as a fallback when the string doesn&#39;t match a registry entry or a Lucide icon name.
+
+The `materialStyle` flag is the exception to that order: when it&#39;s `true`, every string `icon` is rendered as Material-style icon-font content and Lucide is never consulted. `iconRegistry` still wins, because a registry match turns the string into a component before that check.
+
+If a string resolves to none of the above and no icon font family is configured, `DIcon` renders a `&quot;?&quot;` placeholder and logs a console warning.
+
+### Lucide Icons (default)
+
+No configuration is required. Just use the PascalCase icon name:
+
+&lt;Unstyled&gt;
+  &lt;ExampleLucideIcons /&gt;
+&lt;/Unstyled&gt;
+
+&lt;Source
+  code={`
+&lt;DIcon icon=&quot;User&quot; /&gt;
+&lt;DIcon icon=&quot;Home&quot; /&gt;
+&lt;DIcon icon=&quot;Settings&quot; /&gt;
+&lt;DIcon icon=&quot;Heart&quot; /&gt;
+  `}
+  language=&quot;jsx&quot;
+/&gt;
+
+### Custom SVG Registry (`iconRegistry`)
+
+The `DContextProvider` accepts an `iconRegistry` prop: a `Record&lt;string, IconComponent&gt;`, where `IconComponent` is `ComponentType&lt;SVGProps&lt;SVGSVGElement&gt;&gt;`. This lets you plug in your own SVG icon components (e.g. a shared design-system icon set) and reference them by name, just like Lucide icons.
+
+**Important:** `iconRegistry` only works with SVG React components — it does **not** work with icon-font syntax (Bootstrap classes, Material icon names, Font Awesome, etc.). If you need custom icon fonts, use the `icon` object on `DContextProvider` (see below) instead.
+
+&lt;Source
+  code={`
+import type { SVGProps } from &#39;react&#39;;
+import { DContextProvider, DIcon } from &#39;@dynamic-framework/ui-react&#39;;
+
+const MyIcons = {
+  Logo: (props: SVGProps&lt;SVGSVGElement&gt;) =&gt; (
+    &lt;svg viewBox=&quot;0 0 24 24&quot; {...props}&gt;
+      &lt;path d=&quot;...&quot; /&gt;
+    &lt;/svg&gt;
+  ),
+};
+
+&lt;DContextProvider iconRegistry={MyIcons}&gt;
+  &lt;DIcon icon=&quot;Logo&quot; /&gt;
+&lt;/DContextProvider&gt;
+  `}
+  language=&quot;jsx&quot;
+/&gt;
+
+&lt;Unstyled&gt;
+  &lt;ExampleIconRegistry /&gt;
+&lt;/Unstyled&gt;
+
+Note that names not found in the registry (like `&quot;User&quot;`) still fall through to Lucide, since resolution order is preserved.
+
+You can also pass an SVG component directly as the `icon` prop, without registering it:
+
+&lt;Source
+  code={`
+&lt;DIcon icon={MyIcons.Logo} /&gt;
+  `}
+  language=&quot;jsx&quot;
+/&gt;
+
+&lt;Unstyled&gt;
+  &lt;ExampleDirectSvgIcon /&gt;
+&lt;/Unstyled&gt;
+
+### Legacy Icon Fonts (Bootstrap / Material style)
+
+When a string `icon` isn&#39;t found in `iconRegistry` and doesn&#39;t match a Lucide name, `DIcon` falls back to class-based icon fonts. They are also used for every string `icon` when `materialStyle` is `true`, which skips the Lucide lookup entirely. This is configured via the `icon` object on `DContextProvider`:
+
+- `familyPrefix`: The prefix for the icon class (e.g., `bi-` for Bootstrap).
+- `familyClass`: The class for the icon family (e.g., `bi` for Bootstrap icons).
+- `materialStyle`: A boolean flag that determines how the icon is rendered. If `true`, the icon name is rendered as the content of the tag (Material Icons style). If `false`, the icon is rendered via a CSS class (Bootstrap/Font Awesome style).
+
+&lt;Source
+  code={`
+&lt;DContextProvider
+  icon={{
+    familyClass: &#39;bi&#39;,
+    familyPrefix: &#39;bi-&#39;,
+    materialStyle: false,
+  }}
+&gt;
+  &lt;DIcon icon=&quot;user&quot; /&gt;
+&lt;/DContextProvider&gt;
+  `}
+  language=&quot;jsx&quot;
+/&gt;
+
+&lt;Unstyled&gt;
+  &lt;ExampleBootstrapIcons /&gt;
+&lt;/Unstyled&gt;
+
+#### Material Style Flag
+
+This flag comes in handy when you have icon fonts that need to be included as the content of the tag. Keep in mind that it applies to every string `icon` in its scope, so Lucide names are not resolved while it&#39;s enabled.
+
+The following examples show the output of the `DIcon` component with and without the `materialStyle` flag.
+
+&lt;Source
+  code={`
+  // Disabled Material Style Flag (default)
+&lt;i class=&quot;bi bi-user&quot;&gt;&lt;/i&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
+
+&lt;Source
+  code={`
+  // Enabled Material Style Flag
+&lt;i class=&quot;material-symbols-outlined&quot;&gt;user&lt;/i&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
+
+&lt;Unstyled&gt;
+  &lt;ExampleMaterialIcons /&gt;
+&lt;/Unstyled&gt;
+
+
+## Example Usage
+
+#### Bootstrap Icons
+
+```jsx
+&lt;DContextProvider
+  icon={{
+    familyPrefix: &#39;bi-&#39;,
+    familyClass: &#39;bi&#39;,
+    materialStyle: false,
+  }}
+&gt;
+  &lt;DIcon icon=&quot;user&quot; /&gt;
+&lt;/DContextProvider&gt;
+```
+
+#### Font Awesome Icons
+
+To use Font Awesome icons, configure the `DContextProvider` as follows:
+
+```jsx
+&lt;DContextProvider
+  icon={{
+    familyPrefix: &#39;fa-&#39;,
+    familyClass: &#39;fa-solid&#39;,
+    materialStyle: false,
+  }}
+&gt;
+  &lt;DIcon icon=&quot;user&quot; /&gt;
+&lt;/DContextProvider&gt;
+```
+
+#### Material Icons
+
+To use Material icons, configure the `DContextProvider` as follows:
+
+```jsx
+&lt;DContextProvider
+  icon={{
+    familyPrefix: &#39;&#39;,
+    familyClass: &#39;material-symbols-outlined&#39;,
+    materialStyle: true,
+  }}
+&gt;
+  &lt;DIcon icon=&quot;user&quot; /&gt;
+&lt;/DContextProvider&gt;
+```
+
+</code></pre>
+          </div>
+        </div>
+  </div>
+</article>
+<article
+  class="card is-doc no-doc-error"
+  role="listitem"
+  aria-label="Docs">
+  <div class="head">
+    <div class="title">
       <h2><span class="status-dot dot-ok"></span> Design System/Components/Modal/Usage</h2>
       <div class="badges">
         
-        <label for="doc-1-design-system-components-modal-usage-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-2-design-system-components-modal-usage-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/patterns/DModalPattern.mdx">design-system-components-modal-usage--docs · ./stories/hooks/patterns/DModalPattern.mdx</div>
@@ -27158,7 +27431,7 @@ import { DTabs, DLayout, DBox } from &#39;../src&#39;;
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-1-design-system-components-modal-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-2-design-system-components-modal-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -27329,7 +27602,7 @@ export function ExampleModalUsage() {
       <h2><span class="status-dot dot-ok"></span> Design System/Components/Offcanvas/Usage</h2>
       <div class="badges">
         
-        <label for="doc-2-design-system-components-offcanvas-usage-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-3-design-system-components-offcanvas-usage-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/patterns/DOffcanvasPattern.mdx">design-system-components-offcanvas-usage--docs · ./stories/hooks/patterns/DOffcanvasPattern.mdx</div>
@@ -27338,7 +27611,7 @@ export function ExampleModalUsage() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-2-design-system-components-offcanvas-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-3-design-system-components-offcanvas-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -27510,7 +27783,7 @@ export function ExampleOffcanvasUsage() {
       <h2><span class="status-dot dot-ok"></span> Design System/Components/Toast/Usage</h2>
       <div class="badges">
         
-        <label for="doc-3-design-system-components-toast-usage-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-4-design-system-components-toast-usage-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/useDToast.mdx">design-system-components-toast-usage--docs · ./stories/hooks/useDToast.mdx</div>
@@ -27519,7 +27792,7 @@ export function ExampleOffcanvasUsage() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-3-design-system-components-toast-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-4-design-system-components-toast-usage-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -27901,7 +28174,7 @@ export function App() {
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Dark Utilities</h2>
       <div class="badges">
         
-        <label for="doc-4-design-system-examples-dark-utilities-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-5-design-system-examples-dark-utilities-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/DarkUtilities.mdx">design-system-examples-dark-utilities--docs · ./stories/examples/DarkUtilities.mdx</div>
@@ -27910,7 +28183,7 @@ export function App() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-4-design-system-examples-dark-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-5-design-system-examples-dark-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -28063,7 +28336,7 @@ You can override component CSS variables in a plain CSS/SCSS file to tailor dark
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Graphs</h2>
       <div class="badges">
         
-        <label for="doc-5-design-system-examples-graphs-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-6-design-system-examples-graphs-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/Graphs.mdx">design-system-examples-graphs--docs · ./stories/examples/Graphs.mdx</div>
@@ -28072,7 +28345,7 @@ You can override component CSS variables in a plain CSS/SCSS file to tailor dark
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-5-design-system-examples-graphs-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-6-design-system-examples-graphs-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -28455,7 +28728,7 @@ export function ExampleProgressiveBarChart() {
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Hover Utilities</h2>
       <div class="badges">
         
-        <label for="doc-6-design-system-examples-hover-utilities-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-7-design-system-examples-hover-utilities-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/HoverUtilities.mdx">design-system-examples-hover-utilities--docs · ./stories/examples/HoverUtilities.mdx</div>
@@ -28464,7 +28737,7 @@ export function ExampleProgressiveBarChart() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-6-design-system-examples-hover-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-7-design-system-examples-hover-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -28610,130 +28883,6 @@ Palette-level variants (e.g., `hover:border-primary-100`, `hover:border-danger-2
   `}
   language=&quot;html&quot;
 /&gt;
-</code></pre>
-          </div>
-        </div>
-  </div>
-</article>
-<article
-  class="card is-doc no-doc-error"
-  role="listitem"
-  aria-label="Docs">
-  <div class="head">
-    <div class="title">
-      <h2><span class="status-dot dot-ok"></span> Design System/Examples/Icons</h2>
-      <div class="badges">
-        
-        <label for="doc-7-design-system-examples-icons-docs-content" class="badge ok as-toggle">view content</label>
-      </div>
-    </div>
-    <div class="meta" title="./stories/examples/Icons.mdx">design-system-examples-icons--docs · ./stories/examples/Icons.mdx</div>
-    
-  </div>
-
-  <!-- Hidden toggles must be siblings BEFORE .panels -->
-  
-  <input id="doc-7-design-system-examples-icons-docs-content" class="tg tg-content" type="checkbox" hidden />
-
-  <div class="panels">
-    
-    
-        <div class="panel panel-content">
-          <div class="mdx-content">
-            <pre><code>import {
-  Meta,
-  Unstyled,
-  Source,
-} from &#39;@storybook/addon-docs/blocks&#39;;
-
-&lt;Meta title=&quot;Design System/Examples/Icons&quot; /&gt;
-
-## Icons
-
-The `DIcon` component is a versatile icon component that can be configured to use different icon fonts. It supports both traditional icon fonts and material-style icon fonts.
-
-### Configuration
-
-The `DIcon` component is configured using the `DContextProvider`. The `DContextProvider` accepts an `icon` object with the following properties:
-
-- `familyPrefix`: The prefix for the icon class (e.g., `bi-` for Bootstrap).
-- `familyClass`: The class for the icon family (e.g., `bi-icon` for Bootstrap icons).
-- `materialStyle`: A boolean flag that determines how the icon is rendered. If `true`, the icon is rendered with the name of the icon in the content of the tag. If `false`, the icon is rendered with the class of the icon font.
-
-&lt;Source
-  code={`
-&lt;DContextProvider
-  icon={{
-    familyClass: &#39;bi&#39;,
-    familyPrefix: &#39;bi-&#39;,
-    materialStyle: false,
-  }}
-&gt;
-  &lt;DIcon name=&quot;user&quot; /&gt;
-&lt;/DContextProvider&gt;
-  `}
-  language=&quot;html&quot;
-/&gt;
-
-
-### Material Style Flag
-
-This flag comes in handy when you have icon fonts that need to be included as the content of the tag.
-
-Following example show the output of `DIcon` component with and without the `materialStyle` flag.
-
-&lt;Source
-  code={`
-  // Disabled Material Style Flag (default)
-&lt;i class=&quot;bi bi-user&quot;&gt;&lt;/i&gt;
-  `}
-  language=&quot;html&quot;
-/&gt;
-
-&lt;Source
-  code={`
-  // Enabled Material Style Flag
-&lt;i class=&quot;bi&quot;&gt;user&lt;/i&gt;
-  `}
-  language=&quot;html&quot;
-/&gt;
-
-
-## Example Usage
-
-
-#### Font Awesome Icons
-
-To use Font Awesome icons, configure the `DContextProvider` as follows:
-
-```jsx
-&lt;DContextProvider
-  icon={{
-    familyPrefix: &#39;fa-&#39;,
-    familyClass: &#39;fa-solid&#39;,
-    materialStyle: false,
-  }}
-&gt;
-  &lt;DIcon name=&quot;user&quot; /&gt;
-&lt;/DContextProvider&gt;
-```
-
-#### Material Icons
-
-To use Material icons, configure the `DContextProvider` as follows:
-
-```jsx
-&lt;DContextProvider
-  icon={{
-    familyPrefix: &#39;&#39;,
-    familyClass: &#39;material-symbols-outlined&#39;,
-    materialStyle: true,
-  }}
-&gt;
-  &lt;DIcon name=&quot;user&quot; /&gt;
-&lt;/DContextProvider&gt;
-```
-
 </code></pre>
           </div>
         </div>
@@ -31750,10 +31899,186 @@ Use the buttons below to update the `demo` query string parameter (via `changeQu
   aria-label="Docs">
   <div class="head">
     <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Design System/Utils/url/buildUrl</h2>
+      <div class="badges">
+        
+        <label for="doc-28-design-system-utils-url-buildurl-docs-content" class="badge ok as-toggle">view content</label>
+      </div>
+    </div>
+    <div class="meta" title="./stories/utils/url/buildUrl.mdx">design-system-utils-url-buildurl--docs · ./stories/utils/url/buildUrl.mdx</div>
+    
+  </div>
+
+  <!-- Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="doc-28-design-system-utils-url-buildurl-docs-content" class="tg tg-content" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-content">
+          <div class="mdx-content">
+            <pre><code>import {
+  Meta,
+  Unstyled,
+  Source,
+} from &#39;@storybook/addon-docs/blocks&#39;;
+import { ExampleRoot } from &#39;./buildUrlExamples&#39;;
+
+&lt;Meta title=&quot;Design System/Utils/url/buildUrl&quot; /&gt;
+
+# buildUrl
+Builds an internal URL from a `path` and a set of query `params`, normalizing leading separators to prevent scheme-relative URLs (e.g. `//evil.com`).
+
+Useful when `path` comes from a Liquid variable that may be unconfigured, in which case it resolves to the literal string `&#39;#&#39;` — `buildUrl` returns `&#39;#&#39;` as-is in that case instead of building a broken URL.
+
+## Parameters
+
+- **path** (`string`): The path to build the URL from. It is trimmed and every tab, line feed and carriage return is removed, then all leading separators are stripped: `/accounts`, `//accounts`, `\accounts` and `/&lt;TAB&gt;/accounts` all become `accounts`.
+- **params** (`Record&lt;string, string | number&gt;`): Key/value pairs serialized as the query string.
+
+&gt; ⚠️ **Note:** a leading `\` is stripped just like a `/` because browsers resolve them the same way (`/\evil.com` resolves to `https://evil.com/`), and tabs/line feeds are removed because the URL parser ignores them, so they could otherwise hide a scheme-relative prefix.
+
+## Returns
+
+- (`string`): The resulting URL.
+  - `&#39;#&#39;` when `path` normalizes to `&#39;#&#39;` (`&#39;#&#39;`, `&#39;/#&#39;`), ignoring the params.
+  - `&#39;/&#39;` when `path` is empty and there are no params.
+  - `&#39;/?&lt;query&gt;&#39;` when `path` is empty and there are params.
+  - `&#39;&lt;path&gt;&#39;` or `&#39;&lt;path&gt;?&lt;query&gt;&#39;` when `path` starts with `#`, since a fragment must not be prefixed with `/` (it would navigate away from the current document).
+  - `&#39;/&lt;path&gt;&#39;` or `&#39;/&lt;path&gt;?&lt;query&gt;&#39;` otherwise.
+
+## Example of use
+
+&lt;Source
+  code={
+    `
+import { buildUrl } from &#39;@dynamic-framework/ui-react&#39;;
+
+buildUrl(&#39;accounts&#39;, { account_id: &#39;42&#39; }); // &#39;/accounts?account_id=42&#39;
+buildUrl(&#39;//accounts&#39;, {}); // &#39;/accounts&#39;
+buildUrl(&#39;/\\\\evil.com&#39;, {}); // &#39;/evil.com&#39;
+buildUrl(&#39;#&#39;, { account_id: &#39;42&#39; }); // &#39;#&#39; (unconfigured Liquid var)
+buildUrl(&#39;#accounts&#39;, { account_id: &#39;42&#39; }); // &#39;#accounts?account_id=42&#39;
+buildUrl(&#39;&#39;, { tab: &#39;movimientos&#39; }); // &#39;/?tab=movimientos&#39;
+`
+  }
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## Example Render
+
+&lt;Unstyled&gt;
+  &lt;ExampleRoot /&gt;
+&lt;/Unstyled&gt;
+</code></pre>
+          </div>
+        </div>
+  </div>
+</article>
+<article
+  class="card is-doc no-doc-error"
+  role="listitem"
+  aria-label="Docs">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Design System/Utils/url/sanitizeHref</h2>
+      <div class="badges">
+        
+        <label for="doc-29-design-system-utils-url-sanitizehref-docs-content" class="badge ok as-toggle">view content</label>
+      </div>
+    </div>
+    <div class="meta" title="./stories/utils/url/sanitizeHref.mdx">design-system-utils-url-sanitizehref--docs · ./stories/utils/url/sanitizeHref.mdx</div>
+    
+  </div>
+
+  <!-- Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="doc-29-design-system-utils-url-sanitizehref-docs-content" class="tg tg-content" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-content">
+          <div class="mdx-content">
+            <pre><code>import {
+  Meta,
+  Unstyled,
+  Source,
+} from &#39;@storybook/addon-docs/blocks&#39;;
+import { ExampleRoot } from &#39;./sanitizeHrefExamples&#39;;
+
+&lt;Meta title=&quot;Design System/Utils/url/sanitizeHref&quot; /&gt;
+
+# sanitizeHref
+Validates a `href` value and returns it only if it is safe to render as a link, preventing XSS via unsafe URL schemes (e.g. `javascript:`, `data:`) and scheme-relative URLs (e.g. `//evil.com`, `/\evil.com`).
+
+Use it whenever a `href` comes from a source you don&#39;t fully control (CMS content, an external API, user input), before passing it to an `&lt;a&gt;`, `&lt;DButton&gt;`, `&lt;DButtonIcon&gt;`, `&lt;DDropdown&gt;` or `&lt;DListGroup.Item&gt;` action.
+
+## Parameters
+
+- **href** (`string`): The raw URL or path to validate. It is trimmed and every tab, line feed and carriage return is removed before validating, because the URL parser ignores those characters too and they would otherwise hide an unsafe value from the checks.
+
+## Returns
+
+- (`string | undefined`): The sanitized `href` when safe, `undefined` otherwise.
+
+### When it&#39;s considered safe
+
+- **Absolute paths**: starts with a single separator (e.g. `/accounts/42`). A leading `\` is normalized to `/` in the returned value, since that is how the browser resolves it.
+- **Allowed schemes**: `http:`, `https:`, `mailto:`, `tel:` (e.g. `https://example.com`, `mailto:test@example.com`, `tel:+123456789`).
+
+### When it&#39;s rejected (`undefined`)
+
+| Case | Example | Why |
+| --- | --- | --- |
+| Empty / whitespace-only | `&#39;&#39;`, `&#39;   &#39;` | Nothing to render. |
+| Scheme-relative URL | `//evil.com`, `/\evil.com`, `\\evil.com` | The browser resolves it with the current protocol; commonly used to redirect to an attacker-controlled host. A leading `\` counts as a separator because browsers resolve it as `/`. |
+| Scheme-relative URL hidden behind ignored characters | `/&lt;TAB&gt;/evil.com`, `/&lt;LF&gt;/evil.com` | The URL parser drops those characters, so the value resolves to `//evil.com`. |
+| Dangerous scheme | `javascript:alert(1)`, `data:text/html,&lt;script&gt;` | Can execute arbitrary script or load unexpected content in the context of the page. |
+| Unparseable / scheme-less relative value | `#anchor`, `relative/path` | Cannot be validated against the allow-list of schemes, so it&#39;s rejected rather than assumed safe. |
+
+&gt; ⚠️ **Note:** In-page anchors (`#anchor`) and scheme-less relative paths (`relative/path`) are currently rejected. If your use case needs to support them, handle that case explicitly before or after calling `sanitizeHref`.
+
+## Example of use
+
+&lt;Source
+  code={
+    `
+import { sanitizeHref } from &#39;@dynamic-framework/ui-react&#39;;
+
+const safeHref = sanitizeHref(userProvidedHref);
+
+if (safeHref) {
+  // render &lt;a href={safeHref}&gt;
+}
+`
+  }
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## Example Render
+
+&lt;Unstyled&gt;
+  &lt;ExampleRoot /&gt;
+&lt;/Unstyled&gt;
+</code></pre>
+          </div>
+        </div>
+  </div>
+</article>
+<article
+  class="card is-doc no-doc-error"
+  role="listitem"
+  aria-label="Docs">
+  <div class="head">
+    <div class="title">
       <h2><span class="status-dot dot-ok"></span> Design System/Utils/validatePhoneNumber</h2>
       <div class="badges">
         
-        <label for="doc-28-design-system-utils-validatephonenumber-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-30-design-system-utils-validatephonenumber-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/utils/validatePhoneNumber.mdx">design-system-utils-validatephonenumber--docs · ./stories/utils/validatePhoneNumber.mdx</div>
@@ -31762,7 +32087,7 @@ Use the buttons below to update the `demo` query string parameter (via `changeQu
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-28-design-system-utils-validatephonenumber-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-30-design-system-utils-validatephonenumber-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -31808,6 +32133,45 @@ const isValid = validatePhoneNumber(&#39;+1 650-253-0000&#39;);
 &lt;Unstyled&gt;
   &lt;ExampleRoot /&gt;
 &lt;/Unstyled&gt;
+</code></pre>
+          </div>
+        </div>
+  </div>
+</article>
+<article
+  class="card is-doc no-doc-error"
+  role="listitem"
+  aria-label="Docs">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Design System/Migration/Icons (v2.0.0)</h2>
+      <div class="badges">
+        
+        <label for="doc-31-design-system-migration-icons-v2-0-0-docs-content" class="badge ok as-toggle">view content</label>
+      </div>
+    </div>
+    <div class="meta" title="./stories/migration/DIconMigrationGuide.mdx">design-system-migration-icons-v2-0-0--docs · ./stories/migration/DIconMigrationGuide.mdx</div>
+    
+  </div>
+
+  <!-- Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="doc-31-design-system-migration-icons-v2-0-0-docs-content" class="tg tg-content" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-content">
+          <div class="mdx-content">
+            <pre><code>import {
+  Meta,
+  Markdown,
+} from &#39;@storybook/addon-docs/blocks&#39;;
+import IconMigrationGuideContent from &#39;../../ICON_MIGRATION_GUIDE.md?raw&#39;;
+
+&lt;Meta title=&quot;Design System/Migration/Icons (v2.0.0)&quot; /&gt;
+
+&lt;Markdown&gt;{IconMigrationGuideContent}&lt;/Markdown&gt;
 </code></pre>
           </div>
         </div>
