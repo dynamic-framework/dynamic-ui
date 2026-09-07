@@ -346,6 +346,48 @@ describe('<DInputPhone />', () => {
       const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
       expect(countrySelector.parentElement).toHaveClass('my-custom-selector');
     });
+
+    it('falls back to context icon configuration when no icon family props are provided', () => {
+      const { container } = render(
+        <DContextProvider
+          icon={{
+            familyClass: 'material-symbols-outlined',
+            familyPrefix: '',
+            materialStyle: true,
+          }}
+        >
+          <DInputPhone iconEnd="search" />
+        </DContextProvider>,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).toContain('material-symbols-outlined');
+      expect(icon).toHaveTextContent('search');
+      expect(icon?.tagName).toBe('I');
+    });
+
+    it('prioritizes local icon family props over context configuration', () => {
+      const { container } = render(
+        <DContextProvider
+          icon={{
+            familyClass: 'material-symbols-outlined',
+            familyPrefix: '',
+            materialStyle: true,
+          }}
+        >
+          <DInputPhone
+            iconEnd="Search"
+            iconEndMaterialStyle={false}
+            iconEndFamilyClass="bi"
+            iconEndFamilyPrefix="bi-"
+          />
+        </DContextProvider>,
+      );
+
+      const icon = container.querySelector('.d-icon');
+      expect(icon?.className).not.toContain('material-symbols-outlined');
+      expect(icon?.querySelector('svg')).toBeInTheDocument();
+    });
   });
 
   describe('User Interaction and Events', () => {

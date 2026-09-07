@@ -4,7 +4,7 @@ import DStepperDesktop from '../../src/components/DStepperDesktop/DStepperDeskto
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DStepperDesktop> = {
+const meta = {
   title: 'Design System/Components/Stepper Desktop',
   component: DStepperDesktop,
   parameters: {
@@ -86,10 +86,10 @@ const config: Meta<typeof DStepperDesktop> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DStepperDesktop>;
 
-export default config;
-type Story = StoryObj<typeof DStepperDesktop>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [

@@ -1,0 +1,57 @@
+name: A11y browser checks
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches:
+      - master
+      - develop
+
+jobs:
+  a11y-browser:
+    name: Browser-only accessibility checks (axe-core + Playwright)
+    runs-on: ubuntu-latest
+    # Pre-installed browsers (Chromium/Firefox/WebKit) + system deps, so we
+    # can skip `playwright install --with-deps` entirely. Keep this tag in
+    # sync with the exact "playwright" version pinned in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ensure Rollup binary
+        run: |
+          # Workaround for Rollup optional dependencies issue in CI
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
+
+      - name: Cache Storybook/Vite build cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.cache
+          key: storybook-cache-${{ runner.os }}-${{ hashFiles('src/**', 'stories/**', '.storybook/**') }}
+          restore-keys: |
+            storybook-cache-${{ runner.os }}-
+
+      - name: Build package
+        # staticDirs in .storybook/main.ts serves ../dist (e.g. css/dynamic-ui.css,
+        # loaded by .storybook/preview-head.html), so it must exist before
+        # building Storybook, otherwise stories render unstyled.
+        run: npm run build
+
+      - name: Build Storybook
+        run: npm run build:storybook
+
+      - name: Run browser-only accessibility checks
+        run: npm run axe:browser

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import { DCarousel } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DCarousel> = {
+const meta = {
   title: 'Design System/Components/Carousel',
   component: DCarousel,
   parameters: {
@@ -64,10 +64,10 @@ To understand in more detail the aspects covered by this component, review the f
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCarousel>;
 
-export default config;
-type Story = StoryObj<typeof DCarousel>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (

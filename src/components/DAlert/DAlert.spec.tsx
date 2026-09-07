@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import { ComponentStateColor } from '../interface';
 import DAlert from './DAlert';
+import { DContextProvider } from '../../contexts';
 
 describe('<DAlert />', () => {
   it('should render info alert', () => {
@@ -134,6 +135,66 @@ describe('<DAlert />', () => {
     const button = screen.getByRole('button');
     const closeIcon = button.querySelector('.d-icon');
     expect(closeIcon).toBeInTheDocument();
+    expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
+  });
+
+  it('falls back to context icon configuration when no icon family props are provided', () => {
+    render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DAlert showClose icon="heart" iconClose="x">
+          Alert content
+        </DAlert>
+      </DContextProvider>,
+    );
+
+    const alertIcon = screen.getByRole('alert').querySelector('.d-icon');
+    expect(alertIcon?.className).toContain('material-symbols-outlined');
+    expect(alertIcon).toHaveTextContent('heart');
+    expect(alertIcon?.tagName).toBe('I');
+
+    const closeIcon = screen.getByRole('button').querySelector('.d-icon');
+    expect(closeIcon?.className).toContain('material-symbols-outlined');
+    expect(closeIcon).toHaveTextContent('x');
+    expect(closeIcon?.tagName).toBe('I');
+  });
+
+  it('prioritizes local icon family props over context configuration', () => {
+    render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DAlert
+          showClose
+          icon="Heart"
+          iconFamilyClass="bi"
+          iconFamilyPrefix="bi-"
+          iconMaterialStyle={false}
+          iconClose="X"
+          iconCloseFamilyClass="bi"
+          iconCloseFamilyPrefix="bi-"
+          iconCloseMaterialStyle={false}
+        >
+          Alert content
+        </DAlert>
+      </DContextProvider>,
+    );
+
+    const alertIcon = screen.getByRole('alert').querySelector('.d-icon');
+    expect(alertIcon?.className).not.toContain('material-symbols-outlined');
+    expect(alertIcon?.querySelector('svg')).toBeInTheDocument();
+
+    const closeIcon = screen.getByRole('button').querySelector('.d-icon');
+    expect(closeIcon?.className).not.toContain('material-symbols-outlined');
     expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
   });
 });

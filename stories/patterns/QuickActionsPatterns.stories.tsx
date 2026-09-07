@@ -9,7 +9,7 @@ import {
 
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta = {
+const meta = {
   title: 'Patterns/Quick Actions',
   parameters: {
     docs: {
@@ -32,10 +32,10 @@ Quick actions provide users with fast access to frequently used features like tr
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta;
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof meta>;
 
 export const BasicQuickActions: Story = {
   parameters: {

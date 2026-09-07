@@ -1,0 +1,54 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/addon-docs/blocks';
+import { ExampleRoot } from './buildUrlExamples';
+
+<Meta title="Design System/Utils/url/buildUrl" />
+
+# buildUrl
+Builds an internal URL from a `path` and a set of query `params`, normalizing leading separators to prevent scheme-relative URLs (e.g. `//evil.com`).
+
+Useful when `path` comes from a Liquid variable that may be unconfigured, in which case it resolves to the literal string `'#'` — `buildUrl` returns `'#'` as-is in that case instead of building a broken URL.
+
+## Parameters
+
+- **path** (`string`): The path to build the URL from. It is trimmed and every tab, line feed and carriage return is removed, then all leading separators are stripped: `/accounts`, `//accounts`, `\accounts` and `/<TAB>/accounts` all become `accounts`.
+- **params** (`Record<string, string | number>`): Key/value pairs serialized as the query string.
+
+> ⚠️ **Note:** a leading `\` is stripped just like a `/` because browsers resolve them the same way (`/\evil.com` resolves to `https://evil.com/`), and tabs/line feeds are removed because the URL parser ignores them, so they could otherwise hide a scheme-relative prefix.
+
+## Returns
+
+- (`string`): The resulting URL.
+  - `'#'` when `path` normalizes to `'#'` (`'#'`, `'/#'`), ignoring the params.
+  - `'/'` when `path` is empty and there are no params.
+  - `'/?<query>'` when `path` is empty and there are params.
+  - `'<path>'` or `'<path>?<query>'` when `path` starts with `#`, since a fragment must not be prefixed with `/` (it would navigate away from the current document).
+  - `'/<path>'` or `'/<path>?<query>'` otherwise.
+
+## Example of use
+
+<Source
+  code={
+    `
+import { buildUrl } from '@dynamic-framework/ui-react';
+
+buildUrl('accounts', { account_id: '42' }); // '/accounts?account_id=42'
+buildUrl('//accounts', {}); // '/accounts'
+buildUrl('/\\\\evil.com', {}); // '/evil.com'
+buildUrl('#', { account_id: '42' }); // '#' (unconfigured Liquid var)
+buildUrl('#accounts', { account_id: '42' }); // '#accounts?account_id=42'
+buildUrl('', { tab: 'movimientos' }); // '/?tab=movimientos'
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>

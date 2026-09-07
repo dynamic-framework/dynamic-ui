@@ -85,6 +85,18 @@ describe('<DInputSwitch />', () => {
       const switchControl = screen.getByLabelText('My Switch');
       expect(switchControl).toHaveClass('is-valid');
     });
+
+    it('should render the hint and link it via aria-describedby', () => {
+      render(
+        <DContextProvider>
+          <DInputSwitch id="switchTest" label="My Switch" hint="Assistive text" />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('My Switch');
+      expect(screen.getByText('Assistive text')).toBeInTheDocument();
+      expect(switchControl).toHaveAttribute('aria-describedby', 'switchTestHint');
+    });
   });
 
   describe('User Interaction and Events', () => {

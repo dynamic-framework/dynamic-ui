@@ -26,6 +26,7 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   hint?: string;
+  /** Only applies when `type` is `checkbox`; ignored for `radio`. */
   indeterminate?: boolean;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -74,9 +75,9 @@ export default function DInputCheck(
 
   useEffect(() => {
     if (innerRef.current) {
-      innerRef.current.indeterminate = Boolean(indeterminate);
+      innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
     }
-  }, [indeterminate]);
+  }, [indeterminate, type]);
 
   useEffect(() => {
     if (innerRef.current) {

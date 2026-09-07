@@ -6,7 +6,7 @@ import { DBox } from '../../src';
 
 const GAP_OPTIONS = Array.from({ length: 31 }, (_, i) => i);
 
-const config: Meta<typeof DLayout> = {
+const meta = {
   title: 'Design System/Components/Layout',
   component: DLayout,
   argTypes: {
@@ -113,10 +113,10 @@ DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system t
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DLayout>;
 
-export default config;
-type Story = StoryObj<typeof DLayout>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

@@ -48,7 +48,7 @@ const SWIPE_LIST_ITEMS: SwipeListItem[] = [
   },
 ];
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Mobile/List Item Swipe Actions',
   component: DBox,
   parameters: {
@@ -60,11 +60,11 @@ const meta: Meta<typeof DBox> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 function MobileViewport(
   {

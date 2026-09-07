@@ -63,7 +63,7 @@ const ROWS = [
   },
 ];
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Table',
   component: DBox,
   parameters: {
@@ -80,11 +80,11 @@ const meta: Meta<typeof DBox> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 export const BasicTable: Story = {
   render: () => (

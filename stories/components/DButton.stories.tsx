@@ -8,7 +8,7 @@ import {
   THEMES,
 } from '../config/constants';
 
-const meta: Meta<typeof DButton> = {
+const meta = {
   title: 'Design System/Components/Button',
   component: DButton,
   parameters: {
@@ -211,10 +211,10 @@ configured with \`materialStyle: true\`, or use the icon props directly.
       },
     },
   },
-};
+} satisfies Meta<typeof DButton>;
 export default meta;
 
-type Story = StoryObj<typeof DButton>;
+type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   args: {

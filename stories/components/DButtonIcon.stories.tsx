@@ -14,7 +14,7 @@ import {
   THEMES,
 } from '../config/constants';
 
-const config: Meta<typeof DButtonIcon> = {
+const meta = {
   title: 'Design System/Components/Button Icon',
   component: DButtonIcon,
   parameters: {
@@ -243,10 +243,10 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DButtonIcon>;
 
-export default config;
-type Story = StoryObj<typeof DButtonIcon>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -409,7 +409,7 @@ export const AsAnchor: Story = {
  * and the flag `materialStyle=true` or use the flags directly over the
  * `DButtonIcon` component as a props
  */
-export const MaterialSecondaryIconRight: Story = {
+export const IconMaterialSyntax: Story = {
   render: (args: ComponentProps<typeof DButtonIcon>) => (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}

@@ -113,6 +113,49 @@ describe('<DStepperDesktop />', () => {
     expect(iconElement).toHaveClass('d-icon', 'fas', 'd-step-icon');
   });
 
+  it('falls back to context icon configuration when no icon success family props are provided', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DStepperDesktop options={mockSteps} currentStep={2} />
+      </DContextProvider>,
+    );
+
+    const iconElement = container.querySelector('.d-step-check .d-step-icon');
+    expect(iconElement?.className).toContain('material-symbols-outlined');
+    expect(iconElement).toHaveTextContent('Check');
+    expect(iconElement?.tagName).toBe('I');
+  });
+
+  it('prioritizes local icon success family props over context configuration', () => {
+    const { container } = render(
+      <DContextProvider
+        icon={{
+          familyClass: 'material-symbols-outlined',
+          familyPrefix: '',
+          materialStyle: true,
+        }}
+      >
+        <DStepperDesktop
+          options={mockSteps}
+          currentStep={2}
+          iconSuccessFamilyClass="bi"
+          iconSuccessFamilyPrefix="bi-"
+          iconSuccessMaterialStyle={false}
+        />
+      </DContextProvider>,
+    );
+
+    const iconElement = container.querySelector('.d-step-check .d-step-icon');
+    expect(iconElement?.className).not.toContain('material-symbols-outlined');
+    expect(iconElement?.querySelector('svg')).toBeInTheDocument();
+  });
+
   it('should throw error when currentStep is less than 1', () => {
     expect(() => {
       renderWithContext(

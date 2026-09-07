@@ -15,12 +15,12 @@ import {
   DBadge,
   DButton,
   DContextProvider,
+  DInputPhone,
   validatePhoneNumber,
 } from '../../src';
-import DInputPhone from '../../src/components/DInputPhone';
 import { PREFIX_BS } from '../../src/components/config';
 
-const config: Meta<typeof DInputPhone> = {
+const meta = {
   title: 'Design System/Components/Input Phone',
   component: DInputPhone,
   parameters: {
@@ -301,10 +301,10 @@ and all variables are scoped under the \`.d-input-phone\` class.
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DInputPhone>;
 
-export default config;
-type Story = StoryObj<typeof DInputPhone>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

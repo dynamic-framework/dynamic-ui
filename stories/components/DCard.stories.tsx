@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DCard from '../../src/components/DCard/DCard';
 import DButton from '../../src/components/DButton';
 
-const config: Meta<typeof DCard> = {
+const meta = {
   title: 'Design System/Components/Card',
   component: DCard,
   parameters: {
@@ -44,10 +44,10 @@ The Bootstrap documentation provides details on the default [Card CSS Variables]
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCard>;
 
-export default config;
-type Story = StoryObj<typeof DCard>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (

@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DInputMask from '../../src/components/DInputMask';
+import { DInputMask } from '../../src';
 import { ICONS } from '../config/constants';
 
-const config: Meta<typeof DInputMask> = {
+const meta = {
   title: 'Design System/Components/Input Mask',
   component: DInputMask,
   argTypes: {
@@ -210,10 +210,11 @@ const config: Meta<typeof DInputMask> = {
       table: { category: 'Behavior' },
     },
   },
-};
+  tags: ['autodocs'],
+} satisfies Meta<typeof DInputMask>;
 
-export default config;
-type Story = StoryObj<typeof DInputMask>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

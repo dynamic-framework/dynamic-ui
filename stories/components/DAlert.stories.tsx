@@ -11,7 +11,7 @@ import {
   ICONS,
 } from '../config/constants';
 
-const config: Meta<typeof DAlert> = {
+const meta = {
   title: 'Design System/Components/Alert',
   component: DAlert,
   parameters: {
@@ -116,10 +116,10 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DAlert>;
 
-export default config;
-type Story = StoryObj<typeof DAlert>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Success: Story = {
   args: {

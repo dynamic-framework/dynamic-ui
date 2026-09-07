@@ -90,6 +90,30 @@ describe('<DInputCheck />', () => {
     expect(input).toBeChecked();
   });
 
+  it('applies indeterminate state for checkbox', () => {
+    render(
+      <DInputCheck
+        type="checkbox"
+        indeterminate
+        ariaLabel="indeterminate-check"
+      />,
+    );
+    const input = screen.getByLabelText<HTMLInputElement>('indeterminate-check');
+    expect(input.indeterminate).toBe(true);
+  });
+
+  it('ignores indeterminate state for radio', () => {
+    render(
+      <DInputCheck
+        type="radio"
+        indeterminate
+        ariaLabel="indeterminate-radio"
+      />,
+    );
+    const input = screen.getByLabelText<HTMLInputElement>('indeterminate-radio');
+    expect(input.indeterminate).toBe(false);
+  });
+
   it('handles disabled state', () => {
     render(
       <DInputCheck

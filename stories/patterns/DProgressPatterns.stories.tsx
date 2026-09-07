@@ -13,7 +13,7 @@ import {
 } from '../../src';
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DProgress> = {
+const meta = {
   title: 'Patterns/Progress',
   component: DProgress,
   parameters: {
@@ -25,11 +25,11 @@ const meta: Meta<typeof DProgress> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DProgress>;
 
 export default meta;
 
-type Story = StoryObj<typeof DProgress>;
+type Story = StoryObj<typeof meta>;
 
 export const OnboardingChecklist: Story = {
   parameters: {

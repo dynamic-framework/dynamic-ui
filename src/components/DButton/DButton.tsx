@@ -12,6 +12,7 @@ import classNames from 'classnames';
 
 import DIcon from '../DIcon';
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
+import { useDContext } from '../../contexts';
 import type {
   BaseProps,
   ButtonVariant,
@@ -68,6 +69,14 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     'aria-label': ariaLabelProp,
     ...rest
   } = props;
+
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
 
   // Responsive size resolution using useResponsiveProp
   const { responsivePropValue } = useResponsiveProp(true);
@@ -171,18 +180,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
             {iconStart && (
               <DIcon
                 icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-                materialStyle={iconStartMaterialStyle}
+                familyClass={iconStartFamilyClass ?? familyClass}
+                familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+                materialStyle={iconStartMaterialStyle ?? materialStyle}
               />
             )}
             {content}
             {iconEnd && (
               <DIcon
                 icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-                materialStyle={iconEndMaterialStyle}
+                familyClass={iconEndFamilyClass ?? familyClass}
+                familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+                materialStyle={iconEndMaterialStyle ?? materialStyle}
               />
             )}
           </>
@@ -232,18 +241,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
           {iconStart && (
             <DIcon
               icon={iconStart}
-              familyClass={iconStartFamilyClass}
-              familyPrefix={iconStartFamilyPrefix}
-              materialStyle={iconStartMaterialStyle}
+              familyClass={iconStartFamilyClass ?? familyClass}
+              familyPrefix={iconStartFamilyPrefix ?? familyPrefix}
+              materialStyle={iconStartMaterialStyle ?? materialStyle}
             />
           )}
           {content}
           {iconEnd && (
             <DIcon
               icon={iconEnd}
-              familyClass={iconEndFamilyClass}
-              familyPrefix={iconEndFamilyPrefix}
-              materialStyle={iconEndMaterialStyle}
+              familyClass={iconEndFamilyClass ?? familyClass}
+              familyPrefix={iconEndFamilyPrefix ?? familyPrefix}
+              materialStyle={iconEndMaterialStyle ?? materialStyle}
             />
           )}
         </>

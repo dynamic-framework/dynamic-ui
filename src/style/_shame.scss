@@ -4,14 +4,10 @@
   flex: 1;
 }
 
+// Deprecated by bootstrap 5.3, but still used in some components
 .text-muted {
   --#{$prefix}text-muted: var(--#{$prefix}gray-500);
   color: var(--#{$prefix}text-muted) !important;
-}
-
-.form-text {
-  --#{$prefix}form-text: var(--#{$prefix}gray-500);
-  color: var(--#{$prefix}form-text) !important;
 }
 
 .spinner-border {

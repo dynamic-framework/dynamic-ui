@@ -31,7 +31,7 @@ export default function DStepper(
     iconSuccess: iconSuccessProp,
     iconSuccessFamilyClass,
     iconSuccessFamilyPrefix,
-    iconSuccessMaterialStyle = false,
+    iconSuccessMaterialStyle,
     vertical = false,
     completed,
     alignStart = false,
@@ -40,6 +40,11 @@ export default function DStepper(
   } : Props,
 ) {
   const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
     iconMap: {
       check,
     },
@@ -81,9 +86,9 @@ export default function DStepper(
               {((value < currentStep) || completed) && (
                 <DIcon
                   icon={icon}
-                  familyClass={iconSuccessFamilyClass}
-                  familyPrefix={iconSuccessFamilyPrefix}
-                  materialStyle={iconSuccessMaterialStyle}
+                  familyClass={iconSuccessFamilyClass ?? familyClass}
+                  familyPrefix={iconSuccessFamilyPrefix ?? familyPrefix}
+                  materialStyle={iconSuccessMaterialStyle ?? materialStyle}
                   className="d-step-icon"
                 />
               )}

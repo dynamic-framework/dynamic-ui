@@ -6,7 +6,7 @@ import DOtp from '../../src/components/DOtp';
 import { DCard } from '../../src';
 import { PropsOtp } from '../../src/components/DOtp/DOtp';
 
-const meta: Meta<typeof DOtp> = {
+const meta = {
   title: 'Design System/Components/Otp',
   component: DOtp,
   parameters: {
@@ -58,7 +58,7 @@ Ideal for **banking**, **insurance**, and **financial** applications.
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DOtp>;
 
 export function Template(args: PropsOtp) {
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +83,7 @@ export function Template(args: PropsOtp) {
 }
 
 export default meta;
-type Story = StoryObj<typeof DOtp>;
+type Story = StoryObj<typeof meta>;
 
 // 🧾 Default example
 export const Default: Story = {

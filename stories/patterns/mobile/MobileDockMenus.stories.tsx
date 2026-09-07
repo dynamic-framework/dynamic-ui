@@ -64,7 +64,7 @@ const TEXT_DOCK_ITEMS: TextDockItem[] = [
   { id: 'more', label: 'More' },
 ];
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Mobile/Dock Menus',
   component: DBox,
   parameters: {
@@ -76,11 +76,11 @@ const meta: Meta<typeof DBox> = {
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 function MobileViewport(
   {

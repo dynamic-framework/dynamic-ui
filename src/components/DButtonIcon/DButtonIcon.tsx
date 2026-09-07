@@ -15,6 +15,7 @@ import type {
   FamilyIconProps,
   InputState,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
   BaseProps &
@@ -60,6 +61,14 @@ export default function DButtonIcon(
     ...rest
   }: Props,
 ) {
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
+
   const generateClasses = useMemo<ClassMap>(() => {
     const variantClass = !variant || variant === 'solid'
       ? `btn-${color}`
@@ -124,9 +133,9 @@ export default function DButtonIcon(
           : (
             <DIcon
               icon={icon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={iconMaterialStyle}
+              familyClass={iconFamilyClass ?? familyClass}
+              familyPrefix={iconFamilyPrefix ?? familyPrefix}
+              materialStyle={iconMaterialStyle ?? materialStyle}
             />
           )}
       </a>
@@ -156,9 +165,9 @@ export default function DButtonIcon(
         : (
           <DIcon
             icon={icon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={iconMaterialStyle}
+            familyClass={iconFamilyClass ?? familyClass}
+            familyPrefix={iconFamilyPrefix ?? familyPrefix}
+            materialStyle={iconMaterialStyle ?? materialStyle}
           />
         )}
     </button>

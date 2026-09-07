@@ -18,7 +18,7 @@ import {
 
 import DocsTemplate from '../docs/Template.mdx';
 
-const meta: Meta<typeof DBox> = {
+const meta = {
   title: 'Patterns/Mobile/OTP',
   component: DBox,
   parameters: {
@@ -40,11 +40,11 @@ Open each example in its own Storybook canvas:
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof meta>;
 
 function simulateVerify(code: string, validCode = '1234', delay = 800) {
   return new Promise<void>((resolve, reject) => {

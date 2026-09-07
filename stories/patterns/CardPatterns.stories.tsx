@@ -10,7 +10,7 @@ import {
 
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DCard> = {
+const meta = {
   title: 'Patterns/Card',
   component: DCard,
   parameters: {
@@ -25,11 +25,11 @@ These patterns are designed to be reusable and can be customized to fit differen
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DCard>;
 
 export default meta;
 
-type Story = StoryObj<typeof DCard>;
+type Story = StoryObj<typeof meta>;
 
 export const InsurancePlan: Story = {
   render: () => (

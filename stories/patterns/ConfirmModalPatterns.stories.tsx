@@ -14,7 +14,7 @@ import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import type { PortalProps } from '../../src';
 import { useConfirmModal } from '../../src/hooks';
 
-const meta: Meta = {
+const meta = {
   title: 'Patterns/Confirm Modal',
   parameters: {
     layout: 'centered',
@@ -27,9 +27,10 @@ const meta: Meta = {
       </DContextProvider>
     ),
   ],
-};
+} satisfies Meta;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
 function SimpleConfirmContent() {
   const [result, setResult] = useState<string>('');
@@ -67,7 +68,7 @@ function SimpleConfirmContent() {
  * Simple confirmation modal example.
  * Shows how to use `useConfirmModal` for basic confirmations.
  */
-export const SimpleConfirm: StoryObj = {
+export const SimpleConfirm: Story = {
   render: () => <SimpleConfirmContent />,
   parameters: {
     docs: {
@@ -145,7 +146,7 @@ function CriticalDeleteContent() {
  * Critical confirmation with code validation.
  * User must type the exact confirmation code before the confirm button is enabled.
  */
-export const CriticalDelete: StoryObj = {
+export const CriticalDelete: Story = {
   render: () => <CriticalDeleteContent />,
   parameters: {
     docs: {
@@ -247,7 +248,7 @@ function DeleteContactContent() {
  * Mimics the iOS experience when deleting a contact or account.
  * Requires typing "DELETE" to confirm the action.
  */
-export const DeleteContact: StoryObj = {
+export const DeleteContact: Story = {
   render: () => <DeleteContactContent />,
   parameters: {
     docs: {
@@ -390,7 +391,7 @@ function MultipleActionsContent() {
  * Multi-action confirmation example.
  * Different actions with different confirmation requirements.
  */
-export const MultipleActions: StoryObj = {
+export const MultipleActions: Story = {
   render: () => <MultipleActionsContent />,
   parameters: {
     docs: {
@@ -636,7 +637,7 @@ function ContactListContent() {
  * Contact list with per-row dropdown actions.
  * Each row has an Edit (no-op) and a Delete action that opens a personalized confirmation modal.
  */
-export const ContactList: StoryObj = {
+export const ContactList: Story = {
   render: () => <ContactListContent />,
 };
 
@@ -725,7 +726,7 @@ function ConfirmOnModalContent() {
  * Click **Close** inside the form modal to trigger the discard confirmation
  * on top of the already-open modal.
  */
-export const ConfirmOnModal: StoryObj = {
+export const ConfirmOnModal: Story = {
   name: 'Confirm on top of a Modal',
   decorators: [
     (Story) => (
@@ -865,7 +866,7 @@ function ConfirmOnOffcanvasContent() {
  * Click **Discard** or the ✕ button inside the settings panel to trigger
  * the discard confirmation on top of the already-open offcanvas.
  */
-export const ConfirmOnOffcanvas: StoryObj = {
+export const ConfirmOnOffcanvas: Story = {
   name: 'Confirm on top of an Offcanvas',
   decorators: [
     (Story) => (

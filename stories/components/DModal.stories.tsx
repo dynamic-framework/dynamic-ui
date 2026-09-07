@@ -19,7 +19,7 @@ const TRANSITION_PRESETS: TransitionPreset[] = [
   { label: 'None', value: { ease: 'linear', duration: 0 } },
 ];
 
-const config: Meta<typeof DModal> = {
+const meta = {
   title: 'Design System/Components/Modal',
   component: DModal,
   parameters: {
@@ -73,10 +73,10 @@ const config: Meta<typeof DModal> = {
       table: { category: 'Appearance' },
     },
   },
-};
+} satisfies Meta<typeof DModal>;
 
-export default config;
-type Story = StoryObj<typeof DModal>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 type ModalPayloads = {
   confirm: {

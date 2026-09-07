@@ -4,7 +4,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import DDropdown, { DropdownAction } from '../../src/components/DDropdown/DDropdown';
 import { DButton } from '../../src';
 
-const config: Meta<typeof DDropdown> = {
+const meta = {
   title: 'Design System/Components/Dropdown',
   component: DDropdown,
   parameters: {
@@ -114,11 +114,11 @@ The dropdown automatically adjusts its position depending on the available space
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DDropdown>;
 
-export default config;
+export default meta;
 
-type Story = StoryObj<typeof DDropdown>;
+type Story = StoryObj<typeof meta>;
 
 const baseActions: DropdownAction[] = [
   { label: 'Edit', icon: 'Pencil', onClick: () => {} },

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import DErrorBoundary, { getErrorMessage, useErrorBoundary } from '../../src/components/DErrorBoundary';
 import { DAlert, DButton, DCard } from '../../src';
 
-const meta: Meta<typeof DErrorBoundary> = {
+const meta = {
   title: 'Design System/Components/Error Boundary',
   component: DErrorBoundary,
   tags: ['autodocs'],
@@ -49,11 +49,11 @@ const meta: Meta<typeof DErrorBoundary> = {
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DErrorBoundary>;
 
 export default meta;
 
-type Story = StoryObj<typeof DErrorBoundary>;
+type Story = StoryObj<typeof meta>;
 
 function Bomb({ explode }: { explode: boolean }) {
   if (explode) throw new Error('Boom!');

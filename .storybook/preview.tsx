@@ -61,7 +61,8 @@ const config: Preview = {
           [
             'Quick Start',
             'Components',
-            '*'
+            '*',
+            'Migration'
           ],
           'Patterns',
           [

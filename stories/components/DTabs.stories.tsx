@@ -8,7 +8,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import { TAB_VARIANTS } from '../config/constants';
 import { DChip, DIcon } from '../../src';
 
-const config: Meta<typeof DTabs> = {
+const meta = {
   title: 'Design System/Components/Tabs',
   component: DTabs,
   parameters: {
@@ -66,10 +66,10 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DTabs>;
 
-export default config;
-type Story = StoryObj<typeof DTabs>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [

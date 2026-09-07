@@ -4,7 +4,7 @@ import DTimeline from '../../src/components/DTimeline/DTimeline';
 import { DCard } from '../../src';
 import DBox from '../../src/components/DBox';
 
-const config: Meta<typeof DTimeline> = {
+const meta = {
   title: 'Design System/Components/Timeline',
   component: DTimeline,
   parameters: {
@@ -47,10 +47,10 @@ It's used to display a list of events in chronological order.
     },
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof DTimeline>;
 
-export default config;
-type Story = StoryObj<typeof DTimeline>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {

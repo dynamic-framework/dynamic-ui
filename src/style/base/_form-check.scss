@@ -8,10 +8,12 @@
 }
 
 .form-check {
+  // .form-check padding-start only accounts for the input width, the gap between
+  // the input and the label comes from .form-check-label's --bs-label-padding-x.
+  // The hint must repeat that offset to stay aligned with the label text.
   .form-text {
-    --#{$prefix}form-text-padding: 0 var(--#{$prefix}ref-spacer-2);
-
     display: flex;
+    padding-inline: var(--#{$prefix}ref-spacer-2);
   }
 
   @each $state, $data in $form-validation-states {
