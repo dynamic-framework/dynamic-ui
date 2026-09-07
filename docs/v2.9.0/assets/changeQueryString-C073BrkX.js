@@ -1,0 +1,1 @@
+function a(e,{useSearch:o=!0,pushState:i=!1}={}){const r=new URLSearchParams(o?window.location.search:"");if(Object.entries(e).forEach(([t,n])=>{if(!n){r.delete(t);return}r.set(t,String(n))}),i){const t=new URL(window.location.href);t.search=r.toString(),window.history.pushState(null,"",t.toString())}return r.toString()}export{a as c};
