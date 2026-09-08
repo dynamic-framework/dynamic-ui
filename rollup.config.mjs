@@ -7,11 +7,17 @@ const ROOT = 'dist-transpiled';
 /**
  * Collects every publishable index as its own rollup entry.
  *
- * With a single entry, `preserveModules` shakes off the re-exports the root
- * entry does not need: `dist/esm/components/DCard/index.js` would only export
- * `default`, dropping DCardHeader/DCardBody/DCardFooter, and
- * `dist/esm/components/index.js` would not be emitted at all. Declaring each
- * index as an entry keeps every emitted file's export surface intact.
+ * Without these entries, `preserveModules` shakes off the re-exports the root
+ * entry does not need: `dist/esm/components/DCard/index.js` would export only
+ * `default`, dropping DCardHeader / DCardBody / DCardFooter. Declaring each
+ * component, context, hook and util index as an entry keeps its export surface
+ * intact.
+ *
+ * The intermediate barrels (`components/index.js`, `contexts/index.js`, …) are
+ * deliberately left out and are not emitted. Rollup rewires the root index to
+ * import each symbol straight from the module that defines it, e.g.
+ * `export { default as DCard } from './components/DCard/DCard.js'`, so the
+ * barrels would only add a hop. Do not add them as entries.
  */
 function entriesFrom(dir, { indexInFolder }) {
   const base = `${ROOT}/${dir}`;
