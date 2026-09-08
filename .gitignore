@@ -77,3 +77,6 @@ AGENTS.md
 
 scripts/a11y-reports*
 /registry/
+
+# The macOS "Icon?" global pattern matches src/icons ("?" is a single-char wildcard), so re-include it.
+!src/icons/
