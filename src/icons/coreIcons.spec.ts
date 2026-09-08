@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, sep } from 'node:path';
 import * as LucideIcons from 'lucide-react';
 
 import { CORE_LUCIDE_ICONS } from './coreIcons';
@@ -14,6 +14,7 @@ import { CORE_LUCIDE_ICONS } from './coreIcons';
  * chevrons, close buttons and alert icons.
  */
 
+const REPO_ROOT = join(__dirname, '..', '..');
 const COMPONENTS_DIR = join(__dirname, '..', 'components');
 const ICON_PROPS = ['icon', 'iconStart', 'iconEnd', 'labelIcon'] as const;
 const PROP_NAMES = ICON_PROPS.join('|');
@@ -73,7 +74,11 @@ function iconUsages(file: string): Array<Usage> {
       .map((match) => match[1]),
   ];
 
-  return found.map((name) => ({ name, file: file.slice(file.indexOf('src/')) }));
+  // Repo-relative with forward slashes, so a failure message reads the same
+  // on Windows, where `sep` is `\` and an `indexOf('src/')` lookup fails.
+  const displayPath = relative(REPO_ROOT, file).split(sep).join('/');
+
+  return found.map((name) => ({ name, file: displayPath }));
 }
 
 const usages = sourceFiles(COMPONENTS_DIR).flatMap(iconUsages);
