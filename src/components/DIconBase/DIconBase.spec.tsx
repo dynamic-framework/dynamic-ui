@@ -2,6 +2,7 @@
 
 import { render, screen } from '@testing-library/react';
 import DIconBase from '.';
+import { DContextProvider } from '../../contexts';
 
 describe('<DIconBase />', () => {
   it('should render Lucide icon', () => {
@@ -179,5 +180,107 @@ describe('<DIconBase />', () => {
 
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveClass('custom-icon-family');
+  });
+  describe('icon registry', () => {
+    function CustomIcon() {
+      return <svg data-testid="custom-svg" />;
+    }
+
+    it('resolves a string icon from iconRegistry in context', () => {
+      render(
+        <DContextProvider iconRegistry={{ NMChevron: CustomIcon }}>
+          <DIconBase icon="NMChevron" />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+    });
+
+    it('prioritizes iconRegistry over Lucide when the name exists in both', () => {
+      render(
+        <DContextProvider iconRegistry={{ Home: CustomIcon }}>
+          <DIconBase icon="Home" />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+    });
+
+    it('prioritizes iconRegistry over materialStyle', () => {
+      render(
+        <DContextProvider iconRegistry={{ NMChevron: CustomIcon }}>
+          <DIconBase icon="NMChevron" materialStyle familyClass="material-symbols-outlined" />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
+    });
+
+    it('falls back to normal resolution when the name is not registered', () => {
+      const { container } = render(
+        <DContextProvider iconRegistry={{ NMChevron: CustomIcon }}>
+          <DIconBase icon="Home" />
+        </DContextProvider>,
+      );
+
+      expect(screen.queryByTestId('custom-svg')).not.toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
+    });
+  });
+
+  describe('development warning for unresolved names', () => {
+    it('warns once per name when the family is still the package default', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      const { container } = render(
+        <DContextProvider>
+          <DIconBase icon="UnknownWarnOnce" familyClass="bi" familyPrefix="bi-" />
+          <DIconBase icon="UnknownWarnOnce" familyClass="bi" familyPrefix="bi-" />
+        </DContextProvider>,
+      );
+
+      // The icon-font fallback still renders, unchanged.
+      expect(container.querySelector('.d-icon')).toHaveClass('bi', 'bi-UnknownWarnOnce');
+
+      const nameWarnings = consoleWarnSpy.mock.calls
+        .filter(([message]) => String(message).includes('"UnknownWarnOnce"'));
+      expect(nameWarnings).toHaveLength(1);
+      expect(String(nameWarnings[0][0])).toContain('iconRegistry');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('does not warn when the consumer configured an icon font explicitly', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DContextProvider>
+          <DIconBase icon="rocket_launch" familyClass="material-symbols-outlined" familyPrefix="ms-" />
+        </DContextProvider>,
+      );
+
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('does not warn for a name that resolves through the registry', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      function CustomIcon() {
+        return <svg data-testid="registered-svg" />;
+      }
+
+      render(
+        <DContextProvider iconRegistry={{ Whatever: CustomIcon }}>
+          <DIconBase icon="Whatever" familyClass="bi" familyPrefix="bi-" />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('registered-svg')).toBeInTheDocument();
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      consoleWarnSpy.mockRestore();
+    });
   });
 });

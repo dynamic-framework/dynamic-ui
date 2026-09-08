@@ -5,6 +5,9 @@ import * as LucideIcons from 'lucide-react';
 import { isValidElementType } from 'react-is';
 import type { CSSProperties, ComponentType } from 'react';
 import { PREFIX_BS } from '../config';
+import { useDContext } from '../../contexts';
+import resolveIconFromRegistry from './resolveIconFromRegistry';
+import warnUnknownIcon from './warnUnknownIcon';
 
 import type {
   BaseProps,
@@ -42,9 +45,26 @@ type Props =
 
 export type DIconBaseProps = Props;
 
+/**
+ * Renders an icon, resolving the `icon` prop in this order:
+ *
+ * 1. **Icon registry** — a string name found in `DContextProvider`'s
+ *    `iconRegistry` renders the component registered under it. A component
+ *    passed directly skips this step and renders as-is.
+ * 2. **lucide-react** — a PascalCase name exported by lucide-react renders that
+ *    icon. When `materialStyle` is on, this step is skipped and the name is
+ *    emitted as the text content of the icon-font element instead.
+ * 3. **Icon-font family** — anything left over renders as
+ *    `<i class="{familyClass} {familyPrefix}{name}">`, the legacy path for
+ *    Material Symbols and Bootstrap Icons. Outside production builds, a name
+ *    that reaches this step while the family is still the package default logs
+ *    a one-time warning.
+ *
+ * A name that resolves nowhere and has no family configured renders `?`.
+ */
 export default function DIconBase(
   {
-    icon,
+    icon: iconProp,
     color,
     style,
     className,
@@ -58,6 +78,11 @@ export default function DIconBase(
     dataAttributes,
   }: Props,
 ) {
+  const { iconRegistry } = useDContext();
+
+  // The registry wins over every other source, including Material icons.
+  const icon = resolveIconFromRegistry(iconProp, iconRegistry);
+
   // If materialStyle is true, use Material Design icons (legacy)
   const isStringIcon = typeof icon === 'string';
   const useMaterialIcons = materialStyle && isStringIcon;
@@ -132,7 +157,11 @@ export default function DIconBase(
 
   // Render Lucide icon
   if (!LucideIcon) {
-    if (isStringIcon && familyClass && familyPrefix) {
+    if (typeof icon === 'string' && familyClass && familyPrefix) {
+      if (process.env.NODE_ENV !== 'production') {
+        warnUnknownIcon(icon, familyClass, familyPrefix);
+      }
+
       return (
         <i
           className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
