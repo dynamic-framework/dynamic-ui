@@ -111,4 +111,22 @@ describe('<DIcon />', () => {
 
     expect(screen.getByTestId('custom-svg')).toBeInTheDocument();
   });
+
+  describe('accessibility pass-through', () => {
+    it('hides the icon by default', () => {
+      render(
+        <DIcon icon="Home" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('forwards ariaLabel to DIconBase', () => {
+      render(
+        <DIcon icon="Home" ariaLabel="Inicio" />,
+      );
+
+      expect(screen.getByRole('img', { name: 'Inicio' })).toBeInTheDocument();
+    });
+  });
 });

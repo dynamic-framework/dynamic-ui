@@ -283,4 +283,148 @@ describe('<DIconBase />', () => {
       consoleWarnSpy.mockRestore();
     });
   });
+
+  describe('accessibility', () => {
+    function CustomIcon() {
+      return <svg data-testid="custom-svg" />;
+    }
+
+    it('hides a Lucide icon from the accessibility tree by default', () => {
+      render(
+        <DIconBase icon="Heart" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the material-style icon, whose name would otherwise be read out loud', () => {
+      render(
+        <DIconBase
+          icon="home"
+          materialStyle
+          familyClass="material-symbols-outlined"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      // The ligature name stays as text content — aria-hidden is what keeps it
+      // out of the accessibility tree.
+      expect(icon).toHaveTextContent('home');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides a custom SVG component icon by default', () => {
+      render(
+        // eslint-disable-next-line react/jsx-no-bind
+        <DIconBase icon={CustomIcon} dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the icon-font fallback by default', () => {
+      render(
+        <DIconBase
+          icon="custom-icon"
+          familyClass="custom-family"
+          familyPrefix="ci-"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the unresolved "?" fallback by default', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase icon="NonExistentIcon" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).toHaveTextContent('?');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('exposes a named img when ariaLabel is provided', () => {
+      render(
+        <DIconBase icon="Heart" ariaLabel="Favorito" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).not.toHaveAttribute('aria-hidden');
+      expect(icon).toHaveAttribute('role', 'img');
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBe(icon);
+    });
+
+    it('names the material-style icon with ariaLabel instead of its ligature', () => {
+      render(
+        <DIconBase
+          icon="home"
+          materialStyle
+          familyClass="material-symbols-outlined"
+          ariaLabel="Inicio"
+        />,
+      );
+
+      expect(screen.getByRole('img', { name: 'Inicio' })).toBeInTheDocument();
+    });
+
+    it('lets an explicit ariaHidden={false} expose the icon, and warns about the missing name', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase icon="Heart" ariaHidden={false} dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).not.toHaveAttribute('aria-hidden');
+      expect(icon).not.toHaveAttribute('role');
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('exposes an unnamed graphic'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('keeps the icon hidden when ariaHidden wins over ariaLabel, and warns', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden
+          ariaLabel="Favorito"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('aria-label');
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('is ignored because ariaHidden is true'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('still lets dataAttributes override the computed aria attributes', () => {
+      render(
+        <DIconBase
+          icon="Heart"
+          dataAttributes={{
+            'data-testid': 'icon',
+            ...{ 'aria-hidden': 'false' },
+          } as never}
+        />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'false');
+    });
+  });
 });

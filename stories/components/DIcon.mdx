@@ -144,6 +144,40 @@ The following examples show the output of the `DIcon` component with and without
 </Unstyled>
 
 
+## Accessibility
+
+Icons are **decorative by default**: every render path emits `aria-hidden="true"`,
+so an icon never adds noise to the accessibility tree. This matters most for the
+legacy icon-font paths, where the ligature name is the element's text content and
+a screen reader would otherwise read it out loud — `<i class="d-icon material-symbols-outlined">home</i>`
+announcing "home" next to your own label.
+
+You do not need to wrap `DIcon` in a hidden container. Inside a control that
+already carries its own accessible name — a `DButton` with a visible label, a
+`DButtonIcon` with `ariaLabel` — this is all you need:
+
+<Source
+  code={`
+<DButtonIcon icon="Trash2" ariaLabel="Delete item" />
+  `}
+  language="html"
+/>
+
+For the rare icon that is the only carrier of meaning, give it a name with
+`ariaLabel`. That renders `role="img"` and drops the default `aria-hidden`:
+
+<Source
+  code={`
+<DIcon icon="CircleAlert" ariaLabel="Payment overdue" />
+  `}
+  language="html"
+/>
+
+`ariaHidden` is an explicit escape hatch that always wins over `ariaLabel`.
+Avoid `ariaHidden={false}` on its own: it exposes an unnamed graphic to assistive
+technology, which is the one state worse than hiding the icon. Non-production
+builds warn when you do.
+
 ## Example Usage
 
 #### Bootstrap Icons
