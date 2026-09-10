@@ -144,6 +144,55 @@ The following examples show the output of the `DIcon` component with and without
 </Unstyled>
 
 
+## Accessibility
+
+Icons are **decorative by default**: every render path emits `aria-hidden="true"`,
+so an icon never adds noise to the accessibility tree. This matters most for the
+legacy icon-font paths, where the ligature name is the element's text content and
+a screen reader would otherwise read it out loud — `<i class="d-icon material-symbols-outlined">home</i>`
+announcing "home" next to your own label.
+
+You do not need to wrap `DIcon` in a hidden container. Inside a control that
+already carries its own accessible name — a `DButton` with a visible label, a
+`DButtonIcon` with its native `aria-label` — this is all you need:
+
+<Source
+  code={`
+<DButtonIcon icon="Trash2" aria-label="Delete item" />
+  `}
+  language="html"
+/>
+
+For the rare icon that is the only carrier of meaning, give it a name with
+`ariaLabel`. That renders `role="img"` and drops the default `aria-hidden`:
+
+<Source
+  code={`
+<DIcon icon="CircleAlert" ariaLabel="Payment overdue" />
+  `}
+  language="html"
+/>
+
+`ariaHidden` is an explicit escape hatch. It is not symmetric with `ariaLabel`:
+`ariaHidden` wins over a name, because hiding is absolute, while
+`ariaHidden={false}` next to an `ariaLabel` is not a conflict — both expose the
+icon, so the name is kept.
+
+Avoid `ariaHidden={false}` on its own: it exposes an unnamed graphic to assistive
+technology, which is the one state worse than hiding the icon. Non-production
+builds warn when you do.
+
+It reaches the icon itself, not just the wrapper, so a library icon that hides
+its own `<svg>` follows suit. The exception is a registry component that
+hardcodes `aria-hidden` instead of spreading the props it is given: nothing here
+can reach inside it, so it stays hidden.
+
+Note that `DIcon` names *itself*. An icon-only control still needs its own name
+on the control, since a hidden icon leaves it nothing to fall back on.
+`DButtonIcon` takes the native `aria-label`, and on its button branch
+`aria-labelledby` or `title` work too; with none of them the button ends up
+unnamed, whatever the icon is.
+
 ## Example Usage
 
 #### Bootstrap Icons

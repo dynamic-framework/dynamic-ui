@@ -283,4 +283,264 @@ describe('<DIconBase />', () => {
       consoleWarnSpy.mockRestore();
     });
   });
+
+  describe('accessibility', () => {
+    function CustomIcon() {
+      return <svg data-testid="custom-svg" />;
+    }
+
+    it('hides a Lucide icon from the accessibility tree by default', () => {
+      render(
+        <DIconBase icon="Heart" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the material-style icon, whose name would otherwise be read out loud', () => {
+      render(
+        <DIconBase
+          icon="home"
+          materialStyle
+          familyClass="material-symbols-outlined"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      // The ligature name stays as text content — aria-hidden is what keeps it
+      // out of the accessibility tree.
+      expect(icon).toHaveTextContent('home');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides a custom SVG component icon by default', () => {
+      render(
+        // eslint-disable-next-line react/jsx-no-bind
+        <DIconBase icon={CustomIcon} dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the icon-font fallback by default', () => {
+      render(
+        <DIconBase
+          icon="custom-icon"
+          familyClass="custom-family"
+          familyPrefix="ci-"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('hides the unresolved "?" fallback by default', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase icon="NonExistentIcon" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).toHaveTextContent('?');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('exposes a named img when ariaLabel is provided', () => {
+      render(
+        <DIconBase icon="Heart" ariaLabel="Favorito" dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).not.toHaveAttribute('aria-hidden');
+      expect(icon).toHaveAttribute('role', 'img');
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBe(icon);
+    });
+
+    it('names the material-style icon with ariaLabel instead of its ligature', () => {
+      render(
+        <DIconBase
+          icon="home"
+          materialStyle
+          familyClass="material-symbols-outlined"
+          ariaLabel="Inicio"
+        />,
+      );
+
+      expect(screen.getByRole('img', { name: 'Inicio' })).toBeInTheDocument();
+    });
+
+    it('lets an explicit ariaHidden={false} expose the icon, and warns about the missing name', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase icon="Heart" ariaHidden={false} dataAttributes={{ 'data-testid': 'icon' }} />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).not.toHaveAttribute('aria-hidden');
+      expect(icon).not.toHaveAttribute('role');
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('exposes an unnamed graphic'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('keeps the icon hidden when ariaHidden wins over ariaLabel, and warns', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden
+          ariaLabel="Favorito"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      const icon = screen.getByTestId('icon');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('aria-label');
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('is ignored because ariaHidden is true'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('keeps the name when ariaHidden={false} and ariaLabel agree, without warning', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          ariaLabel="Favorito"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      // Both props ask for the icon to be exposed, so this is not a conflict.
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBe(screen.getByTestId('icon'));
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('un-hides the lucide svg when the icon is exposed without a name', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      const { container } = render(
+        <DIconBase icon="Heart" ariaHidden={false} />,
+      );
+
+      // lucide-react hides its own svg unless it receives an a11y prop, which
+      // would defeat the escape hatch.
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'false');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('leaves the lucide svg hidden under role="img", where the wrapper is the leaf', () => {
+      const { container } = render(
+        <DIconBase icon="Heart" ariaLabel="Favorito" />,
+      );
+
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBeInTheDocument();
+    });
+
+    it('still lets dataAttributes override the computed aria attributes', () => {
+      const { container } = render(
+        <DIconBase
+          icon="Heart"
+          dataAttributes={{
+            'data-testid': 'icon',
+            ...{ 'aria-hidden': 'false' },
+          } as never}
+        />,
+      );
+
+      expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'false');
+      // The legacy escape hatch decides the effective state, so the lucide svg
+      // has to follow the wrapper rather than keep its own default.
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'false');
+    });
+
+    it('forwards the exposed state to a registry component that spreads its props', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      function SpreadingIcon(props: React.SVGProps<SVGSVGElement>) {
+        return <svg data-testid="spreading-svg" {...props} />;
+      }
+
+      render(
+        <DContextProvider iconRegistry={{ Spreading: SpreadingIcon }}>
+          <DIconBase icon="Spreading" ariaHidden={false} />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('spreading-svg')).toHaveAttribute('aria-hidden', 'false');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('cannot reach inside a registry component that hardcodes its own aria-hidden', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      function HardcodedIcon() {
+        return <svg data-testid="hardcoded-svg" aria-hidden="true" />;
+      }
+
+      render(
+        <DContextProvider iconRegistry={{ Hardcoded: HardcodedIcon }}>
+          <DIconBase icon="Hardcoded" ariaHidden={false} dataAttributes={{ 'data-testid': 'icon' }} />
+        </DContextProvider>,
+      );
+
+      // The wrapper obeys the escape hatch; the child keeps its own attribute.
+      expect(screen.getByTestId('icon')).not.toHaveAttribute('aria-hidden');
+      expect(screen.getByTestId('hardcoded-svg')).toHaveAttribute('aria-hidden', 'true');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('does not warn about exposing the icon when dataAttributes hide it after all', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          dataAttributes={{ ...{ 'aria-hidden': 'true' } } as never}
+        />,
+      );
+
+      // The legacy override wins, so the icon is not exposed and there is
+      // nothing to warn about.
+      expect(consoleWarnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining('exposes an unnamed graphic'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('keeps the lucide svg hidden when dataAttributes force the wrapper hidden', () => {
+      const { container } = render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          ariaLabel="Favorito"
+          dataAttributes={{ ...{ 'aria-hidden': 'true' } } as never}
+        />,
+      );
+
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
 });

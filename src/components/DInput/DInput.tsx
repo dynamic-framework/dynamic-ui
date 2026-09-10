@@ -239,7 +239,6 @@ function DInput(
             <div
               className="input-group-text"
               id={`${id}Start`}
-              aria-hidden="true"
               tabIndex={-1}
             >
               <DIcon
@@ -274,7 +273,6 @@ function DInput(
             <div
               className="input-group-text"
               id={`${id}End`}
-              aria-hidden="true"
               tabIndex={-1}
             >
               <DIcon

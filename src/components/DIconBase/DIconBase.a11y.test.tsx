@@ -40,4 +40,37 @@ describe('<DIconBase /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it('should have no violations for an icon named with ariaLabel', async () => {
+    const { container } = render(
+      <DIconBase icon="Home" ariaLabel="Inicio" />,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should keep a decorative icon out of the accessibility tree', async () => {
+    const { container } = render(
+      <DIconBase icon="Home" />,
+    );
+
+    expect(container.querySelector('.d-icon')).toHaveAttribute('aria-hidden', 'true');
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should keep the material-style ligature out of the accessibility tree', async () => {
+    const { container } = render(
+      <DIconBase icon="home" materialStyle familyClass="material-symbols-outlined" familyPrefix="" />,
+    );
+
+    const icon = container.querySelector('.d-icon');
+    expect(icon).toHaveTextContent('home');
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });
