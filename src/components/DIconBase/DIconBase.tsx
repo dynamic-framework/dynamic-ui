@@ -57,6 +57,10 @@ type Props =
      * `ariaHidden={false}` alongside an `ariaLabel` is not a conflict, as both
      * expose the icon and the name is kept. Setting `ariaHidden={false}` on its
      * own exposes an unnamed graphic and warns outside production builds.
+     *
+     * It is forwarded to the icon so a hidden `<svg>` follows the wrapper, but a
+     * registry component that hardcodes its own `aria-hidden` rather than
+     * spreading the props it receives stays hidden regardless.
      */
     ariaHidden?: boolean;
     /**
@@ -185,10 +189,14 @@ export default function DIconBase(
   );
 
   /**
-   * lucide-react hides its own `<svg>` unless it receives an a11y prop, which
-   * would keep the graphic out of the tree even when this wrapper is not hidden.
-   * Only matters when the icon is exposed without a name: under `role="img"` the
-   * wrapper is a leaf, so a hidden child changes nothing.
+   * lucide-react hides its own `<svg>` unless it receives an a11y prop, and a
+   * registry component may do the same, which would keep the graphic out of the
+   * tree even when this wrapper is not hidden. Only matters when the icon is
+   * exposed without a name: under `role="img"` the wrapper is a leaf, so a
+   * hidden child changes nothing.
+   *
+   * A registry component that hardcodes `aria-hidden` on its own `<svg>` instead
+   * of spreading props still wins — nothing here can reach inside it.
    */
   const isExposedWithoutName = useMemo(() => {
     const attributes = domAttributes as Record<string, unknown>;
@@ -229,6 +237,7 @@ export default function DIconBase(
           width: resolvedSize || 24,
           height: resolvedSize || 24,
           strokeWidth,
+          ...isExposedWithoutName && { 'aria-hidden': false },
         })}
       </span>
     );

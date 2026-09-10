@@ -143,7 +143,7 @@ export const Basic: Story = {
           <DBox className="d-flex align-items-center">
             <DIcon icon="FileText" size="1rem" className="me-2 text-muted" />
             <span>Doc-name.pdf</span>
-            <DButtonIcon variant="link" icon="Download" size="sm" className="ms-auto" />
+            <DButtonIcon variant="link" icon="Download" size="sm" className="ms-auto" aria-label="Download Doc-name.pdf" />
           </DBox>
         </div>
       </div>

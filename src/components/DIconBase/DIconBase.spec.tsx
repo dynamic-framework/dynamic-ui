@@ -472,6 +472,44 @@ describe('<DIconBase />', () => {
       expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'false');
     });
 
+    it('forwards the exposed state to a registry component that spreads its props', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      function SpreadingIcon(props: React.SVGProps<SVGSVGElement>) {
+        return <svg data-testid="spreading-svg" {...props} />;
+      }
+
+      render(
+        <DContextProvider iconRegistry={{ Spreading: SpreadingIcon }}>
+          <DIconBase icon="Spreading" ariaHidden={false} />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByTestId('spreading-svg')).toHaveAttribute('aria-hidden', 'false');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('cannot reach inside a registry component that hardcodes its own aria-hidden', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      function HardcodedIcon() {
+        return <svg data-testid="hardcoded-svg" aria-hidden="true" />;
+      }
+
+      render(
+        <DContextProvider iconRegistry={{ Hardcoded: HardcodedIcon }}>
+          <DIconBase icon="Hardcoded" ariaHidden={false} dataAttributes={{ 'data-testid': 'icon' }} />
+        </DContextProvider>,
+      );
+
+      // The wrapper obeys the escape hatch; the child keeps its own attribute.
+      expect(screen.getByTestId('icon')).not.toHaveAttribute('aria-hidden');
+      expect(screen.getByTestId('hardcoded-svg')).toHaveAttribute('aria-hidden', 'true');
+
+      consoleWarnSpy.mockRestore();
+    });
+
     it('keeps the lucide svg hidden when dataAttributes force the wrapper hidden', () => {
       const { container } = render(
         <DIconBase

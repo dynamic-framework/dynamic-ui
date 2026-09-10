@@ -182,9 +182,16 @@ Avoid `ariaHidden={false}` on its own: it exposes an unnamed graphic to assistiv
 technology, which is the one state worse than hiding the icon. Non-production
 builds warn when you do.
 
+It reaches the icon itself, not just the wrapper, so a library icon that hides
+its own `<svg>` follows suit. The exception is a registry component that
+hardcodes `aria-hidden` instead of spreading the props it is given: nothing here
+can reach inside it, so it stays hidden.
+
 Note that `DIcon` names *itself*. An icon-only control still needs its own name
-on the control — `DButtonIcon` takes the native `aria-label`, and without it the
-button has no accessible name no matter how the icon is configured.
+on the control, since a hidden icon leaves it nothing to fall back on.
+`DButtonIcon` takes the native `aria-label`, and on its button branch
+`aria-labelledby` or `title` work too; with none of them the button ends up
+unnamed, whatever the icon is.
 
 ## Example Usage
 
