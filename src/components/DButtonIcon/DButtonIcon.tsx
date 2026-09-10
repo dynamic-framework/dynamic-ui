@@ -118,7 +118,7 @@ export default function DButtonIcon(
   );
 
   if (process.env.NODE_ENV !== 'production' && !hasAccessibleName) {
-    warnMissingAccessibleName(icon);
+    warnMissingAccessibleName(icon, href ? 'link' : 'button');
   }
 
   if (href) {

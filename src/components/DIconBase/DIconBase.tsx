@@ -157,22 +157,11 @@ export default function DIconBase(
    * and `ariaLabel` agree — both expose the icon — and the name is honoured.
    */
   const accessibilityProps = useMemo<IconAccessibilityProps>(() => {
-    if (process.env.NODE_ENV !== 'production') {
-      if (ariaHidden === true && ariaLabel) {
-        // eslint-disable-next-line no-console
-        console.warn(`DIcon: ariaLabel "${ariaLabel}" is ignored because ariaHidden is true. Drop ariaHidden to expose the name.`);
-      }
-      if (ariaHidden === false && !ariaLabel) {
-        // eslint-disable-next-line no-console
-        console.warn('DIcon: ariaHidden={false} without an ariaLabel exposes an unnamed graphic to assistive technology. Pass ariaLabel to name it.');
-      }
-    }
-
     // Hiding is absolute: it wins over a name.
     if (ariaHidden === true) return { 'aria-hidden': true };
     // A name exposes the icon, which is also what `ariaHidden={false}` asks for.
     if (ariaLabel) return { role: 'img', 'aria-label': ariaLabel };
-    // Exposed with no name: an explicit opt-out of the default, warned about above.
+    // Exposed with no name: an explicit opt-out of the default, warned about below.
     if (ariaHidden === false) return {};
 
     return { 'aria-hidden': true };
@@ -204,6 +193,24 @@ export default function DIconBase(
 
     return hidden !== true && hidden !== 'true' && !attributes.role;
   }, [domAttributes]);
+
+  /**
+   * Diagnostics read the effective state, so a `dataAttributes` override that
+   * hides the icon after all is not reported as exposing it. Memoised like the
+   * values above, so re-rendering with the same props does not repeat them.
+   */
+  useMemo(() => {
+    if (process.env.NODE_ENV === 'production') return;
+
+    if (ariaHidden === true && ariaLabel) {
+      // eslint-disable-next-line no-console
+      console.warn(`DIcon: ariaLabel "${ariaLabel}" is ignored because ariaHidden is true. Drop ariaHidden to expose the name.`);
+    }
+    if (ariaHidden === false && isExposedWithoutName) {
+      // eslint-disable-next-line no-console
+      console.warn('DIcon: ariaHidden={false} without an ariaLabel exposes an unnamed graphic to assistive technology. Pass ariaLabel to name it.');
+    }
+  }, [ariaHidden, ariaLabel, isExposedWithoutName]);
 
   const iconSize = useMemo(() => {
     if (resolvedSize) {

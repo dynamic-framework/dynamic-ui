@@ -510,6 +510,26 @@ describe('<DIconBase />', () => {
       consoleWarnSpy.mockRestore();
     });
 
+    it('does not warn about exposing the icon when dataAttributes hide it after all', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          dataAttributes={{ ...{ 'aria-hidden': 'true' } } as never}
+        />,
+      );
+
+      // The legacy override wins, so the icon is not exposed and there is
+      // nothing to warn about.
+      expect(consoleWarnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining('exposes an unnamed graphic'),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
     it('keeps the lucide svg hidden when dataAttributes force the wrapper hidden', () => {
       const { container } = render(
         <DIconBase

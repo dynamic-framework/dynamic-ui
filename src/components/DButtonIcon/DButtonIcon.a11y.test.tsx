@@ -49,6 +49,7 @@ describe('<DButtonIcon /> a11y', () => {
       .filter(([message]) => String(message).includes('has no accessible name'));
     expect(nameWarnings).toHaveLength(1);
     expect(String(nameWarnings[0][0])).toContain('WarnOnceIcon');
+    expect(String(nameWarnings[0][0])).toContain('button has no accessible name');
 
     consoleWarnSpy.mockRestore();
   });
@@ -82,8 +83,9 @@ describe('<DButtonIcon /> a11y', () => {
 
     // `rest` is not spread onto the anchor, so the name never reaches the DOM.
     expect(screen.getByRole('link')).not.toHaveAttribute('aria-labelledby');
+    // The message has to name the element it actually rendered.
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining('has no accessible name'),
+      expect.stringContaining('link has no accessible name'),
     );
 
     consoleWarnSpy.mockRestore();
