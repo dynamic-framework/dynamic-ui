@@ -17,7 +17,11 @@ import {
   ConfirmModalStoreContext,
 } from '../components/DConfirmModal/confirmModalStore';
 
-import { PREFIX_BS } from '../components/config';
+import {
+  DEFAULT_ICON_FAMILY_CLASS,
+  DEFAULT_ICON_FAMILY_PREFIX,
+  PREFIX_BS,
+} from '../components/config';
 import type { AlertThemeIconMap, IconComponent } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
@@ -130,8 +134,8 @@ const DEFAULT_STATE = {
     decimal: '.',
   },
   icon: {
-    familyClass: 'bi',
-    familyPrefix: 'bi-',
+    familyClass: DEFAULT_ICON_FAMILY_CLASS,
+    familyPrefix: DEFAULT_ICON_FAMILY_PREFIX,
     materialStyle: false,
   },
   iconRegistry: undefined,

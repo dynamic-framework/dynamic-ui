@@ -423,6 +423,7 @@ export const IconMaterialSyntax: Story = {
     type: 'button',
     loading: false,
     icon: 'arrow_back',
+    'aria-label': 'Go back',
   },
   parameters: {
     docs: {

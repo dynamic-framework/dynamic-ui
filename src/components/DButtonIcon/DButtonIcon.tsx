@@ -16,6 +16,7 @@ import type {
   InputState,
 } from '../interface';
 import { useDContext } from '../../contexts';
+import warnMissingAccessibleName from './warnMissingAccessibleName';
 
 type Props =
   BaseProps &
@@ -105,6 +106,20 @@ export default function DButtonIcon(
         : ariaLabelProp),
     [loading, loadingAriaLabel, ariaLabelProp],
   );
+
+  /**
+   * `aria-labelledby` and `title` also name a control, but they travel in `rest`,
+   * which only the button branch spreads — an anchor drops them, so there the
+   * button really is unnamed and the warning still applies.
+   */
+  const hasAccessibleName = useMemo(
+    () => !!ariaLabel || (!href && (!!rest['aria-labelledby'] || !!rest.title)),
+    [ariaLabel, href, rest],
+  );
+
+  if (process.env.NODE_ENV !== 'production' && !hasAccessibleName) {
+    warnMissingAccessibleName(icon, href ? 'link' : 'button');
+  }
 
   if (href) {
     return (
