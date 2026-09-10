@@ -107,7 +107,17 @@ export default function DButtonIcon(
     [loading, loadingAriaLabel, ariaLabelProp],
   );
 
-  if (process.env.NODE_ENV !== 'production' && !ariaLabel) {
+  /**
+   * `aria-labelledby` and `title` also name a control, but they travel in `rest`,
+   * which only the button branch spreads — an anchor drops them, so there the
+   * button really is unnamed and the warning still applies.
+   */
+  const hasAccessibleName = useMemo(
+    () => !!ariaLabel || (!href && (!!rest['aria-labelledby'] || !!rest.title)),
+    [ariaLabel, href, rest],
+  );
+
+  if (process.env.NODE_ENV !== 'production' && !hasAccessibleName) {
     warnMissingAccessibleName(icon);
   }
 

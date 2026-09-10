@@ -53,6 +53,42 @@ describe('<DButtonIcon /> a11y', () => {
     consoleWarnSpy.mockRestore();
   });
 
+  it('does not warn when named by aria-labelledby or title, which reach the button', () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    render(
+      <>
+        <span id="labelledbyTarget">Go back</span>
+        <DButtonIcon icon="LabelledByIcon" aria-labelledby="labelledbyTarget" />
+        <DButtonIcon icon="TitleIcon" title="Go back" />
+      </>,
+    );
+
+    // Both naming routes resolve, so both buttons carry the same name.
+    expect(screen.getAllByRole('button', { name: 'Go back' })).toHaveLength(2);
+    expect(consoleWarnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('has no accessible name'),
+    );
+
+    consoleWarnSpy.mockRestore();
+  });
+
+  it('still warns for an anchor named by aria-labelledby, which the href branch drops', () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    render(
+      <DButtonIcon icon="AnchorLabelledByIcon" href="#go" aria-labelledby="missingTarget" />,
+    );
+
+    // `rest` is not spread onto the anchor, so the name never reaches the DOM.
+    expect(screen.getByRole('link')).not.toHaveAttribute('aria-labelledby');
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('has no accessible name'),
+    );
+
+    consoleWarnSpy.mockRestore();
+  });
+
   it('does not warn when the button is named', () => {
     const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
