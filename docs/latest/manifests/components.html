@@ -588,7 +588,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">69/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">10/496 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">10/496 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -5301,7 +5301,7 @@ text?: string</code></pre>
         &lt;DBox className=&quot;d-flex align-items-center&quot;&gt;
           &lt;DIcon icon=&quot;FileText&quot; size=&quot;1rem&quot; className=&quot;me-2 text-muted&quot; /&gt;
           &lt;span&gt;Doc-name.pdf&lt;/span&gt;
-          &lt;DButtonIcon variant=&quot;link&quot; icon=&quot;Download&quot; size=&quot;sm&quot; className=&quot;ms-auto&quot; /&gt;
+          &lt;DButtonIcon variant=&quot;link&quot; icon=&quot;Download&quot; size=&quot;sm&quot; className=&quot;ms-auto&quot; aria-label=&quot;Download Doc-name.pdf&quot; /&gt;
         &lt;/DBox&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -7467,7 +7467,8 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
         size={undefined}
         type=&quot;button&quot;
         loading={false}
-        icon=&quot;arrow_back&quot; /&gt;
+        icon=&quot;arrow_back&quot;
+        aria-label=&quot;Go back&quot; /&gt;
 &lt;/DContextProvider&gt;;</code></pre>
             </div>
         </div>
@@ -9242,8 +9243,8 @@ style?: CSSProperties</code></pre>
 }
 
 icon?: any = {
-  familyClass: &#39;bi&#39;,
-  familyPrefix: &#39;bi-&#39;,
+  familyClass: DEFAULT_ICON_FAMILY_CLASS,
+  familyPrefix: DEFAULT_ICON_FAMILY_PREFIX,
   materialStyle: false,
 }
 
@@ -11523,7 +11524,7 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
 <article
   class="card 
   no-error 
-  has-info 
+  no-info 
   no-story-error
   no-doc-error"
   role="listitem"
@@ -11532,8 +11533,8 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DIcon</h2>
       <div class="badges">
-        <label for="c-35-design-system-components-icon-props" class="badge ok as-toggle">12 prop types</label>
-        <label for="c-35-design-system-components-icon-info" class="badge info as-toggle">1 info</label>
+        <label for="c-35-design-system-components-icon-props" class="badge ok as-toggle">14 prop types</label>
+        
         <label for="c-35-design-system-components-icon-stories" class="badge ok as-toggle">14 stories</label>
         
         
@@ -11541,13 +11542,13 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
     </div>
     <div class="meta" title="./stories/components/DIcon.stories.tsx">design-system-components-icon · ./stories/components/DIcon.stories.tsx</div>
     
-    
+    <div class="hint">Thin wrapper over `DIconBase` that fills the icon-font configuration (`familyClass`, `familyPrefix`, `materialStyle`) from `DContextProvider` whenever the caller does not pass it explicitly. Name resolution itself — registry, then lucide-react, then the icon-font family — lives in `DIconBase`, so both components behave identically.</div>
     
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-35-design-system-components-icon-info" class="tg tg-info" type="checkbox" hidden />
+  
   <input id="c-35-design-system-components-icon-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
@@ -11556,23 +11557,39 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
   <div class="panels">
     
     
-        <div class="panel panel-info">
-          
-    <div class="note info">
-      <div class="note-title">Info</div>
-      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
-    </div>
-        </div>
     
         <div class="panel panel-props">
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">12 prop types</span>
+              <span class="badge ok">14 prop types</span>
             </div>
             <pre><code>Component: src/components/DIcon/DIcon.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Hides the icon from the accessibility tree. Defaults to `true`, because
+ * an icon is almost always decorative: it sits next to a visible label, or
+ * inside a control that already carries its own accessible name.
+ * 
+ * Pass `ariaLabel` instead when the icon itself is the only carrier of
+ * meaning. `ariaHidden` wins over `ariaLabel`, since hiding is absolute;
+ * `ariaHidden={false}` alongside an `ariaLabel` is not a conflict, as both
+ * expose the icon and the name is kept. Setting `ariaHidden={false}` on its
+ * own exposes an unnamed graphic and warns outside production builds.
+ * 
+ * It is forwarded to the icon so a hidden `&lt;svg&gt;` follows the wrapper, but a
+ * registry component that hardcodes its own `aria-hidden` rather than
+ * spreading the props it receives stays hidden regardless.
+ */
+ariaHidden?: boolean
+
+/**
+ * Accessible name for an icon that carries meaning on its own. Renders
+ * `role=&quot;img&quot;` alongside it and drops the default `aria-hidden`.
+ */
+ariaLabel?: string
+
+className?: string
 
 color?: string
 
@@ -27359,6 +27376,55 @@ The following examples show the output of the `DIcon` component with and without
   &lt;ExampleMaterialIcons /&gt;
 &lt;/Unstyled&gt;
 
+
+## Accessibility
+
+Icons are **decorative by default**: every render path emits `aria-hidden=&quot;true&quot;`,
+so an icon never adds noise to the accessibility tree. This matters most for the
+legacy icon-font paths, where the ligature name is the element&#39;s text content and
+a screen reader would otherwise read it out loud — `&lt;i class=&quot;d-icon material-symbols-outlined&quot;&gt;home&lt;/i&gt;`
+announcing &quot;home&quot; next to your own label.
+
+You do not need to wrap `DIcon` in a hidden container. Inside a control that
+already carries its own accessible name — a `DButton` with a visible label, a
+`DButtonIcon` with its native `aria-label` — this is all you need:
+
+&lt;Source
+  code={`
+&lt;DButtonIcon icon=&quot;Trash2&quot; aria-label=&quot;Delete item&quot; /&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
+
+For the rare icon that is the only carrier of meaning, give it a name with
+`ariaLabel`. That renders `role=&quot;img&quot;` and drops the default `aria-hidden`:
+
+&lt;Source
+  code={`
+&lt;DIcon icon=&quot;CircleAlert&quot; ariaLabel=&quot;Payment overdue&quot; /&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
+
+`ariaHidden` is an explicit escape hatch. It is not symmetric with `ariaLabel`:
+`ariaHidden` wins over a name, because hiding is absolute, while
+`ariaHidden={false}` next to an `ariaLabel` is not a conflict — both expose the
+icon, so the name is kept.
+
+Avoid `ariaHidden={false}` on its own: it exposes an unnamed graphic to assistive
+technology, which is the one state worse than hiding the icon. Non-production
+builds warn when you do.
+
+It reaches the icon itself, not just the wrapper, so a library icon that hides
+its own `&lt;svg&gt;` follows suit. The exception is a registry component that
+hardcodes `aria-hidden` instead of spreading the props it is given: nothing here
+can reach inside it, so it stays hidden.
+
+Note that `DIcon` names *itself*. An icon-only control still needs its own name
+on the control, since a hidden icon leaves it nothing to fall back on.
+`DButtonIcon` takes the native `aria-label`, and on its button branch
+`aria-labelledby` or `title` work too; with none of them the button ends up
+unnamed, whatever the icon is.
 
 ## Example Usage
 

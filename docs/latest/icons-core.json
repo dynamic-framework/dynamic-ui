@@ -1,0 +1,33 @@
+{
+  "dynamicUi": "2.10.0",
+  "lucideReact": "^0.553.0",
+  "icons": [
+    "AlertCircle",
+    "AlertTriangle",
+    "Calendar",
+    "Check",
+    "CheckCircle",
+    "ChevronDown",
+    "ChevronLeft",
+    "ChevronRight",
+    "ChevronUp",
+    "Eye",
+    "EyeOff",
+    "Info",
+    "Minus",
+    "Plus",
+    "Search",
+    "Upload",
+    "X",
+    "Circle",
+    "CircleCheck",
+    "CircleCheckBig",
+    "Download",
+    "FileText",
+    "MoreVertical",
+    "Paperclip",
+    "RefreshCw",
+    "Share2",
+    "Trash"
+  ]
+}

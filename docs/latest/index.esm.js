@@ -25,6 +25,16 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const PREFIX_BS = 'bs-';
+/**
+ * Default icon-font family configured by `DContextProvider`.
+ *
+ * `DIconBase` compares the family it receives against these values to tell an
+ * unconfigured consumer apart from one that deliberately opted into an icon
+ * font (Material Symbols, Bootstrap Icons). Only the former gets the
+ * development warning for an unresolved icon name.
+ */
+const DEFAULT_ICON_FAMILY_CLASS = 'bi';
+const DEFAULT_ICON_FAMILY_PREFIX = 'bi-';
 
 /* eslint-disable no-lonely-if */
 function useDisableBodyScrollEffect(disable) {
@@ -306,8 +316,8 @@ const DEFAULT_STATE = {
         decimal: '.',
     },
     icon: {
-        familyClass: 'bi',
-        familyPrefix: 'bi-',
+        familyClass: DEFAULT_ICON_FAMILY_CLASS,
+        familyPrefix: DEFAULT_ICON_FAMILY_PREFIX,
         materialStyle: false,
     },
     iconRegistry: undefined,
@@ -412,6 +422,79 @@ function useDContext() {
     return useContext(DContext);
 }
 
+/**
+ * Resolves a string icon name against the registry supplied through
+ * `DContextProvider`'s `iconRegistry` prop.
+ *
+ * This is the single implementation shared by `DIcon` and `DIconBase`, so both
+ * public entry points — and every Dynamic UI component that renders an icon
+ * through them — resolve names identically.
+ *
+ * A non-string `icon` is returned untouched: a component passed directly needs
+ * no lookup. A name missing from the registry is also returned untouched, so
+ * the caller can fall through to lucide-react and then to the icon-font family.
+ */
+function resolveIconFromRegistry(icon, iconRegistry) {
+    if (typeof icon !== 'string')
+        return icon;
+    return (iconRegistry === null || iconRegistry === void 0 ? void 0 : iconRegistry[icon]) || icon;
+}
+
+/**
+ * Names already reported, so a name repeated across renders or across many
+ * instances only warns once per page load.
+ */
+const warnedIconNames = new Set();
+/**
+ * True when the icon-font family is the one `DContextProvider` defaults to.
+ *
+ * The warning is limited to that case so a consumer who configured a different
+ * font — Material Symbols, for instance — is not told about names that font
+ * resolves perfectly well.
+ *
+ * It cannot tell "never configured a font" apart from "configured exactly the
+ * defaults", and those defaults are also the standard Bootstrap Icons setup, so
+ * a consumer who deliberately uses Bootstrap Icons is warned too. The message
+ * says so; silencing that case would need a new context flag, which is beyond
+ * what this helper should decide.
+ */
+function isDefaultIconFamily(familyClass, familyPrefix) {
+    return familyClass === DEFAULT_ICON_FAMILY_CLASS
+        && familyPrefix === DEFAULT_ICON_FAMILY_PREFIX;
+}
+/**
+ * Warns, once per name and only outside production builds, that an icon name
+ * resolved to neither the registry nor lucide-react and is falling back to the
+ * default icon font, which this package no longer ships.
+ *
+ * Whether that fallback renders depends on the host app: if it loads the font
+ * itself the `<i>` shows the glyph, and if it does not, nothing appears. The
+ * message states both possibilities instead of assuming the second.
+ *
+ * The `process.env.NODE_ENV` guard is what bundlers constant-fold, so the whole
+ * call — and this module — drops out of a consumer's production bundle.
+ */
+function warnUnknownIcon(name, familyClass, familyPrefix) {
+    if (!isDefaultIconFamily(familyClass, familyPrefix))
+        return;
+    if (warnedIconNames.has(name))
+        return;
+    warnedIconNames.add(name);
+    const fallbackClass = `${DEFAULT_ICON_FAMILY_CLASS} ${DEFAULT_ICON_FAMILY_PREFIX}${name}`;
+    // eslint-disable-next-line no-console
+    console.warn(`[Dynamic UI] Icon "${name}" is not in the icon registry and is not a `
+        + 'lucide-react export, so it falls back to the default icon font: '
+        + `<i class="${fallbackClass}">. That renders only if your app loads that `
+        + 'font, which this package stopped shipping in v2.0.0. '
+        + 'If the icon is missing, pass a PascalCase lucide-react name such as '
+        + '"Home", or register the component with '
+        + '<DContextProvider iconRegistry={{ MyIcon }}>. '
+        + `If you use the "${DEFAULT_ICON_FAMILY_CLASS}" font on purpose, this is a `
+        + 'false positive: the warning fires whenever the configured family equals '
+        + 'the package default, which is also the standard Bootstrap Icons setup. '
+        + 'It never appears in production builds.');
+}
+
 function subscribeToMediaQuery(query, callback) {
     const mediaQueryList = window.matchMedia(query);
     mediaQueryList.addEventListener('change', callback);
@@ -501,7 +584,31 @@ function useResponsiveProp(useListener = false) {
 function isIconComponent(value) {
     return typeof value !== 'string' && isValidElementType(value);
 }
-function DIconBase({ icon, color, style, className, size, useListenerSize = false, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
+/**
+ * Renders an icon, resolving the `icon` prop in this order:
+ *
+ * 1. **Icon registry** — a string name found in `DContextProvider`'s
+ *    `iconRegistry` renders the component registered under it. A component
+ *    passed directly skips this step and renders as-is.
+ * 2. **lucide-react** — a PascalCase name exported by lucide-react renders that
+ *    icon. When `materialStyle` is on, this step is skipped and the name is
+ *    emitted as the text content of the icon-font element instead.
+ * 3. **Icon-font family** — anything left over renders as
+ *    `<i class="{familyClass} {familyPrefix}{name}">`, the legacy path for
+ *    Material Symbols and Bootstrap Icons. Outside production builds, a name
+ *    that reaches this step while the family is still the package default logs
+ *    a one-time warning.
+ *
+ * A name that resolves nowhere and has no family configured renders `?`.
+ *
+ * Every path is hidden from the accessibility tree by default (`aria-hidden`),
+ * since icons are overwhelmingly decorative. See `ariaHidden` / `ariaLabel` to
+ * override that for an icon that carries meaning on its own.
+ */
+function DIconBase({ icon: iconProp, color, style, className, size, useListenerSize = false, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, ariaHidden, ariaLabel, dataAttributes, }) {
+    const { iconRegistry } = useDContext();
+    // The registry wins over every other source, including Material icons.
+    const icon = resolveIconFromRegistry(iconProp, iconRegistry);
     // If materialStyle is true, use Material Design icons (legacy)
     const isStringIcon = typeof icon === 'string';
     const useMaterialIcons = materialStyle && isStringIcon;
@@ -523,6 +630,61 @@ function DIconBase({ icon, color, style, className, size, useListenerSize = fals
     }, [responsivePropValue, size]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign({}, resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize }), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [resolvedSize, hasCircle, style]);
     const generateClasses = useMemo(() => (Object.assign(Object.assign(Object.assign({ 'd-icon': true }, className && { [className]: true }), { 'd-icon-has-circle': hasCircle }), color && { [`d-icon-color-${color}`]: true })), [className, hasCircle, color]);
+    /**
+     * Decorative by default. `ariaHidden` and `ariaLabel` are not symmetric:
+     * hiding is absolute, so `ariaHidden` wins over a name, but `ariaHidden={false}`
+     * and `ariaLabel` agree — both expose the icon — and the name is honoured.
+     */
+    const accessibilityProps = useMemo(() => {
+        // Hiding is absolute: it wins over a name.
+        if (ariaHidden === true)
+            return { 'aria-hidden': true };
+        // A name exposes the icon, which is also what `ariaHidden={false}` asks for.
+        if (ariaLabel)
+            return { role: 'img', 'aria-label': ariaLabel };
+        // Exposed with no name: an explicit opt-out of the default, warned about below.
+        if (ariaHidden === false)
+            return {};
+        return { 'aria-hidden': true };
+    }, [ariaHidden, ariaLabel]);
+    /**
+     * `dataAttributes` is typed to `data-*`, but casting through it was the only
+     * way to reach the DOM before `ariaHidden` existed, so it still wins over the
+     * computed values — and therefore decides the effective state below.
+     */
+    const domAttributes = useMemo(() => (Object.assign(Object.assign({}, accessibilityProps), dataAttributes)), [accessibilityProps, dataAttributes]);
+    /**
+     * lucide-react hides its own `<svg>` unless it receives an a11y prop, and a
+     * registry component may do the same, which would keep the graphic out of the
+     * tree even when this wrapper is not hidden. Only matters when the icon is
+     * exposed without a name: under `role="img"` the wrapper is a leaf, so a
+     * hidden child changes nothing.
+     *
+     * A registry component that hardcodes `aria-hidden` on its own `<svg>` instead
+     * of spreading props still wins — nothing here can reach inside it.
+     */
+    const isExposedWithoutName = useMemo(() => {
+        const attributes = domAttributes;
+        const hidden = attributes['aria-hidden'];
+        return hidden !== true && hidden !== 'true' && !attributes.role;
+    }, [domAttributes]);
+    /**
+     * Diagnostics read the effective state, so a `dataAttributes` override that
+     * hides the icon after all is not reported as exposing it. Memoised like the
+     * values above, so re-rendering with the same props does not repeat them.
+     */
+    useMemo(() => {
+        if (process.env.NODE_ENV === 'production')
+            return;
+        if (ariaHidden === true && ariaLabel) {
+            // eslint-disable-next-line no-console
+            console.warn(`DIcon: ariaLabel "${ariaLabel}" is ignored because ariaHidden is true. Drop ariaHidden to expose the name.`);
+        }
+        if (ariaHidden === false && isExposedWithoutName) {
+            // eslint-disable-next-line no-console
+            console.warn('DIcon: ariaHidden={false} without an ariaLabel exposes an unnamed graphic to assistive technology. Pass ariaLabel to name it.');
+        }
+    }, [ariaHidden, ariaLabel, isExposedWithoutName]);
     const iconSize = useMemo(() => {
         if (resolvedSize) {
             const numSize = parseInt(resolvedSize, 10);
@@ -532,35 +694,38 @@ function DIconBase({ icon, color, style, className, size, useListenerSize = fals
     }, [resolvedSize]);
     // Render Material Design icon (legacy support)
     if (useMaterialIcons) {
-        return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: isStringIcon ? icon : null })));
+        return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, domAttributes, { children: isStringIcon ? icon : null })));
     }
     if (isIconComponent(icon)) {
-        return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: createElement(icon, {
-                width: resolvedSize || 24,
-                height: resolvedSize || 24,
-                strokeWidth,
-            }) })));
+        return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, domAttributes, { children: createElement(icon, Object.assign({ width: resolvedSize || 24, height: resolvedSize || 24, strokeWidth }, isExposedWithoutName && { 'aria-hidden': false })) })));
     }
     // Render Lucide icon
     if (!LucideIcon) {
-        if (isStringIcon && familyClass && familyPrefix) {
-            return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
+        if (typeof icon === 'string' && familyClass && familyPrefix) {
+            if (process.env.NODE_ENV !== 'production') {
+                warnUnknownIcon(icon, familyClass, familyPrefix);
+            }
+            return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, domAttributes)));
         }
         // eslint-disable-next-line no-console
         console.warn(`Icon "${String(icon)}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
-        return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
+        return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, domAttributes, { children: "?" })));
     }
-    return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: jsx(LucideIcon, { size: iconSize || 24, strokeWidth: strokeWidth }) })));
+    return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, domAttributes, { children: jsx(LucideIcon, Object.assign({ size: iconSize || 24, strokeWidth: strokeWidth }, isExposedWithoutName && { 'aria-hidden': false })) })));
 }
 
+/**
+ * Thin wrapper over `DIconBase` that fills the icon-font configuration
+ * (`familyClass`, `familyPrefix`, `materialStyle`) from `DContextProvider`
+ * whenever the caller does not pass it explicitly.
+ *
+ * Name resolution itself — registry, then lucide-react, then the icon-font
+ * family — lives in `DIconBase`, so both components behave identically.
+ */
 function DIcon(_a) {
     var { icon, familyClass: propFamilyClass, familyPrefix: propFamilyPrefix, materialStyle: propMaterialStyle } = _a, props = __rest(_a, ["icon", "familyClass", "familyPrefix", "materialStyle"]);
-    const { icon: { familyClass, familyPrefix, materialStyle, }, iconRegistry, } = useDContext();
-    const registryIcon = typeof icon === 'string'
-        ? iconRegistry === null || iconRegistry === void 0 ? void 0 : iconRegistry[icon]
-        : undefined;
-    const resolvedIcon = registryIcon || icon;
-    return (jsx(DIconBase, Object.assign({ icon: resolvedIcon, familyClass: propFamilyClass !== null && propFamilyClass !== void 0 ? propFamilyClass : familyClass, familyPrefix: propFamilyPrefix !== null && propFamilyPrefix !== void 0 ? propFamilyPrefix : familyPrefix, materialStyle: propMaterialStyle !== null && propMaterialStyle !== void 0 ? propMaterialStyle : materialStyle }, props)));
+    const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
+    return (jsx(DIconBase, Object.assign({ icon: icon, familyClass: propFamilyClass !== null && propFamilyClass !== void 0 ? propFamilyClass : familyClass, familyPrefix: propFamilyPrefix !== null && propFamilyPrefix !== void 0 ? propFamilyPrefix : familyPrefix, materialStyle: propMaterialStyle !== null && propMaterialStyle !== void 0 ? propMaterialStyle : materialStyle }, props)));
 }
 
 function DAlert({ color = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }) {
@@ -702,7 +867,7 @@ function DInput(_a, ref) {
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
-                }), children: [!!inputStart && (jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (onIconStartClick ? (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel || (typeof iconStart === 'string' ? iconStart : 'start icon'), tabIndex: iconStartTabIndex, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) })) : (jsx("div", { className: "input-group-text", id: `${id}Start`, "aria-hidden": "true", tabIndex: -1, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) }))), dynamicComponent, (iconEnd && !loading) && (onIconEndClick ? (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel || (typeof iconEnd === 'string' ? iconEnd : 'end icon'), tabIndex: iconEndTabIndex, children: jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) })) : (jsx("div", { className: "input-group-text", id: `${id}End`, "aria-hidden": "true", tabIndex: -1, children: jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) }))), loading && (jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", "data-testid": "loading-spinner", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                }), children: [!!inputStart && (jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (onIconStartClick ? (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel || (typeof iconStart === 'string' ? iconStart : 'start icon'), tabIndex: iconStartTabIndex, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) })) : (jsx("div", { className: "input-group-text", id: `${id}Start`, tabIndex: -1, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle }) }))), dynamicComponent, (iconEnd && !loading) && (onIconEndClick ? (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel || (typeof iconEnd === 'string' ? iconEnd : 'end icon'), tabIndex: iconEndTabIndex, children: jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) })) : (jsx("div", { className: "input-group-text", id: `${id}End`, tabIndex: -1, children: jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle }) }))), loading && (jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", "data-testid": "loading-spinner", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 const ForwardedDInput = forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
@@ -1185,6 +1350,44 @@ const DButton = forwardRef((props, ref) => {
 });
 DButton.displayName = 'DButton';
 
+/**
+ * Controls already reported, keyed by kind and icon, so the same unlabelled one
+ * only warns once per page load however often it re-renders or however many
+ * instances exist.
+ */
+const warnedControls = new Set();
+/**
+ * Warns, once per icon and only outside production builds, that an icon-only
+ * button has no accessible name.
+ *
+ * The control has no text to fall back on and its icon is hidden from the
+ * accessibility tree, so the name has to be given explicitly. `aria-label` is
+ * the direct way; on a button `aria-labelledby` and `title` count too, since
+ * `rest` reaches the DOM there, while an anchor drops them — hence `kind`, so
+ * the advice matches what the element can actually receive.
+ *
+ * A legacy icon-font icon used to leak its ligature as the name by accident —
+ * never a good one, being unlocalised and often meaningless ("more_vert") — and
+ * no longer does, so the omission is now visible instead of silent.
+ *
+ * The `process.env.NODE_ENV` guard is what bundlers constant-fold, so the whole
+ * call — and this module — drops out of a consumer's production bundle.
+ */
+function warnMissingAccessibleName(icon, kind) {
+    const key = `${kind}:${icon}`;
+    if (warnedControls.has(key))
+        return;
+    warnedControls.add(key);
+    const alternatives = kind === 'button'
+        ? 'On a button, aria-labelledby or title work too. '
+        : 'A link renders from the href branch, which does not forward aria-labelledby or title, so aria-label is the only option. ';
+    // eslint-disable-next-line no-console
+    console.warn(`[Dynamic UI] DButtonIcon: the "${icon}" ${kind} has no accessible name. `
+        + 'Pass aria-label, since an icon-only control has no text to fall back on '
+        + `and its icon is hidden from the accessibility tree. ${alternatives}`
+        + 'It never appears in production builds.');
+}
+
 function DButtonIcon(_a) {
     var { id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
     const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
@@ -1208,6 +1411,15 @@ function DButtonIcon(_a) {
     const ariaLabel = useMemo(() => (loading
         ? loadingAriaLabel || ariaLabelProp
         : ariaLabelProp), [loading, loadingAriaLabel, ariaLabelProp]);
+    /**
+     * `aria-labelledby` and `title` also name a control, but they travel in `rest`,
+     * which only the button branch spreads — an anchor drops them, so there the
+     * button really is unnamed and the warning still applies.
+     */
+    const hasAccessibleName = useMemo(() => !!ariaLabel || (!href && (!!rest['aria-labelledby'] || !!rest.title)), [ariaLabel, href, rest]);
+    if (process.env.NODE_ENV !== 'production' && !hasAccessibleName) {
+        warnMissingAccessibleName(icon, href ? 'link' : 'button');
+    }
     if (href) {
         return (jsx("a", Object.assign({ id: id, href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": ariaLabel, "aria-disabled": isDisabled }, dataAttributes, { children: loading
                 ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
@@ -2697,7 +2909,7 @@ function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT +
 function DTimeline({ className, style, dataAttributes, items, }) {
     return (jsx("div", Object.assign({ style: style, className: classNames('d-timeline', className) }, dataAttributes, { children: items.map((item, index) => (jsxs("div", { className: classNames('d-timeline-item', {
                 [`d-timeline-item-${item.status}`]: item.status,
-            }), children: [jsx("div", { className: "d-timeline-item-connector" }), jsx("div", { className: "d-timeline-item-icon", children: jsx(DIcon, { icon: item.icon || 'check', size: "1rem" }) }), jsxs("div", { className: "d-timeline-item-content", children: [jsx("div", { className: "d-timeline-item-title", children: item.title }), item.description && jsx("div", { className: "d-timeline-item-description", children: item.description }), item.time && jsx("div", { className: "d-timeline-item-time", children: item.time }), item.children] })] }, index))) })));
+            }), children: [jsx("div", { className: "d-timeline-item-connector" }), jsx("div", { className: "d-timeline-item-icon", children: jsx(DIcon, { icon: item.icon || 'Check', size: "1rem" }) }), jsxs("div", { className: "d-timeline-item-content", children: [jsx("div", { className: "d-timeline-item-title", children: item.title }), item.description && jsx("div", { className: "d-timeline-item-description", children: item.description }), item.time && jsx("div", { className: "d-timeline-item-time", children: item.time }), item.children] })] }, index))) })));
 }
 
 const TabContext = createContext(undefined);
@@ -3742,5 +3954,58 @@ function DConfirmModalContainer({ nodeId }) {
     return createPortal(jsx(AnimatePresence, { children: entries.map((entry) => (jsxs(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' }, children: [jsx("div", { className: "backdrop backdrop-confirm-modal", onClick: entry.onCloseAction, role: "presentation" }), jsx(DConfirmModalUI, { entry: entry })] }, entry.id))) }), portalNode);
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, buildUrl, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, sanitizeHref, subscribeToMediaQuery, useConfirmModal, useCountdown, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useOtp, useProvidedRefOrCreate, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useStackState, useTabContext, validatePhoneNumber };
+/**
+ * The lucide-react icons Dynamic UI renders on its own, without the consumer
+ * asking for them by name.
+ *
+ * Two sources feed this list:
+ *
+ * - The `iconMap` defaults of `DContextProvider` (`src/contexts/DContext.tsx`),
+ *   used by close buttons, chevrons, alert states, input adornments and the
+ *   stepper checkmark.
+ * - Names hard-coded in component JSX or in a prop default, such as
+ *   `DDropdown`'s toggle or `DVoucher`'s action buttons.
+ *
+ * Any bundler-level optimisation that narrows lucide-react down to the icons a
+ * widget actually uses must keep this set, or Dynamic UI components break for
+ * reasons the widget author cannot see in their own source. That is why the
+ * list ships in the package as `dist/icons-core.json` and is exported here.
+ *
+ * `src/icons/coreIcons.spec.ts` scans `src/components/**` and fails when an
+ * internally used icon name is missing from this list or absent from
+ * lucide-react, so the two cannot drift apart.
+ */
+const CORE_LUCIDE_ICONS = [
+    // iconMap defaults — src/contexts/DContext.tsx
+    'AlertCircle',
+    'AlertTriangle',
+    'Calendar',
+    'Check',
+    'CheckCircle',
+    'ChevronDown',
+    'ChevronLeft',
+    'ChevronRight',
+    'ChevronUp',
+    'Eye',
+    'EyeOff',
+    'Info',
+    'Minus',
+    'Plus',
+    'Search',
+    'Upload',
+    'X',
+    // Hard-coded in component JSX or in a prop default
+    'Circle',
+    'CircleCheck',
+    'CircleCheckBig',
+    'Download',
+    'FileText',
+    'MoreVertical',
+    'Paperclip',
+    'RefreshCw',
+    'Share2',
+    'Trash',
+];
+
+export { CORE_LUCIDE_ICONS, DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, buildUrl, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, sanitizeHref, subscribeToMediaQuery, useConfirmModal, useCountdown, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useOtp, useProvidedRefOrCreate, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map
