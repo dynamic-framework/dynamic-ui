@@ -1,0 +1,1 @@
+import{r as c}from"./iframe-B_Y9M-l-.js";import{f as t}from"./formatCurrency-DPyfJ66t.js";import{u as m}from"./DContext-CWByZeTV.js";function i(...a){const{currency:r}=m(),s=c.useCallback((o,u)=>t(o,u||r),[r]),e=(a||[]).map(o=>t(o??0,r));return{format:s,values:e}}export{i as u};
