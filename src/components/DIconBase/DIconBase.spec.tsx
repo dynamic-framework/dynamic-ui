@@ -413,6 +413,48 @@ describe('<DIconBase />', () => {
       consoleWarnSpy.mockRestore();
     });
 
+    it('keeps the name when ariaHidden={false} and ariaLabel agree, without warning', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          ariaLabel="Favorito"
+          dataAttributes={{ 'data-testid': 'icon' }}
+        />,
+      );
+
+      // Both props ask for the icon to be exposed, so this is not a conflict.
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBe(screen.getByTestId('icon'));
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('un-hides the lucide svg when the icon is exposed without a name', () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      const { container } = render(
+        <DIconBase icon="Heart" ariaHidden={false} />,
+      );
+
+      // lucide-react hides its own svg unless it receives an a11y prop, which
+      // would defeat the escape hatch.
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'false');
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('leaves the lucide svg hidden under role="img", where the wrapper is the leaf', () => {
+      const { container } = render(
+        <DIconBase icon="Heart" ariaLabel="Favorito" />,
+      );
+
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+      expect(screen.getByRole('img', { name: 'Favorito' })).toBeInTheDocument();
+    });
+
     it('still lets dataAttributes override the computed aria attributes', () => {
       render(
         <DIconBase

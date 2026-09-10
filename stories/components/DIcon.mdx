@@ -154,7 +154,7 @@ announcing "home" next to your own label.
 
 You do not need to wrap `DIcon` in a hidden container. Inside a control that
 already carries its own accessible name — a `DButton` with a visible label, a
-`DButtonIcon` with `ariaLabel` — this is all you need:
+`DButtonIcon` with its native `aria-label` — this is all you need:
 
 <Source
   code={`
@@ -173,10 +173,18 @@ For the rare icon that is the only carrier of meaning, give it a name with
   language="html"
 />
 
-`ariaHidden` is an explicit escape hatch that always wins over `ariaLabel`.
+`ariaHidden` is an explicit escape hatch. It is not symmetric with `ariaLabel`:
+`ariaHidden` wins over a name, because hiding is absolute, while
+`ariaHidden={false}` next to an `ariaLabel` is not a conflict — both expose the
+icon, so the name is kept.
+
 Avoid `ariaHidden={false}` on its own: it exposes an unnamed graphic to assistive
 technology, which is the one state worse than hiding the icon. Non-production
 builds warn when you do.
+
+Note that `DIcon` names *itself*. An icon-only control still needs its own name
+on the control — `DButtonIcon` takes the native `aria-label`, and without it the
+button has no accessible name no matter how the icon is configured.
 
 ## Example Usage
 

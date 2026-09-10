@@ -53,8 +53,10 @@ type Props =
      * inside a control that already carries its own accessible name.
      *
      * Pass `ariaLabel` instead when the icon itself is the only carrier of
-     * meaning. Setting `ariaHidden={false}` without an `ariaLabel` exposes an
-     * unnamed graphic and warns outside production builds.
+     * meaning. `ariaHidden` wins over `ariaLabel`, since hiding is absolute;
+     * `ariaHidden={false}` alongside an `ariaLabel` is not a conflict, as both
+     * expose the icon and the name is kept. Setting `ariaHidden={false}` on its
+     * own exposes an unnamed graphic and warns outside production builds.
      */
     ariaHidden?: boolean;
     /**
@@ -146,9 +148,9 @@ export default function DIconBase(
   }), [className, hasCircle, color]);
 
   /**
-   * Decorative by default. An explicit `ariaHidden` always wins, so a consumer
-   * can force either state; otherwise an `ariaLabel` promotes the icon to a
-   * named `img`, and with neither the icon stays hidden.
+   * Decorative by default. `ariaHidden` and `ariaLabel` are not symmetric:
+   * hiding is absolute, so `ariaHidden` wins over a name, but `ariaHidden={false}`
+   * and `ariaLabel` agree — both expose the icon — and the name is honoured.
    */
   const accessibilityProps = useMemo<IconAccessibilityProps>(() => {
     if (process.env.NODE_ENV !== 'production') {
@@ -162,12 +164,23 @@ export default function DIconBase(
       }
     }
 
+    // Hiding is absolute: it wins over a name.
     if (ariaHidden === true) return { 'aria-hidden': true };
+    // A name exposes the icon, which is also what `ariaHidden={false}` asks for.
     if (ariaLabel) return { role: 'img', 'aria-label': ariaLabel };
+    // Exposed with no name: an explicit opt-out of the default, warned about above.
     if (ariaHidden === false) return {};
 
     return { 'aria-hidden': true };
   }, [ariaHidden, ariaLabel]);
+
+  /**
+   * lucide-react hides its own `<svg>` unless it receives an a11y prop, which
+   * would keep the graphic out of the tree even when this wrapper is not hidden.
+   * Only matters when the icon is exposed without a name: under `role="img"` the
+   * wrapper is a leaf, so a hidden child changes nothing.
+   */
+  const isExposedWithoutName = !accessibilityProps['aria-hidden'] && !accessibilityProps.role;
 
   const iconSize = useMemo(() => {
     if (resolvedSize) {
@@ -249,6 +262,7 @@ export default function DIconBase(
       <LucideIcon
         size={iconSize || 24}
         strokeWidth={strokeWidth}
+        {...isExposedWithoutName && { 'aria-hidden': false }}
       />
     </span>
   );
