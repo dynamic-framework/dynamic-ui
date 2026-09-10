@@ -456,7 +456,7 @@ describe('<DIconBase />', () => {
     });
 
     it('still lets dataAttributes override the computed aria attributes', () => {
-      render(
+      const { container } = render(
         <DIconBase
           icon="Heart"
           dataAttributes={{
@@ -467,6 +467,22 @@ describe('<DIconBase />', () => {
       );
 
       expect(screen.getByTestId('icon')).toHaveAttribute('aria-hidden', 'false');
+      // The legacy escape hatch decides the effective state, so the lucide svg
+      // has to follow the wrapper rather than keep its own default.
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'false');
+    });
+
+    it('keeps the lucide svg hidden when dataAttributes force the wrapper hidden', () => {
+      const { container } = render(
+        <DIconBase
+          icon="Heart"
+          ariaHidden={false}
+          ariaLabel="Favorito"
+          dataAttributes={{ ...{ 'aria-hidden': 'true' } } as never}
+        />,
+      );
+
+      expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
     });
   });
 });

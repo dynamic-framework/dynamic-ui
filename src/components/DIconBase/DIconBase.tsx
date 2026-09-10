@@ -175,12 +175,27 @@ export default function DIconBase(
   }, [ariaHidden, ariaLabel]);
 
   /**
+   * `dataAttributes` is typed to `data-*`, but casting through it was the only
+   * way to reach the DOM before `ariaHidden` existed, so it still wins over the
+   * computed values — and therefore decides the effective state below.
+   */
+  const domAttributes = useMemo(
+    () => ({ ...accessibilityProps, ...dataAttributes }),
+    [accessibilityProps, dataAttributes],
+  );
+
+  /**
    * lucide-react hides its own `<svg>` unless it receives an a11y prop, which
    * would keep the graphic out of the tree even when this wrapper is not hidden.
    * Only matters when the icon is exposed without a name: under `role="img"` the
    * wrapper is a leaf, so a hidden child changes nothing.
    */
-  const isExposedWithoutName = !accessibilityProps['aria-hidden'] && !accessibilityProps.role;
+  const isExposedWithoutName = useMemo(() => {
+    const attributes = domAttributes as Record<string, unknown>;
+    const hidden = attributes['aria-hidden'];
+
+    return hidden !== true && hidden !== 'true' && !attributes.role;
+  }, [domAttributes]);
 
   const iconSize = useMemo(() => {
     if (resolvedSize) {
@@ -196,8 +211,7 @@ export default function DIconBase(
       <i
         className={classNames(generateClasses, familyClass)}
         style={generateStyleVariables}
-        {...accessibilityProps}
-        {...dataAttributes}
+        {...domAttributes}
       >
         {isStringIcon ? icon : null}
       </i>
@@ -209,8 +223,7 @@ export default function DIconBase(
       <span
         className={classNames(generateClasses)}
         style={generateStyleVariables}
-        {...accessibilityProps}
-        {...dataAttributes}
+        {...domAttributes}
       >
         {createElement(icon, {
           width: resolvedSize || 24,
@@ -232,8 +245,7 @@ export default function DIconBase(
         <i
           className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
           style={generateStyleVariables}
-          {...accessibilityProps}
-          {...dataAttributes}
+          {...domAttributes}
         />
       );
     }
@@ -244,8 +256,7 @@ export default function DIconBase(
       <span
         className={classNames(generateClasses)}
         style={generateStyleVariables}
-        {...accessibilityProps}
-        {...dataAttributes}
+        {...domAttributes}
       >
         ?
       </span>
@@ -256,8 +267,7 @@ export default function DIconBase(
     <span
       className={classNames(generateClasses)}
       style={generateStyleVariables}
-      {...accessibilityProps}
-      {...dataAttributes}
+      {...domAttributes}
     >
       <LucideIcon
         size={iconSize || 24}

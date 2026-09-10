@@ -37,12 +37,28 @@ describe('<DButtonIcon /> a11y', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('warns when the icon-only button has no accessible name', () => {
+  it('warns once per icon when the icon-only button has no accessible name', () => {
     const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
-    render(<DButtonIcon icon="ArrowLeft" />);
+    const { rerender } = render(<DButtonIcon icon="WarnOnceIcon" />);
+    rerender(<DButtonIcon icon="WarnOnceIcon" className="changed" />);
+    render(<DButtonIcon icon="WarnOnceIcon" />);
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
+    // A re-render or a second instance must not flood the console.
+    const nameWarnings = consoleWarnSpy.mock.calls
+      .filter(([message]) => String(message).includes('has no accessible name'));
+    expect(nameWarnings).toHaveLength(1);
+    expect(String(nameWarnings[0][0])).toContain('WarnOnceIcon');
+
+    consoleWarnSpy.mockRestore();
+  });
+
+  it('does not warn when the button is named', () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    render(<DButtonIcon icon="NamedIcon" aria-label="Go back" />);
+
+    expect(consoleWarnSpy).not.toHaveBeenCalledWith(
       expect.stringContaining('has no accessible name'),
     );
 

@@ -16,6 +16,7 @@ import type {
   InputState,
 } from '../interface';
 import { useDContext } from '../../contexts';
+import warnMissingAccessibleName from './warnMissingAccessibleName';
 
 type Props =
   BaseProps &
@@ -107,11 +108,7 @@ export default function DButtonIcon(
   );
 
   if (process.env.NODE_ENV !== 'production' && !ariaLabel) {
-    // The control is icon-only, so `aria-label` is its only possible accessible
-    // name. Icons are hidden from the accessibility tree, and a legacy icon-font
-    // icon that happened to leak its ligature as a name no longer does.
-    // eslint-disable-next-line no-console
-    console.warn(`DButtonIcon: the "${icon}" button has no accessible name. Pass aria-label, since an icon-only control has no text to fall back on.`);
+    warnMissingAccessibleName(icon);
   }
 
   if (href) {
