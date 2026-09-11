@@ -431,6 +431,10 @@ export function resolveColorValue(value, lookup) {
  *   { kind: 'role', step: 500 }      -> --bs-<role>-500-rgb
  *   { kind: 'roleBase', role: 'dark' } -> --bs-dark-rgb
  *   { kind: 'surface' }              -> --bs-body-bg-rgb del contexto
+ *
+ * `noCorregible` marca los pares que ninguna declaración del theme puede
+ * cambiar, porque el color no viaja por una variable. Esos se reportan como
+ * advertencia: un error pediría un arreglo que no existe.
  */
 export const BAKED_PAIRS = [
   {
@@ -476,15 +480,17 @@ export function bakedRolePairs(role) {
   if (solid) {
     pairs.push({
       // El color va escrito en la clase, no en una variable, y en casi todos
-      // los roles además con !important: un theme no puede moverlo. Si el par
-      // no contrasta, el arreglo es cambiar el color del role o no usar la
-      // clase con él. El fondo tampoco es siempre el base: `secondary` se pinta
-      // sobre su paso 50, y `light` y `dark` sobre grises.
+      // los roles además con !important: no hay nada que un theme pueda
+      // declarar para moverlo. Por eso este par se reporta como advertencia y
+      // no como error — ver `noCorregible`. El fondo tampoco es siempre el
+      // base: `secondary` se pinta sobre su paso 50, y `light` y `dark` sobre
+      // grises.
       component: `.text-bg-${role}`,
       why: 'el color va horneado en la clase, fuera de toda variable',
       fg: { fallback: solid.fg, important: role !== 'secondary' },
       bg: { fallback: solid.bg },
       role,
+      noCorregible: true,
     });
     pairs.push({
       component: `.btn-${role}`,

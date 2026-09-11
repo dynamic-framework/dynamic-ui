@@ -224,7 +224,8 @@ correspondería a ningún contexto real.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
-  zona que mueve la superficie los cambia sin tocar ninguno.
+  zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo
+  `.text-bg-<role>`, que es advertencia por no ser corregible desde el theme.
 - `contraste-enlace-zona` — `--bs-link-color-rgb` sobre el fondo de la zona.
   Entre 3:1 y 4.5:1 es aviso, no error: el enlace se distingue del fondo pero su
   texto no llega a AA.
@@ -249,9 +250,15 @@ Dos detalles que importan al leer un informe:
 - Un fondo `transparent` no es un color: lo que se ve detrás es la superficie
   del contexto, y contra eso se mide. Por eso una lista dentro de una zona
   oscura puede fallar sin que el theme haya declarado nada raro.
-- `.text-bg-<role>` lleva el color escrito en la propia clase y con
-  `!important`: ninguna variable lo mueve. Si ese par no contrasta, el arreglo
-  es cambiar el color del role o no usar la clase con él.
+- **`.text-bg-<role>` es la excepción: se reporta como advertencia, no como
+  error.** El color va escrito en la propia clase, y en casi todos los roles con
+  `!important`, así que no hay ninguna variable que un theme pueda declarar para
+  moverlo. Un error pediría un arreglo que no existe; el aviso dice lo que sí se
+  puede hacer — **no corregible desde el theme; evitar la clase** con ese role, o
+  cambiar el color del role hasta que el par contraste. Vale igual en el bloque
+  raíz y dentro de una zona, y no cuenta para el código de salida: un theme que
+  sólo arrastre este caso termina en 0. Los demás pares horneados siguen siendo
+  error, porque todos tienen una variable con la que corregirlos.
 
 Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
 botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el

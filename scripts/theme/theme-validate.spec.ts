@@ -814,6 +814,96 @@ describe('theme-validate — pares horneados', () => {
     expect(validate(arreglado).stderr).not.toContain('.alert-primary');
   });
 
+  it('avisa, sin fallar, del par de .text-bg-<role>, que no es corregible', () => {
+    /*
+     * Bootstrap escribe ese color en la propia clase y con !important, así que
+     * ninguna variable del theme lo mueve. Reportarlo como error pediría un
+     * arreglo que no existe: se avisa, se dice qué hacer, y la salida del
+     * proceso no se tiñe por él.
+     */
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      root: {
+        ...SECTIONED_THEME.root,
+        '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
+      },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          nav: {
+            ...SECTIONED_THEME.zones.oscura.nav,
+            '--bs-nav-pills-link-active-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+
+    expect(result.status).toBe(0);
+    expect(result.stderr).toContain('[contraste-horneado]');
+    expect(result.stderr).toContain('.text-bg-primary');
+    expect(result.stderr).toContain('no corregible desde el theme; evitar la clase');
+    expect(result.stderr).not.toContain('error ');
+  });
+
+  it('los demás pares horneados siguen siendo error', () => {
+    // Misma paleta, pero sin el arreglo del emphasis: la alerta sí se puede
+    // corregir declarando la variable, así que ahí el error se mantiene.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          nav: {
+            ...SECTIONED_THEME.zones.oscura.nav,
+            '--bs-nav-pills-link-active-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('.alert-primary');
+    expect(result.stderr).toContain('Declara --bs-primary-text-emphasis');
+    // Y el de la clase horneada sigue siendo sólo aviso, en la misma corrida.
+    expect(result.stderr).toContain('no corregible desde el theme');
+  });
+
+  it('avisa igual dentro de una zona', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      root: {
+        ...SECTIONED_THEME.root,
+        '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
+      },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          nav: {
+            ...SECTIONED_THEME.zones.oscura.nav,
+            '--bs-nav-pills-link-active-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(0);
+    expect(result.stderr).toContain('.text-bg-primary dentro de [data-bs-theme="oscura"]');
+  });
+
   it('no culpa al theme de un par que ya viene roto en la librería', () => {
     const result = validate(expandCss(SECTIONED_THEME));
     expect(result.stderr).not.toContain('error ');

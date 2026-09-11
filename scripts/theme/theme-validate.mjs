@@ -790,8 +790,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Si el par ya falla con la paleta por defecto y aquí no empeora de forma
       // apreciable, el defecto es de la librería y no del theme. La tolerancia
       // es relativa porque estos pares rotos se mueven unas décimas al cambiar
-      // el color y esa diferencia no es información para nadie.
-      if (baseline !== null && baseline < minContrast && ratio >= baseline * 0.9) {
+      // el color y esa diferencia no es información para nadie. Los pares no
+      // corregibles se saltan esto: su aviso explica mejor qué hacer.
+      if (!pair.noCorregible && baseline !== null && baseline < minContrast
+        && ratio >= baseline * 0.9) {
         warn(
           'contraste-preexistente',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, bajo el `
@@ -803,13 +805,30 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         continue;
       }
 
-      const arreglo = pair.fg.important
-        ? 'Bootstrap fija ese color con !important en la propia clase, así que no hay '
-          + 'variable que lo mueva: o cambia el color del role, o esa clase no se usa con él.'
-        : (pair.fg.variable
-          ? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
-            + 'para que el componente deje de heredar el valor de la librería.'
-          : 'El color va horneado en la clase y no se puede mover desde el theme.');
+      /*
+       * Un par que ninguna declaración del theme puede cambiar no es un error:
+       * sería pedir un arreglo que no existe. Se avisa, se dice por qué, y la
+       * salida del proceso no se tiñe por él.
+       */
+      if (pair.noCorregible) {
+        warn(
+          'contraste-horneado',
+          `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, por debajo del `
+          + `${minContrast}:1 que pide WCAG 2.x AA para texto normal`
+          + (baseline !== null ? ` (con la paleta por defecto este par da ${baseline.toFixed(2)}:1)` : '')
+          + `. Aquí ${pair.why}`
+          + (pair.fg.important ? ', y además con !important' : '')
+          + ': **no corregible desde el theme; evitar la clase** con este role, o cambiar el '
+          + 'color del role hasta que el par contraste.',
+          line,
+        );
+        continue;
+      }
+
+      const arreglo = pair.fg.variable
+        ? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
+          + 'para que el componente deje de heredar el valor de la librería.'
+        : 'El color va horneado en la clase y no se puede mover desde el theme.';
 
       fail(
         'contraste-horneado',
