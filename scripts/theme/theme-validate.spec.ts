@@ -297,7 +297,8 @@ describe('theme-validate rechaza los errores conocidos', () => {
     const css = expandCss({ ...MINIMAL_THEME, roles: { primary: '#ffe066' } });
     const result = validate(css);
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('[contraste]');
+    expect(result.stderr).toContain('[contraste-horneado]');
+    expect(result.stderr).toContain('.btn-primary');
     expect(result.stderr).toContain('--bs-white-rgb');
     expect(result.stderr).toContain('WCAG 2.x AA');
   });
@@ -329,6 +330,17 @@ const SECTIONED_THEME = {
         '--bs-nav-pills-link-active-bg': 'rgb(var(--bs-primary-rgb))',
         '--bs-nav-pills-link-active-color': 'rgb(var(--bs-white-rgb))',
       },
+      // Sin esto la lista se queda con el texto que la librería hornea, que
+      // sobre el fondo de la zona no se lee. Es lo que comprueba el caso
+      // «atrapa una lista que hereda el texto horneado…».
+      components: [{
+        selector: '.list-group',
+        vars: {
+          '--bs-list-group-color': 'rgb(var(--bs-body-color-rgb))',
+          '--bs-list-group-action-color': 'rgb(var(--bs-body-color-rgb))',
+          '--bs-list-group-bg': 'transparent',
+        },
+      }],
     },
   },
 };
@@ -539,6 +551,7 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
       ...SECTIONED_THEME,
       zones: {
         oscura: {
+          ...SECTIONED_THEME.zones.oscura,
           vars: {
             '--bs-body-bg-rgb': '16, 24, 40',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
@@ -627,6 +640,216 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
   });
 });
 
+describe('componentes propios de una zona', () => {
+  it('emite el bloque con el selector de la zona por delante', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          components: [
+            ...SECTIONED_THEME.zones.oscura.components,
+            { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+            { selector: '.form-control, .form-select', declarations: { padding: '1rem' } },
+          ],
+        },
+      },
+    });
+    expect(css).toContain('[data-bs-theme="oscura"] .btn-primary {\n  --bs-btn-color: rgb(var(--bs-dark-rgb));\n}');
+    // Una lista de selectores se prefija entera, no sólo el primero.
+    expect(css).toContain('[data-bs-theme="oscura"] .form-control,\n[data-bs-theme="oscura"] .form-select {');
+  });
+
+  it('los emite después de las variables y del nav de la zona', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          components: [{ selector: '.card', vars: { '--bs-card-bg': 'transparent' } }],
+        },
+      },
+    });
+    expect(css.indexOf('[data-bs-theme="oscura"] {'))
+      .toBeLessThan(css.indexOf('[data-bs-theme="oscura"] .nav {'));
+    expect(css.indexOf('[data-bs-theme="oscura"] .nav {'))
+      .toBeLessThan(css.indexOf('[data-bs-theme="oscura"] .card {'));
+  });
+
+  it('los mide en el contexto de su zona y atrapa un contraste insuficiente', () => {
+    // El texto se resuelve contra --bs-body-color-rgb de la zona, que es
+    // blanco: sobre el turquesa del role no llega a AA.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+          components: [
+            ...SECTIONED_THEME.zones.oscura.components,
+            { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+          ],
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-boton]');
+    expect(result.stderr).toContain('.btn-primary dentro de [data-bs-theme="oscura"]');
+  });
+
+  it('un bloque de zona resuelve el par que el mismo selector deja roto fuera', () => {
+    const base = {
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+        },
+      },
+    };
+    expect(validate(expandCss(base)).status).toBe(1);
+
+    const conArreglo = expandCss({
+      ...base,
+      zones: {
+        oscura: {
+          ...base.zones.oscura,
+          components: [
+            ...SECTIONED_THEME.zones.oscura.components,
+            { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+          ],
+        },
+      },
+    });
+    expect(validate(conArreglo).stderr).not.toContain('[contraste-boton]');
+  });
+});
+
+describe('theme-validate — pares horneados', () => {
+  it('atrapa una lista que hereda el texto horneado dentro de una zona oscura', () => {
+    // `.list-group` fija --bs-list-group-action-color a gray-900 y deja el
+    // fondo transparente. Una zona que oscurece la superficie no toca ninguna
+    // de las dos, así que la lista queda negro sobre negro sin que el theme
+    // declare nada raro.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-horneado]');
+    expect(result.stderr).toContain('.list-group-item-action dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('--bs-list-group-action-color');
+  });
+
+  it('calla cuando la zona declara esas variables en su propio bloque', () => {
+    // SECTIONED_THEME ya trae el arreglo; sin él, el caso anterior falla.
+    const result = validate(expandCss(SECTIONED_THEME));
+    expect(result.stderr).not.toContain('.list-group-item');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide la alerta sobre la variable -text-emphasis, no sobre el paso de la rampa', () => {
+    // Con un primary claro el emphasis derivado no contrasta; declarando la
+    // variable en `root` el par se arregla sin tocar la rampa.
+    const roto = expandCss({ ...SECTIONED_THEME, roles: { primary: '#7fd4d0' } });
+    expect(validate(roto).stderr).toContain('.alert-primary');
+
+    const arreglado = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      root: {
+        ...SECTIONED_THEME.root,
+        '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
+      },
+    });
+    expect(validate(arreglado).stderr).not.toContain('.alert-primary');
+  });
+
+  it('no culpa al theme de un par que ya viene roto en la librería', () => {
+    const result = validate(expandCss(SECTIONED_THEME));
+    expect(result.stderr).not.toContain('error ');
+  });
+
+  it('distingue el botón con contorno en reposo del relleno', () => {
+    // En reposo el texto va sobre la superficie; sólo al rellenarse cae sobre
+    // el color del role, y ahí manda --bs-btn-hover-color. Este theme pone
+    // blanco en reposo sobre fondo oscuro y oscuro al rellenar: los dos pares
+    // contrastan, aunque medir el de reposo contra el role diría lo contrario.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+          components: [
+            ...SECTIONED_THEME.zones.oscura.components,
+            {
+              selector: '.btn-outline-primary',
+              vars: {
+                '--bs-btn-color': 'rgb(var(--bs-white-rgb))',
+                '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+              },
+            },
+          ],
+        },
+      },
+    });
+    expect(validate(css).stderr).not.toContain('[contraste-boton]');
+
+    // Y si el relleno se deja en blanco, sí se reporta, nombrando el estado.
+    const roto = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+          components: [
+            ...SECTIONED_THEME.zones.oscura.components,
+            {
+              selector: '.btn-outline-primary',
+              vars: {
+                '--bs-btn-color': 'rgb(var(--bs-white-rgb))',
+                '--bs-btn-hover-color': 'rgb(var(--bs-white-rgb))',
+              },
+            },
+          ],
+        },
+      },
+    });
+    const result = validate(roto);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('relleno (hover/active)');
+  });
+});
+
 describe('theme-expand — el breakpoint de RFS', () => {
   it('repite los pasos 1..4 en 1200px aunque el tamaño no sea fluido', () => {
     // La librería redeclara --bs-rfs-fs-1..4 dentro de @media (min-width: 1200px)
@@ -657,34 +880,30 @@ describe('el theme de Ejemplo que vive en el repo', () => {
     expect(css).toContain('--bs-primary-rgb: 0, 204, 197;');
     expect(css).toContain('[data-bs-theme="oscura"] {');
     expect(css).toContain('.font-numeric {');
+    // Los componentes propios de la zona, que son lo que v0.2.1 añade.
+    expect(css).toContain('[data-bs-theme="oscura"] .btn-primary {');
+    expect(css).toContain('[data-bs-theme="oscura"] .list-group {');
   });
 
-  it('reporta exactamente los dos hallazgos conocidos de v0.2', () => {
+  it('sólo deja sin resolver el par que va horneado con !important', () => {
     const output = path.join(workdir, 'theme-ejemplo-2.css');
     run(EXPAND, [themePath, '-o', output]);
     const result = run(VALIDATE, [output]);
 
-    // 1. El turquesa de marca no llega a AA en el par que Bootstrap hornea para
-    //    los fondos suaves: --bs-primary-600 sobre --bs-primary-100, que es lo
-    //    que usan `.alert-primary` y `.text-bg-primary`.
-    expect(result.stderr).toContain('Par subtle de "primary"');
-
-    // 2. Los botones primary atan su texto a --bs-body-color-rgb, que dentro de
-    //    oscura vale blanco: blanco sobre el turquesa del fondo no contrasta.
-    //    Fuera de la zona el mismo bloque sí cumple.
-    expect(result.stderr).toContain('.btn-primary dentro de [data-bs-theme="oscura"]');
-    expect(result.stderr).toContain('.btn-outline-primary dentro de [data-bs-theme="oscura"]');
-
-    // Lo que sí controla el theme y queda bien: la pastilla activa en las dos
-    // zonas, y el cuerpo y el enlace de la zona oscura.
+    // Todo lo que el theme puede mover está resuelto: botones y listas dentro
+    // de la zona oscura, y el par de las alertas de primary.
+    expect(result.stderr).not.toContain('[contraste-boton]');
     expect(result.stderr).not.toContain('[contraste-nav-pills]');
     expect(result.stderr).not.toContain('[contraste-zona]');
-    expect(result.stderr).not.toContain('[contraste-enlace-zona]');
+    expect(result.stderr).not.toContain('.list-group-item');
+    expect(result.stderr).not.toContain('.alert-primary');
 
-    // Este caso es el semáforo de la v0.2: cuando diseño resuelva cualquiera de
-    // los dos hallazgos, falla y hay que actualizarlo con el estado nuevo.
+    // Lo único que queda es `.text-bg-primary`, en el raíz y en la zona:
+    // Bootstrap escribe ese color con !important en la propia clase, así que
+    // ninguna variable del theme puede moverlo. Es un límite de la librería.
+    expect(result.stderr).toContain('.text-bg-primary');
     const errores = result.stderr.match(/^error /gm) ?? [];
-    expect(errores).toHaveLength(3);
+    expect(errores).toHaveLength(2);
   });
 });
 
