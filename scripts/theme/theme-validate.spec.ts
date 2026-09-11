@@ -10,7 +10,7 @@
  * también el código de salida y el texto del mensaje, que es el contrato real.
  */
 
-import { execFileSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -32,18 +32,18 @@ afterAll(() => {
 type Run = { status: number; stdout: string; stderr: string };
 
 function run(script: string, args: string[]): Run {
-  try {
-    // stderr se captura en vez de heredarse: los mensajes del validador son
-    // parte de lo que se comprueba, no ruido para la salida de Jest.
-    const stdout = execFileSync('node', [script, ...args], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-    return { status: 0, stdout, stderr: '' };
-  } catch (error) {
-    const spawned = error as { status: number; stdout: string; stderr: string };
-    return { status: spawned.status, stdout: spawned.stdout ?? '', stderr: spawned.stderr ?? '' };
-  }
+  // spawnSync y no execFileSync: éste último sólo devuelve stdout cuando el
+  // proceso sale con 0, y el validador escribe sus avisos en stderr sin fallar.
+  // Con execFileSync un aviso era indistinguible de no haber dicho nada.
+  const spawned = spawnSync('node', [script, ...args], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  return {
+    status: spawned.status ?? 0,
+    stdout: spawned.stdout ?? '',
+    stderr: spawned.stderr ?? '',
+  };
 }
 
 let fixtureCount = 0;
@@ -300,6 +300,366 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('[contraste]');
     expect(result.stderr).toContain('--bs-white-rgb');
     expect(result.stderr).toContain('WCAG 2.x AA');
+  });
+});
+
+/**
+ * Theme mínimo con las tres secciones extendidas. Cada valor está elegido para
+ * que el CSS resultante pase el validador: los casos de abajo lo rompen de una
+ * forma cada vez y comprueban que la regla correspondiente lo atrapa.
+ */
+const SECTIONED_THEME = {
+  ...MINIMAL_THEME,
+  root: {
+    '--bs-body-font-size': '.875rem',
+    '--bs-heading-color': 'rgb(var(--bs-primary-rgb))',
+  },
+  components: [
+    { selector: '.btn', vars: { '--bs-btn-font-weight': '700' } },
+    { selector: '.font-numeric', declarations: { 'font-variant-numeric': 'tabular-nums' } },
+  ],
+  zones: {
+    oscura: {
+      vars: {
+        '--bs-body-bg-rgb': '16, 24, 40',
+        '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+      },
+      nav: {
+        '--bs-nav-link-color': 'rgb(var(--bs-white-rgb))',
+        '--bs-nav-pills-link-active-bg': 'rgb(var(--bs-primary-rgb))',
+        '--bs-nav-pills-link-active-color': 'rgb(var(--bs-white-rgb))',
+      },
+    },
+  },
+};
+
+describe('theme-expand — sección root', () => {
+  it('emite las variables tal cual, dentro del bloque raíz', () => {
+    const css = expandCss(SECTIONED_THEME);
+    const root = css.slice(css.indexOf(':root,'), css.indexOf('\n}'));
+    expect(root).toContain('--bs-body-font-size: .875rem;');
+    expect(root).toContain('--bs-heading-color: rgb(var(--bs-primary-rgb));');
+  });
+
+  it('las pone al final del bloque, para que ganen a las derivadas', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      root: { '--bs-border-radius': '0rem' },
+    });
+    // El radio derivado sigue emitiéndose; el del autor va después y gana.
+    expect(css.indexOf('--bs-border-radius: .75rem;'))
+      .toBeLessThan(css.indexOf('--bs-border-radius: 0rem;'));
+    expect(css).toContain('una pisa una derivada de arriba');
+  });
+
+  it('rechaza una clave que no empieza por --bs-', () => {
+    const result = expand({ ...SECTIONED_THEME, root: { '--brand-shadow': '0 0 0 red' } });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('--brand-shadow');
+    expect(result.stderr).toContain('empieza por --bs-');
+  });
+
+  it('rechaza una referencia a un token que no existe', () => {
+    const result = expand({
+      ...SECTIONED_THEME,
+      root: { '--bs-heading-color': 'rgb(var(--bs-primary-1000-rgb))' },
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('--bs-primary-1000-rgb');
+    expect(result.stderr).toContain('no existe');
+  });
+
+  it('acepta una referencia a un token que sólo existe en el CSS de Dynamic', () => {
+    // --bs-gray-300-rgb no lo genera este theme, pero la librería sí lo define.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      root: { '--bs-heading-color': 'rgb(var(--bs-gray-300-rgb))' },
+    });
+    expect(css).toContain('--bs-heading-color: rgb(var(--bs-gray-300-rgb));');
+  });
+});
+
+describe('theme-expand — sección components', () => {
+  it('emite un bloque por selector, con sus vars y sus declaraciones', () => {
+    const css = expandCss(SECTIONED_THEME);
+    expect(css).toContain('.btn {\n  --bs-btn-font-weight: 700;\n}');
+    expect(css).toContain('.font-numeric {\n  font-variant-numeric: tabular-nums;\n}');
+  });
+
+  it('los coloca después del bloque raíz y antes de las zonas', () => {
+    const css = expandCss(SECTIONED_THEME);
+    expect(css.indexOf('[data-bs-theme="dynamic"] {'))
+      .toBeLessThan(css.indexOf('.btn {'));
+    expect(css.indexOf('.btn {'))
+      .toBeLessThan(css.indexOf('[data-bs-theme="oscura"]'));
+  });
+
+  it('rechaza una declaración que no está en la lista permitida, nombrándola', () => {
+    const result = expand({
+      ...SECTIONED_THEME,
+      components: [{ selector: '.card', declarations: { 'box-shadow': '0 0 0 red' } }],
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('box-shadow');
+    expect(result.stderr).toContain('no está permitida');
+    expect(result.stderr).toContain('padding, border-radius, border-color, font-family, font-variant-numeric');
+  });
+
+  it('rechaza un bloque sin selector', () => {
+    const result = expand({
+      ...SECTIONED_THEME,
+      components: [{ vars: { '--bs-btn-color': 'red' } }],
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('components[0].selector');
+  });
+});
+
+describe('theme-expand — sección zones', () => {
+  it('emite el bloque de la zona con sus variables', () => {
+    const css = expandCss(SECTIONED_THEME);
+    expect(css).toContain('[data-bs-theme="oscura"] {');
+    expect(css).toContain('  --bs-body-bg-rgb: 16, 24, 40;');
+    expect(css).toContain('  --bs-body-color-rgb: var(--bs-white-rgb);');
+  });
+
+  it('reparte `nav` entre .nav y .nav-pills según las claves presentes', () => {
+    const css = expandCss(SECTIONED_THEME);
+    expect(css).toContain('[data-bs-theme="oscura"] .nav {\n  --bs-nav-link-color: rgb(var(--bs-white-rgb));\n}');
+    expect(css).toMatch(/\[data-bs-theme="oscura"\] \.nav-pills \{[^}]*--bs-nav-pills-link-active-bg/);
+    // Sin variables de pastilla no se emite el bloque .nav-pills vacío.
+    const soloNav = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          nav: { '--bs-nav-link-color': 'rgb(var(--bs-white-rgb))' },
+        },
+      },
+    });
+    expect(soloNav).not.toContain('.nav-pills');
+  });
+
+  it('rechaza una variable de `nav` que no sea --bs-nav-*', () => {
+    const result = expand({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          nav: { '--bs-body-bg-rgb': '0, 0, 0' },
+        },
+      },
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('sólo van variables --bs-nav-*');
+  });
+});
+
+describe('theme-validate — reglas de las secciones extendidas', () => {
+  it('acepta el CSS de un theme con las tres secciones', () => {
+    const result = validate(expandCss(SECTIONED_THEME));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('atrapa un botón cuyo texto no contrasta con el fondo de su role', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-primary-600-rgb))' } },
+      ],
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-boton]');
+    expect(result.stderr).toContain('.btn-primary');
+    expect(result.stderr).toContain('WCAG 2.x AA');
+  });
+
+  it('atrapa una pastilla activa ilegible sobre su propio fondo', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      components: [
+        {
+          selector: '.nav-pills',
+          vars: {
+            '--bs-nav-pills-link-active-bg': 'rgb(var(--bs-primary-rgb))',
+            '--bs-nav-pills-link-active-color': 'rgb(var(--bs-primary-400-rgb))',
+          },
+        },
+      ],
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-nav-pills]');
+  });
+
+  it('atrapa una zona cuyo texto es ilegible sobre su fondo', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          vars: { '--bs-body-bg-rgb': '16, 24, 40', '--bs-body-color-rgb': '40, 44, 52' },
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-zona]');
+    expect(result.stderr).toContain('oscura');
+  });
+
+  it('avisa, sin fallar, de un enlace de zona entre 3:1 y 4.5:1', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': '16, 24, 40',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+            '--bs-link-color-rgb': '74, 111, 165',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(0);
+    expect(result.stderr).toContain('[contraste-enlace-zona]');
+    expect(result.stderr).toContain('3:1');
+    expect(result.stderr).not.toContain('error ');
+  });
+
+  it('mide cada zona contra su propio fondo, no contra el del bloque raíz', () => {
+    // El texto blanco de la zona sería ilegible sobre el fondo claro del raíz;
+    // si el validador mezclara los dos contextos, esto fallaría.
+    const result = validate(expandCss(SECTIONED_THEME));
+    expect(result.status).toBe(0);
+  });
+
+  it('mide un componente global también dentro de cada zona', () => {
+    // El botón se declara una sola vez y su texto sigue a --bs-body-color-rgb.
+    // En la zona ese token vale blanco, así que el mismo bloque produce un par
+    // legible fuera y uno ilegible dentro: el caso que se escapa leyendo el CSS
+    // de arriba abajo.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+        },
+      },
+    });
+    const result = validate(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-boton]');
+    expect(result.stderr).toContain('dentro de [data-bs-theme="oscura"]');
+    // Y el mismo botón fuera de la zona no se reporta: ahí el par sí contrasta.
+    expect(result.stderr).not.toMatch(/"\.btn-primary":/);
+  });
+
+  it('no mide el bloque global en una zona que ya tiene el suyo propio', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+      ],
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+        },
+      },
+    });
+    expect(validate(css).status).toBe(1);
+
+    // Con un bloque propio para la zona, que fija un texto legible, calla.
+    const arreglado = css.replace(
+      /$/,
+      '\n[data-bs-theme="oscura"] .btn-primary {\n  --bs-btn-color: rgb(var(--bs-dark-rgb));\n}\n',
+    );
+    const result = validate(arreglado);
+    expect(result.stderr).not.toContain('[contraste-boton]');
+  });
+
+  it('anota como literal un color escrito a mano en un componente', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': '#ffffff' } }],
+    });
+    const result = validate(css);
+    expect(result.stdout).toContain('[literal]');
+    expect(result.stdout).toContain('#ffffff');
+  });
+});
+
+describe('theme-expand — el breakpoint de RFS', () => {
+  it('repite los pasos 1..4 en 1200px aunque el tamaño no sea fluido', () => {
+    // La librería redeclara --bs-rfs-fs-1..4 dentro de @media (min-width: 1200px)
+    // con 3rem/2.5rem/2rem/1.5rem. Un override menor que la base de RFS no genera
+    // valor fluido, pero sigue necesitando su bloque o en desktop gana el suyo.
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: 'Inter, sans-serif', scale: { 3: '1.25rem', 6: '.875rem' } },
+    });
+    expect(css).toContain('--bs-rfs-fs-3: 1.25rem;');
+    expect(css).toMatch(/@media \(min-width: 1200px\) \{[\s\S]*--bs-rfs-fs-3: 1\.25rem;/);
+    // El paso 6 no lo toca la librería en ese breakpoint: no necesita bloque.
+    expect(css).not.toMatch(/@media \(min-width: 1200px\) \{[\s\S]*--bs-rfs-fs-6/);
+    expect(validate(css).status).toBe(0);
+  });
+});
+
+describe('el theme de Ejemplo que vive en el repo', () => {
+  const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
+
+  it('cumple el esquema y genera su CSS', () => {
+    const output = path.join(workdir, 'theme-ejemplo-zonas.css');
+    const result = run(EXPAND, [themePath, '-o', output]);
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+
+    const css = fs.readFileSync(output, 'utf8');
+    expect(css).toContain('--bs-primary-rgb: 0, 204, 197;');
+    expect(css).toContain('[data-bs-theme="oscura"] {');
+    expect(css).toContain('.font-numeric {');
+  });
+
+  it('reporta exactamente los dos hallazgos conocidos de v0.2', () => {
+    const output = path.join(workdir, 'theme-ejemplo-2.css');
+    run(EXPAND, [themePath, '-o', output]);
+    const result = run(VALIDATE, [output]);
+
+    // 1. El turquesa de marca no llega a AA en el par que Bootstrap hornea para
+    //    los fondos suaves: --bs-primary-600 sobre --bs-primary-100, que es lo
+    //    que usan `.alert-primary` y `.text-bg-primary`.
+    expect(result.stderr).toContain('Par subtle de "primary"');
+
+    // 2. Los botones primary atan su texto a --bs-body-color-rgb, que dentro de
+    //    oscura vale blanco: blanco sobre el turquesa del fondo no contrasta.
+    //    Fuera de la zona el mismo bloque sí cumple.
+    expect(result.stderr).toContain('.btn-primary dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('.btn-outline-primary dentro de [data-bs-theme="oscura"]');
+
+    // Lo que sí controla el theme y queda bien: la pastilla activa en las dos
+    // zonas, y el cuerpo y el enlace de la zona oscura.
+    expect(result.stderr).not.toContain('[contraste-nav-pills]');
+    expect(result.stderr).not.toContain('[contraste-zona]');
+    expect(result.stderr).not.toContain('[contraste-enlace-zona]');
+
+    // Este caso es el semáforo de la v0.2: cuando diseño resuelva cualquiera de
+    // los dos hallazgos, falla y hay que actualizarlo con el estado nuevo.
+    const errores = result.stderr.match(/^error /gm) ?? [];
+    expect(errores).toHaveLength(3);
   });
 });
 
