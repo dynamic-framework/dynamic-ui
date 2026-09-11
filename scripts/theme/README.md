@@ -93,7 +93,12 @@ comprueba es la forma.
 - **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
   trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
   las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
-  las de pastilla sobre `.nav` no las alcanza.
+  las de pastilla sobre `.nav` no las alcanza. Y si trae `components`, con la
+  misma forma que la sección global, cada bloque sale como
+  `[data-bs-theme="<nombre>"] <selector>`, después de `vars` y de `nav`: dentro
+  del subárbol pisa tanto a las variables de la zona como al bloque global del
+  mismo selector, que tiene menos especificidad. Es lo que permite que un botón
+  o una lista se comporten distinto dentro de la zona sin duplicar el theme.
 
 Toda referencia `var(--bs-algo)` de estas tres secciones se comprueba contra los
 tokens que el theme genera y contra `known-tokens.json`, el inventario de lo que
@@ -165,13 +170,45 @@ correspondería a ningún contexto real.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
+  un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
+  zona que mueve la superficie los cambia sin tocar ninguno.
 - `contraste-enlace-zona` — `--bs-link-color-rgb` sobre el fondo de la zona.
   Entre 3:1 y 4.5:1 es aviso, no error: el enlace se distingue del fondo pero su
   texto no llega a AA.
 
-Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par sólido de
-ese role deja de medirse en `contraste` y pasa a `contraste-boton`: el par
-horneado ya no es el que se ve. Queda constancia como nota `par-redefinido`.
+### Los pares horneados
+
+Hay pares texto/fondo que la librería resuelve por su cuenta y que un theme no
+declara: se quedan como estaban aunque el rebrand cambie todo lo demás. El
+validador los lleva en una tabla, con la variable que el componente lee y el
+valor al que cae cuando nadie la toca.
+
+| Componente | Texto | Fondo |
+| --- | --- | --- |
+| `.list-group-item` | `--bs-list-group-color` (→ role `dark`) | `--bs-list-group-bg` (→ transparente: la superficie del contexto) |
+| `.list-group-item-action` | `--bs-list-group-action-color` (→ `gray-900`) | `--bs-list-group-bg` |
+| `.alert-<role>` | `--bs-<role>-text-emphasis` | `--bs-<role>-bg-subtle` |
+| `.text-bg-<role>` | horneado en la clase, casi siempre con `!important` | el paso sólido del role |
+| `.btn-<role>` sin override | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+
+Dos detalles que importan al leer un informe:
+
+- Un fondo `transparent` no es un color: lo que se ve detrás es la superficie
+  del contexto, y contra eso se mide. Por eso una lista dentro de una zona
+  oscura puede fallar sin que el theme haya declarado nada raro.
+- `.text-bg-<role>` lleva el color escrito en la propia clase y con
+  `!important`: ninguna variable lo mueve. Si ese par no contrasta, el arreglo
+  es cambiar el color del role o no usar la clase con él.
+
+Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
+botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el
+bloque concreto. Queda constancia como nota `par-redefinido`.
+
+Un botón con contorno se mide en sus dos estados, que son pares distintos: en
+reposo el fondo es transparente y detrás está la superficie del contexto; sólo
+al rellenarse (hover/active) el texto cae sobre el color del role, y ahí el que
+manda es `--bs-btn-hover-color`.
 
 Un color escrito literal (`#fff`) donde se esperaba una referencia se acepta y se
 anota como `literal`: se mide tal cual, pero queda fuera del theme y cambiar el
