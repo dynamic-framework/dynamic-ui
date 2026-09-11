@@ -413,3 +413,89 @@ export function resolveColorValue(value, lookup) {
     return { rgb: null, reason: `"${raw}" no es un color ni una referencia var(--bs-…)` };
   }
 }
+
+// -- Pares horneados ---------------------------------------------------------
+
+/**
+ * Pares texto/fondo que la librería resuelve por su cuenta y que un theme no
+ * declara: se quedan como estaban aunque el rebrand cambie todo lo demás. Cada
+ * lado es la variable que el componente lee, con el valor al que cae cuando el
+ * theme no la toca — tomado del CSS compilado de Dynamic.
+ *
+ * `fallback` habla en tokens, no en colores, para que se resuelva en el
+ * contexto que toque: el mismo par da un resultado en el bloque raíz y otro
+ * dentro de una zona que mueve la superficie.
+ *
+ *   { kind: 'white' }                -> --bs-white-rgb
+ *   { kind: 'gray', step: 900 }      -> --bs-gray-900-rgb
+ *   { kind: 'role', step: 500 }      -> --bs-<role>-500-rgb
+ *   { kind: 'roleBase', role: 'dark' } -> --bs-dark-rgb
+ *   { kind: 'surface' }              -> --bs-body-bg-rgb del contexto
+ */
+export const BAKED_PAIRS = [
+  {
+    component: '.list-group-item',
+    why: 'la lista hereda el texto de --bs-list-group-color, que apunta al role dark',
+    owners: ['.list-group', '.list-group-item'],
+    fg: { variable: '--bs-list-group-color', fallback: { kind: 'roleBase', role: 'dark' } },
+    bg: { variable: '--bs-list-group-bg', fallback: { kind: 'surface' } },
+  },
+  {
+    // El estado normal de un ítem de acción no lee --bs-list-group-color sino
+    // su propia variable, fijada a gray-900 en `.list-group`. Es la que rompe
+    // una lista de acciones dentro de una zona oscura.
+    component: '.list-group-item-action',
+    why: 'un ítem de acción lee --bs-list-group-action-color, no --bs-list-group-color',
+    owners: ['.list-group', '.list-group-item', '.list-group-item-action'],
+    fg: { variable: '--bs-list-group-action-color', fallback: { kind: 'gray', step: 900 } },
+    bg: { variable: '--bs-list-group-bg', fallback: { kind: 'surface' } },
+  },
+];
+
+/**
+ * Los mismos pares, pero por role. Se generan para los roles que el theme toca.
+ * `.alert-<role>` y `.list-group-item-<role>` comparten el par -text-emphasis
+ * sobre -bg-subtle; `.text-bg-<role>` y `.btn-<role>` van sobre el base.
+ */
+export function bakedRolePairs(role) {
+  const subtle = SUBTLE_PAIRS[role];
+  const solid = SOLID_PAIRS[role];
+  const pairs = [];
+
+  if (subtle) {
+    pairs.push({
+      component: `.alert-${role}`,
+      why: 'la alerta usa --bs-<role>-text-emphasis sobre --bs-<role>-bg-subtle',
+      owners: ['.alert', `.alert-${role}`],
+      fg: { variable: `--bs-${role}-text-emphasis`, fallback: subtle.fg },
+      bg: { variable: `--bs-${role}-bg-subtle`, fallback: subtle.bg },
+      role,
+    });
+  }
+
+  if (solid) {
+    pairs.push({
+      // El color va escrito en la clase, no en una variable, y en casi todos
+      // los roles además con !important: un theme no puede moverlo. Si el par
+      // no contrasta, el arreglo es cambiar el color del role o no usar la
+      // clase con él. El fondo tampoco es siempre el base: `secondary` se pinta
+      // sobre su paso 50, y `light` y `dark` sobre grises.
+      component: `.text-bg-${role}`,
+      why: 'el color va horneado en la clase, fuera de toda variable',
+      fg: { fallback: solid.fg, important: role !== 'secondary' },
+      bg: { fallback: solid.bg },
+      role,
+    });
+    pairs.push({
+      component: `.btn-${role}`,
+      why: 'sin override, el botón conserva el color que color-contrast() calculó en Sass',
+      owners: ['.btn', `.btn-${role}`],
+      fg: { variable: `--bs-btn-${role}-color`, fallback: solid.fg },
+      bg: { variable: `--bs-btn-${role}-bg`, fallback: solid.bg },
+      role,
+      onlyWithoutOverride: true,
+    });
+  }
+
+  return pairs;
+}

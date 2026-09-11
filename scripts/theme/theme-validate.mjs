@@ -13,6 +13,7 @@ import process from 'node:process';
 
 import {
   AA_NORMAL_TEXT,
+  BAKED_PAIRS,
   BUTTON_DEFAULT_FG,
   DEFAULT_BLACK,
   DEFAULT_BODY_BG,
@@ -27,8 +28,7 @@ import {
   RAMP_STEPS,
   RFS_MEDIA_STEPS,
   ROLES,
-  SOLID_PAIRS,
-  SUBTLE_PAIRS,
+  bakedRolePairs,
   contrast,
   isRootPrelude,
   luminance,
@@ -439,106 +439,24 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // R9 — contraste AA de los pares texto/fondo que la librería hornea.
-  // Un theme puede corregir el par sólido de un role redefiniendo el color de
-  // texto del botón en su propio bloque (`.btn-<role> { --bs-btn-color: … }`).
-  // Cuando lo hace, el par horneado ya no es el que se ve: medirlo aquí sería
-  // reportar un problema que el theme resuelve dos secciones más abajo, así que
-  // se cede el turno a la regla de botones, que mide el par real.
+  // Un theme puede corregir el par de un botón redefiniendo su color de texto en
+  // un bloque propio (`.btn-<role> { --bs-btn-color: … }`). Cuando lo hace, el
+  // par horneado ya no es el que se ve y lo mide la regla de botones.
   const overriddenButtons = new Set(
     blocks
       .filter((block) => !block.isRoot && block.decls.has('--bs-btn-color'))
       .flatMap((block) => block.prelude.split(','))
-      .map((part) => part.trim().match(new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`))?.[1])
+      .map((part) => part.trim().replace(/^\[data-bs-theme=["']?[\w-]+["']?\]\s*/, ''))
+      .map((sel) => sel.match(new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`))?.[1])
       .filter(Boolean),
   );
 
-  for (const role of touchedRoles) {
-    for (const [surface, table] of [['sólido', SOLID_PAIRS], ['subtle', SUBTLE_PAIRS]]) {
-      const pair = table[role];
-      if (!pair) continue;
-      if (surface === 'sólido' && overriddenButtons.has(role)) {
-        note(
-          'par-redefinido',
-          `Par sólido de "${role}": el theme fija --bs-btn-color en su propio bloque, así que `
-          + 'el par horneado por Sass no es el que se ve. Se mide en la regla de botones.',
-        );
-        continue;
-      }
-      const fgName = pick(pair.fg, role);
-      const bgName = pick(pair.bg, role);
-      const fg = resolve(fgName, root);
-      const bg = resolve(bgName, root);
-      if (!fg.rgb || !bg.rgb) {
-        warn(
-          'contraste-irresoluble',
-          `No se pudo medir el par ${surface} de "${role}": ${fg.reason ?? bg.reason}.`,
-        );
-        continue;
-      }
-      const ratio = contrast(fg.rgb, bg.rgb);
-      if (ratio >= minContrast) continue;
-
-      // El mismo par medido con la paleta por defecto de 2.8.0. Sirve para no
-      // culpar al theme de un par que ya viene roto en la librería.
-      const baseFg = resolve(fgName, new Map());
-      const baseBg = resolve(bgName, new Map());
-      const baseline = baseFg.rgb && baseBg.rgb ? contrast(baseFg.rgb, baseBg.rgb) : null;
-      const why = `Dynamic hornea este par en tiempo de compilación (\`.btn-${role}\`, `
-        + `\`.text-bg-${role}\`, \`-text-emphasis\` sobre \`-bg-subtle\`): `
-        + '`color-contrast()` corre en Sass y no se recalcula al cambiar el triplete en '
-        + 'runtime, así que el texto se queda como estaba.';
-      const line = root.get(bgName)?.line ?? root.get(`--bs-${role}-rgb`)?.line ?? null;
-
-      if (baseline !== null && baseline < minContrast && ratio >= baseline - 0.005) {
-        warn(
-          'contraste-preexistente',
-          `Par ${surface} de "${role}": ${ratio.toFixed(2)}:1 entre ${fgName} y ${bgName}, `
-          + `bajo el ${minContrast}:1 de WCAG 2.x AA — pero el tema por defecto de Dynamic `
-          + `2.8.0 ya da ${baseline.toFixed(2)}:1 en este mismo par, así que el defecto es de `
-          + `la librería y no de tu theme. ${why}`,
-          line,
-        );
-        continue;
-      }
-
-      fail(
-        'contraste',
-        `Par ${surface} de "${role}": ${ratio.toFixed(2)}:1 entre ${fgName} y ${bgName}, por `
-        + `debajo del ${minContrast}:1 que pide WCAG 2.x AA para texto normal`
-        + (baseline !== null ? ` (el tema por defecto da ${baseline.toFixed(2)}:1 aquí)` : '')
-        + `. ${why}`,
-        line,
-      );
-    }
-  }
-
-  // -- Reglas de las secciones extendidas -----------------------------------
-  //
-  // Cada bloque se mide en su propio contexto: sus declaraciones sobre las del
-  // raíz. Es como lo resuelve el navegador, y es la única forma de que una zona
-  // que redefine --bs-body-bg-rgb se evalúe contra su fondo y no contra el otro.
-  const scopeOf = (block) => new Map([...root, ...block.decls]);
-  const measure = (declared, fallbackName, scope, label) => {
-    const lookup = (name) => resolve(name, scope);
-    if (!declared) return { ...lookup(fallbackName), name: fallbackName };
-    const resolved = resolveColorValue(declared.value, lookup);
-    if (resolved.source === 'literal') {
-      note(
-        'literal',
-        `${label}: "${declared.value}" es un color literal. Se mide tal cual, pero queda `
-        + 'fuera del theme: cambiar el token no lo mueve.',
-        declared.line,
-      );
-    }
-    return { ...resolved, name: resolved.via ?? declared.value };
-  };
-
-  // Contextos en los que se mide un componente: el bloque raíz y, además, cada
-  // zona declarada en el archivo. Un `.btn-primary` escrito una sola vez se ve
-  // distinto dentro de `[data-bs-theme="oscura"]` si la zona mueve alguna de
-  // las variables de las que depende — y ese caso es justo el que se escapa al
-  // leer el CSS de arriba abajo.
+  // Contextos en los que se mide un componente y también los pares horneados:
+  // el bloque raíz y, además, cada zona declarada en el archivo. Un
+  // `.btn-primary` escrito una sola vez se ve distinto dentro de
+  // `[data-bs-theme="oscura"]` si la zona mueve alguna de las variables de las
+  // que depende — y ese caso es justo el que se escapa al leer el CSS de arriba
+  // abajo.
   const zoneBlocks = blocks.filter((block) => block.zone);
   const contexts = [
     { zone: null, decls: root },
@@ -577,51 +495,103 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
 
   const inContext = (ctx) => (ctx.zone ? ` dentro de [data-bs-theme="${ctx.zone}"]` : '');
 
+  /**
+   * Mide un lado de un par declarado en un bloque. Si el bloque no lo declara,
+   * se cae al token que la librería usaría. Un color escrito literal se acepta
+   * y se anota: se mide tal cual, pero queda fuera del theme.
+   */
+  const scopeOf = (block) => new Map([...root, ...block.decls]);
+
+  const measure = (declared, fallbackName, scope, label) => {
+    const lookup = (name) => resolve(name, scope);
+    if (!declared) return { ...lookup(fallbackName), name: fallbackName };
+    const resolved = resolveColorValue(declared.value, lookup);
+    if (resolved.source === 'literal') {
+      note(
+        'literal',
+        `${label}: "${declared.value}" es un color literal. Se mide tal cual, pero queda `
+        + 'fuera del theme: cambiar el token no lo mueve.',
+        declared.line,
+      );
+    }
+    return { ...resolved, name: resolved.via ?? declared.value };
+  };
+
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
   // calculó. En `.btn-outline-<role>` el fondo del role es el del estado
   // relleno (hover/active), que es donde el par puede romperse.
-  const BUTTON_SELECTOR = new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`);
+  const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   for (const block of blocks) {
     if (block.isRoot) continue;
     const fgDecl = block.decls.get('--bs-btn-color');
+    const hoverDecl = block.decls.get('--bs-btn-hover-color');
     const bgDecl = block.decls.get('--bs-btn-bg');
-    if (!fgDecl && !bgDecl) continue;
+    if (!fgDecl && !hoverDecl && !bgDecl) continue;
 
     for (const part of splitZone(block.prelude).bare.split(',')) {
-      const role = part.trim().match(BUTTON_SELECTOR)?.[1];
-      if (!role) continue;
+      const match = part.trim().match(BUTTON_SELECTOR);
+      if (!match) continue;
+      const outline = Boolean(match[1]);
+      const role = match[2];
 
       for (const ctx of contextsFor(block, fgDecl ? '--bs-btn-color' : '--bs-btn-bg')) {
         const scope = new Map([...ctx.decls, ...block.decls]);
-        const where = `${part.trim()}${inContext(ctx)}`;
-        const fg = measure(fgDecl, pick(BUTTON_DEFAULT_FG[role], role), scope, `${where} --bs-btn-color`);
-        const bg = measure(bgDecl, `--bs-${role}-rgb`, scope, `${where} --bs-btn-bg`);
-        if (!fg.rgb || !bg.rgb) {
-          warn(
-            'contraste-irresoluble',
-            `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
-            (fgDecl ?? bgDecl).line,
+        const label = `${part.trim()}${inContext(ctx)}`;
+
+        /*
+         * Un botón sólido enseña un único par: su texto sobre el fondo del role.
+         * Uno con contorno enseña dos, y son distintos: en reposo el fondo es
+         * transparente y lo que hay detrás es la superficie del contexto; sólo
+         * al rellenarse (hover/active) el texto cae sobre el color del role, y
+         * ahí el color que manda es --bs-btn-hover-color. Medir el par de
+         * reposo contra el fondo del role daría por roto un botón que se ve
+         * perfectamente.
+         */
+        const cases = outline
+          ? [
+            { estado: 'en reposo', fg: fgDecl, fgFallback: `--bs-${role}-rgb`, bgFallback: '--bs-body-bg-rgb' },
+            { estado: 'relleno (hover/active)', fg: hoverDecl ?? fgDecl, fgFallback: pick(BUTTON_DEFAULT_FG[role], role), bgFallback: `--bs-${role}-rgb` },
+          ]
+          : [
+            { estado: null, fg: fgDecl, fgFallback: pick(BUTTON_DEFAULT_FG[role], role), bgFallback: `--bs-${role}-rgb` },
+          ];
+
+        for (const caso of cases) {
+          const where = caso.estado ? `${label}, ${caso.estado}` : label;
+          const fg = measure(caso.fg, caso.fgFallback, scope, `${where} color de texto`);
+          const bg = measure(
+            caso.bgFallback === `--bs-${role}-rgb` ? bgDecl : undefined,
+            caso.bgFallback,
+            scope,
+            `${where} fondo`,
           );
-          continue;
+          if (!fg.rgb || !bg.rgb) {
+            warn(
+              'contraste-irresoluble',
+              `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
+              (caso.fg ?? bgDecl)?.line ?? null,
+            );
+            continue;
+          }
+          const ratio = contrast(fg.rgb, bg.rgb);
+          if (ratio >= minContrast) continue;
+          fail(
+            'contraste-boton',
+            `"${where}": ${ratio.toFixed(2)}:1 entre el texto (${fg.name}) y el fondo (${bg.name}), `
+            + `por debajo del ${minContrast}:1 que pide WCAG 2.x AA para texto normal. `
+            + (ctx.zone && !block.zone
+              ? `El botón se declara una sola vez, pero dentro de la zona "${ctx.zone}" alguna de `
+                + 'las variables de las que depende vale otra cosa. Dale a la zona su propio '
+                + `bloque \`${zoneSelector(ctx.zone)} ${part.trim()}\`.`
+              : (caso.fg
+                ? 'El theme fija ese color de texto: o se aclara el fondo, o se oscurece el texto.'
+                : `El theme no lo fija, así que el botón conserva el que Bootstrap horneó `
+                  + `para "${role}".`)),
+            (caso.fg ?? bgDecl)?.line ?? null,
+          );
         }
-        const ratio = contrast(fg.rgb, bg.rgb);
-        if (ratio >= minContrast) continue;
-        fail(
-          'contraste-boton',
-          `"${where}": ${ratio.toFixed(2)}:1 entre el texto (${fg.name}) y el fondo (${bg.name}), `
-          + `por debajo del ${minContrast}:1 que pide WCAG 2.x AA para texto normal. `
-          + (ctx.zone
-            ? `El botón se declara una sola vez, pero dentro de la zona "${ctx.zone}" alguna de `
-              + 'las variables de las que depende vale otra cosa. Dale a la zona su propio '
-              + `bloque \`${zoneSelector(ctx.zone)} ${part.trim()}\`.`
-            : (fgDecl
-              ? 'El theme fija el color de texto del botón: o se aclara el fondo, o se oscurece el texto.'
-              : `El theme no fija --bs-btn-color, así que el botón conserva el que Bootstrap horneó `
-                + `para "${role}" y sólo cambia el fondo.`)),
-          (fgDecl ?? bgDecl).line,
-        );
       }
     }
   }
@@ -718,6 +688,122 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       `${detail} Ni siquiera llega al 3:1 mínimo para distinguirse del fondo.`,
       linkDecl.line,
     );
+  }
+
+  // R13 — pares horneados. Son los que la librería resuelve por su cuenta y el
+  // theme no declara: siguen igual después del rebrand, y por eso hay que
+  // medirlos explícitamente. Se comprueban en el raíz y dentro de cada zona,
+  // porque una zona que mueve la superficie los cambia sin tocar ninguno.
+  const bakedPairs = [
+    ...BAKED_PAIRS,
+    ...touchedRoles.flatMap((role) => bakedRolePairs(role)),
+  ];
+
+  /** Token al que cae un lado del par cuando el theme no declara su variable. */
+  const fallbackToken = (spec, role) => {
+    if (spec.kind === 'white') return '--bs-white-rgb';
+    if (spec.kind === 'gray') return `--bs-gray-${spec.step}-rgb`;
+    if (spec.kind === 'roleBase') return `--bs-${spec.role}-rgb`;
+    if (spec.kind === 'surface') return '--bs-body-bg-rgb';
+    return `--bs-${role}-${spec.step}-rgb`;
+  };
+
+  /**
+   * Resuelve un lado del par. Si el theme declara la variable, manda ella; si
+   * no, se usa el valor por defecto de la librería. Un fondo `transparent`
+   * —el de `.list-group`, por ejemplo— no es un color: lo que se ve detrás es
+   * la superficie del contexto, y contra eso hay que medir.
+   */
+  const resolveSide = (side, role, scope) => {
+    const declared = side.variable ? scope.get(side.variable) : undefined;
+    if (declared && !/^\s*transparent\s*$/i.test(declared.value)) {
+      const resolved = resolveColorValue(declared.value, (name) => resolve(name, scope));
+      return { ...resolved, name: resolved.via ?? side.variable, declared: true };
+    }
+    const token = fallbackToken(side.fallback, role);
+    return { ...resolve(token, scope), name: token, declared: false };
+  };
+
+  for (const pair of bakedPairs) {
+    for (const ctx of contexts) {
+      // Un botón con override propio no es un par horneado: lo mide R10, que
+      // conoce el bloque concreto y el contexto en el que se ve.
+      if (pair.onlyWithoutOverride && overriddenButtons.has(pair.role)) continue;
+
+      // Al contexto se le superponen los bloques que pueden declarar las
+      // variables de este par (`.list-group` para una lista, `.alert-<role>`
+      // para una alerta…), sean globales o propios de la zona. Sin esto, un
+      // theme que arregla el par en un bloque de componente seguiría
+      // apareciendo como roto.
+      const owners = pair.owners ?? [];
+      const scope = new Map(ctx.decls);
+      for (const block of blocks) {
+        if (block.isRoot) continue;
+        const split = splitZone(block.prelude);
+        if (split.zone && split.zone !== ctx.zone) continue;
+        const applies = split.bare
+          .split(',')
+          .some((part) => owners.includes(part.trim()));
+        if (!applies) continue;
+        for (const [name, entry] of block.decls) scope.set(name, entry);
+      }
+
+      const fg = resolveSide(pair.fg, pair.role, scope);
+      const bg = resolveSide(pair.bg, pair.role, scope);
+      const where = `${pair.component}${inContext(ctx)}`;
+
+      if (!fg.rgb || !bg.rgb) {
+        warn(
+          'contraste-irresoluble',
+          `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
+        );
+        continue;
+      }
+
+      const ratio = contrast(fg.rgb, bg.rgb);
+      if (ratio >= minContrast) continue;
+
+      // El mismo par con la paleta por defecto. Si allí ya falla y aquí no
+      // empeora, el defecto es de la librería y no de este theme.
+      const baseFg = resolveSide(pair.fg, pair.role, new Map());
+      const baseBg = resolveSide(pair.bg, pair.role, new Map());
+      const baseline = baseFg.rgb && baseBg.rgb ? contrast(baseFg.rgb, baseBg.rgb) : null;
+      const line = scope.get(pair.fg.variable)?.line ?? null;
+
+      // Si el par ya falla con la paleta por defecto y aquí no empeora de forma
+      // apreciable, el defecto es de la librería y no del theme. La tolerancia
+      // es relativa porque estos pares rotos se mueven unas décimas al cambiar
+      // el color y esa diferencia no es información para nadie.
+      if (baseline !== null && baseline < minContrast && ratio >= baseline * 0.9) {
+        warn(
+          'contraste-preexistente',
+          `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, bajo el `
+          + `${minContrast}:1 de WCAG 2.x AA — pero el tema por defecto de Dynamic ya da `
+          + `${baseline.toFixed(2)}:1 en este mismo par, así que el defecto es de la librería `
+          + 'y no de tu theme.',
+          line,
+        );
+        continue;
+      }
+
+      const arreglo = pair.fg.important
+        ? 'Bootstrap fija ese color con !important en la propia clase, así que no hay '
+          + 'variable que lo mueva: o cambia el color del role, o esa clase no se usa con él.'
+        : (pair.fg.variable
+          ? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
+            + 'para que el componente deje de heredar el valor de la librería.'
+          : 'El color va horneado en la clase y no se puede mover desde el theme.');
+
+      fail(
+        'contraste-horneado',
+        `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, por debajo del `
+        + `${minContrast}:1 que pide WCAG 2.x AA para texto normal`
+        + (baseline !== null ? ` (con la paleta por defecto este par da ${baseline.toFixed(2)}:1)` : '')
+        + `. Aquí ${pair.why}: es un par que la librería resuelve por su cuenta y que el `
+        + `rebrand no toca. ${arreglo}`,
+        line,
+      );
+    }
   }
 
   return { errors, warnings, notes };
