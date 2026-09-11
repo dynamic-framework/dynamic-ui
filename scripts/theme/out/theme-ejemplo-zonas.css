@@ -1,0 +1,243 @@
+/*
+ * Theme expandido para @dynamic-framework/ui-react 2.10.0.
+ * Theme: Ejemplo con zonas
+ *
+ * Generado por scripts/theme/theme-expand.mjs — no editar a mano.
+ * Cárgalo DESPUÉS de dynamic-ui.css.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  /* Role primary — base + 10 hojas (el 500 sigue al base) */
+  --bs-primary-rgb: 59, 95, 138;
+  --bs-primary-25-rgb: 245, 247, 249;
+  --bs-primary-50-rgb: 235, 239, 243;
+  --bs-primary-100-rgb: 216, 223, 232;
+  --bs-primary-200-rgb: 177, 191, 208;
+  --bs-primary-300-rgb: 137, 159, 185;
+  --bs-primary-400-rgb: 98, 127, 161;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 47, 76, 110;
+  --bs-primary-700-rgb: 35, 57, 83;
+  --bs-primary-800-rgb: 24, 38, 55;
+  --bs-primary-900-rgb: 12, 19, 28;
+
+  /* Role secondary — base + 10 hojas (el 500 sigue al base) */
+  --bs-secondary-rgb: 90, 101, 112;
+  --bs-secondary-25-rgb: 247, 247, 248;
+  --bs-secondary-50-rgb: 239, 240, 241;
+  --bs-secondary-100-rgb: 222, 224, 226;
+  --bs-secondary-200-rgb: 189, 193, 198;
+  --bs-secondary-300-rgb: 156, 163, 169;
+  --bs-secondary-400-rgb: 123, 132, 141;
+  --bs-secondary-500-rgb: var(--bs-secondary-rgb);
+  --bs-secondary-600-rgb: 72, 81, 90;
+  --bs-secondary-700-rgb: 54, 61, 67;
+  --bs-secondary-800-rgb: 36, 40, 45;
+  --bs-secondary-900-rgb: 18, 20, 22;
+
+  /* Role success — base + 10 hojas (el 500 sigue al base) */
+  --bs-success-rgb: 61, 122, 93;
+  --bs-success-25-rgb: 245, 248, 247;
+  --bs-success-50-rgb: 236, 242, 239;
+  --bs-success-100-rgb: 216, 228, 223;
+  --bs-success-200-rgb: 177, 202, 190;
+  --bs-success-300-rgb: 139, 175, 158;
+  --bs-success-400-rgb: 100, 149, 125;
+  --bs-success-500-rgb: var(--bs-success-rgb);
+  --bs-success-600-rgb: 49, 98, 74;
+  --bs-success-700-rgb: 37, 73, 56;
+  --bs-success-800-rgb: 24, 49, 37;
+  --bs-success-900-rgb: 12, 24, 19;
+
+  /* Role info — base + 10 hojas (el 500 sigue al base) */
+  --bs-info-rgb: 55, 98, 127;
+  --bs-info-25-rgb: 245, 247, 249;
+  --bs-info-50-rgb: 235, 239, 242;
+  --bs-info-100-rgb: 215, 224, 229;
+  --bs-info-200-rgb: 175, 192, 204;
+  --bs-info-300-rgb: 135, 161, 178;
+  --bs-info-400-rgb: 95, 129, 153;
+  --bs-info-500-rgb: var(--bs-info-rgb);
+  --bs-info-600-rgb: 44, 78, 102;
+  --bs-info-700-rgb: 33, 59, 76;
+  --bs-info-800-rgb: 22, 39, 51;
+  --bs-info-900-rgb: 11, 20, 25;
+
+  /* Role warning — base + 10 hojas (el 500 sigue al base) */
+  --bs-warning-rgb: 224, 179, 65;
+  --bs-warning-25-rgb: 253, 251, 246;
+  --bs-warning-50-rgb: 252, 247, 236;
+  --bs-warning-100-rgb: 249, 240, 217;
+  --bs-warning-200-rgb: 243, 225, 179;
+  --bs-warning-300-rgb: 236, 209, 141;
+  --bs-warning-400-rgb: 230, 194, 103;
+  --bs-warning-500-rgb: var(--bs-warning-rgb);
+  --bs-warning-600-rgb: 179, 143, 52;
+  --bs-warning-700-rgb: 134, 107, 39;
+  --bs-warning-800-rgb: 90, 72, 26;
+  --bs-warning-900-rgb: 45, 36, 13;
+
+  /* Role danger — base + 10 hojas (el 500 sigue al base) */
+  --bs-danger-rgb: 168, 68, 63;
+  --bs-danger-25-rgb: 251, 246, 245;
+  --bs-danger-50-rgb: 246, 236, 236;
+  --bs-danger-100-rgb: 238, 218, 217;
+  --bs-danger-200-rgb: 220, 180, 178;
+  --bs-danger-300-rgb: 203, 143, 140;
+  --bs-danger-400-rgb: 185, 105, 101;
+  --bs-danger-500-rgb: var(--bs-danger-rgb);
+  --bs-danger-600-rgb: 134, 54, 50;
+  --bs-danger-700-rgb: 101, 41, 38;
+  --bs-danger-800-rgb: 67, 27, 25;
+  --bs-danger-900-rgb: 34, 14, 13;
+
+  /* Role light — sólo base: la librería no expone rampa para light */
+  --bs-light-rgb: 245, 247, 249;
+
+  /* Role dark — sólo base: la librería no expone rampa para dark */
+  --bs-dark-rgb: 33, 41, 51;
+
+  /* Superficies — siempre explícitas */
+  --bs-body-bg-rgb: 245, 247, 249;
+  --bs-body-color-rgb: 31, 41, 51;
+  --bs-border-color: rgb(0, 0, 0);
+
+  /* Fix: en la librería estas dos apuntan al wrapper (var(--bs-gray-200)),
+     que no es un triplete y rompe cualquier RGBA() que las consuma */
+  --bs-secondary-bg-rgb: var(--bs-gray-200-rgb);
+  --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
+
+  /* Tipografía — familia y escala vía --bs-rfs-fs-N, nunca --bs-fs-N */
+  --bs-body-font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-rfs-fs-1: calc(1.325rem + .9vw);
+  --bs-rfs-fs-2: calc(1.3rem + .6vw);
+  --bs-rfs-fs-3: calc(1.275rem + .3vw);
+  --bs-rfs-fs-4: 1.25rem;
+  --bs-rfs-fs-5: 1rem;
+  --bs-rfs-fs-6: .875rem;
+
+  /* Radios — derivados del radio base */
+  --bs-border-radius: .5rem;
+  --bs-border-radius-sm: .25rem;
+  --bs-border-radius-lg: 1rem;
+  --bs-border-radius-xl: 1.5rem;
+  --bs-border-radius-xxl: 2rem;
+  --bs-border-radius-2xl: var(--bs-border-radius-xxl);
+
+  /* Variables propias del theme */
+  --bs-body-font-size: .9375rem;
+  --bs-body-line-height: 1.5;
+  --bs-heading-color: rgb(var(--bs-dark-rgb));
+  --bs-border-color-translucent: rgba(0, 0, 0, .1);
+  --bs-box-shadow-sm: 0 1px 4px rgba(31, 41, 51, .1);
+  --bs-focus-ring-color: rgba(var(--bs-primary-rgb), .4);
+  --bs-primary-text-emphasis: rgb(var(--bs-primary-700-rgb));
+}
+
+/* La librería redefine --bs-rfs-fs-1..4 en este breakpoint; sin este bloque
+   la escala de arriba sólo se vería por debajo de 1200px. */
+@media (min-width: 1200px) {
+  :root,
+  [data-bs-theme="dynamic"] {
+    --bs-rfs-fs-1: 2rem;
+    --bs-rfs-fs-2: 1.75rem;
+    --bs-rfs-fs-3: 1.5rem;
+    --bs-rfs-fs-4: 1.25rem;
+  }
+}
+
+/* Componentes — 6 selector(es). */
+.btn {
+  --bs-btn-border-radius: 50rem;
+  --bs-btn-font-weight: 600;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-padding-y: .375rem;
+}
+
+.card {
+  --bs-card-bg: rgb(var(--bs-body-bg-rgb));
+  --bs-card-border-color: var(--bs-border-color);
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: rgb(var(--bs-primary-rgb));
+  --bs-nav-pills-link-active-color: rgb(var(--bs-white-rgb));
+}
+
+.form-control,
+.form-select {
+  padding: .5rem .75rem;
+}
+
+.form-check-input {
+  border-color: rgb(var(--bs-secondary-rgb));
+  border-radius: .125rem;
+}
+
+.font-numeric {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Zonas — subárboles con su propia paleta, montados con data-bs-theme. */
+[data-bs-theme="oscura"] {
+  --bs-body-bg-rgb: var(--bs-dark-rgb);
+  --bs-body-bg: rgb(var(--bs-dark-rgb));
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-emphasis-color: rgb(var(--bs-white-rgb));
+  --bs-heading-color: rgb(var(--bs-white-rgb));
+  --bs-link-color-rgb: var(--bs-primary-300-rgb);
+  --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
+  --bs-border-color: rgba(var(--bs-white-rgb), .15);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+
+[data-bs-theme="oscura"] .nav {
+  --bs-nav-link-color: rgb(var(--bs-white-rgb));
+  --bs-nav-link-hover-color: rgb(var(--bs-primary-200-rgb));
+}
+
+[data-bs-theme="oscura"] .nav-pills {
+  --bs-nav-pills-link-active-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-nav-pills-link-active-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme="oscura"] .btn-primary {
+  --bs-btn-color: rgb(var(--bs-dark-rgb));
+  --bs-btn-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-hover-color: rgb(var(--bs-dark-rgb));
+  --bs-btn-active-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme="oscura"] .btn-outline-primary {
+  --bs-btn-color: rgb(var(--bs-white-rgb));
+  --bs-btn-hover-color: rgb(var(--bs-dark-rgb));
+  --bs-btn-hover-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-hover-border-color: rgb(var(--bs-primary-200-rgb));
+}
+
+[data-bs-theme="oscura"] .list-group {
+  --bs-list-group-color: rgb(var(--bs-body-color-rgb));
+  --bs-list-group-bg: transparent;
+  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));
+  --bs-list-group-border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="oscura"] .form-control,
+[data-bs-theme="oscura"] .form-select {
+  --bs-body-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme="oscura"] .modal {
+  --bs-modal-color: rgb(var(--bs-dark-rgb));
+  --bs-heading-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme="oscura"] .modal .btn-outline-primary {
+  --bs-btn-color: rgb(var(--bs-dark-rgb));
+}

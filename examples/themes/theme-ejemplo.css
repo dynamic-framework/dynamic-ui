@@ -1,0 +1,157 @@
+/*
+ * Theme expandido para @dynamic-framework/ui-react 2.10.0.
+ * Theme: Banco Ejemplo
+ *
+ * Generado por scripts/theme/theme-expand.mjs — no editar a mano.
+ * Cárgalo DESPUÉS de dynamic-ui.css.
+ *
+ * NOTA: La rampa de grises de Dynamic 2.8.0 está escrita a mano en
+ *        _colors.scss; aquí se deriva por tinte desde `gray`, así que los
+ *        pasos no coinciden con los del tema por defecto.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  /* Grises — base y 11 pasos derivados por tinte */
+  --bs-gray-rgb: 91, 100, 114;
+  --bs-gray-25-rgb: 247, 247, 248;
+  --bs-gray-50-rgb: 239, 240, 241;
+  --bs-gray-100-rgb: 222, 224, 227;
+  --bs-gray-200-rgb: 189, 193, 199;
+  --bs-gray-300-rgb: 157, 162, 170;
+  --bs-gray-400-rgb: 124, 131, 142;
+  --bs-gray-500-rgb: 91, 100, 114;
+  --bs-gray-600-rgb: 73, 80, 91;
+  --bs-gray-700-rgb: 55, 60, 68;
+  --bs-gray-800-rgb: 36, 40, 46;
+  --bs-gray-900-rgb: 18, 20, 23;
+
+  /* Role primary — base + 10 hojas (el 500 sigue al base) */
+  --bs-primary-rgb: 11, 107, 83;
+  --bs-primary-25-rgb: 243, 248, 246;
+  --bs-primary-50-rgb: 231, 240, 238;
+  --bs-primary-100-rgb: 206, 225, 221;
+  --bs-primary-200-rgb: 157, 196, 186;
+  --bs-primary-300-rgb: 109, 166, 152;
+  --bs-primary-400-rgb: 60, 137, 117;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 9, 86, 66;
+  --bs-primary-700-rgb: 7, 64, 50;
+  --bs-primary-800-rgb: 4, 43, 33;
+  --bs-primary-900-rgb: 2, 21, 17;
+
+  /* Role secondary — base + 10 hojas (el 500 sigue al base) */
+  --bs-secondary-rgb: 65, 65, 78;
+  --bs-secondary-25-rgb: 246, 246, 246;
+  --bs-secondary-50-rgb: 236, 236, 237;
+  --bs-secondary-100-rgb: 217, 217, 220;
+  --bs-secondary-200-rgb: 179, 179, 184;
+  --bs-secondary-300-rgb: 141, 141, 149;
+  --bs-secondary-400-rgb: 103, 103, 113;
+  --bs-secondary-500-rgb: var(--bs-secondary-rgb);
+  --bs-secondary-600-rgb: 52, 52, 62;
+  --bs-secondary-700-rgb: 39, 39, 47;
+  --bs-secondary-800-rgb: 26, 26, 31;
+  --bs-secondary-900-rgb: 13, 13, 16;
+
+  /* Role success — base + 10 hojas (el 500 sigue al base) */
+  --bs-success-rgb: 15, 122, 61;
+  --bs-success-25-rgb: 243, 248, 245;
+  --bs-success-50-rgb: 231, 242, 236;
+  --bs-success-100-rgb: 207, 228, 216;
+  --bs-success-200-rgb: 159, 202, 177;
+  --bs-success-300-rgb: 111, 175, 139;
+  --bs-success-400-rgb: 63, 149, 100;
+  --bs-success-500-rgb: var(--bs-success-rgb);
+  --bs-success-600-rgb: 12, 98, 49;
+  --bs-success-700-rgb: 9, 73, 37;
+  --bs-success-800-rgb: 6, 49, 24;
+  --bs-success-900-rgb: 3, 24, 12;
+
+  /* Role info — base + 10 hojas (el 500 sigue al base) */
+  --bs-info-rgb: 27, 110, 194;
+  --bs-info-25-rgb: 244, 248, 252;
+  --bs-info-50-rgb: 232, 241, 249;
+  --bs-info-100-rgb: 209, 226, 243;
+  --bs-info-200-rgb: 164, 197, 231;
+  --bs-info-300-rgb: 118, 168, 218;
+  --bs-info-400-rgb: 73, 139, 206;
+  --bs-info-500-rgb: var(--bs-info-rgb);
+  --bs-info-600-rgb: 22, 88, 155;
+  --bs-info-700-rgb: 16, 66, 116;
+  --bs-info-800-rgb: 11, 44, 78;
+  --bs-info-900-rgb: 5, 22, 39;
+
+  /* Role warning — base + 10 hojas (el 500 sigue al base) */
+  --bs-warning-rgb: 245, 165, 36;
+  --bs-warning-25-rgb: 255, 251, 244;
+  --bs-warning-50-rgb: 254, 246, 233;
+  --bs-warning-100-rgb: 253, 237, 211;
+  --bs-warning-200-rgb: 251, 219, 167;
+  --bs-warning-300-rgb: 249, 201, 124;
+  --bs-warning-400-rgb: 247, 183, 80;
+  --bs-warning-500-rgb: var(--bs-warning-rgb);
+  --bs-warning-600-rgb: 196, 132, 29;
+  --bs-warning-700-rgb: 147, 99, 22;
+  --bs-warning-800-rgb: 98, 66, 14;
+  --bs-warning-900-rgb: 49, 33, 7;
+
+  /* Role danger — base + 10 hojas (el 500 sigue al base) */
+  --bs-danger-rgb: 180, 35, 24;
+  --bs-danger-25-rgb: 251, 244, 243;
+  --bs-danger-50-rgb: 248, 233, 232;
+  --bs-danger-100-rgb: 240, 211, 209;
+  --bs-danger-200-rgb: 225, 167, 163;
+  --bs-danger-300-rgb: 210, 123, 116;
+  --bs-danger-400-rgb: 195, 79, 70;
+  --bs-danger-500-rgb: var(--bs-danger-rgb);
+  --bs-danger-600-rgb: 144, 28, 19;
+  --bs-danger-700-rgb: 108, 21, 14;
+  --bs-danger-800-rgb: 72, 14, 10;
+  --bs-danger-900-rgb: 36, 7, 5;
+
+  /* Role light — sólo base: la librería no expone rampa para light */
+  --bs-light-rgb: 251, 251, 252;
+
+  /* Role dark — sólo base: la librería no expone rampa para dark */
+  --bs-dark-rgb: 16, 24, 40;
+
+  /* Superficies — siempre explícitas */
+  --bs-body-bg-rgb: 247, 248, 250;
+  --bs-body-color-rgb: 16, 24, 40;
+  --bs-border-color: rgb(228, 231, 236);
+
+  /* Fix: en la librería estas dos apuntan al wrapper (var(--bs-gray-200)),
+     que no es un triplete y rompe cualquier RGBA() que las consuma */
+  --bs-secondary-bg-rgb: var(--bs-gray-200-rgb);
+  --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
+
+  /* Tipografía — familia y escala vía --bs-rfs-fs-N, nunca --bs-fs-N */
+  --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-rfs-fs-1: calc(1.4rem + 1.8vw);
+  --bs-rfs-fs-2: calc(1.35rem + 1.2vw);
+  --bs-rfs-fs-3: calc(1.3125rem + .75vw);
+  --bs-rfs-fs-4: calc(1.275rem + .3vw);
+  --bs-rfs-fs-5: 1.25rem;
+  --bs-rfs-fs-6: 1rem;
+
+  /* Radios — derivados del radio base */
+  --bs-border-radius: .75rem;
+  --bs-border-radius-sm: .375rem;
+  --bs-border-radius-lg: 1.5rem;
+  --bs-border-radius-xl: 2.25rem;
+  --bs-border-radius-xxl: 3rem;
+  --bs-border-radius-2xl: var(--bs-border-radius-xxl);
+}
+
+/* La librería redefine --bs-rfs-fs-1..4 en este breakpoint; sin este bloque
+   la escala de arriba sólo se vería por debajo de 1200px. */
+@media (min-width: 1200px) {
+  :root,
+  [data-bs-theme="dynamic"] {
+    --bs-rfs-fs-1: 2.75rem;
+    --bs-rfs-fs-2: 2.25rem;
+    --bs-rfs-fs-3: 1.875rem;
+    --bs-rfs-fs-4: 1.5rem;
+  }
+}
