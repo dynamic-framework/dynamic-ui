@@ -17,13 +17,27 @@ npm run theme:validate -- examples/themes/theme-ejemplo.css
 
 Los tests viven en `theme-validate.spec.ts` y corren con `npm test`.
 
-Los themes de marca viven en `themes/` y su CSS generado en `out/`:
+Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
+`theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
+zona y los pares horneados, y que el validador acepta sin errores:
 
 ```bash
 npm run theme:expand -- scripts/theme/themes/theme-ejemplo-zonas.json -o scripts/theme/out/theme-ejemplo-zonas.css
 npm run theme:validate -- scripts/theme/out/theme-ejemplo-zonas.css
 npm run theme:preview          # sirve scripts/theme/preview en el navegador
 ```
+
+La preview carga el theme por query string, así que sirve para cualquiera sin
+tocar el HTML:
+
+```
+/preview/                                      # theme-ejemplo-zonas.css
+/preview/?css=../out/mi-theme.css
+/preview/?css=../out/mi-theme.css&fonts=<url>  # webfonts, si el theme las pide
+/preview/?css=…&zona=nocturna                  # sin este parámetro se deduce del CSS
+```
+
+Un theme que no declare ninguna zona se muestra igual, sólo con la columna clara.
 
 ## Entrada
 

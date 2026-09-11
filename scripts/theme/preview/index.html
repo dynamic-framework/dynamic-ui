@@ -3,17 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ejemplo v0.2.2 sobre Dynamic UI 2.10.0</title>
+<title>Preview de theme sobre Dynamic UI 2.10.0</title>
 <!-- Inline para que la página no pida un favicon que no existe. -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%237fd4d0'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;500;700&display=swap">
 
 <!-- El orden importa: la librería primero, el theme después. -->
 <link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/2.10.0/ui-react/css/dynamic-ui.min.css">
-<link rel="stylesheet" href="../out/theme-ejemplo-zonas.css">
+
+<script>
+  /*
+   * El theme y sus fuentes se pasan por query string, para que la misma página
+   * sirva para cualquiera:
+   *
+   *   ?css=../out/mi-theme.css
+   *   ?fonts=https://fonts.googleapis.com/css2?family=…   (opcional, ya escapado)
+   *
+   * Los <link> se insertan aquí, en el head y antes del contenido, para que el
+   * navegador los trate como hoja bloqueante y no haya un parpadeo sin estilos.
+   */
+  const params = new URLSearchParams(window.location.search);
+  const themeHref = params.get('css') || '../out/theme-ejemplo-zonas.css';
+  const fontsHref = params.get('fonts');
+
+  const cargar = (href) => new Promise((resolve) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    // Se resuelve igual si falla: la página tiene que poder decir qué no cargó.
+    link.addEventListener('load', () => resolve({ href, ok: true }));
+    link.addEventListener('error', () => resolve({ href, ok: false }));
+    document.head.appendChild(link);
+  });
+
+  window.__preview = {
+    themeHref,
+    hojas: Promise.all([cargar(themeHref), fontsHref ? cargar(fontsHref) : null].filter(Boolean)),
+  };
+</script>
 
 <style>
   /*
@@ -106,11 +135,13 @@
 <body>
 <div class="container">
   <header class="mb-4">
-    <h1 class="preview-title">Ejemplo con zonas · v0.2.2</h1>
+    <h1 class="preview-title">Preview de theme</h1>
     <p class="mb-0">
-      <code>theme-ejemplo-zonas.css</code> sobre <code>@dynamic-framework/ui-react 2.10.0</code>
-      servido desde el CDN. Cada sección se repite en la zona clara y dentro de
-      <code>[data-bs-theme="oscura"]</code>.
+      <code class="js-theme-href"></code> sobre
+      <code>@dynamic-framework/ui-react 2.10.0</code> servido desde el CDN. Cada sección se
+      repite en la zona clara y dentro de la zona oscura del theme.
+      Se cambia de theme con <code>?css=…</code>, y se añaden webfonts con
+      <code>?fonts=…</code>.
     </p>
   </header>
   <main id="preview-root"></main>
@@ -294,7 +325,7 @@
 </template>
 
 <!-- El hero sólo existe en oscuro: es el encabezado del dashboard. -->
-<template data-section="Hero del dashboard" data-only-dark="true" data-contrast-pair="body">
+<template data-section="Bloque destacado en zona oscura" data-only-dark="true" data-contrast-pair="body">
   <ul class="nav nav-pills mb-4">
     <li class="nav-item"><a class="nav-link active" href="#">Cuentas</a></li>
     <li class="nav-item"><a class="nav-link" href="#">Créditos</a></li>
@@ -327,6 +358,25 @@
  */
 
 const ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'];
+
+/*
+ * Nombre de la zona oscura que trae el theme cargado. Se busca en sus reglas en
+ * vez de fijarlo aquí, para que la página no dependa de cómo la haya llamado
+ * quien escribió el theme.
+ */
+function zonaDelTheme() {
+  const propia = new URLSearchParams(window.location.search).get('zona');
+  if (propia) return propia;
+  for (const sheet of document.styleSheets) {
+    let rules;
+    try { rules = sheet.cssRules; } catch { continue; }
+    for (const rule of rules) {
+      const match = rule.selectorText?.match(/^\[data-bs-theme=["']?([\w-]+)["']?\]$/);
+      if (match && match[1] !== 'dynamic') return match[1];
+    }
+  }
+  return null;
+}
 const RAMP = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
 /** Relación de contraste WCAG 2.x entre dos colores ya resueltos a canales. */
@@ -434,6 +484,8 @@ function readout(zone, pairKey) {
   </small>`;
 }
 
+let ZONA = null;
+
 function build() {
   const root = document.getElementById('preview-root');
   for (const tpl of document.querySelectorAll('template[data-section]')) {
@@ -442,8 +494,8 @@ function build() {
     const onlyDark = tpl.dataset.onlyDark === 'true';
 
     const zones = onlyDark
-      ? [{ label: 'oscura', theme: 'oscura' }]
-      : [{ label: 'zona clara', theme: null }, { label: 'oscura', theme: 'oscura' }];
+      ? [{ label: ZONA, theme: ZONA }]
+      : [{ label: 'zona clara', theme: null }, { label: ZONA, theme: ZONA }];
 
     const pair = document.createElement('div');
     pair.className = 'preview-pair';
@@ -478,7 +530,22 @@ function build() {
 
 // Las fuentes cambian métricas, no colores, pero se espera a que carguen para
 // que la captura no salga con la tipografía de respaldo.
-document.fonts.ready.then(() => {
+Promise.all([document.fonts.ready, window.__preview.hojas]).then(([, hojas]) => {
+  document.querySelector('.js-theme-href').textContent = window.__preview.themeHref;
+
+  const fallidas = hojas.filter((h) => !h.ok);
+  if (fallidas.length > 0) {
+    document.getElementById('preview-root').insertAdjacentHTML('beforebegin',
+      `<p class="alert alert-danger">No se pudo cargar: ${fallidas.map((h) => h.href).join(', ')}</p>`);
+  }
+
+  ZONA = zonaDelTheme();
+  if (!ZONA) {
+    document.getElementById('preview-root').insertAdjacentHTML('beforebegin',
+      '<p class="alert alert-warning">El theme no declara ninguna zona: se muestra sólo la clara.</p>');
+    ZONA = 'sin-zona';
+  }
+
   build();
   document.documentElement.dataset.previewReady = 'true';
 });

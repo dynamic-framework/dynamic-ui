@@ -528,7 +528,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     const fgDecl = block.decls.get('--bs-btn-color');
     const hoverDecl = block.decls.get('--bs-btn-hover-color');
     const bgDecl = block.decls.get('--bs-btn-bg');
-    if (!fgDecl && !hoverDecl && !bgDecl) continue;
+    const hoverBgDecl = block.decls.get('--bs-btn-hover-bg');
+    if (!fgDecl && !hoverDecl && !bgDecl && !hoverBgDecl) continue;
 
     for (const part of splitZone(block.prelude).bare.split(',')) {
       const match = part.trim().match(BUTTON_SELECTOR);
@@ -551,27 +552,43 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
          */
         const cases = outline
           ? [
-            { estado: 'en reposo', fg: fgDecl, fgFallback: `--bs-${role}-rgb`, bgFallback: '--bs-body-bg-rgb' },
-            { estado: 'relleno (hover/active)', fg: hoverDecl ?? fgDecl, fgFallback: pick(BUTTON_DEFAULT_FG[role], role), bgFallback: `--bs-${role}-rgb` },
+            {
+              estado: 'en reposo',
+              fg: fgDecl,
+              fgFallback: `--bs-${role}-rgb`,
+              bg: undefined,
+              bgFallback: '--bs-body-bg-rgb',
+            },
+            {
+              // Al rellenarse, el fondo lo pone --bs-btn-hover-bg, que en
+              // Bootstrap vale var(--bs-<role>); --bs-btn-bg se queda en
+              // transparent y no llega a verse nunca.
+              estado: 'relleno (hover/active)',
+              fg: hoverDecl ?? fgDecl,
+              fgFallback: pick(BUTTON_DEFAULT_FG[role], role),
+              bg: hoverBgDecl,
+              bgFallback: `--bs-${role}-rgb`,
+            },
           ]
           : [
-            { estado: null, fg: fgDecl, fgFallback: pick(BUTTON_DEFAULT_FG[role], role), bgFallback: `--bs-${role}-rgb` },
+            {
+              estado: null,
+              fg: fgDecl,
+              fgFallback: pick(BUTTON_DEFAULT_FG[role], role),
+              bg: bgDecl,
+              bgFallback: `--bs-${role}-rgb`,
+            },
           ];
 
         for (const caso of cases) {
           const where = caso.estado ? `${label}, ${caso.estado}` : label;
           const fg = measure(caso.fg, caso.fgFallback, scope, `${where} color de texto`);
-          const bg = measure(
-            caso.bgFallback === `--bs-${role}-rgb` ? bgDecl : undefined,
-            caso.bgFallback,
-            scope,
-            `${where} fondo`,
-          );
+          const bg = measure(caso.bg, caso.bgFallback, scope, `${where} fondo`);
           if (!fg.rgb || !bg.rgb) {
             warn(
               'contraste-irresoluble',
               `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
-              (caso.fg ?? bgDecl)?.line ?? null,
+              (caso.fg ?? caso.bg)?.line ?? null,
             );
             continue;
           }
@@ -589,7 +606,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
                 ? 'El theme fija ese color de texto: o se aclara el fondo, o se oscurece el texto.'
                 : `El theme no lo fija, así que el botón conserva el que Bootstrap horneó `
                   + `para "${role}".`)),
-            (caso.fg ?? bgDecl)?.line ?? null,
+            (caso.fg ?? caso.bg)?.line ?? null,
           );
         }
       }

@@ -588,7 +588,7 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
       zones: {
         oscura: {
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
         },
@@ -612,7 +612,7 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
       zones: {
         oscura: {
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
         },
@@ -670,7 +670,7 @@ describe('componentes propios de una zona', () => {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
             '--bs-body-bg': 'rgb(var(--bs-dark-rgb))',
             '--bs-body-color': 'rgb(var(--bs-white-rgb))',
@@ -715,7 +715,7 @@ describe('componentes propios de una zona', () => {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
           components: [
@@ -742,7 +742,7 @@ describe('componentes propios de una zona', () => {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
         },
@@ -777,7 +777,7 @@ describe('theme-validate — pares horneados', () => {
       zones: {
         oscura: {
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
         },
@@ -831,7 +831,7 @@ describe('theme-validate — pares horneados', () => {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
           components: [
@@ -857,7 +857,7 @@ describe('theme-validate — pares horneados', () => {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
           vars: {
-            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-bg-rgb': '32, 44, 62',
             '--bs-body-color-rgb': 'var(--bs-white-rgb)',
           },
           components: [
@@ -896,43 +896,43 @@ describe('theme-expand — el breakpoint de RFS', () => {
   });
 });
 
-describe('el theme de Ejemplo que vive en el repo', () => {
+describe('el ejemplo con zonas que vive en el repo', () => {
   const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
 
   it('cumple el esquema y genera su CSS', () => {
-    const output = path.join(workdir, 'theme-ejemplo-zonas.css');
+    const output = path.join(workdir, 'ejemplo-zonas.css');
     const result = run(EXPAND, [themePath, '-o', output]);
     expect(result.stderr).toBe('');
     expect(result.status).toBe(0);
 
     const css = fs.readFileSync(output, 'utf8');
-    expect(css).toContain('--bs-primary-rgb: 0, 204, 197;');
     expect(css).toContain('[data-bs-theme="oscura"] {');
-    expect(css).toContain('.font-numeric {');
-    // Los componentes propios de la zona, que son lo que v0.2.1 añade.
-    expect(css).toContain('[data-bs-theme="oscura"] .btn-primary {');
     expect(css).toContain('[data-bs-theme="oscura"] .list-group {');
+    expect(css).toContain('.font-numeric {');
   });
 
-  it('sólo deja sin resolver el par que va horneado con !important', () => {
-    const output = path.join(workdir, 'theme-ejemplo-2.css');
+  it('pasa el validador sin errores', () => {
+    // Este ejemplo es el banco de pruebas de la herramienta: ejercita las tres
+    // secciones, los componentes de zona y los pares horneados. Si deja de
+    // validar, alguna regla cambió de criterio sin querer.
+    const output = path.join(workdir, 'ejemplo-zonas-2.css');
     run(EXPAND, [themePath, '-o', output]);
     const result = run(VALIDATE, [output]);
+    expect(result.stderr).not.toContain('error ');
+    expect(result.status).toBe(0);
+  });
 
-    // Todo lo que el theme puede mover está resuelto: botones y listas dentro
-    // de la zona oscura, y el par de las alertas de primary.
-    expect(result.stderr).not.toContain('[contraste-boton]');
-    expect(result.stderr).not.toContain('[contraste-nav-pills]');
-    expect(result.stderr).not.toContain('[contraste-zona]');
-    expect(result.stderr).not.toContain('.list-group-item');
-    expect(result.stderr).not.toContain('.alert-primary');
-
-    // Lo único que queda es `.text-bg-primary`, en el raíz y en la zona:
-    // Bootstrap escribe ese color con !important en la propia clase, así que
-    // ninguna variable del theme puede moverlo. Es un límite de la librería.
-    expect(result.stderr).toContain('.text-bg-primary');
-    const errores = result.stderr.match(/^error /gm) ?? [];
-    expect(errores).toHaveLength(2);
+  it('el CSS versionado está al día con su JSON', () => {
+    // El CSS se commitea para que la preview funcione recién clonado el repo;
+    // si alguien toca el JSON y no regenera, esto lo dice.
+    const output = path.join(workdir, 'ejemplo-zonas-3.css');
+    run(EXPAND, [themePath, '-o', output]);
+    const recien = fs.readFileSync(output, 'utf8');
+    const versionado = fs.readFileSync(
+      path.join(ROOT, 'scripts/theme/out/theme-ejemplo-zonas.css'),
+      'utf8',
+    );
+    expect(recien).toBe(versionado);
   });
 });
 
