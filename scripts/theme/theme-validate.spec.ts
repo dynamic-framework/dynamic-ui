@@ -341,15 +341,26 @@ describe('theme-expand — sección root', () => {
     expect(root).toContain('--bs-heading-color: rgb(var(--bs-primary-rgb));');
   });
 
-  it('las pone al final del bloque, para que ganen a las derivadas', () => {
+  it('sustituye la variable derivada en vez de declararla dos veces', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
       root: { '--bs-border-radius': '0rem' },
     });
-    // El radio derivado sigue emitiéndose; el del autor va después y gana.
-    expect(css.indexOf('--bs-border-radius: .75rem;'))
-      .toBeLessThan(css.indexOf('--bs-border-radius: 0rem;'));
-    expect(css).toContain('una pisa una derivada de arriba');
+    // El valor del autor ocupa el sitio de la derivada, que desaparece: repetir
+    // la declaración daría el mismo resultado en la cascada, pero el bloque
+    // quedaría con una custom property duplicada.
+    expect(css).toContain('--bs-border-radius: 0rem;');
+    expect(css).not.toContain('--bs-border-radius: .75rem;');
+    expect(css.match(/^ {2}--bs-border-radius:/gm)).toHaveLength(1);
+    expect(css).toContain('reemplaza una variable derivada');
+  });
+
+  it('normaliza los hex a minúscula, como pide el linter del repo', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      root: { '--bs-danger-text-emphasis': '#A41313' },
+    });
+    expect(css).toContain('--bs-danger-text-emphasis: #a41313;');
   });
 
   it('rechaza una clave que no empieza por --bs-', () => {
@@ -386,6 +397,20 @@ describe('theme-expand — sección components', () => {
     expect(css).toContain('.font-numeric {\n  font-variant-numeric: tabular-nums;\n}');
   });
 
+  it('escribe una lista de selectores con uno por línea y ordena las propiedades', () => {
+    // Las dos cosas las pide el stylelint del repo, que también pasa por este
+    // CSS: selector-list-comma-newline-after y order/properties-order.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      components: [{
+        selector: '.form-control, .form-select',
+        declarations: { 'border-radius': '.125rem', padding: '1rem', 'border-color': 'rgb(var(--bs-info-rgb))' },
+      }],
+    });
+    expect(css).toContain('.form-control,\n.form-select {');
+    expect(css).toContain('  padding: 1rem;\n  border-color: rgb(var(--bs-info-rgb));\n  border-radius: .125rem;');
+  });
+
   it('los coloca después del bloque raíz y antes de las zonas', () => {
     const css = expandCss(SECTIONED_THEME);
     expect(css.indexOf('[data-bs-theme="dynamic"] {'))
@@ -402,7 +427,7 @@ describe('theme-expand — sección components', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('box-shadow');
     expect(result.stderr).toContain('no está permitida');
-    expect(result.stderr).toContain('padding, border-radius, border-color, font-family, font-variant-numeric');
+    expect(result.stderr).toContain('padding, font-family, font-variant-numeric, border-color, border-radius');
   });
 
   it('rechaza un bloque sin selector', () => {

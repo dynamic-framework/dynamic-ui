@@ -43,6 +43,7 @@ import {
   ZONE_NAME_RE,
   deriveRamp,
   formatRem,
+  normalizeCssValue,
   parseColor,
   parseRem,
   rfsPair,
@@ -383,7 +384,7 @@ const decl = (name, value) => `  --bs-${name}: ${value};`;
 /** Construye el CSS completo a partir de un theme ya normalizado. */
 export function expandTheme(input) {
   const theme = readTheme(input);
-  const lines = [];
+  let lines = [];
   const notes = [];
 
   // Grises. Si el theme los toca, la rampa se deriva con la misma receta de
@@ -496,23 +497,33 @@ export function expandTheme(input) {
   }
   lines.push(decl('border-radius-2xl', 'var(--bs-border-radius-xxl)'));
 
-  // Sección `root`. Va al final del bloque a propósito: son overrides escritos
-  // a mano, y si alguno repite una variable de las secciones derivadas debe
-  // ganar. La cascada de CSS resuelve el empate por orden de aparición.
+  // Sección `root`. Una variable que repita alguna de las derivadas sustituye a
+  // aquélla en su sitio en vez de volver a declararse al final: el resultado en
+  // la cascada es el mismo, pero sin una declaración duplicada en el bloque.
+  // Las que no chocan con nada van juntas al final.
   if (theme.root.length > 0) {
-    const derived = new Set(
-      lines
-        .map((line) => line.match(/^ {2}(--[\w-]+):/)?.[1])
-        .filter(Boolean),
-    );
-    const overrides = theme.root.filter(({ name }) => derived.has(name));
-    lines.push(section(
-      overrides.length > 0
-        ? `Variables propias del theme — ${overrides.length === 1 ? 'una pisa' : `${overrides.length} pisan`} una derivada de arriba:\n     ${overrides.map((o) => o.name).join(', ')}`
-        : 'Variables propias del theme, emitidas tal cual',
-    ));
-    for (const { name, value } of theme.root) {
-      lines.push(`  ${name}: ${value};`);
+    const pending = new Map(theme.root.map((entry) => [entry.name, entry]));
+    const overridden = [];
+
+    lines = lines.map((line) => {
+      const name = line.match(/^ {2}(--[\w-]+):/)?.[1];
+      const entry = name && pending.get(name);
+      if (!entry) return line;
+      pending.delete(name);
+      overridden.push(name);
+      return `  ${name}: ${normalizeCssValue(entry.value)}; /* del theme, en vez de la derivada */`;
+    });
+
+    if (overridden.length > 0) {
+      notes.push(
+        `La sección \`root\` reemplaza ${overridden.length === 1 ? 'una variable derivada' : `${overridden.length} variables derivadas`}: ${overridden.join(', ')}.`,
+      );
+    }
+    if (pending.size > 0) {
+      lines.push(section('Variables propias del theme'));
+      for (const { name, value } of pending.values()) {
+        lines.push(`  ${name}: ${normalizeCssValue(value)};`);
+      }
     }
   }
 
@@ -547,11 +558,17 @@ export function expandTheme(input) {
   // Componentes. Un bloque por selector, después del raíz y antes de las zonas:
   // así una zona puede pisar lo que el componente fija sin subir especificidad.
   const componentBlocks = theme.components.map(({ selector, vars, declarations }) => {
+    // Las declaraciones se ordenan como las espera el stylelint del repo, y los
+    // selectores de una lista van uno por línea por la misma razón.
+    const ordered = [...declarations].sort(
+      (a, b) => ALLOWED_DECLARATIONS.indexOf(a.property) - ALLOWED_DECLARATIONS.indexOf(b.property),
+    );
     const body = [
-      ...vars.map(({ name, value }) => `  ${name}: ${value};`),
-      ...declarations.map(({ property, value }) => `  ${property}: ${value};`),
+      ...vars.map(({ name, value }) => `  ${name}: ${normalizeCssValue(value)};`),
+      ...ordered.map(({ property, value }) => `  ${property}: ${normalizeCssValue(value)};`),
     ];
-    return `${selector} {\n${body.join('\n')}\n}`;
+    const prelude = selector.split(',').map((part) => part.trim()).filter(Boolean).join(',\n');
+    return `${prelude} {\n${body.join('\n')}\n}`;
   });
 
   // Zonas. Cada una es un subárbol con su propia paleta; `nav` se reparte en
@@ -559,15 +576,12 @@ export function expandTheme(input) {
   // de pills sobre .nav no las alcanza.
   const zoneBlocks = theme.zones.flatMap(({ name, vars, nav }) => {
     const selector = zoneSelector(name);
-    const blocks = [
-      `${selector} {\n${vars.map((v) => `  ${v.name}: ${v.value};`).join('\n')}\n}`,
-    ];
-    if (nav?.link.length) {
-      blocks.push(`${selector} .nav {\n${nav.link.map((v) => `  ${v.name}: ${v.value};`).join('\n')}\n}`);
-    }
-    if (nav?.pills.length) {
-      blocks.push(`${selector} .nav-pills {\n${nav.pills.map((v) => `  ${v.name}: ${v.value};`).join('\n')}\n}`);
-    }
+    const emit = (entries) => entries
+      .map((v) => `  ${v.name}: ${normalizeCssValue(v.value)};`)
+      .join('\n');
+    const blocks = [`${selector} {\n${emit(vars)}\n}`];
+    if (nav?.link.length) blocks.push(`${selector} .nav {\n${emit(nav.link)}\n}`);
+    if (nav?.pills.length) blocks.push(`${selector} .nav-pills {\n${emit(nav.pills)}\n}`);
     return blocks;
   });
 

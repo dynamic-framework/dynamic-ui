@@ -315,11 +315,20 @@ export const KNOWN_TOKENS_VERSION = knownTokens.dynamicUi;
  */
 export const ALLOWED_DECLARATIONS = [
   'padding',
-  'border-radius',
-  'border-color',
   'font-family',
   'font-variant-numeric',
+  'border-color',
+  'border-radius',
 ];
+
+/**
+ * Normaliza un valor CSS a lo que el stylelint del repo acepta: los hex en
+ * minúscula (`@stylistic/color-hex-case`). El theme se escribe a mano y ahí
+ * `#A41313` es tan legítimo como `#a41313`, pero el CSS generado pasa por el
+ * mismo linter que el resto del repo.
+ */
+export const normalizeCssValue = (value) => String(value)
+  .replace(/#[0-9a-fA-F]{3,8}\b/g, (hex) => hex.toLowerCase());
 
 /**
  * Color de texto que Bootstrap hornea en `.btn-<role>` con `color-contrast()`.
