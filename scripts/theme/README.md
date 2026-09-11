@@ -100,6 +100,44 @@ comprueba es la forma.
   mismo selector, que tiene menos especificidad. Es lo que permite que un botón
   o una lista se comporten distinto dentro de la zona sin duplicar el theme.
 
+### Hasta dónde llega una zona
+
+Una zona no es un tema aparte: es un subárbol del mismo documento, y hay dos
+cosas que no hereda solas.
+
+**Los wrappers de color se computan donde se declaran.** La librería define
+`--bs-body-color: rgb(var(--bs-body-color-rgb))` en `:root`, así que ese valor
+queda resuelto **con el triplete del raíz** y se hereda ya calculado. Una zona
+que sólo cambie `--bs-body-color-rgb` no lo mueve: todo lo que lea
+`var(--bs-body-color)` —`.form-control`, `.modal`, `.text-body-secondary`—
+seguirá pintando el color del tema claro. Por eso una zona declara el triplete
+**y** el wrapper:
+
+```json
+"vars": {
+  "--bs-body-color-rgb": "var(--bs-white-rgb)",
+  "--bs-body-color": "rgb(var(--bs-white-rgb))",
+  "--bs-secondary-color": "rgba(var(--bs-white-rgb), .75)",
+  "--bs-tertiary-color": "rgba(var(--bs-white-rgb), .5)",
+  "--bs-emphasis-color": "rgb(var(--bs-white-rgb))"
+}
+```
+
+**Y la zona tiene que pintarse.** `--bs-body-bg` y `--bs-body-color` las aplica
+la librería sobre `body`; un subárbol a media página nunca pasa por esa regla.
+Cuando una zona declara cualquiera de las dos, el generador emite `color` y
+`background-color` en su selector, para que el consumidor no acabe repitiéndolas
+a mano en su CSS.
+
+**Cuidado con el efecto en las superficies claras.** Declarar el wrapper cambia
+el color heredado de *todo* el subárbol, incluidos los componentes que llevan su
+propio fondo claro: un `.form-control` dentro de una zona oscura pasa a texto
+blanco sobre fondo blanco. Esos componentes necesitan su propio bloque en
+`zones.<nombre>.components` devolviéndoles un color legible —es exactamente para
+lo que está esa sección—. El validador todavía no lo detecta: asume que dentro de
+una zona el fondo es el de la zona, así que este caso hay que mirarlo en la
+preview.
+
 Toda referencia `var(--bs-algo)` de estas tres secciones se comprueba contra los
 tokens que el theme genera y contra `known-tokens.json`, el inventario de lo que
 Dynamic define en su CSS. Un `var()` a un token inexistente no da error en el

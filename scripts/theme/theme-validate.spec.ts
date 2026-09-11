@@ -660,6 +660,35 @@ describe('componentes propios de una zona', () => {
     expect(css).toContain('[data-bs-theme="oscura"] .form-control,\n[data-bs-theme="oscura"] .form-select {');
   });
 
+  it('pinta la zona cuando ésta se da su propio cuerpo', () => {
+    // Las variables solas no bastan: `--bs-body-bg` y `--bs-body-color` las
+    // aplica la librería sobre `body`, y un subárbol a media página nunca pasa
+    // por esa regla.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: {
+            '--bs-body-bg-rgb': '0, 40, 86',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+            '--bs-body-bg': 'rgb(var(--bs-dark-rgb))',
+            '--bs-body-color': 'rgb(var(--bs-white-rgb))',
+          },
+        },
+      },
+    });
+    expect(css).toContain('  color: var(--bs-body-color);\n  background-color: var(--bs-body-bg);\n}');
+  });
+
+  it('no pinta nada si la zona sólo toca los tripletes', () => {
+    // Sin los wrappers no hay nada que aplicar: `--bs-body-color-rgb` por sí
+    // solo no es un color que ninguna regla lea.
+    const css = expandCss(SECTIONED_THEME);
+    const bloque = css.slice(css.indexOf('[data-bs-theme="oscura"] {'));
+    expect(bloque.slice(0, bloque.indexOf('}'))).not.toContain('color: var(--bs-body-color);');
+  });
+
   it('los emite después de las variables y del nav de la zona', () => {
     const css = expandCss({
       ...SECTIONED_THEME,

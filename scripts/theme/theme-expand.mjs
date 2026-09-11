@@ -617,7 +617,21 @@ export function expandTheme(input) {
     const emit = (entries) => entries
       .map((v) => `  ${v.name}: ${normalizeCssValue(v.value)};`)
       .join('\n');
-    const blocks = [`${selector} {\n${emit(vars)}\n}`];
+
+    /*
+     * Una zona que se da su propio cuerpo tiene que pintarlo. Las variables
+     * solas no bastan: `--bs-body-bg` y `--bs-body-color` las aplica la
+     * librería en `body`, y un subárbol a media página nunca pasa por esa
+     * regla. Sin estas dos declaraciones la zona define colores que no usa
+     * nadie, y el consumidor acaba repitiéndolas a mano en su CSS.
+     */
+    const declares = (name) => vars.some((v) => v.name === name);
+    const paint = [
+      declares('--bs-body-color') ? '  color: var(--bs-body-color);' : null,
+      declares('--bs-body-bg') ? '  background-color: var(--bs-body-bg);' : null,
+    ].filter(Boolean);
+
+    const blocks = [`${selector} {\n${[emit(vars), ...paint].join('\n')}\n}`];
     if (nav?.link.length) blocks.push(`${selector} .nav {\n${emit(nav.link)}\n}`);
     if (nav?.pills.length) blocks.push(`${selector} .nav-pills {\n${emit(nav.pills)}\n}`);
     // Los componentes de la zona van al final: dentro del subárbol pisan tanto

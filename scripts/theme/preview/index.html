@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ejemplo v0.2.1 sobre Dynamic UI 2.10.0</title>
+<title>Ejemplo v0.2.2 sobre Dynamic UI 2.10.0</title>
 <!-- Inline para que la página no pida un favicon que no existe. -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%237fd4d0'/%3E%3C/svg%3E">
 
@@ -32,12 +32,20 @@
   }
   .preview-pair { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
   @media (max-width: 991.98px) { .preview-pair { grid-template-columns: 1fr; } }
+  /*
+   * El contenedor de zona no se pinta: el color y el fondo los pone el propio
+   * theme en el selector de la zona. Si esta regla los fijara, la preview
+   * enseñaría su propio CSS en vez del que se está revisando, y una zona que
+   * olvidara declararlos parecería correcta.
+   */
   .preview-zone {
     padding: 1.25rem;
     border: 1px solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
-    background-color: rgb(var(--bs-body-bg-rgb));
-    color: rgb(var(--bs-body-color-rgb));
+  }
+  /* La zona clara sí necesita fondo: es el :root, y ahí pinta `body`. */
+  .preview-zone:not([data-bs-theme]) {
+    background-color: var(--bs-body-bg);
   }
   .preview-zone-label {
     display: block;
@@ -98,7 +106,7 @@
 <body>
 <div class="container">
   <header class="mb-4">
-    <h1 class="preview-title">Ejemplo con zonas · v0.2.1</h1>
+    <h1 class="preview-title">Ejemplo con zonas · v0.2.2</h1>
     <p class="mb-0">
       <code>theme-ejemplo-zonas.css</code> sobre <code>@dynamic-framework/ui-react 2.10.0</code>
       servido desde el CDN. Cada sección se repite en la zona clara y dentro de
@@ -116,7 +124,7 @@
   <div class="js-palette"></div>
 </template>
 
-<template data-section="Tipografía" data-contrast-pair="body">
+<template data-section="Tipografía" data-contrast-pair="secundario">
   <h1>Raleway 1 · 1.625rem</h1>
   <h2>Raleway 2 · 1.5rem</h2>
   <h3>Raleway 3 · 1.25rem</h3>
@@ -127,7 +135,8 @@
     Cuerpo de texto en Raleway 400 a <code>.875rem</code> con interlineado
     <code>1.4286</code>. Aquí va <a href="#">un enlace</a> y <strong>algo en negrita</strong>.
   </p>
-  <p><small class="text-body-secondary">Texto <code>small</code>, para notas al pie y leyendas.</small></p>
+  <p><small class="text-body-secondary js-secondary">Texto <code>small</code> con <code>.text-body-secondary</code>, para notas al pie y leyendas.</small></p>
+  <p><span class="text-body-tertiary">Texto con <code>.text-body-tertiary</code>.</span></p>
   <p class="font-numeric mb-0" style="font-size:1.5rem;font-weight:700;">$ 1,284,590.75</p>
   <p><small><code>.font-numeric</code> — Open Sans con <code>tabular-nums</code></small></p>
 </template>
@@ -400,6 +409,9 @@ function renderPalette(host) {
  */
 const PAIRS = {
   body: (zone) => ({ label: 'cuerpo sobre fondo', node: zone }),
+  // El par que delata un wrapper que no sigue al triplete de la zona: si
+  // --bs-secondary-color se quedó con el valor del raíz, aquí se ve.
+  secundario: (zone) => ({ label: '.text-body-secondary', node: zone.querySelector('.js-secondary') }),
   'btn-primary': (zone) => ({ label: '.btn-primary', node: zone.querySelector('.btn-primary') }),
   input: (zone) => ({ label: '.form-control', node: zone.querySelector('.form-control') }),
   card: (zone) => ({ label: '.list-group-item', node: zone.querySelector('.list-group-item') }),
