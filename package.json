@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "2.8.0",
+  "version": "2.10.0",
   "description": "React Dynamic Framework",
   "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md",
   "repository": {
@@ -45,10 +45,11 @@
     "test:coverage": "jest --testPathPatterns=\\.spec\\.tsx?$ --coverage",
     "test:a11y": "jest --testPathPatterns=\\.a11y\\.test\\.tsx$",
     "test:storybook": "test-storybook",
-    "build": "npm run clean && npm run build:react && npm run build:scss && npm run cp",
+    "build": "npm run clean && npm run build:react && npm run build:scss && npm run build:icons-core && npm run cp",
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:scss": "node scripts/build-scss.js",
+    "build:icons-core": "npx tsx scripts/build-icons-core.ts",
     "build:scss:watch": "npx nodemon --watch src --ext scss --exec 'npm run build:scss'",
     "dev:ts": "tsc -p tsconfig.build.json",
     "dev:rollup": "rollup -c rollup.config.mjs",
@@ -90,7 +91,7 @@
     "node": ">=22.0.0"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
@@ -109,7 +110,6 @@
     "file-selector": "~2.1.2",
     "google-libphonenumber": "~3.2.43",
     "html2canvas": "^1.4.1",
-    "jspdf": "^4.0.0",
     "lucide-react": "^0.553.0",
     "react-datepicker": "~8.3.0",
     "react-error-boundary": "^6.1.0",

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.9.0...v2.10.0) (2026-09-10)
+
+
+### Features
+
+* **a11y:** hide DIcon from the accessibility tree by default ([#1181](https://github.com/dynamic-framework/dynamic-ui/issues/1181)) ([4275307](https://github.com/dynamic-framework/dynamic-ui/commit/42753078fe3ccbd340c8cc0b1d253ea11cfd4f3b))
+* **build:** per-module ESM output for consumer tree-shaking + drop jspdf ([#1176](https://github.com/dynamic-framework/dynamic-ui/issues/1176)) ([506ee88](https://github.com/dynamic-framework/dynamic-ui/commit/506ee88e6f5e02e6d2f789c249b8776a6c215c62))
+* **icons:** registry-aware DIconBase, dev warning, core icon list ([#1177](https://github.com/dynamic-framework/dynamic-ui/issues/1177)) ([bb69c85](https://github.com/dynamic-framework/dynamic-ui/commit/bb69c85ef219c4ab4fe5e32d9ffeaf2283285684))
+
+## [2.9.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.8.0...v2.9.0) (2026-09-07)
+
+
+### Features
+
+* **utils:** add buildUrl and sanitizeHref url helpers ([#1166](https://github.com/dynamic-framework/dynamic-ui/issues/1166)) ([7c55af6](https://github.com/dynamic-framework/dynamic-ui/commit/7c55af626c51e349ed90bf07727d29b74a776f58))
+
+
+### Bug Fixes
+
+* apply valid/invalid state color to input hints using native Bootstrap logic ([#1153](https://github.com/dynamic-framework/dynamic-ui/issues/1153)) ([82c5baa](https://github.com/dynamic-framework/dynamic-ui/commit/82c5baae950ca47c491cc5851e6a5174bb46f794))
+* fallback to context icon config in components using DIcon ([#1158](https://github.com/dynamic-framework/dynamic-ui/issues/1158)) ([925eeab](https://github.com/dynamic-framework/dynamic-ui/commit/925eeab7461f82f9a7272eadd5342f152d9f8ae8))
+* **styles:** restore Bootstrap shadow scale and give DBox its own token ([#1167](https://github.com/dynamic-framework/dynamic-ui/issues/1167)) ([06bb857](https://github.com/dynamic-framework/dynamic-ui/commit/06bb857fc86ecf3c5ab7a8623d5d15cbc86d9434))
+
 ## [2.8.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.7.0...v2.8.0) (2026-08-12)
 
 

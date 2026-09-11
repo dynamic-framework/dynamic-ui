@@ -37,7 +37,7 @@ export default function DTimeline({
         >
           <div className="d-timeline-item-connector" />
           <div className="d-timeline-item-icon">
-            <DIcon icon={item.icon || 'check'} size="1rem" />
+            <DIcon icon={item.icon || 'Check'} size="1rem" />
           </div>
           <div className="d-timeline-item-content">
             <div className="d-timeline-item-title">{item.title}</div>
