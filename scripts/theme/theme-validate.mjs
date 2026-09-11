@@ -13,6 +13,7 @@ import process from 'node:process';
 
 import {
   AA_NORMAL_TEXT,
+  BUTTON_DEFAULT_FG,
   DEFAULT_BLACK,
   DEFAULT_BODY_BG,
   DEFAULT_BODY_COLOR,
@@ -24,28 +25,39 @@ import {
   GRAY_STEPS,
   RAMPED_ROLES,
   RAMP_STEPS,
+  RFS_MEDIA_STEPS,
   ROLES,
   SOLID_PAIRS,
   SUBTLE_PAIRS,
   contrast,
+  isRootPrelude,
   luminance,
   parseTriplet,
+  resolveColorValue,
+  zoneFromPrelude,
+  zoneSelector,
 } from './theme-tokens.mjs';
-
-const RFS_MEDIA_STEPS = ['1', '2', '3', '4'];
 
 // -- Lectura del CSS --------------------------------------------------------
 
 /**
- * Lector mínimo: sólo necesita ver declaraciones de custom properties y en qué
- * `@media` caen. Devuelve las declaraciones del contexto raíz y las del
- * breakpoint 1200px por separado, con el número de línea de cada una.
+ * Lector mínimo: sólo necesita ver declaraciones de custom properties, en qué
+ * bloque caen y en qué `@media`. Devuelve las declaraciones del bloque raíz
+ * (`root`), las del breakpoint 1200px (`wide`) y la lista de bloques con su
+ * selector (`blocks`), con el número de línea de cada declaración.
+ *
+ * Separar por bloque es lo que permite que un theme con componentes y zonas se
+ * valide: sin eso, `[data-bs-theme="oscura"] { --bs-body-bg-rgb: … }` pisaría
+ * en el análisis al valor del bloque raíz y las reglas medirían una mezcla de
+ * los dos que no existe en ningún contexto real.
  */
 export function readCss(css) {
   const stripped = css.replace(/\/\*[\s\S]*?\*\//g, (match) => match.replace(/[^\n]/g, ' '));
   const root = new Map();
   const wide = new Map();
+  const blocks = [];
   const stack = [];
+  const blockStack = [];
   let buffer = '';
   let line = 1;
 
@@ -53,25 +65,49 @@ export function readCss(css) {
     (prelude) => /^@media\b/.test(prelude) && /min-width\s*:\s*1200px/.test(prelude),
   );
   const inAnyMedia = () => stack.some((prelude) => /^@media\b/.test(prelude));
+  const currentBlock = () => [...blockStack].reverse().find(Boolean) ?? null;
 
   const commit = (text, endLine) => {
     const match = text.match(/^\s*(--[\w-]+)\s*:\s*([\s\S]+?)\s*$/);
     if (!match || stack.length === 0) return;
-    const target = inWideMedia() ? wide : (inAnyMedia() ? null : root);
-    if (!target) return;
-    target.set(match[1], { value: match[2], line: endLine });
+    const entry = { value: match[2], line: endLine };
+
+    if (inWideMedia()) {
+      wide.set(match[1], entry);
+      return;
+    }
+    if (inAnyMedia()) return;
+
+    const block = currentBlock();
+    if (block) block.decls.set(match[1], entry);
+    if (block && block.isRoot) root.set(match[1], entry);
   };
 
   for (let i = 0; i < stripped.length; i += 1) {
     const char = stripped[i];
     if (char === '\n') line += 1;
     if (char === '{') {
-      stack.push(buffer.trim());
+      const prelude = buffer.trim();
+      stack.push(prelude);
+      if (prelude.startsWith('@')) {
+        blockStack.push(null);
+      } else {
+        const block = {
+          prelude,
+          isRoot: isRootPrelude(prelude),
+          zone: zoneFromPrelude(prelude),
+          decls: new Map(),
+          line,
+        };
+        blocks.push(block);
+        blockStack.push(block);
+      }
       buffer = '';
     } else if (char === '}') {
       commit(buffer, line);
       buffer = '';
       stack.pop();
+      blockStack.pop();
     } else if (char === ';') {
       commit(buffer, line);
       buffer = '';
@@ -80,7 +116,9 @@ export function readCss(css) {
     }
   }
 
-  return { root, wide, usesWhere: /:where\s*\(/.test(stripped) };
+  return {
+    root, wide, blocks, usesWhere: /:where\s*\(/.test(stripped),
+  };
 }
 
 // -- Resolución de tripletes ------------------------------------------------
@@ -166,19 +204,32 @@ function touched(decls) {
 
 /**
  * Corre todas las reglas sobre un CSS ya leído.
- * Devuelve `{ errors, warnings }`; cada entrada es `{ rule, line, message }`.
+ * Devuelve `{ errors, warnings, notes }`; cada entrada es `{ rule, line, message }`.
+ * Las notas no son hallazgos: dejan constancia de lo que la medición dio por
+ * supuesto, como un color escrito literal en vez de referenciar un token.
  */
 export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
-  const { root, wide, usesWhere } = readCss(css);
+  const {
+    root, wide, blocks, usesWhere,
+  } = readCss(css);
   const errors = [];
   const warnings = [];
+  const notes = [];
   const fail = (rule, message, line = null) => errors.push({ rule, message, line });
   const warn = (rule, message, line = null) => warnings.push({ rule, message, line });
+  const note = (rule, message, line = null) => notes.push({ rule, message, line });
 
   if (root.size === 0 && wide.size === 0) {
     fail('vacio', 'El archivo no declara ninguna custom property --bs-*.');
-    return { errors, warnings };
+    return { errors, warnings, notes };
   }
+
+  /** Nombre del token que un par horneado usa para su texto o su fondo. */
+  const pick = (spec, role) => {
+    if (spec.kind === 'white') return '--bs-white-rgb';
+    if (spec.kind === 'gray') return `--bs-gray-${spec.step}-rgb`;
+    return `--bs-${role}-${spec.step}-rgb`;
+  };
 
   // R1 — formato de triplete.
   for (const [name, { value, line }] of root) {
@@ -302,11 +353,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       );
       continue;
     }
-    if (decl.value.trim() !== expected) {
+    // Lo que se exige es que la variable acabe en un triplete, que es lo que la
+    // librería rompe al apuntarla al wrapper. Un theme puede darle su propio
+    // color — un literal "R, G, B" o cualquier otra -rgb — y sigue estando bien;
+    // lo único inaceptable es volver a un valor que no sea triplete.
+    const value = decl.value.trim();
+    const isTriplet = parseTriplet(value) !== null;
+    const isRgbRef = /^var\(\s*--bs-[\w-]+-rgb\s*(?:,[\s\S]*)?\)$/.test(value);
+    if (!isTriplet && !isRgbRef) {
       fail(
         'fix-bg',
-        `${name}: "${decl.value}" no corrige el bug de la librería. Debe valer exactamente `
-        + `${expected}; ${wrapper} es precisamente el valor roto.`,
+        `${name}: "${decl.value}" no corrige el bug de la librería. Tiene que acabar en un `
+        + `triplete: ${expected}, otra variable -rgb o un literal "R, G, B". `
+        + `${wrapper} es precisamente el valor roto.`,
         decl.line,
       );
     }
@@ -381,15 +440,31 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   }
 
   // R9 — contraste AA de los pares texto/fondo que la librería hornea.
-  const pick = (spec, role) => {
-    if (spec.kind === 'white') return '--bs-white-rgb';
-    if (spec.kind === 'gray') return `--bs-gray-${spec.step}-rgb`;
-    return `--bs-${role}-${spec.step}-rgb`;
-  };
+  // Un theme puede corregir el par sólido de un role redefiniendo el color de
+  // texto del botón en su propio bloque (`.btn-<role> { --bs-btn-color: … }`).
+  // Cuando lo hace, el par horneado ya no es el que se ve: medirlo aquí sería
+  // reportar un problema que el theme resuelve dos secciones más abajo, así que
+  // se cede el turno a la regla de botones, que mide el par real.
+  const overriddenButtons = new Set(
+    blocks
+      .filter((block) => !block.isRoot && block.decls.has('--bs-btn-color'))
+      .flatMap((block) => block.prelude.split(','))
+      .map((part) => part.trim().match(new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`))?.[1])
+      .filter(Boolean),
+  );
+
   for (const role of touchedRoles) {
     for (const [surface, table] of [['sólido', SOLID_PAIRS], ['subtle', SUBTLE_PAIRS]]) {
       const pair = table[role];
       if (!pair) continue;
+      if (surface === 'sólido' && overriddenButtons.has(role)) {
+        note(
+          'par-redefinido',
+          `Par sólido de "${role}": el theme fija --bs-btn-color en su propio bloque, así que `
+          + 'el par horneado por Sass no es el que se ve. Se mide en la regla de botones.',
+        );
+        continue;
+      }
       const fgName = pick(pair.fg, role);
       const bgName = pick(pair.bg, role);
       const fg = resolve(fgName, root);
@@ -438,7 +513,214 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  return { errors, warnings };
+  // -- Reglas de las secciones extendidas -----------------------------------
+  //
+  // Cada bloque se mide en su propio contexto: sus declaraciones sobre las del
+  // raíz. Es como lo resuelve el navegador, y es la única forma de que una zona
+  // que redefine --bs-body-bg-rgb se evalúe contra su fondo y no contra el otro.
+  const scopeOf = (block) => new Map([...root, ...block.decls]);
+  const measure = (declared, fallbackName, scope, label) => {
+    const lookup = (name) => resolve(name, scope);
+    if (!declared) return { ...lookup(fallbackName), name: fallbackName };
+    const resolved = resolveColorValue(declared.value, lookup);
+    if (resolved.source === 'literal') {
+      note(
+        'literal',
+        `${label}: "${declared.value}" es un color literal. Se mide tal cual, pero queda `
+        + 'fuera del theme: cambiar el token no lo mueve.',
+        declared.line,
+      );
+    }
+    return { ...resolved, name: resolved.via ?? declared.value };
+  };
+
+  // Contextos en los que se mide un componente: el bloque raíz y, además, cada
+  // zona declarada en el archivo. Un `.btn-primary` escrito una sola vez se ve
+  // distinto dentro de `[data-bs-theme="oscura"]` si la zona mueve alguna de
+  // las variables de las que depende — y ese caso es justo el que se escapa al
+  // leer el CSS de arriba abajo.
+  const zoneBlocks = blocks.filter((block) => block.zone);
+  const contexts = [
+    { zone: null, decls: root },
+    ...zoneBlocks.map((block) => ({
+      zone: block.zone,
+      decls: new Map([...root, ...block.decls]),
+    })),
+  ];
+
+  /** Zona a la que pertenece un bloque por su selector, y el selector sin ella. */
+  const splitZone = (prelude) => {
+    const match = prelude.match(/^\[data-bs-theme=["']?([\w-]+)["']?\]\s*(.*)$/);
+    if (!match) return { zone: null, bare: prelude.trim() };
+    return { zone: match[1], bare: match[2].trim() };
+  };
+
+  /**
+   * Contextos que hay que medir para un bloque. Uno escrito dentro de una zona
+   * se mide sólo en ella. Uno global se mide en el raíz y en cada zona, salvo
+   * en las que ya tienen un bloque propio para el mismo selector que redefine
+   * la variable en cuestión: ahí manda el específico y medir el global sería
+   * reportar algo que nunca se ve.
+   */
+  const contextsFor = (block, variable) => {
+    const { zone, bare } = splitZone(block.prelude);
+    if (zone) return contexts.filter((ctx) => ctx.zone === zone);
+    return contexts.filter((ctx) => {
+      if (!ctx.zone) return true;
+      const overridden = blocks.some((other) => {
+        const split = splitZone(other.prelude);
+        return split.zone === ctx.zone && split.bare === bare && other.decls.has(variable);
+      });
+      return !overridden;
+    });
+  };
+
+  const inContext = (ctx) => (ctx.zone ? ` dentro de [data-bs-theme="${ctx.zone}"]` : '');
+
+  // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
+  // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
+  // par real es el que quede después de estos overrides, no el que la librería
+  // calculó. En `.btn-outline-<role>` el fondo del role es el del estado
+  // relleno (hover/active), que es donde el par puede romperse.
+  const BUTTON_SELECTOR = new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`);
+  for (const block of blocks) {
+    if (block.isRoot) continue;
+    const fgDecl = block.decls.get('--bs-btn-color');
+    const bgDecl = block.decls.get('--bs-btn-bg');
+    if (!fgDecl && !bgDecl) continue;
+
+    for (const part of splitZone(block.prelude).bare.split(',')) {
+      const role = part.trim().match(BUTTON_SELECTOR)?.[1];
+      if (!role) continue;
+
+      for (const ctx of contextsFor(block, fgDecl ? '--bs-btn-color' : '--bs-btn-bg')) {
+        const scope = new Map([...ctx.decls, ...block.decls]);
+        const where = `${part.trim()}${inContext(ctx)}`;
+        const fg = measure(fgDecl, pick(BUTTON_DEFAULT_FG[role], role), scope, `${where} --bs-btn-color`);
+        const bg = measure(bgDecl, `--bs-${role}-rgb`, scope, `${where} --bs-btn-bg`);
+        if (!fg.rgb || !bg.rgb) {
+          warn(
+            'contraste-irresoluble',
+            `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
+            (fgDecl ?? bgDecl).line,
+          );
+          continue;
+        }
+        const ratio = contrast(fg.rgb, bg.rgb);
+        if (ratio >= minContrast) continue;
+        fail(
+          'contraste-boton',
+          `"${where}": ${ratio.toFixed(2)}:1 entre el texto (${fg.name}) y el fondo (${bg.name}), `
+          + `por debajo del ${minContrast}:1 que pide WCAG 2.x AA para texto normal. `
+          + (ctx.zone
+            ? `El botón se declara una sola vez, pero dentro de la zona "${ctx.zone}" alguna de `
+              + 'las variables de las que depende vale otra cosa. Dale a la zona su propio '
+              + `bloque \`${zoneSelector(ctx.zone)} ${part.trim()}\`.`
+            : (fgDecl
+              ? 'El theme fija el color de texto del botón: o se aclara el fondo, o se oscurece el texto.'
+              : `El theme no fija --bs-btn-color, así que el botón conserva el que Bootstrap horneó `
+                + `para "${role}" y sólo cambia el fondo.`)),
+          (fgDecl ?? bgDecl).line,
+        );
+      }
+    }
+  }
+
+  // R11 — pastilla activa de .nav-pills, en cada contexto donde se vea.
+  for (const block of blocks) {
+    const fgDecl = block.decls.get('--bs-nav-pills-link-active-color');
+    if (!fgDecl) continue;
+    const bgDecl = block.decls.get('--bs-nav-pills-link-active-bg');
+
+    for (const ctx of contextsFor(block, '--bs-nav-pills-link-active-color')) {
+      const scope = new Map([...ctx.decls, ...block.decls]);
+      const where = `${block.prelude.replace(/\s+/g, ' ')}${block.zone ? '' : inContext(ctx)}`;
+      const fg = measure(fgDecl, '--bs-white-rgb', scope, `${where} --bs-nav-pills-link-active-color`);
+      // Sin fondo propio, la pastilla activa usa el de Bootstrap: var(--bs-primary).
+      const bg = measure(bgDecl, '--bs-primary-rgb', scope, `${where} --bs-nav-pills-link-active-bg`);
+      if (!fg.rgb || !bg.rgb) {
+        warn(
+          'contraste-irresoluble',
+          `No se pudo medir la pastilla activa de "${where}": ${fg.reason ?? bg.reason}.`,
+          fgDecl.line,
+        );
+        continue;
+      }
+      const ratio = contrast(fg.rgb, bg.rgb);
+      if (ratio >= minContrast) continue;
+      fail(
+        'contraste-nav-pills',
+        `Pastilla activa en "${where}": ${ratio.toFixed(2)}:1 entre `
+        + `--bs-nav-pills-link-active-color (${fg.name}) y --bs-nav-pills-link-active-bg `
+        + `(${bg.name}), por debajo del ${minContrast}:1 de WCAG 2.x AA. La pastilla activa `
+        + 'es el único elemento de la barra que lleva fondo sólido: si su par no contrasta, '
+        + 'la opción seleccionada es la menos legible de todas.',
+        fgDecl.line,
+      );
+    }
+  }
+
+  // R12 — zonas. Una zona reescribe la paleta de su subárbol, así que su par
+  // cuerpo/fondo hay que medirlo entero otra vez: nada de lo validado en el
+  // bloque raíz aplica dentro de ella.
+  for (const block of blocks) {
+    if (!block.zone) continue;
+    const scope = scopeOf(block);
+    const bg = resolve('--bs-body-bg-rgb', scope);
+    const fg = resolve('--bs-body-color-rgb', scope);
+    const where = `[data-bs-theme="${block.zone}"]`;
+
+    if (!fg.rgb || !bg.rgb) {
+      warn(
+        'contraste-irresoluble',
+        `No se pudo medir el cuerpo de la zona "${block.zone}": ${fg.reason ?? bg.reason}.`,
+        block.line,
+      );
+    } else {
+      const ratio = contrast(fg.rgb, bg.rgb);
+      if (ratio < minContrast) {
+        fail(
+          'contraste-zona',
+          `Zona "${block.zone}": ${ratio.toFixed(2)}:1 entre --bs-body-color-rgb y `
+          + `--bs-body-bg-rgb, por debajo del ${minContrast}:1 de WCAG 2.x AA. Todo el texto `
+          + `de ${where} hereda este par, así que la zona entera queda ilegible, no un componente.`,
+          block.decls.get('--bs-body-color-rgb')?.line ?? block.line,
+        );
+      }
+    }
+
+    const linkDecl = block.decls.get('--bs-link-color-rgb');
+    if (!linkDecl || !bg.rgb) continue;
+    const link = resolve('--bs-link-color-rgb', scope);
+    if (!link.rgb) {
+      warn(
+        'contraste-irresoluble',
+        `No se pudo medir el enlace de la zona "${block.zone}": ${link.reason}.`,
+        linkDecl.line,
+      );
+      continue;
+    }
+    const ratio = contrast(link.rgb, bg.rgb);
+    if (ratio >= minContrast) continue;
+    const detail = `Zona "${block.zone}": el enlace da ${ratio.toFixed(2)}:1 entre `
+      + `--bs-link-color-rgb y el fondo de la zona, bajo el ${minContrast}:1 de WCAG 2.x AA.`;
+    if (ratio >= 3) {
+      warn(
+        'contraste-enlace-zona',
+        `${detail} Pasa el 3:1 de componente gráfico, así que el enlace se distingue del `
+        + 'fondo, pero su texto no llega a AA. Revísalo con diseño antes de darlo por bueno.',
+        linkDecl.line,
+      );
+      continue;
+    }
+    fail(
+      'contraste-enlace-zona',
+      `${detail} Ni siquiera llega al 3:1 mínimo para distinguirse del fondo.`,
+      linkDecl.line,
+    );
+  }
+
+  return { errors, warnings, notes };
 }
 
 // -- CLI --------------------------------------------------------------------
@@ -475,13 +757,16 @@ function main(argv) {
     return 2;
   }
 
-  const { errors, warnings } = validate(css, { minContrast });
+  const { errors, warnings, notes } = validate(css, { minContrast });
   const rel = path.relative(process.cwd(), file);
   const render = (entry, kind) => {
     const where = entry.line ? `${rel}:${entry.line}` : rel;
     return `${kind} ${where}  [${entry.rule}]\n  ${entry.message}\n`;
   };
 
+  // Las notas van a stdout: no son hallazgos, y mezclarlas con los avisos haría
+  // que un CSS correcto pareciera tener algo que arreglar.
+  for (const entry of notes) process.stdout.write(render(entry, 'nota  '));
   for (const warning of warnings) process.stderr.write(render(warning, 'aviso '));
   for (const error of errors) process.stderr.write(render(error, 'error '));
 
