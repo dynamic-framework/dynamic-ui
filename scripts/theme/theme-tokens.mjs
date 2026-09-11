@@ -1,13 +1,17 @@
 // Núcleo compartido por theme-expand.mjs y theme-validate.mjs.
 //
-// Todo lo que hay aquí está verificado contra el CSS compilado de Dynamic UI 2.8.0
+// Todo lo que hay aquí está verificado contra el CSS compilado de Dynamic UI
 // (dist/css/dynamic-ui.css), no contra stories/foundations/*.mdx, que documentan el
-// formato incorrecto (`--bs-primary: #hex`).
+// formato incorrecto (`--bs-primary: #hex`). Las rampas y los pares horneados se
+// comprobaron en 2.8.0 y siguen igual en 2.10.0; el inventario de nombres de
+// known-tokens.json sí está tomado del CSS publicado de 2.10.0.
 //
 // Referencias en el código fuente:
 //   src/style/abstracts/variables/_colors.scss  → rampas, $theme-colors-mapping
 //   src/style/root/_root.scss                   → wrappers rgb(var(--bs-<x>-rgb))
 //   node_modules/bootstrap/scss/vendor/_rfs.scss → base 1.25rem, factor 10, bp 1200px
+
+import fs from 'node:fs';
 
 import { parse, wcagContrast, wcagLuminance } from 'culori';
 
@@ -238,6 +242,14 @@ export function rfsPair(rem) {
 /** Pasos tipográficos que Dynamic expone como --bs-rfs-fs-N. */
 export const FONT_SIZE_STEPS = ['1', '2', '3', '4', '5', '6'];
 
+/**
+ * Pasos que la librería vuelve a declarar dentro de `@media (min-width: 1200px)`
+ * (dist/css/dynamic-ui.css: 3rem, 2.5rem, 2rem y 1.5rem). Un override de estos
+ * cuatro necesita su propio bloque en ese breakpoint aunque el valor no sea
+ * fluido, o en desktop gana el de la librería.
+ */
+export const RFS_MEDIA_STEPS = ['1', '2', '3', '4'];
+
 /** Escala tipográfica por defecto de 2.8.0, en rem. */
 export const DEFAULT_FONT_SCALE = {
   1: '3rem', 2: '2.5rem', 3: '2rem', 4: '1.5rem', 5: '1.25rem', 6: '1rem',
@@ -278,3 +290,117 @@ export const DEFAULT_ROLE_RAMPS = {
   danger: deriveRampFrom('220, 53, 69'),
   secondary: Object.fromEntries(RAMP_STEPS.map((step) => [step, DEFAULT_GRAYS[step]])),
 };
+
+// -- Secciones root / components / zones ------------------------------------
+
+/**
+ * Nombres de custom property que Dynamic UI define en su CSS compilado.
+ * Sirve para responder una sola pregunta: si un theme escribe
+ * `var(--bs-algo)`, ¿ese `--bs-algo` existe en algún sitio? Se regenera con
+ * `node scripts/theme/build-known-tokens.mjs`.
+ */
+const knownTokens = JSON.parse(
+  fs.readFileSync(new URL('./known-tokens.json', import.meta.url), 'utf8'),
+);
+
+export const KNOWN_TOKENS = new Set(knownTokens.tokens);
+export const KNOWN_TOKENS_VERSION = knownTokens.dynamicUi;
+
+/**
+ * Propiedades CSS que un bloque de `components` puede declarar además de sus
+ * variables. La lista es corta a propósito: un theme ajusta la caja y la
+ * tipografía de un componente, no lo redibuja. Cualquier otra cosa (color,
+ * background, display, position…) pertenece al CSS de la aplicación o a una
+ * variable `--bs-*` del propio componente.
+ */
+export const ALLOWED_DECLARATIONS = [
+  'padding',
+  'border-radius',
+  'border-color',
+  'font-family',
+  'font-variant-numeric',
+];
+
+/**
+ * Color de texto que Bootstrap hornea en `.btn-<role>` con `color-contrast()`.
+ * Igual que en SOLID_PAIRS: corre en Sass, así que cambiar `--bs-<role>-rgb`
+ * en runtime no lo recalcula. `secondary` va con blanco porque su base es
+ * gray-800, no el paso 50 que usa `.text-bg-secondary`.
+ */
+export const BUTTON_DEFAULT_FG = {
+  primary: { kind: 'white' },
+  secondary: { kind: 'white' },
+  success: { kind: 'white' },
+  info: { kind: 'white' },
+  danger: { kind: 'white' },
+  dark: { kind: 'white' },
+  warning: { kind: 'gray', step: 700 },
+  light: { kind: 'gray', step: 700 },
+};
+
+/** `[data-bs-theme="<zona>"]`, el selector con el que se monta una zona. */
+export const zoneSelector = (name) => `[data-bs-theme="${name}"]`;
+
+/** Un nombre de zona viaja en un selector de atributo: sin comillas ni corchetes. */
+export const ZONE_NAME_RE = /^[a-zA-Z][\w-]*$/;
+
+/**
+ * ¿Este prelude es el bloque raíz del theme? Se compara laxo — quitando
+ * `:where(...)` y espacios — para que un CSS que envuelva el selector siga
+ * reconociéndose como raíz y la regla que prohíbe `:where()` pueda reportarlo,
+ * en vez de que el bloque desaparezca del análisis.
+ */
+export function isRootPrelude(prelude) {
+  const bare = String(prelude).replace(/:where\(([^)]*)\)/g, '$1');
+  return bare.split(',').some((part) => {
+    const sel = part.trim();
+    return sel === ':root' || /^\[data-bs-theme=["']?dynamic["']?\]$/.test(sel);
+  });
+}
+
+/** Nombre de la zona si el prelude es exactamente su selector; null si no. */
+export function zoneFromPrelude(prelude) {
+  const match = String(prelude).trim().match(/^\[data-bs-theme=["']?([\w-]+)["']?\]$/);
+  if (!match || match[1] === 'dynamic') return null;
+  return match[1];
+}
+
+/** Todos los `--bs-*` que un valor referencia dentro de un `var()`. */
+export function varRefs(value) {
+  return [...String(value).matchAll(/var\(\s*(--[\w-]+)/g)].map((m) => m[1]);
+}
+
+/**
+ * Resuelve el valor de una declaración a un color, para poder medir contraste.
+ *
+ * Entiende las tres formas en que un theme escribe un color:
+ *   - `rgb(var(--bs-x-rgb))` y `var(--bs-x)`  → se sigue la indirección;
+ *   - `var(--bs-x-rgb)` a secas               → idem, es un triplete;
+ *   - un literal (`#fff`, `rgb(0 0 0)`, …)    → se acepta y se marca `literal`.
+ *
+ * `lookup(name)` devuelve `{ rgb }` o `{ rgb: null, reason }`; es quien conoce
+ * el contexto (el bloque raíz, una zona, los valores por defecto).
+ */
+export function resolveColorValue(value, lookup) {
+  const raw = String(value).trim();
+
+  const wrapped = raw.match(/^rgba?\(\s*var\(\s*(--[\w-]+)\s*(?:,[\s\S]*?)?\)\s*(?:[,/][\s\S]*)?\)$/);
+  if (wrapped) return { ...lookup(wrapped[1]), via: wrapped[1] };
+
+  const direct = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
+  if (direct) {
+    const name = direct[1];
+    // El wrapper de color (`--bs-primary`) es `rgb(var(--bs-primary-rgb))` en
+    // la librería: se mide sobre su triplete, que es donde vive el valor.
+    const viaTriplet = name.endsWith('-rgb') ? name : `${name}-rgb`;
+    const resolved = lookup(viaTriplet);
+    if (resolved.rgb) return { ...resolved, via: viaTriplet };
+    return { ...lookup(name), via: name };
+  }
+
+  try {
+    return { rgb: parseColor(raw, 'valor'), source: 'literal' };
+  } catch {
+    return { rgb: null, reason: `"${raw}" no es un color ni una referencia var(--bs-…)` };
+  }
+}
