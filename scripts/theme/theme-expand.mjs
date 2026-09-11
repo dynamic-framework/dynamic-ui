@@ -197,56 +197,66 @@ export function readTheme(theme) {
 
   const root = theme.root === undefined ? [] : readVars(theme.root, 'root');
 
-  const components = [];
-  if (theme.components !== undefined) {
-    if (!Array.isArray(theme.components)) {
-      push('`components` debe ser una lista de { selector, vars?, declarations? }.');
-    } else {
-      theme.components.forEach((entry, index) => {
-        const where = `components[${index}]`;
-        if (!isPlainObject(entry)) {
-          push(`\`${where}\` debe ser un objeto { selector, vars?, declarations? }.`);
-          return;
-        }
-        const selector = typeof entry.selector === 'string' ? entry.selector.trim() : '';
-        if (selector === '') {
-          push(`\`${where}.selector\` es obligatorio: el selector CSS del bloque (por ejemplo ".btn").`);
-          return;
-        }
-        const vars = entry.vars === undefined ? [] : readVars(entry.vars, `${where}.vars`);
+  /**
+   * Lee una lista de bloques de componente. La usan `components` y la sección
+   * `components` de cada zona: la forma es la misma, lo único que cambia es
+   * dónde acaba el bloque en el CSS.
+   */
+  const readComponents = (raw, where) => {
+    const out = [];
+    if (!Array.isArray(raw)) {
+      push(`\`${where}\` debe ser una lista de { selector, vars?, declarations? }.`);
+      return out;
+    }
+    raw.forEach((entry, index) => {
+      const at = `${where}[${index}]`;
+      if (!isPlainObject(entry)) {
+        push(`\`${at}\` debe ser un objeto { selector, vars?, declarations? }.`);
+        return;
+      }
+      const selector = typeof entry.selector === 'string' ? entry.selector.trim() : '';
+      if (selector === '') {
+        push(`\`${at}.selector\` es obligatorio: el selector CSS del bloque (por ejemplo ".btn").`);
+        return;
+      }
+      const vars = entry.vars === undefined ? [] : readVars(entry.vars, `${at}.vars`);
 
-        const declarations = [];
-        if (entry.declarations !== undefined) {
-          if (!isPlainObject(entry.declarations)) {
-            push(`\`${where}.declarations\` debe ser un objeto { propiedad: valor }.`);
-          } else {
-            for (const [property, value] of Object.entries(entry.declarations)) {
-              if (!ALLOWED_DECLARATIONS.includes(property)) {
-                push(
-                  `\`${where}.declarations.${property}\`: la propiedad "${property}" no está `
-                  + `permitida en un theme. Sólo se admiten ${ALLOWED_DECLARATIONS.join(', ')}; `
-                  + 'lo demás pertenece al CSS de la aplicación o a una variable --bs-* del '
-                  + `componente (selector "${selector}").`,
-                );
-                continue;
-              }
-              if (typeof value !== 'string' && typeof value !== 'number') {
-                push(`\`${where}.declarations.${property}\`: se esperaba un string, se recibió ${typeof value}.`);
-                continue;
-              }
-              declarations.push({ property, value: String(value).trim() });
+      const declarations = [];
+      if (entry.declarations !== undefined) {
+        if (!isPlainObject(entry.declarations)) {
+          push(`\`${at}.declarations\` debe ser un objeto { propiedad: valor }.`);
+        } else {
+          for (const [property, value] of Object.entries(entry.declarations)) {
+            if (!ALLOWED_DECLARATIONS.includes(property)) {
+              push(
+                `\`${at}.declarations.${property}\`: la propiedad "${property}" no está `
+                + `permitida en un theme. Sólo se admiten ${ALLOWED_DECLARATIONS.join(', ')}; `
+                + 'lo demás pertenece al CSS de la aplicación o a una variable --bs-* del '
+                + `componente (selector "${selector}").`,
+              );
+              continue;
             }
+            if (typeof value !== 'string' && typeof value !== 'number') {
+              push(`\`${at}.declarations.${property}\`: se esperaba un string, se recibió ${typeof value}.`);
+              continue;
+            }
+            declarations.push({ property, value: String(value).trim() });
           }
         }
+      }
 
-        if (vars.length === 0 && declarations.length === 0) {
-          push(`\`${where}\` ("${selector}") no declara nada: usa \`vars\`, \`declarations\` o ambos.`);
-          return;
-        }
-        components.push({ selector, vars, declarations });
-      });
-    }
-  }
+      if (vars.length === 0 && declarations.length === 0) {
+        push(`\`${at}\` ("${selector}") no declara nada: usa \`vars\`, \`declarations\` o ambos.`);
+        return;
+      }
+      out.push({ selector, vars, declarations });
+    });
+    return out;
+  };
+
+  const components = theme.components === undefined
+    ? []
+    : readComponents(theme.components, 'components');
 
   const zones = [];
   if (theme.zones !== undefined) {
@@ -276,6 +286,10 @@ export function readTheme(theme) {
           push(`\`${where}.vars\` está vacío: una zona existe para cambiar variables.`);
           continue;
         }
+        const zoneComponents = zone.components === undefined
+          ? []
+          : readComponents(zone.components, `${where}.components`);
+
         let nav = null;
         if (zone.nav !== undefined) {
           const navVars = readVars(zone.nav, `${where}.nav`);
@@ -290,7 +304,9 @@ export function readTheme(theme) {
           const pills = navVars.filter((v) => v.name.startsWith('--bs-nav-pills-'));
           if (link.length > 0 || pills.length > 0) nav = { link, pills };
         }
-        zones.push({ name, vars, nav });
+        zones.push({
+          name, vars, nav, components: zoneComponents,
+        });
       }
     }
   }
@@ -320,6 +336,14 @@ export function readTheme(theme) {
     for (const { name, value } of zone.vars) checkRefs(value, `zones.${zone.name}.${name}`);
     for (const { name, value } of [...(zone.nav?.link ?? []), ...(zone.nav?.pills ?? [])]) {
       checkRefs(value, `zones.${zone.name}.nav.${name}`);
+    }
+    for (const { selector, vars, declarations } of zone.components) {
+      for (const { name, value } of vars) {
+        checkRefs(value, `zones.${zone.name}.components["${selector}"].${name}`);
+      }
+      for (const { property, value } of declarations) {
+        checkRefs(value, `zones.${zone.name}.components["${selector}"].${property}`);
+      }
     }
   }
 
@@ -557,9 +581,15 @@ export function expandTheme(input) {
 
   // Componentes. Un bloque por selector, después del raíz y antes de las zonas:
   // así una zona puede pisar lo que el componente fija sin subir especificidad.
-  const componentBlocks = theme.components.map(({ selector, vars, declarations }) => {
-    // Las declaraciones se ordenan como las espera el stylelint del repo, y los
-    // selectores de una lista van uno por línea por la misma razón.
+  /**
+   * Un bloque de componente. `prefix` antepone el selector de la zona a cada
+   * selector de la lista, para que `.btn, .card` dentro de una zona salga como
+   * dos selectores completos y no como uno prefijado y otro suelto.
+   *
+   * Las declaraciones se ordenan como las espera el stylelint del repo, y los
+   * selectores de una lista van uno por línea por la misma razón.
+   */
+  const componentBlock = ({ selector, vars, declarations }, prefix = '') => {
     const ordered = [...declarations].sort(
       (a, b) => ALLOWED_DECLARATIONS.indexOf(a.property) - ALLOWED_DECLARATIONS.indexOf(b.property),
     );
@@ -567,14 +597,22 @@ export function expandTheme(input) {
       ...vars.map(({ name, value }) => `  ${name}: ${normalizeCssValue(value)};`),
       ...ordered.map(({ property, value }) => `  ${property}: ${normalizeCssValue(value)};`),
     ];
-    const prelude = selector.split(',').map((part) => part.trim()).filter(Boolean).join(',\n');
+    const prelude = selector
+      .split(',')
+      .map((part) => `${prefix}${part.trim()}`)
+      .filter((part) => part !== prefix)
+      .join(',\n');
     return `${prelude} {\n${body.join('\n')}\n}`;
-  });
+  };
+
+  const componentBlocks = theme.components.map((entry) => componentBlock(entry));
 
   // Zonas. Cada una es un subárbol con su propia paleta; `nav` se reparte en
   // dos bloques porque .nav y .nav-pills leen variables distintas y montar las
   // de pills sobre .nav no las alcanza.
-  const zoneBlocks = theme.zones.flatMap(({ name, vars, nav }) => {
+  const zoneBlocks = theme.zones.flatMap(({
+    name, vars, nav, components,
+  }) => {
     const selector = zoneSelector(name);
     const emit = (entries) => entries
       .map((v) => `  ${v.name}: ${normalizeCssValue(v.value)};`)
@@ -582,6 +620,10 @@ export function expandTheme(input) {
     const blocks = [`${selector} {\n${emit(vars)}\n}`];
     if (nav?.link.length) blocks.push(`${selector} .nav {\n${emit(nav.link)}\n}`);
     if (nav?.pills.length) blocks.push(`${selector} .nav-pills {\n${emit(nav.pills)}\n}`);
+    // Los componentes de la zona van al final: dentro del subárbol pisan tanto
+    // a las variables de la zona como al bloque global del mismo selector, que
+    // tiene menos especificidad.
+    for (const entry of components) blocks.push(componentBlock(entry, `${selector} `));
     return blocks;
   });
 
