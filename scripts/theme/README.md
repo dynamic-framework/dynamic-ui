@@ -17,6 +17,14 @@ npm run theme:validate -- examples/themes/theme-ejemplo.css
 
 Los tests viven en `theme-validate.spec.ts` y corren con `npm test`.
 
+Los themes de marca viven en `themes/` y su CSS generado en `out/`:
+
+```bash
+npm run theme:expand -- scripts/theme/themes/theme-ejemplo-zonas.json -o scripts/theme/out/theme-ejemplo-zonas.css
+npm run theme:validate -- scripts/theme/out/theme-ejemplo-zonas.css
+npm run theme:preview          # sirve scripts/theme/preview en el navegador
+```
+
 ## Entrada
 
 `theme.json` reducido. Los colores aceptan hex, triplete `"R, G, B"` o cualquier
@@ -45,6 +53,57 @@ color CSS.
 | `typography.fontFamily` | sí | |
 | `typography.scale.N` | no | Pasos `1`..`6`, en `rem` |
 | `radius` | sí | Radio base en `rem`; el resto se deriva |
+| `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
+| `components` | no | Lista de `{ selector, vars?, declarations? }` |
+| `zones` | no | Mapa `<nombre>` → `{ vars, nav? }` |
+
+### Las tres secciones extendidas
+
+`roles`, `body`, `typography` y `radius` derivan tokens. Estas tres no: son
+variables y declaraciones que escribes y que salen tal cual. Lo único que se
+comprueba es la forma.
+
+```json
+{
+  "root": {
+    "--bs-body-font-size": ".875rem",
+    "--bs-heading-color": "rgb(var(--bs-dark-rgb))"
+  },
+  "components": [
+    { "selector": ".btn", "vars": { "--bs-btn-font-weight": "700" } },
+    { "selector": ".font-numeric", "declarations": { "font-variant-numeric": "tabular-nums" } }
+  ],
+  "zones": {
+    "oscura": {
+      "vars": { "--bs-body-bg-rgb": "var(--bs-dark-rgb)" },
+      "nav": { "--bs-nav-link-color": "rgb(var(--bs-white-rgb))" }
+    }
+  }
+}
+```
+
+- **`root`** — toda clave empieza por `--bs-`. Se emite al final del bloque
+  raíz, así que si repite una variable derivada, gana la tuya; la salida lo dice
+  en un comentario.
+- **`components`** — un bloque por `selector`. En `vars` van variables `--bs-*`
+  del componente; en `declarations` sólo se admiten `padding`, `border-radius`,
+  `border-color`, `font-family` y `font-variant-numeric`. Cualquier otra
+  propiedad es un error que la nombra. Los bloques se emiten después del raíz y
+  antes de las zonas, que es el orden que la cascada necesita.
+- **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
+  trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
+  las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
+  las de pastilla sobre `.nav` no las alcanza.
+
+Toda referencia `var(--bs-algo)` de estas tres secciones se comprueba contra los
+tokens que el theme genera y contra `known-tokens.json`, el inventario de lo que
+Dynamic define en su CSS. Un `var()` a un token inexistente no da error en el
+navegador: deja la propiedad en su valor inicial, y el fallo es invisible.
+
+`known-tokens.json` se regenera con
+`node scripts/theme/build-known-tokens.mjs [ruta/al/dynamic-ui.css]` — `dist/`
+está gitignoreado, así que el JSON se versiona y el script se corre a mano tras
+un build o contra el CSS de un tarball publicado.
 
 ## Reglas que la salida respeta
 
@@ -89,9 +148,34 @@ color CSS.
 
 `triplete`, `wrapper`, `rampa-incompleta`, `paso-500`, `superficie-faltante`,
 `border-color`, `fix-bg`, `where`, `tipografia`, `tipografia-breakpoint`,
-`monotonia`, `contraste`. Sale con 1 si hay errores; `--strict` hace fallar
-también con avisos, y `--min-contrast N` cambia el umbral (4.5 por defecto,
-WCAG 2.x AA para texto normal).
+`monotonia`, `contraste`, `contraste-boton`, `contraste-nav-pills`,
+`contraste-zona` y `contraste-enlace-zona`. Sale con 1 si hay errores;
+`--strict` hace fallar también con avisos, y `--min-contrast N` cambia el umbral
+(4.5 por defecto, WCAG 2.x AA para texto normal).
 
-Un par que ya falla con la paleta por defecto de 2.8.0 se reporta como aviso
+Cada bloque se mide **en su propio contexto**: sus declaraciones sobre las del
+bloque raíz, como lo resuelve el navegador. Sin eso, una zona que redefine
+`--bs-body-bg-rgb` se evaluaría contra el fondo del raíz y la medición no
+correspondería a ningún contexto real.
+
+- `contraste-boton` — todo bloque `.btn-<role>` o `.btn-outline-<role>` que fije
+  `--bs-btn-color` o `--bs-btn-bg`. El texto que falte se toma del que Bootstrap
+  hornea (blanco, o gris 700 en `warning` y `light`) y el fondo, de
+  `--bs-<role>-rgb`. En `outline` ese fondo es el del estado relleno.
+- `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
+  `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren.
+- `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `contraste-enlace-zona` — `--bs-link-color-rgb` sobre el fondo de la zona.
+  Entre 3:1 y 4.5:1 es aviso, no error: el enlace se distingue del fondo pero su
+  texto no llega a AA.
+
+Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par sólido de
+ese role deja de medirse en `contraste` y pasa a `contraste-boton`: el par
+horneado ya no es el que se ve. Queda constancia como nota `par-redefinido`.
+
+Un color escrito literal (`#fff`) donde se esperaba una referencia se acepta y se
+anota como `literal`: se mide tal cual, pero queda fuera del theme y cambiar el
+token no lo mueve. Las notas van a stdout, no a stderr — no son hallazgos.
+
+Un par que ya falla con la paleta por defecto se reporta como aviso
 `contraste-preexistente`, no como error: el defecto es de la librería.
