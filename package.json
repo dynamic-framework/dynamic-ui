@@ -69,6 +69,7 @@
     "validate:token-overrides": "node scripts/validate-token-overrides.mjs",
     "theme:expand": "node scripts/theme/theme-expand.mjs",
     "theme:validate": "node scripts/theme/theme-validate.mjs",
+    "theme:preview": "vite scripts/theme --port 4173 --open /preview/",
     "eslint": "npm run eslint:src && npm run eslint:stories && npm run eslint:test",
     "eslint:src": "eslint 'src/**/*.ts' 'src/**/*.tsx' --ignore-pattern '**/*.spec.tsx'",
     "eslint:stories": "eslint stories/**/*.stories.tsx",

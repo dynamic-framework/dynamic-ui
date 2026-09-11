@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejemplo v0.2 sobre Dynamic UI 2.10.0</title>
+<!-- Inline para que la página no pida un favicon que no existe. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%237fd4d0'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;500;700&display=swap">
+
+<!-- El orden importa: la librería primero, el theme después. -->
+<link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/2.10.0/ui-react/css/dynamic-ui.min.css">
+<link rel="stylesheet" href="../out/theme-ejemplo-zonas.css">
+
+<style>
+  /*
+   * Estilos de la propia página de preview. Nada de esto forma parte del theme:
+   * sirve para montar las dos zonas en paralelo y para forzar estados que de
+   * otro modo exigirían interactuar con el navegador.
+   */
+  body { padding-block: 2rem; }
+  .preview-title { font-weight: 700; }
+  .preview-section { margin-bottom: 3rem; }
+  .preview-section > h2 {
+    font-size: 1.125rem;
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+  .preview-pair { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 991.98px) { .preview-pair { grid-template-columns: 1fr; } }
+  .preview-zone {
+    padding: 1.25rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background-color: rgb(var(--bs-body-bg-rgb));
+    color: rgb(var(--bs-body-color-rgb));
+  }
+  .preview-zone-label {
+    display: block;
+    margin-bottom: .75rem;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+  .contrast-readout { display: block; margin-top: 1rem; font-size: .75rem; opacity: .85; }
+  .contrast-readout.is-fail { color: rgb(var(--bs-danger-rgb)); font-weight: 700; }
+
+  /* Muestras de color de la paleta. */
+  .ramp { display: flex; flex-wrap: wrap; gap: .25rem; margin-bottom: .75rem; }
+  .swatch {
+    width: 4.25rem;
+    padding: .25rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: .25rem;
+    font-size: .5625rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .swatch-chip { display: block; height: 1.75rem; margin-bottom: .25rem; border-radius: .125rem; }
+
+  /*
+   * Estados forzados. Bootstrap los expresa con pseudoclases, que una captura
+   * estática no puede disparar; estas clases aplican las mismas variables que
+   * el componente usaría, así que lo que se ve es el token, no una imitación.
+   */
+  .btn.force-hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  }
+  .btn.force-active {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+  }
+  .btn.force-focus {
+    box-shadow: 0 0 0 .25rem var(--bs-focus-ring-color);
+    outline: 0;
+  }
+  .form-control.force-focus, .form-select.force-focus {
+    border-color: rgba(var(--bs-primary-rgb), .6);
+    box-shadow: 0 0 0 .25rem var(--bs-focus-ring-color);
+    outline: 0;
+  }
+
+  /* Modal montado en su sitio en vez de sobre toda la página. */
+  .modal-stage { position: relative; min-height: 15rem; overflow: hidden; border-radius: var(--bs-border-radius); }
+  .modal-stage .modal-backdrop { position: absolute; }
+  .modal-stage .modal { position: absolute; display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="mb-4">
+    <h1 class="preview-title">Ejemplo con zonas · v0.2</h1>
+    <p class="mb-0">
+      <code>theme-ejemplo-zonas.css</code> sobre <code>@dynamic-framework/ui-react 2.10.0</code>
+      servido desde el CDN. Cada sección se repite en la zona clara y dentro de
+      <code>[data-bs-theme="oscura"]</code>.
+    </p>
+  </header>
+  <main id="preview-root"></main>
+</div>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Plantillas. Cada una se clona en las dos zonas.                     -->
+<!-- ------------------------------------------------------------------ -->
+
+<template data-section="Paleta" data-contrast-pair="body">
+  <div class="js-palette"></div>
+</template>
+
+<template data-section="Tipografía" data-contrast-pair="body">
+  <h1>Raleway 1 · 1.625rem</h1>
+  <h2>Raleway 2 · 1.5rem</h2>
+  <h3>Raleway 3 · 1.25rem</h3>
+  <h4>Raleway 4 · 1.125rem</h4>
+  <h5>Raleway 5 · 1rem</h5>
+  <h6>Raleway 6 · .875rem</h6>
+  <p>
+    Cuerpo de texto en Raleway 400 a <code>.875rem</code> con interlineado
+    <code>1.4286</code>. Aquí va <a href="#">un enlace</a> y <strong>algo en negrita</strong>.
+  </p>
+  <p><small class="text-body-secondary">Texto <code>small</code>, para notas al pie y leyendas.</small></p>
+  <p class="font-numeric mb-0" style="font-size:1.5rem;font-weight:700;">$ 1,284,590.75</p>
+  <p><small><code>.font-numeric</code> — Open Sans con <code>tabular-nums</code></small></p>
+</template>
+
+<template data-section="Botones" data-contrast-pair="btn-primary">
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn-primary force-hover">Hover</button>
+    <button type="button" class="btn btn-primary force-active">Active</button>
+    <button type="button" class="btn btn-primary" disabled>Disabled</button>
+    <button type="button" class="btn btn-primary force-focus">Focus</button>
+  </div>
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button type="button" class="btn btn-outline-primary">Outline</button>
+    <button type="button" class="btn btn-outline-primary force-hover">Hover</button>
+    <button type="button" class="btn btn-outline-primary force-active">Active</button>
+    <button type="button" class="btn btn-outline-primary" disabled>Disabled</button>
+    <button type="button" class="btn btn-outline-primary force-focus">Focus</button>
+  </div>
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button type="button" class="btn btn-link">Link</button>
+    <button type="button" class="btn btn-link force-hover">Hover</button>
+    <button type="button" class="btn btn-link force-active">Active</button>
+    <button type="button" class="btn btn-link" disabled>Disabled</button>
+    <button type="button" class="btn btn-link force-focus">Focus</button>
+  </div>
+  <div class="d-flex flex-wrap gap-2">
+    <button type="button" class="btn btn-secondary">Secondary</button>
+    <button type="button" class="btn btn-secondary force-hover">Hover</button>
+    <button type="button" class="btn btn-secondary force-active">Active</button>
+    <button type="button" class="btn btn-secondary" disabled>Disabled</button>
+    <button type="button" class="btn btn-secondary force-focus">Focus</button>
+  </div>
+</template>
+
+<template data-section="Formularios" data-contrast-pair="input">
+  <div class="mb-3">
+    <label class="form-label" for="f-default">Campo por defecto</label>
+    <input type="text" class="form-control" id="f-default" value="Cuenta de cheques">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="f-focus">Con foco</label>
+    <input type="text" class="form-control force-focus" id="f-focus" value="0123 4567 8901">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="f-invalid">Con error</label>
+    <input type="text" class="form-control is-invalid" id="f-invalid" value="12">
+    <div class="invalid-feedback">La CLABE debe tener 18 dígitos.</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="f-disabled">Deshabilitado</label>
+    <input type="text" class="form-control" id="f-disabled" value="No editable" disabled>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="f-select">Selección</label>
+    <select class="form-select" id="f-select">
+      <option selected>Transferencia SPEI</option>
+      <option>Pago de servicios</option>
+    </select>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="f-check" checked>
+    <label class="form-check-label" for="f-check">Guardar como frecuente</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="f-check-2">
+    <label class="form-check-label" for="f-check-2">Enviar comprobante por correo</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="r" id="f-radio" checked>
+    <label class="form-check-label" for="f-radio">Cuenta propia</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="r" id="f-radio-2">
+    <label class="form-check-label" for="f-radio-2">Cuenta de tercero</label>
+  </div>
+</template>
+
+<template data-section="Tarjeta y lista" data-contrast-pair="card">
+  <div class="card">
+    <div class="card-header">Movimientos recientes</div>
+    <div class="list-group list-group-flush">
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <span>Pago de nómina</span>
+        <span class="font-numeric">+ $ 24,500.00</span>
+      </div>
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <span>Transferencia SPEI</span>
+        <span class="font-numeric">− $ 3,120.50</span>
+      </div>
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <span>Compra en comercio</span>
+        <span class="font-numeric">− $ 890.00</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template data-section="Alertas" data-contrast-pair="alert-info">
+  <div class="alert alert-info alert-dismissible" role="alert">
+    Tu estado de cuenta de agosto ya está disponible.
+    <button type="button" class="btn-close" aria-label="Cerrar"></button>
+  </div>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    La transferencia se realizó correctamente.
+    <button type="button" class="btn-close" aria-label="Cerrar"></button>
+  </div>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    Tu token vence en 5 días.
+    <button type="button" class="btn-close" aria-label="Cerrar"></button>
+  </div>
+  <div class="alert alert-danger alert-dismissible mb-0" role="alert">
+    No pudimos procesar el pago. Intenta de nuevo.
+    <button type="button" class="btn-close" aria-label="Cerrar"></button>
+  </div>
+</template>
+
+<template data-section="Navegación" data-contrast-pair="nav-pill">
+  <ul class="nav nav-pills mb-4">
+    <li class="nav-item"><a class="nav-link active" href="#">Resumen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Movimientos</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Tarjetas</a></li>
+    <li class="nav-item"><a class="nav-link disabled" href="#">Inversiones</a></li>
+  </ul>
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" href="#">Pendientes</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Programadas</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Historial</a></li>
+  </ul>
+</template>
+
+<template data-section="Modal" data-contrast-pair="modal">
+  <div class="modal-stage">
+    <div class="modal-backdrop show"></div>
+    <div class="modal show" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirma la transferencia</h5>
+            <button type="button" class="btn-close" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-1">Vas a enviar</p>
+            <p class="font-numeric mb-0" style="font-size:1.5rem;font-weight:700;">$ 3,120.50</p>
+            <p class="mb-0"><small class="text-body-secondary">a la cuenta terminada en 4821</small></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary">Cancelar</button>
+            <button type="button" class="btn btn-primary">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- El hero sólo existe en oscuro: es el encabezado del dashboard. -->
+<template data-section="Hero del dashboard" data-only-dark="true" data-contrast-pair="body">
+  <ul class="nav nav-pills mb-4">
+    <li class="nav-item"><a class="nav-link active" href="#">Cuentas</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Créditos</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Inversiones</a></li>
+  </ul>
+  <p class="mb-1"><small>Saldo disponible</small></p>
+  <p class="font-numeric mb-4" style="font-size:2.25rem;font-weight:700;line-height:1.1;">$ 184,920.35</p>
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <div class="p-3 rounded bg-body-secondary bg-opacity-10">
+        <p class="mb-1"><small>Cuenta de cheques</small></p>
+        <p class="font-numeric mb-0" style="font-weight:700;">$ 120,400.15</p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="p-3 rounded bg-body-secondary bg-opacity-10">
+        <p class="mb-1"><small>Ahorro programado</small></p>
+        <p class="font-numeric mb-0" style="font-weight:700;">$ 64,520.20</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+/*
+ * Todo lo que sigue es de la preview, no del theme: monta cada plantilla en las
+ * dos zonas, lee los tokens ya resueltos por el navegador y calcula contrastes.
+ * Leer con getComputedStyle y no del JSON es deliberado: así lo que se mide es
+ * lo que realmente pinta la cascada, incluida la librería del CDN.
+ */
+
+const ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'];
+const RAMP = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+/** Relación de contraste WCAG 2.x entre dos colores ya resueltos a canales. */
+function contrast(a, b) {
+  const lum = ({ r, g, b: bl }) => {
+    const channel = (v) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+    };
+    return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(bl);
+  };
+  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/** Convierte cualquier color que devuelva getComputedStyle a canales enteros. */
+function toRgb(value) {
+  const nums = String(value).match(/[\d.]+/g);
+  if (!nums || nums.length < 3) return null;
+  return { r: Math.round(+nums[0]), g: Math.round(+nums[1]), b: Math.round(+nums[2]) };
+}
+
+const toHex = ({ r, g, b }) => `#${[r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+
+/**
+ * Color de fondo efectivo: sube por los ancestros hasta encontrar uno opaco,
+ * porque un fondo transparente no dice nada sobre lo que se ve detrás.
+ */
+function effectiveBg(node) {
+  let el = node;
+  while (el && el !== document.documentElement) {
+    const value = getComputedStyle(el).backgroundColor;
+    const rgb = toRgb(value);
+    const alpha = String(value).match(/[\d.]+\)$/);
+    if (rgb && (!alpha || parseFloat(alpha[0]) > 0.95)) return rgb;
+    el = el.parentElement;
+  }
+  return toRgb(getComputedStyle(document.body).backgroundColor);
+}
+
+/** Lee una variable --bs-<x>-rgb resuelta en el contexto de un elemento. */
+function tokenRgb(el, name) {
+  const raw = getComputedStyle(el).getPropertyValue(name).trim();
+  if (!raw) return null;
+  // Puede venir como "0, 204, 197" o ya resuelto a rgb(...).
+  return toRgb(raw);
+}
+
+/** Tabla de muestras de los ocho roles, con el hex que el navegador resolvió. */
+function renderPalette(host) {
+  const out = [];
+  for (const role of ROLES) {
+    const base = tokenRgb(host, `--bs-${role}-rgb`);
+    const chips = [];
+    for (const step of RAMP) {
+      // El 500 apunta al base; light y dark no tienen rampa en la librería.
+      const rgb = step === 500
+        ? base
+        : tokenRgb(host, `--bs-${role}-${step}-rgb`);
+      if (!rgb) continue;
+      chips.push(`
+        <div class="swatch">
+          <span class="swatch-chip" style="background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b});"></span>
+          <strong>${step}</strong><br>${toHex(rgb)}
+        </div>`);
+    }
+    const missing = chips.length === 0
+      ? `<div class="swatch"><span class="swatch-chip" style="background-color: rgb(${base.r}, ${base.g}, ${base.b});"></span><strong>base</strong><br>${toHex(base)}</div>`
+      : '';
+    out.push(`
+      <p class="mb-1"><small><strong>${role}</strong>${chips.length === 0 ? ' — la librería no expone rampa para este role' : ''}</small></p>
+      <div class="ramp">${chips.join('') || missing}</div>`);
+  }
+  host.innerHTML = out.join('');
+}
+
+/**
+ * Par texto/fondo que mide cada sección. Se apunta al elemento que representa
+ * el caso interesante de esa sección, no al contenedor.
+ */
+const PAIRS = {
+  body: (zone) => ({ label: 'cuerpo sobre fondo', node: zone }),
+  'btn-primary': (zone) => ({ label: '.btn-primary', node: zone.querySelector('.btn-primary') }),
+  input: (zone) => ({ label: '.form-control', node: zone.querySelector('.form-control') }),
+  card: (zone) => ({ label: '.list-group-item', node: zone.querySelector('.list-group-item') }),
+  'alert-info': (zone) => ({ label: '.alert-info', node: zone.querySelector('.alert-info') }),
+  'nav-pill': (zone) => ({ label: '.nav-link.active', node: zone.querySelector('.nav-pills .nav-link.active') }),
+  modal: (zone) => ({ label: '.modal-content', node: zone.querySelector('.modal-body') }),
+};
+
+function readout(zone, pairKey) {
+  const spec = (PAIRS[pairKey] || PAIRS.body)(zone);
+  const node = spec.node || zone;
+  const fg = toRgb(getComputedStyle(node).color);
+  const bg = effectiveBg(node);
+  if (!fg || !bg) return '';
+  const ratio = contrast(fg, bg);
+  const ok = ratio >= 4.5;
+  return `<small class="contrast-readout${ok ? '' : ' is-fail'}">
+    ${spec.label}: ${toHex(fg)} sobre ${toHex(bg)} = <strong>${ratio.toFixed(2)}:1</strong>
+    ${ok ? '— cumple AA (4.5:1)' : '— por debajo de AA (4.5:1)'}
+  </small>`;
+}
+
+function build() {
+  const root = document.getElementById('preview-root');
+  for (const tpl of document.querySelectorAll('template[data-section]')) {
+    const section = document.createElement('section');
+    section.className = 'preview-section';
+    const onlyDark = tpl.dataset.onlyDark === 'true';
+
+    const zones = onlyDark
+      ? [{ label: 'oscura', theme: 'oscura' }]
+      : [{ label: 'zona clara', theme: null }, { label: 'oscura', theme: 'oscura' }];
+
+    const pair = document.createElement('div');
+    pair.className = 'preview-pair';
+    if (onlyDark) pair.style.gridTemplateColumns = '1fr';
+
+    for (const zone of zones) {
+      const box = document.createElement('div');
+      box.className = 'preview-zone';
+      box.dataset.contrastPair = tpl.dataset.contrastPair || 'body';
+      if (zone.theme) box.setAttribute('data-bs-theme', zone.theme);
+      box.innerHTML = `<span class="preview-zone-label">${zone.label}</span>`;
+      box.appendChild(tpl.content.cloneNode(true));
+      pair.appendChild(box);
+    }
+
+    section.innerHTML = `<h2>${tpl.dataset.section}</h2>`;
+    section.appendChild(pair);
+    root.appendChild(section);
+  }
+
+  // La paleta necesita estar en el DOM para que las variables resuelvan por zona.
+  for (const host of document.querySelectorAll('.js-palette')) {
+    renderPalette(host.closest('.preview-zone'));
+  }
+
+  // Y los contrastes, después de que todo esté pintado. Cada zona lleva su
+  // propio par anotado, así que se recorren una sola vez.
+  for (const zone of document.querySelectorAll('.preview-zone')) {
+    zone.insertAdjacentHTML('beforeend', readout(zone, zone.dataset.contrastPair));
+  }
+}
+
+// Las fuentes cambian métricas, no colores, pero se espera a que carguen para
+// que la captura no salga con la tipografía de respaldo.
+document.fonts.ready.then(() => {
+  build();
+  document.documentElement.dataset.previewReady = 'true';
+});
+</script>
+</body>
+</html>
