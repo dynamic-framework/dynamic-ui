@@ -370,9 +370,9 @@ describe('theme-expand — sección root', () => {
   it('normaliza los hex a minúscula, como pide el linter del repo', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
-      root: { '--bs-danger-text-emphasis': '#A41313' },
+      root: { '--bs-danger-text-emphasis': '#2B6CB0' },
     });
-    expect(css).toContain('--bs-danger-text-emphasis: #a41313;');
+    expect(css).toContain('--bs-danger-text-emphasis: #2b6cb0;');
   });
 
   it('rechaza una clave que no empieza por --bs-', () => {

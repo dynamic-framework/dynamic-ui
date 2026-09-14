@@ -324,7 +324,7 @@ export const ALLOWED_DECLARATIONS = [
 /**
  * Normaliza un valor CSS a lo que el stylelint del repo acepta: los hex en
  * minúscula (`@stylistic/color-hex-case`). El theme se escribe a mano y ahí
- * `#A41313` es tan legítimo como `#a41313`, pero el CSS generado pasa por el
+ * `#2B6CB0` es tan legítimo como `#2b6cb0`, pero el CSS generado pasa por el
  * mismo linter que el resto del repo.
  */
 export const normalizeCssValue = (value) => String(value)
