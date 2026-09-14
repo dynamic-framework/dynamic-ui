@@ -34,9 +34,11 @@ function main(argv) {
   }
 
   const tokens = [...new Set(css.match(/--bs-[A-Za-z0-9_-]+(?=\s*:)/g) ?? [])].sort();
+  // Sin la ruta de entrada: era relativa al directorio desde el que se corriera
+  // el script, así que el JSON versionado cambiaba según la máquina y llegó a
+  // llevar dentro una ruta temporal. La procedencia que importa es la versión.
   const payload = {
     dynamicUi: version,
-    source: path.relative(process.cwd(), source),
     count: tokens.length,
     tokens,
   };
