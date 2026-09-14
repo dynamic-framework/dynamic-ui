@@ -72,7 +72,7 @@ color CSS.
 | `radius` | sí | Radio base en `rem`; el resto se deriva |
 | `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
 | `components` | no | Lista de `{ selector, vars?, declarations? }` |
-| `zones` | no | Mapa `<nombre>` → `{ vars, nav? }` |
+| `zones` | no | Mapa `<nombre>` → `{ vars, nav?, components? }` |
 
 ### Las tres secciones extendidas
 
@@ -209,10 +209,12 @@ un build o contra el CSS de un tarball publicado.
 
 ## Qué comprueba el validador
 
-`triplete`, `wrapper`, `rampa-incompleta`, `paso-500`, `superficie-faltante`,
-`border-color`, `fix-bg`, `where`, `tipografia`, `tipografia-breakpoint`,
-`monotonia`, `contraste`, `contraste-boton`, `contraste-nav-pills`,
-`contraste-zona` y `contraste-enlace-zona`. Sale con 1 si hay errores;
+`triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
+`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `border-color`,
+`fix-bg`, `where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
+`contraste-boton`, `contraste-nav-pills`, `contraste-zona`,
+`contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
+`contraste-irresoluble`. Sale con 1 si hay errores;
 `--strict` hace fallar también con avisos, y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
 
@@ -268,7 +270,7 @@ Dos detalles que importan al leer un informe:
 
 Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
 botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el
-bloque concreto. Queda constancia como nota `par-redefinido`.
+bloque concreto.
 
 Un botón con contorno se mide en sus dos estados, que son pares distintos: en
 reposo el fondo es transparente y detrás está la superficie del contexto; sólo

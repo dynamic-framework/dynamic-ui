@@ -265,7 +265,13 @@ export function parseRem(value, where) {
   if (!match) {
     throw new Error(`${where}: se esperaba un valor en rem (por ejemplo "0.5rem"), se recibió "${value}".`);
   }
-  return Number(match[1]);
+  const rem = Number(match[1]);
+  // Un radio o un tamaño negativo es CSS inválido: el navegador descarta la
+  // declaración y el theme parece correcto mientras no se mira en pantalla.
+  if (rem < 0) {
+    throw new Error(`${where}: se esperaba un valor en rem que no sea negativo, se recibió "${value}".`);
+  }
+  return rem;
 }
 
 export const formatRem = (n) => `${fmtNum(n)}rem`;

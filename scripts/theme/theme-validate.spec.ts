@@ -1114,3 +1114,78 @@ describe('theme-expand — la cabecera del CSS', () => {
     }
   });
 });
+
+describe('theme-expand — root gana en todos los anchos', () => {
+  it('quita del @media la variable que root reemplaza, en vez de duplicarla', () => {
+    const result = expand({ ...MINIMAL_THEME, root: { '--bs-rfs-fs-1': '1rem' } });
+    expect(result.status).toBe(0);
+    const css = fs.readFileSync(result.stdout, 'utf8');
+
+    // Una sola declaración, fuera del breakpoint y con el valor del theme: si
+    // el @media conservara la suya, en desktop volvería a ganar la derivada.
+    const todas = (css.match(/^\s*--bs-rfs-fs-1:.*$/gm) ?? []).map((l) => l.trim());
+    expect(todas).toEqual(['--bs-rfs-fs-1: 1rem;']);
+
+    const media = css.slice(css.indexOf('@media (min-width: 1200px)'));
+    expect(media).not.toContain('--bs-rfs-fs-1');
+
+    // Y la nota sigue diciendo lo que pasó.
+    expect(result.stderr).toContain('reemplaza una variable derivada');
+    expect(result.stderr).toContain('--bs-rfs-fs-1');
+  });
+
+  it('deja intactos los pasos del @media que root no toca', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: 'Inter, sans-serif', scale: { 1: '2.75rem', 2: '2rem' } },
+      root: { '--bs-rfs-fs-1': '1rem' },
+    });
+    const media = css.slice(css.indexOf('@media (min-width: 1200px)'));
+    expect(media).not.toContain('--bs-rfs-fs-1');
+    expect(media).toContain('--bs-rfs-fs-2');
+  });
+});
+
+describe('theme-expand — rem negativos', () => {
+  it('rechaza un radio negativo nombrando la clave y el valor', () => {
+    const result = expand({ ...MINIMAL_THEME, radius: '-0.5rem' });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('radius');
+    expect(result.stderr).toContain('-0.5rem');
+    expect(result.stderr).toContain('no sea negativo');
+  });
+
+  it('rechaza un paso de escala negativo nombrando la clave y el valor', () => {
+    const result = expand({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: 'Inter, sans-serif', scale: { 1: '-2rem' } },
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('typography.scale.1');
+    expect(result.stderr).toContain('-2rem');
+    expect(result.stderr).toContain('no sea negativo');
+  });
+});
+
+describe('theme-validate — el triplete está acotado', () => {
+  /** CSS mínimo que el validador acepta, con `--bs-primary-rgb` puesto a mano. */
+  const conPrimary = (value: string) => expandCss(MINIMAL_THEME)
+    .replace(/--bs-primary-rgb: [^;]+;/, `--bs-primary-rgb: ${value};`);
+
+  it.each(['999, 0, 0', '300, 300, 300'])('rechaza el canal fuera de rango %s', (value) => {
+    const result = validate(conPrimary(value));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[triplete]');
+  });
+
+  it('rechaza una referencia al wrapper, que no es un triplete', () => {
+    const result = validate(conPrimary('var(--bs-primary)'));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[triplete]');
+  });
+
+  it.each(['0, 0, 0', '255, 255, 255', 'var(--bs-primary-rgb)'])('acepta %s', (value) => {
+    const result = validate(conPrimary(value));
+    expect(result.stderr).not.toContain('[triplete]');
+  });
+});

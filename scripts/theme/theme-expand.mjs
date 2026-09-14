@@ -497,7 +497,7 @@ export function expandTheme(input) {
   lines.push(section('Tipografía'));
   lines.push(decl('body-font-family', theme.typography.fontFamily));
 
-  const wide = [];
+  let wide = [];
   const scaleSteps = FONT_SIZE_STEPS.filter((s) => theme.typography.scale[s] !== undefined);
   for (const step of scaleSteps) {
     const rem = theme.typography.scale[step];
@@ -537,6 +537,13 @@ export function expandTheme(input) {
       overridden.push(name);
       return `  ${name}: ${normalizeCssValue(entry.value)};`;
     });
+
+    // Un valor de `root` vale en todos los anchos. Si la variable que reemplaza
+    // se emite también dentro del breakpoint, allí volvería a ganar la derivada
+    // y el override se perdería en desktop sin decir nada: por eso desaparece
+    // del @media en vez de duplicarse dentro.
+    const reemplazadas = new Set(overridden);
+    wide = wide.filter((line) => !reemplazadas.has(line.match(/^ {2}(--[\w-]+):/)?.[1]));
 
     if (overridden.length > 0) {
       notes.push(

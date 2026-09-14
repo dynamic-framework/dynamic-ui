@@ -170,7 +170,21 @@ export function resolve(name, decls, seen = new Set()) {
 
 // -- Reglas -----------------------------------------------------------------
 
-const TRIPLET_OR_VAR = /^(?:\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}|var\(\s*--[\w-]+\s*(?:,[\s\S]*)?\))$/;
+/**
+ * Lo que puede valer una variable `-rgb`: tres canales de 0 a 255, o una
+ * referencia a otra variable que también sea `-rgb`.
+ *
+ * Un `var(--bs-primary)` no sirve aunque exista: el wrapper vale `rgb(...)`,
+ * y dentro de `rgb(var(--bs-primary))` queda `rgb(rgb(...))`, que no computa.
+ * Los canales se acotan porque `999, 0, 0` tampoco lo consume nadie.
+ */
+const isTripletOrRgbVar = (value) => {
+  const raw = String(value).trim();
+  const ref = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
+  if (ref) return ref[1].endsWith('-rgb');
+  const channels = raw.match(/^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$/);
+  return Boolean(channels) && channels.slice(1).every((c) => Number(c) <= 255);
+};
 
 /** Nombres de wrapper de color que un theme nunca debe declarar. */
 function wrapperName(name) {
@@ -234,7 +248,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R1 — formato de triplete.
   for (const [name, { value, line }] of root) {
     if (!name.endsWith('-rgb')) continue;
-    if (TRIPLET_OR_VAR.test(value.trim())) continue;
+    if (isTripletOrRgbVar(value)) continue;
     fail(
       'triplete',
       `${name}: "${value}" no es un triplete. Los colores de Dynamic viajan como `
