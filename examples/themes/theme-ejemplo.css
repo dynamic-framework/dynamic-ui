@@ -1,18 +1,12 @@
 /*
- * Theme expandido para @dynamic-framework/ui-react 2.10.0.
  * Theme: Banco Ejemplo
- *
- * Generado por scripts/theme/theme-expand.mjs — no editar a mano.
- * Cárgalo DESPUÉS de dynamic-ui.css.
- *
- * NOTA: La rampa de grises de Dynamic 2.8.0 está escrita a mano en
- *        _colors.scss; aquí se deriva por tinte desde `gray`, así que los
- *        pasos no coinciden con los del tema por defecto.
+ * Para @dynamic-framework/ui-react 2.10.0.
+ * Se carga después del CSS de Dynamic UI.
  */
 
 :root,
 [data-bs-theme="dynamic"] {
-  /* Grises — base y 11 pasos derivados por tinte */
+  /* Grises */
   --bs-gray-rgb: 91, 100, 114;
   --bs-gray-25-rgb: 247, 247, 248;
   --bs-gray-50-rgb: 239, 240, 241;
@@ -26,7 +20,7 @@
   --bs-gray-800-rgb: 36, 40, 46;
   --bs-gray-900-rgb: 18, 20, 23;
 
-  /* Role primary — base + 10 hojas (el 500 sigue al base) */
+  /* Role primary */
   --bs-primary-rgb: 11, 107, 83;
   --bs-primary-25-rgb: 243, 248, 246;
   --bs-primary-50-rgb: 231, 240, 238;
@@ -40,7 +34,7 @@
   --bs-primary-800-rgb: 4, 43, 33;
   --bs-primary-900-rgb: 2, 21, 17;
 
-  /* Role secondary — base + 10 hojas (el 500 sigue al base) */
+  /* Role secondary */
   --bs-secondary-rgb: 65, 65, 78;
   --bs-secondary-25-rgb: 246, 246, 246;
   --bs-secondary-50-rgb: 236, 236, 237;
@@ -54,7 +48,7 @@
   --bs-secondary-800-rgb: 26, 26, 31;
   --bs-secondary-900-rgb: 13, 13, 16;
 
-  /* Role success — base + 10 hojas (el 500 sigue al base) */
+  /* Role success */
   --bs-success-rgb: 15, 122, 61;
   --bs-success-25-rgb: 243, 248, 245;
   --bs-success-50-rgb: 231, 242, 236;
@@ -68,7 +62,7 @@
   --bs-success-800-rgb: 6, 49, 24;
   --bs-success-900-rgb: 3, 24, 12;
 
-  /* Role info — base + 10 hojas (el 500 sigue al base) */
+  /* Role info */
   --bs-info-rgb: 27, 110, 194;
   --bs-info-25-rgb: 244, 248, 252;
   --bs-info-50-rgb: 232, 241, 249;
@@ -82,7 +76,7 @@
   --bs-info-800-rgb: 11, 44, 78;
   --bs-info-900-rgb: 5, 22, 39;
 
-  /* Role warning — base + 10 hojas (el 500 sigue al base) */
+  /* Role warning */
   --bs-warning-rgb: 245, 165, 36;
   --bs-warning-25-rgb: 255, 251, 244;
   --bs-warning-50-rgb: 254, 246, 233;
@@ -96,7 +90,7 @@
   --bs-warning-800-rgb: 98, 66, 14;
   --bs-warning-900-rgb: 49, 33, 7;
 
-  /* Role danger — base + 10 hojas (el 500 sigue al base) */
+  /* Role danger */
   --bs-danger-rgb: 180, 35, 24;
   --bs-danger-25-rgb: 251, 244, 243;
   --bs-danger-50-rgb: 248, 233, 232;
@@ -110,23 +104,20 @@
   --bs-danger-800-rgb: 72, 14, 10;
   --bs-danger-900-rgb: 36, 7, 5;
 
-  /* Role light — sólo base: la librería no expone rampa para light */
+  /* Role light */
   --bs-light-rgb: 251, 251, 252;
 
-  /* Role dark — sólo base: la librería no expone rampa para dark */
+  /* Role dark */
   --bs-dark-rgb: 16, 24, 40;
 
-  /* Superficies — siempre explícitas */
+  /* Superficies */
   --bs-body-bg-rgb: 247, 248, 250;
   --bs-body-color-rgb: 16, 24, 40;
   --bs-border-color: rgb(228, 231, 236);
-
-  /* Fix: en la librería estas dos apuntan al wrapper (var(--bs-gray-200)),
-     que no es un triplete y rompe cualquier RGBA() que las consuma */
   --bs-secondary-bg-rgb: var(--bs-gray-200-rgb);
   --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
 
-  /* Tipografía — familia y escala vía --bs-rfs-fs-N, nunca --bs-fs-N */
+  /* Tipografía */
   --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --bs-rfs-fs-1: calc(1.4rem + 1.8vw);
   --bs-rfs-fs-2: calc(1.35rem + 1.2vw);
@@ -135,7 +126,7 @@
   --bs-rfs-fs-5: 1.25rem;
   --bs-rfs-fs-6: 1rem;
 
-  /* Radios — derivados del radio base */
+  /* Radios */
   --bs-border-radius: .75rem;
   --bs-border-radius-sm: .375rem;
   --bs-border-radius-lg: 1.5rem;
@@ -144,8 +135,7 @@
   --bs-border-radius-2xl: var(--bs-border-radius-xxl);
 }
 
-/* La librería redefine --bs-rfs-fs-1..4 en este breakpoint; sin este bloque
-   la escala de arriba sólo se vería por debajo de 1200px. */
+/* Tipografía en pantallas grandes */
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme="dynamic"] {

@@ -63,7 +63,9 @@ function expand(theme: unknown): Run {
 
 function expandCss(theme: unknown): string {
   const result = expand(theme);
-  expect(result.stderr).toBe('');
+  // El generador escribe las notas en stderr, así que un stderr no vacío sólo
+  // es un fallo si trae algo que no sea el bloque de notas.
+  if (result.stderr !== '') expect(result.stderr).toMatch(/^Notas de generación\n/);
   expect(result.status).toBe(0);
   return fs.readFileSync(result.stdout, 'utf8');
 }
@@ -364,7 +366,19 @@ describe('theme-expand — sección root', () => {
     expect(css).toContain('--bs-border-radius: 0rem;');
     expect(css).not.toContain('--bs-border-radius: .75rem;');
     expect(css.match(/^ {2}--bs-border-radius:/gm)).toHaveLength(1);
-    expect(css).toContain('reemplaza una variable derivada');
+  });
+
+  it('avisa por la terminal de la variable derivada que reemplaza, no en el CSS', () => {
+    const result = expand({
+      ...SECTIONED_THEME,
+      root: { '--bs-border-radius': '0rem' },
+    });
+    expect(result.status).toBe(0);
+    expect(result.stderr).toContain('Notas de generación');
+    expect(result.stderr).toContain('reemplaza una variable derivada');
+    expect(result.stderr).toContain('--bs-border-radius');
+    // El CSS entregado no dice nada de esto.
+    expect(fs.readFileSync(result.stdout, 'utf8')).not.toContain('reemplaza');
   });
 
   it('normaliza los hex a minúscula, como pide el linter del repo', () => {
@@ -1052,6 +1066,51 @@ describe('la receta de tinte contra el CSS compilado', () => {
         expect(fromLibrary).not.toBeNull();
         expect(fromTool?.[1]).toBe(fromLibrary?.[1]);
       }
+    }
+  });
+});
+
+describe('theme-expand — la cabecera del CSS', () => {
+  const PKG_VERSION = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'),
+  ).version as string;
+
+  const header = (themeLine: string | null) => [
+    '/*',
+    ...(themeLine ? [` * Theme: ${themeLine}`] : []),
+    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+    ' * Se carga después del CSS de Dynamic UI.',
+    ' */',
+  ];
+
+  it('emite el nombre y la versión del theme, y nada más', () => {
+    const css = expandCss({ ...MINIMAL_THEME, name: 'Banco Ejemplo', version: '1.0.0' });
+    // Las líneas exactas, y el bloque cerrado: cualquier línea de más aquí es
+    // información interna viajando dentro del entregable.
+    const expected = header('Banco Ejemplo 1.0.0');
+    expect(css.split('\n').slice(0, expected.length)).toEqual(expected);
+    expect(css.split('\n')[expected.length]).toBe('');
+  });
+
+  it('omite la versión cuando el theme no la trae', () => {
+    const css = expandCss({ ...MINIMAL_THEME, name: 'Banco Ejemplo' });
+    const expected = header('Banco Ejemplo');
+    expect(css.split('\n').slice(0, expected.length)).toEqual(expected);
+  });
+
+  it('omite la línea del theme cuando no hay nombre', () => {
+    const css = expandCss(MINIMAL_THEME);
+    const expected = header(null);
+    expect(css.split('\n').slice(0, expected.length)).toEqual(expected);
+    expect(css).not.toContain('Theme:');
+  });
+
+  it('no filtra al CSS cómo se generó, ni con todas las secciones en juego', () => {
+    // El theme más completo que hay en este spec, más el gris, que es lo que
+    // más notas produce: si algo se escapa al archivo, sale por aquí.
+    const css = expandCss({ ...SECTIONED_THEME, name: 'Banco Ejemplo', gray: '#5b6472' });
+    for (const leak of ['Generado por', 'no editar a mano', 'derivad']) {
+      expect(css).not.toContain(leak);
     }
   });
 });

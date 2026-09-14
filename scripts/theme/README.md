@@ -47,6 +47,7 @@ color CSS.
 ```json
 {
   "name": "Banco Ejemplo",
+  "version": "1.0.0",
   "roles": { "primary": "#0b6b53" },
   "gray": "#5b6472",
   "body": { "bg": "#f7f8fa", "color": "#101828", "borderColor": "#e4e7ec" },
@@ -60,6 +61,8 @@ color CSS.
 
 | Campo | Obligatorio | Notas |
 | --- | --- | --- |
+| `name` | no | Encabeza el CSS generado |
+| `version` | no | Cadena; acompaña a `name` en la cabecera del CSS |
 | `roles.<role>` | al menos uno, o `gray` | `primary secondary success info warning danger light dark` |
 | `gray` | no | Deriva la rampa de grises por tinte; ver la advertencia de abajo |
 | `body.bg`, `body.color` | sí | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
@@ -97,8 +100,8 @@ comprueba es la forma.
 ```
 
 - **`root`** — toda clave empieza por `--bs-`. Se emite al final del bloque
-  raíz, así que si repite una variable derivada, gana la tuya; la salida lo dice
-  en un comentario.
+  raíz, así que si repite una variable derivada, gana la tuya; el script lo
+  avisa por la terminal.
 - **`components`** — un bloque por `selector`. En `vars` van variables `--bs-*`
   del componente; en `declarations` sólo se admiten `padding`, `border-radius`,
   `border-color`, `font-family` y `font-variant-numeric`. Cualquier otra
@@ -185,13 +188,16 @@ un build o contra el CSS de un tarball publicado.
   `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: la librería las define
   apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete.
 - Sin `:where()`: tiene especificidad cero y la librería le gana.
+- El CSS es un entregable: la cabecera dice qué theme es y para qué versión de
+  la librería, y los comentarios de dentro sólo nombran la sección. Lo que haya
+  que contar sobre cómo se generó sale por stderr, bajo «Notas de generación».
 
 ## Advertencias
 
 - **La rampa de grises de Dynamic está escrita a mano** en
   `src/style/abstracts/variables/_colors.scss`; no es tint/shade de `gray-500`.
   Pasar `gray` la deriva por tinte, así que cambia el carácter del neutro, no
-  sólo su tono. La salida lo avisa en un comentario.
+  sólo su tono. El script lo avisa por la terminal.
 - **`gray` no se propaga solo a `secondary`, `light` y `dark`.** Esos roles se
   respaldan en pasos de gris (`gray-800`, `gray-25`, `gray-900`), pero sus
   rampas están resueltas a literales en tiempo de compilación. Cuando el theme

@@ -353,6 +353,8 @@ export function readTheme(theme) {
 
   return {
     name: typeof theme.name === 'string' ? theme.name : null,
+    // Opcional, y sólo cosmético: acompaña al nombre en la cabecera del CSS.
+    version: typeof theme.version === 'string' ? theme.version : null,
     roles,
     gray,
     body: { ...surfaces, borderColor },
@@ -405,7 +407,12 @@ function generatedTokens({ roles, gray, root }) {
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
 
-/** Construye el CSS completo a partir de un theme ya normalizado. */
+/**
+ * Construye el CSS completo a partir de un theme ya normalizado.
+ *
+ * Devuelve `{ css, notes }`: el CSS es lo que se entrega, y las notas son lo
+ * que hay que contarle a quien lo generó. No van dentro del archivo.
+ */
 export function expandTheme(input) {
   const theme = readTheme(input);
   let lines = [];
@@ -428,7 +435,7 @@ export function expandTheme(input) {
       + '_colors.scss; aquí se deriva por tinte desde `gray`, así que los pasos '
       + 'no coinciden con los del tema por defecto.',
     );
-    lines.push(section('Grises — base y 11 pasos derivados por tinte'));
+    lines.push(section('Grises'));
     lines.push(decl('gray-rgb', toTriplet(theme.gray)));
     for (const step of GRAY_STEPS) {
       lines.push(decl(`gray-${step}-rgb`, grayTriplet(step)));
@@ -449,11 +456,7 @@ export function expandTheme(input) {
     const explicit = theme.roles[role];
     const hasRamp = RAMPED_ROLES.includes(role);
 
-    lines.push(section(
-      hasRamp
-        ? `Role ${role} — base + 10 hojas (el 500 sigue al base)`
-        : `Role ${role} — sólo base: la librería no expone rampa para ${role}`,
-    ));
+    lines.push(section(`Role ${role}`));
 
     if (explicit) {
       lines.push(decl(`${role}-rgb`, toTriplet(explicit)));
@@ -479,7 +482,7 @@ export function expandTheme(input) {
   }
 
   // Superficies. Siempre presentes, incluso si el theme no cambia el gris.
-  lines.push(section('Superficies — siempre explícitas'));
+  lines.push(section('Superficies'));
   lines.push(decl('body-bg-rgb', toTriplet(theme.body.bg)));
   lines.push(decl('body-color-rgb', toTriplet(theme.body.color)));
   lines.push(decl(
@@ -487,14 +490,11 @@ export function expandTheme(input) {
     theme.body.borderColor ? toCssRgb(theme.body.borderColor) : 'rgb(var(--bs-gray-100-rgb))',
   ));
 
-  lines.push(section(
-    'Fix: en la librería estas dos apuntan al wrapper (var(--bs-gray-200)),\n     que no es un triplete y rompe cualquier RGBA() que las consuma',
-  ));
   lines.push(decl('secondary-bg-rgb', 'var(--bs-gray-200-rgb)'));
   lines.push(decl('tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'));
 
   // Tipografía. Se overridea --bs-rfs-fs-N; --bs-fs-N ya apunta ahí.
-  lines.push(section('Tipografía — familia y escala vía --bs-rfs-fs-N, nunca --bs-fs-N'));
+  lines.push(section('Tipografía'));
   lines.push(decl('body-font-family', theme.typography.fontFamily));
 
   const wide = [];
@@ -514,7 +514,7 @@ export function expandTheme(input) {
   }
 
   // Radios, derivados del base con los múltiplos de 2.8.0.
-  lines.push(section('Radios — derivados del radio base'));
+  lines.push(section('Radios'));
   for (const [suffix, factor] of Object.entries(RADIUS_FACTORS)) {
     const name = suffix ? `border-radius-${suffix}` : 'border-radius';
     lines.push(decl(name, formatRem(theme.radius * factor)));
@@ -535,7 +535,7 @@ export function expandTheme(input) {
       if (!entry) return line;
       pending.delete(name);
       overridden.push(name);
-      return `  ${name}: ${normalizeCssValue(entry.value)}; /* del theme, en vez de la derivada */`;
+      return `  ${name}: ${normalizeCssValue(entry.value)};`;
     });
 
     if (overridden.length > 0) {
@@ -551,14 +551,17 @@ export function expandTheme(input) {
     }
   }
 
+  // El CSS es el artefacto que se entrega: dice qué theme es y contra qué
+  // versión de la librería se generó, y nada más. Cómo se generó y qué
+  // decisiones se tomaron por el camino van a las notas, que salen por la
+  // terminal a quien corre el script, no al archivo que recibe el cliente.
   const header = [
     '/*',
-    ` * Theme expandido para @dynamic-framework/ui-react ${PKG_VERSION}.`,
-    theme.name ? ` * Theme: ${theme.name}` : null,
-    ' *',
-    ' * Generado por scripts/theme/theme-expand.mjs — no editar a mano.',
-    ' * Cárgalo DESPUÉS de dynamic-ui.css.',
-    ...notes.flatMap((note) => [' *', ...wrapNote(note)]),
+    theme.name
+      ? ` * Theme: ${[theme.name, theme.version].filter(Boolean).join(' ')}`
+      : null,
+    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+    ' * Se carga después del CSS de Dynamic UI.',
     ' */',
   ].filter(Boolean).join('\n');
 
@@ -569,8 +572,7 @@ export function expandTheme(input) {
   const media = wide.length > 0
     ? [
       '',
-      '/* La librería redefine --bs-rfs-fs-1..4 en este breakpoint; sin este bloque',
-      '   la escala de arriba sólo se vería por debajo de 1200px. */',
+      '/* Tipografía en pantallas grandes */',
       '@media (min-width: 1200px) {',
       `  ${THEME_SELECTOR.split('\n').join('\n  ')} {`,
       ...wide.map((line) => `  ${line}`),
@@ -631,7 +633,11 @@ export function expandTheme(input) {
       declares('--bs-body-bg') ? '  background-color: var(--bs-body-bg);' : null,
     ].filter(Boolean);
 
-    const blocks = [`${selector} {\n${[emit(vars), ...paint].join('\n')}\n}`];
+    // El separador va pegado al primer bloque de la zona: suelto, el join de
+    // abajo lo dejaría a un párrafo de distancia del selector que nombra.
+    const blocks = [
+      `/* Zona ${name} */\n${selector} {\n${[emit(vars), ...paint].join('\n')}\n}`,
+    ];
     if (nav?.link.length) blocks.push(`${selector} .nav {\n${emit(nav.link)}\n}`);
     if (nav?.pills.length) blocks.push(`${selector} .nav-pills {\n${emit(nav.pills)}\n}`);
     // Los componentes de la zona van al final: dentro del subárbol pisan tanto
@@ -643,30 +649,16 @@ export function expandTheme(input) {
 
   const extra = [
     componentBlocks.length > 0
-      ? `\n/* Componentes — ${componentBlocks.length} selector(es). */\n${componentBlocks.join('\n\n')}`
+      ? `\n/* Componentes */\n${componentBlocks.join('\n\n')}`
       : '',
-    zoneBlocks.length > 0
-      ? `\n/* Zonas — subárboles con su propia paleta, montados con data-bs-theme. */\n${zoneBlocks.join('\n\n')}`
-      : '',
+    // Sin cabecera de grupo: cada zona ya se anuncia con su nombre, y dos
+    // comentarios seguidos no le gustan al stylelint del repo.
+    zoneBlocks.length > 0 ? `\n${zoneBlocks.join('\n\n')}` : '',
   ].filter(Boolean).join('\n');
 
-  return `${header}\n\n${root}\n${media}${extra ? `\n${extra}\n` : '\n'}`;
+  const css = `${header}\n\n${root}\n${media}${extra ? `\n${extra}\n` : '\n'}`;
+  return { css, notes };
 }
-
-const wrapNote = (note) => {
-  const words = note.split(' ');
-  const out = [];
-  let line = ' * NOTA:';
-  for (const word of words) {
-    if (`${line} ${word}`.length > 78) {
-      out.push(line);
-      line = ' *       ';
-    }
-    line += ` ${word}`;
-  }
-  out.push(line);
-  return out;
-};
 
 // -- CLI --------------------------------------------------------------------
 
@@ -700,8 +692,9 @@ function main(argv) {
   }
 
   let css;
+  let notes;
   try {
-    css = expandTheme(theme);
+    ({ css, notes } = expandTheme(theme));
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     return 1;
@@ -710,6 +703,10 @@ function main(argv) {
   const target = outPath ? path.resolve(outPath) : inPath.replace(/\.json$/, '.css');
   fs.writeFileSync(target, css, 'utf8');
   process.stdout.write(`${path.relative(process.cwd(), target)} escrito.\n`);
+  // Las notas son para quien genera, no para quien recibe el CSS.
+  if (notes.length > 0) {
+    process.stderr.write(`Notas de generación\n${notes.join('\n')}\n`);
+  }
   return 0;
 }
 
