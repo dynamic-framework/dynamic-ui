@@ -13,6 +13,7 @@ import type {
 } from 'react';
 
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 import { PREFIX_BS } from '../config';
@@ -116,9 +117,9 @@ function DInputRange(
 
   return (
     <>
-      <label className="form-label" htmlFor={id}>
+      <DFormLabel className="form-label" htmlFor={id}>
         {label}
-      </label>
+      </DFormLabel>
       {inputComponent}
     </>
   );

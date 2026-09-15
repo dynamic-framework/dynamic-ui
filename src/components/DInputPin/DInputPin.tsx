@@ -15,6 +15,7 @@ import type {
   WheelEvent,
 } from 'react';
 
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
@@ -165,9 +166,9 @@ export default function DInputPin(
       {...dataAttributes}
     >
       {hasLabelContent(label) && (
-        <label htmlFor="pinIndex0">
+        <DFormLabel htmlFor="pinIndex0">
           {label}
-        </label>
+        </DFormLabel>
       )}
       <div className="d-input-pin-group" id={id}>
         {Array.from({ length: characters }).map((_, index) => (

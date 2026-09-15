@@ -16,6 +16,7 @@ import type {
 
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
@@ -181,9 +182,9 @@ function DInput(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,

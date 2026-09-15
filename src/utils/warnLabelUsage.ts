@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+import hasLabelContent from './hasLabelContent';
 import isTextLabel from './isTextLabel';
 
 /**
@@ -42,6 +43,10 @@ type WarnLabelUsageOptions = {
  * the placeholder and the label position, so a node with its own height or its
  * own interactive children breaks the layout rather than the semantics.
  *
+ * Labels the render paths drop are skipped through the same `hasLabelContent`
+ * they use, so `label={condition && <span />}` with a false condition warns
+ * about nothing: there is no label on the page to name.
+ *
  * The `process.env.NODE_ENV` guard belongs at the call site — that is what
  * bundlers constant-fold, dropping this module from a consumer's production
  * bundle.
@@ -52,7 +57,7 @@ export default function warnLabelUsage({
   hasAccessibleName,
   floatingLabel = false,
 }: WarnLabelUsageOptions): void {
-  if (label === undefined || label === null || isTextLabel(label)) return;
+  if (!hasLabelContent(label) || isTextLabel(label)) return;
 
   if (!hasAccessibleName) {
     warnOnce(

@@ -32,6 +32,10 @@ the name becomes whatever the subtree computes to. Pass \`aria-label\` with the 
 the field. A development-only warning fires when this is missing.
 + **Do not combine it with \`floatingLabel\`**, whose layout animates a single line of text. This
 also warns in development.
++ **Prefer a real \`<a href>\` or \`<button>\`** for anything clickable in the label. Browsers
+exempt native interactive content from a label's click forwarding, so those activate on their own.
+A \`span\` with \`role\` and \`tabindex\` gets no exemption; the component suppresses the forwarded
+click for it, but the native element is still the better choice.
 
 The only code that breaks on upgrade is code that reads the prop type back out of the component and
 treats it as a string — \`ComponentProps<typeof DInput>['label']\` forwarded to \`placeholder\` or
@@ -273,6 +277,10 @@ A development-only warning fires when this is missing.
 + Clicking the nested link or button does **not** toggle the checkbox: the HTML spec skips a
 label's activation behavior for events targeted at interactive content descendants. Clicking the
 plain text still toggles it.
++ Triggers that are not native interactive content — a \`span\` with \`role=button\` and a
+\`tabindex\`, say — get no such exemption from the browser, so the component suppresses that
+forwarded click itself. Prefer a real \`<button>\` anyway: it is focusable and operable by keyboard
+without extra attributes.
         `,
       },
     },

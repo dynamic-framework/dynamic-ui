@@ -9,6 +9,7 @@ import classNames from 'classnames';
 
 import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
@@ -144,9 +145,9 @@ export default function DInputCheck(
       {...dataAttributes}
     >
       {inputComponent}
-      <label className="form-check-label" htmlFor={id}>
+      <DFormLabel className="form-check-label" htmlFor={id}>
         {label}
-      </label>
+      </DFormLabel>
       {hint && (
         <div
           className="form-text"

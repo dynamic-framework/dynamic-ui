@@ -9,6 +9,7 @@ import type {
 
 import DIcon from '../DIcon';
 import isTextLabel from '../../utils/isTextLabel';
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
@@ -192,9 +193,9 @@ export default function DInputSelect<T extends object = DefaultOption>(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,

@@ -8,6 +8,7 @@ import {
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
@@ -108,12 +109,12 @@ export default function DInputSwitch(
         {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       />
       {hasLabelContent(label) && (
-        <label
+        <DFormLabel
           className="form-check-label"
           htmlFor={id}
         >
           {label}
-        </label>
+        </DFormLabel>
       )}
       {hint && (
         <div

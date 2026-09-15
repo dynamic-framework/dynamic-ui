@@ -24,6 +24,7 @@ import {
 } from 'react-international-phone';
 
 import DIcon from '../DIcon';
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
@@ -206,9 +207,9 @@ function DInputPhone(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,

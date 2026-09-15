@@ -15,6 +15,7 @@ import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 import DSelectPlaceholder from './components/DSelectPlaceholder';
 
+import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
@@ -128,9 +129,9 @@ function DSelect<
       {...dataAttributes}
     >
       {hasLabelContent(label) && (
-        <label htmlFor={id}>
+        <DFormLabel htmlFor={id}>
           {label}
-        </label>
+        </DFormLabel>
       )}
       <div
         className={classNames({

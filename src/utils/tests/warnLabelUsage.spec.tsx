@@ -38,6 +38,23 @@ describe('warnLabelUsage', () => {
 
     warnLabelUsage({ component: 'DInput', label: undefined, hasAccessibleName: false });
     warnLabelUsage({ component: 'DInput', label: null, hasAccessibleName: false });
+    warnLabelUsage({ component: 'DInput', label: '', hasAccessibleName: false });
+
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  // `label={condition && <span />}` collapses to false when the condition is
+  // false, and the render paths drop it, so there is no label to warn about.
+  it('should stay silent for a boolean label the render paths drop', async () => {
+    const warnLabelUsage = await loadWarnLabelUsage();
+
+    warnLabelUsage({ component: 'DInput', label: false, hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput',
+      label: true,
+      hasAccessibleName: false,
+      floatingLabel: true,
+    });
 
     expect(warn).not.toHaveBeenCalled();
   });
