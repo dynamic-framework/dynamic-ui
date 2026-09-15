@@ -57,6 +57,12 @@ const PKG_VERSION = JSON.parse(
   fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
 ).version;
 
+/**
+ * Notaciones de color que llevan el alfa en el propio nombre de la función.
+ * Un valor así no se puede reducir a r/g/b sin perderlo.
+ */
+const ALPHA_COLOR_RE = /^(?:rgba|hsla)\(/i;
+
 // -- Entrada ----------------------------------------------------------------
 
 /**
@@ -116,10 +122,16 @@ export function readTheme(theme) {
       push(error.message);
     }
   }
+  // `--bs-border-color` es una variable de color directa, no un triplete `-rgb`
+  // como `body.bg` o `body.color`: aquí se guarda el valor CSS tal como se va a
+  // emitir. Un color con alfa viaja íntegro, porque pasarlo por r/g/b lo dejaría
+  // opaco y cambiaría el aspecto del borde; el resto se sigue normalizando.
   let borderColor = null;
   if (body.borderColor !== undefined) {
     try {
-      borderColor = parseColor(body.borderColor, 'body.borderColor');
+      const raw = String(body.borderColor).trim();
+      const parsed = parseColor(raw, 'body.borderColor');
+      borderColor = ALPHA_COLOR_RE.test(raw) ? raw : toCssRgb(parsed);
     } catch (error) {
       push(error.message);
     }
@@ -487,7 +499,7 @@ export function expandTheme(input) {
   lines.push(decl('body-color-rgb', toTriplet(theme.body.color)));
   lines.push(decl(
     'border-color',
-    theme.body.borderColor ? toCssRgb(theme.body.borderColor) : 'rgb(var(--bs-gray-100-rgb))',
+    theme.body.borderColor ?? 'rgb(var(--bs-gray-100-rgb))',
   ));
 
   lines.push(decl('secondary-bg-rgb', 'var(--bs-gray-200-rgb)'));

@@ -1189,3 +1189,17 @@ describe('theme-validate — el triplete está acotado', () => {
     expect(result.stderr).not.toContain('[triplete]');
   });
 });
+
+describe('theme-expand — body.borderColor conserva el alfa', () => {
+  it('emite un rgba() tal como viene', () => {
+    // `--bs-border-color` es una variable de color directa, no un triplete
+    // `-rgb`: parsearla a r/g/b deja el borde opaco y cambia el aspecto.
+    const css = expandCss({ ...MINIMAL_THEME, body: { ...MINIMAL_THEME.body, borderColor: 'rgba(0, 0, 0, .1)' } });
+    expect(css).toContain('--bs-border-color: rgba(0, 0, 0, .1);');
+  });
+
+  it('sigue normalizando un hex opaco a rgb()', () => {
+    const css = expandCss({ ...MINIMAL_THEME, body: { ...MINIMAL_THEME.body, borderColor: '#e4e7ec' } });
+    expect(css).toContain('--bs-border-color: rgb(228, 231, 236);');
+  });
+});
