@@ -80,6 +80,7 @@ export default function DInputSwitch(
       component: 'DInputSwitch',
       label,
       hasAccessibleName: !!ariaLabel,
+      accessibleNameProp: 'ariaLabel',
     });
   }
 

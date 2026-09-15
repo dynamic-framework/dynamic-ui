@@ -217,6 +217,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
       component: 'DInputSelect',
       label,
       hasAccessibleName: !!ariaLabel,
+      accessibleNameProp: 'ariaLabel',
       floatingLabel,
     });
   }

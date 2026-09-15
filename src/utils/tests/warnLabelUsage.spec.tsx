@@ -22,11 +22,14 @@ describe('warnLabelUsage', () => {
   it('should stay silent for a text label', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: 'Name', hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput', label: 'Name', hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
     warnLabelUsage({
       component: 'DInput',
       label: 0,
       hasAccessibleName: false,
+      accessibleNameProp: 'aria-label',
       floatingLabel: true,
     });
 
@@ -36,9 +39,15 @@ describe('warnLabelUsage', () => {
   it('should stay silent when the label is absent', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: undefined, hasAccessibleName: false });
-    warnLabelUsage({ component: 'DInput', label: null, hasAccessibleName: false });
-    warnLabelUsage({ component: 'DInput', label: '', hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput', label: undefined, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
+    warnLabelUsage({
+      component: 'DInput', label: null, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
+    warnLabelUsage({
+      component: 'DInput', label: '', hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
 
     expect(warn).not.toHaveBeenCalled();
   });
@@ -48,11 +57,14 @@ describe('warnLabelUsage', () => {
   it('should stay silent for a boolean label the render paths drop', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: false, hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput', label: false, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
     warnLabelUsage({
       component: 'DInput',
       label: true,
       hasAccessibleName: false,
+      accessibleNameProp: 'aria-label',
       floatingLabel: true,
     });
 
@@ -62,7 +74,9 @@ describe('warnLabelUsage', () => {
   it('should warn when a node label has no accessible name', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: <span>Name</span>, hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput', label: <span>Name</span>, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
 
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInput'));
@@ -72,7 +86,9 @@ describe('warnLabelUsage', () => {
   it('should stay silent when a node label has an accessible name', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: <span>Name</span>, hasAccessibleName: true });
+    warnLabelUsage({
+      component: 'DInput', label: <span>Name</span>, hasAccessibleName: true, accessibleNameProp: 'aria-label',
+    });
 
     expect(warn).not.toHaveBeenCalled();
   });
@@ -84,6 +100,7 @@ describe('warnLabelUsage', () => {
       component: 'DInput',
       label: <span>Name</span>,
       hasAccessibleName: true,
+      accessibleNameProp: 'aria-label',
       floatingLabel: true,
     });
 
@@ -94,10 +111,39 @@ describe('warnLabelUsage', () => {
   it('should warn once per component and reason however many instances render', async () => {
     const warnLabelUsage = await loadWarnLabelUsage();
 
-    warnLabelUsage({ component: 'DInput', label: <span>A</span>, hasAccessibleName: false });
-    warnLabelUsage({ component: 'DInput', label: <span>B</span>, hasAccessibleName: false });
-    warnLabelUsage({ component: 'DSelect', label: <span>C</span>, hasAccessibleName: false });
+    warnLabelUsage({
+      component: 'DInput', label: <span>A</span>, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
+    warnLabelUsage({
+      component: 'DInput', label: <span>B</span>, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
+    warnLabelUsage({
+      component: 'DSelect', label: <span>C</span>, hasAccessibleName: false, accessibleNameProp: 'aria-label',
+    });
 
     expect(warn).toHaveBeenCalledTimes(2);
+  });
+
+  // The supported prop differs per component: those spreading the native input
+  // attributes take `aria-label`, the rest reject it in favour of `ariaLabel`.
+  // Naming the wrong one sends the developer to a prop their component refuses.
+  it('should name the prop the component actually accepts', async () => {
+    const warnLabelUsage = await loadWarnLabelUsage();
+
+    warnLabelUsage({
+      component: 'DInput',
+      label: <span>Name</span>,
+      hasAccessibleName: false,
+      accessibleNameProp: 'aria-label',
+    });
+    warnLabelUsage({
+      component: 'DInputSelect',
+      label: <span>Name</span>,
+      hasAccessibleName: false,
+      accessibleNameProp: 'ariaLabel',
+    });
+
+    expect(warn).toHaveBeenNthCalledWith(1, expect.stringContaining('Pass aria-label with'));
+    expect(warn).toHaveBeenNthCalledWith(2, expect.stringContaining('Pass ariaLabel with'));
   });
 });

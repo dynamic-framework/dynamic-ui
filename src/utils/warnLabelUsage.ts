@@ -26,6 +26,13 @@ type WarnLabelUsageOptions = {
   label: ReactNode;
   /** Whether an explicit accessible name reaches the control. */
   hasAccessibleName: boolean;
+  /**
+   * The prop this component actually accepts for the accessible name, so the
+   * advice is usable: components that spread the native input attributes take
+   * `aria-label`, the rest expose the camelCase `ariaLabel` and reject the
+   * native one at compile time.
+   */
+  accessibleNameProp: 'aria-label' | 'ariaLabel';
   /** Whether the component is rendering in Bootstrap's floating-label layout. */
   floatingLabel?: boolean;
 };
@@ -37,7 +44,9 @@ type WarnLabelUsageOptions = {
  * A text label doubles as the control's accessible name. A `ReactNode` one does
  * not: the name becomes whatever the subtree happens to compute to, which for a
  * label carrying a link or an icon trigger reads as the wrong thing or as
- * nothing at all — so an explicit `aria-label` is needed.
+ * nothing at all — so an explicit name is needed. Which prop carries it differs
+ * per component, hence `accessibleNameProp`: naming the wrong one would send
+ * the developer to a prop their component rejects.
  *
  * `form-floating` is the second case: it animates a single line of text between
  * the placeholder and the label position, so a node with its own height or its
@@ -55,6 +64,7 @@ export default function warnLabelUsage({
   component,
   label,
   hasAccessibleName,
+  accessibleNameProp,
   floatingLabel = false,
 }: WarnLabelUsageOptions): void {
   if (!hasLabelContent(label) || isTextLabel(label)) return;
@@ -63,8 +73,8 @@ export default function warnLabelUsage({
     warnOnce(
       `${component}:name`,
       `${component}: a non-text "label" does not give the control a reliable accessible name. `
-      + 'Pass aria-label with the plain-text name of the field, since the label subtree '
-      + 'may include links, icons or markup that read as the wrong name or as none at all.',
+      + `Pass ${accessibleNameProp} with the plain-text name of the field, since the label `
+      + 'subtree may include links, icons or markup that read as the wrong name or as none at all.',
     );
   }
 

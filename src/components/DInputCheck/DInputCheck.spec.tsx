@@ -301,4 +301,42 @@ describe('<DInputCheck />', () => {
     expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
   });
+
+  // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+  // `aria-label` wins — including an explicitly undefined one, which leaves the
+  // control unnamed however non-empty `ariaLabel` was.
+  it('warns when a native aria-label overrides ariaLabel with nothing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms"
+        aria-label={undefined}
+        label={<span>I accept the terms</span>}
+      />,
+    );
+
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-label');
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInputCheck'));
+    warn.mockRestore();
+  });
+
+  it('does not warn for a node label named by aria-labelledby', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <>
+        <span id="termsName">Accept the terms and conditions</span>
+        <DInputCheck
+          type="checkbox"
+          aria-labelledby="termsName"
+          label={<span>I accept the terms</span>}
+        />
+      </>,
+    );
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });

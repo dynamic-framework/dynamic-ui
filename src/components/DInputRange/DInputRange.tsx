@@ -107,7 +107,11 @@ function DInputRange(
     warnLabelUsage({
       component: 'DInputRange',
       label,
-      hasAccessibleName: !!ariaLabel || !!props['aria-label'] || !!props['aria-labelledby'],
+      // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+      // `aria-label` wins — including when it is explicitly undefined.
+      hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+        || !!props['aria-labelledby'],
+      accessibleNameProp: 'ariaLabel',
     });
   }
 

@@ -5,9 +5,14 @@ import type { MouseEvent } from 'react';
  *
  * Per the HTML spec a label does nothing for events targeted at its interactive
  * content descendants, so these need — and must get — no help from us: calling
- * `preventDefault` on a click targeting a link would cancel its navigation.
+ * `preventDefault` on a click targeting a link, or on an image map area, would
+ * cancel the navigation it was meant to perform.
+ *
+ * The list mirrors the spec's interactive content, image maps included, since
+ * one of those carrying a `tabindex` would otherwise fall through to the
+ * pseudo-interactive branch below and be suppressed by mistake.
  */
-const NATIVE_INTERACTIVE = 'a[href], button, input, select, textarea, details, summary, audio[controls], video[controls], embed, iframe';
+const NATIVE_INTERACTIVE = 'a[href], area[href], button, input, select, textarea, details, summary, img[usemap], object[usemap], audio[controls], video[controls], embed, iframe';
 
 /**
  * Descendants that act like controls without being interactive content.

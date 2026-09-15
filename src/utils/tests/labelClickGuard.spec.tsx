@@ -37,6 +37,10 @@ describe('labelClickGuard', () => {
     ['select', '<select data-probe><option>t</option></select>'],
     ['textarea', '<textarea data-probe></textarea>'],
     ['summary', '<details><summary data-probe>t</summary></details>'],
+    ['area[href]', '<map><area data-probe href="#x" shape="rect" coords="0,0,1,1"></map>'],
+    ['img[usemap]', '<img data-probe usemap="#m" alt="t">'],
+    ['object[usemap]', '<object data-probe usemap="#m"></object>'],
+    ['img[usemap] with tabindex', '<img data-probe usemap="#m" tabindex="0" alt="t">'],
   ])('should let the browser handle native interactive content: %s', (_name, inner) => {
     expect(clickInsideLabel(inner)).not.toHaveBeenCalled();
   });

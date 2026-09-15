@@ -236,6 +236,7 @@ function DInputPhone(
       component: 'DInputPhone',
       label,
       hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+      accessibleNameProp: 'aria-label',
       floatingLabel,
     });
   }
