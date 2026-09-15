@@ -9,7 +9,9 @@ import classNames from 'classnames';
 
 import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
-import type { BaseProps, InputCheckType } from '../interface';
+import warnLabelUsage from '../../utils/warnLabelUsage';
+
+import type { BaseProps, DLabel, InputCheckType } from '../interface';
 
 type Props =
 & ComponentPropsWithoutRef<'input'>
@@ -18,7 +20,7 @@ type Props =
   id?: string;
   type: InputCheckType;
   name?: string;
-  label?: string;
+  label?: DLabel;
   ariaLabel?: string;
   checked?: boolean;
   inputClassName?: string;
@@ -122,6 +124,14 @@ export default function DInputCheck(
     ariaDescribedby,
     props,
   ]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputCheck',
+      label,
+      hasAccessibleName: !!ariaLabel,
+    });
+  }
 
   if (!label) {
     return inputComponent;

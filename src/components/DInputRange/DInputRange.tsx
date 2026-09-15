@@ -13,15 +13,16 @@ import type {
 } from 'react';
 
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 import { PREFIX_BS } from '../config';
 
-import type { BaseProps, CustomStyles } from '../interface';
+import type { BaseProps, CustomStyles, DLabel } from '../interface';
 import type { Merge } from '../../types';
 
 type NonHTMLInputElementProps =
 & BaseProps
 & {
-  label?: string;
+  label?: DLabel;
   ariaLabel?: string;
   filledValue?: boolean;
 };
@@ -99,6 +100,14 @@ function DInputRange(
     props,
     value,
   ]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputRange',
+      label,
+      hasAccessibleName: !!ariaLabel,
+    });
+  }
 
   if (!label) {
     return inputComponent;

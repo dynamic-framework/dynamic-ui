@@ -8,13 +8,15 @@ import {
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 
-import type { BaseProps } from '../interface';
+import warnLabelUsage from '../../utils/warnLabelUsage';
+
+import type { BaseProps, DLabel } from '../interface';
 
 type Props =
 & BaseProps
 & {
   id?: string;
-  label?: string;
+  label?: DLabel;
   ariaLabel?: string;
   name?: string;
   checked?: boolean;
@@ -70,6 +72,14 @@ export default function DInputSwitch(
     setInternalIsChecked(value);
     onChange?.(value);
   }, [onChange]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputSwitch',
+      label,
+      hasAccessibleName: !!ariaLabel,
+    });
+  }
 
   return (
     <div

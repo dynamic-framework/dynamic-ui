@@ -1,4 +1,9 @@
-import type { ComponentType, CSSProperties, SVGProps } from 'react';
+import type {
+  ComponentType,
+  CSSProperties,
+  ReactNode,
+  SVGProps,
+} from 'react';
 
 export type ClassMap = { [className: string]: boolean };
 export type CustomStyles = Record<string, string | undefined> | undefined;
@@ -9,6 +14,17 @@ export type NavegableProps = {
   target?: string,
   'aria-current'?: string,
 };
+
+/**
+ * The label of a form control.
+ *
+ * Any node is accepted so a label can carry a link, an info trigger or other
+ * markup — the terms-and-conditions pattern, for instance. A text label still
+ * doubles as the control's accessible name; a richer one needs an explicit
+ * `aria-label`, and does not fit the `floatingLabel` layout.
+ */
+export type DLabel = ReactNode;
+
 export type ComponentSize = 'sm' | 'lg';
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export type AvatarSize = 'xs' | 'sm' | 'lg' | 'xl' | 'xxl';

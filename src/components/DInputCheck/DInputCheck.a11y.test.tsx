@@ -62,4 +62,23 @@ describe('<DInputCheck /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+  it('should have no violations with a label carrying a link', async () => {
+    const { container } = render(
+      <DInputCheck
+        id="termsCheckbox"
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+      />,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });

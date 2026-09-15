@@ -16,10 +16,12 @@ import type {
 
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
   ComponentSize,
+  DLabel,
   EndIconProps,
   FamilyIconProps,
   StartIconProps,
@@ -34,7 +36,7 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
-  label?: string;
+  label?: DLabel;
   loading?: boolean;
   hint?: string;
   size?: ComponentSize;
@@ -197,6 +199,15 @@ function DInput(
     }
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInput',
+      label,
+      hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+      floatingLabel,
+    });
+  }
 
   return (
     <div

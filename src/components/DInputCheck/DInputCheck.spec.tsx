@@ -185,4 +185,98 @@ describe('<DInputCheck />', () => {
     const wrapper = screen.getByTestId('custom-wrapper');
     expect(wrapper).toBeInTheDocument();
   });
+  // A label may carry a link or a button — the terms-and-conditions pattern. The
+  // three tests below pin that contract down: the markup renders, the accessible
+  // name stays the one given explicitly, and activating the nested control does
+  // not also activate the checkbox (the HTML spec skips a label's activation
+  // behaviour for events targeted at interactive content descendants).
+  it('renders a ReactNode label as markup', () => {
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+      />,
+    );
+
+    expect(screen.getByRole('link', { name: 'terms and conditions' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('Accept the terms and conditions');
+  });
+
+  it('leaves the control untouched when a link inside the label is clicked', () => {
+    const onChange = jest.fn();
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('link', { name: 'terms and conditions' }));
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('leaves the control untouched when a button inside the label is clicked', () => {
+    const onChange = jest.fn();
+    const onInfoClick = jest.fn();
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the terms
+            {' '}
+            <button type="button" onClick={onInfoClick}>More info</button>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'More info' }));
+
+    expect(onInfoClick).toHaveBeenCalledTimes(1);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('toggles the control when the plain text of the label is clicked', () => {
+    const onChange = jest.fn();
+
+    const { container } = render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(container.querySelector('label') as HTMLLabelElement);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
 });

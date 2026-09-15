@@ -8,10 +8,13 @@ import type {
 } from 'react';
 
 import DIcon from '../DIcon';
+import isTextLabel from '../../utils/isTextLabel';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
   ComponentSize,
+  DLabel,
   EndIconProps,
   FamilyIconProps,
   StartIconProps,
@@ -30,7 +33,8 @@ export type Props<T> =
 & {
   id?: string;
   name?: string;
-  label?: string;
+  label?: DLabel;
+  ariaLabel?: string;
   disabled?: boolean;
   loading?: boolean;
   invalid?: boolean;
@@ -53,6 +57,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     id: idProp,
     name,
     label = '',
+    ariaLabel,
     className,
     style,
     options = [],
@@ -149,7 +154,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
         'is-invalid': invalid,
         'is-valid': valid,
       })}
-      aria-label={label}
+      aria-label={ariaLabel ?? (isTextLabel(label) ? String(label) : undefined)}
       disabled={disabled || loading}
       onChange={changeHandler}
       onBlur={blurHandler}
@@ -167,6 +172,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     </select>
   ), [
     ariaDescribedby,
+    ariaLabel,
     blurHandler,
     changeHandler,
     disabled,
@@ -203,6 +209,15 @@ export default function DInputSelect<T extends object = DefaultOption>(
       );
     } return selectComponent;
   }, [floatingLabel, labelComponent, selectComponent]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputSelect',
+      label,
+      hasAccessibleName: !!ariaLabel,
+      floatingLabel,
+    });
+  }
 
   return (
     <div

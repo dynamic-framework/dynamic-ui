@@ -24,10 +24,12 @@ import {
 } from 'react-international-phone';
 
 import DIcon from '../DIcon';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
   ComponentSize,
+  DLabel,
   EndIconProps,
   FamilyIconProps,
 } from '../interface';
@@ -49,7 +51,7 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
-  label?: string;
+  label?: DLabel;
   loading?: boolean;
   hint?: string;
   size?: ComponentSize;
@@ -226,6 +228,15 @@ function DInputPhone(
     inputComponent,
     labelComponent,
   ]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputPhone',
+      label,
+      hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+      floatingLabel,
+    });
+  }
 
   return (
     <div

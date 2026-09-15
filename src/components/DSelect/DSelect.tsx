@@ -17,6 +17,7 @@ import DSelectPlaceholder from './components/DSelectPlaceholder';
 
 import type {
   BaseProps,
+  DLabel,
   EndIconProps,
   FamilyIconProps,
   StartIconProps,
@@ -36,7 +37,11 @@ SelectProps<Option, IsMulti, Group>,
 | 'isSearchable'
 | 'isMulti'
 > & {
-  label?: string;
+  label?: DLabel;
+  /**
+   * Accessible name of the control. Defaults to a generic one, which is why a
+   * non-text `label` does not warn here the way it does on the other inputs.
+   */
   ariaLabel?: string;
   hint?: string;
   invalid?: boolean;

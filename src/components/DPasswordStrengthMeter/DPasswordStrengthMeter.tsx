@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import DInputPassword from '../DInputPassword';
 import PasswordChecksList from './PasswordCheckList';
-import type { BaseProps } from '../interface';
+import type { BaseProps, DLabel } from '../interface';
 
 export type ValidationMessages = {
   number: string;
@@ -16,7 +16,8 @@ export type ValidationCheck = 'uppercase' | 'lowercase' | 'number' | 'specialCha
 
 type Props = BaseProps & {
   id?: string;
-  label?: string;
+  label?: DLabel;
+  ariaLabel?: string;
   placeholder?: string;
   value?: string;
   name?: string;
@@ -41,6 +42,7 @@ const DEFAULT_ENABLED_CHECKS: ValidationCheck[] = ['uppercase', 'lowercase', 'nu
 export default function DPasswordStrengthMeter({
   id,
   label = 'Password',
+  ariaLabel,
   placeholder,
   value = '',
   name,
@@ -70,6 +72,7 @@ export default function DPasswordStrengthMeter({
       <DInputPassword
         id={id}
         label={label}
+        aria-label={ariaLabel}
         placeholder={placeholder}
         value={password}
         name={name}

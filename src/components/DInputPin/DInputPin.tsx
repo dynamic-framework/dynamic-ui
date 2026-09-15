@@ -17,6 +17,7 @@ import type {
 
 import type {
   BaseProps,
+  DLabel,
   FamilyIconProps,
   PinInputMode,
   PinInputType,
@@ -27,7 +28,12 @@ type Props =
 & FamilyIconProps
 & {
   id?: string;
-  label?: string;
+  /**
+   * Visible label of the group. Each character input carries its own
+   * `aria-label`, so this never acts as the accessible name and a non-text
+   * label does not warn here the way it does on the other inputs.
+   */
+  label?: DLabel;
   placeholder?: string;
   type?: PinInputType;
   disabled?: boolean;

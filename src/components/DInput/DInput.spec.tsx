@@ -311,4 +311,30 @@ describe('', () => {
       expect(icon.querySelector('svg')).toBeInTheDocument();
     });
   });
+  it('renders a ReactNode label and keeps the explicit accessible name', () => {
+    render(
+      <DInput
+        label={(
+          <>
+            Amount
+            {' '}
+            <button type="button">What is this?</button>
+          </>
+        )}
+        aria-label="Amount"
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'What is this?' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('Amount');
+  });
+
+  it('warns in development when a node label has no accessible name', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(<DInput label={<span>Amount</span>} />);
+
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInput'));
+    warn.mockRestore();
+  });
 });

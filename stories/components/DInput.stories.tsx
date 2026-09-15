@@ -23,6 +23,25 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Form Control](https://getbootstrap.com/docs/5.3/forms/forcontrol/)
 + [Bootstrap Input Group](https://getbootstrap.com/docs/5.3/forms/input-group/)
 
+## Labels
+
+\`label\` accepts any \`ReactNode\`, not only a string, so a field name can carry a link, a tooltip
+trigger or a button that opens a modal — the terms-and-conditions pattern.
+
+Passing a string keeps working exactly as before; the type was widened, not changed. Two things to
+watch for when moving to a richer label:
+
++ **Give the control an accessible name.** A text label doubles as the name; a node does not, since
+the name becomes whatever the subtree computes to. Pass \`aria-label\` with the plain-text name of
+the field. A development-only warning fires when this is missing.
++ **Do not combine it with \`floatingLabel\`**, whose layout animates a single line of text. This
+also warns in development.
+
+The only code that breaks on upgrade is code that reads the prop type back out of the component and
+treats it as a string — \`ComponentProps<typeof DInput>['label']\` forwarded to \`placeholder\` or
+\`aria-label\`, or called with a string method. Type the wrapper's own \`label\` as \`string\`, or
+narrow with \`typeof label === 'string'\` at the point where it is forwarded.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
@@ -90,8 +109,8 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     placeholder: {
       control: 'text',
@@ -412,5 +431,45 @@ export const MaterialIcon: Story = {
     type: 'text',
     iconStart: 'face_5',
     iconStartAriaLabel: 'start action',
+  },
+};
+
+export const LabelWithAction: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+\`label\` accepts any \`ReactNode\`, so a field name can sit next to a trigger that reveals extra
+information — a tooltip, a modal or a link to a longer explanation.
+
+Pass \`aria-label\` with the plain-text name of the field: the accessible name otherwise becomes
+whatever the label subtree computes to, which includes the trigger's own text. A development-only
+warning fires when this is missing.
+
+A rich label does not fit \`floatingLabel\`, whose layout animates a single line of text. That
+combination also warns in development.
+        `,
+      },
+    },
+  },
+  args: {
+    id: 'componentIdLabelAction',
+    'aria-label': 'CVV',
+    placeholder: '123',
+    type: 'text',
+    label: (
+      <>
+        CVV
+        {' '}
+        <button
+          type="button"
+          className="btn btn-link p-0 align-baseline"
+          // eslint-disable-next-line no-alert
+          onClick={() => window.alert('The 3 digits on the back of your card.')}
+        >
+          What is this?
+        </button>
+      </>
+    ),
   },
 };
