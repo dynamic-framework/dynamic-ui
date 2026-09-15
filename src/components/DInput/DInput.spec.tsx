@@ -337,4 +337,19 @@ describe('', () => {
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInput'));
     warn.mockRestore();
   });
+
+  it('renders a numeric label instead of dropping it as falsy', () => {
+    const { container } = render(<DInput label={0} />);
+
+    expect(container.querySelector('label')).toHaveTextContent('0');
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('0');
+  });
+
+  it('renders no label for an empty or absent one', () => {
+    const { container, rerender } = render(<DInput label="" />);
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+
+    rerender(<DInput />);
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+  });
 });

@@ -15,6 +15,8 @@ import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 import DSelectPlaceholder from './components/DSelectPlaceholder';
 
+import hasLabelContent from '../../utils/hasLabelContent';
+
 import type {
   BaseProps,
   DLabel,
@@ -125,7 +127,7 @@ function DSelect<
       style={style}
       {...dataAttributes}
     >
-      {label && (
+      {hasLabelContent(label) && (
         <label htmlFor={id}>
           {label}
         </label>

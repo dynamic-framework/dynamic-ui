@@ -13,6 +13,7 @@ import type {
 } from 'react';
 
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 import { PREFIX_BS } from '../config';
 
@@ -105,11 +106,11 @@ function DInputRange(
     warnLabelUsage({
       component: 'DInputRange',
       label,
-      hasAccessibleName: !!ariaLabel,
+      hasAccessibleName: !!ariaLabel || !!props['aria-label'] || !!props['aria-labelledby'],
     });
   }
 
-  if (!label) {
+  if (!hasLabelContent(label)) {
     return inputComponent;
   }
 

@@ -9,6 +9,7 @@ import type {
 
 import DIcon from '../DIcon';
 import isTextLabel from '../../utils/isTextLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
@@ -225,7 +226,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && (
+      {hasLabelContent(label) && !floatingLabel && (
         labelComponent
       )}
       <div className={classNames({

@@ -8,6 +8,7 @@ import {
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type { BaseProps, DLabel } from '../interface';
@@ -106,7 +107,7 @@ export default function DInputSwitch(
         aria-label={ariaLabel}
         {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       />
-      {label && (
+      {hasLabelContent(label) && (
         <label
           className="form-check-label"
           htmlFor={id}

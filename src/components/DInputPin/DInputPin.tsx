@@ -15,6 +15,8 @@ import type {
   WheelEvent,
 } from 'react';
 
+import hasLabelContent from '../../utils/hasLabelContent';
+
 import type {
   BaseProps,
   DLabel,
@@ -162,7 +164,7 @@ export default function DInputPin(
       style={style}
       {...dataAttributes}
     >
-      {label && (
+      {hasLabelContent(label) && (
         <label htmlFor="pinIndex0">
           {label}
         </label>

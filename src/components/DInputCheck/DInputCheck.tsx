@@ -9,6 +9,7 @@ import classNames from 'classnames';
 
 import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type { BaseProps, DLabel, InputCheckType } from '../interface';
@@ -129,11 +130,11 @@ export default function DInputCheck(
     warnLabelUsage({
       component: 'DInputCheck',
       label,
-      hasAccessibleName: !!ariaLabel,
+      hasAccessibleName: !!ariaLabel || !!props['aria-label'] || !!props['aria-labelledby'],
     });
   }
 
-  if (!label) {
+  if (!hasLabelContent(label)) {
     return inputComponent;
   }
 

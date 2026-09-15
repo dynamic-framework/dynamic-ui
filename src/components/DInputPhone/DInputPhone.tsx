@@ -24,6 +24,7 @@ import {
 } from 'react-international-phone';
 
 import DIcon from '../DIcon';
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
@@ -244,7 +245,7 @@ function DInputPhone(
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && labelComponent}
+      {hasLabelContent(label) && !floatingLabel && labelComponent}
       <div
         className={classNames({
           [`input-group-${size}`]: !!size,

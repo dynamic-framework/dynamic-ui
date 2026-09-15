@@ -279,4 +279,26 @@ describe('<DInputCheck />', () => {
 
     expect(onChange).toHaveBeenCalledTimes(1);
   });
+
+  it('renders a numeric label instead of dropping it as falsy', () => {
+    const { container } = render(<DInputCheck type="checkbox" label={0} />);
+
+    expect(container.querySelector('label')).toHaveTextContent('0');
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('0');
+  });
+
+  it('does not warn for a node label named by the forwarded native aria-label', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        aria-label="Accept the terms and conditions"
+        label={<span>I accept the terms</span>}
+      />,
+    );
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });

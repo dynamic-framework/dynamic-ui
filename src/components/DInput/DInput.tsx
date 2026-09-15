@@ -16,6 +16,7 @@ import type {
 
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
@@ -215,7 +216,7 @@ function DInput(
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && labelComponent}
+      {hasLabelContent(label) && !floatingLabel && labelComponent}
       <div
         className={classNames({
           [`input-group-${size}`]: !!size,

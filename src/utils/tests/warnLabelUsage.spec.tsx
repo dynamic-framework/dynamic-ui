@@ -1,4 +1,3 @@
-/* eslint-disable no-console -- the subject of these tests is console.warn */
 /**
  * Each test re-imports the module because it dedupes warnings in a module-level
  * set, so a warning already reported would stay silent on the next call.
@@ -10,16 +9,14 @@ async function loadWarnLabelUsage() {
 }
 
 describe('warnLabelUsage', () => {
-  const warn = jest.fn();
-  const originalWarn = console.warn;
+  const warn = jest.spyOn(console, 'warn');
 
   beforeEach(() => {
-    warn.mockClear();
-    console.warn = warn;
+    warn.mockReset().mockImplementation(() => {});
   });
 
-  afterEach(() => {
-    console.warn = originalWarn;
+  afterAll(() => {
+    warn.mockRestore();
   });
 
   it('should stay silent for a text label', async () => {
