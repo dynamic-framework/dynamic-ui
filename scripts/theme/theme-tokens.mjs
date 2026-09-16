@@ -187,6 +187,17 @@ export function parseTriplet(value) {
 }
 
 export const toTriplet = ({ r, g, b }) => `${r}, ${g}, ${b}`;
+
+/**
+ * Alfa de un color CSS, entre 0 y 1; 1 si es opaco o si no se reconoce.
+ *
+ * Se lee del color ya parseado y no del nombre de la función, porque el alfa
+ * llega por varias vías: `rgba()`, `hsla()`, el hex de ocho dígitos y la
+ * sintaxis con barra `rgb(0 0 0 / 10%)`. Un triplete "R, G, B" no pasa por
+ * culori y cuenta como opaco, que es lo que es.
+ */
+export const colorAlpha = (value) => parse(String(value).trim())?.alpha ?? 1;
+
 export const toCssRgb = ({ r, g, b }) => `rgb(${r}, ${g}, ${b})`;
 export const toHex = ({ r, g, b }) => `#${[r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('')}`;
 

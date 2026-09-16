@@ -1189,3 +1189,38 @@ describe('theme-validate — el triplete está acotado', () => {
     expect(result.stderr).not.toContain('[triplete]');
   });
 });
+
+describe('theme-expand — body.borderColor conserva el alfa', () => {
+  const conBorde = (borderColor: unknown) => (
+    { ...MINIMAL_THEME, body: { ...MINIMAL_THEME.body, borderColor } }
+  );
+
+  // `--bs-border-color` es una variable de color directa, no un triplete
+  // `-rgb`: parsearla a r/g/b deja el borde opaco y cambia el aspecto. El alfa
+  // llega por cuatro vías y ninguna puede perderse.
+  it.each([
+    'rgba(0, 0, 0, .1)',
+    'hsla(0, 0%, 0%, .1)',
+    '#0000001a',
+    'rgb(0 0 0 / 10%)',
+  ])('emite %s tal como viene', (borderColor) => {
+    expect(expandCss(conBorde(borderColor))).toContain(`--bs-border-color: ${borderColor};`);
+  });
+
+  it.each([
+    ['#e4e7ec', 'rgb(228, 231, 236)'],
+    ['228, 231, 236', 'rgb(228, 231, 236)'],
+    ['rgb(228, 231, 236)', 'rgb(228, 231, 236)'],
+  ])('sigue normalizando %s, que es opaco', (borderColor, esperado) => {
+    expect(expandCss(conBorde(borderColor))).toContain(`--bs-border-color: ${esperado};`);
+  });
+
+  it('rechaza un valor que no sea string, igual que body.bg', () => {
+    // parseColor es quien comprueba el tipo; envolver el valor en String()
+    // antes de llamarlo dejaría pasar un array como "0,0,0".
+    const result = expand(conBorde(['0', '0', '0']));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('body.borderColor');
+    expect(result.stderr).toContain('se esperaba un string con un color');
+  });
+});

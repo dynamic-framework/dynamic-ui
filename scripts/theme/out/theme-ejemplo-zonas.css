@@ -99,7 +99,7 @@
   /* Superficies */
   --bs-body-bg-rgb: 245, 247, 249;
   --bs-body-color-rgb: 31, 41, 51;
-  --bs-border-color: rgb(0, 0, 0);
+  --bs-border-color: rgba(0, 0, 0, .1);
   --bs-secondary-bg-rgb: var(--bs-gray-200-rgb);
   --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
 
