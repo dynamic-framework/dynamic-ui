@@ -42,15 +42,25 @@ const PSEUDO_INTERACTIVE = '[role="button"], [role="link"], [role="checkbox"], [
  * propagation cannot skip it.
  */
 export default function labelClickGuard(event: MouseEvent<HTMLLabelElement>): void {
+  const label = event.currentTarget;
   const target = event.target as HTMLElement | null;
 
   if (!target?.closest) return;
 
-  const native = target.closest(NATIVE_INTERACTIVE);
-  if (native && native !== event.currentTarget) return;
+  /**
+   * `closest` walks the whole ancestor chain, so a match may sit above the
+   * label — a card with a `role` or a `tabindex` wrapping the control and its
+   * label, say. Acting on one of those would suppress the plain label text's
+   * own click and leave the control unresponsive, so only matches inside the
+   * label count.
+   */
+  const inside = (match: Element | null) => (
+    !!match && match !== label && label.contains(match)
+  );
 
-  const pseudo = target.closest(PSEUDO_INTERACTIVE);
-  if (pseudo && pseudo !== event.currentTarget) {
+  if (inside(target.closest(NATIVE_INTERACTIVE))) return;
+
+  if (inside(target.closest(PSEUDO_INTERACTIVE))) {
     event.preventDefault();
   }
 }

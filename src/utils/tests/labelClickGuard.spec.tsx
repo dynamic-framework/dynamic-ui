@@ -11,10 +11,18 @@ import labelClickGuard from '../labelClickGuard';
  * content, so it never forwards the click the guard is there to suppress —
  * unlike browsers, which do. Hence the direct unit test.
  */
-function clickInsideLabel(inner: string) {
+function clickInsideLabel(inner: string, wrapper?: string) {
   const label = document.createElement('label');
   label.innerHTML = `text ${inner}`;
-  document.body.appendChild(label);
+
+  if (wrapper) {
+    const host = document.createElement('div');
+    host.innerHTML = wrapper;
+    (host.firstElementChild as HTMLElement).appendChild(label);
+    document.body.appendChild(host);
+  } else {
+    document.body.appendChild(label);
+  }
 
   const target = label.querySelector('[data-probe]') ?? label;
   const preventDefault = jest.fn();
@@ -25,6 +33,7 @@ function clickInsideLabel(inner: string) {
   } as unknown as MouseEvent<HTMLLabelElement>;
 
   labelClickGuard(event);
+  label.closest('body > *')?.remove();
   label.remove();
 
   return preventDefault;
@@ -66,5 +75,23 @@ describe('labelClickGuard', () => {
   it('should let a link nested inside a trigger navigate', () => {
     expect(clickInsideLabel('<span role="button" tabindex="0"><a data-probe href="#x">t</a></span>'))
       .not.toHaveBeenCalled();
+  });
+
+  // `closest` walks past the label, so a card with a role or a tabindex wrapping
+  // the control and its label would otherwise have its own plain text
+  // suppressed, leaving the control unresponsive to a click on the label.
+  describe('matches above the label', () => {
+    it.each([
+      ['role=button card', '<div role="button" tabindex="0"></div>'],
+      ['tabindex card', '<div tabindex="0"></div>'],
+      ['link card', '<a href="#x"></a>'],
+    ])('should ignore a %s wrapping the label', (_name, wrapper) => {
+      expect(clickInsideLabel('', wrapper)).not.toHaveBeenCalled();
+    });
+
+    it('should ignore the wrapper but still guard a trigger inside the label', () => {
+      expect(clickInsideLabel('<span data-probe role="button">t</span>', '<div role="button" tabindex="0"></div>'))
+        .toHaveBeenCalledTimes(1);
+    });
   });
 });
