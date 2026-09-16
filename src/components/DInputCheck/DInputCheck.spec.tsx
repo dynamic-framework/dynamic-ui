@@ -232,7 +232,10 @@ describe('<DInputCheck />', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('leaves the control untouched when a button inside the label is clicked', () => {
+  // A `<button>` is a labelable element and so a forbidden descendant of
+  // `<label>`; the conforming trigger for a label is a link or a span carrying
+  // a role, which is what this fixture uses.
+  it('runs a custom trigger inside the label without toggling the control', () => {
     const onChange = jest.fn();
     const onInfoClick = jest.fn();
 
@@ -244,7 +247,14 @@ describe('<DInputCheck />', () => {
           <>
             I accept the terms
             {' '}
-            <button type="button" onClick={onInfoClick}>More info</button>
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={onInfoClick}
+              onKeyDown={onInfoClick}
+            >
+              More info
+            </span>
           </>
         )}
         onChange={onChange}

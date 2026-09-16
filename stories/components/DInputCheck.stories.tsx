@@ -30,15 +30,14 @@ watch for when moving to a richer label:
 + **Give the control an accessible name.** A text label doubles as the name; a node does not, since
 the name becomes whatever the subtree computes to. Pass \`aria-label\` with the plain-text name of
 the field. A development-only warning fires when this is missing.
-+ **Do not combine it with \`floatingLabel\`**, whose layout animates a single line of text. This
-also warns in development.
-+ **Prefer a real \`<a href>\` or \`<button>\`** for anything clickable in the label. Browsers
-exempt native interactive content from a label's click forwarding, so those activate on their own.
-A \`span\` with \`role\` and \`tabindex\` gets no exemption; the component suppresses the forwarded
-click for it, but the native element is still the better choice.
++ **Reach for \`<a href>\` first.** A link is not a labelable element, so it is a valid descendant
+of a label, and browsers exempt it from the label's click forwarding. A \`<button>\` is labelable
+and therefore a forbidden descendant under the HTML content model — put it outside the label
+instead. A \`span\` with \`role\` and \`tabindex\` is valid but gets no exemption: the component
+suppresses the forwarded click for it, and handling Enter and Space is then on you.
 
 The only code that breaks on upgrade is code that reads the prop type back out of the component and
-treats it as a string — \`ComponentProps<typeof DInput>['label']\` forwarded to \`placeholder\` or
+treats it as a string — \`ComponentProps<typeof DInputCheck>['label']\` forwarded to \`placeholder\` or
 \`aria-label\`, or called with a string method. Type the wrapper's own \`label\` as \`string\`, or
 narrow with \`typeof label === 'string'\` at the point where it is forwarded.
 

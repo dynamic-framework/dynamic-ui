@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 import DInputPassword from '../DInputPassword';
 import PasswordChecksList from './PasswordCheckList';
+import warnLabelUsage from '../../utils/warnLabelUsage';
+
 import type { BaseProps, DLabel } from '../interface';
 
 export type ValidationMessages = {
@@ -66,6 +68,17 @@ export default function DPasswordStrengthMeter({
     setPassword(newValue);
     onChange?.(newValue);
   };
+
+  if (process.env.NODE_ENV !== 'production') {
+    // The nested DInput warns too, but under its own name and for its own prop.
+    // This one addresses the consumer with the API they actually hold.
+    warnLabelUsage({
+      component: 'DPasswordStrengthMeter',
+      label,
+      hasAccessibleName: !!ariaLabel,
+      accessibleNameProp: 'ariaLabel',
+    });
+  }
 
   return (
     <div className={className} style={style} {...dataAttributes}>

@@ -318,14 +318,14 @@ describe('', () => {
           <>
             Amount
             {' '}
-            <button type="button">What is this?</button>
+            <a href="#help">What is this?</a>
           </>
         )}
         aria-label="Amount"
       />,
     );
 
-    expect(screen.getByRole('button', { name: 'What is this?' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'What is this?' })).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toHaveAccessibleName('Amount');
   });
 

@@ -36,7 +36,10 @@ const PSEUDO_INTERACTIVE = '[role="button"], [role="link"], [role="checkbox"], [
  *
  * Native interactive content returns early rather than falling through, since
  * `preventDefault` on those clicks would cancel the link navigation or the
- * button submit the label is meant to let through.
+ * image map the label is meant to let through.
+ *
+ * `DFormLabel` wires this in the capture phase so a trigger that stops
+ * propagation cannot skip it.
  */
 export default function labelClickGuard(event: MouseEvent<HTMLLabelElement>): void {
   const target = event.target as HTMLElement | null;

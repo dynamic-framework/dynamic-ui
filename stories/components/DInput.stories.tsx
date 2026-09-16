@@ -36,10 +36,11 @@ the name becomes whatever the subtree computes to. Pass \`aria-label\` with the 
 the field. A development-only warning fires when this is missing.
 + **Do not combine it with \`floatingLabel\`**, whose layout animates a single line of text. This
 also warns in development.
-+ **Prefer a real \`<a href>\` or \`<button>\`** for anything clickable in the label. Browsers
-exempt native interactive content from a label's click forwarding, so those activate on their own.
-A \`span\` with \`role\` and \`tabindex\` gets no exemption; the component suppresses the forwarded
-click for it, but the native element is still the better choice.
++ **Reach for \`<a href>\` first.** A link is not a labelable element, so it is a valid descendant
+of a label, and browsers exempt it from the label's click forwarding. A \`<button>\` is labelable
+and therefore a forbidden descendant under the HTML content model — put it outside the label
+instead. A \`span\` with \`role\` and \`tabindex\` is valid but gets no exemption: the component
+suppresses the forwarded click for it, and handling Enter and Space is then on you.
 
 The only code that breaks on upgrade is code that reads the prop type back out of the component and
 treats it as a string — \`ComponentProps<typeof DInput>['label']\` forwarded to \`placeholder\` or
@@ -444,7 +445,11 @@ export const LabelWithAction: Story = {
       description: {
         story: `
 \`label\` accepts any \`ReactNode\`, so a field name can sit next to a trigger that reveals extra
-information — a tooltip, a modal or a link to a longer explanation.
+information — a link to a longer explanation, or a tooltip or modal trigger.
+
+This example uses a link because a \`<button>\` is a labelable element and so a forbidden descendant
+of \`<label>\` under the HTML content model. A modal trigger that has to be a button belongs outside
+the label.
 
 Pass \`aria-label\` with the plain-text name of the field: the accessible name otherwise becomes
 whatever the label subtree computes to, which includes the trigger's own text. A development-only
@@ -465,14 +470,9 @@ combination also warns in development.
       <>
         CVV
         {' '}
-        <button
-          type="button"
-          className="btn btn-link p-0 align-baseline"
-          // eslint-disable-next-line no-alert
-          onClick={() => window.alert('The 3 digits on the back of your card.')}
-        >
+        <a href="https://dynamicframework.dev" target="_blank" rel="noreferrer">
           What is this?
-        </button>
+        </a>
       </>
     ),
   },
