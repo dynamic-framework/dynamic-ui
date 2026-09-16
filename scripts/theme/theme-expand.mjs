@@ -41,6 +41,7 @@ import {
   ROLES,
   THEME_SELECTOR,
   ZONE_NAME_RE,
+  colorAlpha,
   deriveRamp,
   formatRem,
   normalizeCssValue,
@@ -56,12 +57,6 @@ import {
 const PKG_VERSION = JSON.parse(
   fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
 ).version;
-
-/**
- * Notaciones de color que llevan el alfa en el propio nombre de la función.
- * Un valor así no se puede reducir a r/g/b sin perderlo.
- */
-const ALPHA_COLOR_RE = /^(?:rgba|hsla)\(/i;
 
 // -- Entrada ----------------------------------------------------------------
 
@@ -129,9 +124,12 @@ export function readTheme(theme) {
   let borderColor = null;
   if (body.borderColor !== undefined) {
     try {
-      const raw = String(body.borderColor).trim();
-      const parsed = parseColor(raw, 'body.borderColor');
-      borderColor = ALPHA_COLOR_RE.test(raw) ? raw : toCssRgb(parsed);
+      // parseColor va primero, y con el valor sin tocar: es quien comprueba que
+      // sea un string. Envolverlo en String() aquí aceptaría un array o un
+      // número que `body.bg` y `body.color` sí rechazan.
+      const parsed = parseColor(body.borderColor, 'body.borderColor');
+      const raw = body.borderColor.trim();
+      borderColor = colorAlpha(raw) < 1 ? raw : toCssRgb(parsed);
     } catch (error) {
       push(error.message);
     }
