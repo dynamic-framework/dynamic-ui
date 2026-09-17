@@ -12,6 +12,8 @@ import type { ReactNode } from 'react';
  * and so does `String()`, which is what the string-only attributes end up
  * receiving. `bigint` is part of `ReactNode` under these React types, so
  * leaving it out made a label React draws as text get treated as a rich node.
+ * React 18 cannot render one, which `DFormLabel` handles by rendering its
+ * string form — the classification stays true for every supported React.
  */
 export default function isTextLabel(label: ReactNode): label is string | number | bigint {
   return typeof label === 'string'

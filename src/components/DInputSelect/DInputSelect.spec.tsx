@@ -348,6 +348,8 @@ describe('<DInputSelect />', () => {
         </DContextProvider>,
       );
 
+      // Rendered as a string, not as the bigint itself: React 18 throws on a
+      // bigint child and this package supports it.
       expect(container.querySelector('label')).toHaveTextContent('42');
       expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', '42');
       expect(warn).not.toHaveBeenCalled();

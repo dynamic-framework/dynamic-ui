@@ -31,6 +31,19 @@ type Props = {
  * focusable but inert until they handle Enter and Space themselves.
  */
 export default function DFormLabel({ htmlFor, className, children }: Props) {
+  /**
+   * React 19 renders a bigint child; React 18 throws on one, and this package
+   * supports both (`react: >=18 <20`). The label helpers count bigint as text
+   * because that is what it draws as, so it is turned into its string form here
+   * — the one place every control's label passes through — rather than pushing
+   * a version check onto consumers.
+   *
+   * Only a bigint at the top level: one buried inside an array or a fragment is
+   * the consumer's own React child, and normalising it would mean walking and
+   * rebuilding the whole subtree.
+   */
+  const content = typeof children === 'bigint' ? String(children) : children;
+
   return (
     /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
        jsx-a11y/no-noninteractive-element-interactions */
@@ -39,7 +52,7 @@ export default function DFormLabel({ htmlFor, className, children }: Props) {
       className={className}
       onClickCapture={labelClickGuard}
     >
-      {children}
+      {content}
     </label>
   );
 }
