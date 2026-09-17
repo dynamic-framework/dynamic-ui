@@ -41,6 +41,7 @@ import {
   ROLES,
   THEME_SELECTOR,
   ZONE_NAME_RE,
+  colorAlpha,
   deriveRamp,
   formatRem,
   normalizeCssValue,
@@ -116,10 +117,19 @@ export function readTheme(theme) {
       push(error.message);
     }
   }
+  // `--bs-border-color` es una variable de color directa, no un triplete `-rgb`
+  // como `body.bg` o `body.color`: aquí se guarda el valor CSS tal como se va a
+  // emitir. Un color con alfa viaja íntegro, porque pasarlo por r/g/b lo dejaría
+  // opaco y cambiaría el aspecto del borde; el resto se sigue normalizando.
   let borderColor = null;
   if (body.borderColor !== undefined) {
     try {
-      borderColor = parseColor(body.borderColor, 'body.borderColor');
+      // parseColor va primero, y con el valor sin tocar: es quien comprueba que
+      // sea un string. Envolverlo en String() aquí aceptaría un array o un
+      // número que `body.bg` y `body.color` sí rechazan.
+      const parsed = parseColor(body.borderColor, 'body.borderColor');
+      const raw = body.borderColor.trim();
+      borderColor = colorAlpha(raw) < 1 ? raw : toCssRgb(parsed);
     } catch (error) {
       push(error.message);
     }
@@ -487,7 +497,7 @@ export function expandTheme(input) {
   lines.push(decl('body-color-rgb', toTriplet(theme.body.color)));
   lines.push(decl(
     'border-color',
-    theme.body.borderColor ? toCssRgb(theme.body.borderColor) : 'rgb(var(--bs-gray-100-rgb))',
+    theme.body.borderColor ?? 'rgb(var(--bs-gray-100-rgb))',
   ));
 
   lines.push(decl('secondary-bg-rgb', 'var(--bs-gray-200-rgb)'));
