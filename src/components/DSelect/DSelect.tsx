@@ -41,18 +41,25 @@ SelectProps<Option, IsMulti, Group>,
 | 'isMulti'
 > & {
   /**
-   * The label of the control. Any node is accepted, so it can carry a link, an
-   * info trigger or other markup.
+   * The visible label of the control. Any node is accepted, so it can carry a
+   * link, an info trigger or other markup.
    *
-   * Text doubles as the control's accessible name. A richer label falls back to
-   * the default `ariaLabel`, which is worth replacing with the real name of the
-   * field. A rich label also does not fit `floatingLabel`, whose layout
-   * animates a single line of text.
+   * Unlike the other controls, this one is named by `ariaLabel` whatever the
+   * label is: `aria-label` always reaches the inner input and outranks the
+   * associated `<label>` in the accessible name computation. So a text label
+   * here is visible but not the name — set `ariaLabel` to the real name of the
+   * field, otherwise the control keeps announcing the generic default.
+   *
+   * A rich label also does not fit `floatingLabel`, whose layout animates a
+   * single line of text.
    */
   label?: ReactNode;
   /**
-   * Accessible name of the control. Defaults to a generic one, which is why a
-   * non-text `label` does not warn here the way it does on the other inputs.
+   * Accessible name of the control, for every kind of `label`: it is always
+   * passed to the inner input, where it outranks the associated `<label>`.
+   * Defaults to a generic string, which is why a non-text `label` does not warn
+   * here the way it does on the other inputs — and why leaving the default in
+   * place makes every select announce the same name.
    */
   ariaLabel?: string;
   hint?: string;

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import DSelect from './DSelect';
 
@@ -27,4 +27,45 @@ it('should render my component', () => {
   expect(selectComponent).toBeInTheDocument();
   expect(inputElement).toBeInTheDocument();
   expect(inputElement).toHaveAttribute('type', 'text');
+});
+
+// `aria-label` always reaches the inner input, where it outranks the associated
+// `<label>`, so in this component the visible label never names the control.
+// These pin that down: the JSDoc and the story documentation describe it, and a
+// change here should be a deliberate one.
+describe('<DSelect /> accessible name', () => {
+  it('should name the control with ariaLabel rather than with a text label', () => {
+    render(
+      <DSelect
+        inputId="countrySelect"
+        label="Country"
+        options={[{ label: 'Chile', value: 'cl' }]}
+      />,
+    );
+
+    const input = screen.getByRole('combobox');
+    expect(screen.getByText('Country')).toBeInTheDocument();
+    expect(input).toHaveAccessibleName('Search for an option');
+  });
+
+  it('should announce the generic default until ariaLabel is set', () => {
+    const { rerender } = render(
+      <DSelect
+        inputId="countrySelect"
+        label="Country"
+        options={[{ label: 'Chile', value: 'cl' }]}
+      />,
+    );
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Search for an option');
+
+    rerender(
+      <DSelect
+        inputId="countrySelect"
+        label="Country"
+        ariaLabel="Country"
+        options={[{ label: 'Chile', value: 'cl' }]}
+      />,
+    );
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Country');
+  });
 });
