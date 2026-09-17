@@ -19,6 +19,14 @@ export type ValidationCheck = 'uppercase' | 'lowercase' | 'number' | 'specialCha
 
 type Props = BaseProps & {
   id?: string;
+  /**
+   * The label of the password field. Any node is accepted, so it can carry a
+   * link or an info trigger.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `aria-label` alongside it; a development-only warning says so when it
+   * is missing.
+   */
   label?: ReactNode;
   /**
    * Accessible name of the password field. Spelled as the native attribute

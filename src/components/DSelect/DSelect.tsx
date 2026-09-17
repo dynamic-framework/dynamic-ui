@@ -40,6 +40,15 @@ SelectProps<Option, IsMulti, Group>,
 | 'isSearchable'
 | 'isMulti'
 > & {
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label falls back to
+   * the default `ariaLabel`, which is worth replacing with the real name of the
+   * field. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
+   */
   label?: ReactNode;
   /**
    * Accessible name of the control. Defaults to a generic one, which is why a

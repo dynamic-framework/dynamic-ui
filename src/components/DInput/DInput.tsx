@@ -37,6 +37,15 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup — the terms-and-conditions pattern.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `aria-label` alongside it; a development-only warning says so when it
+   * is missing. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
+   */
   label?: ReactNode;
   loading?: boolean;
   hint?: string;

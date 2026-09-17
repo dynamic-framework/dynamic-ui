@@ -49,6 +49,11 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   onChange?: (value: string) => void;
+  /**
+   * Accessible name given to every character input, suffixed with its position
+   * — "Pin character number 2 of 4". Each input is named on its own, which is
+   * why `label` never acts as the accessible name here.
+   */
   'aria-label'?: string;
 };
 
