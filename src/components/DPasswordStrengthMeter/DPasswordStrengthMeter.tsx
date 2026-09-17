@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 import DInputPassword from '../DInputPassword';
 import PasswordChecksList from './PasswordCheckList';
-import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type { BaseProps, DLabel } from '../interface';
 
@@ -19,7 +18,13 @@ export type ValidationCheck = 'uppercase' | 'lowercase' | 'number' | 'specialCha
 type Props = BaseProps & {
   id?: string;
   label?: DLabel;
-  ariaLabel?: string;
+  /**
+   * Accessible name of the password field. Spelled as the native attribute
+   * because it is forwarded straight to the nested input, which is also the
+   * component the development-only naming warning comes from — so the advice it
+   * gives names a prop this component accepts.
+   */
+  'aria-label'?: string;
   placeholder?: string;
   value?: string;
   name?: string;
@@ -44,7 +49,7 @@ const DEFAULT_ENABLED_CHECKS: ValidationCheck[] = ['uppercase', 'lowercase', 'nu
 export default function DPasswordStrengthMeter({
   id,
   label = 'Password',
-  ariaLabel,
+  'aria-label': ariaLabel,
   placeholder,
   value = '',
   name,
@@ -68,17 +73,6 @@ export default function DPasswordStrengthMeter({
     setPassword(newValue);
     onChange?.(newValue);
   };
-
-  if (process.env.NODE_ENV !== 'production') {
-    // The nested DInput warns too, but under its own name and for its own prop.
-    // This one addresses the consumer with the API they actually hold.
-    warnLabelUsage({
-      component: 'DPasswordStrengthMeter',
-      label,
-      hasAccessibleName: !!ariaLabel,
-      accessibleNameProp: 'ariaLabel',
-    });
-  }
 
   return (
     <div className={className} style={style} {...dataAttributes}>

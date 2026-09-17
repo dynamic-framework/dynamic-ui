@@ -352,4 +352,15 @@ describe('', () => {
     rerender(<DInput />);
     expect(container.querySelector('label')).not.toBeInTheDocument();
   });
+
+  it('renders no label for an iterable that renders nothing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const empty: string[] = [];
+
+    const { container } = render(<DInput label={empty.map((t) => t)} />);
+
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });
