@@ -339,6 +339,21 @@ describe('<DInputSelect />', () => {
       expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', 'Explicit name');
     });
 
+    it('should name the control with a bigint label the way it renders it', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const { container } = render(
+        <DContextProvider>
+          <DInputSelect label={BigInt(42)} options={defaultOptions} />
+        </DContextProvider>,
+      );
+
+      expect(container.querySelector('label')).toHaveTextContent('42');
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', '42');
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+    });
+
     it('should render a numeric label instead of dropping it as falsy', () => {
       const { container } = render(
         <DContextProvider>

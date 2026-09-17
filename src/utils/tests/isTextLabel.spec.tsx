@@ -1,10 +1,12 @@
 import isTextLabel from '../isTextLabel';
 
 describe('isTextLabel', () => {
-  it('should accept strings and numbers', () => {
+  // React renders every one of these as text, so they all name a control.
+  it('should accept strings, numbers and bigints', () => {
     expect(isTextLabel('Terms')).toBe(true);
     expect(isTextLabel('')).toBe(true);
     expect(isTextLabel(0)).toBe(true);
+    expect(isTextLabel(BigInt(42))).toBe(true);
   });
 
   it('should reject nodes, nullish values and booleans', () => {
