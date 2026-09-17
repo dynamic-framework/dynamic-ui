@@ -7,13 +7,13 @@ import {
 } from 'react';
 import classNames from 'classnames';
 
-import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef, ReactNode } from 'react';
 
 import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
-import type { BaseProps, DLabel, InputCheckType } from '../interface';
+import type { BaseProps, InputCheckType } from '../interface';
 
 type Props =
 & ComponentPropsWithoutRef<'input'>
@@ -22,7 +22,7 @@ type Props =
   id?: string;
   type: InputCheckType;
   name?: string;
-  label?: DLabel;
+  label?: ReactNode;
   ariaLabel?: string;
   checked?: boolean;
   inputClassName?: string;

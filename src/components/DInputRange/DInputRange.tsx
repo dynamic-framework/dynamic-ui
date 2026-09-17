@@ -9,6 +9,7 @@ import type {
   CSSProperties,
   ForwardedRef,
   ComponentPropsWithoutRef,
+  ReactNode,
   RefObject,
 } from 'react';
 
@@ -18,13 +19,13 @@ import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 import { PREFIX_BS } from '../config';
 
-import type { BaseProps, CustomStyles, DLabel } from '../interface';
+import type { BaseProps, CustomStyles } from '../interface';
 import type { Merge } from '../../types';
 
 type NonHTMLInputElementProps =
 & BaseProps
 & {
-  label?: DLabel;
+  label?: ReactNode;
   ariaLabel?: string;
   filledValue?: boolean;
 };

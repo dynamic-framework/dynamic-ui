@@ -12,6 +12,7 @@ import type {
   ClipboardEvent,
   FormEvent,
   KeyboardEvent,
+  ReactNode,
   WheelEvent,
 } from 'react';
 
@@ -20,7 +21,6 @@ import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
   BaseProps,
-  DLabel,
   FamilyIconProps,
   PinInputMode,
   PinInputType,
@@ -36,7 +36,7 @@ type Props =
    * `aria-label`, so this never acts as the accessible name and a non-text
    * label does not warn here the way it does on the other inputs.
    */
-  label?: DLabel;
+  label?: ReactNode;
   placeholder?: string;
   type?: PinInputType;
   disabled?: boolean;

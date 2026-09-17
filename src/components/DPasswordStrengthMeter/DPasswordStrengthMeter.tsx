@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
+import type { ReactNode } from 'react';
+
 import DInputPassword from '../DInputPassword';
 import PasswordChecksList from './PasswordCheckList';
 
-import type { BaseProps, DLabel } from '../interface';
+import type { BaseProps } from '../interface';
 
 export type ValidationMessages = {
   number: string;
@@ -17,7 +19,7 @@ export type ValidationCheck = 'uppercase' | 'lowercase' | 'number' | 'specialCha
 
 type Props = BaseProps & {
   id?: string;
-  label?: DLabel;
+  label?: ReactNode;
   /**
    * Accessible name of the password field. Spelled as the native attribute
    * because it is forwarded straight to the nested input, which is also the

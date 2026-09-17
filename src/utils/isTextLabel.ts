@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 /**
- * Narrows a `DLabel` to the plain-text case.
+ * Narrows a `label` node to the plain-text case.
  *
  * `label` accepts any `ReactNode` so patterns like a terms-and-conditions link
  * or an info trigger can live next to the field name. Anything that is not text

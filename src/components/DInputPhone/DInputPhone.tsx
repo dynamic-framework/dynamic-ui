@@ -31,7 +31,6 @@ import warnLabelUsage from '../../utils/warnLabelUsage';
 import type {
   BaseProps,
   ComponentSize,
-  DLabel,
   EndIconProps,
   FamilyIconProps,
 } from '../interface';
@@ -53,7 +52,7 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
-  label?: DLabel;
+  label?: ReactNode;
   loading?: boolean;
   hint?: string;
   size?: ComponentSize;

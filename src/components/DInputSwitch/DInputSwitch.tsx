@@ -6,19 +6,19 @@ import {
   useMemo,
 } from 'react';
 import classNames from 'classnames';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 
 import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
-import type { BaseProps, DLabel } from '../interface';
+import type { BaseProps } from '../interface';
 
 type Props =
 & BaseProps
 & {
   id?: string;
-  label?: DLabel;
+  label?: ReactNode;
   ariaLabel?: string;
   name?: string;
   checked?: boolean;

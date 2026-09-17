@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { useCallback, useId, useMemo } from 'react';
+import type { ReactNode } from 'react';
 import classNames from 'classnames';
 import type { Props as SelectProps, GroupBase } from 'react-select';
 import DIcon from '../DIcon';
@@ -20,7 +21,6 @@ import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
   BaseProps,
-  DLabel,
   EndIconProps,
   FamilyIconProps,
   StartIconProps,
@@ -40,7 +40,7 @@ SelectProps<Option, IsMulti, Group>,
 | 'isSearchable'
 | 'isMulti'
 > & {
-  label?: DLabel;
+  label?: ReactNode;
   /**
    * Accessible name of the control. Defaults to a generic one, which is why a
    * non-text `label` does not warn here the way it does on the other inputs.

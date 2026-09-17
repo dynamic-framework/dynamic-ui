@@ -5,6 +5,7 @@ import type {
   ChangeEvent,
   FocusEvent,
   MouseEvent,
+  ReactNode,
 } from 'react';
 
 import DIcon from '../DIcon';
@@ -16,7 +17,6 @@ import warnLabelUsage from '../../utils/warnLabelUsage';
 import type {
   BaseProps,
   ComponentSize,
-  DLabel,
   EndIconProps,
   FamilyIconProps,
   StartIconProps,
@@ -35,7 +35,7 @@ export type Props<T> =
 & {
   id?: string;
   name?: string;
-  label?: DLabel;
+  label?: ReactNode;
   ariaLabel?: string;
   disabled?: boolean;
   loading?: boolean;

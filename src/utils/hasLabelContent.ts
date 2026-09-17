@@ -3,7 +3,7 @@ import { isValidElement } from 'react';
 import type { ReactNode } from 'react';
 
 /**
- * Whether a `DLabel` has something to render.
+ * Whether a `label` node has something to render.
  *
  * The render paths cannot test `label` for truthiness: since the prop widened
  * to `ReactNode` it also accepts `0`, which React renders as the text "0" and
