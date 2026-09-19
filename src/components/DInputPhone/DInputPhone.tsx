@@ -24,6 +24,9 @@ import {
 } from 'react-international-phone';
 
 import DIcon from '../DIcon';
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
@@ -49,7 +52,16 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `aria-label` alongside it; a development-only warning says so when it
+   * is missing. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
+   */
+  label?: ReactNode;
   loading?: boolean;
   hint?: string;
   size?: ComponentSize;
@@ -203,9 +215,9 @@ function DInputPhone(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,
@@ -227,13 +239,23 @@ function DInputPhone(
     labelComponent,
   ]);
 
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputPhone',
+      label,
+      hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+      accessibleNameProp: 'aria-label',
+      floatingLabel,
+    });
+  }
+
   return (
     <div
       className={classNames('d-input-phone', className)}
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && labelComponent}
+      {hasLabelContent(label) && !floatingLabel && labelComponent}
       <div
         className={classNames({
           [`input-group-${size}`]: !!size,

@@ -287,4 +287,84 @@ describe('<DInputSelect />', () => {
       expect(handleBlur).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('accessible name with a rich label', () => {
+    it('should use a text label as the aria-label', () => {
+      render(
+        <DContextProvider>
+          <DInputSelect label="My Select" options={defaultOptions} />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', 'My Select');
+    });
+
+    it('should omit the aria-label for a ReactNode label rather than stringify it', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <DContextProvider>
+          <DInputSelect
+            label={<span>My Select</span>}
+            options={defaultOptions}
+          />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-label');
+      warn.mockRestore();
+    });
+
+    it('should name the control with ariaLabel when the label is a ReactNode', () => {
+      render(
+        <DContextProvider>
+          <DInputSelect
+            ariaLabel="My Select"
+            label={<span>My Select with a trigger</span>}
+            options={defaultOptions}
+          />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByRole('combobox')).toHaveAccessibleName('My Select');
+    });
+
+    it('should let ariaLabel win over a text label', () => {
+      render(
+        <DContextProvider>
+          <DInputSelect ariaLabel="Explicit name" label="Visible label" options={defaultOptions} />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', 'Explicit name');
+    });
+
+    it('should name the control with a bigint label the way it renders it', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const { container } = render(
+        <DContextProvider>
+          <DInputSelect label={BigInt(42)} options={defaultOptions} />
+        </DContextProvider>,
+      );
+
+      // Rendered as a string, not as the bigint itself: React 18 throws on a
+      // bigint child and this package supports it.
+      expect(container.querySelector('label')).toHaveTextContent('42');
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', '42');
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+    });
+
+    it('should render a numeric label instead of dropping it as falsy', () => {
+      const { container } = render(
+        <DContextProvider>
+          <DInputSelect label={0} options={defaultOptions} />
+        </DContextProvider>,
+      );
+
+      expect(container.querySelector('label')).toHaveTextContent('0');
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-label', '0');
+    });
+  });
 });

@@ -83,8 +83,13 @@ To understand in more detail the aspects covered by this component, review the f
     },
     label: {
       control: 'text',
+      description: 'Visible label of the control; accepts any ReactNode. It does not name the control: ariaLabel always does, for text labels too. Set ariaLabel to the real name of the field.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    ariaLabel: {
+      control: 'text',
       type: 'string',
-      description: 'The label text for the component',
+      description: 'Accessible name of the control, for every kind of label: it always reaches the inner input and outranks the associated <label>. Defaults to "Search for an option", so leaving it unset makes every select announce the same name.',
       table: { category: 'Content' },
     },
     floatingLabel: {

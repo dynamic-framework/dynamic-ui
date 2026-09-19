@@ -65,8 +65,8 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit ariaLabel.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     ariaLabel: {
       control: 'text',

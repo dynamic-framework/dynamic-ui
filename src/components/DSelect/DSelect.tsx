@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { useCallback, useId, useMemo } from 'react';
+import type { ReactNode } from 'react';
 import classNames from 'classnames';
 import type { Props as SelectProps, GroupBase } from 'react-select';
 import DIcon from '../DIcon';
@@ -14,6 +15,9 @@ import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 import DSelectPlaceholder from './components/DSelectPlaceholder';
+
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
   BaseProps,
@@ -36,7 +40,27 @@ SelectProps<Option, IsMulti, Group>,
 | 'isSearchable'
 | 'isMulti'
 > & {
-  label?: string;
+  /**
+   * The visible label of the control. Any node is accepted, so it can carry a
+   * link, an info trigger or other markup.
+   *
+   * Unlike the other controls, this one is named by `ariaLabel` whatever the
+   * label is: `aria-label` always reaches the inner input and outranks the
+   * associated `<label>` in the accessible name computation. So a text label
+   * here is visible but not the name — set `ariaLabel` to the real name of the
+   * field, otherwise the control keeps announcing the generic default.
+   *
+   * A rich label also does not fit `floatingLabel`, whose layout animates a
+   * single line of text.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control, for every kind of `label`: it is always
+   * passed to the inner input, where it outranks the associated `<label>`.
+   * Defaults to a generic string, which is why a non-text `label` does not warn
+   * here the way it does on the other inputs — and why leaving the default in
+   * place makes every select announce the same name.
+   */
   ariaLabel?: string;
   hint?: string;
   invalid?: boolean;
@@ -120,10 +144,10 @@ function DSelect<
       style={style}
       {...dataAttributes}
     >
-      {label && (
-        <label htmlFor={id}>
+      {hasLabelContent(label) && (
+        <DFormLabel htmlFor={id}>
           {label}
-        </label>
+        </DFormLabel>
       )}
       <div
         className={classNames({

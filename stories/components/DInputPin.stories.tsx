@@ -53,8 +53,8 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. Each character input carries its own aria-label, so this never acts as the accessible name.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     placeholder: {
       control: 'text',

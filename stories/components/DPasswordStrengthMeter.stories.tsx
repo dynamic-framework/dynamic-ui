@@ -113,8 +113,13 @@ The strength bar color is calculated based on the percentage of passed checks:
     },
     label: {
       control: 'text',
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    'aria-label': {
+      control: 'text',
       type: 'string',
-      description: 'The label text for the password input',
+      description: 'Accessible name of the password field, forwarded to the nested input. Required when `label` is not plain text.',
       table: { category: 'Content' },
     },
     placeholder: {

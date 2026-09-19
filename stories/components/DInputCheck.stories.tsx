@@ -19,6 +19,28 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
 + [Bootstrap Checks](https://getbootstrap.com/docs/5.3/forms/checks-radios/#checks)
 
+## Labels
+
+\`label\` accepts any \`ReactNode\`, not only a string, so a field name can carry a link, a tooltip
+trigger or a button that opens a modal — the terms-and-conditions pattern.
+
+Passing a string keeps working exactly as before; the type was widened, not changed. Two things to
+watch for when moving to a richer label:
+
++ **Give the control an accessible name.** A text label doubles as the name; a node does not, since
+the name becomes whatever the subtree computes to. Pass \`aria-label\` with the plain-text name of
+the field. A development-only warning fires when this is missing.
++ **Reach for \`<a href>\` first.** A link is not a labelable element, so it is a valid descendant
+of a label, and browsers exempt it from the label's click forwarding. A \`<button>\` is labelable
+and therefore a forbidden descendant under the HTML content model — put it outside the label
+instead. A \`span\` with \`role\` and \`tabindex\` is valid but gets no exemption: the component
+suppresses the forwarded click for it, and handling Enter and Space is then on you.
+
+The only code that breaks on upgrade is code that reads the prop type back out of the component and
+treats it as a string — \`ComponentProps<typeof DInputCheck>['label']\` forwarded to \`placeholder\` or
+\`aria-label\`, or called with a string method. Type the wrapper's own \`label\` as \`string\`, or
+narrow with \`typeof label === 'string'\` at the point where it is forwarded.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [Check CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
@@ -74,8 +96,8 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     ariaLabel: {
       control: 'text',
@@ -235,5 +257,46 @@ export const WithInputClassName: Story = {
     label: 'Custom styled input',
     checked: false,
     inputClassName: 'border-2 border-info-500',
+  },
+};
+
+export const LabelWithLink: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+\`label\` accepts any \`ReactNode\`, which covers the terms-and-conditions pattern: part of the
+label is a link to the full text, a tooltip trigger or a button that opens a modal.
+
+Two things to keep in mind:
+
++ Pass \`ariaLabel\` with the plain-text name of the field. The accessible name otherwise becomes
+whatever the label subtree computes to, which for a label carrying a link reads as the wrong name.
+A development-only warning fires when this is missing.
++ Clicking the nested link or button does **not** toggle the checkbox: the HTML spec skips a
+label's activation behavior for events targeted at interactive content descendants. Clicking the
+plain text still toggles it.
++ Triggers that are not native interactive content — a \`span\` with \`role=button\` and a
+\`tabindex\`, say — get no such exemption from the browser, so the component suppresses that
+forwarded click itself. Prefer a real \`<button>\` anyway: it is focusable and operable by keyboard
+without extra attributes.
+        `,
+      },
+    },
+  },
+  args: {
+    id: 'componentIdTerms',
+    type: 'checkbox',
+    checked: false,
+    ariaLabel: 'Accept the terms and conditions',
+    label: (
+      <>
+        I accept the
+        {' '}
+        <a href="https://dynamicframework.dev" target="_blank" rel="noreferrer">
+          terms and conditions
+        </a>
+      </>
+    ),
   },
 };

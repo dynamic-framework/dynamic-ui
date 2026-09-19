@@ -311,4 +311,56 @@ describe('', () => {
       expect(icon.querySelector('svg')).toBeInTheDocument();
     });
   });
+  it('renders a ReactNode label and keeps the explicit accessible name', () => {
+    render(
+      <DInput
+        label={(
+          <>
+            Amount
+            {' '}
+            <a href="#help">What is this?</a>
+          </>
+        )}
+        aria-label="Amount"
+      />,
+    );
+
+    expect(screen.getByRole('link', { name: 'What is this?' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('Amount');
+  });
+
+  it('warns in development when a node label has no accessible name', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(<DInput label={<span>Amount</span>} />);
+
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInput'));
+    warn.mockRestore();
+  });
+
+  it('renders a numeric label instead of dropping it as falsy', () => {
+    const { container } = render(<DInput label={0} />);
+
+    expect(container.querySelector('label')).toHaveTextContent('0');
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('0');
+  });
+
+  it('renders no label for an empty or absent one', () => {
+    const { container, rerender } = render(<DInput label="" />);
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+
+    rerender(<DInput />);
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+  });
+
+  it('renders no label for an iterable that renders nothing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const empty: string[] = [];
+
+    const { container } = render(<DInput label={empty.map((t) => t)} />);
+
+    expect(container.querySelector('label')).not.toBeInTheDocument();
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });

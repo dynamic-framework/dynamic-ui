@@ -185,4 +185,168 @@ describe('<DInputCheck />', () => {
     const wrapper = screen.getByTestId('custom-wrapper');
     expect(wrapper).toBeInTheDocument();
   });
+  // A label may carry a link or a button — the terms-and-conditions pattern. The
+  // three tests below pin that contract down: the markup renders, the accessible
+  // name stays the one given explicitly, and activating the nested control does
+  // not also activate the checkbox (the HTML spec skips a label's activation
+  // behaviour for events targeted at interactive content descendants).
+  it('renders a ReactNode label as markup', () => {
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+      />,
+    );
+
+    expect(screen.getByRole('link', { name: 'terms and conditions' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('Accept the terms and conditions');
+  });
+
+  it('leaves the control untouched when a link inside the label is clicked', () => {
+    const onChange = jest.fn();
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('link', { name: 'terms and conditions' }));
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  // A `<button>` is a labelable element and so a forbidden descendant of
+  // `<label>`; the conforming trigger for a label is a link or a span carrying
+  // a role, which is what this fixture uses.
+  it('runs a custom trigger inside the label without toggling the control', () => {
+    const onChange = jest.fn();
+    const onInfoClick = jest.fn();
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the terms
+            {' '}
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={onInfoClick}
+              onKeyDown={onInfoClick}
+            >
+              More info
+            </span>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'More info' }));
+
+    expect(onInfoClick).toHaveBeenCalledTimes(1);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('toggles the control when the plain text of the label is clicked', () => {
+    const onChange = jest.fn();
+
+    const { container } = render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms and conditions"
+        label={(
+          <>
+            I accept the
+            {' '}
+            <a href="#terms">terms and conditions</a>
+          </>
+        )}
+        onChange={onChange}
+      />,
+    );
+
+    fireEvent.click(container.querySelector('label') as HTMLLabelElement);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders a numeric label instead of dropping it as falsy', () => {
+    const { container } = render(<DInputCheck type="checkbox" label={0} />);
+
+    expect(container.querySelector('label')).toHaveTextContent('0');
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('0');
+  });
+
+  it('does not warn for a node label named by the forwarded native aria-label', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        aria-label="Accept the terms and conditions"
+        label={<span>I accept the terms</span>}
+      />,
+    );
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
+  // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+  // `aria-label` wins — including an explicitly undefined one, which leaves the
+  // control unnamed however non-empty `ariaLabel` was.
+  it('warns when a native aria-label overrides ariaLabel with nothing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <DInputCheck
+        type="checkbox"
+        ariaLabel="Accept the terms"
+        aria-label={undefined}
+        label={<span>I accept the terms</span>}
+      />,
+    );
+
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-label');
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('DInputCheck'));
+    warn.mockRestore();
+  });
+
+  it('does not warn for a node label named by aria-labelledby', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <>
+        <span id="termsName">Accept the terms and conditions</span>
+        <DInputCheck
+          type="checkbox"
+          aria-labelledby="termsName"
+          label={<span>I accept the terms</span>}
+        />
+      </>,
+    );
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });

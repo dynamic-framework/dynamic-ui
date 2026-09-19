@@ -156,8 +156,8 @@ and all variables are scoped under the \`.d-input-phone\` class.
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     placeholder: {
       control: 'text',

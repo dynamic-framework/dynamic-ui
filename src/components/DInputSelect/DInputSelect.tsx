@@ -5,9 +5,14 @@ import type {
   ChangeEvent,
   FocusEvent,
   MouseEvent,
+  ReactNode,
 } from 'react';
 
 import DIcon from '../DIcon';
+import isTextLabel from '../../utils/isTextLabel';
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
@@ -30,7 +35,22 @@ export type Props<T> =
 & {
   id?: string;
   name?: string;
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel` alongside it; a development-only warning says so when it
+   * is missing. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control, needed when `label` is not plain text.
+   * Without it the name becomes whatever the label subtree computes to, which
+   * for a label carrying a link or an icon reads as the wrong name or as none.
+   */
+  ariaLabel?: string;
   disabled?: boolean;
   loading?: boolean;
   invalid?: boolean;
@@ -53,6 +73,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     id: idProp,
     name,
     label = '',
+    ariaLabel,
     className,
     style,
     options = [],
@@ -149,7 +170,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
         'is-invalid': invalid,
         'is-valid': valid,
       })}
-      aria-label={label}
+      aria-label={ariaLabel ?? (isTextLabel(label) ? String(label) : undefined)}
       disabled={disabled || loading}
       onChange={changeHandler}
       onBlur={blurHandler}
@@ -167,6 +188,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     </select>
   ), [
     ariaDescribedby,
+    ariaLabel,
     blurHandler,
     changeHandler,
     disabled,
@@ -185,9 +207,9 @@ export default function DInputSelect<T extends object = DefaultOption>(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,
@@ -204,13 +226,23 @@ export default function DInputSelect<T extends object = DefaultOption>(
     } return selectComponent;
   }, [floatingLabel, labelComponent, selectComponent]);
 
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputSelect',
+      label,
+      hasAccessibleName: !!ariaLabel,
+      accessibleNameProp: 'ariaLabel',
+      floatingLabel,
+    });
+  }
+
   return (
     <div
       className={className}
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && (
+      {hasLabelContent(label) && !floatingLabel && (
         labelComponent
       )}
       <div className={classNames({

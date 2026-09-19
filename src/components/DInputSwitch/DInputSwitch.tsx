@@ -6,7 +6,11 @@ import {
   useMemo,
 } from 'react';
 import classNames from 'classnames';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
+
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type { BaseProps } from '../interface';
 
@@ -14,7 +18,20 @@ type Props =
 & BaseProps
 & {
   id?: string;
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel` alongside it; a development-only warning says so when it
+   * is missing.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control, needed when `label` is not plain text.
+   * Without it the name becomes whatever the label subtree computes to, which
+   * for a label carrying a link or an icon reads as the wrong name or as none.
+   */
   ariaLabel?: string;
   name?: string;
   checked?: boolean;
@@ -71,6 +88,15 @@ export default function DInputSwitch(
     onChange?.(value);
   }, [onChange]);
 
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputSwitch',
+      label,
+      hasAccessibleName: !!ariaLabel,
+      accessibleNameProp: 'ariaLabel',
+    });
+  }
+
   return (
     <div
       className={classNames('form-check form-switch', className)}
@@ -96,13 +122,13 @@ export default function DInputSwitch(
         aria-label={ariaLabel}
         {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       />
-      {label && (
-        <label
+      {hasLabelContent(label) && (
+        <DFormLabel
           className="form-check-label"
           htmlFor={id}
         >
           {label}
-        </label>
+        </DFormLabel>
       )}
       {hint && (
         <div

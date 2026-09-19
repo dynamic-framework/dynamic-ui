@@ -12,8 +12,12 @@ import type {
   ClipboardEvent,
   FormEvent,
   KeyboardEvent,
+  ReactNode,
   WheelEvent,
 } from 'react';
+
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
 
 import type {
   BaseProps,
@@ -27,7 +31,12 @@ type Props =
 & FamilyIconProps
 & {
   id?: string;
-  label?: string;
+  /**
+   * Visible label of the group. Each character input carries its own
+   * `aria-label`, so this never acts as the accessible name and a non-text
+   * label does not warn here the way it does on the other inputs.
+   */
+  label?: ReactNode;
   placeholder?: string;
   type?: PinInputType;
   disabled?: boolean;
@@ -40,6 +49,11 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   onChange?: (value: string) => void;
+  /**
+   * Accessible name given to every character input, suffixed with its position
+   * — "Pin character number 2 of 4". Each input is named on its own, which is
+   * why `label` never acts as the accessible name here.
+   */
   'aria-label'?: string;
 };
 
@@ -156,10 +170,10 @@ export default function DInputPin(
       style={style}
       {...dataAttributes}
     >
-      {label && (
-        <label htmlFor="pinIndex0">
+      {hasLabelContent(label) && (
+        <DFormLabel htmlFor="pinIndex0">
           {label}
-        </label>
+        </DFormLabel>
       )}
       <div className="d-input-pin-group" id={id}>
         {Array.from({ length: characters }).map((_, index) => (
