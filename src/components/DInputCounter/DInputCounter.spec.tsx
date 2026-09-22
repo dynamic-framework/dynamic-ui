@@ -229,6 +229,36 @@ describe('<DInputCounter />', () => {
       expect(handleChange).toHaveBeenCalledTimes(1);
     });
 
+    it('re-seeds to minValue when it moves and no starting value was given', () => {
+      const handleChange = jest.fn();
+
+      const { rerender } = render(
+        <DInputCounter minValue={0} maxValue={10} onChange={handleChange} />,
+      );
+      const input = screen.getByRole('spinbutton');
+
+      fireEvent.click(screen.getByLabelText('increase action'));
+      fireEvent.click(screen.getByLabelText('increase action'));
+      expect(input).toHaveValue(2);
+
+      handleChange.mockClear();
+      rerender(<DInputCounter minValue={5} maxValue={10} onChange={handleChange} />);
+
+      expect(input).toHaveValue(5);
+      expect(handleChange).toHaveBeenCalledWith(5);
+    });
+
+    it('leaves the value alone when minValue moves and a starting value was given', () => {
+      const { rerender } = render(
+        <DInputCounter minValue={0} maxValue={10} defaultValue={2} />,
+      );
+      const input = screen.getByRole('spinbutton');
+
+      rerender(<DInputCounter minValue={5} maxValue={10} defaultValue={2} />);
+
+      expect(input).toHaveValue(2);
+    });
+
     it('reports the starting value to an onChange attached after mount', () => {
       const handleChange = jest.fn();
 

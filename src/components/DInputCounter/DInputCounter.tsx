@@ -109,6 +109,24 @@ function DInputCounter(
     onChange(currentValue);
   }, [onChange, currentValue]);
 
+  // `value` used to default to `minValue`, so a counter left to its own devices
+  // re-seeded — and reported — whenever `minValue` moved. Consumers use it as a
+  // live bound, so that stays; an explicit `value` or `defaultValue` opts out,
+  // exactly as passing `value` did before. The ref keeps this to real changes,
+  // so mounting still reports once and a click is never undone.
+  const hasExplicitStartingValue = value !== undefined || defaultValue !== undefined;
+  const previousMinValue = useRef(minValue);
+  useEffect(() => {
+    if (previousMinValue.current === minValue) {
+      return;
+    }
+    previousMinValue.current = minValue;
+    if (hasExplicitStartingValue) {
+      return;
+    }
+    commitValue(minValue);
+  }, [hasExplicitStartingValue, minValue, commitValue]);
+
   const handleOnChange = useCallback((newValue?: string) => {
     commitValue(Number(newValue || '0'));
   }, [commitValue]);
