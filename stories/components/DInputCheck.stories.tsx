@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { DInputCheck } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
@@ -18,6 +19,23 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
 + [Bootstrap Checks](https://getbootstrap.com/docs/5.3/forms/checks-radios/#checks)
+
+## Controlled and uncontrolled
+
+The control works in both modes.
+
+**Controlled** — pass \`checked\` *and* \`onChange\`. The control then renders exactly what the prop
+says, so when the parent rejects a change — a selection cap, an async call that fails and reverts, a
+reducer that drops a duplicate — it snaps back on its own instead of drifting away from the state
+behind it.
+
+**Uncontrolled** — pass \`defaultChecked\` for a starting point, or nothing at all, and the control
+keeps toggling by itself.
+
+\`checked\` on its own, with no \`onChange\`, keeps its historical meaning: a starting value that a
+later change from outside still lands on, while the control goes on toggling by itself. That is what
+makes \`<DInputCheck type="radio" name="plan" checked />\` work, and nothing about it changed. Prefer \`defaultChecked\` in new code,
+it says so out loud.
 
 ## Labels
 
@@ -108,6 +126,13 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     checked: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Checked state. With `onChange` the control is fully controlled; on its own it is the starting value.',
+      table: { category: 'Behavior' },
+    },
+    defaultChecked: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Starting checked state for uncontrolled usage.',
       table: { category: 'Behavior' },
     },
     disabled: {
@@ -298,5 +323,44 @@ without extra attributes.
         </a>
       </>
     ),
+  },
+};
+
+export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+A parent that caps the selection at two. The third click is rejected, and the checkbox snaps back
+instead of staying marked while the state says otherwise.
+        `,
+      },
+    },
+  },
+  render: function Render() {
+    const LIMIT = 2;
+    const [selected, setSelected] = useState<Array<string>>([]);
+
+    return (
+      <div className="d-flex flex-column gap-2">
+        {['Ana', 'Beto', 'Carla', 'Diego'].map((approver) => (
+          <DInputCheck
+            key={approver}
+            type="checkbox"
+            label={approver}
+            checked={selected.includes(approver)}
+            onChange={(event) => setSelected((prev) => {
+              if (!event.target.checked) {
+                return prev.filter((name) => name !== approver);
+              }
+              return prev.length < LIMIT ? [...prev, approver] : prev;
+            })}
+          />
+        ))}
+        <p className="form-text">
+          {`Up to ${LIMIT} approvers — selected: ${selected.join(', ') || 'none'}`}
+        </p>
+      </div>
+    );
   },
 };

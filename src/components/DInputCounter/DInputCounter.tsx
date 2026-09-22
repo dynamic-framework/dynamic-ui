@@ -1,8 +1,8 @@
 import {
-  useState,
   useEffect,
   useMemo,
   useCallback,
+  useRef,
   forwardRef,
 } from 'react';
 
@@ -23,9 +23,22 @@ import type { Merge } from '../../types';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 import { useDContext } from '../../contexts';
 import { useDisableInputWheel } from '../../hooks';
+import useControlledState from '../../hooks/useControlledState';
 
 type NonDInputProps = {
+  /**
+   * Current value of the counter.
+   *
+   * Passed together with `onChange` the counter is fully controlled: when the
+   * parent rejects a change the counter snaps back to this value.
+   *
+   * Passed on its own it is taken as the starting value and the counter keeps
+   * counting by itself — the historical behaviour. Prefer `defaultValue` for
+   * that, it says so out loud.
+   */
   value?: number;
+  /** Starting value for uncontrolled usage; falls back to `minValue`. */
+  defaultValue?: number;
   minValue: number;
   maxValue: number;
   onChange?: (value?: number) => void;
@@ -47,7 +60,8 @@ function DInputCounter(
   {
     minValue,
     maxValue,
-    value = minValue,
+    value,
+    defaultValue,
     invalid,
     iconStart: iconStartProp,
     iconEnd: iconEndProp,
@@ -63,28 +77,47 @@ function DInputCounter(
     handleOnWheel,
   } = useDisableInputWheel(ref);
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
-  const [internalIsInvalid, setInternalIsInvalid] = useState(false);
-  const [internalValue, setInternalValue] = useState<number>(value);
+  // See `useControlledState` for why `onChange` takes part in this decision.
+  const isControlled = value !== undefined && onChange !== undefined;
+  const [currentValue, setCurrentValue] = useControlledState(
+    value,
+    isControlled,
+    defaultValue ?? minValue,
+  );
 
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
+  // `onChange` used to be called from an effect watching the internal value,
+  // which made controlling the counter impossible: a controlled counter never
+  // moves that value, so the effect never fired. Reporting from the handlers
+  // instead works in both modes.
+  const commitValue = useCallback((newValue: number) => {
+    setCurrentValue(newValue);
+    onChange?.(newValue);
+  }, [setCurrentValue, onChange]);
 
+  // Consumers have always been handed the starting value through `onChange` on
+  // mount, and some seed their state with it, so that one call stays. The ref
+  // keeps it to the first run: the old effect also re-fired on every render
+  // that passed a fresh inline `onChange`.
+  const hasReportedInitialValue = useRef(false);
   useEffect(() => {
-    onChange?.(Number(internalValue));
-  }, [onChange, internalValue]);
+    if (hasReportedInitialValue.current) {
+      return;
+    }
+    hasReportedInitialValue.current = true;
+    onChange?.(currentValue);
+  }, [onChange, currentValue]);
 
   const handleOnChange = useCallback((newValue?: string) => {
-    setInternalValue(Number(newValue || '0'));
-  }, []);
+    commitValue(Number(newValue || '0'));
+  }, [commitValue]);
 
   const handleOnIconStartClick = useCallback(() => {
-    setInternalValue((prevInternalValue) => Math.max(prevInternalValue - 1, minValue));
-  }, [minValue]);
+    commitValue(Math.max(currentValue - 1, minValue));
+  }, [commitValue, currentValue, minValue]);
 
   const handleOnIconEndClick = useCallback(() => {
-    setInternalValue((prevInternalValue) => Math.min(prevInternalValue + 1, maxValue));
-  }, [maxValue]);
+    commitValue(Math.min(currentValue + 1, maxValue));
+  }, [commitValue, currentValue, maxValue]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
@@ -92,12 +125,12 @@ function DInputCounter(
   }), [style]);
 
   const valueString = useMemo(() => (
-    internalValue.toString()
-  ), [internalValue]);
+    currentValue.toString()
+  ), [currentValue]);
 
-  useEffect(() => {
-    setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
-  }, [internalValue, minValue, maxValue]);
+  const internalIsInvalid = useMemo(() => (
+    !(currentValue >= minValue && currentValue <= maxValue)
+  ), [currentValue, minValue, maxValue]);
 
   const { iconMap: { input } } = useDContext();
 
@@ -125,10 +158,10 @@ function DInputCounter(
       onIconEndClick={handleOnIconEndClick}
       iconStartAriaLabel={iconStartAriaLabel}
       iconEndAriaLabel={iconEndAriaLabel}
-      {...internalValue === minValue && {
+      {...currentValue === minValue && {
         iconStartDisabled: true,
       }}
-      {...internalValue === maxValue && {
+      {...currentValue === maxValue && {
         iconEndDisabled: true,
       }}
       {...props}

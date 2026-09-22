@@ -37,7 +37,19 @@ type Props =
    * for a label carrying a link or an icon reads as the wrong name or as none.
    */
   ariaLabel?: string;
+  /**
+   * Checked state of the control.
+   *
+   * Passed together with `onChange` the control is fully controlled: when the
+   * parent rejects a change the DOM snaps back to this value.
+   *
+   * Passed on its own it is taken as the starting value and the control keeps
+   * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+   * that, it says so out loud.
+   */
   checked?: boolean;
+  /** Starting checked state for uncontrolled usage. */
+  defaultChecked?: boolean;
   inputClassName?: string;
   disabled?: boolean;
   invalid?: boolean;
@@ -56,7 +68,8 @@ export default function DInputCheck(
     name,
     label,
     ariaLabel,
-    checked = false,
+    checked,
+    defaultChecked,
     disabled = false,
     invalid = false,
     valid = false,
@@ -72,6 +85,8 @@ export default function DInputCheck(
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
+  // See `useControlledState` for why `onChange` takes part in this decision.
+  const isControlled = checked !== undefined && onChange !== undefined;
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 
@@ -96,15 +111,22 @@ export default function DInputCheck(
     }
   }, [indeterminate, type]);
 
+  // Legacy path only: a `checked` with no `onChange` behind it still lands on
+  // the element, but through the DOM, so the input stays uncontrolled and both
+  // clicking it and the native radio-group behaviour keep working.
   useEffect(() => {
-    if (innerRef.current) {
-      innerRef.current.checked = checked;
+    if (isControlled || checked === undefined || !innerRef.current) {
+      return;
     }
-  }, [checked]);
+    innerRef.current.checked = checked;
+  }, [isControlled, checked]);
 
   const inputComponent = useMemo(() => (
     <input
       ref={innerRef}
+      {...isControlled
+        ? { checked }
+        : defaultChecked !== undefined && { defaultChecked }}
       onChange={handleChange}
       className={classNames(
         'form-check-input',
@@ -125,6 +147,9 @@ export default function DInputCheck(
       {...props}
     />
   ), [
+    isControlled,
+    checked,
+    defaultChecked,
     handleChange,
     invalid,
     valid,

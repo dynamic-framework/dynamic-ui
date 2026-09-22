@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { useState } from 'react';
 import type { ComponentProps } from 'react';
 
 import { DInputCounter, DContextProvider } from '../../src';
@@ -14,6 +15,23 @@ const meta = {
       description: {
         component: `
 Component composition with \`d-input\` to make a counter input component.
+
+## Controlled and uncontrolled
+
+The control works in both modes.
+
+**Controlled** — pass \`value\` *and* \`onChange\`. The control then renders exactly what the prop
+says, so when the parent rejects a change — a selection cap, an async call that fails and reverts, a
+reducer that drops a duplicate — it snaps back on its own instead of drifting away from the state
+behind it.
+
+**Uncontrolled** — pass \`defaultValue\` for a starting point, or nothing at all, and the control
+keeps counting by itself.
+
+\`value\` on its own, with no \`onChange\`, keeps its historical meaning: a starting value that a
+later change from outside still lands on, while the control goes on counting by itself. That is what
+makes \`<DInputCounter value={3} />\` work, and nothing about it changed. Prefer \`defaultValue\` in new code,
+it says so out loud.
 
 ## CSS Variables
 
@@ -73,7 +91,13 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     value: {
       control: 'number',
       type: 'number',
-      description: 'The value of the input',
+      description: 'The value of the input. With `onChange` the counter is fully controlled; on its own it is the starting value.',
+      table: { category: 'Content' },
+    },
+    defaultValue: {
+      control: 'number',
+      type: 'number',
+      description: 'Starting value for uncontrolled usage; falls back to `minValue`.',
       table: { category: 'Content' },
     },
     size: {
@@ -283,5 +307,34 @@ export const MaterialIcon: Story = {
         sourceState: 'shown',
       },
     },
+  },
+};
+
+export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+A parent that only accepts even values. Odd steps are rejected, and the counter snaps back instead
+of showing a value the state never took.
+        `,
+      },
+    },
+  },
+  render: function Render() {
+    const [quantity, setQuantity] = useState(0);
+
+    return (
+      <div className="d-flex flex-column gap-2">
+        <DInputCounter
+          label="Quantity (even only)"
+          minValue={0}
+          maxValue={20}
+          value={quantity}
+          onChange={(next) => setQuantity((prev) => ((next ?? 0) % 2 === 0 ? next ?? 0 : prev))}
+        />
+        <p className="form-text">{`Accepted value: ${quantity}`}</p>
+      </div>
+    );
   },
 };

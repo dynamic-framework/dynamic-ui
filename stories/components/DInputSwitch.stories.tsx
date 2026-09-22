@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { DInputSwitch } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
@@ -15,6 +16,23 @@ Graphical control element that allows the user to choose between two mutually ex
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Switch](https://getbootstrap.com/docs/5.3/forms/checks-radios/#switches)
+
+## Controlled and uncontrolled
+
+The control works in both modes.
+
+**Controlled** — pass \`checked\` *and* \`onChange\`. The control then renders exactly what the prop
+says, so when the parent rejects a change — a selection cap, an async call that fails and reverts, a
+reducer that drops a duplicate — it snaps back on its own instead of drifting away from the state
+behind it.
+
+**Uncontrolled** — pass \`defaultChecked\` for a starting point, or nothing at all, and the control
+keeps toggling by itself.
+
+\`checked\` on its own, with no \`onChange\`, keeps its historical meaning: a starting value that a
+later change from outside still lands on, while the control goes on toggling by itself. That is what
+makes \`<DInputSwitch checked />\` work, and nothing about it changed. Prefer \`defaultChecked\` in new code,
+it says so out loud.
 
 ## CSS Variables
 
@@ -77,6 +95,13 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
     checked: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Checked state. With `onChange` the control is fully controlled; on its own it is the starting value.',
+      table: { category: 'Behavior' },
+    },
+    defaultChecked: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Starting checked state for uncontrolled usage.',
       table: { category: 'Behavior' },
     },
     readonly: {
@@ -234,4 +259,33 @@ export const SeeMoreExamples: Story = {
       </div>
     </div>
   ),
+};
+
+export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+A parent that refuses to turn the switch on. The switch snaps back instead of staying on while the
+state says otherwise.
+        `,
+      },
+    },
+  },
+  render: function Render() {
+    const [enabled, setEnabled] = useState(false);
+
+    return (
+      <div className="d-flex flex-column gap-2">
+        <DInputSwitch
+          label="Notifications"
+          checked={enabled}
+          onChange={() => setEnabled(false)}
+        />
+        <p className="form-text">
+          {`Rejected by the parent — state: ${enabled ? 'on' : 'off'}`}
+        </p>
+      </div>
+    );
+  },
 };
