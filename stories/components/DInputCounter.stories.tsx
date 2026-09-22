@@ -33,6 +33,10 @@ later change from outside still lands on, while the control goes on counting by 
 makes \`<DInputCounter value={3} />\` work, and nothing about it changed. Prefer \`defaultValue\` in new code,
 it says so out loud.
 
+The examples on this page pass \`defaultValue\` rather than \`value\`: Storybook injects an action
+handler for every \`on*\` arg, so a fixed \`value\` would put them in controlled mode and freeze
+them in the canvas. The \`Controlled\` story below drives the value from real state instead.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
@@ -232,7 +236,7 @@ export const Invalid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    value: 21,
+    defaultValue: 21,
     minValue: 0,
     maxValue: 20,
     invalid: true,
@@ -246,7 +250,7 @@ export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    value: 2,
+    defaultValue: 2,
     minValue: 0,
     maxValue: 20,
     valid: true,
@@ -260,7 +264,7 @@ export const Disabled: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
-    value: 3,
+    defaultValue: 3,
     minValue: 0,
     maxValue: 20,
     disabled: true,
@@ -273,7 +277,7 @@ export const Floating: Story = {
   args: {
     id: 'componentId5',
     label: 'Label',
-    value: 3,
+    defaultValue: 3,
     minValue: 0,
     maxValue: 20,
     floatingLabel: true,
@@ -295,7 +299,7 @@ export const MaterialIcon: Story = {
   args: {
     id: 'componentId6',
     label: 'Label',
-    value: 3,
+    defaultValue: 3,
     minValue: 0,
     maxValue: 20,
     iconStartAriaLabel: 'decrease action',

@@ -34,6 +34,10 @@ later change from outside still lands on, while the control goes on toggling by 
 makes \`<DInputSwitch checked />\` work, and nothing about it changed. Prefer \`defaultChecked\` in new code,
 it says so out loud.
 
+The examples on this page pass \`defaultChecked\` rather than \`checked\`: Storybook injects an action
+handler for every \`on*\` arg, so a fixed \`checked\` would put them in controlled mode and freeze
+them in the canvas. The \`Controlled\` story below drives the value from real state instead.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
@@ -142,7 +146,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithoutLabel: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     ariaLabel: 'Label',
   },
@@ -152,7 +156,7 @@ export const Default: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
   },
 };
@@ -161,7 +165,7 @@ export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     valid: true,
     hint: 'Assistive text',
@@ -172,7 +176,7 @@ export const Invalid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     invalid: true,
     hint: 'Assistive text',
@@ -183,7 +187,7 @@ export const Checked: Story = {
   args: {
     id: 'componentId5',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: false,
   },
 };
@@ -192,7 +196,7 @@ export const Readonly: Story = {
   args: {
     id: 'componentId6',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     readonly: true,
   },
 };
@@ -201,7 +205,7 @@ export const Disabled: Story = {
   args: {
     id: 'componentId7',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
 };
@@ -210,7 +214,7 @@ export const CheckedDisabled: Story = {
   args: {
     id: 'componentId8',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: true,
   },
 };
@@ -219,7 +223,7 @@ export const WithInputClassName: Story = {
   args: {
     id: 'componentId9',
     label: 'Custom styled input',
-    checked: false,
+    defaultChecked: false,
     inputClassName: 'border-2',
   },
 };

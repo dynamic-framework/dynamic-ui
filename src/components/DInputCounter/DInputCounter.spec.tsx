@@ -228,5 +228,16 @@ describe('<DInputCounter />', () => {
 
       expect(handleChange).toHaveBeenCalledTimes(1);
     });
+
+    it('reports the starting value to an onChange attached after mount', () => {
+      const handleChange = jest.fn();
+
+      const { rerender } = render(<DInputCounter minValue={2} maxValue={10} />);
+
+      rerender(<DInputCounter minValue={2} maxValue={10} onChange={handleChange} />);
+
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith(2);
+    });
   });
 });

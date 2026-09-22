@@ -97,14 +97,16 @@ function DInputCounter(
   // Consumers have always been handed the starting value through `onChange` on
   // mount, and some seed their state with it, so that one call stays. The ref
   // keeps it to the first run: the old effect also re-fired on every render
-  // that passed a fresh inline `onChange`.
+  // that passed a fresh inline `onChange`. Nothing is marked as reported until
+  // there is a handler to report to, so a counter mounted without `onChange`
+  // still hands over its starting value once one is attached.
   const hasReportedInitialValue = useRef(false);
   useEffect(() => {
-    if (hasReportedInitialValue.current) {
+    if (hasReportedInitialValue.current || !onChange) {
       return;
     }
     hasReportedInitialValue.current = true;
-    onChange?.(currentValue);
+    onChange(currentValue);
   }, [onChange, currentValue]);
 
   const handleOnChange = useCallback((newValue?: string) => {
