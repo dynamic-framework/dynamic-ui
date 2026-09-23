@@ -29,16 +29,23 @@ export default function useControlledState<T>(
     value === undefined ? initialValue : value,
   );
 
-  // Legacy path only. `value` without an `onChange` still means "start here",
-  // and a later flip of it from outside must still land — but between flips the
+  // The internal copy follows `value` in both modes.
+  //
+  // Uncontrolled, `value` without an `onChange` still means "start here", and a
+  // later flip of it from outside must still land — but between flips the
   // control has to keep moving on its own, which is why this depends on `value`
   // alone and not on `internalValue`.
+  //
+  // Controlled, the copy is not what gets rendered, but it is what the control
+  // falls back to if the consumer later stops passing a value — `value={locked
+  // ? undefined : x}`, say. Keeping it current means that hand-off carries on
+  // from where the control is instead of snapping back to the mount-time seed.
   useEffect(() => {
-    if (isControlled || value === undefined) {
+    if (value === undefined) {
       return;
     }
     setInternalValue(value);
-  }, [isControlled, value]);
+  }, [value]);
 
   const setValue = useCallback((next: T) => {
     if (isControlled) {

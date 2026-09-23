@@ -52,6 +52,36 @@ describe('useControlledState', () => {
     expect(result.current[0]).toBe(5);
   });
 
+  it('carries the latest controlled value over when the consumer stops passing one', () => {
+    const { result, rerender } = renderHook(
+      ({ value, isControlled }) => useControlledState<number>(value, isControlled, 0),
+      { initialProps: { value: 0 as number | undefined, isControlled: true } },
+    );
+
+    rerender({ value: 3, isControlled: true });
+    expect(result.current[0]).toBe(3);
+
+    // The consumer drops the value — `value={locked ? undefined : x}`. The
+    // control goes on from 3, not back to the 0 it was seeded with.
+    rerender({ value: undefined, isControlled: false });
+    expect(result.current[0]).toBe(3);
+
+    act(() => result.current[1](4));
+    expect(result.current[0]).toBe(4);
+  });
+
+  it('carries the latest controlled value over when only onChange goes away', () => {
+    const { result, rerender } = renderHook(
+      ({ value, isControlled }) => useControlledState<number>(value, isControlled, 0),
+      { initialProps: { value: 0 as number | undefined, isControlled: true } },
+    );
+
+    rerender({ value: 3, isControlled: true });
+    rerender({ value: 3, isControlled: false });
+
+    expect(result.current[0]).toBe(3);
+  });
+
   it('still applies an uncontrolled value that is changed from outside', () => {
     const { result, rerender } = renderHook(
       ({ value }) => useControlledState<number>(value, false, 0),
