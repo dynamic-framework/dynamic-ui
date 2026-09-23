@@ -107,10 +107,20 @@ function DInputCounter(
       return;
     }
 
-    currentValueRef.current = newValue;
+    // Only the uncontrolled path moves the ref ahead of a render. There the
+    // component owns the value, so a second step in the same batch has to build
+    // on the first. Controlled, the prop is the truth and every step proposes
+    // from it: a parent that rejects without re-rendering — `onChange={() => {}}`,
+    // or a setter returning the previous state — never re-runs the assignment
+    // above, so a speculative ref would climb away from the value on screen and
+    // each further click would report a number further from it.
+    if (!isControlled) {
+      currentValueRef.current = newValue;
+    }
+
     setCurrentValue(newValue);
     onChange?.(newValue);
-  }, [setCurrentValue, onChange]);
+  }, [isControlled, setCurrentValue, onChange]);
 
   // Consumers have always been handed the starting value through `onChange` on
   // mount, and some seed their state with it, so that one call stays. The ref

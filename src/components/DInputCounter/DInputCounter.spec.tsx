@@ -231,6 +231,68 @@ describe('<DInputCounter />', () => {
       expect(handleChange).toHaveBeenCalledTimes(1);
     });
 
+    it('proposes from the prop on every step while the parent rejects', () => {
+      const seen: Array<number | undefined> = [];
+
+      function Rejecting() {
+        const [value] = useState(1);
+        return (
+          <DInputCounter
+            minValue={0}
+            maxValue={10}
+            value={value}
+            onChange={(next) => { seen.push(next); }}
+          />
+        );
+      }
+
+      render(<Rejecting />);
+      const input = screen.getByRole('spinbutton');
+      const increase = screen.getByLabelText('increase action');
+
+      seen.length = 0;
+      fireEvent.click(increase);
+      fireEvent.click(increase);
+      fireEvent.click(increase);
+
+      // A rejection that changes no state re-renders nothing, so a step that
+      // moved a value of its own would climb away from the prop and report a
+      // number further from it on every click.
+      expect(input).toHaveValue(1);
+      expect(seen).toEqual([2, 2, 2]);
+    });
+
+    it('does not run past a parent that caps the value', () => {
+      const seen: Array<number | undefined> = [];
+
+      function Capping() {
+        const [value, setValue] = useState(1);
+        return (
+          <DInputCounter
+            minValue={0}
+            maxValue={10}
+            value={value}
+            onChange={(next) => {
+              seen.push(next);
+              setValue(Math.min(next ?? 0, 2));
+            }}
+          />
+        );
+      }
+
+      render(<Capping />);
+      const input = screen.getByRole('spinbutton');
+      const increase = screen.getByLabelText('increase action');
+
+      seen.length = 0;
+      fireEvent.click(increase);
+      fireEvent.click(increase);
+      fireEvent.click(increase);
+
+      expect(input).toHaveValue(2);
+      expect(seen).toEqual([2, 3, 3]);
+    });
+
     it('keeps every step when several land in the same batch', () => {
       const handleChange = jest.fn();
 
