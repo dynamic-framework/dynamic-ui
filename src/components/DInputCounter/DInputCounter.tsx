@@ -85,11 +85,29 @@ function DInputCounter(
     defaultValue ?? minValue,
   );
 
+  // The step handlers move *from* the current value rather than replacing it,
+  // so they need the latest one even when several clicks land in the same React
+  // batch and no render has happened in between — the functional update this
+  // replaced handled that on its own. Written on every render so it follows the
+  // props, and by `commitValue` so a second step in the same batch starts from
+  // where the first left off instead of collapsing into it.
+  const currentValueRef = useRef(currentValue);
+  currentValueRef.current = currentValue;
+
   // `onChange` used to be called from an effect watching the internal value,
   // which made controlling the counter impossible: a controlled counter never
   // moves that value, so the effect never fired. Reporting from the handlers
   // instead works in both modes.
   const commitValue = useCallback((newValue: number) => {
+    // Clicking at a bound, or typing the value that is already there, is not a
+    // change. The effect this replaced watched the value itself and so stayed
+    // quiet too; without this a batch of clicks against `minValue` would report
+    // the same number once per click.
+    if (newValue === currentValueRef.current) {
+      return;
+    }
+
+    currentValueRef.current = newValue;
     setCurrentValue(newValue);
     onChange?.(newValue);
   }, [setCurrentValue, onChange]);
@@ -132,12 +150,12 @@ function DInputCounter(
   }, [commitValue]);
 
   const handleOnIconStartClick = useCallback(() => {
-    commitValue(Math.max(currentValue - 1, minValue));
-  }, [commitValue, currentValue, minValue]);
+    commitValue(Math.max(currentValueRef.current - 1, minValue));
+  }, [commitValue, minValue]);
 
   const handleOnIconEndClick = useCallback(() => {
-    commitValue(Math.min(currentValue + 1, maxValue));
-  }, [commitValue, currentValue, maxValue]);
+    commitValue(Math.min(currentValueRef.current + 1, maxValue));
+  }, [commitValue, maxValue]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,

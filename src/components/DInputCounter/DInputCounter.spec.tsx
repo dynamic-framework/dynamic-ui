@@ -1,7 +1,9 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import DInputCounter from './DInputCounter';
 
 describe('<DInputCounter />', () => {
@@ -227,6 +229,45 @@ describe('<DInputCounter />', () => {
       rerender(<DInputCounter minValue={2} maxValue={10} onChange={() => { handleChange(); }} />);
 
       expect(handleChange).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps every step when several land in the same batch', () => {
+      const handleChange = jest.fn();
+
+      render(<DInputCounter minValue={0} maxValue={10} onChange={handleChange} />);
+      const input = screen.getByRole('spinbutton');
+      const increase = screen.getByLabelText('increase action');
+
+      handleChange.mockClear();
+      // No render happens between the two, so the second step has to start
+      // from the first instead of reading a stale value and collapsing into it.
+      act(() => {
+        increase.click();
+        increase.click();
+      });
+
+      expect(input).toHaveValue(2);
+      expect(handleChange.mock.calls.flat()).toEqual([1, 2]);
+    });
+
+    it('clamps a batch at the bound and reports it once', () => {
+      const handleChange = jest.fn();
+
+      render(
+        <DInputCounter minValue={0} maxValue={10} defaultValue={1} onChange={handleChange} />,
+      );
+      const input = screen.getByRole('spinbutton');
+      const decrease = screen.getByLabelText('decrease action');
+
+      handleChange.mockClear();
+      act(() => {
+        decrease.click();
+        decrease.click();
+        decrease.click();
+      });
+
+      expect(input).toHaveValue(0);
+      expect(handleChange.mock.calls.flat()).toEqual([0]);
     });
 
     it('re-seeds to minValue when it moves and no starting value was given', () => {
