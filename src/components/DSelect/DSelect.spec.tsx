@@ -151,6 +151,18 @@ describe('<DSelect /> focus announcement', () => {
     expect(focusGuidance(container)).toMatch(/^Country of birth is focused/);
   });
 
+  it('should announce the aria-label of an aria-labelledby target over its text', () => {
+    const { container } = render(
+      <>
+        <span id="countryHeading" aria-label="Country of birth">Country</span>
+        <DSelect aria-labelledby="countryHeading" options={options} />
+      </>,
+    );
+
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Country of birth');
+    expect(focusGuidance(container)).toMatch(/^Country of birth is focused/);
+  });
+
   it('should keep the guidance passed through ariaLiveMessages', () => {
     const { container } = render(
       <DSelect

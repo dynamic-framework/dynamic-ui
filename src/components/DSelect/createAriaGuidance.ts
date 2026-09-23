@@ -8,16 +8,26 @@ type Names = {
 };
 
 /**
- * Text of the elements an `aria-labelledby` points at, joined as the accessible
+ * Name of the elements an `aria-labelledby` points at, joined as the accessible
  * name computation does. Read when the message is built rather than when the
  * select renders, since the referenced elements may render after it.
+ *
+ * Each element contributes its own `aria-label` when it has one, and its text
+ * otherwise. That covers the targets a select is labelled by in practice — a
+ * heading, a span, a labelled region — without shipping the full accessible
+ * name algorithm; names derived from descendants' `aria-label`, `alt` or
+ * hidden content are not resolved, so pass `ariaLiveMessages` for those.
  */
 function resolveLabelledBy(labelledBy: string): string {
   if (typeof document === 'undefined') return '';
 
   return labelledBy
     .split(/\s+/)
-    .map((ref) => document.getElementById(ref)?.textContent?.trim())
+    .map((ref) => {
+      const element = document.getElementById(ref);
+
+      return element?.getAttribute('aria-label')?.trim() || element?.textContent?.trim();
+    })
     .filter(Boolean)
     .join(' ');
 }
