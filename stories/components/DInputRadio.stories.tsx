@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { DInputCheck } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
@@ -18,6 +19,27 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
 + [Bootstrap Radios](https://getbootstrap.com/docs/5.3/forms/checks-radios/#radios)
+
+## Controlled and uncontrolled
+
+The control works in both modes.
+
+**Controlled** — pass \`checked\` *and* \`onChange\`. The control then renders exactly what the prop
+says, so when the parent rejects a change — a selection cap, an async call that fails and reverts, a
+reducer that drops a duplicate — it snaps back on its own instead of drifting away from the state
+behind it.
+
+**Uncontrolled** — pass \`defaultChecked\` for a starting point, or nothing at all, and the control
+keeps toggling by itself.
+
+\`checked\` on its own, with no \`onChange\`, keeps its historical meaning: a starting value that a
+later change from outside still lands on, while the control goes on toggling by itself. That is what
+makes \`<DInputCheck type="radio" name="plan" checked />\` work, and nothing about it changed. Prefer
+\`defaultChecked\` in new code, it says so out loud.
+
+The examples on this page pass \`defaultChecked\` rather than \`checked\`: Storybook injects an action
+handler for every \`on*\` arg, so a fixed \`checked\` would put them in controlled mode and freeze
+them in the canvas. The \`Controlled\` story below drives the value from real state instead.
 
 ## CSS Variables
 
@@ -87,6 +109,13 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
     checked: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Checked state. With `onChange` the control is fully controlled; on its own it is the starting value.',
+      table: { category: 'Behavior' },
+    },
+    defaultChecked: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Starting checked state for uncontrolled usage.',
       table: { category: 'Behavior' },
     },
     disabled: {
@@ -125,7 +154,7 @@ export const Default: Story = {
     id: 'componentId1',
     type: 'radio',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     hint: 'Assistive text',
     valid: false,
@@ -141,7 +170,7 @@ export const WithoutLabel: Story = {
   args: {
     id: 'componentId2',
     type: 'radio',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     ariaLabel: 'Label',
   },
@@ -153,7 +182,7 @@ export const Hint: Story = {
     type: 'radio',
     label: 'Label',
     hint: 'Assistive text',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
   },
 };
@@ -163,7 +192,7 @@ export const Valid: Story = {
     id: 'componentId4',
     type: 'radio',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     valid: true,
     hint: 'Assistive text',
@@ -175,7 +204,7 @@ export const Invalid: Story = {
     id: 'componentId5',
     type: 'radio',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     invalid: true,
     hint: 'Assistive text',
@@ -187,7 +216,7 @@ export const Checked: Story = {
     id: 'componentId6',
     type: 'radio',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: false,
   },
 };
@@ -197,7 +226,7 @@ export const Disabled: Story = {
     id: 'componentId7',
     type: 'radio',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
 };
@@ -207,7 +236,42 @@ export const CheckedDisabled: Story = {
     id: 'componentId8',
     type: 'radio',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: true,
+  },
+};
+
+export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+A radio group whose parent refuses to leave the current plan once a paid one is picked. The
+rejected click snaps back instead of leaving the group showing an option the state never took.
+        `,
+      },
+    },
+  },
+  render: function Render() {
+    const [plan, setPlan] = useState('basic');
+
+    return (
+      <div className="d-flex flex-column gap-2">
+        {[['basic', 'Basic'], ['pro', 'Pro'], ['enterprise', 'Enterprise']].map(([id, name]) => (
+          <DInputCheck
+            key={id}
+            type="radio"
+            name="controlledPlan"
+            label={name}
+            value={id}
+            checked={plan === id}
+            onChange={() => setPlan((prev) => (prev === 'basic' ? id : prev))}
+          />
+        ))}
+        <p className="form-text">
+          {`Downgrades are rejected — selected: ${plan}`}
+        </p>
+      </div>
+    );
   },
 };
