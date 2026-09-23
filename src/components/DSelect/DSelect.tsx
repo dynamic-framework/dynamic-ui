@@ -56,10 +56,10 @@ SelectProps<Option, IsMulti, Group>,
    * name computation, so use it to name a control with a non-text label or to
    * replace the name a text label gives.
    *
-   * Without a `label` it falls back to a generic string, so an unlabelled
-   * select is never nameless. With a `label` there is no fallback: a generic
-   * `aria-label` would override the label and make every select announce the
-   * same name.
+   * Without a `label` or an `aria-labelledby` it falls back to a generic
+   * string, so an unlabelled select is never nameless. With either there is no
+   * fallback: a generic `aria-label` would override the label and make every
+   * select announce the same name.
    */
   ariaLabel?: string;
   hint?: string;
@@ -190,7 +190,9 @@ function DSelect<
         <Select<Option, IsMulti, Group>
           id={`${id}Container`}
           inputId={inputId}
-          aria-label={ariaLabel ?? (hasLabelContent(label) ? undefined : 'Search for an option')}
+          aria-label={ariaLabel ?? (
+            hasLabelContent(label) || props['aria-labelledby'] ? undefined : 'Search for an option'
+          )}
           styles={{
             control: (base) => ({
               ...base,

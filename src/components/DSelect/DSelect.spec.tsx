@@ -60,6 +60,19 @@ describe('<DSelect /> accessible name', () => {
     expect(screen.getByRole('combobox')).toHaveAccessibleName('Search for an option');
   });
 
+  it('should not add the generic name next to aria-labelledby', () => {
+    render(
+      <>
+        <span id="countryHeading">Country</span>
+        <DSelect aria-labelledby="countryHeading" options={options} />
+      </>,
+    );
+
+    const input = screen.getByRole('combobox');
+    expect(input).toHaveAccessibleName('Country');
+    expect(input).not.toHaveAttribute('aria-label');
+  });
+
   it('should warn in development when a node label has no accessible name', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
