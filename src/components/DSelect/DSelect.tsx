@@ -15,9 +15,11 @@ import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 import DSelectPlaceholder from './components/DSelectPlaceholder';
+import createAriaGuidance from './createAriaGuidance';
 
 import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
+import isTextLabel from '../../utils/isTextLabel';
 import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
@@ -119,6 +121,7 @@ function DSelect<
     onIconEndClick,
     dataAttributes,
     ariaLabel,
+    ariaLiveMessages,
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
@@ -127,6 +130,16 @@ function DSelect<
   // The `<label>` must point at the element react-select renders the input
   // with, so an explicit `inputId` wins over `id` for both.
   const inputId = inputIdProp || id;
+
+  // A text label names the control through `<label>`, which react-select's
+  // focus announcement cannot see, so it is handed the name explicitly.
+  // Messages passed by the consumer still take precedence.
+  const textLabel = hasLabelContent(label) && isTextLabel(label) ? String(label) : undefined;
+  const liveMessages = useMemo(() => (
+    textLabel
+      ? { guidance: createAriaGuidance(textLabel), ...ariaLiveMessages }
+      : ariaLiveMessages
+  ), [textLabel, ariaLiveMessages]);
 
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
@@ -194,6 +207,7 @@ function DSelect<
           aria-label={ariaLabel ?? (
             hasLabelContent(label) || props['aria-labelledby'] ? undefined : 'Search for an option'
           )}
+          ariaLiveMessages={liveMessages}
           styles={{
             control: (base) => ({
               ...base,

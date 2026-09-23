@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import DSelect from './DSelect';
 
@@ -87,5 +87,40 @@ describe('<DSelect /> accessible name', () => {
     render(<DSelect label={<span>Country</span>} ariaLabel="Country" options={options} />);
 
     expect(screen.getByRole('combobox')).toHaveAccessibleName('Country');
+  });
+});
+
+describe('<DSelect /> focus announcement', () => {
+  const options = [{ label: 'Chile', value: 'cl' }];
+
+  function focusGuidance(container: HTMLElement) {
+    act(() => screen.getByRole('combobox').focus());
+    return container.querySelector('#aria-guidance')?.textContent;
+  }
+
+  it('should announce the text label on focus', () => {
+    const { container } = render(<DSelect label="Country" options={options} />);
+
+    expect(focusGuidance(container)).toMatch(/^Country is focused/);
+  });
+
+  it('should announce ariaLabel over the text label', () => {
+    const { container } = render(
+      <DSelect label="Country" ariaLabel="Country of residence" options={options} />,
+    );
+
+    expect(focusGuidance(container)).toMatch(/^Country of residence is focused/);
+  });
+
+  it('should keep the guidance passed through ariaLiveMessages', () => {
+    const { container } = render(
+      <DSelect
+        label="Country"
+        options={options}
+        ariaLiveMessages={{ guidance: () => 'Custom guidance' }}
+      />,
+    );
+
+    expect(focusGuidance(container)).toBe('Custom guidance');
   });
 });
