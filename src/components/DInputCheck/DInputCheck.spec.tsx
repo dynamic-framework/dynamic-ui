@@ -507,6 +507,25 @@ describe('<DInputCheck />', () => {
       expect(input).toBeChecked();
     });
 
+    it('lets an uncontrolled click clear indeterminate, as the browser does', async () => {
+      render(
+        <DInputCheck
+          type="checkbox"
+          ariaLabel="All rows"
+          indeterminate
+          onChange={() => {}}
+        />,
+      );
+      const input = screen.getByRole('checkbox');
+
+      expect((input as HTMLInputElement).indeterminate).toBe(true);
+
+      await userEvent.click(input);
+
+      expect((input as HTMLInputElement).indeterminate).toBe(false);
+      expect(input).toBeChecked();
+    });
+
     it('hands onChange the indeterminate the browser left', async () => {
       let seen: boolean | undefined;
 

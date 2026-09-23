@@ -93,17 +93,19 @@ export default function DInputCheck(
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);
 
-    // Activating a checkbox clears the DOM `indeterminate` flag, and it has no
-    // HTML attribute for React to restore the way it restores `checked` when a
-    // controlled parent rejects the change. Without this the mixed state is
-    // gone after the first click, since the effect below only re-runs when the
-    // prop moves. Reapplied after `onChange` so a handler reading
+    // Controlled only. Activating a checkbox clears the DOM `indeterminate`
+    // flag, and it has no HTML attribute for React to restore the way it
+    // restores `checked` when the parent rejects the change, so the mixed state
+    // would be gone after the first click — the effect below only re-runs when
+    // the prop moves. Uncontrolled keeps the browser's behaviour, where the
+    // click owns the state and `indeterminate` was only the starting look.
+    // Reapplied after `onChange` so a handler reading
     // `event.target.indeterminate` still sees what the browser left, and a
     // parent that does move the prop wins through that effect.
-    if (innerRef.current) {
+    if (isControlled && innerRef.current) {
       innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
     }
-  }, [onChange, indeterminate, type]);
+  }, [onChange, isControlled, indeterminate, type]);
 
   const ariaDescribedby = useMemo(() => (
     [
