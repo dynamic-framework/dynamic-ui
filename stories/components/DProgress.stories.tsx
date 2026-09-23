@@ -72,6 +72,21 @@ The Bootstrap documentation provides details on the default [Progress CSS Variab
         category: 'Appearance',
       },
     },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'Accessible name of the bar. Describe what progresses, not the role. Defaults to "Progress bar" when neither `ariaLabel` nor `ariaLabelledBy` is set.',
+      table: {
+        defaultValue: { summary: 'Progress bar' },
+        category: 'Content',
+      },
+    },
+    ariaLabelledBy: {
+      control: 'text',
+      type: 'string',
+      description: 'Id of a visible element that names the bar. Takes precedence over `ariaLabel` and drops the default name.',
+      table: { category: 'Content' },
+    },
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof DProgress>;
@@ -266,6 +281,38 @@ export const CustomHeight: Story = {
     docs: {
       description: {
         story: 'Progress bar with custom height (10px) without text value. Useful for compact designs.',
+      },
+    },
+  },
+};
+
+export const WithVisibleLabel: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <>
+      <span id="storage-usage-label" className="fw-semibold">Storage used</span>
+      <DProgress {...args} />
+    </>
+  ),
+  args: {
+    currentValue: 60,
+    minValue: 0,
+    maxValue: 100,
+    ariaLabelledBy: 'storage-usage-label',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Bar named by the visible title above it through `ariaLabelledBy`, so the text is not duplicated in `ariaLabel`.',
       },
     },
   },

@@ -58,6 +58,58 @@ describe('<DProgress />', () => {
     expect(progressBar).toHaveTextContent('50%');
   });
 
+  it('computes the percentage relative to minValue', () => {
+    render(
+      <DProgress
+        currentValue={70}
+        minValue={20}
+        maxValue={120}
+      />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveAttribute('aria-valuemin', '20');
+    expect(progressBar).toHaveAttribute('aria-valuemax', '120');
+    expect(progressBar).toHaveAttribute('aria-valuenow', '70');
+    expect(progressBar).toHaveStyle('width: 50%');
+    expect(progressBar).toHaveTextContent('50%');
+  });
+
+  it('renders 0% when maxValue is not greater than minValue', () => {
+    render(
+      <DProgress
+        currentValue={10}
+        minValue={50}
+        maxValue={50}
+      />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveStyle('width: 0%');
+    expect(progressBar).toHaveTextContent('0%');
+  });
+
+  it('keeps "Progress bar" as the default accessible name', () => {
+    render(<DProgress currentValue={40} />);
+    expect(screen.getByRole('progressbar', { name: 'Progress bar' })).toBeInTheDocument();
+  });
+
+  it('uses ariaLabel as the accessible name', () => {
+    render(<DProgress currentValue={40} ariaLabel="Tiempo restante" />);
+    const progressBar = screen.getByRole('progressbar', { name: 'Tiempo restante' });
+    expect(progressBar).toHaveAttribute('aria-label', 'Tiempo restante');
+  });
+
+  it('takes the accessible name from ariaLabelledBy without the default aria-label', () => {
+    render(
+      <>
+        <span id="upload-title">Carga de archivos</span>
+        <DProgress currentValue={40} ariaLabelledBy="upload-title" />
+      </>,
+    );
+    const progressBar = screen.getByRole('progressbar', { name: 'Carga de archivos' });
+    expect(progressBar).toHaveAttribute('aria-labelledby', 'upload-title');
+    expect(progressBar).not.toHaveAttribute('aria-label');
+  });
+
   it('hides current value text when hideCurrentValue is true', () => {
     render(<DProgress currentValue={80} hideCurrentValue />);
     const progressBar = screen.getByRole('progressbar');

@@ -305,21 +305,21 @@ export const Dashboard: Story = {
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>232</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
@@ -489,21 +489,21 @@ export const Dashboard2: Story = {
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>232</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
@@ -744,21 +744,21 @@ export const Dashboard3: Story = {
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>232</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
                 <tr>
                   <td>Project Alpha</td>
                   <td className="align-middle">
-                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                    <DProgress currentValue={75} hideCurrentValue height={5} ariaLabel="Project Alpha progress" />
                   </td>
                   <td>222</td>
                 </tr>
