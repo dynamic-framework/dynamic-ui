@@ -46,9 +46,10 @@ SelectProps<Option, IsMulti, Group>,
    * info trigger or other markup.
    *
    * Text doubles as the control's accessible name. A richer label does not, so
-   * pass `ariaLabel` alongside it; a development-only warning says so when it
-   * is missing. A rich label also does not fit `floatingLabel`, whose layout
-   * animates a single line of text.
+   * pass `ariaLabel`, or `aria-labelledby` pointing at a text element, alongside
+   * it; a development-only warning says so when both are missing. A rich label
+   * also does not fit `floatingLabel`, whose layout animates a single line of
+   * text.
    */
   label?: ReactNode;
   /**
