@@ -246,30 +246,34 @@ export const Controlled: Story = {
     docs: {
       description: {
         story: `
-A radio group whose parent refuses to leave the current plan once a paid one is picked. The
-rejected click snaps back instead of leaving the group showing an option the state never took.
+A radio group whose parent only accepts upgrades. Picking a cheaper plan is rejected, and the
+click snaps back instead of leaving the group showing an option the state never took.
         `,
       },
     },
   },
   render: function Render() {
+    const PLANS = ['basic', 'pro', 'enterprise'];
+    const LABELS = { basic: 'Basic', pro: 'Pro', enterprise: 'Enterprise' };
     const [plan, setPlan] = useState('basic');
 
     return (
       <div className="d-flex flex-column gap-2">
-        {[['basic', 'Basic'], ['pro', 'Pro'], ['enterprise', 'Enterprise']].map(([id, name]) => (
+        {PLANS.map((id) => (
           <DInputCheck
             key={id}
             type="radio"
             name="controlledPlan"
-            label={name}
+            label={LABELS[id as keyof typeof LABELS]}
             value={id}
             checked={plan === id}
-            onChange={() => setPlan((prev) => (prev === 'basic' ? id : prev))}
+            onChange={() => setPlan((prev) => (
+              PLANS.indexOf(id) > PLANS.indexOf(prev) ? id : prev
+            ))}
           />
         ))}
         <p className="form-text">
-          {`Downgrades are rejected — selected: ${plan}`}
+          {`Downgrades are rejected — selected: ${LABELS[plan as keyof typeof LABELS]}`}
         </p>
       </div>
     );

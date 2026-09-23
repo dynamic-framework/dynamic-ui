@@ -456,6 +456,74 @@ describe('<DInputCheck />', () => {
       expect(input).toBeChecked();
     });
 
+    it('keeps indeterminate through a rejected change', async () => {
+      function Rejecting() {
+        const [checked] = useState(false);
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="All rows"
+            checked={checked}
+            indeterminate
+            onChange={() => {}}
+          />
+        );
+      }
+
+      render(<Rejecting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+
+      // Activating the checkbox clears the DOM flag and the prop never moved,
+      // so nothing else would put the mixed state back.
+      expect((input as HTMLInputElement).indeterminate).toBe(true);
+      expect(input).not.toBeChecked();
+    });
+
+    it('drops indeterminate when the parent accepts and clears it', async () => {
+      function Accepting() {
+        const [state, setState] = useState({ checked: false, indeterminate: true });
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="All rows"
+            checked={state.checked}
+            indeterminate={state.indeterminate}
+            onChange={(event) => setState({
+              checked: event.target.checked,
+              indeterminate: false,
+            })}
+          />
+        );
+      }
+
+      render(<Accepting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+
+      expect((input as HTMLInputElement).indeterminate).toBe(false);
+      expect(input).toBeChecked();
+    });
+
+    it('hands onChange the indeterminate the browser left', async () => {
+      let seen: boolean | undefined;
+
+      render(
+        <DInputCheck
+          type="checkbox"
+          ariaLabel="All rows"
+          indeterminate
+          onChange={(event) => { seen = event.target.indeterminate; }}
+        />,
+      );
+
+      await userEvent.click(screen.getByRole('checkbox'));
+
+      expect(seen).toBe(false);
+    });
+
     it('keeps indeterminate working alongside checked', () => {
       render(
         <DInputCheck
