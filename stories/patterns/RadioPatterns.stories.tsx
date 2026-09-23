@@ -48,7 +48,7 @@ export const PlansSelection: Story = {
             </label>
 
             <label className="radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2">
-              <DInputCheck type="radio" name="plan" ariaLabel="Pro" checked inputClassName="d-none" />
+              <DInputCheck type="radio" name="plan" ariaLabel="Pro" defaultChecked inputClassName="d-none" />
               <div className="form-check-label">
                 <span className="fw-semibold d-flex align-items-center gap-2">
                   <DIcon icon="Zap" size="1rem" color="primary" />
@@ -98,7 +98,7 @@ export const ShippingMethods: Story = {
             <span className="ms-auto">Free</span>
           </label>
           <label className="radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2">
-            <DInputCheck type="radio" name="ship" ariaLabel="Express" checked inputClassName="d-none" />
+            <DInputCheck type="radio" name="ship" ariaLabel="Express" defaultChecked inputClassName="d-none" />
             <div className="form-check-label">
               <span className="fw-semibold d-flex align-items-center gap-2">
                 <DIcon icon="Lightning" size="1rem" className="text-primary" />
@@ -121,7 +121,7 @@ export const PaymentOptions: Story = {
         <legend className="fw-semibold">Payment</legend>
         <div className="grid gap-3">
           <label className="radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2">
-            <DInputCheck type="radio" name="pay" ariaLabel="Card" checked inputClassName="d-none" />
+            <DInputCheck type="radio" name="pay" ariaLabel="Card" defaultChecked inputClassName="d-none" />
             <div className="form-check-label">
               <span className="fw-semibold d-flex align-items-center gap-2">
                 <DIcon icon="CreditCard" size="1rem" className="text-muted" />
