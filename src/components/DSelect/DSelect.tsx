@@ -18,6 +18,7 @@ import DSelectPlaceholder from './components/DSelectPlaceholder';
 
 import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
@@ -41,25 +42,24 @@ SelectProps<Option, IsMulti, Group>,
 | 'isMulti'
 > & {
   /**
-   * The visible label of the control. Any node is accepted, so it can carry a
-   * link, an info trigger or other markup.
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
    *
-   * Unlike the other controls, this one is named by `ariaLabel` whatever the
-   * label is: `aria-label` always reaches the inner input and outranks the
-   * associated `<label>` in the accessible name computation. So a text label
-   * here is visible but not the name — set `ariaLabel` to the real name of the
-   * field, otherwise the control keeps announcing the generic default.
-   *
-   * A rich label also does not fit `floatingLabel`, whose layout animates a
-   * single line of text.
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel` alongside it; a development-only warning says so when it
+   * is missing. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
    */
   label?: ReactNode;
   /**
-   * Accessible name of the control, for every kind of `label`: it is always
-   * passed to the inner input, where it outranks the associated `<label>`.
-   * Defaults to a generic string, which is why a non-text `label` does not warn
-   * here the way it does on the other inputs — and why leaving the default in
-   * place makes every select announce the same name.
+   * Accessible name of the control. It outranks the `label` in the accessible
+   * name computation, so use it to name a control with a non-text label or to
+   * replace the name a text label gives.
+   *
+   * Without a `label` it falls back to a generic string, so an unlabelled
+   * select is never nameless. With a `label` there is no fallback: a generic
+   * `aria-label` would override the label and make every select announce the
+   * same name.
    */
   ariaLabel?: string;
   hint?: string;
@@ -84,6 +84,7 @@ function DSelect<
 >(
   {
     id: idProp,
+    inputId: inputIdProp,
     className,
     style,
     label,
@@ -116,12 +117,15 @@ function DSelect<
     onIconStartClick,
     onIconEndClick,
     dataAttributes,
-    ariaLabel = 'Search for an option',
+    ariaLabel,
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+  // The `<label>` must point at the element react-select renders the input
+  // with, so an explicit `inputId` wins over `id` for both.
+  const inputId = inputIdProp || id;
 
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
@@ -130,6 +134,16 @@ function DSelect<
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(defaultValue);
   }, [onIconEndClick, defaultValue]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DSelect',
+      label,
+      hasAccessibleName: !!ariaLabel || !!props['aria-label'] || !!props['aria-labelledby'],
+      accessibleNameProp: 'ariaLabel',
+      floatingLabel,
+    });
+  }
 
   return (
     <div
@@ -145,7 +159,7 @@ function DSelect<
       {...dataAttributes}
     >
       {hasLabelContent(label) && (
-        <DFormLabel htmlFor={id}>
+        <DFormLabel htmlFor={inputId}>
           {label}
         </DFormLabel>
       )}
@@ -175,8 +189,8 @@ function DSelect<
         )}
         <Select<Option, IsMulti, Group>
           id={`${id}Container`}
-          inputId={id}
-          aria-label={ariaLabel}
+          inputId={inputId}
+          aria-label={ariaLabel ?? (hasLabelContent(label) ? undefined : 'Search for an option')}
           styles={{
             control: (base) => ({
               ...base,
