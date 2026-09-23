@@ -1,5 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 
+import * as warnLabelUsageModule from '../../utils/warnLabelUsage';
 import DSelect from './DSelect';
 
 it('should render my component', () => {
@@ -83,6 +84,27 @@ describe('<DSelect /> accessible name', () => {
     warn.mockRestore();
   });
 
+  // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+  // `aria-label` wins — including an explicitly undefined one. The warning is
+  // deduplicated per page load and already fired above, so this checks what
+  // the component reports to it.
+  it('should report no accessible name when a native aria-label removes ariaLabel', () => {
+    const spy = jest.spyOn(warnLabelUsageModule, 'default');
+
+    render(
+      <DSelect
+        label={<span>Country</span>}
+        ariaLabel="Country"
+        aria-label={undefined}
+        options={options}
+      />,
+    );
+
+    expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-label');
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ hasAccessibleName: false }));
+    spy.mockRestore();
+  });
+
   it('should name the control with ariaLabel when the label is a node', () => {
     render(<DSelect label={<span>Country</span>} ariaLabel="Country" options={options} />);
 
@@ -110,6 +132,23 @@ describe('<DSelect /> focus announcement', () => {
     );
 
     expect(focusGuidance(container)).toMatch(/^Country of residence is focused/);
+  });
+
+  it('should announce the aria-labelledby name over the text label and ariaLabel', () => {
+    const { container } = render(
+      <>
+        <span id="countryHeading">Country of birth</span>
+        <DSelect
+          label="Country"
+          ariaLabel="Country of residence"
+          aria-labelledby="countryHeading"
+          options={options}
+        />
+      </>,
+    );
+
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Country of birth');
+    expect(focusGuidance(container)).toMatch(/^Country of birth is focused/);
   });
 
   it('should keep the guidance passed through ariaLiveMessages', () => {

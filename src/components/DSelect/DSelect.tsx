@@ -131,15 +131,17 @@ function DSelect<
   // with, so an explicit `inputId` wins over `id` for both.
   const inputId = inputIdProp || id;
 
-  // A text label names the control through `<label>`, which react-select's
-  // focus announcement cannot see, so it is handed the name explicitly.
-  // Messages passed by the consumer still take precedence.
+  // A text label or `aria-labelledby` names the control without going through
+  // `aria-label`, which is all react-select's focus announcement reads, so it
+  // is handed those names explicitly. Messages passed by the consumer still
+  // take precedence.
   const textLabel = hasLabelContent(label) && isTextLabel(label) ? String(label) : undefined;
+  const labelledBy = props['aria-labelledby'];
   const liveMessages = useMemo(() => (
-    textLabel
-      ? { guidance: createAriaGuidance(textLabel), ...ariaLiveMessages }
+    textLabel || labelledBy
+      ? { guidance: createAriaGuidance({ labelledBy, label: textLabel }), ...ariaLiveMessages }
       : ariaLiveMessages
-  ), [textLabel, ariaLiveMessages]);
+  ), [textLabel, labelledBy, ariaLiveMessages]);
 
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
@@ -153,7 +155,10 @@ function DSelect<
     warnLabelUsage({
       component: 'DSelect',
       label,
-      hasAccessibleName: !!ariaLabel || !!props['aria-label'] || !!props['aria-labelledby'],
+      // `{...props}` is spread after `ariaLabel`, so a native `aria-label` in it
+      // is the one that reaches the input, even when it is `undefined`.
+      hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+        || !!labelledBy,
       accessibleNameProp: 'ariaLabel',
       floatingLabel,
     });
