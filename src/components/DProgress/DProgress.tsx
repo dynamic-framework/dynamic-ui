@@ -18,7 +18,8 @@ type Props = BaseProps & {
   ariaLabel?: string;
   /**
    * Id of a visible element that names the bar, for a title rendered next to
-   * it. Takes precedence over `ariaLabel` and drops the default name.
+   * it. When set, `aria-label` is not rendered, so `ariaLabel` and the default
+   * name are ignored.
    */
   ariaLabelledBy?: string;
 };
@@ -65,7 +66,7 @@ export default function DProgress(
       <div
         className={classNames(generateClasses)}
         role="progressbar"
-        aria-label={ariaLabelledBy ? ariaLabel : (ariaLabel ?? 'Progress bar')}
+        aria-label={ariaLabelledBy ? undefined : (ariaLabel ?? 'Progress bar')}
         aria-labelledby={ariaLabelledBy}
         style={{ width: formatProgress }}
         aria-valuenow={currentValue}

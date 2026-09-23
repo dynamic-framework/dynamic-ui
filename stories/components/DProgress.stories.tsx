@@ -84,7 +84,7 @@ The Bootstrap documentation provides details on the default [Progress CSS Variab
     ariaLabelledBy: {
       control: 'text',
       type: 'string',
-      description: 'Id of a visible element that names the bar. Takes precedence over `ariaLabel` and drops the default name.',
+      description: 'Id of a visible element that names the bar. When set, `aria-label` is not rendered, so `ariaLabel` and the default name are ignored.',
       table: { category: 'Content' },
     },
   },

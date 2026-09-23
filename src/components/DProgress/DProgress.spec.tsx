@@ -110,6 +110,18 @@ describe('<DProgress />', () => {
     expect(progressBar).not.toHaveAttribute('aria-label');
   });
 
+  it('renders only aria-labelledby when both ariaLabel and ariaLabelledBy are set', () => {
+    render(
+      <>
+        <span id="upload-title">Carga de archivos</span>
+        <DProgress currentValue={40} ariaLabel="Tiempo restante" ariaLabelledBy="upload-title" />
+      </>,
+    );
+    const progressBar = screen.getByRole('progressbar', { name: 'Carga de archivos' });
+    expect(progressBar).toHaveAttribute('aria-labelledby', 'upload-title');
+    expect(progressBar).not.toHaveAttribute('aria-label');
+  });
+
   it('hides current value text when hideCurrentValue is true', () => {
     render(<DProgress currentValue={80} hideCurrentValue />);
     const progressBar = screen.getByRole('progressbar');
