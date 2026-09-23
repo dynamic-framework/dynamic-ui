@@ -1,6 +1,8 @@
 /// <reference types="@testing-library/jest-dom" />
 
+import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import DInputCheck from '.';
 
 import { InputCheckType } from '../interface';
@@ -348,5 +350,213 @@ describe('<DInputCheck />', () => {
 
     expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
+  });
+
+  describe('controlled and uncontrolled modes', () => {
+    it('reverts to the prop when the parent rejects the change', async () => {
+      function Rejecting() {
+        const [checked] = useState(false);
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="Approver"
+            checked={checked}
+            onChange={() => {}}
+          />
+        );
+      }
+
+      render(<Rejecting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+
+      expect(input).not.toBeChecked();
+    });
+
+    it('follows the prop when the parent accepts the change', async () => {
+      function Accepting() {
+        const [checked, setChecked] = useState(false);
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="Approver"
+            checked={checked}
+            onChange={(event) => setChecked(event.target.checked)}
+          />
+        );
+      }
+
+      render(<Accepting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+      expect(input).toBeChecked();
+
+      await userEvent.click(input);
+      expect(input).not.toBeChecked();
+    });
+
+    it('toggles on its own when no checked prop is passed', async () => {
+      render(<DInputCheck type="checkbox" ariaLabel="Filter" />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+      expect(input).toBeChecked();
+
+      await userEvent.click(input);
+      expect(input).not.toBeChecked();
+    });
+
+    it('starts from defaultChecked and keeps toggling', async () => {
+      render(<DInputCheck type="checkbox" ariaLabel="Filter" defaultChecked />);
+      const input = screen.getByRole('checkbox');
+
+      expect(input).toBeChecked();
+
+      await userEvent.click(input);
+      expect(input).not.toBeChecked();
+    });
+
+    it('keeps a checked without onChange as a starting value, not a lock', async () => {
+      render(
+        <>
+          <DInputCheck type="radio" name="plan" ariaLabel="Basic" />
+          <DInputCheck type="radio" name="plan" ariaLabel="Pro" checked />
+        </>,
+      );
+      const basic = screen.getByLabelText('Basic');
+      const pro = screen.getByLabelText('Pro');
+
+      expect(pro).toBeChecked();
+
+      await userEvent.click(basic);
+
+      expect(basic).toBeChecked();
+      expect(pro).not.toBeChecked();
+    });
+
+    it('still applies a checked without onChange that is flipped from outside', async () => {
+      function External() {
+        const [checked, setChecked] = useState(false);
+        return (
+          <>
+            <button type="button" onClick={() => setChecked(true)}>select all</button>
+            <DInputCheck type="checkbox" ariaLabel="Row" checked={checked} />
+          </>
+        );
+      }
+
+      render(<External />);
+      const input = screen.getByRole('checkbox');
+      expect(input).not.toBeChecked();
+
+      await userEvent.click(screen.getByText('select all'));
+
+      expect(input).toBeChecked();
+    });
+
+    it('keeps indeterminate through a rejected change', async () => {
+      function Rejecting() {
+        const [checked] = useState(false);
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="All rows"
+            checked={checked}
+            indeterminate
+            onChange={() => {}}
+          />
+        );
+      }
+
+      render(<Rejecting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+
+      // Activating the checkbox clears the DOM flag and the prop never moved,
+      // so nothing else would put the mixed state back.
+      expect((input as HTMLInputElement).indeterminate).toBe(true);
+      expect(input).not.toBeChecked();
+    });
+
+    it('drops indeterminate when the parent accepts and clears it', async () => {
+      function Accepting() {
+        const [state, setState] = useState({ checked: false, indeterminate: true });
+        return (
+          <DInputCheck
+            type="checkbox"
+            ariaLabel="All rows"
+            checked={state.checked}
+            indeterminate={state.indeterminate}
+            onChange={(event) => setState({
+              checked: event.target.checked,
+              indeterminate: false,
+            })}
+          />
+        );
+      }
+
+      render(<Accepting />);
+      const input = screen.getByRole('checkbox');
+
+      await userEvent.click(input);
+
+      expect((input as HTMLInputElement).indeterminate).toBe(false);
+      expect(input).toBeChecked();
+    });
+
+    it('lets an uncontrolled click clear indeterminate, as the browser does', async () => {
+      render(
+        <DInputCheck
+          type="checkbox"
+          ariaLabel="All rows"
+          indeterminate
+          onChange={() => {}}
+        />,
+      );
+      const input = screen.getByRole('checkbox');
+
+      expect((input as HTMLInputElement).indeterminate).toBe(true);
+
+      await userEvent.click(input);
+
+      expect((input as HTMLInputElement).indeterminate).toBe(false);
+      expect(input).toBeChecked();
+    });
+
+    it('hands onChange the indeterminate the browser left', async () => {
+      let seen: boolean | undefined;
+
+      render(
+        <DInputCheck
+          type="checkbox"
+          ariaLabel="All rows"
+          indeterminate
+          onChange={(event) => { seen = event.target.indeterminate; }}
+        />,
+      );
+
+      await userEvent.click(screen.getByRole('checkbox'));
+
+      expect(seen).toBe(false);
+    });
+
+    it('keeps indeterminate working alongside checked', () => {
+      render(
+        <DInputCheck
+          type="checkbox"
+          ariaLabel="All rows"
+          checked
+          indeterminate
+          onChange={() => {}}
+        />,
+      );
+      const input = screen.getByRole('checkbox');
+
+      expect((input as HTMLInputElement).indeterminate).toBe(true);
+      expect(input).toBeChecked();
+    });
   });
 });

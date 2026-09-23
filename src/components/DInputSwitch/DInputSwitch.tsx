@@ -1,6 +1,4 @@
 import {
-  useState,
-  useEffect,
   useCallback,
   useId,
   useMemo,
@@ -11,6 +9,7 @@ import type { ChangeEvent, ReactNode } from 'react';
 import DFormLabel from '../internal/DFormLabel';
 import hasLabelContent from '../../utils/hasLabelContent';
 import warnLabelUsage from '../../utils/warnLabelUsage';
+import useControlledState from '../../hooks/useControlledState';
 
 import type { BaseProps } from '../interface';
 
@@ -34,7 +33,19 @@ type Props =
    */
   ariaLabel?: string;
   name?: string;
+  /**
+   * Checked state of the switch.
+   *
+   * Passed together with `onChange` the switch is fully controlled: when the
+   * parent rejects a change the switch snaps back to this value.
+   *
+   * Passed on its own it is taken as the starting value and the switch keeps
+   * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+   * that, it says so out loud.
+   */
   checked?: boolean;
+  /** Starting checked state for uncontrolled usage. */
+  defaultChecked?: boolean;
   disabled?: boolean;
   inputClassName?: string;
   invalid?: boolean;
@@ -51,6 +62,7 @@ export default function DInputSwitch(
     ariaLabel,
     name,
     checked,
+    defaultChecked = false,
     disabled,
     invalid = false,
     valid = false,
@@ -65,7 +77,9 @@ export default function DInputSwitch(
 ) {
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
-  const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(checked);
+  // See `useControlledState` for why `onChange` takes part in this decision.
+  const isControlled = checked !== undefined && onChange !== undefined;
+  const [isChecked, setIsChecked] = useControlledState(checked, isControlled, defaultChecked);
 
   const ariaDescribedby = useMemo(() => (
     [
@@ -78,15 +92,11 @@ export default function DInputSwitch(
     hint,
   ]);
 
-  useEffect(() => {
-    setInternalIsChecked(checked);
-  }, [checked]);
-
   const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.checked;
-    setInternalIsChecked(value);
+    setIsChecked(value);
     onChange?.(value);
-  }, [onChange]);
+  }, [setIsChecked, onChange]);
 
   if (process.env.NODE_ENV !== 'production') {
     warnLabelUsage({
@@ -117,7 +127,7 @@ export default function DInputSwitch(
         style={style}
         type="checkbox"
         role="switch"
-        checked={internalIsChecked}
+        checked={isChecked}
         disabled={disabled}
         aria-label={ariaLabel}
         {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
