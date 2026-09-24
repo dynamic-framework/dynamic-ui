@@ -34,4 +34,25 @@ describe('<DProgress /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it('should have no violations with ariaLabel', async () => {
+    const { container } = render(
+      <DProgress currentValue={40} ariaLabel="Tiempo restante" />,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should have no violations with ariaLabelledBy', async () => {
+    const { container } = render(
+      <div>
+        <span id="upload-title">Carga de archivos</span>
+        <DProgress currentValue={40} ariaLabelledBy="upload-title" />
+      </div>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });
