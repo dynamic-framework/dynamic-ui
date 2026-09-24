@@ -3,7 +3,6 @@ import {
   useCallback,
   useEffect,
   useRef,
-  createRef,
   useMemo,
 } from 'react';
 import classNames from 'classnames';
@@ -73,20 +72,7 @@ function DTabs(
     [vertical, variant, className],
   );
 
-  const tabRefs = useRef<Array<React.RefObject<HTMLButtonElement>>>([]);
-
-  // Always holds the latest `options` without needing to be a dependency:
-  // `options` is commonly passed as an inline array literal (e.g.
-  // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), so it's a new array
-  // reference on every parent render even when its content hasn't changed.
-  // Reading it from this ref (updated synchronously on every render) lets
-  // the focus effect below react only to `selected` changing.
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
-
-  useEffect(() => {
-    tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef<HTMLButtonElement>());
-  }, [options]);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   // Ensure selected is never disabled
   useEffect(() => {
@@ -98,28 +84,14 @@ function DTabs(
     }
   }, [options, selected]);
 
-  // Declarative focus management. Wrapped in `useCallback` with an empty
-  // dependency array since it only reads from the `tabRefs` ref, so its
-  // identity stays stable across renders and it can safely be used as an
-  // effect dependency below.
+  // Focus only moves in response to the user: arrow keys and clicks call
+  // this directly. Changes to `selected` that don't come from an interaction
+  // (mount, a new `defaultSelected`, the disabled-tab fallback above) leave
+  // focus where it is, so the page doesn't scroll to the tablist and no other
+  // element (a search field, an OTP input) loses focus.
   const focusTab = useCallback((idx: number) => {
-    if (tabRefs.current[idx]?.current) {
-      tabRefs.current[idx].current.focus();
-    }
+    tabRefs.current[idx]?.focus();
   }, []);
-
-  // Focus selected tab when selected changes.
-  // Reads `options` from `optionsRef` (see comment above) instead of
-  // depending on `options` directly, so a parent re-render that merely
-  // creates a new `options` reference with identical content doesn't call
-  // `focusTab` again and steal focus away from unrelated elements on the
-  // page (e.g. an OTP input).
-  useEffect(() => {
-    const idx = optionsRef.current.findIndex((opt) => opt.tab === selected && !opt.disabled);
-    if (idx !== -1) {
-      focusTab(idx);
-    }
-  }, [selected, focusTab]);
 
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
@@ -190,7 +162,9 @@ function DTabs(
                 className="nav-item"
               >
                 <button
-                  ref={tabRefs.current[idx]}
+                  ref={(element) => {
+                    tabRefs.current[idx] = element;
+                  }}
                   id={`${option.tab}Tab`}
                   className={classNames(
                     'nav-link',
@@ -203,7 +177,10 @@ function DTabs(
                   aria-selected={isTabSelected}
                   tabIndex={isTabSelected ? 0 : -1}
                   disabled={option.disabled}
-                  onClick={() => onSelect(option)}
+                  onClick={() => {
+                    focusTab(idx);
+                    onSelect(option);
+                  }}
                   onKeyDown={(e) => handleKeyDown(idx, e)}
                 >
                   {option.label}
