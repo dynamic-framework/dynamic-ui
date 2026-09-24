@@ -13,9 +13,16 @@
 
 import fs from 'node:fs';
 
-import { parse, wcagContrast, wcagLuminance } from 'culori';
+import {
+  converter, parse, wcagContrast, wcagLuminance,
+} from 'culori';
 
 export const PREFIX = 'bs';
+
+// culori devuelve cada color en su propio espacio (`hsl()` llega como
+// { mode: 'hsl', h, s, l }), así que los canales r/g/b sólo existen tras
+// convertirlo a sRGB.
+const toRgb = converter('rgb');
 
 /** Selector exacto que emite Dynamic UI en :root (dist/css/dynamic-ui.css:1). */
 export const THEME_SELECTOR = ':root,\n[data-bs-theme="dynamic"]';
@@ -170,10 +177,11 @@ export function parseColor(input, where = 'color') {
       `${where}: "${raw}" no es un color reconocible. Usa hex (#0b6b53) o triplete ("11, 107, 83").`,
     );
   }
+  const rgb = toRgb(parsed);
   return {
-    r: clamp255(Math.round(parsed.r * 255)),
-    g: clamp255(Math.round(parsed.g * 255)),
-    b: clamp255(Math.round(parsed.b * 255)),
+    r: clamp255(Math.round(rgb.r * 255)),
+    g: clamp255(Math.round(rgb.g * 255)),
+    b: clamp255(Math.round(rgb.b * 255)),
   };
 }
 
