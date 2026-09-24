@@ -50,7 +50,7 @@
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:scss": "node scripts/build-scss.js",
     "build:icons-core": "npx tsx scripts/build-icons-core.ts",
-    "build:api": "node scripts/generate-api.mjs && cp registry/api.json dist/api.json",
+    "build:api": "node scripts/generate-api.mjs && mkdir -p dist && cp registry/api.json dist/api.json",
     "build:scss:watch": "npx nodemon --watch src --ext scss --exec 'npm run build:scss'",
     "dev:ts": "tsc -p tsconfig.build.json",
     "dev:rollup": "rollup -c rollup.config.mjs",
