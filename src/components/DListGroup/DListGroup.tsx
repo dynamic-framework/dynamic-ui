@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import type { PropsWithChildren } from 'react';
 
 import DListGroupItem from './components/DListGroupItem';
+import ListGroupContext from './ListGroupContext';
 
 import type { BaseProps } from '../interface';
 
@@ -52,13 +53,15 @@ function DListGroup(
   );
 
   return (
-    <Tag
-      className={classNames(generateClasses, className)}
-      style={style}
-      {...dataAttributes}
-    >
-      {children}
-    </Tag>
+    <ListGroupContext.Provider value={Tag}>
+      <Tag
+        className={classNames(generateClasses, className)}
+        style={style}
+        {...dataAttributes}
+      >
+        {children}
+      </Tag>
+    </ListGroupContext.Provider>
   );
 }
 

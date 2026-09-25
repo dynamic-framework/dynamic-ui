@@ -91,7 +91,7 @@ describe('<DListGroup.Item />', () => {
     it('should render as a link when href is provided', () => {
       render(
         <DContextProvider>
-          <DListGroup>
+          <DListGroup as="div">
             <DListGroup.Item href="/test">Link Item</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
@@ -106,7 +106,7 @@ describe('<DListGroup.Item />', () => {
     it('should render as a button when action is true', () => {
       render(
         <DContextProvider>
-          <DListGroup>
+          <DListGroup as="div">
             <DListGroup.Item action>Button Item</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
@@ -149,7 +149,7 @@ describe('<DListGroup.Item />', () => {
     it('should apply active state to an action item (button)', () => {
       render(
         <DContextProvider>
-          <DListGroup>
+          <DListGroup as="div">
             <DListGroup.Item action active>Active Button</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
@@ -163,7 +163,7 @@ describe('<DListGroup.Item />', () => {
     it('should apply disabled state to an action item (button)', () => {
       render(
         <DContextProvider>
-          <DListGroup>
+          <DListGroup as="div">
             <DListGroup.Item action disabled>Disabled Button</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
@@ -240,7 +240,7 @@ describe('<DListGroup.Item />', () => {
       const handleClick = jest.fn();
       render(
         <DContextProvider>
-          <DListGroup>
+          <DListGroup as="div">
             <DListGroup.Item action onClick={handleClick}>
               Click Me
             </DListGroup.Item>
@@ -250,6 +250,72 @@ describe('<DListGroup.Item />', () => {
 
       await user.click(screen.getByText('Click Me'));
       expect(handleClick).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('development warning for invalid markup', () => {
+    // The warning is deduplicated per container>item pair for the whole page
+    // load, so each case below uses a pair no other test renders.
+    it('warns once when links render inside the default <ul>', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation();
+      render(
+        <DContextProvider>
+          <DListGroup>
+            <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+            <DListGroup.Item href="/movimientos">Movimientos</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      expect(warn).toHaveBeenCalledTimes(1);
+      expect(warn.mock.calls[0][0]).toContain('a <a> inside a <ul> is invalid markup');
+      expect(warn.mock.calls[0][0]).toContain('as="div"');
+      warn.mockRestore();
+    });
+
+    it('warns when an action item renders a <button> inside a numbered <ol>', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation();
+      render(
+        <DContextProvider>
+          <DListGroup numbered>
+            <DListGroup.Item action>Paso</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      expect(warn).toHaveBeenCalledTimes(1);
+      expect(warn.mock.calls[0][0]).toContain('a <button> inside a <ol> is invalid markup');
+      warn.mockRestore();
+    });
+
+    it('warns when a plain <li> item renders inside as="div"', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation();
+      render(
+        <DContextProvider>
+          <DListGroup as="div">
+            <DListGroup.Item>Texto</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      expect(warn).toHaveBeenCalledTimes(1);
+      expect(warn.mock.calls[0][0]).toContain('a <li> inside a <div> is invalid markup');
+      warn.mockRestore();
+    });
+
+    it('does not warn for valid combinations or for an item outside a DListGroup', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation();
+      render(
+        <DContextProvider>
+          <DListGroup>
+            <DListGroup.Item>Texto</DListGroup.Item>
+          </DListGroup>
+          <DListGroup as="div">
+            <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+            <DListGroup.Item action>Acción</DListGroup.Item>
+          </DListGroup>
+          <DListGroup.Item href="/suelto">Suelto</DListGroup.Item>
+        </DContextProvider>,
+      );
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
     });
   });
 });
