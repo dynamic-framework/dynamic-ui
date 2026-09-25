@@ -28,7 +28,8 @@ type Props =
     size?: ComponentSize;
     /**
      * Size of the icon glyph, forwarded to `DIcon` (e.g. `"1.5rem"`, or a
-     * responsive object). Without it the glyph follows the button's font size,
+     * responsive object such as `{ xs: '1rem', lg: '2rem' }`, which follows
+     * viewport changes). Without it the glyph follows the button's font size,
      * which changes with `size`.
      */
     iconSize?: string | ResponsiveProp;
@@ -92,6 +93,10 @@ export default function DButtonIcon(
       loading,
     };
   }, [variant, color, size, state, loading]);
+
+  // A responsive iconSize has to follow viewport changes, so DIcon only
+  // listens to breakpoints when it gets an object; a plain string needs none.
+  const useIconSizeListener = typeof iconSize === 'object';
 
   const isDisabled = useMemo(() => (
     state === 'disabled' || loading || disabled
@@ -158,6 +163,7 @@ export default function DButtonIcon(
             <DIcon
               icon={icon}
               size={iconSize}
+              useListenerSize={useIconSizeListener}
               familyClass={iconFamilyClass ?? familyClass}
               familyPrefix={iconFamilyPrefix ?? familyPrefix}
               materialStyle={iconMaterialStyle ?? materialStyle}
@@ -191,6 +197,7 @@ export default function DButtonIcon(
           <DIcon
             icon={icon}
             size={iconSize}
+            useListenerSize={useIconSizeListener}
             familyClass={iconFamilyClass ?? familyClass}
             familyPrefix={iconFamilyPrefix ?? familyPrefix}
             materialStyle={iconMaterialStyle ?? materialStyle}
