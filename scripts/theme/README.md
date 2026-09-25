@@ -185,8 +185,9 @@ un build o contra el CSS de un tarball publicado.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
 - Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
-  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: la librería las define
-  apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete.
+  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: hasta 2.10.0 la librería las
+  definía apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete
+  (#1191). Se mantiene para que el theme funcione también sobre esas versiones.
 - Sin `:where()`: tiene especificidad cero y la librería le gana.
 - El CSS es un entregable: la cabecera dice qué theme es y para qué versión de
   la librería, y los comentarios de dentro sólo nombran la sección. Lo que haya

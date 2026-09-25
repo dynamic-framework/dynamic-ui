@@ -106,7 +106,7 @@ export const SUBTLE_PAIRS = {
   warning: { fg: { kind: 'role', step: 800 }, bg: { kind: 'role', step: 25 } },
   danger: { fg: { kind: 'role', step: 600 }, bg: { kind: 'role', step: 25 } },
   light: { fg: { kind: 'gray', step: 600 }, bg: { kind: 'gray', step: 100 } },
-  dark: { fg: { kind: 'gray', step: 25 }, bg: { kind: 'gray', step: 400 } },
+  dark: { fg: { kind: 'gray', step: 900 }, bg: { kind: 'gray', step: 300 } },
 };
 
 /** Rampa de grises por defecto de 2.8.0 (hecha a mano, NO derivada por tinte). */

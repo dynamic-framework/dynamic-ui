@@ -178,8 +178,34 @@ describe('theme-validate acepta lo que theme-expand produce', () => {
     });
     const result = validate(css);
     expect(result.status).toBe(0);
-    // El único hallazgo es un par que ya viene roto en la librería, no del theme.
-    expect(result.stderr).not.toContain('error ');
+    // Ni errores ni avisos: desde #1190 ningún par por defecto queda bajo AA,
+    // así que tampoco hay `contraste-preexistente` que atribuir a la librería.
+    expect(result.stderr).toBe('');
+  });
+
+  it('usa como fallback los pares subtle que define la librería para light y dark', () => {
+    // Los roles respaldados en gris no tienen rampa: su par subtle apunta a
+    // pasos de gris en _colors.scss. Si SUBTLE_PAIRS se desfasa de ahí, el
+    // validador mide un par que la librería ya no emite.
+    const scss = fs.readFileSync(path.join(ROOT, 'src/style/abstracts/variables/_colors.scss'), 'utf8');
+    const grayStep = (name: string) => {
+      const match = scss.match(new RegExp(`^\\$${name}: var\\(--#\\{\\$prefix\\}gray-(\\d+)\\) !default;`, 'm'));
+      expect(match).not.toBeNull();
+      return Number(match?.[1]);
+    };
+    const loaded = spawnSync('node', [
+      '--input-type=module',
+      '-e',
+      `import('${path.join(ROOT, 'scripts/theme/theme-tokens.mjs')}').then((m) => console.log(JSON.stringify(m.SUBTLE_PAIRS)))`,
+    ], { encoding: 'utf8' });
+    expect(loaded.status).toBe(0);
+    const subtlePairs = JSON.parse(loaded.stdout);
+    for (const role of ['light', 'dark']) {
+      expect(subtlePairs[role]).toEqual({
+        fg: { kind: 'gray', step: grayStep(`${role}-text-emphasis`) },
+        bg: { kind: 'gray', step: grayStep(`${role}-bg-subtle`) },
+      });
+    }
   });
 
   it('valida el ejemplo canónico del repo', () => {
