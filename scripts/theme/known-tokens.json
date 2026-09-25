@@ -1,6 +1,6 @@
 {
   "dynamicUi": "2.10.0",
-  "count": 1884,
+  "count": 1885,
   "tokens": [
     "--bs-accordion-active-bg",
     "--bs-accordion-active-color",
@@ -1745,6 +1745,7 @@
     "--bs-table-hover-color",
     "--bs-table-striped-bg",
     "--bs-table-striped-color",
+    "--bs-tabs-content-margin-bottom",
     "--bs-teal",
     "--bs-teal-100",
     "--bs-teal-100-rgb",
