@@ -67,6 +67,15 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
       description: 'Name of icon to use (in kebab-case)',
       table: { category: 'Icon' },
     },
+    showIcon: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Show the leading icon. When `false`, `icon` is ignored.',
+      table: {
+        defaultValue: { summary: 'true' },
+        category: 'Icon',
+      },
+    },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
@@ -152,6 +161,21 @@ export const Warning: Story = {
   args: {
     color: 'warning',
     children: 'This is a warning alert',
+  },
+};
+
+export const WithoutIcon: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'With `showIcon={false}` the alert renders only its text, for informative blocks where an icon would compete with the content.',
+      },
+    },
+  },
+  args: {
+    color: 'info',
+    showIcon: false,
+    children: 'Movements from the last 90 days are available in the detail view.',
   },
 };
 
