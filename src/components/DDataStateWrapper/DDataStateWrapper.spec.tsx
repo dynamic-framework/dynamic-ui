@@ -146,4 +146,78 @@ describe('<DDataStateWrapper />', () => {
       expect(screen.queryByText('Ocurrió un error inesperado.')).not.toBeInTheDocument();
     });
   });
+
+  describe('single resource', () => {
+    type Detail = { id: string; title: string };
+    const detail: Detail = { id: '1', title: 'Cuenta de ahorros' };
+
+    it('passes the object itself to the render prop', () => {
+      render(
+        <DDataStateWrapper isLoading={false} isError={false} data={detail}>
+          {(item) => <h2>{item.title}</h2>}
+        </DDataStateWrapper>,
+      );
+      expect(screen.getByRole('heading', { name: 'Cuenta de ahorros' })).toBeInTheDocument();
+    });
+
+    it.each([
+      ['undefined', undefined],
+      ['null', null],
+    ])('renders the empty state when the object is %s', (_, value) => {
+      render(
+        <DDataStateWrapper<Detail> isLoading={false} isError={false} data={value}>
+          {(item) => <h2>{item.title}</h2>}
+        </DDataStateWrapper>,
+      );
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+      expect(screen.getByText(/no data/i)).toBeInTheDocument();
+    });
+
+    it('keeps loading and error ahead of the data check', () => {
+      const { rerender } = render(
+        <DDataStateWrapper isLoading isError={false} data={detail}>
+          {(item) => <h2>{item.title}</h2>}
+        </DDataStateWrapper>,
+      );
+      expect(screen.getByRole('status')).toBeInTheDocument();
+      rerender(
+        <DDataStateWrapper isLoading={false} isError data={detail}>
+          {(item) => <h2>{item.title}</h2>}
+        </DDataStateWrapper>,
+      );
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    });
+
+    it('treats an empty object as data, not as empty', () => {
+      render(
+        <DDataStateWrapper isLoading={false} isError={false} data={{}}>
+          {() => <p>Sin campos</p>}
+        </DDataStateWrapper>,
+      );
+      expect(screen.getByText('Sin campos')).toBeInTheDocument();
+    });
+
+    it('types the render prop after the shape of data', () => {
+      // Compile-time checks: ts-jest fails the suite if these stop holding.
+      const list = (
+        <DDataStateWrapper isLoading={false} isError={false} data={[detail]}>
+          {(items) => items.map((item) => <p key={item.id}>{item.title}</p>)}
+        </DDataStateWrapper>
+      );
+      const single = (
+        <DDataStateWrapper isLoading={false} isError={false} data={detail}>
+          {(item) => <p>{item.title}</p>}
+        </DDataStateWrapper>
+      );
+      /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return */
+      const wrong = (
+        <DDataStateWrapper isLoading={false} isError={false} data={detail}>
+          {/* @ts-expect-error a single object is not an array */}
+          {(items) => items.map(() => null)}
+        </DDataStateWrapper>
+      );
+      /* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return */
+      expect([list, single, wrong]).toHaveLength(3);
+    });
+  });
 });
