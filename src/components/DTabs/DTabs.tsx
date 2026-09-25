@@ -1,4 +1,5 @@
 import {
+  Children,
   useState,
   useCallback,
   useEffect,
@@ -24,6 +25,11 @@ export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;
+  /**
+   * Class for the panels container. It is only rendered when `DTabs` has
+   * children, so a tab bar used as pure navigation leaves no empty node.
+   */
+  classNameContent?: string;
   onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
@@ -41,6 +47,7 @@ function DTabs(
     options,
     className,
     classNameTab,
+    classNameContent,
     style,
     vertical,
     variant = 'underline',
@@ -189,9 +196,11 @@ function DTabs(
             );
           })}
         </ul>
-        <div className="d-tabs-content tab-content">
-          {children}
-        </div>
+        {Children.toArray(children).length > 0 && (
+          <div className={classNames('d-tabs-content tab-content', classNameContent)}>
+            {children}
+          </div>
+        )}
       </div>
     </TabContext.Provider>
   );
