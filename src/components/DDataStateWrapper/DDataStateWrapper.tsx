@@ -30,13 +30,11 @@ type DDataStateWrapperBaseProps = {
 /** A collection: empty when it has no items. */
 export type DDataStateWrapperListProps<T> = DDataStateWrapperBaseProps & {
   /**
-   * The data to render. A collection (`T[]`) counts as empty when it has no
-   * items. A single resource (`T | null | undefined`, see
-   * `DDataStateWrapperSingleProps`) is also accepted and counts as empty when
-   * it is `null` or `undefined`.
+   * A collection; empty when it has no items. For a single resource, pass the
+   * object itself: that overload is typed by `DDataStateWrapperSingleProps`.
    */
   data: T[] | undefined;
-  /** Receives `data` with the same shape it was given: the array, or the object. */
+  /** Receives the array. */
   children: (data: T[]) => ReactNode;
 };
 
