@@ -283,6 +283,7 @@ describe('<DListGroup.Item />', () => {
       );
       expect(warn).toHaveBeenCalledTimes(1);
       expect(warn.mock.calls[0][0]).toContain('a <button> inside a <ol> is invalid markup');
+      expect(warn.mock.calls[0][0]).toContain('Remove `numbered`');
       warn.mockRestore();
     });
 

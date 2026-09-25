@@ -28,9 +28,13 @@ export default function warnInvalidListMarkup(
 
   warnedCombinations.add(key);
 
-  const advice = container === 'div'
-    ? 'Keep the container as a list (the default `as="ul"`, or `numbered`) or render the item as a link or button.'
-    : 'Use `as="div"` on the DListGroup when its items are links or buttons.';
+  let advice = 'Use `as="div"` on the DListGroup when its items are links or buttons.';
+  if (container === 'div') {
+    advice = 'Keep the container as a list (the default `as="ul"`, or `numbered`) or render the item as a link or button.';
+  } else if (container === 'ol') {
+    // `numbered` always renders an <ol>, whatever `as` says.
+    advice = 'Remove `numbered` and use `as="div"` on the DListGroup when its items are links or buttons: `numbered` always renders an <ol>.';
+  }
 
   // eslint-disable-next-line no-console
   console.warn(
