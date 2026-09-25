@@ -45,4 +45,11 @@ describe('<DAlert /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it.each(['status', 'none'] as const)('has no violations with role="%s"', async (role) => {
+    const { container } = render(<DAlert color="info" role={role}>Info message</DAlert>);
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });

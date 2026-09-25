@@ -11,6 +11,13 @@ export type NavegableProps = {
 };
 
 export type ComponentSize = 'sm' | 'lg';
+/**
+ * How a message is exposed to assistive technology: `alert` interrupts the
+ * screen reader (critical errors), `status` is announced without interrupting
+ * (non-critical dynamic messages) and `none` is not a live region (static
+ * content already on screen).
+ */
+export type LiveRegionRole = 'alert' | 'status' | 'none';
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export type AvatarSize = 'xs' | 'sm' | 'lg' | 'xl' | 'xxl';
 

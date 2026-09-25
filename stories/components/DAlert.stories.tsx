@@ -22,6 +22,16 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
 
+## Accessibility: live region role
+
+| \`role\`            | Screen reader behavior            | Use it for                                             |
+|---------------------|-----------------------------------|--------------------------------------------------------|
+| \`alert\` (default) | Interrupts what it is announcing  | Critical errors that need immediate attention          |
+| \`status\`          | Announces without interrupting    | Confirmations and other dynamic, non-critical messages |
+| \`none\`            | Not announced as a live region    | Static content already on screen when the page loads   |
+
+Pass \`closeAriaLabel\` with \`showClose\` to name the close button in the app's language (defaults to \`"Close"\`).
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [Alert CSS Variables](https://getbootstrap.com/docs/5.3/components/alerts/#css)
@@ -81,6 +91,24 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
       control: 'boolean',
       type: 'boolean',
       table: { category: 'Icon' },
+    },
+    role: {
+      control: 'select',
+      options: ['alert', 'status', 'none'],
+      description: 'Live region role: `alert` interrupts the screen reader, `status` announces without interrupting, `none` is not a live region.',
+      table: {
+        defaultValue: { summary: 'alert' },
+        category: 'Accessibility',
+      },
+    },
+    closeAriaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'Accessible name of the close button.',
+      table: {
+        defaultValue: { summary: 'Close' },
+        category: 'Accessibility',
+      },
     },
     showClose: {
       control: 'boolean',
@@ -152,6 +180,21 @@ export const Warning: Story = {
   args: {
     color: 'warning',
     children: 'This is a warning alert',
+  },
+};
+
+export const StatusRole: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A non-critical message with `role="status"`: the screen reader announces it without interrupting the user.',
+      },
+    },
+  },
+  args: {
+    color: 'info',
+    role: 'status',
+    children: 'Your balance is updated every hour.',
   },
 };
 
