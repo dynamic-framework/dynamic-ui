@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
@@ -12,6 +12,8 @@ import type {
   StartIconProps,
 } from '../../interface';
 import { useDContext } from '../../../contexts';
+import ListGroupContext from '../ListGroupContext';
+import warnInvalidListMarkup from './warnInvalidListMarkup';
 
 type Props =
 & BaseProps
@@ -69,6 +71,15 @@ export default function DListGroupItem(
 
     return as;
   }, [href, as, actionProp]);
+
+  const container = useContext(ListGroupContext);
+
+  if (process.env.NODE_ENV !== 'production' && container) {
+    const isListContainer = container === 'ul' || container === 'ol';
+    if (isListContainer !== (Tag === 'li')) {
+      warnInvalidListMarkup(container, Tag);
+    }
+  }
 
   const action = useMemo(() => {
     if (Tag === 'a' || Tag === 'button') {

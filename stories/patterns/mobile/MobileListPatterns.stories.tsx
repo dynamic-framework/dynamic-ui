@@ -359,7 +359,7 @@ function IconListExample() {
     <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
       <h5 className="mb-1">Quick services</h5>
       <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
-      <DListGroup className="rounded-3 bg-white overflow-hidden">
+      <DListGroup as="div" className="rounded-3 bg-white overflow-hidden">
         {QUICK_SERVICES.map((item) => (
           <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
             <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />
@@ -582,7 +582,7 @@ function IconListExample() {
         <h5 className="mb-1">Quick services</h5>
         <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
 
-        <DListGroup className="rounded-3 bg-white overflow-hidden">
+        <DListGroup as="div" className="rounded-3 bg-white overflow-hidden">
           {QUICK_SERVICES.map((item) => (
             <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
               <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />

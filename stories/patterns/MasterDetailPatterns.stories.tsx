@@ -163,7 +163,7 @@ export const Menu: Story = {
     <div className="border rounded-2 overflow-hidden grid gap-0">
       <div className="g-col-12 g-col-lg-4 border-end border-opacity-25">
         <div>
-          <DListGroup className="list-group-white">
+          <DListGroup as="div" className="list-group-white">
             <DListGroupItem iconEnd="ChevronRight" as="button" active>
               <div>Home request issue #1</div>
               <small className="text-muted fw-normal">Text lorem ipsum</small>
