@@ -1,3 +1,4 @@
+import { Fragment, StrictMode } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DTabs, { DTabOption } from './DTabs';
@@ -41,6 +42,74 @@ describe('<DTabs />', () => {
     expect(document.activeElement).toBe(tab3);
     fireEvent.keyDown(tab3, { key: 'ArrowLeft' });
     expect(document.activeElement).toBe(tab1);
+  });
+
+  it.each([
+    ['without StrictMode', false],
+    ['under StrictMode', true],
+  ])('does not move focus to the selected tab on mount %s', (_, strict) => {
+    const Wrapper = strict ? StrictMode : Fragment;
+    const { rerender } = render(<Wrapper><input aria-label="Search" /></Wrapper>);
+    const search = screen.getByRole('textbox', { name: 'Search' });
+    search.focus();
+    rerender(
+      <Wrapper>
+        <input aria-label="Search" />
+        <DTabs options={options} defaultSelected="tab1">
+          <div>Tab Content</div>
+        </DTabs>
+      </Wrapper>,
+    );
+    expect(search).toHaveFocus();
+  });
+
+  it('does not move focus on mount when falling back from a disabled defaultSelected', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1', disabled: true },
+      { label: 'Tab 2', tab: 'tab2' },
+    ];
+    render(
+      <DTabs options={opts} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(document.body).toHaveFocus();
+  });
+
+  it('does not move focus when defaultSelected changes programmatically', () => {
+    const { rerender } = render(
+      <>
+        <button type="button">Next step</button>
+        <DTabs options={options} defaultSelected="tab1">
+          <div>Tab Content</div>
+        </DTabs>
+      </>,
+    );
+    const next = screen.getByRole('button', { name: 'Next step' });
+    next.focus();
+    rerender(
+      <>
+        <button type="button">Next step</button>
+        <DTabs options={options} defaultSelected="tab2">
+          <div>Tab Content</div>
+        </DTabs>
+      </>,
+    );
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(next).toHaveFocus();
+  });
+
+  it('focuses the tab the user clicks', () => {
+    render(
+      <DTabs options={options} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
+    fireEvent.click(tab2);
+    expect(tab2).toHaveClass('active');
+    expect(tab2).toHaveFocus();
   });
 
   it('applies aria-label and aria-labelledby correctly', () => {
