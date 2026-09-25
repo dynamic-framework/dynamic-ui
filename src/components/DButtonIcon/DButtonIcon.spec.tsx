@@ -212,4 +212,30 @@ describe('<DButtonIcon />', () => {
     expect(icon?.className).not.toContain('material-symbols-outlined');
     expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
+
+  describe('iconSize', () => {
+    it('forwards iconSize to the icon on a button', () => {
+      const { container } = render(
+        <DButtonIcon icon="Download" size="lg" iconSize="2rem" aria-label="Descargar" />,
+      );
+      const icon = container.querySelector('button .d-icon') as HTMLElement;
+      expect(icon.style.getPropertyValue('--bs-icon-component-size')).toBe('2rem');
+    });
+
+    it('forwards iconSize to the icon on a link', () => {
+      const { container } = render(
+        <DButtonIcon icon="Download" href="/descargas" iconSize="2rem" aria-label="Descargar" />,
+      );
+      const icon = container.querySelector('a .d-icon') as HTMLElement;
+      expect(icon.style.getPropertyValue('--bs-icon-component-size')).toBe('2rem');
+    });
+
+    it('sets no icon size without iconSize, so the glyph follows the button', () => {
+      const { container } = render(
+        <DButtonIcon icon="Download" size="lg" aria-label="Descargar" />,
+      );
+      const icon = container.querySelector('.d-icon') as HTMLElement;
+      expect(icon.style.getPropertyValue('--bs-icon-component-size')).toBe('');
+    });
+  });
 });

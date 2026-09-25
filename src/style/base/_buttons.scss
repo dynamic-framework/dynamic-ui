@@ -149,8 +149,11 @@
     @include box-shadow(none);
   }
 
+  // The glyph follows the button's font size unless a size is set explicitly,
+  // through DIcon's `size` (inline) or `--bs-icon-component-size` on the icon
+  // or the button.
   .d-icon {
-    --#{$prefix}icon-size: var(--#{$prefix}btn-font-size);
+    --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, var(--#{$prefix}btn-font-size));
   }
 }
 
