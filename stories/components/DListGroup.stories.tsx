@@ -14,6 +14,10 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
 
+## Accessible name
+
+When a screen has more than one list, name each one with \`ariaLabel\` (or \`ariaLabelledBy\`, pointing to the heading above it) so screen readers announce what the list contains, not just "list, 3 items". A named \`as="div"\` container is exposed as \`role="group"\`, since a plain \`<div>\` can't carry a name.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [List Group CSS Variables](https://getbootstrap.com/docs/5.3/components/list-group/#css)
@@ -41,6 +45,18 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
       type: 'boolean',
       control: 'boolean',
       table: { category: 'Appearance' },
+    },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'Accessible name of the list. Ignored when `ariaLabelledBy` is set.',
+      table: { category: 'Accessibility' },
+    },
+    ariaLabelledBy: {
+      control: 'text',
+      type: 'string',
+      description: 'Id of a visible element that names the list.',
+      table: { category: 'Accessibility' },
     },
     horizontal: {
       control: 'select',
@@ -135,6 +151,26 @@ export const Buttons: Story = {
   args: {
     as: 'div',
   },
+};
+
+export const WithAccessibleName: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Named with the heading above it through `ariaLabelledBy`, so a screen reader announces "Recent movements, list, 3 items".',
+      },
+    },
+  },
+  render: (args) => (
+    <section>
+      <h3 id="recent-movements" className="h6">Recent movements</h3>
+      <DListGroup {...args} ariaLabelledBy="recent-movements">
+        <DListGroup.Item>Transfer received</DListGroup.Item>
+        <DListGroup.Item>Card payment</DListGroup.Item>
+        <DListGroup.Item>Cash withdrawal</DListGroup.Item>
+      </DListGroup>
+    </section>
+  ),
 };
 
 export const Flush: Story = {

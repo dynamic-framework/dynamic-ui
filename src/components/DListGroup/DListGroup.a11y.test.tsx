@@ -63,4 +63,18 @@ describe('<DListGroup /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it.each([
+    ['a named <ul>', <DListGroup ariaLabel="Movimientos"><DListGroup.Item>Uno</DListGroup.Item></DListGroup>],
+    ['a named as="div" group of links', (
+      <DListGroup as="div" ariaLabel="Accesos rápidos">
+        <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+      </DListGroup>
+    )],
+  ])('should have no violations with %s', async (_, node) => {
+    const { container } = render(<DContextProvider>{node}</DContextProvider>);
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });
