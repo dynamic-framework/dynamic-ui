@@ -130,6 +130,17 @@ describe('theme-expand', () => {
     }
   });
 
+  it.each([
+    ['hsl()', 'hsl(174 100% 40%)', '0, 204, 184'],
+    ['hsla()', 'hsla(174, 100%, 40%, 0.5)', '0, 204, 184'],
+    ['oklch()', 'oklch(0.6 0.15 180)', '0, 156, 132'],
+    ['lab()', 'lab(50% 40 30)', '187, 88, 70'],
+  ])('convierte un role escrito en %s a su triplete sRGB', (_, color, triplet) => {
+    const css = expandCss({ ...MINIMAL_THEME, roles: { primary: color } });
+    expect(css).toContain(`--bs-primary-rgb: ${triplet};`);
+    expect(css).not.toContain('NaN');
+  });
+
   it('rechaza un theme sin familia tipográfica ni radio, diciendo qué falta', () => {
     const result = expand({ roles: { primary: '#0b6b53' }, body: { bg: '#fff', color: '#000' } });
     expect(result.status).toBe(1);
