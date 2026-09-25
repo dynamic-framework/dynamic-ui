@@ -153,6 +153,12 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       options: COMPONENT_SIZE,
       table: { category: 'Appearance' },
     },
+    iconSize: {
+      control: 'text',
+      type: 'string',
+      description: 'Size of the icon glyph (e.g. `"1.5rem"`). Without it the glyph follows the button font size, which changes with `size`.',
+      table: { category: 'Appearance' },
+    },
     type: {
       control: 'select',
       type: 'string',
@@ -401,6 +407,25 @@ export const AsAnchor: Story = {
     target: '_blank',
     rel: 'noopener noreferrer',
     'aria-label': 'Open page in new tab',
+  },
+};
+
+/**
+ * The glyph follows the button font size, so it grows with `size`. Use `iconSize`
+ * when a layout needs a different glyph size than the one `size` gives.
+ */
+export const IconSize: Story = {
+  render: (args) => (
+    <div className="d-flex align-items-center gap-3">
+      <DButtonIcon {...args} size="sm" aria-label="Download (sm)" />
+      <DButtonIcon {...args} aria-label="Download" />
+      <DButtonIcon {...args} size="lg" aria-label="Download (lg)" />
+      <DButtonIcon {...args} size="lg" iconSize="2rem" aria-label="Download (lg, 2rem glyph)" />
+    </div>
+  ),
+  args: {
+    color: 'primary',
+    icon: 'Download',
   },
 };
 

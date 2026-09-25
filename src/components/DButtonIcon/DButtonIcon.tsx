@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import type { MouseEvent } from 'react';
 
+import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
+
 import DIcon from '../DIcon';
 
 import type {
@@ -24,6 +26,12 @@ type Props =
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     icon: string;
     size?: ComponentSize;
+    /**
+     * Size of the icon glyph, forwarded to `DIcon` (e.g. `"1.5rem"`, or a
+     * responsive object). Without it the glyph follows the button's font size,
+     * which changes with `size`.
+     */
+    iconSize?: string | ResponsiveProp;
     variant?: ButtonVariant;
     color?: ComponentColor;
     state?: InputState;
@@ -41,6 +49,7 @@ export default function DButtonIcon(
     id,
     icon,
     size,
+    iconSize,
     className,
     variant,
     state,
@@ -148,6 +157,7 @@ export default function DButtonIcon(
           : (
             <DIcon
               icon={icon}
+              size={iconSize}
               familyClass={iconFamilyClass ?? familyClass}
               familyPrefix={iconFamilyPrefix ?? familyPrefix}
               materialStyle={iconMaterialStyle ?? materialStyle}
@@ -180,6 +190,7 @@ export default function DButtonIcon(
         : (
           <DIcon
             icon={icon}
+            size={iconSize}
             familyClass={iconFamilyClass ?? familyClass}
             familyPrefix={iconFamilyPrefix ?? familyPrefix}
             materialStyle={iconMaterialStyle ?? materialStyle}
