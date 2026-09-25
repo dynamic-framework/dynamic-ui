@@ -197,4 +197,32 @@ describe('<DAlert />', () => {
     expect(closeIcon?.className).not.toContain('material-symbols-outlined');
     expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
   });
+
+  describe('role', () => {
+    it('keeps role="alert" by default', () => {
+      render(<DAlert color="info">Alert content</DAlert>);
+      expect(screen.getByRole('alert')).toHaveClass('alert-info');
+    });
+
+    it('renders role="status" for non-critical messages', () => {
+      render(<DAlert color="info" role="status">Alert content</DAlert>);
+      expect(screen.getByRole('status')).toHaveClass('alert-info');
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('renders no role with role="none"', () => {
+      const { container } = render(<DAlert color="info" role="none">Alert content</DAlert>);
+      expect(container.querySelector('.alert')).not.toHaveAttribute('role');
+    });
+  });
+
+  it('names the close button with closeAriaLabel', () => {
+    render(<DAlert showClose closeAriaLabel="Cerrar aviso">Alert content</DAlert>);
+    expect(screen.getByRole('button', { name: 'Cerrar aviso' })).toBeInTheDocument();
+  });
+
+  it('keeps "Close" as the default close button name', () => {
+    render(<DAlert showClose>Alert content</DAlert>);
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
+  });
 });

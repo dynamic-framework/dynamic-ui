@@ -13,7 +13,7 @@ import DToast from '../DToast/DToast';
 import DIcon from '../DIcon';
 import { useDContext } from '../../contexts';
 
-import { ComponentStateColor } from '../interface';
+import { ComponentStateColor, LiveRegionRole } from '../interface';
 
 /**
  * Data used to render the default DToast component via `useDToast`.
@@ -34,6 +34,13 @@ export type ToastData = {
   closeIcon?: string;
   /** Applies the `toast-{color}` CSS modifier class. */
   color?: ComponentStateColor;
+  /**
+   * Live region role of the toast. Defaults to `alert`; use `status` for
+   * confirmations so the screen reader doesn't interrupt the user.
+   */
+  role?: LiveRegionRole;
+  /** Accessible name of the close button. Defaults to `"Close"`. */
+  closeAriaLabel?: string;
 };
 
 /** Options forwarded to react-hot-toast for a single toast instance. */
@@ -90,6 +97,8 @@ export default function useDToast() {
       closeIcon,
       timestamp,
       color,
+      role,
+      closeAriaLabel = 'Close',
     } = data;
 
     return reactHotToast.custom(({ id, visible }) => {
@@ -98,9 +107,11 @@ export default function useDToast() {
       }
       if (!description) {
         return (
-          <DToast className={classNames({
-            [`toast-${color}`]: !!color,
-          }, 'show')}
+          <DToast
+            role={role}
+            className={classNames({
+              [`toast-${color}`]: !!color,
+            }, 'show')}
           >
             <DToast.Body>
               {icon && (
@@ -112,7 +123,7 @@ export default function useDToast() {
               <button
                 type="button"
                 className="d-close"
-                aria-label="Close"
+                aria-label={closeAriaLabel}
                 onClick={() => reactHotToast.dismiss(id)}
               >
                 <DIcon icon={closeIcon || xLg} />
@@ -122,9 +133,11 @@ export default function useDToast() {
         );
       }
       return (
-        <DToast className={classNames({
-          [`toast-${color}`]: !!color,
-        }, 'show')}
+        <DToast
+          role={role}
+          className={classNames({
+            [`toast-${color}`]: !!color,
+          }, 'show')}
         >
           <DToast.Header>
             {icon && (
@@ -139,7 +152,7 @@ export default function useDToast() {
             <button
               type="button"
               className="d-close"
-              aria-label="Close"
+              aria-label={closeAriaLabel}
               onClick={() => reactHotToast.dismiss(id)}
             >
               <DIcon icon={closeIcon || xLg} />

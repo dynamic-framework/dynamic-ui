@@ -94,6 +94,8 @@ Fields used when dispatching a toast with the default `DToast` layout.
 | `icon` | `string` | — | Icon name from the active icon set in `DContextProvider`. Shown before the title. |
 | `closeIcon` | `string` | — | Overrides the default close icon from the context icon map. |
 | `color` | `ComponentStateColor` | — | Applies the `toast-{color}` CSS modifier class (e.g. `"success"`, `"danger"`, `"warning"`, `"info"`). |
+| `role` | `'alert' \| 'status' \| 'none'` | — | Live region of the toast. Defaults to `alert`, which interrupts the screen reader; use `status` for confirmations such as "Transfer sent", so it is announced without interrupting. |
+| `closeAriaLabel` | `string` | — | Accessible name of the close button. Defaults to `"Close"`; pass the text in the app's language. |
 
 ## `DToastContainerProps`
 

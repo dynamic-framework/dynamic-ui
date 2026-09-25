@@ -43,4 +43,29 @@ describe('<DToast />', () => {
     expect(toast).toHaveAttribute('aria-live', 'assertive');
     expect(toast).toHaveAttribute('aria-atomic', 'true');
   });
+
+  describe('role', () => {
+    it('keeps the assertive alert region by default', () => {
+      render(<DToast>Contenido</DToast>);
+      const toast = screen.getByRole('alert');
+      expect(toast).toHaveAttribute('aria-live', 'assertive');
+      expect(toast).toHaveAttribute('aria-atomic', 'true');
+    });
+
+    it('renders a polite status region with role="status"', () => {
+      render(<DToast role="status">Transferencia enviada</DToast>);
+      const toast = screen.getByRole('status');
+      expect(toast).toHaveAttribute('aria-live', 'polite');
+      expect(toast).toHaveAttribute('aria-atomic', 'true');
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('renders no live region with role="none"', () => {
+      const { container } = render(<DToast role="none">Contenido</DToast>);
+      const toast = container.querySelector('.toast');
+      expect(toast).not.toHaveAttribute('role');
+      expect(toast).not.toHaveAttribute('aria-live');
+      expect(toast).not.toHaveAttribute('aria-atomic');
+    });
+  });
 });

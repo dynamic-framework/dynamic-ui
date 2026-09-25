@@ -300,4 +300,31 @@ describe('useDToast', () => {
     expect(container.querySelector('.toast-danger')).toBeInTheDocument();
     expect(container.querySelector('.show')).toBeInTheDocument();
   });
+
+  it.each([
+    ['without description', undefined],
+    ['with description', 'Detalle'],
+  ])('forwards role and closeAriaLabel to the toast %s', (_, description) => {
+    const { result } = renderWithContext(() => useDToast());
+
+    act(() => {
+      result.current.toast({
+        title: 'Transferencia enviada',
+        description,
+        role: 'status',
+        closeAriaLabel: 'Cerrar notificación',
+      });
+    });
+
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
+    const { getByRole, queryByRole } = render(
+      <DContextProvider>
+        {renderFunction(createMockToast({ visible: true }))}
+      </DContextProvider>,
+    );
+
+    expect(getByRole('status')).toHaveAttribute('aria-live', 'polite');
+    expect(queryByRole('alert')).not.toBeInTheDocument();
+    expect(getByRole('button', { name: 'Cerrar notificación' })).toBeInTheDocument();
+  });
 });

@@ -19,6 +19,14 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)
 
+## Accessibility: live region role
+
+| \`role\`            | Screen reader behavior            | Use it for                                             |
+|---------------------|-----------------------------------|--------------------------------------------------------|
+| \`alert\` (default) | Interrupts what it is announcing  | Critical errors that need immediate attention          |
+| \`status\`          | Announces without interrupting    | Confirmations and other dynamic, non-critical messages |
+| \`none\`            | Not announced as a live region    | Static content already on screen when the page loads   |
+
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Toast CSS Variables](https://getbootstrap.com/docs/5.3/components/toasts/#css)
 
@@ -34,6 +42,15 @@ The Bootstrap documentation provides details on the default [Toast CSS Variables
     },
   },
   argTypes: {
+    role: {
+      control: 'select',
+      options: ['alert', 'status', 'none'],
+      description: 'Live region role: `alert` interrupts the screen reader, `status` announces without interrupting, `none` is not a live region.',
+      table: {
+        defaultValue: { summary: 'alert' },
+        category: 'Accessibility',
+      },
+    },
     className: {
       control: 'text',
       type: 'string',
