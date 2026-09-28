@@ -14,6 +14,17 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
 
+## Container and item elements
+
+\`DListGroup\` renders a \`<ul>\` by default (\`<ol>\` with \`numbered\`), and those only accept \`<li>\` children. A \`DListGroup.Item\` with \`href\` renders an \`<a>\`, and one with \`action\` renders a \`<button>\`, so a group of links or buttons needs \`as="div"\` on the container:
+
+| Items                              | Container                        |
+|------------------------------------|----------------------------------|
+| Plain items (\`<li>\`)               | default \`as="ul"\`, or \`numbered\` |
+| Links (\`href\`) or buttons (\`action\`) | \`as="div"\`                       |
+
+Any other combination is invalid markup: screen readers stop announcing the group as a list. In development, \`DListGroup.Item\` logs a warning when it detects one.
+
 ## Accessible name
 
 When a screen has more than one list, name each one with \`ariaLabel\` (or \`ariaLabelledBy\`, pointing to the heading above it) so screen readers announce what the list contains, not just "list, 3 items". A named \`as="div"\` container is exposed as \`role="group"\`, since a plain \`<div>\` can't carry a name.
