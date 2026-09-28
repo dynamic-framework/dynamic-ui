@@ -71,11 +71,14 @@
   --#{$prefix}input-group-sm-icon-size: #{$input-group-sm-icon-size};
   --#{$prefix}input-group-lg-icon-size: #{$input-group-lg-icon-size};
 
-  &.input-group-sm .d-icon {
+  // Icons inside a button (a DButton or DButtonIcon in `inputStart`/`inputEnd`)
+  // keep following the button's font size, as before `.btn .d-icon` honored
+  // an explicit icon size.
+  &.input-group-sm .d-icon:not(.btn .d-icon) {
     --#{$prefix}icon-component-size: var(--#{$prefix}input-group-sm-icon-size);
   }
 
-  &.input-group-lg .d-icon {
+  &.input-group-lg .d-icon:not(.btn .d-icon) {
     --#{$prefix}icon-component-size: var(--#{$prefix}input-group-lg-icon-size);
   }
 
