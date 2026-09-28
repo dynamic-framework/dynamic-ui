@@ -225,7 +225,7 @@ export const PaymentMethods: Story = {
   render: () => (
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Payment Methods</h5>
-      <DListGroup>
+      <DListGroup as="div">
         <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
@@ -473,7 +473,7 @@ export const AccountSummaryWithActions: Story = {
   render: () => (
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Quick Actions</h5>
-      <DListGroup>
+      <DListGroup as="div">
         <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">

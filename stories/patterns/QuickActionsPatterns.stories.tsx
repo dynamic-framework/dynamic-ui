@@ -439,7 +439,7 @@ export const SidebarListBasic: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Quick Actions Menu</h5>
       <div className="bg-white border rounded" style={{ maxWidth: '320px' }}>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
               <DIcon icon="ArrowLeftRight" hasCircle size="2rem" className="me-3 text-primary bg-gray-50" />
@@ -503,7 +503,7 @@ export const SidebarListWithIcons: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Sidebar Menu</h5>
       <div className="bg-white border rounded" style={{ maxWidth: '280px' }}>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
               <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
@@ -564,7 +564,7 @@ export const SidebarListWithBadges: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Navigation with Notifications</h5>
       <div className="bg-white border rounded" style={{ maxWidth: '300px' }}>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center justify-content-between py-2">
               <div className="d-flex align-items-center">
@@ -629,7 +629,7 @@ export const SidebarListGrouped: Story = {
         <div className="p-3 border-bottom">
           <small className="text-body-secondary text-uppercase fw-semibold">Main Menu</small>
         </div>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
               <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
@@ -647,7 +647,7 @@ export const SidebarListGrouped: Story = {
         <div className="p-3 border-bottom border-top">
           <small className="text-body-secondary text-uppercase fw-semibold">Services</small>
         </div>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
               <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
@@ -671,7 +671,7 @@ export const SidebarListGrouped: Story = {
         <div className="p-3 border-bottom border-top">
           <small className="text-body-secondary text-uppercase fw-semibold">Support</small>
         </div>
-        <DListGroup flush>
+        <DListGroup as="div" flush>
           <DListGroup.Item action onClick={() => {}}>
             <div className="d-flex align-items-center py-2">
               <DIcon icon="HelpCircle" hasCircle size="1rem" className="me-3 bg-gray-50" />
