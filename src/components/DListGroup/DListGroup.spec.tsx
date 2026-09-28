@@ -252,4 +252,61 @@ describe('<DListGroup.Item />', () => {
       expect(handleClick).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('accessible name', () => {
+    it.each([
+      ['ul', {}],
+      ['ol', { numbered: true }],
+    ] as const)('names the <%s> with ariaLabel', (tag, props) => {
+      render(
+        <DContextProvider>
+          <DListGroup {...props} ariaLabel="Movimientos recientes">
+            <DListGroup.Item>Transferencia recibida</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      const list = screen.getByRole('list', { name: 'Movimientos recientes' });
+      expect(list.tagName).toBe(tag.toUpperCase());
+      expect(list).not.toHaveAttribute('role');
+    });
+
+    it('exposes a named as="div" container as a group', () => {
+      render(
+        <DContextProvider>
+          <DListGroup as="div" ariaLabel="Accesos rápidos">
+            <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      expect(screen.getByRole('group', { name: 'Accesos rápidos' })).toHaveClass('list-group');
+    });
+
+    it('prefers ariaLabelledBy over ariaLabel', () => {
+      render(
+        <DContextProvider>
+          <h2 id="movimientos-title">Movimientos</h2>
+          <DListGroup ariaLabel="Ignorado" ariaLabelledBy="movimientos-title">
+            <DListGroup.Item>Transferencia recibida</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      const list = screen.getByRole('list', { name: 'Movimientos' });
+      expect(list).toHaveAttribute('aria-labelledby', 'movimientos-title');
+      expect(list).not.toHaveAttribute('aria-label');
+    });
+
+    it('leaves the markup unchanged without a name', () => {
+      const { container } = render(
+        <DContextProvider>
+          <DListGroup as="div">
+            <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+          </DListGroup>
+        </DContextProvider>,
+      );
+      const group = container.querySelector('.list-group');
+      expect(group).not.toHaveAttribute('role');
+      expect(group).not.toHaveAttribute('aria-label');
+      expect(group).not.toHaveAttribute('aria-labelledby');
+    });
+  });
 });
