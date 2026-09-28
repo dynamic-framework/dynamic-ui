@@ -20,6 +20,12 @@ type Props =
    */
   role?: LiveRegionRole;
   icon?: string;
+  /**
+   * Renders the leading icon. Set to `false` for an alert without icon, such
+   * as an informative block inside a form where the icon competes with the
+   * content. When `true`, `icon` falls back to the one mapped to `color`.
+   */
+  showIcon?: boolean;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
   iconMaterialStyle?: boolean;
@@ -38,6 +44,7 @@ export default function DAlert(
     color = 'success',
     role = 'alert',
     icon: iconProp,
+    showIcon = true,
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle,
@@ -87,7 +94,7 @@ export default function DAlert(
       id={id}
       {...dataAttributes}
     >
-      {icon && (
+      {showIcon && icon && (
         <DIcon
           className="alert-icon"
           icon={icon}

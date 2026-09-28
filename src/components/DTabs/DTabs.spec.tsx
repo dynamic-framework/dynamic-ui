@@ -290,6 +290,30 @@ describe('<DTabs />', () => {
     expect(nav).toHaveClass('d-tabs-nav-vertical');
   });
 
+  it('does not render the panels container without children', () => {
+    const { container } = render(<DTabs options={options} defaultSelected="tab1" />);
+    expect(container.querySelector('.d-tabs-content')).toBeNull();
+  });
+
+  it('does not render the panels container when children render nothing', () => {
+    const { container } = render(
+      <DTabs options={options} defaultSelected="tab1">
+        {null}
+        {false}
+      </DTabs>,
+    );
+    expect(container.querySelector('.d-tabs-content')).toBeNull();
+  });
+
+  it('applies classNameContent to the panels container', () => {
+    const { container } = render(
+      <DTabs options={options} defaultSelected="tab1" classNameContent="mb-0 custom-content">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    expect(container.querySelector('.d-tabs-content')).toHaveClass('tab-content', 'mb-0', 'custom-content');
+  });
+
   it('reacts to changes in defaultSelected prop', () => {
     const { rerender } = render(
       <DTabs
