@@ -54,7 +54,7 @@ const meta = {
       },
     },
     data: {
-      description: 'The data to be displayed. If null or empty, the empty state is shown.',
+      description: 'The data to be displayed: a collection (`T[]`, empty with no items) or a single resource (`T | null | undefined`, empty when `null` or `undefined`). `children` receives it with the same shape.',
       table: {
         category: 'Data',
       },
@@ -161,6 +161,53 @@ export const Success: Story = {
       'Beta',
       'Gamma',
     ],
+  },
+};
+
+/**
+ * A single resource (an entity detail, a summary) instead of a collection.
+ * The render prop receives the object itself, and the empty state shows when
+ * it is `null` or `undefined`.
+ */
+export const SingleResource: Story = {
+  render: function Render() {
+    type AccountDetail = { alias: string; number: string; balance: string };
+    const [detail, setDetail] = useState<AccountDetail | null>(null);
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <div className="d-flex gap-2">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setDetail({ alias: 'Cuenta de ahorros', number: '•••• 4821', balance: '$ 12.450.000' })}
+          >
+            Load detail
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setDetail(null)}
+          >
+            Clear
+          </button>
+        </div>
+        <DDataStateWrapper
+          isLoading={false}
+          isError={false}
+          data={detail}
+          messages={{ empty: 'Select an account to see its detail.' }}
+        >
+          {(account) => (
+            <DBox>
+              <h3 className="h5 mb-1">{account.alias}</h3>
+              <p className="mb-1">{account.number}</p>
+              <p className="mb-0 fw-bold">{account.balance}</p>
+            </DBox>
+          )}
+        </DDataStateWrapper>
+      </div>
+    );
   },
 };
 
