@@ -33,6 +33,14 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
 | --${PREFIX_BS}nav-link-padding-y                      | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav link padding vertical          |
 | --${PREFIX_BS}nav-link-hover-bg                       | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover background          |
 | --${PREFIX_BS}nav-link-hover-color                    | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover color               |
+
+Dynamic adds its own variable for the panels container:
+
+| Variable                                              | Classes                               | Type            | Description                        |
+|-------------------------------------------------------|---------------------------------------|-----------------|------------------------------------|
+| --${PREFIX_BS}tabs-content-margin-bottom              | .d-tabs                               | css length unit | Space below the panels container   |
+
+The panels container is only rendered when \`DTabs\` has children. Used as pure navigation (no \`DTabs.Tab\`, reacting to \`onChange\`), it renders just the tab bar.
         `,
       },
     },
@@ -41,6 +49,12 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
+    },
+    classNameContent: {
+      control: 'text',
+      type: 'string',
+      description: 'Class for the panels container. Only rendered when `DTabs` has children.',
       table: { category: 'Appearance' },
     },
     style: {
@@ -161,6 +175,24 @@ export const Default: Story = {
     ],
     className: 'mb-8',
     vertical: false,
+  },
+};
+
+export const NavigationOnly: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Without `DTabs.Tab` children the panels container is not rendered, so the tab bar can drive navigation through `onChange` without leaving an empty node or margin below it.',
+      },
+    },
+  },
+  args: {
+    defaultSelected: 'overview',
+    options: [
+      { label: 'Overview', tab: 'overview' },
+      { label: 'Settings', tab: 'settings' },
+    ],
+    ariaLabel: 'Account sections',
   },
 };
 
