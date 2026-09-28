@@ -30,4 +30,16 @@ describe('<DToast /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it.each(['status', 'none'] as const)('should have no violations with role="%s"', async (role) => {
+    const { container } = render(
+      <DToast role={role}>
+        <DToast.Header>Transferencia enviada</DToast.Header>
+        <DToast.Body>El dinero llegará en unos minutos.</DToast.Body>
+      </DToast>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });
