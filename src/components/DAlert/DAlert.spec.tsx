@@ -197,4 +197,30 @@ describe('<DAlert />', () => {
     expect(closeIcon?.className).not.toContain('material-symbols-outlined');
     expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
   });
+
+  it('renders the color icon by default', () => {
+    render(<DAlert color="info">Alert content</DAlert>);
+    expect(screen.getByRole('alert').querySelector('.alert-icon')).toBeInTheDocument();
+  });
+
+  it('omits the icon with showIcon={false}, even when icon is set', () => {
+    render(
+      <DAlert color="info" icon="Info" showIcon={false}>
+        Alert content
+      </DAlert>,
+    );
+    const alert = screen.getByRole('alert');
+    expect(alert.querySelector('.alert-icon')).toBeNull();
+    expect(alert.querySelector('.d-icon')).toBeNull();
+    expect(alert).toHaveTextContent('Alert content');
+  });
+
+  it('keeps the close button when the icon is omitted', () => {
+    render(
+      <DAlert color="info" showIcon={false} showClose>
+        Alert content
+      </DAlert>,
+    );
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
 });
