@@ -16,6 +16,13 @@ type NonDInputProps = {
   value?: number;
   minValue?: number;
   maxValue?: number;
+  /**
+   * When `true` (default) a value outside `minValue`/`maxValue` is brought
+   * into range on mount, when it changes and on blur, and `onChange` receives
+   * the clamped number. When `false` the entered value is kept and the input
+   * is marked invalid while it is out of range, unless `invalid` is set.
+   */
+  clamp?: boolean;
   currencyCode?: string;
   onChange?: (value?: number) => void;
 };
@@ -27,6 +34,7 @@ function DInputCurrency(
     value,
     minValue,
     maxValue,
+    clamp = true,
     currencyCode,
     onFocus,
     onBlur,
@@ -43,6 +51,8 @@ function DInputCurrency(
     inputRef,
     innerValue,
     innerType,
+    isOverMax,
+    isUnderMin,
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
@@ -55,7 +65,10 @@ function DInputCurrency(
     ref,
     minValue,
     maxValue,
+    clamp,
   );
+
+  const outOfRange = !clamp && (isOverMax || isUnderMin);
 
   return (
     <DInput
@@ -67,6 +80,7 @@ function DInputCurrency(
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       onWheel={handleOnWheel}
+      invalid={outOfRange}
       inputStart={(
         <span
           slot="input-start"

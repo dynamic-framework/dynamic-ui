@@ -205,4 +205,39 @@ describe('<DInputCurrency />', () => {
     const input = screen.getByRole('textbox');
     expect(input).toHaveClass('is-invalid');
   });
+
+  describe('clamp={false}', () => {
+    it('keeps an out-of-range value and marks the input invalid', () => {
+      const onChange = jest.fn();
+      render(
+        <DInputCurrency value={5000000} maxValue={3000000} clamp={false} onChange={onChange} />,
+      );
+      const input = screen.getByRole('textbox');
+      expect(input).toHaveValue('5,000,000.00');
+      expect(input).toHaveClass('is-invalid');
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('drops the invalid state once the value is back in range', () => {
+      const { rerender } = render(
+        <DInputCurrency value={5000000} maxValue={3000000} clamp={false} />,
+      );
+      rerender(<DInputCurrency value={2000000} maxValue={3000000} clamp={false} />);
+      expect(screen.getByRole('textbox')).not.toHaveClass('is-invalid');
+    });
+
+    it('lets an explicit invalid prop win', () => {
+      render(<DInputCurrency value={5000000} maxValue={3000000} clamp={false} invalid={false} />);
+      expect(screen.getByRole('textbox')).not.toHaveClass('is-invalid');
+    });
+  });
+
+  it('clamps a value above maxValue on mount and reports it through onChange', () => {
+    const onChange = jest.fn();
+    render(
+      <ControlledDInputCurrency initialValue={5000000} maxValue={3000000} onChange={onChange} />,
+    );
+    expect(screen.getByRole('textbox')).toHaveValue('3,000,000.00');
+    expect(onChange).toHaveBeenCalledWith(3000000);
+  });
 });
