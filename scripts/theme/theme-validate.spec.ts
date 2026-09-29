@@ -144,9 +144,18 @@ describe('theme-expand', () => {
   it.each([
     ['un role claro', '#ffe066', 'var(--bs-gray-700)'],
     ['un role oscuro', '#0b6b53', 'var(--bs-white)'],
+    // Ni el blanco (4.24:1) ni gray-700 llegan a 4.5:1: gana el negro.
+    ['un azul medio', '#0b74ff', 'var(--bs-black)'],
   ])('resuelve el texto de .text-bg-<role> para %s', (_, color, expected) => {
     const css = expandCss({ ...MINIMAL_THEME, roles: { primary: color } });
     expect(css).toContain(`--bs-primary-text-bg-color: ${expected};`);
+  });
+
+  it('mide .text-bg-light y .text-bg-dark contra el role declarado, no contra su gris', () => {
+    const css = expandCss({ ...MINIMAL_THEME, roles: { light: '#000000', dark: '#ffffff' } });
+    const result = validate(css);
+    expect(result.stderr).not.toContain('.text-bg-light');
+    expect(result.stderr).not.toContain('.text-bg-dark');
   });
 
   it('no emite la variable de texto para secondary, que lee su rampa', () => {

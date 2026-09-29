@@ -553,7 +553,9 @@ export function bakedRolePairs(role) {
         component: `.text-bg-${role}`,
         why: 'la clase lee --bs-<role>-text-bg-color, que por defecto conserva el color resuelto para el role de la librería',
         fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg },
-        bg: { fallback: solid.bg },
+        // The class paints `--bs-<role>-rgb`, so that is what gets measured;
+        // the step only applies when the theme doesn't declare the role.
+        bg: { variable: `--bs-${role}-rgb`, fallback: solid.bg },
         role,
       });
     pairs.push({
