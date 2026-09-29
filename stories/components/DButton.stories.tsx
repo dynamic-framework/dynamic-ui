@@ -399,14 +399,23 @@ export const Sizes: Story = {
 };
 
 export const ResponsiveSizes: Story = {
+  // Responsive sizes resolve against the breakpoints DContextProvider reads
+  // from the CSS; without it no breakpoint matches.
+  decorators: [
+    (Story) => (
+      <DContextProvider>
+        <Story />
+      </DContextProvider>
+    ),
+  ],
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />
       <DButton color="success" size={{ sm: 'sm', lg: 'lg' }} text="SM=sm, LG=lg" />
       <DButton color="danger" size={{ xs: 'sm', xl: 'lg' }} text="XS=sm, XL=lg" />
-      <DButton color="primary" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} text="XS=sm, SM=md, LG=lg" />
+      <DButton color="primary" size={{ xs: 'lg', lg: 'sm' }} text="XS=lg, LG=sm" />
+      <DButton color="warning" size={{ md: 'sm' }} text="MD=sm" />
       <DButton color="secondary" size="lg" text="Only size fallback" />
-      <DButton color="warning" size={{ xs: 'sm', md: 'md', xl: 'lg' }} text="ResponsiveObj" />
     </div>
   ),
   parameters: {
@@ -415,7 +424,7 @@ export const ResponsiveSizes: Story = {
     },
     docs: {
       description: {
-        story: 'Responsive usage examples: the button size changes according to the breakpoint. Use the Storybook viewport menu to simulate mobile, tablet, and desktop.',
+        story: 'Responsive usage examples: the button size changes according to the breakpoint. The value of the largest matching breakpoint wins, and a breakpoint without a value keeps the one below it, so below the first defined breakpoint the button has its default size (e.g. `SM=sm, LG=lg` is default under 576px). Values are `sm` and `lg`; there is no `md` size. Use the Storybook viewport menu to simulate mobile, tablet, and desktop.',
       },
     },
   },
