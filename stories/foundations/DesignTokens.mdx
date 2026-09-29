@@ -29,7 +29,7 @@ Key CSS variables:
 - Small text: `--bs-fs-small`; line-heights: `--bs-lh-sm`, `--bs-lh-base`, `--bs-lh-lg`
 - Heading line-height: `--bs-heading-line-height`
 
-Heading sizes are fluid: `--bs-fs-N` is an alias of `--bs-rfs-fs-N`, which the library computes with RFS and redefines at 1200px. Override `--bs-rfs-fs-N`, and repeat steps 1 to 4 inside the same media query, or the library value wins on desktop:
+Heading sizes are fluid: `--bs-fs-N` is an alias of `--bs-rfs-fs-N`, which the library computes with RFS as a value that grows with the viewport below 1200px and a fixed size from 1200px on. Override `--bs-rfs-fs-N`; a stylesheet loaded after Dynamic's already wins at every width. To keep the same behavior (fluid below 1200px, capped on desktop), set the fluid value on `:root` and the desktop size of steps 1 to 4 in the same media query:
 
 ```css
 :root {
@@ -56,7 +56,7 @@ Components read the `--bs-fs-*` aliases; the value lives in the RFS variable eac
 
 | Components read | Override | Fluid below 1200px |
 |---|---|---|
-| `--bs-fs-1` … `--bs-fs-4` | `--bs-rfs-fs-1` … `--bs-rfs-fs-4` | yes, repeat the desktop value in `@media (min-width: 1200px)` |
+| `--bs-fs-1` … `--bs-fs-4` | `--bs-rfs-fs-1` … `--bs-rfs-fs-4` | yes; set the desktop cap in `@media (min-width: 1200px)` |
 | `--bs-fs-5`, `--bs-fs-6` | `--bs-rfs-fs-5`, `--bs-rfs-fs-6` | no |
 | `--bs-fs-display-1` … `--bs-fs-display-6` | `--bs-rfs-display-1` … `--bs-rfs-display-6` | yes, same media query |
 | `--bs-fs-small` | `--bs-rfs-fs-small` | no |
