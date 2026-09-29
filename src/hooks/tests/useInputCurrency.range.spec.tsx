@@ -154,6 +154,23 @@ describe('useInputCurrency range handling', () => {
     );
     expect(input().value).toBe('3.000.000,00');
     expect(amount()).toBe('3000000');
-    expect(onChangeSpy.mock.calls.every(([value]) => value === 3000000)).toBe(true);
+    expect(onChangeSpy).toHaveBeenCalledTimes(1);
+    expect(onChangeSpy).toHaveBeenCalledWith(3000000);
+  });
+
+  it('reformats the value when the formatting options change', () => {
+    function WithOptions({ decimal }: { decimal: string }) {
+      const { innerValue } = useInputCurrency(
+        {
+          symbol: '$', decimal, separator: decimal === ',' ? '.' : ',', precision: 2,
+        },
+        1234.5,
+      );
+      return <output data-testid="formatted">{innerValue}</output>;
+    }
+    const { rerender } = render(<WithOptions decimal="," />);
+    expect(screen.getByTestId('formatted').textContent).toBe('1.234,50');
+    rerender(<WithOptions decimal="." />);
+    expect(screen.getByTestId('formatted').textContent).toBe('1,234.50');
   });
 });

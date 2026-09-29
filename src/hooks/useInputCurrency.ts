@@ -60,6 +60,16 @@ export default function useInputCurrency(
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
+  // Content of the options, so a real formatting change (another decimal
+  // separator or precision, e.g. from DContext) reformats the value while a
+  // new object with the same content does not.
+  const optionsKey = JSON.stringify(currencyOptions);
+
+  // Last clamp reported through `onChange`, as the value it came from and the
+  // value it produced. StrictMode replays effects before the consumer's state
+  // update lands, and the same clamp must not be reported twice.
+  const lastReportedClampRef = useRef<{ from?: number; to?: number } | null>(null);
+
   const clampValue = useCallback((newValue?: number) => {
     if (newValue === undefined || !clamp) {
       return newValue;
@@ -130,12 +140,24 @@ export default function useInputCurrency(
     }
 
     if (nextNumber !== value) {
-      onChangeRef.current?.(nextNumber);
+      const last = lastReportedClampRef.current;
+      if (!last || last.from !== value || last.to !== nextNumber) {
+        lastReportedClampRef.current = { from: value, to: nextNumber };
+        onChangeRef.current?.(nextNumber);
+      }
+    } else {
+      lastReportedClampRef.current = null;
     }
   // `innerNumber` is read, not tracked: the effect reacts to the consumer's
   // value and to the bounds, not to its own updates.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clampValue, isEditing]);
+
+  useEffect(() => {
+    setInnerString(formatValue(innerNumber, currencyOptionsRef.current));
+  // Reformat only when the options' content changes; the number is read.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionsKey]);
 
   const innerValue = useMemo<string>(
     () => (innerType === 'number' ? innerNumber?.toString() ?? '' : innerString ?? ''),
