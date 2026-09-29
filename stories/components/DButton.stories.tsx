@@ -3,6 +3,7 @@ import DButton from '../../src/components/DButton/DButton';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 import {
+  COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
   ICONS,
   THEMES,
@@ -160,6 +161,9 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     },
     size: {
       control: 'select',
+      type: 'string',
+      options: COMPONENT_SIZE,
+      description: 'Button size. Also accepts a responsive object such as `{ xs: \'sm\', md: \'lg\' }` (see the ResponsiveSizes story).',
       table: {
         defaultValue: {
           summary: 'undefined',
