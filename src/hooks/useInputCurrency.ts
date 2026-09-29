@@ -90,9 +90,6 @@ export default function useInputCurrency(
 
   const [innerType, setInnerType] = useState('text');
   const [innerNumber, setInnerNumber] = useState<number | undefined>(() => clampValue(value));
-  const [innerString, setInnerString] = useState<string | undefined>(
-    () => formatValue(clampValue(value), currencyOptions),
-  );
 
   const handleOnFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -108,7 +105,6 @@ export default function useInputCurrency(
 
     if (clampedNumber !== innerNumber) {
       setInnerNumber(clampedNumber);
-      setInnerString(formatValue(clampedNumber, currencyOptionsRef.current));
       onChange?.(clampedNumber);
     }
 
@@ -120,7 +116,6 @@ export default function useInputCurrency(
 
     if (newNumber !== innerNumber) {
       setInnerNumber(newNumber);
-      setInnerString(formatValue(newNumber, currencyOptionsRef.current));
       onChange?.(newNumber);
     }
   }, [onChange, innerNumber]);
@@ -136,7 +131,6 @@ export default function useInputCurrency(
 
     if (nextNumber !== innerNumber) {
       setInnerNumber(nextNumber);
-      setInnerString(formatValue(nextNumber, currencyOptionsRef.current));
     }
 
     if (nextNumber !== value) {
@@ -153,14 +147,17 @@ export default function useInputCurrency(
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clampValue, isEditing]);
 
-  useEffect(() => {
-    setInnerString(formatValue(innerNumber, currencyOptionsRef.current));
-  // Reformat only when the options' content changes; the number is read.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsKey]);
+  // Derived, not stored: the formatted text always matches the current number
+  // and the options' content, even when both change in the same render.
+  const innerString = useMemo(
+    () => formatValue(innerNumber, currencyOptionsRef.current),
+    // `optionsKey` stands for the options' content; the ref holds the object.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [innerNumber, optionsKey],
+  );
 
   const innerValue = useMemo<string>(
-    () => (innerType === 'number' ? innerNumber?.toString() ?? '' : innerString ?? ''),
+    () => (innerType === 'number' ? innerNumber?.toString() ?? '' : innerString),
     [innerType, innerNumber, innerString],
   );
 

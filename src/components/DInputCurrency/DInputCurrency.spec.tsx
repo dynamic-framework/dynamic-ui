@@ -226,6 +226,20 @@ describe('<DInputCurrency />', () => {
       expect(screen.getByRole('textbox')).not.toHaveClass('is-invalid');
     });
 
+    it('does not render valid and invalid at the same time', () => {
+      render(<DInputCurrency value={5000000} maxValue={3000000} clamp={false} valid />);
+      const input = screen.getByRole('textbox');
+      expect(input).toHaveClass('is-invalid');
+      expect(input).not.toHaveClass('is-valid');
+    });
+
+    it('keeps valid once the value is back in range', () => {
+      render(<DInputCurrency value={2000000} maxValue={3000000} clamp={false} valid />);
+      const input = screen.getByRole('textbox');
+      expect(input).toHaveClass('is-valid');
+      expect(input).not.toHaveClass('is-invalid');
+    });
+
     it('lets an explicit invalid prop win', () => {
       render(<DInputCurrency value={5000000} maxValue={3000000} clamp={false} invalid={false} />);
       expect(screen.getByRole('textbox')).not.toHaveClass('is-invalid');

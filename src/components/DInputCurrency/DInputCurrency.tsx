@@ -39,6 +39,8 @@ function DInputCurrency(
     onFocus,
     onBlur,
     onChange,
+    invalid: invalidProp,
+    valid: validProp,
     ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -70,6 +72,11 @@ function DInputCurrency(
 
   const outOfRange = !clamp && (isOverMax || isUnderMin);
 
+  // One validation state: an explicit `invalid` wins; otherwise an
+  // out-of-range value is invalid and can't also be shown as valid.
+  const invalid = invalidProp ?? outOfRange;
+  const valid = invalid ? false : validProp;
+
   return (
     <DInput
       ref={inputRef}
@@ -80,7 +87,8 @@ function DInputCurrency(
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       onWheel={handleOnWheel}
-      invalid={outOfRange}
+      invalid={invalid}
+      valid={valid}
       inputStart={(
         <span
           slot="input-start"

@@ -173,4 +173,19 @@ describe('useInputCurrency range handling', () => {
     rerender(<WithOptions decimal="." />);
     expect(screen.getByTestId('formatted').textContent).toBe('1,234.50');
   });
+
+  it('formats the new value with the new options when both change in the same render', () => {
+    function WithBoth({ decimal, total }: { decimal: string; total: number }) {
+      const { innerValue } = useInputCurrency(
+        {
+          symbol: '$', decimal, separator: decimal === ',' ? '.' : ',', precision: 2,
+        },
+        total,
+      );
+      return <output data-testid="formatted">{innerValue}</output>;
+    }
+    const { rerender } = render(<WithBoth decimal="," total={1234.5} />);
+    rerender(<WithBoth decimal="." total={9876.25} />);
+    expect(screen.getByTestId('formatted').textContent).toBe('9,876.25');
+  });
 });
