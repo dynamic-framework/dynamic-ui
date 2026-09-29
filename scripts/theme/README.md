@@ -170,11 +170,18 @@ un build o contra el CSS de un tarball publicado.
 
 `declarations` admite `padding`, `border-radius`, `border-color`, `font-family`
 y `font-variant-numeric` (`ALLOWED_DECLARATIONS` en `theme-tokens.mjs`). No es
-una lista incompleta: el criterio es que **una medida que el componente reparte
-por una variable `--bs-*` se cambia en esa variable, no con una declaración
-suelta**. Por eso `font-size` y `line-height` se rechazan aunque `font-family`,
-que también es tipografía, se admite: ningún componente deriva otras medidas
-de la familia, y sí del tamaño y del interlineado.
+una lista incompleta. El criterio aplica a las **medidas tipográficas**: el
+tamaño y el interlineado de un componente viajan por su variable `--bs-*`
+(`--bs-chip-font-size`, `--bs-btn-font-size`) y el componente deriva otras
+medidas de ella, así que se cambian en esa variable y no con una declaración
+suelta. Por eso `font-size` y `line-height` se rechazan aunque `font-family`,
+que también es tipografía, se admite: ningún componente deriva otras medidas de
+la familia.
+
+`padding` también tiene variable en varios componentes (`--bs-chip-padding-x`,
+`--bs-btn-padding-y`), pero esa variable sólo alimenta el propio `padding` del
+componente (`_d-chip.scss`, `_buttons.scss`). Declararlo directo da el mismo
+resultado que cambiar la variable, y por eso se admite.
 
 Declarar la propiedad pisa el valor en ese elemento, pero lo que el componente
 calcula a partir de su variable no toma la medida declarada: sigue saliendo de
