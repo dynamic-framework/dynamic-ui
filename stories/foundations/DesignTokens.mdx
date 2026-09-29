@@ -88,19 +88,19 @@ Override the **triplets**, not the wrappers. The library declares every color tw
 ```css
 :root {
   /* Role: the base triplet and the 10 steps of its ramp (500 follows the base) */
-  --bs-primary-rgb: 11, 116, 255;
-  --bs-primary-25-rgb: 243, 248, 255;
-  --bs-primary-50-rgb: 231, 241, 255;
-  --bs-primary-100-rgb: 206, 227, 255;
-  --bs-primary-200-rgb: 157, 199, 255;
-  --bs-primary-300-rgb: 109, 172, 255;
-  --bs-primary-400-rgb: 60, 144, 255;
-  --bs-primary-600-rgb: 9, 93, 204;
-  --bs-primary-700-rgb: 7, 70, 153;
-  --bs-primary-800-rgb: 4, 46, 102;
-  --bs-primary-900-rgb: 2, 23, 51;
+  --bs-primary-rgb: 10, 106, 232;
+  --bs-primary-25-rgb: 243, 248, 254;
+  --bs-primary-50-rgb: 231, 240, 253;
+  --bs-primary-100-rgb: 206, 225, 250;
+  --bs-primary-200-rgb: 157, 195, 246;
+  --bs-primary-300-rgb: 108, 166, 241;
+  --bs-primary-400-rgb: 59, 136, 237;
+  --bs-primary-600-rgb: 8, 85, 186;
+  --bs-primary-700-rgb: 6, 64, 139;
+  --bs-primary-800-rgb: 4, 42, 93;
+  --bs-primary-900-rgb: 2, 21, 46;
   /* Text of .text-bg-primary: the one that contrasts with the new base */
-  --bs-primary-text-bg-color: var(--bs-black);
+  --bs-primary-text-bg-color: var(--bs-white);
 
   /* Body */
   --bs-body-color-rgb: 46, 52, 56;
@@ -111,6 +111,7 @@ Override the **triplets**, not the wrappers. The library declares every color tw
 - The ramp steps are literal triplets, so changing only `--bs-primary-rgb` leaves `--bs-primary-100` and the rest of the ramp at the default brand.
 - Links follow the role: `--bs-link-color-rgb` points to `--bs-primary-rgb` and `--bs-link-hover-color-rgb` to its 700 step, so they only need an override to use a different color.
 - `.text-bg-<role>` reads its text from `--bs-<role>-text-bg-color`, resolved for the default role. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`).
+- `.btn-<role>` keeps the white or dark text resolved for the default palette, so pick a base that contrasts with it (this example is 4.95:1 against white) or override the button text colors.
 - `npm run theme:expand` derives the ramp and `--bs-<role>-text-bg-color` from one color per role, and `npm run theme:validate` checks the result, contrast included.
 
 #### Palette variables (25–900)
@@ -317,7 +318,7 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
 <br />
 
 ## Bootstrapping a theme (copy-paste starter)
-Generate the color section with `npm run theme:expand` (one color per role; it writes the base triplet, the 10 ramp steps and `--bs-<role>-text-bg-color`), then add what the generator doesn't cover:
+Generate the color section with `npm run theme:expand` from one color per role. It writes the base triplet of each role, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp. Then add what the generator doesn't cover:
 ```css
 /* Global theme */
 :root {
@@ -330,7 +331,7 @@ Generate the color section with `npm run theme:expand` (one color per role; it w
   /* Color tokens: triplets, not hex on the wrappers */
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-body-color-rgb: 46, 52, 56;
-  /* --bs-<role>-rgb, its ramp and --bs-<role>-text-bg-color: from theme:expand */
+  /* Role triplets, ramps and text-bg colors: from theme:expand */
 
   /* Spacing */
   --bs-ref-spacer-4: 16px;
