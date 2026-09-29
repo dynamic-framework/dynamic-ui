@@ -155,9 +155,11 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     iconSize: {
       control: 'text',
-      type: 'string',
-      description: 'Size of the icon glyph (e.g. `"1.5rem"`). Without it the glyph follows the button font size, which changes with `size`.',
-      table: { category: 'Appearance' },
+      description: 'Size of the icon glyph: a CSS length (e.g. `"1.5rem"`) or a responsive object such as `{ xs: \'1rem\', lg: \'2rem\' }` (see the ResponsiveIconSize story; the control only edits the string form). Without it the glyph follows the button font size, which changes with `size`.',
+      table: {
+        type: { summary: 'string | ResponsiveProp' },
+        category: 'Appearance',
+      },
     },
     type: {
       control: 'select',
@@ -426,6 +428,35 @@ export const IconSize: Story = {
   args: {
     color: 'primary',
     icon: 'Download',
+  },
+};
+
+/**
+ * `iconSize` also takes an object by breakpoint, and the glyph follows viewport
+ * changes. Responsive values resolve against the breakpoints `DContextProvider`
+ * reads from the CSS, so the tree needs the provider. Resize the viewport to
+ * see the glyph go from 1rem to 2rem at the `lg` breakpoint.
+ */
+export const ResponsiveIconSize: Story = {
+  decorators: [
+    (Story) => (
+      <DContextProvider>
+        <Story />
+      </DContextProvider>
+    ),
+  ],
+  render: (args) => (
+    <DButtonIcon {...args} iconSize={{ xs: '1rem', lg: '2rem' }} aria-label="Download" />
+  ),
+  args: {
+    color: 'primary',
+    icon: 'Download',
+    size: 'lg',
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'responsive',
+    },
   },
 };
 
