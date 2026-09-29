@@ -11,7 +11,8 @@ Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variable
 <br />
 
 ## Principles
-- Scope overrides: use `:root` for global themes, `[data-bs-theme="brand"]` or `body.brand` for app-specific, and `.dark` or `prefers-color-scheme` for dark mode.
+- Scope overrides: use `:root` for global themes and a zone (`[data-bs-theme="<name>"]`) for a subtree with its own colors. A zone needs more than the global theme; see [Zones](#zones).
+- Colors travel as RGB triplets on `--bs-<name>-rgb`. The color variables without `-rgb` (`--bs-primary`, `--bs-body-bg`) are wrappers computed from the triplet; don't set them with a hex value.
 - Change variables, not classes: utilities and components read from CSS variables; overriding variables updates the whole system consistently.
 - Validate contrast: ensure WCAG AA for text/background, borders, and focus rings.
 
@@ -28,43 +29,39 @@ Key CSS variables:
 - Small text: `--bs-fs-small`; line-heights: `--bs-lh-sm`, `--bs-lh-base`, `--bs-lh-lg`
 - Heading line-height: `--bs-heading-line-height`
 
-Example:
+Heading sizes are fluid: `--bs-fs-N` is an alias of `--bs-rfs-fs-N`, which the library computes with RFS and redefines at 1200px. Override `--bs-rfs-fs-N`, and repeat steps 1 to 4 inside the same media query, or the library value wins on desktop:
+
 ```css
 :root {
   --bs-body-font-family: "Jost", system-ui, sans-serif; /* or your brand font */
   --bs-body-font-size: 1rem; /* base body size */
-  --bs-fs-1: 3rem; /* h1 */
-  --bs-fs-2: 2.5rem;
-  --bs-fs-3: 2rem;
-  --bs-fs-4: 1.5rem;
-  --bs-fs-5: 1.25rem;
-  --bs-fs-6: 1rem;
-  --bs-fs-small: .875rem; /* small text */
+  --bs-rfs-fs-1: calc(1.425rem + 2.1vw); /* h1, fluid below 1200px */
+  --bs-rfs-fs-2: calc(1.375rem + 1.5vw);
+  --bs-rfs-fs-5: 1.25rem; /* steps 5 and 6 are not fluid */
+  --bs-rfs-fs-6: 1rem;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --bs-rfs-fs-1: 3rem; /* h1 on desktop */
+    --bs-rfs-fs-2: 2.5rem;
+  }
 }
 ```
+
+`npm run theme:expand` generates the fluid value and the 1200px block from a single size per step.
 
 #### Typography variables (headings and display)
-```css
-:root {
-  /* Headings and body sizes */
-  --bs-fs-1: 3rem;
-  --bs-fs-2: 2.5rem;
-  --bs-fs-3: 2rem;
-  --bs-fs-4: 1.5rem;
-  --bs-fs-5: 1.25rem;
-  --bs-fs-6: 1rem;
-  --bs-fs-small: .875rem;
-  --bs-heading-line-height: 1.2;
+Components read the `--bs-fs-*` aliases; the value lives in the RFS variable each one points to, which is the one to override:
 
-  /* Display sizes */
-  --bs-fs-display-1: 6rem;
-  --bs-fs-display-2: 5.5rem;
-  --bs-fs-display-3: 5rem;
-  --bs-fs-display-4: 4.5rem;
-  --bs-fs-display-5: 4rem;
-  --bs-fs-display-6: 3.5rem;
-}
-```
+| Components read | Override | Fluid below 1200px |
+|---|---|---|
+| `--bs-fs-1` … `--bs-fs-4` | `--bs-rfs-fs-1` … `--bs-rfs-fs-4` | yes, repeat the desktop value in `@media (min-width: 1200px)` |
+| `--bs-fs-5`, `--bs-fs-6` | `--bs-rfs-fs-5`, `--bs-rfs-fs-6` | no |
+| `--bs-fs-display-1` … `--bs-fs-display-6` | `--bs-rfs-display-1` … `--bs-rfs-display-6` | yes, same media query |
+| `--bs-fs-small` | `--bs-rfs-fs-small` | no |
+
+`--bs-heading-line-height` has no alias and is overridden directly.
 
 #### Usage examples
 ```html
@@ -86,82 +83,60 @@ Dynamic’s palettes expose base tokens and extended shades.
 - Text/background/border subtles: `--bs/{token}-text-emphasis`, `--bs/{token}-bg-subtle`, `--bs/{token}-border-subtle`
 - Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
 
-Override with either RGB bases or direct colors:
+Override the **triplets**, not the wrappers. The library declares every color twice: the triplet that holds the value (`--bs-primary-rgb: 32, 104, 213`) and a wrapper computed from it (`--bs-primary: rgb(var(--bs-primary-rgb))`). Buttons, utilities such as `.bg-primary` and `.text-bg-primary`, and anything with opacity read the triplet; a hex value on `--bs-primary` changes only what reads the wrapper, so the brand shows up halfway.
+
 ```css
 :root {
-  /* Brand primaries */
-  --bs-primary: #0b74ff;
-  --bs-primary-100: #e5f0ff; /* light tint */
-  --bs-success: #0c8a50;
-  --bs-warning: #d99100;
-  --bs-danger: #c83333;
-  --bs-info: #0aa0c8;
-  --bs-secondary: #5b6670;
+  /* Role: the base triplet and the 10 steps of its ramp (500 follows the base) */
+  --bs-primary-rgb: 11, 116, 255;
+  --bs-primary-25-rgb: 243, 248, 255;
+  --bs-primary-50-rgb: 231, 241, 255;
+  --bs-primary-100-rgb: 206, 227, 255;
+  --bs-primary-200-rgb: 157, 199, 255;
+  --bs-primary-300-rgb: 109, 172, 255;
+  --bs-primary-400-rgb: 60, 144, 255;
+  --bs-primary-600-rgb: 9, 93, 204;
+  --bs-primary-700-rgb: 7, 70, 153;
+  --bs-primary-800-rgb: 4, 46, 102;
+  --bs-primary-900-rgb: 2, 23, 51;
+  /* Text of .text-bg-primary: the one that contrasts with the new base */
+  --bs-primary-text-bg-color: var(--bs-black);
 
-  /* Body and links */
-  --bs-body-color: #2e3438;
-  --bs-body-bg: #ffffff;
-  --bs-link-color: #0b74ff;
-  --bs-link-hover-color: #095fd1;
+  /* Body */
+  --bs-body-color-rgb: 46, 52, 56;
+  --bs-body-bg-rgb: 255, 255, 255;
 }
 ```
+
+- The ramp steps are literal triplets, so changing only `--bs-primary-rgb` leaves `--bs-primary-100` and the rest of the ramp at the default brand.
+- Links follow the role: `--bs-link-color-rgb` points to `--bs-primary-rgb` and `--bs-link-hover-color-rgb` to its 700 step, so they only need an override to use a different color.
+- `.text-bg-<role>` reads its text from `--bs-<role>-text-bg-color`, resolved for the default role. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`).
+- `npm run theme:expand` derives the ramp and `--bs-<role>-text-bg-color` from one color per role, and `npm run theme:validate` checks the result, contrast included.
 
 #### Palette variables (25–900)
+Each role with a ramp (`primary`, `secondary`, `success`, `info`, `warning`, `danger`) exposes 11 triplets. Step 500 is `var(--bs-<role>-rgb)`, so a rebrand sets the base and the other 10:
 ```css
 :root {
-  /* Primary */
-  --bs-primary-25: /* override */; --bs-primary-50: /* override */; --bs-primary-100: /* override */;
-  --bs-primary-200: /* override */; --bs-primary-300: /* override */; --bs-primary-400: /* override */;
-  --bs-primary-500: /* override */; --bs-primary-600: /* override */; --bs-primary-700: /* override */;
-  --bs-primary-800: /* override */; --bs-primary-900: /* override */;
-
-  /* Success */
-  --bs-success-25: /* override */; --bs-success-50: /* override */; --bs-success-100: /* override */;
-  --bs-success-200: /* override */; --bs-success-300: /* override */; --bs-success-400: /* override */;
-  --bs-success-500: /* override */; --bs-success-600: /* override */; --bs-success-700: /* override */;
-  --bs-success-800: /* override */; --bs-success-900: /* override */;
-
-  /* Warning */
-  --bs-warning-25: /* override */; --bs-warning-50: /* override */; --bs-warning-100: /* override */;
-  --bs-warning-200: /* override */; --bs-warning-300: /* override */; --bs-warning-400: /* override */;
-  --bs-warning-500: /* override */; --bs-warning-600: /* override */; --bs-warning-700: /* override */;
-  --bs-warning-800: /* override */; --bs-warning-900: /* override */;
-
-  /* Danger */
-  --bs-danger-25: /* override */; --bs-danger-50: /* override */; --bs-danger-100: /* override */;
-  --bs-danger-200: /* override */; --bs-danger-300: /* override */; --bs-danger-400: /* override */;
-  --bs-danger-500: /* override */; --bs-danger-600: /* override */; --bs-danger-700: /* override */;
-  --bs-danger-800: /* override */; --bs-danger-900: /* override */;
-
-  /* Info */
-  --bs-info-25: /* override */; --bs-info-50: /* override */; --bs-info-100: /* override */;
-  --bs-info-200: /* override */; --bs-info-300: /* override */; --bs-info-400: /* override */;
-  --bs-info-500: /* override */; --bs-info-600: /* override */; --bs-info-700: /* override */;
-  --bs-info-800: /* override */; --bs-info-900: /* override */;
-
-  /* Secondary */
-  --bs-secondary-25: /* override */; --bs-secondary-50: /* override */; --bs-secondary-100: /* override */;
-  --bs-secondary-200: /* override */; --bs-secondary-300: /* override */; --bs-secondary-400: /* override */;
-  --bs-secondary-500: /* override */; --bs-secondary-600: /* override */; --bs-secondary-700: /* override */;
-  --bs-secondary-800: /* override */; --bs-secondary-900: /* override */;
+  --bs-primary-rgb: /* R, G, B */;
+  --bs-primary-25-rgb: /* R, G, B */; --bs-primary-50-rgb: /* R, G, B */; --bs-primary-100-rgb: /* R, G, B */;
+  --bs-primary-200-rgb: /* R, G, B */; --bs-primary-300-rgb: /* R, G, B */; --bs-primary-400-rgb: /* R, G, B */;
+  --bs-primary-600-rgb: /* R, G, B */; --bs-primary-700-rgb: /* R, G, B */; --bs-primary-800-rgb: /* R, G, B */;
+  --bs-primary-900-rgb: /* R, G, B */;
+  /* Same shape for success, info, warning, danger and secondary. */
 }
 ```
+`light` and `dark` have no ramp: only `--bs-light-rgb` and `--bs-dark-rgb`.
 
-Dark mode (automatic and forced):
+Dark mode (automatic and forced). Dynamic ships with Bootstrap's built-in dark mode turned off, so a dark palette is an override like any other. On `:root` the wrappers are recomputed from the new triplets; on a class that applies to a subtree, the rules of [Zones](#zones) apply:
 ```css
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-bg: #0e1116;
-    --bs-body-color: #e6e6e6;
-    --bs-heading-color: #ffffff;
-    --bs-link-color: #5ba8ff;
-    --bs-link-hover-color: #8fc2ff;
-    --bs-border-color: #2a2f36;
+    --bs-body-bg-rgb: 14, 17, 22;
+    --bs-body-color-rgb: 230, 230, 230;
+    --bs-link-color-rgb: 91, 168, 255;
+    --bs-link-hover-color-rgb: 143, 194, 255;
+    --bs-border-color: rgb(42, 47, 54);
   }
-}
-.dark {
-  --bs-body-bg: #0e1116;
-  --bs-body-color: #e6e6e6;
 }
 ```
 
@@ -274,15 +249,60 @@ Many component styles are derived from the core variables, but some expose speci
 
 ## Dark mode patterns
 - Use dark: utilities for class-based overrides and @media prefers-color-scheme for system dark.
-- Define token pairs for light/dark to ensure consistent tints and emphasis colors.
+- Define token pairs for light/dark to ensure consistent tints and emphasis colors, as triplets:
 
 ```css
-.dark {
-  --bs-secondary-bg: #1b2129;
-  --bs-secondary-color: rgba(230,230,230,.75);
-  --bs-danger-100: #471c1c; /* dark tint variant */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-secondary-bg-rgb: 27, 33, 41;
+    --bs-secondary-color: rgba(230, 230, 230, .75);
+    --bs-danger-100-rgb: 71, 28, 28; /* dark tint variant */
+  }
 }
 ```
+
+<br />
+
+## Zones
+A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]` (for example, a dark header in a light app). It is not a separate theme: it inherits from `:root`, and three things don't follow on their own.
+
+**1. Declare the triplet and the wrapper.** The library computes each wrapper where it declares it: `--bs-body-color: rgb(var(--bs-body-color-rgb))` is resolved on `:root` and inherited already computed. A zone that only changes `--bs-body-color-rgb` doesn't move anything that reads `var(--bs-body-color)` (`.form-control`, `.modal`, `.text-body-secondary`). Set both, plus the derived text colors:
+
+```css
+[data-bs-theme="dark-header"] {
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-emphasis-color: rgb(var(--bs-white-rgb));
+  --bs-body-bg-rgb: 32, 44, 62;
+  --bs-body-bg: rgb(32, 44, 62);
+}
+```
+
+**2. Paint the zone.** The library applies `--bs-body-bg` and `--bs-body-color` on `body`; a subtree halfway down the page never goes through that rule, so the zone paints itself:
+
+```css
+[data-bs-theme="dark-header"] {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+```
+
+**3. Give components with their own background a block.** Changing the inherited color reaches every component in the zone, including the ones that keep a light background: a `.form-control` inside a dark zone ends up with white text on white. Those components need their own block in the zone. The `.nav-pills` variables don't reach from `.nav`, so they go in their own block too:
+
+```css
+[data-bs-theme="dark-header"] .form-control {
+  --bs-body-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme="dark-header"] .nav-pills {
+  --bs-nav-pills-link-active-color: rgb(var(--bs-dark-rgb));
+  --bs-nav-pills-link-active-bg: rgb(var(--bs-white-rgb));
+}
+```
+
+`npm run theme:expand` writes these blocks from the `zones` section of a theme file, and `npm run theme:validate` measures each zone against its own background. The full reference is in `scripts/theme/README.md`.
 
 <br />
 
@@ -291,12 +311,13 @@ Many component styles are derived from the core variables, but some expose speci
 2. Set typography: body family/size, heading/display scales, small text, line-heights.
 3. Tune spacing scale and component gaps using --bs-ref-spacer-*.
 4. Adjust radius, borders, shadows, focus tokens for personality and accessibility.
-5. Implement dark mode via prefers-color-scheme and .dark, validate contrast.
+5. Implement dark mode via prefers-color-scheme, and dark subtrees as [zones](#zones); validate contrast.
 6. Verify utilities (fs-*, display-*, text-*, bg-*, border-*) reflect your overrides.
 
 <br />
 
 ## Bootstrapping a theme (copy-paste starter)
+Generate the color section with `npm run theme:expand` (one color per role; it writes the base triplet, the 10 ramp steps and `--bs-<role>-text-bg-color`), then add what the generator doesn't cover:
 ```css
 /* Global theme */
 :root {
@@ -306,15 +327,10 @@ Many component styles are derived from the core variables, but some expose speci
   --bs-heading-line-height: 1.2;
   --bs-fs-small: .875rem;
 
-  /* Color tokens */
-  --bs-body-bg: #ffffff;
-  --bs-body-color: #2e3438;
-  --bs-primary: #0b74ff;
-  --bs-success: #0c8a50;
-  --bs-warning: #d99100;
-  --bs-danger: #c83333;
-  --bs-info: #0aa0c8;
-  --bs-secondary: #5b6670;
+  /* Color tokens: triplets, not hex on the wrappers */
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-body-color-rgb: 46, 52, 56;
+  /* --bs-<role>-rgb, its ramp and --bs-<role>-text-bg-color: from theme:expand */
 
   /* Spacing */
   --bs-ref-spacer-4: 16px;
@@ -328,9 +344,9 @@ Many component styles are derived from the core variables, but some expose speci
 /* System dark support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-bg: #0e1116;
-    --bs-body-color: #e6e6e6;
-    --bs-border-color: #2a2f36;
+    --bs-body-bg-rgb: 14, 17, 22;
+    --bs-body-color-rgb: 230, 230, 230;
+    --bs-border-color: rgb(42, 47, 54);
   }
 }
 ```
