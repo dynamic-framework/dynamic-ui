@@ -8,9 +8,12 @@ import useMediaQuery from './useMediaQuery';
 
 const BREAKPOINTS: Array<keyof BreakpointProps> = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
-// Breakpoints read from the CSS, kept once the stylesheet is loaded so every
-// component that resolves responsive props shares a single computed-style
-// read instead of one per breakpoint per render.
+// Breakpoints read from the CSS on first use and shared by every component
+// that resolves responsive props: one computed-style read for the page,
+// instead of one per breakpoint per render. `dynamic-ui.css` has to be loaded
+// before rendering; if it isn't, the empty result is kept too, so a
+// misconfigured tree doesn't pay the read on every render (responsive props
+// then keep their default value and useResponsiveProp warns in development).
 let cssBreakpoints: BreakpointProps | null = null;
 
 function readCssBreakpoint(breakpoint: keyof BreakpointProps): string {
@@ -23,9 +26,7 @@ function readCssBreakpoint(breakpoint: keyof BreakpointProps): string {
     style.getPropertyValue(`--${PREFIX_BS}breakpoint-${name}`).trim(),
   ])) as BreakpointProps;
 
-  // `xs` is `0`, so `sm` tells whether the stylesheet is there yet. Until it
-  // is, nothing is cached and the next render reads again.
-  if (read.sm) cssBreakpoints = read;
+  cssBreakpoints = read;
   return read[breakpoint];
 }
 

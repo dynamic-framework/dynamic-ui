@@ -51,4 +51,15 @@ describe('breakpoints without DContextProvider', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     spy.mockRestore();
   });
+
+  it('also keeps the result when the CSS is missing, so it is not re-read on every render', () => {
+    const spy = jest.spyOn(window, 'getComputedStyle');
+    const warn = jest.spyOn(console, 'warn').mockImplementation();
+    for (let i = 0; i < 20; i += 1) {
+      renderHook(() => useResponsiveProp());
+    }
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
+    warn.mockRestore();
+  });
 });
