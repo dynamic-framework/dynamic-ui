@@ -1,8 +1,10 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import {
+  fireEvent,
   render,
   screen,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DListGroup from '.';
@@ -256,34 +258,19 @@ describe('<DListGroup.Item />', () => {
   describe('development warning for invalid markup', () => {
     // The warning is deduplicated per container>item pair for the whole page
     // load, so each case below uses a pair no other test renders.
-    it('warns once when links render inside the default <ul>', () => {
+    it('does not warn for links or buttons inside a list: they are wrapped in <li>', () => {
       const warn = jest.spyOn(console, 'warn').mockImplementation();
       render(
         <DContextProvider>
           <DListGroup>
             <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
-            <DListGroup.Item href="/movimientos">Movimientos</DListGroup.Item>
           </DListGroup>
-        </DContextProvider>,
-      );
-      expect(warn).toHaveBeenCalledTimes(1);
-      expect(warn.mock.calls[0][0]).toContain('a <a> inside a <ul> is invalid markup');
-      expect(warn.mock.calls[0][0]).toContain('as="div"');
-      warn.mockRestore();
-    });
-
-    it('warns when an action item renders a <button> inside a numbered <ol>', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation();
-      render(
-        <DContextProvider>
           <DListGroup numbered>
             <DListGroup.Item action>Paso</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
       );
-      expect(warn).toHaveBeenCalledTimes(1);
-      expect(warn.mock.calls[0][0]).toContain('a <button> inside a <ol> is invalid markup');
-      expect(warn.mock.calls[0][0]).toContain('Remove `numbered`');
+      expect(warn).not.toHaveBeenCalled();
       warn.mockRestore();
     });
 
@@ -374,6 +361,115 @@ describe('<DListGroup.Item />', () => {
       expect(group).not.toHaveAttribute('role');
       expect(group).not.toHaveAttribute('aria-label');
       expect(group).not.toHaveAttribute('aria-labelledby');
+    });
+  });
+
+  describe('list semantics for links and buttons', () => {
+    const renderList = (node: React.ReactNode) => render(
+      <DContextProvider>{node}</DContextProvider>,
+    );
+
+    it('renders links as list > listitem > link inside the default <ul>', () => {
+      renderList(
+        <DListGroup ariaLabel="Accesos">
+          <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+          <DListGroup.Item href="/movimientos">Movimientos</DListGroup.Item>
+        </DListGroup>,
+      );
+      const list = screen.getByRole('list', { name: 'Accesos' });
+      const items = within(list).getAllByRole('listitem');
+      expect(items).toHaveLength(2);
+      const link = within(items[0]).getByRole('link', { name: 'Cuentas' });
+      expect(link).toHaveAttribute('href', '/cuentas');
+      expect(link).toHaveClass('d-list-group-item-link');
+      expect(items[0]).toHaveClass('list-group-item', 'list-group-item-action', 'd-list-group-item-interactive');
+    });
+
+    it('renders buttons inside a numbered <ol> as listitems', () => {
+      const onClick = jest.fn();
+      renderList(
+        <DListGroup numbered>
+          <DListGroup.Item action onClick={onClick}>Paso</DListGroup.Item>
+        </DListGroup>,
+      );
+      const item = within(screen.getByRole('list')).getByRole('listitem');
+      const button = within(item).getByRole('button', { name: 'Paso' });
+      expect(button).toHaveAttribute('type', 'button');
+      fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('puts item classes and style on the <li> and data attributes on the control', () => {
+      renderList(
+        <DListGroup>
+          <DListGroup.Item
+            href="/cuentas"
+            color="primary"
+            active
+            className="hover:bg-gray-25"
+            style={{ minHeight: '3rem' }}
+            dataAttributes={{ 'data-testid': 'cuentas' }}
+          >
+            Cuentas
+          </DListGroup.Item>
+        </DListGroup>,
+      );
+      const item = screen.getByRole('listitem');
+      expect(item).toHaveClass('list-group-item-primary', 'active', 'hover:bg-gray-25');
+      expect(item).toHaveStyle('min-height: 3rem');
+      expect(screen.getByTestId('cuentas')).toBe(screen.getByRole('link'));
+    });
+
+    it('keeps the flat structure with as="div"', () => {
+      const { container } = renderList(
+        <DListGroup as="div">
+          <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+        </DListGroup>,
+      );
+      const link = screen.getByRole('link', { name: 'Cuentas' });
+      expect(link).toHaveClass('list-group-item', 'list-group-item-action');
+      expect(container.querySelector('li')).toBeNull();
+    });
+  });
+
+  describe('disabled and current state', () => {
+    const renderItem = (node: React.ReactNode) => render(
+      <DContextProvider>
+        <DListGroup>{node}</DListGroup>
+      </DContextProvider>,
+    );
+
+    it('takes a disabled link out of the tab order and does not activate it', () => {
+      const onClick = jest.fn();
+      renderItem(<DListGroup.Item href="/tarjetas" disabled onClick={onClick}>Tarjetas</DListGroup.Item>);
+      const link = screen.getByText('Tarjetas').closest('a') as HTMLAnchorElement;
+      expect(link).not.toHaveAttribute('href');
+      expect(link).toHaveAttribute('tabindex', '-1');
+      expect(link).toHaveAttribute('aria-disabled', 'true');
+      fireEvent.click(link);
+      expect(onClick).not.toHaveBeenCalled();
+      expect(screen.getByRole('listitem')).toHaveClass('disabled');
+    });
+
+    it('disables a button with the disabled attribute', () => {
+      renderItem(<DListGroup.Item action disabled>Pagar</DListGroup.Item>);
+      expect(screen.getByRole('button', { name: 'Pagar' })).toBeDisabled();
+    });
+
+    it('sets aria-current to "true" by default and to ariaCurrent when given', () => {
+      renderItem(
+        <>
+          <DListGroup.Item href="/a" active>A</DListGroup.Item>
+          <DListGroup.Item href="/b" active ariaCurrent="page">B</DListGroup.Item>
+        </>,
+      );
+      expect(screen.getByRole('link', { name: 'A' })).toHaveAttribute('aria-current', 'true');
+      expect(screen.getByRole('link', { name: 'B' })).toHaveAttribute('aria-current', 'page');
+    });
+
+    it('does not set aria-current on inactive items', () => {
+      renderItem(<DListGroup.Item href="/a" ariaCurrent="page">A</DListGroup.Item>);
+      expect(screen.getByRole('link', { name: 'A' })).not.toHaveAttribute('aria-current');
     });
   });
 });

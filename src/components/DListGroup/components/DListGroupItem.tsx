@@ -23,6 +23,11 @@ type Props =
   as?: 'li' | 'a' | 'button';
   action?: boolean;
   active?: boolean;
+  /**
+   * Value of `aria-current` while the item is `active`: `'page'` for the
+   * current page of a navigation, `'step'` for the current step of a flow.
+   */
+  ariaCurrent?: 'page' | 'step' | 'location' | 'date' | 'time' | 'true';
   disabled?: boolean;
   href?: string;
   onClick?: () => void;
@@ -34,6 +39,7 @@ export default function DListGroupItem(
     as = 'li',
     action: actionProp,
     active,
+    ariaCurrent = 'true',
     disabled,
     href,
     onClick,
@@ -73,55 +79,58 @@ export default function DListGroupItem(
   }, [href, as, actionProp]);
 
   const container = useContext(ListGroupContext);
+  const isInteractive = Tag === 'a' || Tag === 'button';
 
-  if (process.env.NODE_ENV !== 'production' && container) {
-    const isListContainer = container === 'ul' || container === 'ol';
-    if (isListContainer !== (Tag === 'li')) {
-      warnInvalidListMarkup(container, Tag);
-    }
+  // Inside a <ul>/<ol>, a link or button is wrapped in the <li> that carries
+  // the item styles, so the group keeps list semantics (`list > listitem >
+  // link|button`) without breaking Bootstrap's sibling selectors.
+  const isWrapped = isInteractive && (container === 'ul' || container === 'ol');
+
+  if (process.env.NODE_ENV !== 'production' && container === 'div' && Tag === 'li') {
+    warnInvalidListMarkup(container, Tag);
   }
-
-  const action = useMemo(() => {
-    if (Tag === 'a' || Tag === 'button') {
-      return true;
-    }
-    return actionProp;
-  }, [Tag, actionProp]);
 
   const generateClasses = useMemo(
     () => ({
       'list-group-item': true,
-      'list-group-item-action': action,
+      'list-group-item-action': isInteractive || actionProp,
+      'd-list-group-item-interactive': isWrapped,
       [`list-group-item-${color}`]: !!color,
       active,
       disabled,
     }),
-    [action, active, disabled, color],
+    [isInteractive, actionProp, isWrapped, active, disabled, color],
   );
 
-  const ariaAttributes = useMemo(() => {
+  // A disabled link leaves the tab order and can't be activated: without
+  // `href` and `onClick`, Enter does nothing. A button uses `disabled`.
+  const interactiveProps = useMemo(() => {
     if (Tag === 'button') {
       return {
-        ...active && { 'aria-current': true },
+        type: 'button' as const,
+        ...onClick && { onClick },
+        ...active && { 'aria-current': ariaCurrent },
         ...disabled && { disabled: true },
       };
     }
+    if (Tag === 'a') {
+      return disabled
+        ? { 'aria-disabled': true, tabIndex: -1, ...active && { 'aria-current': ariaCurrent } }
+        : {
+          ...href && { href },
+          ...onClick && { onClick },
+          ...active && { 'aria-current': ariaCurrent },
+        };
+    }
     return {
-      ...active && { 'aria-current': true },
+      ...onClick && { onClick },
+      ...active && { 'aria-current': ariaCurrent },
       ...disabled && { 'aria-disabled': true },
     };
-  }, [Tag, active, disabled]);
+  }, [Tag, href, onClick, active, ariaCurrent, disabled]);
 
-  return (
-    <Tag
-      className={classNames(generateClasses, className)}
-      style={style}
-      {...Tag === 'a' && href && { href }}
-      {...onClick && { onClick }}
-      {...ariaAttributes}
-      {...dataAttributes}
-      {...Tag === 'button' && { type: 'button' }}
-    >
+  const content = (
+    <>
       {iconStart && (
         <DIcon
           icon={iconStart}
@@ -140,6 +149,34 @@ export default function DListGroupItem(
           className="ms-auto"
         />
       )}
+    </>
+  );
+
+  if (isWrapped) {
+    return (
+      <li
+        className={classNames(generateClasses, className)}
+        style={style}
+      >
+        <Tag
+          className="d-list-group-item-link"
+          {...interactiveProps}
+          {...dataAttributes}
+        >
+          {content}
+        </Tag>
+      </li>
+    );
+  }
+
+  return (
+    <Tag
+      className={classNames(generateClasses, className)}
+      style={style}
+      {...interactiveProps}
+      {...dataAttributes}
+    >
+      {content}
     </Tag>
   );
 }
