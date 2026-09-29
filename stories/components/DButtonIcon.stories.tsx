@@ -153,6 +153,14 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       options: COMPONENT_SIZE,
       table: { category: 'Appearance' },
     },
+    iconSize: {
+      control: 'text',
+      description: 'Size of the icon glyph: a CSS length (e.g. `"1.5rem"`) or a responsive object such as `{ xs: \'1rem\', lg: \'2rem\' }` (see the ResponsiveIconSize story; the control only edits the string form). Without it the glyph follows the button font size, which changes with `size`.',
+      table: {
+        type: { summary: 'string | ResponsiveProp' },
+        category: 'Appearance',
+      },
+    },
     type: {
       control: 'select',
       type: 'string',
@@ -401,6 +409,54 @@ export const AsAnchor: Story = {
     target: '_blank',
     rel: 'noopener noreferrer',
     'aria-label': 'Open page in new tab',
+  },
+};
+
+/**
+ * The glyph follows the button font size, so it grows with `size`. Use `iconSize`
+ * when a layout needs a different glyph size than the one `size` gives.
+ */
+export const IconSize: Story = {
+  render: (args) => (
+    <div className="d-flex align-items-center gap-3">
+      <DButtonIcon {...args} size="sm" aria-label="Download (sm)" />
+      <DButtonIcon {...args} aria-label="Download" />
+      <DButtonIcon {...args} size="lg" aria-label="Download (lg)" />
+      <DButtonIcon {...args} size="lg" iconSize="2rem" aria-label="Download (lg, 2rem glyph)" />
+    </div>
+  ),
+  args: {
+    color: 'primary',
+    icon: 'Download',
+  },
+};
+
+/**
+ * `iconSize` also takes an object by breakpoint, and the glyph follows viewport
+ * changes. Responsive values resolve against the breakpoints `DContextProvider`
+ * reads from the CSS, so the tree needs the provider. Resize the viewport to
+ * see the glyph go from 1rem to 2rem at the `lg` breakpoint.
+ */
+export const ResponsiveIconSize: Story = {
+  decorators: [
+    (Story) => (
+      <DContextProvider>
+        <Story />
+      </DContextProvider>
+    ),
+  ],
+  render: (args) => (
+    <DButtonIcon {...args} iconSize={{ xs: '1rem', lg: '2rem' }} aria-label="Download" />
+  ),
+  args: {
+    color: 'primary',
+    icon: 'Download',
+    size: 'lg',
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'responsive',
+    },
   },
 };
 
