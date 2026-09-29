@@ -954,6 +954,33 @@ describe('theme-validate — pares horneados', () => {
     expect(result.stderr).not.toContain('.text-bg-primary');
   });
 
+  it('mide .text-bg-<role> de un role que sólo cambia dentro de una zona', () => {
+    const base = {
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-danger-rgb': '255, 214, 214' },
+        },
+      },
+    };
+    const roto = validate(expandCss(base));
+    expect(roto.status).toBe(1);
+    expect(roto.stderr).toContain('.text-bg-danger dentro de [data-bs-theme="oscura"]');
+    expect(roto.stderr).toContain('Declara --bs-danger-text-bg-color');
+
+    const arreglado = validate(expandCss({
+      ...base,
+      zones: {
+        oscura: {
+          ...base.zones.oscura,
+          vars: { ...base.zones.oscura.vars, '--bs-danger-text-bg-color': 'var(--bs-gray-900)' },
+        },
+      },
+    }));
+    expect(arreglado.stderr).not.toContain('.text-bg-danger');
+  });
+
   it('mide .text-bg-<role> también dentro de cada zona', () => {
     const css = expandCss({
       ...SECTIONED_THEME,

@@ -725,9 +725,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // theme no declara: siguen igual después del rebrand, y por eso hay que
   // medirlos explícitamente. Se comprueban en el raíz y dentro de cada zona,
   // porque una zona que mueve la superficie los cambia sin tocar ninguno.
+  // Un role que sólo cambia dentro de una zona también arrastra sus pares: la
+  // zona mueve `--bs-<role>-rgb` y el texto horneado se queda como estaba.
+  const pairRoles = [...new Set([
+    ...touchedRoles,
+    ...zoneBlocks.flatMap((block) => touched(block.decls).roles),
+  ])];
   const bakedPairs = [
     ...BAKED_PAIRS,
-    ...touchedRoles.flatMap((role) => bakedRolePairs(role)),
+    ...pairRoles.flatMap((role) => bakedRolePairs(role)),
   ];
 
   /** Token al que cae un lado del par cuando el theme no declara su variable. */
