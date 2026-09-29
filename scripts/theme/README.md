@@ -107,6 +107,48 @@ comprueba es la forma.
   `border-color`, `font-family` y `font-variant-numeric`. Cualquier otra
   propiedad es un error que la nombra. Los bloques se emiten después del raíz y
   antes de las zonas, que es el orden que la cascada necesita.
+
+### Qué no va en un theme
+
+`declarations` admite `padding`, `border-radius`, `border-color`, `font-family`
+y `font-variant-numeric` (`ALLOWED_DECLARATIONS` en `theme-tokens.mjs`). No es
+una lista incompleta: el criterio es que **una medida que el componente reparte
+por una variable `--bs-*` se cambia en esa variable, no con una declaración
+suelta**. Por eso `font-size` y `line-height` se rechazan aunque `font-family`,
+que también es tipografía, se admite: ningún componente deriva otras medidas
+de la familia, y sí del tamaño y del interlineado.
+
+Declarar la propiedad pisa el valor en ese elemento, pero lo que el componente
+calcula a partir de su variable se queda como estaba. En `.d-chip` el icono
+toma su tamaño de `--bs-chip-font-size` (`src/style/components/_d-chip.scss`):
+
+| En el theme | Texto | Icono |
+| --- | --- | --- |
+| nada | 14px | 10,7px |
+| `"declarations": { "font-size": "1.25rem" }` | 20px | 15,3px |
+| `"vars": { "--bs-chip-font-size": "1.25rem" }` | 20px | 20px |
+
+Con la declaración el texto crece y el icono no lo acompaña; con la variable
+crecen juntos. Lo mismo pasa en los botones, donde el icono sigue a
+`--bs-btn-font-size`.
+
+El reemplazo es la variable del componente, que `known-tokens.json` inventaría
+(`--bs-chip-font-size`, `--bs-chip-line-height`, `--bs-btn-font-size`,
+`--bs-btn-line-height`, …):
+
+```json
+{
+  "selector": ".d-chip",
+  "vars": {
+    "--bs-chip-font-size": ".875rem",
+    "--bs-chip-line-height": "1.2"
+  }
+}
+```
+
+Para el texto general, `--bs-body-font-size` y `--bs-body-line-height` van en
+`root`; los tamaños de encabezado, sobre `--bs-rfs-fs-N` (ver *Reglas que la
+salida respeta*).
 - **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
   trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
   las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
