@@ -442,7 +442,8 @@ describe('<DListGroup.Item />', () => {
     it('takes a disabled link out of the tab order and does not activate it', () => {
       const onClick = jest.fn();
       renderItem(<DListGroup.Item href="/tarjetas" disabled onClick={onClick}>Tarjetas</DListGroup.Item>);
-      const link = screen.getByText('Tarjetas').closest('a') as HTMLAnchorElement;
+      const link = screen.getByRole('link', { name: 'Tarjetas' });
+      expect(link.tagName).toBe('A');
       expect(link).not.toHaveAttribute('href');
       expect(link).toHaveAttribute('tabindex', '-1');
       expect(link).toHaveAttribute('aria-disabled', 'true');

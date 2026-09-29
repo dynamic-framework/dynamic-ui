@@ -103,7 +103,9 @@ export default function DListGroupItem(
   );
 
   // A disabled link leaves the tab order and can't be activated: without
-  // `href` and `onClick`, Enter does nothing. A button uses `disabled`.
+  // `href` and `onClick`, Enter does nothing. Dropping `href` also drops the
+  // implicit link role, so it is set back explicitly. A button uses
+  // `disabled`.
   const interactiveProps = useMemo(() => {
     if (Tag === 'button') {
       return {
@@ -115,7 +117,12 @@ export default function DListGroupItem(
     }
     if (Tag === 'a') {
       return disabled
-        ? { 'aria-disabled': true, tabIndex: -1, ...active && { 'aria-current': ariaCurrent } }
+        ? {
+          role: 'link',
+          'aria-disabled': true,
+          tabIndex: -1,
+          ...active && { 'aria-current': ariaCurrent },
+        }
         : {
           ...href && { href },
           ...onClick && { onClick },
