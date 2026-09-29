@@ -234,7 +234,7 @@ correspondería a ningún contexto real.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo
-  `.text-bg-<role>`, que es advertencia por no ser corregible desde el theme.
+  `.text-bg-secondary`, que es advertencia por no ser corregible desde el theme.
 - `contraste-enlace-zona` — `--bs-link-color-rgb` sobre el fondo de la zona.
   Entre 3:1 y 4.5:1 es aviso, no error: el enlace se distingue del fondo pero su
   texto no llega a AA.
@@ -251,7 +251,7 @@ valor al que cae cuando nadie la toca.
 | `.list-group-item` | `--bs-list-group-color` (→ role `dark`) | `--bs-list-group-bg` (→ transparente: la superficie del contexto) |
 | `.list-group-item-action` | `--bs-list-group-action-color` (→ `gray-900`) | `--bs-list-group-bg` |
 | `.alert-<role>` | `--bs-<role>-text-emphasis` | `--bs-<role>-bg-subtle` |
-| `.text-bg-<role>` | horneado en la clase, casi siempre con `!important` | el paso sólido del role |
+| `.text-bg-<role>` | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | el paso sólido del role |
 | `.btn-<role>` sin override | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
 
 Dos detalles que importan al leer un informe:
@@ -259,15 +259,16 @@ Dos detalles que importan al leer un informe:
 - Un fondo `transparent` no es un color: lo que se ve detrás es la superficie
   del contexto, y contra eso se mide. Por eso una lista dentro de una zona
   oscura puede fallar sin que el theme haya declarado nada raro.
-- **`.text-bg-<role>` es la excepción: se reporta como advertencia, no como
-  error.** El color va escrito en la propia clase, y en casi todos los roles con
-  `!important`, así que no hay ninguna variable que un theme pueda declarar para
-  moverlo. Un error pediría un arreglo que no existe; el aviso dice lo que sí se
-  puede hacer — **no corregible desde el theme; evitar la clase** con ese role, o
-  cambiar el color del role hasta que el par contraste. Vale igual en el bloque
-  raíz y dentro de una zona, y no cuenta para el código de salida: un theme que
-  sólo arrastre este caso termina en 0. Los demás pares horneados siguen siendo
-  error, porque todos tienen una variable con la que corregirlos.
+- **`.text-bg-<role>` lee `--bs-<role>-text-bg-color`.** La librería la
+  resuelve en Sass contra el role por defecto (el primero de blanco, `gray-700`,
+  blanco o negro que llega a 4.5:1), y `theme-expand` la vuelve a calcular con
+  la misma regla para cada role que el theme cambia. Un theme escrito a mano que
+  cambia `--bs-<role>-rgb` sin declararla hereda el texto del role anterior, y
+  el validador lo reporta como error.
+- **`.text-bg-secondary` es la excepción: se reporta como advertencia, no como
+  error.** Se pinta con su propia rampa (700 sobre 50), sin una variable de
+  texto aparte, así que el aviso dice lo que sí se puede hacer: cambiar el color
+  del role hasta que el par contraste. No cuenta para el código de salida.
 
 Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
 botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el

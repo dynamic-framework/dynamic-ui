@@ -71,6 +71,15 @@
     --#{$prefix}#{$color}-border-subtle: #{$value};
   }
 
+  // Text color of `.text-bg-<color>`, resolved in Sass against the default
+  // role value. It lives in a variable so a theme that redefines
+  // `--bs-<color>-rgb` can move it too. `secondary` already reads its ramp.
+  @each $color, $value in $theme-colors {
+    @if $color != "secondary" {
+      --#{$prefix}#{$color}-text-bg-color: #{color-contrast-var($value)};
+    }
+  }
+
   // Fonts
 
   // Note: Use `inspect` for lists so that quoted items keep the quotes.

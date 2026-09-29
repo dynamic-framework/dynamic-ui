@@ -141,6 +141,19 @@ describe('theme-expand', () => {
     expect(css).not.toContain('NaN');
   });
 
+  it.each([
+    ['un role claro', '#ffe066', 'var(--bs-gray-700)'],
+    ['un role oscuro', '#0b6b53', 'var(--bs-white)'],
+  ])('resuelve el texto de .text-bg-<role> para %s', (_, color, expected) => {
+    const css = expandCss({ ...MINIMAL_THEME, roles: { primary: color } });
+    expect(css).toContain(`--bs-primary-text-bg-color: ${expected};`);
+  });
+
+  it('no emite la variable de texto para secondary, que lee su rampa', () => {
+    const css = expandCss({ ...MINIMAL_THEME, roles: { secondary: '#5b6670' } });
+    expect(css).not.toContain('--bs-secondary-text-bg-color');
+  });
+
   it('rechaza un theme sin familia tipográfica ni radio, diciendo qué falta', () => {
     const result = expand({ roles: { primary: '#0b6b53' }, body: { bg: '#fff', color: '#000' } });
     expect(result.status).toBe(1);
@@ -328,6 +341,15 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('[tipografia-breakpoint]');
     expect(result.stderr).toContain('min-width: 1200px');
+  });
+
+  it('un role claro que no declara el texto de .text-bg-<role>', () => {
+    const valid = expandCss({ ...MINIMAL_THEME, roles: { primary: '#ffe066' } });
+    const broken = valid.replace(/\n\s*--bs-primary-text-bg-color: [^;]+;/, '');
+    const result = validate(broken);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('".text-bg-primary"');
+    expect(result.stderr).toContain('Declara --bs-primary-text-bg-color');
   });
 
   it('un role claro bajo el texto blanco que la librería hornea', () => {
@@ -865,13 +887,9 @@ describe('theme-validate — pares horneados', () => {
     expect(validate(arreglado).stderr).not.toContain('.alert-primary');
   });
 
-  it('avisa, sin fallar, del par de .text-bg-<role>, que no es corregible', () => {
-    /*
-     * Bootstrap escribe ese color en la propia clase y con !important, así que
-     * ninguna variable del theme lo mueve. Reportarlo como error pediría un
-     * arreglo que no existe: se avisa, se dice qué hacer, y la salida del
-     * proceso no se tiñe por él.
-     */
+  it('resuelve .text-bg-<role> con la variable que emite theme-expand', () => {
+    // Con un primary claro, el blanco por defecto no contrasta; theme-expand
+    // declara --bs-primary-text-bg-color con el texto oscuro y el par pasa.
     const css = expandCss({
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
@@ -895,9 +913,7 @@ describe('theme-validate — pares horneados', () => {
     const result = validate(css);
 
     expect(result.status).toBe(0);
-    expect(result.stderr).toContain('[contraste-horneado]');
-    expect(result.stderr).toContain('.text-bg-primary');
-    expect(result.stderr).toContain('no corregible desde el theme; evitar la clase');
+    expect(result.stderr).not.toContain('.text-bg-primary');
     expect(result.stderr).not.toContain('error ');
   });
 
@@ -925,11 +941,11 @@ describe('theme-validate — pares horneados', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('.alert-primary');
     expect(result.stderr).toContain('Declara --bs-primary-text-emphasis');
-    // Y el de la clase horneada sigue siendo sólo aviso, en la misma corrida.
-    expect(result.stderr).toContain('no corregible desde el theme');
+    // .text-bg-primary ya no aparece: theme-expand declaró su variable.
+    expect(result.stderr).not.toContain('.text-bg-primary');
   });
 
-  it('avisa igual dentro de una zona', () => {
+  it('mide .text-bg-<role> también dentro de cada zona', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
@@ -950,9 +966,13 @@ describe('theme-validate — pares horneados', () => {
         },
       },
     });
-    const result = validate(css);
-    expect(result.status).toBe(0);
+    // Sin la variable, el par falla en el raíz y en la zona: el texto se
+    // hereda del role por defecto en los dos contextos.
+    const broken = css.replace(/\n\s*--bs-primary-text-bg-color: [^;]+;/, '');
+    const result = validate(broken);
+    expect(result.status).toBe(1);
     expect(result.stderr).toContain('.text-bg-primary dentro de [data-bs-theme="oscura"]');
+    expect(validate(css).stderr).not.toContain('.text-bg-primary');
   });
 
   it('no culpa al theme de un par que ya viene roto en la librería', () => {

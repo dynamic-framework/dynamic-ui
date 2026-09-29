@@ -22,6 +22,7 @@
 
   /* Role primary */
   --bs-primary-rgb: 11, 107, 83;
+  --bs-primary-text-bg-color: var(--bs-white);
   --bs-primary-25-rgb: 243, 248, 246;
   --bs-primary-50-rgb: 231, 240, 238;
   --bs-primary-100-rgb: 206, 225, 221;
@@ -50,6 +51,7 @@
 
   /* Role success */
   --bs-success-rgb: 15, 122, 61;
+  --bs-success-text-bg-color: var(--bs-white);
   --bs-success-25-rgb: 243, 248, 245;
   --bs-success-50-rgb: 231, 242, 236;
   --bs-success-100-rgb: 207, 228, 216;
@@ -64,6 +66,7 @@
 
   /* Role info */
   --bs-info-rgb: 27, 110, 194;
+  --bs-info-text-bg-color: var(--bs-white);
   --bs-info-25-rgb: 244, 248, 252;
   --bs-info-50-rgb: 232, 241, 249;
   --bs-info-100-rgb: 209, 226, 243;
@@ -78,6 +81,7 @@
 
   /* Role warning */
   --bs-warning-rgb: 245, 165, 36;
+  --bs-warning-text-bg-color: var(--bs-gray-700);
   --bs-warning-25-rgb: 255, 251, 244;
   --bs-warning-50-rgb: 254, 246, 233;
   --bs-warning-100-rgb: 253, 237, 211;
@@ -92,6 +96,7 @@
 
   /* Role danger */
   --bs-danger-rgb: 180, 35, 24;
+  --bs-danger-text-bg-color: var(--bs-white);
   --bs-danger-25-rgb: 251, 244, 243;
   --bs-danger-50-rgb: 248, 233, 232;
   --bs-danger-100-rgb: 240, 211, 209;
@@ -106,9 +111,11 @@
 
   /* Role light */
   --bs-light-rgb: 251, 251, 252;
+  --bs-light-text-bg-color: var(--bs-gray-700);
 
   /* Role dark */
   --bs-dark-rgb: 16, 24, 40;
+  --bs-dark-text-bg-color: var(--bs-white);
 
   /* Superficies */
   --bs-body-bg-rgb: 247, 248, 250;
