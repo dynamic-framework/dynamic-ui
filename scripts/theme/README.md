@@ -170,33 +170,41 @@ un build o contra el CSS de un tarball publicado.
 
 `declarations` admite `padding`, `border-radius`, `border-color`, `font-family`
 y `font-variant-numeric` (`ALLOWED_DECLARATIONS` en `theme-tokens.mjs`). No es
-una lista incompleta. El criterio aplica a las **medidas tipográficas**: el
-tamaño y el interlineado de un componente viajan por su variable `--bs-*`
-(`--bs-chip-font-size`, `--bs-btn-font-size`) y el componente deriva otras
-medidas de ella, así que se cambian en esa variable y no con una declaración
-suelta. Por eso `font-size` y `line-height` se rechazan aunque `font-family`,
-que también es tipografía, se admite: ningún componente deriva otras medidas de
-la familia.
+una lista incompleta: **las medidas tipográficas (`font-size`, `line-height`)
+se cambian siempre en la variable `--bs-*` del componente**, no con una
+declaración suelta. `font-family` se admite porque no es una medida: ningún
+componente deriva otras de ella.
 
-`padding` también tiene variable en varios componentes (`--bs-chip-padding-x`,
-`--bs-btn-padding-y`), pero esa variable sólo alimenta el propio `padding` del
-componente (`_d-chip.scss`, `_buttons.scss`). Declararlo directo da el mismo
-resultado que cambiar la variable, y por eso se admite.
+La regla es la misma para todos los componentes, aunque el riesgo que evita
+depende de cada uno. En algunos, otras medidas salen de la variable
+tipográfica, y una declaración directa las deja desacompasadas:
 
-Declarar la propiedad pisa el valor en ese elemento, pero lo que el componente
-calcula a partir de su variable no toma la medida declarada: sigue saliendo de
-la variable, a lo sumo recalculado en el nuevo contexto. En `.d-chip` el icono
-toma su tamaño de `--bs-chip-font-size` (`src/style/components/_d-chip.scss`):
+- `.d-chip`: el icono toma su tamaño de `--bs-chip-font-size`, y el contenedor
+  del icono su ancho y alto de `--bs-chip-line-height` (`_d-chip.scss`).
+- `.btn`: el icono sigue a `--bs-btn-font-size` (`_buttons.scss`).
 
-| En el theme | Texto | Icono |
+En otros la variable sólo alimenta su propia propiedad (`--bs-btn-line-height`
+es sólo el `line-height` del botón) y la declaración daría el mismo resultado.
+La regla no distingue esos casos a propósito: con la variable, un theme cambia
+la tipografía siempre en el mismo lugar y no depende de cómo esté construido
+cada componente por dentro.
+
+`padding` es otra decisión: un theme sí puede ajustar la caja de un componente
+con una declaración. En los componentes que lo exponen como variable
+(`--bs-chip-padding-x/y`, `--bs-btn-padding-x/y`), esa variable sólo alimenta
+el propio `padding`, así que declararlo directo da el mismo resultado.
+
+El efecto, medido en `.d-chip` con CSS aplicado a mano (`theme:expand` rechaza
+la fila de `font-size` antes de emitirla):
+
+| CSS aplicado | Texto | Icono |
 | --- | --- | --- |
 | nada | 14px | 10,7px |
-| `"declarations": { "font-size": "1.25rem" }` | 20px | 15,3px |
-| `"vars": { "--bs-chip-font-size": "1.25rem" }` | 20px | 20px |
+| `.d-chip { font-size: 1.25rem }` (lo que pediría `"declarations": { "font-size": … }`) | 20px | 15,3px |
+| `.d-chip { --bs-chip-font-size: 1.25rem }` (lo que emite `"vars"`) | 20px | 20px |
 
 Con la declaración el texto pasa a 20px y el icono se queda en 15,3px, sin
-llegar a la medida declarada; con la variable los dos quedan en 20px. Lo mismo pasa en los botones, donde el icono sigue a
-`--bs-btn-font-size`.
+llegar a la medida declarada; con la variable los dos quedan en 20px.
 
 El reemplazo es la variable del componente, que `known-tokens.json` inventaría
 (`--bs-chip-font-size`, `--bs-chip-line-height`, `--bs-btn-font-size`,
