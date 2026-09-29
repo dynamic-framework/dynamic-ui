@@ -2,10 +2,37 @@ import { useMemo } from 'react';
 
 import { useDContext } from '../contexts/DContext';
 import { PREFIX_BS } from '../components/config';
-import getCssVariable from '../utils/getCssVariable';
 
 import type { BreakpointProps } from '../contexts/DContext';
 import useMediaQuery from './useMediaQuery';
+
+const BREAKPOINTS: Array<keyof BreakpointProps> = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+
+// Breakpoints read from the CSS, kept once the stylesheet is loaded so every
+// component that resolves responsive props shares a single computed-style
+// read instead of one per breakpoint per render.
+let cssBreakpoints: BreakpointProps | null = null;
+
+function readCssBreakpoint(breakpoint: keyof BreakpointProps): string {
+  if (cssBreakpoints) return cssBreakpoints[breakpoint];
+  if (typeof document === 'undefined') return '';
+
+  const style = getComputedStyle(document.documentElement);
+  const read = Object.fromEntries(BREAKPOINTS.map((name) => [
+    name,
+    style.getPropertyValue(`--${PREFIX_BS}breakpoint-${name}`).trim(),
+  ])) as BreakpointProps;
+
+  // `xs` is `0`, so `sm` tells whether the stylesheet is there yet. Until it
+  // is, nothing is cached and the next render reads again.
+  if (read.sm) cssBreakpoints = read;
+  return read[breakpoint];
+}
+
+/** Clears the cached CSS breakpoints. Only meant for tests. */
+export function resetCssBreakpointsCache() {
+  cssBreakpoints = null;
+}
 
 /**
  * Pixel value of a breakpoint. `DContextProvider` reads them from the CSS and
@@ -17,11 +44,10 @@ export function useBreakpointValue(breakpoint: keyof BreakpointProps) {
   const { breakpoints } = useDContext();
   const fromContext = breakpoints[breakpoint];
 
-  return useMemo(() => {
-    if (fromContext) return fromContext;
-    if (typeof document === 'undefined') return '';
-    return getCssVariable(`--${PREFIX_BS}breakpoint-${breakpoint}`);
-  }, [fromContext, breakpoint]);
+  return useMemo(
+    () => fromContext || readCssBreakpoint(breakpoint),
+    [fromContext, breakpoint],
+  );
 }
 
 function useMediaBreakpointUp(

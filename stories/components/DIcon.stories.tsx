@@ -415,15 +415,10 @@ export const WithResponsiveSizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The size property with breakpoints does not work outside of a DContextProvider.',
+        story: 'The size property accepts an object by breakpoint. Breakpoints are read from the `--bs-breakpoint-*` CSS variables, so `dynamic-ui.css` has to be loaded; `DContextProvider` is not required. With `useListenerSize` the icon follows viewport changes.',
       },
     },
   },
-  decorators: (Story) => (
-    <DContextProvider>
-      <Story />
-    </DContextProvider>
-  ),
   args: {
     icon: 'Settings',
     size: {
