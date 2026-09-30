@@ -171,9 +171,11 @@ un build o contra el CSS de un tarball publicado.
 `declarations` admite `padding`, `border-radius`, `border-color`, `font-family`
 y `font-variant-numeric` (`ALLOWED_DECLARATIONS` en `theme-tokens.mjs`). No es
 una lista incompleta: **las medidas tipográficas (`font-size`, `line-height`)
-se cambian siempre en la variable `--bs-*` del componente**, no con una
-declaración suelta. `font-family` se admite porque no es una medida: ningún
-componente deriva otras de ella.
+se cambian en la variable `--bs-*` del componente, cuando la expone**, no con
+una declaración suelta. Si el componente no la expone (`.d-otp-contact` fija
+`font-size: .875em` en `_d-otp.scss`), la medida pertenece al CSS de la
+aplicación, que es a donde remite el error del validador. `font-family` se
+admite porque no es una medida: ningún componente deriva otras de ella.
 
 La regla es la misma para todos los componentes, aunque el riesgo que evita
 depende de cada uno. En algunos, otras medidas salen de la variable
@@ -190,9 +192,19 @@ la tipografía siempre en el mismo lugar y no depende de cómo esté construido
 cada componente por dentro.
 
 `padding` es otra decisión: un theme sí puede ajustar la caja de un componente
-con una declaración. En los componentes que lo exponen como variable
-(`--bs-chip-padding-x/y`, `--bs-btn-padding-x/y`), esa variable sólo alimenta
-el propio `padding`, así que declararlo directo da el mismo resultado.
+con una declaración. En un componente sin variantes de tamaño, como `.d-chip`,
+declararlo da el mismo resultado que `--bs-chip-padding-x/y`. En `.btn` no: los
+tamaños `.btn-sm` y `.btn-lg` escriben `--bs-btn-padding-x/y` con la misma
+especificidad que `.btn`, así que tanto la declaración como esa variable sobre
+`.btn`, cargadas después de Dynamic, aplanan los tres tamaños. Para cambiar un
+tamaño sin tocar los otros, se usa su variable propia:
+
+| En `.btn` | `sm` | por defecto | `lg` |
+| --- | --- | --- | --- |
+| nada | 12px | 16px | 20px |
+| `padding: .5rem 3rem` | 48px | 48px | 48px |
+| `--bs-btn-padding-x: 3rem` | 48px | 48px | 48px |
+| `--bs-btn-lg-padding-x: 3rem` | 12px | 16px | 48px |
 
 El efecto, medido en `.d-chip` con CSS aplicado a mano (`theme:expand` rechaza
 la fila de `font-size` antes de emitirla):
@@ -206,19 +218,23 @@ la fila de `font-size` antes de emitirla):
 Con la declaración el texto pasa a 20px y el icono se queda en 15,3px, sin
 llegar a la medida declarada; con la variable los dos quedan en 20px.
 
-El reemplazo es la variable del componente, que `known-tokens.json` inventaría
-(`--bs-chip-font-size`, `--bs-chip-line-height`, `--bs-btn-font-size`,
-`--bs-btn-line-height`, …):
+Cuando el componente la expone, el reemplazo es su variable. `known-tokens.json`
+es el inventario de las que existen (`--bs-chip-font-size`,
+`--bs-chip-line-height`, `--bs-btn-font-size`, `--bs-btn-line-height`, …):
 
 ```json
 {
   "selector": ".d-chip",
   "vars": {
     "--bs-chip-font-size": ".875rem",
-    "--bs-chip-line-height": "1.2"
+    "--bs-chip-line-height": "1.05rem"
   }
 }
 ```
+
+`--bs-chip-line-height` va con unidad: además del interlineado, es el ancho y
+el alto del contenedor del icono (`_d-chip.scss`), donde un número sin unidad
+no es una longitud válida. `1.05rem` es el mismo `1.2` sobre `.875rem`.
 
 Para el texto general, `--bs-body-font-size` y `--bs-body-line-height` van en
 `root`; los tamaños de encabezado, sobre `--bs-rfs-fs-N` (ver *Reglas que la
