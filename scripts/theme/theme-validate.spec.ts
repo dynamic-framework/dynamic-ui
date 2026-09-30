@@ -981,6 +981,28 @@ describe('theme-validate — pares horneados', () => {
     expect(arreglado.stderr).not.toContain('.text-bg-danger');
   });
 
+  it('mide .text-bg-<role> cuando el theme sólo redefine su variable de texto', () => {
+    // Negro sobre el primary por defecto da 4.00:1.
+    const raiz = validate(expandCss({
+      ...MINIMAL_THEME,
+      root: { '--bs-primary-text-bg-color': 'var(--bs-black)' },
+    }));
+    expect(raiz.status).toBe(1);
+    expect(raiz.stderr).toContain('".text-bg-primary"');
+
+    const zona = validate(expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-info-text-bg-color': 'var(--bs-black)' },
+        },
+      },
+    }));
+    expect(zona.status).toBe(1);
+    expect(zona.stderr).toContain('.text-bg-info dentro de [data-bs-theme="oscura"]');
+  });
+
   it('mide .text-bg-<role> también dentro de cada zona', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
