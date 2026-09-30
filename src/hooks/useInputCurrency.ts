@@ -52,22 +52,13 @@ export default function useInputCurrency(
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
-  // Read through a ref so an inline `currencyOptions` object (a new reference
-  // on every render) doesn't retrigger the synchronization effect below.
-  const currencyOptionsRef = useRef(currencyOptions);
-  currencyOptionsRef.current = currencyOptions;
-
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
-  // Content of the options, so a real formatting change (another decimal
-  // separator or precision, e.g. from DContext) reformats the value while a
-  // new object with the same content does not.
-  const optionsKey = JSON.stringify(currencyOptions);
-
   // Last clamp reported through `onChange`, as the value it came from and the
-  // value it produced. StrictMode replays effects before the consumer's state
-  // update lands, and the same clamp must not be reported twice.
+  // value it produced. StrictMode replays effects, and a consumer may reflect
+  // `onChange` asynchronously, both before `value` catches up: the same clamp
+  // must not be reported twice.
   const lastReportedClampRef = useRef<{ from?: number; to?: number } | null>(null);
 
   const clampValue = useCallback((newValue?: number) => {
@@ -105,11 +96,15 @@ export default function useInputCurrency(
 
     if (clampedNumber !== innerNumber) {
       setInnerNumber(clampedNumber);
+      // Recorded before notifying, so the sync effect that runs when editing
+      // ends doesn't report the same clamp again while `value` still holds the
+      // typed number.
+      lastReportedClampRef.current = { from: value, to: clampedNumber };
       onChange?.(clampedNumber);
     }
 
     onBlur?.(event);
-  }, [onBlur, innerNumber, clampValue, onChange]);
+  }, [onBlur, innerNumber, clampValue, onChange, value]);
 
   const handleOnChange = useCallback((newValue?: string) => {
     const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
@@ -148,12 +143,12 @@ export default function useInputCurrency(
   }, [value, clampValue, isEditing]);
 
   // Derived, not stored: the formatted text always matches the current number
-  // and the options' content, even when both change in the same render.
+  // and options, even when both change in the same render. It depends on the
+  // options object itself, so a new custom `format` function is honored too;
+  // formatting is cheap and doesn't feed the synchronization effect.
   const innerString = useMemo(
-    () => formatValue(innerNumber, currencyOptionsRef.current),
-    // `optionsKey` stands for the options' content; the ref holds the object.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [innerNumber, optionsKey],
+    () => formatValue(innerNumber, currencyOptions),
+    [innerNumber, currencyOptions],
   );
 
   const innerValue = useMemo<string>(

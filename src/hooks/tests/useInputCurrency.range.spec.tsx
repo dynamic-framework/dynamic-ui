@@ -174,6 +174,66 @@ describe('useInputCurrency range handling', () => {
     expect(screen.getByTestId('formatted').textContent).toBe('1,234.50');
   });
 
+  it('honors a new custom format function', () => {
+    function WithFormat({ suffix }: { suffix: string }) {
+      const { innerValue } = useInputCurrency(
+        {
+          symbol: '$',
+          decimal: '.',
+          separator: ',',
+          precision: 2,
+          format: (currency) => `${currency?.value ?? ''} ${suffix}`,
+        },
+        10,
+      );
+      return <output data-testid="formatted">{innerValue}</output>;
+    }
+    const { rerender } = render(<WithFormat suffix="COP" />);
+    expect(screen.getByTestId('formatted').textContent).toBe('10 COP');
+    rerender(<WithFormat suffix="USD" />);
+    expect(screen.getByTestId('formatted').textContent).toBe('10 USD');
+  });
+
+  it('reports a blur clamp once when the consumer reflects onChange asynchronously', async () => {
+    const onChangeSpy = jest.fn();
+    function AsyncWidget() {
+      const [value, setValue] = useState<number | undefined>();
+      const {
+        inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur,
+      } = useInputCurrency(
+        STABLE_OPTIONS,
+        value,
+        undefined,
+        (next) => {
+          onChangeSpy(next);
+          setTimeout(() => setValue(next), 0);
+        },
+        undefined,
+        undefined,
+        0,
+        MAX,
+      );
+      return (
+        <input
+          aria-label="Monto"
+          ref={inputRef}
+          type={innerType}
+          value={innerValue}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          onChange={(event) => handleOnChange(event.target.value)}
+        />
+      );
+    }
+    render(<AsyncWidget />);
+    fireEvent.focus(input());
+    fireEvent.change(input(), { target: { value: '5000000' } });
+    await act(async () => { await new Promise((resolve) => { setTimeout(resolve, 0); }); });
+    fireEvent.blur(input());
+    await act(async () => { await new Promise((resolve) => { setTimeout(resolve, 0); }); });
+    expect(onChangeSpy.mock.calls.filter(([next]) => next === 3000000)).toHaveLength(1);
+  });
+
   it('formats the new value with the new options when both change in the same render', () => {
     function WithBoth({ decimal, total }: { decimal: string; total: number }) {
       const { innerValue } = useInputCurrency(
