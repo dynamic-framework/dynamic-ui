@@ -726,10 +726,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // medirlos explícitamente. Se comprueban en el raíz y dentro de cada zona,
   // porque una zona que mueve la superficie los cambia sin tocar ninguno.
   // Un role que sólo cambia dentro de una zona también arrastra sus pares: la
-  // zona mueve `--bs-<role>-rgb` y el texto horneado se queda como estaba.
+  // zona mueve `--bs-<role>-rgb` y el texto horneado se queda como estaba. Y un
+  // theme que sólo redefine `--bs-<role>-text-bg-color`, en el raíz o en una
+  // zona, cambia el texto de `.text-bg-<role>` sin tocar el role: también se
+  // mide.
+  const textBgRoles = (decls) => ROLES.filter((role) => decls.has(`--bs-${role}-text-bg-color`));
   const pairRoles = [...new Set([
     ...touchedRoles,
-    ...zoneBlocks.flatMap((block) => touched(block.decls).roles),
+    ...textBgRoles(root),
+    ...zoneBlocks.flatMap((block) => [...touched(block.decls).roles, ...textBgRoles(block.decls)]),
   ])];
   const bakedPairs = [
     ...BAKED_PAIRS,
