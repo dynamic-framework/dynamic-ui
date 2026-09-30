@@ -5,7 +5,6 @@ import { RejectedFile } from '../../src/components/DBoxFile/utils';
 import { ICONS } from '../config/constants';
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { DButton, DIcon } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
@@ -27,24 +26,28 @@ The component's behavior is inspired by the [React Dropzone](https://react-dropz
 
 ## CSS Variables
 
-| Variable | Class | Type | Description |
-| ------------------------------------------| -------------| -----------------| --------------------------|
-| --${PREFIX_BS}box-file-gap | .d-box-file | css length unit | Space between elements |
-| --${PREFIX_BS}box-file-bg | .d-box-file | css color unit | Background |
-| --${PREFIX_BS}box-file-border | .d-box-file | css border | Border |
-| --${PREFIX_BS}box-file-border-radius | .d-box-file | css length unit | Border radius |
-| --${PREFIX_BS}box-file-content-max-width | .d-box-file | css length unit | Max width of the content |
-| --${PREFIX_BS}box-file-padding | .d-box-file | css length unit | Padding |
-| --${PREFIX_BS}box-file-icon-size | .d-box-file | css length unit | Icon size |
-| --${PREFIX_BS}box-file-icon-color | .d-box-file | css color unit | Icon color |
-| --${PREFIX_BS}box-file-hover-border | .d-box-file | css border | Hover Border |
-| --${PREFIX_BS}box-file-hover-bg | .d-box-file | css color unit | Hover background |
-| --${PREFIX_BS}box-file-selected-border | .d-box-file | css border | Selected border |
-| --${PREFIX_BS}box-file-selected-bg | .d-box-file | css color unit | Selected background |
-| --${PREFIX_BS}box-file-disabled-border | .d-box-file | css border | Disabled Border |
-| --${PREFIX_BS}box-file-disabled-bg | .d-box-file | css color unit | Disabled background |
-| --${PREFIX_BS}box-file-valid-border | .d-box-file | css border | Valid border |
-| --${PREFIX_BS}box-file-invalid-border | .d-box-file | css color unit | Invalid border |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/dropzone.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                               | Type       | Description          |
+|----------------------------------------|------------|----------------------|
+| \`--df-dropzone-padding\`              | css length | Padding              |
+| \`--df-dropzone-gap\`                  | css length | Gap                  |
+| \`--df-dropzone-radius\`               | css length | Radius               |
+| \`--df-dropzone-border-width\`         | css length | Border width         |
+| \`--df-dropzone-bg\`                   | css color  | Background           |
+| \`--df-dropzone-fg\`                   | css color  | Foreground           |
+| \`--df-dropzone-border-color\`         | css color  | Border color         |
+| \`--df-dropzone-hover-bg\`             | css color  | Hover background     |
+| \`--df-dropzone-hover-border-color\`   | css color  | Hover border color   |
+| \`--df-dropzone-invalid-border-color\` | css color  | Invalid border color |
+| \`--df-dropzone-valid-border-color\`   | css color  | Valid border color   |
+| \`--df-dropzone-disabled-bg\`          | css color  | Disabled background  |
+| \`--df-dropzone-disabled-fg\`          | css color  | Disabled foreground  |
+| \`--df-dropzone-file-gap\`             | css length | File gap             |
+| \`--df-dropzone-file-padding-block\`   | css length | File padding block   |
+
 `,
       },
     },
@@ -239,17 +242,17 @@ export const WithFileSizeLimits: Story = {
           maxSize={100 * 1024} // 100 KB
           multiple
         >
-          <p className="m-0 text-center">
+          <p className="df-m-0 df-text-center">
             Drop files here
             {' '}
-            <span className="text-nowrap">(max 100 KB each)</span>
+            <span className="df-text-nowrap">(max 100 KB each)</span>
           </p>
         </DBoxFile>
-        <div className="mt-3">
+        <div className="df-mt-3">
           {accepted.length > 0 && <h5>Accepted files:</h5>}
           <ul>
             {accepted.map((file) => (
-              <li key={file.name} className="text-success">
+              <li key={file.name} className="df-text-success">
                 {file.name}
                 {' '}
                 -
@@ -259,10 +262,10 @@ export const WithFileSizeLimits: Story = {
               </li>
             ))}
           </ul>
-          {rejected.length > 0 && <h5 className="mt-2">Rejected files:</h5>}
+          {rejected.length > 0 && <h5 className="df-mt-2">Rejected files:</h5>}
           <ul>
             {rejected.map(({ file, errors }) => (
-              <li key={file.name} className="text-danger">
+              <li key={file.name} className="df-text-danger">
                 {file.name}
                 {' '}
                 -
@@ -296,25 +299,25 @@ function FileSizeLimitExample() {
         maxSize={100 * 1024} // 100 KB
         multiple
       >
-        <p className="m-0 text-center">
+        <p className="df-m-0 df-text-center">
           Drop files here
           {' '}
-          <span className="text-nowrap">(max 100 KB each)</span>
+          <span className="df-text-nowrap">(max 100 KB each)</span>
         </p>
       </DBoxFile>
-      <div className="mt-3">
+      <div className="df-mt-3">
         {accepted.length > 0 && <h5>Accepted files:</h5>}
         <ul>
           {accepted.map(file => (
-            <li key={file.name} className="text-success">
+            <li key={file.name} className="df-text-success">
               {file.name} - {Math.round(file.size / 1024)} KB
             </li>
           ))}
         </ul>
-        {rejected.length > 0 && <h5 className="mt-2">Rejected files:</h5>}
+        {rejected.length > 0 && <h5 className="df-mt-2">Rejected files:</h5>}
         <ul>
           {rejected.map(({ file, errors }) => (
-            <li key={file.name} className="text-danger">
+            <li key={file.name} className="df-text-danger">
               {file.name} - {errors.map(e => e.message).join(', ')}
             </li>
           ))}
@@ -349,14 +352,14 @@ export const WithInitialFile: Story = {
           ]}
           onLoad={(files) => setLoadedFiles(files)}
         />
-        <div className="mt-3">
+        <div className="df-mt-3">
           {loadedFiles.length > 0 ? (
             <>
               <h5>File Loaded from URL:</h5>
-              <p className="text-success">{loadedFiles[0].name}</p>
+              <p className="df-text-success">{loadedFiles[0].name}</p>
             </>
           ) : (
-            <p className="text-muted">Loading initial file...</p>
+            <p className="df-text-muted">Loading initial file...</p>
           )}
         </div>
       </>
@@ -379,14 +382,14 @@ function InitialFileExample() {
         value={['https://placehold.co/600x400/EEE/333?text=Initial']}
         onLoad={(files) => setLoadedFiles(files)}
       />
-      <div className="mt-3">
+      <div className="df-mt-3">
         {loadedFiles.length > 0 ? (
           <>
             <h5>File Loaded from URL:</h5>
-            <p className="text-success">{loadedFiles[0].name}</p>
+            <p className="df-text-success">{loadedFiles[0].name}</p>
           </>
         ) : (
-          <p className="text-muted">Loading initial file...</p>
+          <p className="df-text-muted">Loading initial file...</p>
         )}
       </div>
     </>
@@ -418,13 +421,13 @@ export const WithPreviews: Story = {
         >
           Drop files here to see previews
         </DBoxFile>
-        <aside className="d-flex flex-wrap gap-2 mt-3">
+        <aside className="df-flex df-flex-wrap df-gap-2 df-mt-3">
           {files.map((file) => (
-            <div key={file.name} className="text-center">
+            <div key={file.name} className="df-text-center">
               <img
                 src={file.preview}
                 alt={file.name}
-                className="img-thumbnail"
+                className="df-w-full df-h-auto df-p-1 df-bg-surface df-border-1 df-border-default df-rounded-control"
                 style={{
                   width: '100px',
                   height: '100px',
@@ -433,7 +436,7 @@ export const WithPreviews: Story = {
                 onLoad={() => URL.revokeObjectURL(file.preview)}
               />
               <p
-                className="small text-muted"
+                className="df-fs-body-sm df-text-muted"
                 style={{
                   width: '100px',
                   overflow: 'hidden',
@@ -479,17 +482,17 @@ function PreviewsExample() {
       >
         Drop files here to see previews
       </DBoxFile>
-      <aside className="d-flex flex-wrap gap-2 mt-3">
+      <aside className="df-flex df-flex-wrap df-gap-2 df-mt-3">
         {files.map(file => (
-          <div key={file.name} className="text-center">
+          <div key={file.name} className="df-text-center">
             <img
               src={file.preview}
               alt={file.name}
-              className="img-thumbnail"
+              className="df-w-full df-h-auto df-p-1 df-bg-surface df-border-1 df-border-default df-rounded-control"
               style={{ width: '100px', height: '100px', objectFit: 'cover' }}
               onLoad={() => URL.revokeObjectURL(file.preview)}
             />
-            <p className="small text-muted" style={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <p className="df-fs-body-sm df-text-muted" style={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {file.name}
             </p>
           </div>
@@ -509,10 +512,10 @@ export const CustomContent: Story = {
     accept: {},
     icon: false,
     children: (
-      <div className="text-center p-4">
+      <div className="df-text-center df-p-4">
         <DIcon icon="CloudUpload" strokeWidth={1} color="success" size="5rem" />
-        <p className="mt-2 mb-0">Click or drag file to this area to upload.</p>
-        <p className="small text-muted">
+        <p className="df-mt-2 df-mb-0">Click or drag file to this area to upload.</p>
+        <p className="df-fs-body-sm df-text-muted">
           Support for a single or bulk upload.
         </p>
       </div>
@@ -524,10 +527,10 @@ export const CustomContent: Story = {
         language: 'tsx',
         code: `
 <DBoxFile icon={false}>
-  <div className="text-center p-4">
+  <div className="df-text-center df-p-4">
     <DIcon icon="CloudUpload" strokeWidth={1} color="success" size="5rem" />
-    <p className="mt-2 mb-0">Click or drag file to this area to upload.</p>
-    <p className="small text-muted">
+    <p className="df-mt-2 df-mb-0">Click or drag file to this area to upload.</p>
+    <p className="df-fs-body-sm df-text-muted">
       Support for a single or bulk upload.
     </p>
   </div>
@@ -543,11 +546,13 @@ export const ChildrenAsFunction: Story = {
     return (
       <DBoxFile {...args} noClick>
         {(openFileDialog) => (
-          <div className="text-center p-4 border border-2 border-dashed rounded-3">
-            <p className="mb-2">This dropzone is not clickable.</p>
+          <div className="df-text-center df-p-4 df-border-1 df-border-2 df-border-dashed df-rounded-control">
+            <p className="df-mb-2">This dropzone is not clickable.</p>
             <DButton
               size="sm"
-              className="btn btn-primary"
+              className="df-button"
+              data-variant="solid"
+              data-color="primary"
               onClick={openFileDialog}
             >
               Click here to select files
@@ -571,11 +576,11 @@ export const ChildrenAsFunction: Story = {
         code: `
 <DBoxFile noClick icon={false}>
   {(openFileDialog) => (
-    <div className="text-center p-4 border border-2 border-dashed rounded-3">
-      <p className="mb-2">This dropzone is not clickable.</p>
+    <div className="df-text-center df-p-4 df-border-1 df-border-2 df-border-dashed df-rounded-control">
+      <p className="df-mb-2">This dropzone is not clickable.</p>
       <DButton
         size="sm"
-        className="btn btn-primary"
+        className="df-button" data-variant="solid" data-color="primary"
         onClick={openFileDialog}
       >
         Click here to select files

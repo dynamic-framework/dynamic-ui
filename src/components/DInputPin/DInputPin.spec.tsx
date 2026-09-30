@@ -18,66 +18,66 @@ describe('<DInputPin />', () => {
         </DContextProvider>,
       );
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            class="d-input-pin"
-          >
-            <div
-              class="d-input-pin-group"
-              id="myPin"
-            >
-              <input
-                aria-label="Pin character number 1 of 4"
-                autocomplete="off"
-                class="form-control"
-                id="pinIndex0"
-                inputmode="text"
-                maxlength="1"
-                name="pin-0"
-                required=""
-                type="text"
-                value=""
-              />
-              <input
-                aria-label="Pin character number 2 of 4"
-                autocomplete="off"
-                class="form-control"
-                id="pinIndex1"
-                inputmode="text"
-                maxlength="1"
-                name="pin-1"
-                required=""
-                type="text"
-                value=""
-              />
-              <input
-                aria-label="Pin character number 3 of 4"
-                autocomplete="off"
-                class="form-control"
-                id="pinIndex2"
-                inputmode="text"
-                maxlength="1"
-                name="pin-2"
-                required=""
-                type="text"
-                value=""
-              />
-              <input
-                aria-label="Pin character number 4 of 4"
-                autocomplete="off"
-                class="form-control"
-                id="pinIndex3"
-                inputmode="text"
-                maxlength="1"
-                name="pin-3"
-                required=""
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <div
+    class="df-field"
+  >
+    <div
+      class="df-pin"
+      id="myPin"
+    >
+      <input
+        aria-label="Pin character number 1 of 4"
+        autocomplete="off"
+        class="df-pin-input"
+        id="pinIndex0"
+        inputmode="text"
+        maxlength="1"
+        name="pin-0"
+        required=""
+        type="text"
+        value=""
+      />
+      <input
+        aria-label="Pin character number 2 of 4"
+        autocomplete="off"
+        class="df-pin-input"
+        id="pinIndex1"
+        inputmode="text"
+        maxlength="1"
+        name="pin-1"
+        required=""
+        type="text"
+        value=""
+      />
+      <input
+        aria-label="Pin character number 3 of 4"
+        autocomplete="off"
+        class="df-pin-input"
+        id="pinIndex2"
+        inputmode="text"
+        maxlength="1"
+        name="pin-2"
+        required=""
+        type="text"
+        value=""
+      />
+      <input
+        aria-label="Pin character number 4 of 4"
+        autocomplete="off"
+        class="df-pin-input"
+        id="pinIndex3"
+        inputmode="text"
+        maxlength="1"
+        name="pin-3"
+        required=""
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`);
     });
 
     it('renders a different length based on prop', () => {
@@ -110,7 +110,7 @@ describe('<DInputPin />', () => {
       );
       const inputs = screen.getAllByRole('textbox');
       inputs.forEach((input) => {
-        expect(input).toHaveClass('is-invalid');
+        expect(input).toHaveAttribute('data-invalid');
       });
     });
   });

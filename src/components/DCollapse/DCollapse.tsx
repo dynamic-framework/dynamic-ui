@@ -3,6 +3,7 @@ import {
   useMemo,
   useState,
   useEffect,
+  useId,
 } from 'react';
 
 import type {
@@ -52,6 +53,8 @@ export default function DCollapse(
   }: Props,
 ) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const innerId = useId();
+  const bodyId = `${id ?? innerId}Body`;
 
   const onChangeCollapse = () => {
     setCollapsed((prev) => {
@@ -80,21 +83,27 @@ export default function DCollapse(
   return (
     <div
       id={id}
-      className={classNames('collapse-container', className)}
+      className={classNames('df-collapse', className)}
       style={style}
       {...dataAttributes}
     >
       <button
-        className="collapse-button"
+        className="df-collapse-trigger"
         type="button"
+        // `aria-expanded` and `aria-controls` are what make this a disclosure
+        // to a screen reader. 2.x had neither: the button announced only its
+        // label, with no indication that it opened anything or what.
+        aria-expanded={!collapsed}
+        aria-controls={bodyId}
         onClick={onChangeCollapse}
       >
-        <div className="flex-grow-1">
+        <div className="df-collapse-trigger-label">
           {Component}
         </div>
         <DIcon
+          className="df-collapse-trigger-end df-collapse-trigger-icon"
           color="primary"
-          size="1.25rem"
+          size="20px"
           icon={collapsed ? iconOpen : iconClose}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
@@ -102,11 +111,11 @@ export default function DCollapse(
         />
       </button>
       <div
-        className={classNames('collapse-body-wrapper', {
-          show: !collapsed,
-        })}
+        id={bodyId}
+        className="df-collapse-body"
+        {...!collapsed && { 'data-expanded': '' }}
       >
-        <div className="collapse-body">
+        <div className="df-collapse-body-inner">
           {children}
         </div>
       </div>

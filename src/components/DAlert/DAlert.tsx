@@ -7,6 +7,7 @@ import DIcon from '../DIcon';
 
 import { useDContext } from '../../contexts';
 import type { BaseProps, ComponentStateColor } from '../interface';
+import { resolveRole } from '../roles';
 
 type Props =
 & BaseProps
@@ -54,40 +55,40 @@ export default function DAlert(
   const icon = useMemo(() => iconProp || alert[color], [alert, iconProp, color]);
   const iconClose = useMemo(() => (iconCloseProp || xLg), [iconCloseProp, xLg]);
 
-  const generateClasses = useMemo(
-    () => ({
-      alert: true,
-      [`alert-${color}`]: true,
-      'fade show': !!showClose,
-      ...className && { [className]: true },
-    }),
-    [color, showClose, className],
+  const dataProps = useMemo(
+    () => ({ 'data-color': resolveRole(color, 'info') }),
+    [color],
   );
 
   return (
     <div
-      className={classNames(generateClasses)}
+      className={classNames('df-alert', className)}
       style={style}
       role="alert"
       id={id}
+      {...dataProps}
       {...dataAttributes}
     >
       {icon && (
         <DIcon
-          className="alert-icon"
+          className="df-alert-icon"
           icon={icon}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
           materialStyle={iconMaterialStyle}
         />
       )}
-      <div className="alert-text">
+      <div className="df-alert-content">
         {children}
       </div>
       {showClose && (
         <button
           type="button"
-          className="d-close"
+          className="df-button df-alert-dismiss"
+          data-variant="link"
+          data-color="neutral"
+          data-size="sm"
+          data-icon-only=""
           aria-label="Close"
           onClick={onClose}
         >

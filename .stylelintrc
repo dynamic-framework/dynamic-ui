@@ -1,34 +1,82 @@
 {
   "extends": [
-    "stylelint-config-twbs-bootstrap"
+    "stylelint-config-standard",
+    "stylelint-config-recess-order"
   ],
   "ignoreFiles": [
     "coverage/**/*",
     "dist/**/*",
+    "docs/**/*",
     "node_modules/**/*"
   ],
   "reportInvalidScopeDisables": true,
   "reportNeedlessDisables": true,
+  "rules": {
+    "selector-class-pattern": [
+      "^df(-[a-z0-9]+)+$",
+      {
+        "message": "Class names are hyphen-separated and df-prefixed: .df-button, .df-button-label, .df-card-header"
+      }
+    ],
+    "custom-property-pattern": [
+      "^(_|df-)[a-z0-9]+(-[a-z0-9]+)*$",
+      {
+        "message": "Custom properties are --df-* (public) or --_* (private to a rule)"
+      }
+    ],
+    "declaration-property-value-disallowed-list": {
+      "border": [
+        "none"
+      ],
+      "outline": [
+        "none"
+      ]
+    },
+    "alpha-value-notation": "number",
+    "color-function-notation": "modern",
+    "media-feature-range-notation": "prefix"
+  },
   "overrides": [
     {
-      "files": ["**/*.scss"],
+      "files": [
+        "src/css/**/*.css"
+      ],
       "rules": {
-        "declaration-property-value-disallowed-list": {
-          "border": "none",
-          "outline": "none"
-        },
-        "function-disallowed-list": [
-          "lighten",
-          "darken"
-        ],
-        "property-disallowed-list": [],
-        "scss/dollar-variable-default": [
+        "color-no-hex": [
           true,
           {
-            "ignore": "local"
+            "message": "No literal colours in the stylesheet. Every colour comes from a token — see tokens/README.md rule B."
           }
         ],
-        "scss/selector-no-union-class-name": true
+        "function-disallowed-list": [
+          [
+            "rgb",
+            "rgba",
+            "hsl",
+            "hsla"
+          ],
+          {
+            "message": "No literal colour functions. Use a token, or color-mix() over one."
+          }
+        ],
+        "declaration-no-important": [
+          true,
+          {
+            "message": "@layer makes !important unnecessary: a consumer's unlayered CSS already wins. If you truly need it, add an inline disable with a reason."
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "stories/**/*.scss",
+        "stories/**/*.css"
+      ],
+      "rules": {
+        "selector-class-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+        "custom-property-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+        "color-function-notation": null,
+        "alpha-value-notation": null
       }
     }
   ]

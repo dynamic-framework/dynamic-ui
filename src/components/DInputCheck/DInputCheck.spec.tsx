@@ -23,7 +23,7 @@ describe('<DInputCheck />', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <input
-    class="form-check-input"
+    class="df-choice-input"
     id="checkTest"
     type="checkbox"
     value=""
@@ -49,7 +49,7 @@ describe('<DInputCheck />', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <input
-    class="form-check-input"
+    class="df-choice-input"
     id="radioTest"
     type="radio"
     value=""
@@ -125,7 +125,7 @@ describe('<DInputCheck />', () => {
       />,
     );
     const input = screen.getByLabelText('invalid-check');
-    expect(input).toHaveClass('is-invalid');
+    expect(input).toHaveAttribute('data-invalid');
 
     rerender(
       <DInputCheck
@@ -134,7 +134,7 @@ describe('<DInputCheck />', () => {
         ariaLabel="valid-check"
       />,
     );
-    expect(screen.getByLabelText('valid-check')).toHaveClass('is-valid');
+    expect(screen.getByLabelText('valid-check')).toHaveAttribute('data-valid');
   });
 
   it('applies aria-describedby when hint is present', () => {

@@ -15,17 +15,19 @@ export default function DModalFooter(
     children,
   }: Props,
 ) {
-  const generateClasses = useMemo(() => ({
-    'modal-footer': true,
-    [`d-modal-action-${actionPlacement}`]: !!actionPlacement,
-  }), [actionPlacement]);
+  // `d-modal-action-fill` / `-start` were two classes for one axis.
+  const dataProps = useMemo(
+    () => (actionPlacement ? { 'data-align': actionPlacement } : {}),
+    [actionPlacement],
+  );
 
   return (
     <>
-      <div className="d-modal-separator" />
+      <hr className="df-overlay-separator" />
       <div
-        className={classNames(generateClasses, className)}
+        className={classNames('df-overlay-footer', className)}
         style={style}
+        {...dataProps}
       >
         {children}
       </div>

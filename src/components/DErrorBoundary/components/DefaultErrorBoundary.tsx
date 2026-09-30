@@ -12,7 +12,7 @@ export default function DefaultErrorBoundary({ resetErrorBoundary }: Props) {
       color="danger"
       showClose={false}
     >
-      <div className="d-flex align-items-center gap-2">
+      <div className="df-state" data-variant="error">
         <span>An unexpected error occurred.</span>
         <DButton
           color="secondary"

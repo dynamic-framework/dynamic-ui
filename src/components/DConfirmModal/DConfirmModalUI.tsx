@@ -65,14 +65,15 @@ export default function DConfirmModalUI({ entry }: Props) {
     <DModal
       name={entry.id}
       size="lg"
-      className={`confirm-modal ${critical ? 'critical-modal' : ''}`}
+      className="df-confirm-modal"
+      {...critical && { 'data-critical': '' }}
     >
       <DModal.Header onClose={handleClose} showCloseButton>
-        <h5 className="fw-bold">{title}</h5>
+        <h5 className="df-confirm-modal-title">{title}</h5>
       </DModal.Header>
 
-      <DModal.Body className="py-3 px-5">
-        <p className="mb-4">{message}</p>
+      <DModal.Body className="df-confirm-modal-body">
+        <p className="df-confirm-modal-message">{message}</p>
 
         {critical && (
           <DInput
@@ -81,7 +82,7 @@ export default function DConfirmModalUI({ entry }: Props) {
             placeholder={critical.inputPlaceholder}
             value={confirmationCode}
             onChange={(value) => setConfirmationCode(value)}
-            className="mb-4"
+            className="df-confirm-modal-field"
             autoFocus
           />
         )}

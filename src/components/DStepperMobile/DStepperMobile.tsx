@@ -4,9 +4,11 @@ import {
   useState,
 } from 'react';
 
-import classNames from 'classnames';
-import { PREFIX_BS } from '../config';
+import type { CSSProperties } from 'react';
 
+import classNames from 'classnames';
+
+import { PREFIX } from '../config';
 import type { BaseProps } from '../interface';
 
 type Step = {
@@ -55,27 +57,25 @@ export default function DStepper(
     };
   }, [currentAngle, currentStep, options.length]);
 
-  const progressStyle = useMemo(
-    () => `conic-gradient(
-      from 0deg,
-      var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
-      var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`,
-    [currentAngle],
-  );
-
   return (
     <div
-      className={classNames('d-stepper', className)}
+      className={classNames('df-stepper-mobile', className)}
       style={style}
     >
-      <div className="d-step-bar" style={{ background: progressStyle }}>
-        <p className="d-step-number">{`${currentStep}/${options.length}`}</p>
+      {/* 2.x assembled the whole `conic-gradient()` string in JavaScript. Only
+          the angle is a live value, so only the angle is written here and the
+          gradient lives in stepper.css. */}
+      <div
+        className="df-step-progress"
+        style={{ [`--${PREFIX}step-progress-angle`]: `${currentAngle}deg` } as CSSProperties}
+      >
+        <p className="df-step-progress-value">{`${currentStep}/${options.length}`}</p>
       </div>
-      <div className="d-step-info">
+      <div className="df-step-info">
         {Object.keys(currentOption).length > 0 && (
           <>
-            <div className="d-step-label">{currentOption.label}</div>
-            <div className="d-step-description">{currentOption.description || ''}</div>
+            <div className="df-step-label">{currentOption.label}</div>
+            <div className="df-step-description">{currentOption.description || ''}</div>
           </>
         )}
       </div>

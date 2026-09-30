@@ -1,0 +1,16 @@
+{
+  "$description": "Voucher tokens — a transaction receipt.",
+  "voucher": {
+    "padding": {"$type": "dimension", "$value": "{size.6}"},
+    "gap": {"$type": "dimension", "$value": "{size.4}"},
+    "radius": {"$type": "dimension", "$value": "{shape.surface}"},
+    "bg": {"$type": "color", "$value": "{bg.surface}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+    "divider-color": {"$type": "color", "$value": "{border.muted}"},
+    "title-font-size": {"$type": "dimension", "$value": "{font-size.500}"},
+    "title-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+    "amount-font-size": {"$type": "dimension", "$value": "{font-size.700}"},
+    "amount-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"}
+  }
+}

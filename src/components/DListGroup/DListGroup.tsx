@@ -35,26 +35,23 @@ function DListGroup(
     return as;
   }, [numbered, as]);
 
-  const generateClasses = useMemo(
-    () => {
-      const listGroupHorizontalClass = typeof horizontal === 'string'
-        ? `list-group-horizontal-${horizontal}`
-        : 'list-group-horizontal';
-
-      return {
-        'list-group': true,
-        'list-group-numbered': numbered,
-        'list-group-flush': flush,
-        [listGroupHorizontalClass]: !!horizontal,
-      };
-    },
-    [flush, horizontal, numbered],
-  );
+  /**
+   * `horizontal` was six class names in 2.x — one plain plus one per
+   * breakpoint — all shipped whether used or not. Here it is one attribute
+   * whose value is the breakpoint, or the empty string for "at every width",
+   * and the media queries live in the stylesheet.
+   */
+  const dataProps = useMemo(() => ({
+    ...numbered && { 'data-numbered': '' },
+    ...flush && { 'data-flush': '' },
+    ...horizontal && { 'data-horizontal': typeof horizontal === 'string' ? horizontal : '' },
+  }), [flush, horizontal, numbered]);
 
   return (
     <Tag
-      className={classNames(generateClasses, className)}
+      className={classNames('df-list', className)}
       style={style}
+      {...dataProps}
       {...dataAttributes}
     >
       {children}

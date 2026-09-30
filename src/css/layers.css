@@ -1,0 +1,15 @@
+/**
+ * Cascade layer order. MUST be the first thing in the bundle: a layer's
+ * position is fixed by where it is first NAMED, so declaring the order up
+ * front means the source files can be concatenated in any order.
+ *
+ * The point of this one line: a consumer's own CSS is *unlayered*, and
+ * unlayered styles beat every layer regardless of specificity. So a client can
+ * override anything Dynamic ships with a plain selector — no `!important`, no
+ * specificity arms race. That is what retires `_shame.scss` and the
+ * `$enable-important-utilities` flag from 2.x.
+ *
+ * Within Dynamic, later layers win: a utility beats a component, a component
+ * beats an element style.
+ */
+@layer df.tokens, df.reset, df.base, df.components, df.utilities;

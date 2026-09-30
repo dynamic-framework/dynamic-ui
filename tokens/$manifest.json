@@ -1,0 +1,75 @@
+{
+  "contract": "1.0.0",
+  "prefix": "df",
+  "rootFontSizeToken": "root-font-size",
+  "collections": [
+    {
+      "name": "Primitives",
+      "layer": "primitive",
+      "description": "Raw values with no meaning attached. The only layer allowed to contain literals. Created in Figma but hidden from the published library: a Figma alias needs its target to exist in the file, so the primitives must be there — designers just should not compose with them.",
+      "figma": {
+        "publish": true,
+        "hiddenFromPublishing": true
+      },
+      "modes": [
+        {
+          "name": "Value",
+          "sources": [
+            "primitives/color.json",
+            "primitives/dimension.json",
+            "primitives/typography.json",
+            "primitives/effect.json",
+            "primitives/motion.json"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Semantic",
+      "layer": "semantic",
+      "description": "The product vocabulary. The layer a client overrides to rebrand and the only one a designer composes with. Alias-only.",
+      "figma": {
+        "publish": true,
+        "hiddenFromPublishing": false
+      },
+      "modes": [
+        {
+          "name": "light",
+          "default": true,
+          "sources": [
+            "semantic/color.light.json",
+            "semantic/shared.json"
+          ],
+          "selector": "[data-df-theme=\"light\"]"
+        },
+        {
+          "name": "dark",
+          "selector": "[data-df-theme=\"dark\"]",
+          "prefersColorScheme": "dark",
+          "sources": [
+            "semantic/color.dark.json",
+            "semantic/shared.json"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Components",
+      "layer": "component",
+      "description": "Per-component geometry and type. Alias-only. Variant x colour matrices are deliberately absent — see tokens/component/button.json.",
+      "figma": {
+        "publish": true,
+        "hiddenFromPublishing": false
+      },
+      "modes": [
+        {
+          "name": "Value",
+          "default": true,
+          "sources": [
+            "component/*.json"
+          ]
+        }
+      ]
+    }
+  ]
+}

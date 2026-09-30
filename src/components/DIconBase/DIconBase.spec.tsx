@@ -9,7 +9,7 @@ describe('<DIconBase />', () => {
       <DIconBase icon="Heart" />,
     );
 
-    const iconElement = container.querySelector('.d-icon');
+    const iconElement = container.querySelector('.df-icon');
     expect(iconElement).toBeInTheDocument();
 
     // Lucide renders an SVG
@@ -26,7 +26,7 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon');
+    expect(icon).toHaveClass('df-icon');
   });
 
   it('applies custom size and color', () => {
@@ -40,10 +40,8 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveStyle({
-      '--bs-icon-component-size': '32px',
-    });
-    expect(icon).toHaveClass('d-icon-color-primary');
+    expect(icon).toHaveStyle({ '--df-icon-inline-size': '32px' });
+    expect(icon).toHaveAttribute('data-color', 'primary');
   });
 
   it('applies custom size and color with hasCircle', () => {
@@ -58,12 +56,9 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveStyle({
-      '--bs-icon-component-size': '32px',
-      '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
-    });
-    expect(icon).toHaveClass('d-icon-color-primary');
-    expect(icon).toHaveClass('d-icon-has-circle');
+    expect(icon).toHaveStyle({ '--df-icon-inline-size': '32px' });
+    expect(icon).toHaveAttribute('data-color', 'primary');
+    expect(icon).toHaveAttribute('data-circle');
   });
 
   it('applies color-based background when hasCircle is true', () => {
@@ -77,8 +72,8 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon-color-primary');
-    expect(icon).toHaveClass('d-icon-has-circle');
+    expect(icon).toHaveAttribute('data-color', 'primary');
+    expect(icon).toHaveAttribute('data-circle');
   });
 
   it('renders Material Design icon when materialStyle is true', () => {
@@ -106,10 +101,10 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveStyle({
-      '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
-    });
-    expect(icon).toHaveClass('d-icon-has-circle');
+    // The circle padding is no longer an inline calc(): it moved to
+    // --df-icon-circle-padding in the stylesheet, where a client can retune it.
+    // The attribute is what the element now carries.
+    expect(icon).toHaveAttribute('data-circle');
   });
 
   it('applies custom className when provided', () => {
@@ -161,7 +156,7 @@ describe('<DIconBase />', () => {
     );
 
     // Should render fallback
-    const iconElement = container.querySelector('.d-icon');
+    const iconElement = container.querySelector('.df-icon');
     expect(iconElement).toHaveTextContent('?');
 
     consoleWarnSpy.mockRestore();

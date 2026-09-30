@@ -39,17 +39,21 @@ export default function DStepper(
 ) {
   return (
     <div
-      className={className}
+      className={['df-stepper', className].filter(Boolean).join(' ')}
       style={style}
       {...dataAttributes}
     >
-      <div className={`d-block d-${breakpoint}-none`}>
+      {/* 2.x used `d-block d-{bp}-none` / `d-none d-{bp}-block`, which are
+          responsive utilities and therefore live in the opt-in stylesheet — a
+          component must not depend on that being loaded. The breakpoint is an
+          attribute and stepper.css owns the media queries. */}
+      <div className="df-stepper-mobile" data-below={breakpoint}>
         <DStepperMobile
           options={options}
           currentStep={currentStep}
         />
       </div>
-      <div className={`d-none d-${breakpoint}-block`}>
+      <div className="df-stepper-desktop" data-from={breakpoint}>
         <DStepperDesktop
           options={options}
           currentStep={currentStep}

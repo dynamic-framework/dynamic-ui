@@ -1,7 +1,7 @@
 <!-- <script type="module" src="dynamic-framework/dynamic-framework.esm.js"></script> -->
 <!-- <script nomodule src="cjs/dynamic-framework.cjs.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.browser.min.js"></script>
-<link href="css/dynamic-ui.css" rel="stylesheet" />
+<link href="css/dynamic.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -37,13 +37,13 @@
   .sbdocs :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)),
   .docs-story :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)),
   .sb-show-main :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)) {
-    font-family: var(--bs-body-font-family) !important;
-    font-size: var(--bs-body-font-size) !important;
+    font-family: var(--df-text-body-font-family) !important;
+    font-size: var(--df-text-body-font-size) !important;
   }
   .sbdocs :where(h1, h2, h3, h4, h5, h6, div),
   .docs-story :where(h1, h2, h3, h4, h5, h6, div),
   .sb-show-main :where(h1, h2, h3, h4, h5, h6, div) {
-    font-family: var(--bs-body-font-family) !important;
+    font-family: var(--df-text-body-font-family) !important;
   }
 
   /* Emulate .mb-4 for markdown headings in stories */
@@ -59,7 +59,7 @@
   .docs-story .inline-story.sb-unstyled h4,
   .docs-story .inline-story.sb-unstyled h5,
   .docs-story .inline-story.sb-unstyled h6 {
-    margin-bottom: var(--bs-ref-spacer-4) !important;
+    margin-bottom: var(--df-size-4) !important;
   }
   /* Ensure code tokens render monospace */
   .sbdocs .token,
@@ -69,12 +69,12 @@
   .language-jsx,
   .language-tsx,
   .language-html {
-    font-family: var(--bs-font-monospace) !important;
+    font-family: var(--df-font-family-mono) !important;
   }
   /* Force monospace for last token-like span in code blocks */
   .sbdocs div[class^="language-"] span:last-child,
   .docs-story div[class^="language-"] span:last-child,
   .sb-show-main div[class^="language-"] span:last-child {
-    font-family: var(--bs-font-monospace) !important;
+    font-family: var(--df-font-family-mono) !important;
   }
 </style>

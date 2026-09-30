@@ -1,0 +1,134 @@
+/**
+ * PIN / OTP input — one box per character.
+ *
+ * 2.x built each box from `.form-control` plus `.d-input-pin`, so a PIN box
+ * inherited the text field's padding and then fought it back with overrides.
+ * These are their own control: square, centred, and sized by the token.
+ */
+@layer df.components {
+  .df-pin {
+    display: flex;
+    gap: var(--df-pin-gap);
+  }
+
+  .df-pin-input {
+    width: var(--df-pin-size);
+    height: var(--df-pin-size);
+    padding: 0;
+    font-family: inherit;
+    font-size: var(--df-pin-font-size);
+    color: var(--df-pin-fg);
+    text-align: center;
+    background-color: var(--df-pin-bg);
+    border: var(--df-pin-border-width) solid var(--df-pin-border-color);
+    border-radius: var(--df-pin-radius);
+    transition: border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  /* The spin buttons on a numeric PIN box are noise and break the centring. */
+  .df-pin-input::-webkit-outer-spin-button,
+  .df-pin-input::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
+  .df-pin-input[type="number"] {
+    appearance: textfield;
+  }
+
+  .df-pin-input:focus {
+    border-color: var(--df-pin-focus-border-color);
+
+    /* The browser's own ring is replaced, not removed: the next rule draws one
+       for keyboard focus, which is the only case it should appear in. */
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+  }
+
+  .df-pin-input:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-pin-input:is([data-valid]) {
+    border-color: var(--df-pin-valid-border-color);
+  }
+
+  .df-pin-input:is([data-invalid], [aria-invalid="true"]) {
+    border-color: var(--df-pin-invalid-border-color);
+  }
+
+  .df-pin-input:is(:disabled) {
+    color: var(--df-pin-disabled-fg);
+    cursor: not-allowed;
+    background-color: var(--df-pin-disabled-bg);
+  }
+
+  /* --- The OTP panel ----------------------------------------------------
+   *
+   * 2.x arranged this with `d-flex flex-column gap-6 pb-4 px-3`, then
+   * `d-flex flex-column flex-lg-row gap-4 align-items-center` for the actions
+   * and `small ms-lg-auto mb-0` for the note. Two of those are responsive
+   * utilities, which live in the opt-in stylesheet — so the panel only laid out
+   * correctly if the consumer happened to load it.
+   */
+  .df-otp {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-otp-gap);
+    padding-block-end: var(--df-otp-padding-block-end);
+    padding-inline: var(--df-otp-padding-inline);
+  }
+
+  .df-otp-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-otp-gap);
+  }
+
+  .df-otp-divider {
+    width: 100%;
+    height: var(--df-stroke-divider);
+    margin: 0;
+    background-color: var(--df-otp-divider-color);
+    border: 0;
+  }
+
+  .df-otp-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-otp-actions-gap);
+    align-items: center;
+  }
+
+  .df-otp-note {
+    margin: 0;
+    font-size: var(--df-otp-note-font-size);
+  }
+
+  .df-otp-contact-link {
+    white-space: nowrap;
+  }
+
+  .df-otp-countdown {
+    display: flex;
+    gap: var(--df-size-2);
+    align-items: center;
+  }
+
+  .df-otp-countdown-text {
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  @media (min-width: 992px) {
+    .df-otp-actions {
+      flex-direction: row;
+    }
+
+    /* Pushes the note to the far edge once the actions sit in a row. */
+    .df-otp-note {
+      margin-inline-start: auto;
+    }
+  }
+}

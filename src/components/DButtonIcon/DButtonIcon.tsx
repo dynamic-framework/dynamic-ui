@@ -1,15 +1,14 @@
-/* eslint-disable react/button-has-type */
 import { useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 import DIcon from '../DIcon';
+import { resolveRole } from '../roles';
 
 import type {
   BaseProps,
   ButtonVariant,
-  ClassMap,
   ComponentColor,
   ComponentSize,
   FamilyIconProps,
@@ -27,6 +26,7 @@ type Props =
     state?: InputState;
     loading?: boolean;
     loadingAriaLabel?: string;
+    loadingLabel?: string;
     stopPropagationEnabled?: boolean;
     href?: string;
     target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
@@ -34,15 +34,25 @@ type Props =
     onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   };
 
+/**
+ * An icon-only button.
+ *
+ * 3.x has no stylesheet of its own for this: it renders `.df-button` with
+ * `data-icon-only`, which `src/css/components/button.css` already squares off.
+ * 2.x needed a `.d-button-icon` class alongside `.btn` plus its own rules; the
+ * only real difference is that the padding is symmetric, and that is one
+ * attribute.
+ */
 export default function DButtonIcon(
   {
     id,
     icon,
     size,
     className,
-    variant,
+    variant = 'solid',
     state,
     loadingAriaLabel,
+    loadingLabel = 'Loading…',
     iconMaterialStyle,
     disabled = false,
     color = 'primary',
@@ -60,23 +70,28 @@ export default function DButtonIcon(
     ...rest
   }: Props,
 ) {
-  const generateClasses = useMemo<ClassMap>(() => {
-    const variantClass = !variant || variant === 'solid'
-      ? `btn-${color}`
-      : `btn-${variant}-${color}`;
+  const isDisabled = useMemo(
+    () => state === 'disabled' || loading || disabled,
+    [state, loading, disabled],
+  );
 
-    return {
-      'btn d-button-icon': true,
-      [variantClass]: true,
-      ...size && { [`btn-${size}`]: true },
-      ...(state && state !== 'disabled') && { [state]: true },
-      loading,
-    };
-  }, [variant, color, size, state, loading]);
+  const dataProps = useMemo(() => ({
+    'data-variant': variant,
+    'data-color': resolveRole(color),
+    'data-icon-only': '',
+    ...(size ? { 'data-size': size } : {}),
+    ...(loading ? { 'data-loading': '' } : {}),
+    // `hover`, `active` and `focus-visible` let a story or a test pin a visual
+    // state. 2.x applied them as bare class names — `.hover`, `.active` —
+    // which are about as collision-prone as a class name gets in a page that
+    // also carries a client's CSS. They are `.df-*` now.
+    ...(state && state !== 'disabled' ? { 'data-state': state } : {}),
+  }), [variant, color, size, loading, state]);
 
-  const isDisabled = useMemo(() => (
-    state === 'disabled' || loading || disabled
-  ), [state, loading, disabled]);
+  const stateClass = useMemo(() => {
+    if (!state || state === 'disabled') return undefined;
+    return `df-${state}`;
+  }, [state]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (stopPropagationEnabled) {
@@ -90,77 +105,65 @@ export default function DButtonIcon(
   }, [stopPropagationEnabled, onClick, isDisabled]);
 
   const ariaLabel = useMemo(
-    () => (
-      loading
-        ? loadingAriaLabel || ariaLabelProp
-        : ariaLabelProp),
+    () => (loading ? loadingAriaLabel || ariaLabelProp : ariaLabelProp),
     [loading, loadingAriaLabel, ariaLabelProp],
   );
+
+  const body: ReactNode = loading
+    ? (
+      <span className="df-button-spinner">
+        <span className="df-spinner" aria-hidden="true" />
+        <span className="df-sr-only" role="status">{loadingLabel}</span>
+      </span>
+    )
+    : (
+      <DIcon
+        className="df-button-icon"
+        icon={icon}
+        familyClass={iconFamilyClass}
+        familyPrefix={iconFamilyPrefix}
+        materialStyle={iconMaterialStyle}
+      />
+    );
 
   if (href) {
     return (
       <a
         id={id}
-        href={href}
+        href={isDisabled ? undefined : href}
         target={target}
         rel={rel}
-        className={classNames(generateClasses, className)}
+        className={classNames('df-button', stateClass, className)}
         style={style}
         onClick={clickHandler}
         aria-label={ariaLabel}
+        aria-busy={loading}
         aria-disabled={isDisabled}
+        tabIndex={isDisabled ? -1 : undefined}
+        {...dataProps}
         {...dataAttributes}
       >
-        {loading
-          ? (
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </span>
-          )
-          : (
-            <DIcon
-              icon={icon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={iconMaterialStyle}
-            />
-          )}
+        {body}
       </a>
     );
   }
 
   return (
     <button
-      className={classNames(generateClasses, className)}
+      id={id}
+      // eslint-disable-next-line react/button-has-type
+      type={rest.type ?? 'button'}
+      className={classNames('df-button', stateClass, className)}
       style={style}
-      disabled={state === 'disabled' || loading}
+      disabled={isDisabled}
       onClick={clickHandler}
       aria-label={ariaLabel}
+      aria-busy={loading}
+      {...dataProps}
       {...dataAttributes}
       {...rest}
     >
-      {loading
-        ? (
-          <span
-            className="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          >
-            <span className="visually-hidden">Loading...</span>
-          </span>
-        )
-        : (
-          <DIcon
-            icon={icon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={iconMaterialStyle}
-          />
-        )}
+      {body}
     </button>
   );
 }

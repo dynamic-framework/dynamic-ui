@@ -1,0 +1,118 @@
+{
+  "$description": "Semantic tokens that do not vary by colour mode: type roles, radius roles, elevation and motion roles. Loaded into every mode of the Semantic collection.",
+  "text": {
+    "$description": "Type roles. 2.x expressed these as `$h1-font-size` .. `$h6-font-size` plus `$display1..6`, each wired through rfs() fluid sizing. Fluid sizing cannot round-trip to Figma, so the sizes here are discrete; responsive scaling belongs in the Breakpoint collection.",
+    "body": {
+      "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
+      "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
+      "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" },
+      "line-height": { "$type": "number", "$value": "{line-height.normal}" }
+    },
+    "body-sm": {
+      "font-size": { "$type": "dimension", "$value": "{font-size.200}" },
+      "line-height": { "$type": "number", "$value": "{line-height.normal}" }
+    },
+    "caption": {
+      "font-size": { "$type": "dimension", "$value": "{font-size.100}" },
+      "line-height": { "$type": "number", "$value": "{line-height.snug}" }
+    },
+    "heading": {
+      "$description": "Shared across h1-h6. 2.x used $font-weight-bold, whose value was 600 — the token named `semibold` here, so the rendered weight is unchanged.",
+      "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
+      "font-weight": { "$type": "fontWeight", "$value": "{font-weight.semibold}" },
+      "line-height": { "$type": "number", "$value": "{line-height.tight}" }
+    },
+    "heading-1": { "font-size": { "$type": "dimension", "$value": "{font-size.900}" } },
+    "heading-2": { "font-size": { "$type": "dimension", "$value": "{font-size.800}" } },
+    "heading-3": { "font-size": { "$type": "dimension", "$value": "{font-size.700}" } },
+    "heading-4": { "font-size": { "$type": "dimension", "$value": "{font-size.600}" } },
+    "heading-5": { "font-size": { "$type": "dimension", "$value": "{font-size.500}" } },
+    "heading-6": { "font-size": { "$type": "dimension", "$value": "{font-size.300}" } },
+    "display-1": { "font-size": { "$type": "dimension", "$value": "{font-size.1500}" } },
+    "display-2": { "font-size": { "$type": "dimension", "$value": "{font-size.1400}" } },
+    "display-3": { "font-size": { "$type": "dimension", "$value": "{font-size.1300}" } },
+    "display-4": { "font-size": { "$type": "dimension", "$value": "{font-size.1200}" } },
+    "display-5": { "font-size": { "$type": "dimension", "$value": "{font-size.1100}" } },
+    "display-6": { "font-size": { "$type": "dimension", "$value": "{font-size.1000}" } },
+    "label": {
+      "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
+      "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" }
+    },
+    "table-header": {
+      "$description": "2.x forced this with `th { font-weight: var(--bs-fw-semibold) !important }` in _shame.scss. Its 500 is the token named `medium` here.",
+      "font-weight": { "$type": "fontWeight", "$value": "{font-weight.medium}" }
+    }
+  },
+  "shape": {
+    "$type": "dimension",
+    "$description": "Radius roles. Named `shape` rather than `radius` so the role names cannot collide with the primitive `radius.*` scale — two collections declaring `radius.none` would emit one custom property twice, the second aliasing itself.",
+    "control": { "$value": "{radius.md}", "$description": "Buttons, inputs, chips." },
+    "control-sm": { "$value": "{radius.sm}" },
+    "control-lg": { "$value": "{radius.lg}" },
+    "surface": { "$value": "{radius.lg}", "$description": "Cards, panels." },
+    "surface-lg": { "$value": "{radius.xl}", "$description": "Modals, offcanvas." },
+    "pill": { "$value": "{radius.pill}" },
+    "none": { "$value": "{radius.none}" }
+  },
+  "stroke": {
+    "$type": "dimension",
+    "$description": "Border-width roles. Named `stroke` for the same reason `shape` is not `radius`.",
+    "control": { "$value": "{border-width.1}" },
+    "divider": { "$value": "{border-width.1}" },
+    "emphasis": { "$value": "{border-width.2}" }
+  },
+  "opacity": {
+    "$type": "number",
+    "disabled": { "$value": "{opacity.65}" },
+    "muted": { "$value": "{opacity.50}" },
+    "scrim": { "$value": "{opacity.50}" }
+  },
+  "focus": {
+    "ring-width": { "$type": "dimension", "$value": "{border-width.3}" },
+    "ring-offset": { "$type": "dimension", "$value": "{border-width.1}" }
+  },
+  "elevation": {
+    "$type": "shadow",
+    "$description": "Composite shadows. Figma has no shadow VARIABLE type — shadows are effect styles — so this group is not published as variables; the Figma exporter emits it as effect styles instead.",
+    "$extensions": {
+      "dev.dynamicframework.figma": { "publish": false, "exportAs": "effectStyle" }
+    },
+    "none": {
+      "$value": {
+        "color": "{color.alpha.black.5}", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 0, "unit": "px" }, "blur": { "value": 0, "unit": "px" }, "spread": { "value": 0, "unit": "px" }
+      }
+    },
+    "sm": {
+      "$value": {
+        "color": "{color.alpha.black.5}", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 1, "unit": "px" }, "blur": { "value": 2, "unit": "px" }, "spread": { "value": 0, "unit": "px" }
+      }
+    },
+    "md": {
+      "$value": {
+        "color": "{color.alpha.black.10}", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 4, "unit": "px" }, "blur": { "value": 8, "unit": "px" }, "spread": { "value": -2, "unit": "px" }
+      }
+    },
+    "lg": {
+      "$value": {
+        "color": "{color.alpha.black.10}", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 10, "unit": "px" }, "blur": { "value": 20, "unit": "px" }, "spread": { "value": -4, "unit": "px" }
+      }
+    },
+    "xl": {
+      "$value": {
+        "color": "{color.alpha.black.20}", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 20, "unit": "px" }, "blur": { "value": 40, "unit": "px" }, "spread": { "value": -8, "unit": "px" }
+      }
+    }
+  },
+  "motion": {
+    "$description": "Motion roles.",
+    "$extensions": {
+      "dev.dynamicframework.figma": { "publish": false }
+    },
+    "duration-enter": { "$type": "duration", "$value": "{duration.normal}" },
+    "duration-exit": { "$type": "duration", "$value": "{duration.fast}" },
+    "duration-hover": { "$type": "duration", "$value": "{duration.fast}" },
+    "easing-enter": { "$type": "cubicBezier", "$value": "{easing.decelerate}" },
+    "easing-exit": { "$type": "cubicBezier", "$value": "{easing.accelerate}" },
+    "easing-standard": { "$type": "cubicBezier", "$value": "{easing.standard}" }
+  }
+}

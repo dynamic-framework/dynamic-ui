@@ -22,11 +22,32 @@ Dynamic framework exports 4 card-related components:
 To understand in more detail the aspects and css varibles covered by this component,
 review the following documentation:
 
-+ [Bootstrap Cards](https://getbootstrap.com/docs/5.3/components/card/)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Card CSS Variables](https://getbootstrap.com/docs/5.3/components/card/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/card.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                                     | Type           | Description                    |
+|----------------------------------------------|----------------|--------------------------------|
+| \`--df-card-padding-block\`                  | css length     | Padding block                  |
+| \`--df-card-padding-inline\`                 | css length     | Padding inline                 |
+| \`--df-card-gap\`                            | css length     | Gap                            |
+| \`--df-card-radius\`                         | css length     | Radius                         |
+| \`--df-card-border-width\`                   | css length     | Border width                   |
+| \`--df-card-bg\`                             | css color      | Background                     |
+| \`--df-card-fg\`                             | css color      | Foreground                     |
+| \`--df-card-border-color\`                   | css color      | Border color                   |
+| \`--df-card-shadow\`                         | css box-shadow | Shadow                         |
+| \`--df-card-header-padding-block\`           | css length     | Header padding block           |
+| \`--df-card-header-border-color\`            | css color      | Header border color            |
+| \`--df-card-header-font-size\`               | css length     | Header font size               |
+| \`--df-card-header-font-weight\`             | font weight    | Header font weight             |
+| \`--df-card-footer-padding-block\`           | css length     | Footer padding block           |
+| \`--df-card-footer-border-color\`            | css color      | Footer border color            |
+| \`--df-card-footer-bg\`                      | css color      | Footer background              |
+| \`--df-card-interactive-border-color-hover\` | css color      | Interactive border color hover |
+| \`--df-card-interactive-shadow-hover\`       | css box-shadow | Interactive shadow hover       |
 
         `,
       },
@@ -53,12 +74,12 @@ export const Default: Story = {
   render: (args) => (
     <DCard {...args}>
       <DCard.Header>
-        <h5 className="card-title mb-0">Title #1</h5>
+        <h5 className="df-fs-heading-5 df-fw-semibold df-mb-0">Title #1</h5>
       </DCard.Header>
       <DCard.Body>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
       </DCard.Body>
-      <DCard.Footer className="d-flex justify-content-end">
+      <DCard.Footer className="df-flex df-justify-end">
         <DButton
           text="Click me!"
         />
@@ -76,7 +97,7 @@ export const HeaderAndBody: Story = {
   render: (args) => (
     <DCard {...args}>
       <DCard.Header>
-        <h5 className="card-title mb-0">Title #1</h5>
+        <h5 className="df-fs-heading-5 df-fw-semibold df-mb-0">Title #1</h5>
       </DCard.Header>
       <DCard.Body>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
@@ -113,7 +134,7 @@ export const TopImage: Story = {
     <DCard {...args}>
       <img
         src="https://placehold.co/200x200"
-        className="card-img-top"
+        className="df-card-media"
         alt="200x200"
       />
       <DCard.Body>
@@ -133,24 +154,24 @@ export const TopImage: Story = {
 export const Horizontal: Story = {
   render: (args) => (
     <DCard {...args}>
-      <div className="row g-0">
-        <div className="col-md-4">
+      <div className="df-grid df-grid-cols-12 df-gap-0">
+        <div className="df-md:col-span-4">
           <img
             src="https://placehold.co/200x300"
-            className="img-fluid rounded-start"
+            className="df-w-full df-h-auto df-rounded-s-control"
             alt="200x200"
           />
         </div>
-        <div className="col-md-8">
+        <div className="df-md:col-span-8">
           <DCard.Body>
-            <h5 className="card-title mb-0">Card title</h5>
-            <p className="card-text">
+            <h5 className="df-fs-heading-5 df-fw-semibold df-mb-0">Card title</h5>
+            <p className="df-fs-body">
               This is a wider card with supporting text
               below as a natural lead-in to additional
               content. This content is a little bit longer.
             </p>
-            <p className="card-text">
-              <small className="text-body-secondary">
+            <p className="df-fs-body">
+              <small className="df-text-muted">
                 Last updated 3 mins ago
               </small>
             </p>

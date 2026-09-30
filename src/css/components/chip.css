@@ -1,0 +1,63 @@
+/**
+ * Chip.
+ */
+@layer df.components {
+  .df-chip {
+    --df-chip-bg: var(--df-bg-muted);
+    --df-chip-fg: var(--df-fg-default);
+    --df-chip-border-color: var(--df-border-default);
+
+    display: inline-flex;
+    gap: var(--df-chip-gap);
+    align-items: center;
+    padding-block: var(--df-chip-padding-block);
+    padding-inline: var(--df-chip-padding-inline);
+    font-size: var(--df-chip-font-size);
+    line-height: var(--df-chip-line-height);
+    color: var(--df-chip-fg);
+    background-color: var(--df-chip-bg);
+    border: var(--df-chip-border-width) solid var(--df-chip-border-color);
+    border-radius: var(--df-chip-radius);
+  }
+
+  .df-chip-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-chip-icon-size);
+    height: var(--df-chip-icon-size);
+  }
+
+  .df-chip-icon > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* The dismiss control is a real button: focusable, and with a hit area that
+     is not just the glyph. 2.x reused the icon container class for it, which
+     left it with no focus treatment of its own. */
+  .df-chip-dismiss {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-chip-icon-size);
+    height: var(--df-chip-icon-size);
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-chip-dismiss:hover {
+    background-color: color-mix(in oklab, currentcolor 12%, transparent);
+  }
+
+  .df-chip-dismiss:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+}

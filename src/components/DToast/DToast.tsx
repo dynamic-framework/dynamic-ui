@@ -17,7 +17,7 @@ function DToast(
 ) {
   return (
     <div
-      className={classNames('toast', className)}
+      className={classNames('df-toast', className)}
       role="alert"
       aria-live="assertive"
       aria-atomic="true"

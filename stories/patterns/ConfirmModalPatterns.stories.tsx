@@ -51,14 +51,14 @@ function SimpleConfirmContent() {
   });
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Delete Item"
         color="danger"
         onClick={confirm.open}
-        className="mb-3"
+        className="df-mb-3"
       />
-      {result && <p className="alert alert-info">{result}</p>}
+      {result && <p className="df-alert" data-color="info">{result}</p>}
     </div>
   );
 }
@@ -92,14 +92,14 @@ export const SimpleConfirm: StoryObj = {
   });
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Delete Item"
         color="danger"
         onClick={confirm.open}
-        className="mb-3"
+        className="df-mb-3"
       />
-      {result && <p className="alert alert-info">{result}</p>}
+      {result && <p className="df-alert" data-color="info">{result}</p>}
     </div>
   );
 }`,
@@ -129,14 +129,14 @@ function CriticalDeleteContent() {
   });
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Delete Account"
         color="danger"
         onClick={confirm.open}
-        className="mb-3"
+        className="df-mb-3"
       />
-      {result && <p className="alert alert-danger">{result}</p>}
+      {result && <p className="df-alert" data-color="danger">{result}</p>}
     </div>
   );
 }
@@ -171,14 +171,14 @@ export const CriticalDelete: StoryObj = {
   });
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Delete Account"
         color="danger"
         onClick={confirm.open}
-        className="mb-3"
+        className="df-mb-3"
       />
-      {result && <p className="alert alert-danger">{result}</p>}
+      {result && <p className="df-alert" data-color="danger">{result}</p>}
     </div>
   );
 }`,
@@ -217,20 +217,20 @@ function DeleteContactContent() {
   });
 
   return (
-    <div className="text-center">
-      <div className="card p-4 mb-3" style={{ maxWidth: '350px', margin: '0 auto' }}>
-        <div className="mb-3">
+    <div className="df-text-center">
+      <div className="df-card df-p-4 df-mb-3" style={{ maxWidth: '350px', margin: '0 auto' }}>
+        <div className="df-mb-3">
           <DAvatar name="Sarah Mitchell" size="lg" />
         </div>
-        <h5 className="mb-1">Sarah Mitchell</h5>
-        <p className="text-muted mb-3">sarah.mitchell@email.com</p>
-        <p className="text-muted small mb-4">Added 2 months ago</p>
+        <h5 className="df-mb-1">Sarah Mitchell</h5>
+        <p className="df-text-muted df-mb-3">sarah.mitchell@email.com</p>
+        <p className="df-text-muted df-fs-body-sm df-mb-4">Added 2 months ago</p>
         <DButton
           text={isDeleting ? 'Deleting...' : 'Delete Contact'}
           color="danger"
           onClick={confirmDelete.open}
           disabled={isDeleting}
-          className="w-100"
+          className="df-w-full"
         />
       </div>
       {result && (
@@ -282,20 +282,20 @@ export const DeleteContact: StoryObj = {
   });
 
   return (
-    <div className="text-center">
-      <div className="card p-4 mb-3" style={{ maxWidth: '350px', margin: '0 auto' }}>
-        <div className="mb-3">
+    <div className="df-text-center">
+      <div className="df-card df-p-4 df-mb-3" style={{ maxWidth: '350px', margin: '0 auto' }}>
+        <div className="df-mb-3">
           <DAvatar name="Sarah Mitchell" size="lg" />
         </div>
-        <h5 className="mb-1">Sarah Mitchell</h5>
-        <p className="text-muted mb-3">sarah.mitchell@email.com</p>
-        <p className="text-muted small mb-4">Added 2 months ago</p>
+        <h5 className="df-mb-1">Sarah Mitchell</h5>
+        <p className="df-text-muted df-mb-3">sarah.mitchell@email.com</p>
+        <p className="df-text-muted df-fs-body-sm df-mb-4">Added 2 months ago</p>
         <DButton
           text={isDeleting ? 'Deleting...' : 'Delete Contact'}
           color="danger"
           onClick={confirmDelete.open}
           disabled={isDeleting}
-          className="w-100"
+          className="df-w-full"
         />
       </div>
       {result && (
@@ -363,7 +363,7 @@ function MultipleActionsContent() {
 
   return (
     <div>
-      <div className="d-flex gap-2 justify-content-center mb-3 flex-wrap">
+      <div className="df-flex df-gap-2 df-justify-center df-mb-3 df-flex-wrap">
         <DButton
           text="Archive"
           variant="outline"
@@ -381,7 +381,7 @@ function MultipleActionsContent() {
           onClick={confirmExport.open}
         />
       </div>
-      {lastAction && <p className="alert alert-info text-center">{lastAction}</p>}
+      {lastAction && <p className="df-alert df-text-center" data-color="info">{lastAction}</p>}
     </div>
   );
 }
@@ -440,7 +440,7 @@ export const MultipleActions: StoryObj = {
 
   return (
     <div>
-      <div className="d-flex gap-2 justify-content-center mb-3 flex-wrap">
+      <div className="df-flex df-gap-2 df-justify-center df-mb-3 df-flex-wrap">
         <DButton
           text="Archive"
           variant="outline"
@@ -458,7 +458,7 @@ export const MultipleActions: StoryObj = {
           onClick={confirmExport.open}
         />
       </div>
-      {lastAction && <p className="alert alert-info text-center">{lastAction}</p>}
+      {lastAction && <p className="df-alert df-text-center" data-color="info">{lastAction}</p>}
     </div>
   );
 }`,
@@ -568,16 +568,16 @@ function ContactRow({
   });
 
   return (
-    <div className="d-flex align-items-center gap-3 p-3 border-bottom">
+    <div className="df-flex df-items-center df-gap-3 df-p-3 df-border-b-1">
       <DAvatar name={contact.name} size="sm" />
-      <div className="flex-grow-1 min-width-0">
-        <div className="fw-semibold text-truncate">{contact.name}</div>
-        <div className="text-muted small text-truncate">{contact.email}</div>
+      <div className="df-grow df-min-w-0">
+        <div className="df-fw-semibold df-text-truncate">{contact.name}</div>
+        <div className="df-text-muted df-fs-body-sm df-text-truncate">{contact.email}</div>
       </div>
-      <div className="text-muted small d-none d-sm-block" style={{ minWidth: '100px' }}>
+      <div className="df-text-muted df-fs-body-sm df-hidden df-sm:block" style={{ minWidth: '100px' }}>
         {contact.phone}
       </div>
-      <span className="badge bg-secondary-subtle text-secondary-emphasis d-none d-md-inline">
+      <span className="df-badge df-bg-secondary-subtle df-text-secondary df-hidden df-md:inline">
         {contact.role}
       </span>
       <DDropdown
@@ -612,12 +612,12 @@ function ContactListContent() {
 
   return (
     <div style={{ width: '600px', maxWidth: '100%' }}>
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h5 className="mb-0">{`Contacts (${contacts.length})`}</h5>
+      <div className="df-flex df-items-center df-justify-between df-mb-3">
+        <h5 className="df-mb-0">{`Contacts (${contacts.length})`}</h5>
       </div>
-      <div className="card">
+      <div className="df-card">
         {contacts.length === 0 ? (
-          <p className="text-muted text-center py-4 mb-0">No contacts remaining.</p>
+          <p className="df-text-muted df-text-center df-py-4 df-mb-0">No contacts remaining.</p>
         ) : (
           contacts.map((contact) => (
             <ContactRow
@@ -666,25 +666,25 @@ function EditProfileModal() {
   return (
     <DModal name="editProfileModal" centered size="lg">
       <DModal.Header onClose={confirmDiscard.open} showCloseButton>
-        <h5 className="fw-bold">Edit Profile</h5>
+        <h5 className="df-fw-semibold">Edit Profile</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
-        <p className="text-muted mb-3">
+      <DModal.Body className="df-py-3 df-px-5">
+        <p className="df-text-muted df-mb-3">
           Fill in your details below. Changes are not saved until you click
           {' '}
           <strong>Save</strong>
           .
         </p>
-        <div className="mb-3">
+        <div className="df-mb-3">
           <input
-            className="form-control"
+            className="df-input"
             defaultValue="Sarah Mitchell"
             aria-label="Full name"
           />
         </div>
-        <div className="mb-3">
+        <div className="df-mb-3">
           <input
-            className="form-control"
+            className="df-input"
             defaultValue="sarah.mitchell@email.com"
             aria-label="Email"
           />
@@ -710,7 +710,7 @@ function ConfirmOnModalContent() {
   const { openPortal } = useDPortalContext<EditProfilePayloads>();
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Open Form Modal"
         onClick={() => openPortal('editProfile', {})}
@@ -763,11 +763,11 @@ function EditProfileModal({ }: PortalProps<EditProfilePayloads['editProfile']>) 
   return (
     <DModal name="editProfileModal" centered size="lg">
       <DModal.Header onClose={confirmDiscard.open} showCloseButton>
-        <h5 className="fw-bold">Edit Profile</h5>
+        <h5 className="df-fw-semibold">Edit Profile</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
-        <input className="form-control mb-3" defaultValue="Sarah Mitchell" aria-label="Full name" />
-        <input className="form-control" defaultValue="sarah.mitchell@email.com" aria-label="Email" />
+      <DModal.Body className="df-py-3 df-px-5">
+        <input className="df-input df-mb-3" defaultValue="Sarah Mitchell" aria-label="Full name" />
+        <input className="df-input" defaultValue="sarah.mitchell@email.com" aria-label="Email" />
       </DModal.Body>
       <DModal.Footer>
         <DButton text="Close" variant="outline" onClick={confirmDiscard.open} />
@@ -814,17 +814,17 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
   return (
     <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
       <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
-        <h5 className="fw-bold">Settings</h5>
+        <h5 className="df-fw-semibold">Settings</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
-        <p className="text-muted mb-4">
+        <p className="df-text-muted df-mb-4">
           Update your preferences below. Changes are not saved until you click
           {' '}
           <strong>Save</strong>
           .
         </p>
-        <div className="mb-3">
-          <p className="form-label mb-2">Notification email</p>
+        <div className="df-mb-3">
+          <p className="df-label df-mb-2">Notification email</p>
           <DInputSwitch label="Email notifications" />
           <DInputSwitch label="Newsletter subscription" />
         </div>
@@ -850,7 +850,7 @@ function ConfirmOnOffcanvasContent() {
   const { openPortal } = useDPortalContext<SettingsOffcanvasPayloads>();
 
   return (
-    <div className="text-center">
+    <div className="df-text-center">
       <DButton
         text="Open Settings"
         onClick={() => openPortal('settings', {})}
@@ -903,7 +903,7 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
   return (
     <DOffcanvas name={name} openFrom="end">
       <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
-        <h5 className="fw-bold">Settings</h5>
+        <h5 className="df-fw-semibold">Settings</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         {/* form fields */}

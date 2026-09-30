@@ -3,7 +3,7 @@ import { DTabs, DLayout, DBox } from '../src';
 
 <Meta title="Design System/Quick Start" />
 
-<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--df-font-family-sans)' }}>
 
   # Dynamic Framework
 
@@ -107,75 +107,75 @@ import { DTabs, DLayout, DBox } from '../src';
   - Text: `.text-{token}`, Background tints: `.bg-{token}-{25|50|100|200|300|400|500|600|700|800|900}`, Border: `.border-{token}`
   - Light variants are intended for use on dark backgrounds to ensure contrast.
 
-  <div className="d-flex flex-wrap gap-3 mb-4">
-    <div className="p-3 rounded border border-primary">
-      <strong className="text-primary">Primary</strong>
-      <p className="m-0 text-body-secondary">Action or highlight</p>
+  <div className="df-flex df-flex-wrap df-gap-3 df-mb-4">
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-primary">
+      <strong className="df-text-primary">Primary</strong>
+      <p className="df-m-0 df-text-muted">Action or highlight</p>
     </div>
-    <div className="p-3 rounded border border-success bg-success-100">
-      <strong className="text-success">Success</strong>
-      <p className="m-0 text-body-secondary">Positive state</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-success df-bg-success-subtle">
+      <strong className="df-text-success">Success</strong>
+      <p className="df-m-0 df-text-muted">Positive state</p>
     </div>
-    <div className="p-3 rounded border border-warning bg-warning-100">
-      <strong className="text-warning">Warning</strong>
-      <p className="m-0 text-body-secondary">Cautionary state</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-warning df-bg-warning-subtle">
+      <strong className="df-text-warning">Warning</strong>
+      <p className="df-m-0 df-text-muted">Cautionary state</p>
     </div>
-    <div className="p-3 rounded border border-danger bg-danger-100">
-      <strong className="text-danger">Danger</strong>
-      <p className="m-0 text-body-secondary">Error/Destructive</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-danger df-bg-danger-subtle">
+      <strong className="df-text-danger">Danger</strong>
+      <p className="df-m-0 df-text-muted">Error/Destructive</p>
     </div>
-    <div className="p-3 rounded border border-info bg-info-100">
-      <strong className="text-info">Info</strong>
-      <p className="m-0 text-body-secondary">Informational</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-info df-bg-info-subtle">
+      <strong className="df-text-info">Info</strong>
+      <p className="df-m-0 df-text-muted">Informational</p>
     </div>
-    <div className="p-3 rounded border border-secondary bg-secondary-100">
-      <strong className="text-secondary">Secondary</strong>
-      <p className="m-0 text-body-secondary">Neutral/Complementary</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-secondary df-bg-secondary-subtle">
+      <strong className="df-text-secondary">Secondary</strong>
+      <p className="df-m-0 df-text-muted">Neutral/Complementary</p>
     </div>
-    <div className="p-3 rounded border border-dark bg-dark-100">
-      <strong className="text-dark">Dark</strong>
-      <p className="m-0 text-body-secondary">Dark surfaces</p>
+    <div className="df-p-3 df-rounded-control df-border-1 df-border-strong df-bg-sunken">
+      <strong className="df-text-default">Dark</strong>
+      <p className="df-m-0 df-text-muted">Dark surfaces</p>
     </div>
   </div>
 
   ```html
-  <div class="text-warning">Warning</div>
-  <div class="bg-danger-100 border border-danger">Danger</div>
+  <div class="df-text-warning">Warning</div>
+  <div class="df-bg-danger-subtle df-border-1 df-border-danger">Danger</div>
   ```
 
-  <p className="mt-3 p-3 rounded bg-dark text-light">Light variants (e.g., <code className="bg-light text-dark">.text-light</code>), are designed for dark backgrounds.</p>
+  <p className="df-mt-3 df-p-3 df-rounded-control df-bg-inverse df-text-inverse">Light variants (e.g., <code className="df-bg-muted df-text-default">.text-light</code>), are designed for dark backgrounds.</p>
 
   <br />
   #### Spacing system
   Spacing utilities extended to 0–30 with responsive variants.
   - Margin: `.m{t|b|s|e|x|y}-{0..30}`; Padding: `.p{t|b|s|e|x|y}-{0..30}`
 
-  <div className="p-3 border rounded d-flex flex-column gap-1 mb-4">
-    <div className="p-2 bg-secondary-100">.p-2</div>
-    <div className="mt-15 p-2 bg-secondary-100">.mt-15</div>
-    <div className="px-30 py-2 bg-secondary-100">.px-30 .py-2</div>
+  <div className="df-p-3 df-border-1 df-rounded-control df-flex df-flex-col df-gap-1 df-mb-4">
+    <div className="df-p-2 df-bg-secondary-subtle">.p-2</div>
+    <div className="df-mt-15 df-p-2 df-bg-secondary-subtle">.mt-15</div>
+    <div className="df-px-30 df-py-2 df-bg-secondary-subtle">.px-30 .py-2</div>
   </div>
 
   ```html
-  <div class="mt-15 px-30 py-2">...</div>
+  <div class="df-mt-15 df-px-30 df-py-2">...</div>
   ```
 
   <br />
   #### Grid & layout
-  Leverage Bootstrap grid: Container (.container), Rows (.row), Columns (.col, .col-6, .col-md-4 …). You can use the classic <code>&lt;div class="row"&gt;</code> approach, or our CSS Grid-based column system via <code>&lt;DLayout /&gt;</code>.
+  Leverage Bootstrap grid: Container (.container), Rows (.row), Columns (.col, .col-6, .col-md-4 …). You can use the classic <code>&lt;div class="df-grid df-grid-cols-12 df-gap-4"&gt;</code> approach, or our CSS Grid-based column system via <code>&lt;DLayout /&gt;</code>.
   See: <a href="/?path=/story/design-system-components-layout">Design System/Components/Layout</a>.
 
-  <div className="container p-3 border rounded">
-    <div className="row g-2">
-      <div className="col-6"><div className="p-2 bg-secondary-100">.col-6</div></div>
-      <div className="col-6"><div className="p-2 bg-secondary-100">.col-6</div></div>
-      <div className="col-md-4"><div className="p-2 bg-secondary-100">.col-md-4</div></div>
-      <div className="col-md-8"><div className="p-2 bg-secondary-100">.col-md-8</div></div>
+  <div className="df-container df-container-xxl df-p-3 df-border-1 df-rounded-control">
+    <div className="df-grid df-grid-cols-12 df-gap-2">
+      <div className="df-col-span-6"><div className="df-p-2 df-bg-secondary-subtle">.col-6</div></div>
+      <div className="df-col-span-6"><div className="df-p-2 df-bg-secondary-subtle">.col-6</div></div>
+      <div className="df-md:col-span-4"><div className="df-p-2 df-bg-secondary-subtle">.col-md-4</div></div>
+      <div className="df-md:col-span-8"><div className="df-p-2 df-bg-secondary-subtle">.col-md-8</div></div>
     </div>
   </div>
 
   ```html
-  <div class="container"><div class="row"><div class="col-md-4">...</div></div></div>
+  <div class="df-container df-container-xxl"><div class="df-grid df-grid-cols-12 df-gap-4"><div class="df-md:col-span-4">...</div></div></div>
   ```
 
   DLayout (CSS Grid) example:
@@ -192,13 +192,13 @@ import { DTabs, DLayout, DBox } from '../src';
   </DLayout>
   ```
 
-  <div className="mt-3">
+  <div className="df-mt-3">
     <DLayout gap={3}>
       <DLayout.Pane cols="4">
-        <DBox className="p-3 border rounded bg-secondary-100">Sidebar</DBox>
+        <DBox className="df-p-3 df-border-1 df-rounded-control df-bg-secondary-subtle">Sidebar</DBox>
       </DLayout.Pane>
       <DLayout.Pane cols="8">
-        <DBox className="p-3 border rounded bg-secondary-100">Main Content</DBox>
+        <DBox className="df-p-3 df-border-1 df-rounded-control df-bg-secondary-subtle">Main Content</DBox>
       </DLayout.Pane>
     </DLayout>
   </div>
@@ -208,14 +208,14 @@ import { DTabs, DLayout, DBox } from '../src';
   `dark:` utilities layer on Bootstrap and also support automatic `prefers-color-scheme`.
   See: <a href="/?path=/story/design-system-examples-dark-utilities">Design System/Examples/Dark Utilities</a>.
 
-  <div className="d-flex gap-3 mb-4">
-    <div className="p-3 border dark:bg-secondary-100">Auto/system dark tint</div>
-    <div className="dark p-3 border dark:bg-primary-100">Forced dark via .dark</div>
+  <div className="df-flex df-gap-3 df-mb-4">
+    <div className="df-p-3 df-border-1 df-dark:bg-secondary-subtle">Auto/system dark tint</div>
+    <div className="df-p-3 df-border-1 df-dark:bg-primary-subtle" data-df-theme="dark">Forced dark via data-df-theme</div>
   </div>
 
   ```html
-  <div class="dark:bg-secondary-100">...</div>
-  <div class="dark"><div class="dark:bg-primary-100">...</div></div>
+  <div class="df-dark:bg-secondary-subtle">...</div>
+  <div data-df-theme="dark"><div class="df-dark:bg-primary-subtle">...</div></div>
   ```
 
   <br />

@@ -1,0 +1,61 @@
+/**
+ * Badge. One treatment with two fills — solid and soft — across the eight
+ * roles, assigned by the generated matrix.
+ */
+@layer df.components {
+  .df-badge {
+    --df-badge-bg: var(--df-bg-muted);
+    --df-badge-fg: var(--df-fg-default);
+    --df-badge-border-color: transparent;
+
+    display: inline-flex;
+    gap: var(--df-badge-gap);
+    align-items: center;
+    padding-block: var(--df-badge-padding-block);
+    padding-inline: var(--df-badge-padding-inline);
+    font-size: var(--df-badge-font-size);
+    font-weight: var(--df-badge-font-weight);
+    line-height: var(--df-badge-line-height);
+    color: var(--df-badge-fg);
+    white-space: nowrap;
+    background-color: var(--df-badge-bg);
+    border: var(--df-badge-border-width) solid var(--df-badge-border-color);
+    border-radius: var(--df-badge-radius);
+  }
+
+  .df-badge[data-size="sm"] {
+    padding-block: var(--df-badge-sm-padding-block);
+    padding-inline: var(--df-badge-sm-padding-inline);
+    font-size: var(--df-badge-sm-font-size);
+  }
+
+  .df-badge[data-size="lg"] {
+    padding-block: var(--df-badge-lg-padding-block);
+    padding-inline: var(--df-badge-lg-padding-inline);
+    font-size: var(--df-badge-lg-font-size);
+  }
+
+  .df-badge[data-shape="pill"] {
+    border-radius: var(--df-shape-pill);
+  }
+
+  /* A badge with no text is a status dot. */
+  .df-badge[data-dot] {
+    width: var(--df-size-2);
+    min-width: var(--df-size-2);
+    height: var(--df-size-2);
+    padding: 0;
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-badge-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+
+  .df-badge-icon > svg {
+    width: 1em;
+    height: 1em;
+  }
+}

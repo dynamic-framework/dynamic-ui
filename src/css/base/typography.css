@@ -1,0 +1,124 @@
+/**
+ * Element typography.
+ *
+ * Sizes come from the `text.*` semantic roles, not from the raw scale, so a
+ * client retunes headings by overriding one role rather than six elements.
+ *
+ * 2.x drove these through rfs() fluid sizing. They are discrete here: a fluid
+ * value cannot be a Figma variable, and a designer works on fixed-width frames.
+ * Responsive scaling arrives as the Breakpoint token collection.
+ */
+@layer df.base {
+  h1, h2, h3, h4, h5, h6,
+  .df-h1, .df-h2, .df-h3, .df-h4, .df-h5, .df-h6 {
+    font-family: var(--df-text-heading-font-family);
+    font-weight: var(--df-text-heading-font-weight);
+    line-height: var(--df-text-heading-line-height);
+    color: var(--df-fg-default);
+    text-wrap: balance;
+  }
+
+  h1, .df-h1 { font-size: var(--df-text-heading-1-font-size); }
+  h2, .df-h2 { font-size: var(--df-text-heading-2-font-size); }
+  h3, .df-h3 { font-size: var(--df-text-heading-3-font-size); }
+  h4, .df-h4 { font-size: var(--df-text-heading-4-font-size); }
+  h5, .df-h5 { font-size: var(--df-text-heading-5-font-size); }
+  h6, .df-h6 { font-size: var(--df-text-heading-6-font-size); }
+
+  .df-display-1 { font-size: var(--df-text-display-1-font-size); }
+  .df-display-2 { font-size: var(--df-text-display-2-font-size); }
+  .df-display-3 { font-size: var(--df-text-display-3-font-size); }
+  .df-display-4 { font-size: var(--df-text-display-4-font-size); }
+  .df-display-5 { font-size: var(--df-text-display-5-font-size); }
+  .df-display-6 { font-size: var(--df-text-display-6-font-size); }
+
+  .df-display-1,
+  .df-display-2,
+  .df-display-3,
+  .df-display-4,
+  .df-display-5,
+  .df-display-6 {
+    font-family: var(--df-text-heading-font-family);
+    font-weight: var(--df-font-weight-normal);
+    line-height: var(--df-text-heading-line-height);
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--df-fg-link);
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+    transition: color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  a:hover {
+    color: var(--df-fg-link-hover);
+    text-decoration: underline;
+  }
+
+  small,
+  .df-text-small {
+    font-size: var(--df-text-body-sm-font-size);
+  }
+
+  strong,
+  b {
+    font-weight: var(--df-font-weight-semibold);
+  }
+
+  mark {
+    padding: 0.125em 0.25em;
+    color: var(--df-role-warning-on-subtle);
+    background-color: var(--df-role-warning-subtle);
+    border-radius: var(--df-radius-sm);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--df-font-family-mono);
+    font-size: var(--df-text-body-sm-font-size);
+  }
+
+  code {
+    padding: 0.125em 0.35em;
+    color: var(--df-fg-default);
+    background-color: var(--df-bg-sunken);
+    border-radius: var(--df-radius-sm);
+  }
+
+  pre {
+    padding: var(--df-size-4);
+    overflow-x: auto;
+    color: var(--df-fg-default);
+    background-color: var(--df-bg-sunken);
+    border-radius: var(--df-shape-control);
+  }
+
+  pre code {
+    padding: 0;
+    background: none;
+  }
+
+  blockquote {
+    padding-inline-start: var(--df-size-4);
+    border-inline-start: var(--df-stroke-emphasis) solid var(--df-border-default);
+  }
+
+  abbr[title] {
+    text-decoration: underline dotted;
+    cursor: help;
+  }
+
+  sub,
+  sup {
+    position: relative;
+    font-size: 0.75em;
+    line-height: 0;
+    vertical-align: baseline;
+  }
+
+  sub { bottom: -0.25em; }
+  sup { top: -0.5em; }
+}

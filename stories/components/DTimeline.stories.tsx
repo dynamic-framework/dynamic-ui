@@ -153,11 +153,11 @@ export const WithChildren: Story = {
         description: 'The build completed with warnings.',
         time: '11:00 AM',
         children: (
-          <div className="mt-4">
+          <div className="df-mt-4">
             <p>Additional content</p>
             <DCard>
               <DCard.Header>
-                <h6 className="card-title mb-0">Card header</h6>
+                <h6 className="df-fs-heading-5 df-fw-semibold df-mb-0">Card header</h6>
               </DCard.Header>
               <DCard.Body>Card simple with content</DCard.Body>
             </DCard>
@@ -186,11 +186,11 @@ export const WhiteBackground: Story = {
         description: 'The build completed with warnings.',
         time: '11:00 AM',
         children: (
-          <div className="mt-4">
+          <div className="df-mt-4">
             <p>Additional content</p>
             <DCard>
               <DCard.Header>
-                <h6 className="card-title mb-0">Card header</h6>
+                <h6 className="df-fs-heading-5 df-fw-semibold df-mb-0">Card header</h6>
               </DCard.Header>
               <DCard.Body>Card simple with content</DCard.Body>
             </DCard>

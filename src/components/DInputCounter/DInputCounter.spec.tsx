@@ -24,8 +24,8 @@ describe('<DInputCounter />', () => {
     const input = container.querySelector('#counter');
     const decreaseBtn = container.querySelector('button[aria-label="decrease action"]');
     const increaseBtn = container.querySelector('button[aria-label="increase action"]');
-    const decreaseIcon = decreaseBtn?.querySelector('.d-icon');
-    const increaseIcon = increaseBtn?.querySelector('.d-icon');
+    const decreaseIcon = decreaseBtn?.querySelector('.df-icon');
+    const increaseIcon = increaseBtn?.querySelector('.df-icon');
 
     expect(input).toHaveAttribute('type', 'number');
     expect(input).toHaveValue(0);

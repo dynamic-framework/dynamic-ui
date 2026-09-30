@@ -1,0 +1,403 @@
+/**
+ * Carousel.
+ *
+ * 2.x wrapped Splide: ~40 KB of JavaScript that measured the container on every
+ * resize, computed each slide's width, and drove the track with a `transform`.
+ * Drag, momentum, keyboard scrolling and the scrollbar were all reimplemented
+ * because a transform-driven track is not a scroll container and gets none of
+ * them for free.
+ *
+ * This is a scroll container. The browser does the scrolling, the snapping, the
+ * touch momentum, the keyboard, and the RTL flip; the component supplies arrows,
+ * dots and autoplay, which is the part a browser has no opinion about.
+ *
+ * ## Why the layout is here and not in the component
+ *
+ * `perPage`, `gap` and `peek` are responsive — `{ xs: 1, md: 3 }` — and every
+ * one of them is resolved by the media queries below rather than by
+ * `useResponsiveProp`. Three reasons, in order of how much they matter:
+ *
+ *   1. A JS-resolved width is wrong on the first paint and right on the second,
+ *      which is a visible reflow on every load. CSS is right on the first.
+ *   2. Resizing costs nothing. No listener, no re-render, no measurement.
+ *   3. The component never has to know what `md` means. The breakpoints live in
+ *      one place, and `npm run css:validate` fails the build if a media query
+ *      here stops matching a `breakpoint.*` token.
+ *
+ * The component writes only the tiers a consumer set — `--df-carousel-per-page-md: 3`
+ * — and the chains below resolve the cascade. JavaScript then READS the result
+ * (`getComputedStyle` on `--df-carousel-per-page`) rather than recomputing it,
+ * so the dots and the arrows can never disagree with the layout.
+ */
+@layer df.components {
+  .df-carousel {
+    /**
+     * The inputs, declared as `initial`.
+     *
+     * The component writes only the tiers a consumer set, so the rest have to
+     * be undefined for the fallback chains to walk down to the next one — and
+     * `initial` on a custom property is exactly that: the guaranteed-invalid
+     * value, which makes `var(--x, fallback)` take the fallback.
+     *
+     * Declaring them rather than leaving them absent costs nothing at runtime
+     * and buys two things: the stylesheet states the whole surface a consumer
+     * can set, and `npm run css:validate` can keep refusing `var()` references
+     * to properties nothing defines — the rule that has caught every typo in
+     * this layer so far.
+     */
+
+    /* slides visible */
+    --df-carousel-per-page-xs: initial;
+    --df-carousel-per-page-sm: initial;
+    --df-carousel-per-page-md: initial;
+    --df-carousel-per-page-lg: initial;
+    --df-carousel-per-page-xl: initial;
+    --df-carousel-per-page-xxl: initial;
+
+    /* space between slides */
+    --df-carousel-gap-xs: initial;
+    --df-carousel-gap-sm: initial;
+    --df-carousel-gap-md: initial;
+    --df-carousel-gap-lg: initial;
+    --df-carousel-gap-xl: initial;
+    --df-carousel-gap-xxl: initial;
+
+    /* inset at both ends */
+    --df-carousel-peek-xs: initial;
+    --df-carousel-peek-sm: initial;
+    --df-carousel-peek-md: initial;
+    --df-carousel-peek-lg: initial;
+    --df-carousel-peek-xl: initial;
+    --df-carousel-peek-xxl: initial;
+
+    /* The resolved values. Each tier falls back through the tiers below it, so
+       `{ xs: 1, lg: 3 }` gives 1 at xs/sm/md and 3 at lg/xl/xxl — the same
+       "highest matching tier wins" rule every responsive prop in the library
+       follows. */
+    --df-carousel-per-page: var(--df-carousel-per-page-xs, 1);
+    --df-carousel-slide-gap: var(--df-carousel-gap-xs, var(--df-carousel-gap));
+    --df-carousel-slide-peek: var(--df-carousel-peek-xs, var(--df-carousel-peek));
+
+    /* Written by the component when `height` and `align` are set. */
+    --df-carousel-height: initial;
+    --df-carousel-snap-align: initial;
+
+    position: relative;
+  }
+
+  /**
+   * The scroll container.
+   *
+   * It is also the flex container on purpose: a slide's `inline-size: …%` then
+   * resolves against the scrollport's content box. With a separate inner track
+   * the percentage would resolve against a box that is itself sized by its
+   * children, which is circular.
+   */
+  .df-carousel-viewport {
+    position: relative;
+    display: flex;
+    gap: var(--df-carousel-slide-gap);
+    block-size: var(--df-carousel-height, auto);
+
+    /* The peek. Padding on the scroll container rather than margin on the end
+       slide, because a scroll container honours its own end padding and does
+       not always honour a child's end margin. `scroll-padding` repeats it so a
+       snapped slide lands after the inset instead of under it. */
+    padding-inline: var(--df-carousel-slide-peek);
+    overflow: auto hidden;
+
+    /* Stops a horizontal flick at the end of the strip from navigating back a
+       page or bouncing the whole document. */
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: var(--df-carousel-slide-peek);
+
+    /* Firefox and the standard property; the WebKit pseudo-element below covers
+       Safari and Chrome. The strip is still scrollable by every other means —
+       this hides the bar, it does not disable scrolling. */
+    scrollbar-width: none;
+  }
+
+  .df-carousel-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The scrollable region is keyboard-reachable, so it gets the same focus ring
+     as every other focusable thing rather than the browser's default outline. */
+  .df-carousel-viewport:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-carousel-slide {
+    /* `100%` is the scrollport's content box, so this is exactly
+       "n slides and the n-1 gaps between them fill the visible width". */
+    flex: 0 0 auto;
+    inline-size: calc(
+      (100% - (var(--df-carousel-per-page) - 1) * var(--df-carousel-slide-gap))
+      / var(--df-carousel-per-page)
+    );
+    scroll-snap-align: var(--df-carousel-snap-align, start);
+
+    /* Without this a fast flick skips past several slides and lands wherever
+       momentum ran out, which reads as the carousel losing your place. */
+    scroll-snap-stop: always;
+  }
+
+  /**
+   * Loop clones.
+   *
+   * They are real DOM so the browser can scroll onto them seamlessly, and they
+   * snap exactly like a real slide ON PURPOSE: the loop works by letting the
+   * scroll come to rest on a clone and then jumping to the identical real slide
+   * with no animation. A clone that refused to snap would be pulled back to the
+   * last real slide instead, and the strip would simply stop.
+   *
+   * `inert` on the element keeps them out of the tab order, the accessibility
+   * tree and find-in-page — a slide announced twice is worse than no loop.
+   */
+
+  /* --- arrows ----------------------------------------------------------- */
+
+  /**
+   * Plain by default: a glyph, no fill, no border, no shadow.
+   *
+   * The first version gave them a bordered white pill, which on a light page is
+   * two circles drawing attention to themselves in front of the content they
+   * are there to move. The affordance appears on hover instead, where it is
+   * useful and where nothing is competing for the eye.
+   *
+   * Every part of the old treatment is still a token, so a carousel over
+   * photography — where a bare chevron would vanish — gets it back with
+   * `--df-carousel-arrow-bg` and `--df-carousel-arrow-border-width`.
+   */
+  .df-carousel-arrow {
+    position: absolute;
+    inset-block-start: 50%;
+    z-index: var(--df-z-raised);
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--df-carousel-arrow-size);
+    block-size: var(--df-carousel-arrow-size);
+    padding: 0;
+    color: var(--df-carousel-arrow-fg);
+    cursor: pointer;
+    background-color: var(--df-carousel-arrow-bg);
+    border: var(--df-carousel-arrow-border-width) solid var(--df-carousel-arrow-border-color);
+    border-radius: var(--df-carousel-arrow-radius);
+    box-shadow: var(--df-carousel-arrow-shadow);
+    transform: translateY(-50%);
+  }
+
+  .df-carousel-arrow[data-direction="prev"] {
+    inset-inline-start: var(--df-carousel-arrow-offset);
+  }
+
+  .df-carousel-arrow[data-direction="next"] {
+    inset-inline-end: var(--df-carousel-arrow-offset);
+  }
+
+  /**
+   * The glyph is a `DIcon`, so its size comes from the icon's own custom
+   * property rather than from a rule about `svg`.
+   *
+   * That matters because `DIcon` is not always an SVG — with an icon font it is
+   * a styled `<i>` — and because an author passing `iconArrowLeft={{ size }}`
+   * sets the same property inline, which then wins over this without the
+   * stylesheet needing an `!important` or a more specific selector.
+   *
+   * There is no mirroring here any more: the two directions are two icons from
+   * the context's map, each already pointing the right way, and each already
+   * flipping with the writing direction if the icon set does.
+   */
+  .df-carousel-arrow .df-icon {
+    --df-icon-inline-size: var(--df-carousel-arrow-icon-size);
+  }
+
+  .df-carousel-arrow:where(:hover) {
+    background-color: var(--df-carousel-arrow-hover-bg);
+  }
+
+  /* No transition on the fill would make the hover a hard flash, since there is
+     nothing there to begin with. */
+  @media (prefers-reduced-motion: no-preference) {
+    .df-carousel-arrow {
+      transition: background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    }
+  }
+
+  .df-carousel-arrow:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* Disabled rather than hidden: an arrow that disappears at the end of the
+     strip moves the one beside it, and the control you were aiming at is gone. */
+  .df-carousel-arrow:disabled {
+    cursor: default;
+    opacity: var(--df-carousel-arrow-disabled-opacity);
+  }
+
+  /* --- pagination and autoplay ------------------------------------------ */
+
+  /**
+   * The row under the strip.
+   *
+   * The play/pause toggle lives here rather than floating over a slide because
+   * it is a control, not decoration: WCAG 2.2.2 requires a way to stop anything
+   * that moves for more than five seconds, and a control nobody can find does
+   * not satisfy that.
+   */
+  .df-carousel-controls {
+    display: flex;
+    gap: var(--df-carousel-pagination-gap);
+    align-items: center;
+    justify-content: center;
+    margin-block-start: var(--df-carousel-pagination-offset);
+  }
+
+  .df-carousel-autoplay {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--df-carousel-page-color);
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
+  .df-carousel-autoplay .df-icon {
+    --df-icon-inline-size: var(--df-carousel-page-active-size);
+  }
+
+  .df-carousel-autoplay:where(:hover) {
+    color: var(--df-carousel-page-active-color);
+  }
+
+  .df-carousel-autoplay:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-carousel-pagination {
+    display: flex;
+    gap: var(--df-carousel-pagination-gap);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .df-carousel-page {
+    inline-size: var(--df-carousel-page-size);
+    block-size: var(--df-carousel-page-size);
+    padding: 0;
+    cursor: pointer;
+    background-color: var(--df-carousel-page-color);
+    border: 0;
+    border-radius: var(--df-carousel-page-radius);
+    transition:
+      inline-size var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  /* The active dot stretches rather than just changing colour, so the position
+     in the strip is legible without relying on a colour difference. */
+  .df-carousel-page[aria-selected="true"] {
+    inline-size: var(--df-carousel-page-active-size);
+    background-color: var(--df-carousel-page-active-color);
+  }
+
+  .df-carousel-page:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* --- interaction states ----------------------------------------------- */
+
+  /**
+   * While a pointer drag is in progress the snap has to be off, or the browser
+   * pulls the strip back to the nearest snap point on every frame and the drag
+   * fights the scroller. Releasing removes the attribute, and the browser snaps
+   * from wherever the drag ended.
+   */
+  .df-carousel[data-dragging] .df-carousel-viewport {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+    scroll-behavior: auto;
+  }
+
+  .df-carousel[data-draggable] .df-carousel-viewport {
+    cursor: grab;
+  }
+
+  /* --- responsive tiers -------------------------------------------------- */
+
+  /**
+   * One block per breakpoint, each re-resolving the three responsive values
+   * through the tiers below it. The chains get long at the top end, and that is
+   * the price of being able to read `md`'s fallback order off the page.
+   *
+   * These `min-width` values must match the `breakpoint.*` tokens;
+   * `npm run css:validate` asserts it.
+   */
+  @media (min-width: 576px) {
+    .df-carousel {
+      --df-carousel-per-page: var(--df-carousel-per-page-sm, var(--df-carousel-per-page-xs, 1));
+      --df-carousel-slide-gap: var(--df-carousel-gap-sm, var(--df-carousel-gap-xs, var(--df-carousel-gap)));
+      --df-carousel-slide-peek: var(--df-carousel-peek-sm, var(--df-carousel-peek-xs, var(--df-carousel-peek)));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .df-carousel {
+      --df-carousel-per-page: var(--df-carousel-per-page-md, var(--df-carousel-per-page-sm, var(--df-carousel-per-page-xs, 1)));
+      --df-carousel-slide-gap: var(--df-carousel-gap-md, var(--df-carousel-gap-sm, var(--df-carousel-gap-xs, var(--df-carousel-gap))));
+      --df-carousel-slide-peek: var(--df-carousel-peek-md, var(--df-carousel-peek-sm, var(--df-carousel-peek-xs, var(--df-carousel-peek))));
+    }
+  }
+
+  @media (min-width: 992px) {
+    .df-carousel {
+      --df-carousel-per-page: var(--df-carousel-per-page-lg, var(--df-carousel-per-page-md, var(--df-carousel-per-page-sm, var(--df-carousel-per-page-xs, 1))));
+      --df-carousel-slide-gap: var(--df-carousel-gap-lg, var(--df-carousel-gap-md, var(--df-carousel-gap-sm, var(--df-carousel-gap-xs, var(--df-carousel-gap)))));
+      --df-carousel-slide-peek: var(--df-carousel-peek-lg, var(--df-carousel-peek-md, var(--df-carousel-peek-sm, var(--df-carousel-peek-xs, var(--df-carousel-peek)))));
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .df-carousel {
+      --df-carousel-per-page: var(--df-carousel-per-page-xl, var(--df-carousel-per-page-lg, var(--df-carousel-per-page-md, var(--df-carousel-per-page-sm, var(--df-carousel-per-page-xs, 1)))));
+      --df-carousel-slide-gap: var(--df-carousel-gap-xl, var(--df-carousel-gap-lg, var(--df-carousel-gap-md, var(--df-carousel-gap-sm, var(--df-carousel-gap-xs, var(--df-carousel-gap))))));
+      --df-carousel-slide-peek: var(--df-carousel-peek-xl, var(--df-carousel-peek-lg, var(--df-carousel-peek-md, var(--df-carousel-peek-sm, var(--df-carousel-peek-xs, var(--df-carousel-peek))))));
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .df-carousel {
+      --df-carousel-per-page: var(--df-carousel-per-page-xxl, var(--df-carousel-per-page-xl, var(--df-carousel-per-page-lg, var(--df-carousel-per-page-md, var(--df-carousel-per-page-sm, var(--df-carousel-per-page-xs, 1))))));
+      --df-carousel-slide-gap: var(--df-carousel-gap-xxl, var(--df-carousel-gap-xl, var(--df-carousel-gap-lg, var(--df-carousel-gap-md, var(--df-carousel-gap-sm, var(--df-carousel-gap-xs, var(--df-carousel-gap)))))));
+      --df-carousel-slide-peek: var(--df-carousel-peek-xxl, var(--df-carousel-peek-xl, var(--df-carousel-peek-lg, var(--df-carousel-peek-md, var(--df-carousel-peek-sm, var(--df-carousel-peek-xs, var(--df-carousel-peek)))))));
+    }
+  }
+
+  /**
+   * Smooth scrolling is opt-out, not opt-in.
+   *
+   * It is declared here rather than on the viewport so the reduce branch below
+   * can drop it entirely: `scroll-behavior: smooth` is what makes a programmatic
+   * `scrollTo` animate, and under reduced motion the jump should be instant
+   * rather than slow.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .df-carousel-viewport {
+      scroll-behavior: smooth;
+    }
+  }
+}

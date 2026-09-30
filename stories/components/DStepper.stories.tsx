@@ -107,7 +107,7 @@ export const Default: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '300px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>
@@ -131,7 +131,7 @@ export const DefaultMobile: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '300px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>
@@ -155,7 +155,7 @@ export const Vertical: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '300px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>
@@ -180,7 +180,7 @@ export const WithDescription: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '400px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>
@@ -223,7 +223,7 @@ export const WithDescriptionVertical: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '500px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>

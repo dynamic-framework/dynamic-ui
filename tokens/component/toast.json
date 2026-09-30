@@ -1,0 +1,18 @@
+{
+  "$description": "Toast tokens.",
+  "toast": {
+    "min-width": {"$type": "dimension", "$value": "{measure.md}"},
+    "padding-block": {"$type": "dimension", "$value": "{size.3}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+    "gap": {"$type": "dimension", "$value": "{size.3}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "bg": {"$type": "color", "$value": "{bg.raised}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+    "shadow": {"$type": "shadow", "$value": "{elevation.lg}"},
+    "header-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+    "header-border-color": {"$type": "color", "$value": "{border.muted}"}
+  }
+}

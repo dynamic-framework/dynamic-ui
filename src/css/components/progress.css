@@ -1,0 +1,55 @@
+/**
+ * Progress bar.
+ *
+ * The fill width is the one thing a component must set inline — it is a live
+ * value, not a design decision — and it is set as a custom property rather than
+ * `width`, so the stylesheet keeps control of how that value is used.
+ */
+@layer df.components {
+  .df-progress {
+    --df-progress-value: 0%;
+    --df-progress-bar-bg: var(--df-role-primary-base);
+    --df-progress-bar-fg: var(--df-role-primary-on-base);
+
+    display: flex;
+    height: var(--df-progress-height);
+    overflow: hidden;
+    font-size: var(--df-progress-font-size);
+    background-color: var(--df-progress-track-color);
+    border-radius: var(--df-progress-radius);
+  }
+
+  .df-progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-progress-value);
+    color: var(--df-progress-bar-fg);
+    white-space: nowrap;
+    background-color: var(--df-progress-bar-bg);
+    transition: width var(--df-motion-duration-enter) var(--df-motion-easing-standard);
+  }
+
+  .df-progress[data-striped] > .df-progress-bar {
+    background-image: linear-gradient(
+      45deg,
+      color-mix(in oklab, var(--df-color-white) 15%, transparent) 25%,
+      transparent 25%,
+      transparent 50%,
+      color-mix(in oklab, var(--df-color-white) 15%, transparent) 50%,
+      color-mix(in oklab, var(--df-color-white) 15%, transparent) 75%,
+      transparent 75%,
+      transparent
+    );
+    background-size: var(--df-progress-stripe-size) var(--df-progress-stripe-size);
+  }
+
+  .df-progress[data-animated] > .df-progress-bar {
+    animation: df-progress-stripes var(--df-progress-stripe-duration) linear infinite;
+  }
+
+  @keyframes df-progress-stripes {
+    from { background-position-x: var(--df-progress-stripe-size); }
+    to { background-position-x: 0; }
+  }
+}

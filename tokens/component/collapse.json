@@ -1,0 +1,21 @@
+{
+  "$description": "Collapse tokens.",
+  "collapse": {
+    "bg": {"$type": "color", "$value": "{bg.surface}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control}"},
+    "shadow": {"$type": "shadow", "$value": "{elevation.sm}"},
+
+    "trigger-padding-block": {"$type": "dimension", "$value": "{size.4}"},
+    "trigger-padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+    "trigger-gap": {"$type": "dimension", "$value": "{size.4}"},
+    "trigger-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+
+    "body-padding-block": {"$type": "dimension", "$value": "{size.4}"},
+    "body-padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+
+    "separator-size": {"$type": "dimension", "$value": "{border-width.1}"},
+    "separator-color": {"$type": "color", "$value": "{border.muted}"},
+    "duration": {"$type": "duration", "$value": "{duration.slow}"}
+  }
+}

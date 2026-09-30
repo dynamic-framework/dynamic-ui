@@ -11,6 +11,7 @@ import type {
   EndIconProps,
   StartIconProps,
 } from '../../interface';
+import { resolveRole } from '../../roles';
 
 type Props =
 & BaseProps
@@ -68,15 +69,13 @@ export default function DListGroupItem(
     return actionProp;
   }, [Tag, actionProp]);
 
-  const generateClasses = useMemo(
+  const dataProps = useMemo(
     () => ({
-      'list-group-item': true,
-      'list-group-item-action': action,
-      [`list-group-item-${color}`]: !!color,
-      active,
-      disabled,
+      ...action && { 'data-action': '' },
+      ...active && { 'data-active': '' },
+      ...color && { 'data-color': resolveRole(color) },
     }),
-    [action, active, disabled, color],
+    [action, active, color],
   );
 
   const ariaAttributes = useMemo(() => {
@@ -94,8 +93,9 @@ export default function DListGroupItem(
 
   return (
     <Tag
-      className={classNames(generateClasses, className)}
+      className={classNames('df-list-item', className)}
       style={style}
+      {...dataProps}
       {...Tag === 'a' && href && { href }}
       {...onClick && { onClick }}
       {...ariaAttributes}
@@ -117,7 +117,7 @@ export default function DListGroupItem(
           familyClass={iconEndFamilyClass}
           familyPrefix={iconEndFamilyPrefix}
           materialStyle={iconEndMaterialStyle}
-          className="ms-auto"
+          className="df-list-item-end"
         />
       )}
     </Tag>

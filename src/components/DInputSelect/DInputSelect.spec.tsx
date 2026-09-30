@@ -23,31 +23,31 @@ describe('<DInputSelect />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div>
-            <div
-              class="input-group"
-            >
-              <select
-                aria-label=""
-                class="form-select"
-                id="Random-id"
-              >
-                <option
-                  value="1"
-                >
-                  Option 1
-                </option>
-                <option
-                  value="2"
-                >
-                  Option 2
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <div>
+    <div
+      class="df-input-group"
+    >
+      <select
+        aria-label=""
+        class="df-select"
+        id="Random-id"
+      >
+        <option
+          value="1"
+        >
+          Option 1
+        </option>
+        <option
+          value="2"
+        >
+          Option 2
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+`);
     });
 
     it('should render with a floating label', () => {
@@ -58,7 +58,7 @@ describe('<DInputSelect />', () => {
       );
 
       const select = screen.getByLabelText('My Select');
-      expect(select.closest('.form-floating')).toBeInTheDocument();
+      expect(select.closest('.df-input-floating')).toBeInTheDocument();
     });
 
     it('should be disabled when the disabled prop is true', () => {
@@ -80,7 +80,7 @@ describe('<DInputSelect />', () => {
       );
 
       const select = screen.getByLabelText('My Select');
-      expect(select).toHaveClass('is-invalid');
+      expect(select).toHaveAttribute('data-invalid');
     });
 
     it('should show the valid state when the valid prop is true', () => {
@@ -90,7 +90,7 @@ describe('<DInputSelect />', () => {
         </DContextProvider>,
       );
       const select = screen.getByLabelText('Valid Select');
-      expect(select).toHaveClass('is-valid');
+      expect(select).toHaveAttribute('data-valid');
     });
 
     it('should be disabled and show a spinner when loading', () => {
@@ -120,7 +120,7 @@ describe('<DInputSelect />', () => {
       );
 
       const select = screen.getByLabelText('Sized Select');
-      expect(select).toHaveClass(`form-select-${size}`);
+      expect(select).toHaveAttribute('data-size', size);
     });
 
     it('should work with custom data structure using extractors', async () => {
@@ -169,8 +169,7 @@ describe('<DInputSelect />', () => {
           <DInputSelect options={[]} floatingLabel />
         </DContextProvider>,
       );
-      const select = container.querySelector('select');
-      expect(select).toHaveClass('floating-label');
+      expect(container.querySelector('.df-input-floating')).toBeInTheDocument();
 
       const label = container.querySelector('label');
       expect(label).toBeInTheDocument();

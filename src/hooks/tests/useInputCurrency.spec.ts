@@ -66,7 +66,7 @@ describe('useInputCurrency', () => {
 
   it('should generate style variables', () => {
     const { result } = renderHook(() => useInputCurrency(currencyOptions, 100));
-    expect(result.current.generateStyleVariables).toHaveProperty('--bs-input-currency-component-symbol-color');
+    expect(result.current.generateStyleVariables).toHaveProperty('--df-input-currency-component-symbol-color');
     expect(result.current.generateSymbolStyleVariables).toHaveProperty('color');
   });
 

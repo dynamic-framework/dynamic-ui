@@ -1,0 +1,6 @@
+{
+  "$description": "Layout grid tokens. The column count and the pane span are deliberately NOT here: they are per-instance layout parameters the component writes as custom properties, not design decisions anyone rebrands. The default column count is a local slot in layout.css.",
+  "layout": {
+    "gap": {"$type": "dimension", "$value": "{size.4}"}
+  }
+}

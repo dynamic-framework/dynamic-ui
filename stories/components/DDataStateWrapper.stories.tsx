@@ -136,11 +136,11 @@ export const Default: Story = {
     isError: false,
     data: [],
     children: (data: unknown) => (
-      <ul className="list-group">
+      <ul className="df-list">
         {(data as string[]).map((item) => (
           <li
             key={item}
-            className="list-group-item"
+            className="df-list-item"
           >
             {item}
           </li>
@@ -226,32 +226,44 @@ export const CustomMessages: Story = {
     };
 
     return (
-      <div className="d-flex flex-column gap-3">
-        <div className="d-flex gap-2 mb-3">
+      <div className="df-flex df-flex-col df-gap-3">
+        <div className="df-flex df-gap-2 df-mb-3">
           <button
             type="button"
-            className="btn btn-outline-primary btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="primary"
+            data-size="sm"
             onClick={() => setStatus(true, false, [])}
           >
             Loading
           </button>
           <button
             type="button"
-            className="btn btn-outline-danger btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="danger"
+            data-size="sm"
             onClick={() => setStatus(false, true, [])}
           >
             Error
           </button>
           <button
             type="button"
-            className="btn btn-outline-secondary btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="secondary"
+            data-size="sm"
             onClick={() => setStatus(false, false, [])}
           >
             Empty
           </button>
           <button
             type="button"
-            className="btn btn-outline-success btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="success"
+            data-size="sm"
             onClick={() => setStatus(false, false, ['Alpha', 'Beta', 'Gamma'])}
           >
             Success
@@ -277,9 +289,9 @@ export const CustomMessages: Story = {
       retry: 'Reintentar',
     },
     children: (data: unknown) => (
-      <ul className="list-group">
+      <ul className="df-list">
         {(data as string[]).map((item) => (
-          <li key={item} className="list-group-item">{item}</li>
+          <li key={item} className="df-list-item">{item}</li>
         ))}
       </ul>
     ),
@@ -319,32 +331,44 @@ export const CustomTemplates: Story = {
     };
 
     return (
-      <div className="d-flex flex-column gap-3">
-        <div className="d-flex gap-2 mb-3">
+      <div className="df-flex df-flex-col df-gap-3">
+        <div className="df-flex df-gap-2 df-mb-3">
           <button
             type="button"
-            className="btn btn-outline-primary btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="primary"
+            data-size="sm"
             onClick={() => setStatus(true, false, [])}
           >
             Show Loading
           </button>
           <button
             type="button"
-            className="btn btn-outline-danger btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="danger"
+            data-size="sm"
             onClick={() => setStatus(false, true, [])}
           >
             Show Error
           </button>
           <button
             type="button"
-            className="btn btn-outline-secondary btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="secondary"
+            data-size="sm"
             onClick={() => setStatus(false, false, [])}
           >
             Show Empty
           </button>
           <button
             type="button"
-            className="btn btn-outline-success btn-sm"
+            className="df-button"
+            data-variant="outline"
+            data-color="success"
+            data-size="sm"
             onClick={() => setStatus(false, false, ['Item 1'])}
           >
             Show Success
@@ -365,23 +389,24 @@ export const CustomTemplates: Story = {
     isError: false,
     data: [],
     renderLoading: (
-      <div className="text-center p-5 border rounded bg-light">
+      <div className="df-text-center df-p-5 df-border-1 df-rounded-control df-bg-muted">
         <div
-          className="spinner-grow text-primary"
+          className="df-spinner df-text-primary"
           role="status"
         >
-          <span className="visually-hidden">
+          <span className="df-sr-only">
             Loading...
           </span>
         </div>
-        <p className="mt-2 mb-0">
+        <p className="df-mt-2 df-mb-0">
           Customizing the loading experience...
         </p>
       </div>
     ),
     renderError: (
       <div
-        className="alert alert-danger d-flex align-items-center"
+        className="df-alert df-flex df-items-center"
+        data-color="danger"
         role="alert"
       >
         <div>
@@ -393,7 +418,8 @@ export const CustomTemplates: Story = {
           {' '}
           <button
             type="button"
-            className="btn btn-link p-0 align-baseline"
+            className="df-button df-p-0 df-align-baseline"
+            data-variant="link"
           >
             Click here to try again
           </button>
@@ -402,16 +428,19 @@ export const CustomTemplates: Story = {
       </div>
     ),
     renderEmpty: (
-      <DBox className="text-center p-4 border-dashed rounded">
+      <DBox className="df-text-center df-p-4 df-border-dashed df-rounded-control">
         <h4>
           No tracks found
         </h4>
-        <p className="text-muted">
+        <p className="df-text-muted">
           Try adjusting your search filters.
         </p>
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className="df-button"
+          data-variant="solid"
+          data-color="primary"
+          data-size="sm"
         >
           Reset Filters
         </button>
@@ -446,9 +475,9 @@ export const CustomTemplates: Story = {
  */
 export const StandaloneStates: Story = {
   render: () => (
-    <div className="d-flex flex-column gap-4">
+    <div className="df-flex df-flex-col df-gap-4">
       <div>
-        <h6 className="text-muted mb-3">EmptyState</h6>
+        <h6 className="df-text-muted df-mb-3">EmptyState</h6>
         <EmptyState
           message="No items found"
           icon="Search"
@@ -457,7 +486,7 @@ export const StandaloneStates: Story = {
         />
       </div>
       <div>
-        <h6 className="text-muted mb-3">ErrorState (Danger)</h6>
+        <h6 className="df-text-muted df-mb-3">ErrorState (Danger)</h6>
         <ErrorState
           message="Failed to load data. Please check your connection."
           onRetry={() => undefined}
@@ -466,7 +495,7 @@ export const StandaloneStates: Story = {
         />
       </div>
       <div>
-        <h6 className="text-muted mb-3">ErrorState (Warning)</h6>
+        <h6 className="df-text-muted df-mb-3">ErrorState (Warning)</h6>
         <ErrorState
           message="Something went wrong, but you can try again."
           onRetry={() => undefined}
@@ -475,7 +504,7 @@ export const StandaloneStates: Story = {
         />
       </div>
       <div>
-        <h6 className="text-muted mb-3">LoadingState</h6>
+        <h6 className="df-text-muted df-mb-3">LoadingState</h6>
         <LoadingState ariaLabel="Loading your data..." />
       </div>
     </div>

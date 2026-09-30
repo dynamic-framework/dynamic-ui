@@ -1,0 +1,47 @@
+/**
+ * Icon.
+ *
+ * The colour axis is a data attribute rather than a class per theme colour, and
+ * the circle background is `color-mix()` over `currentColor` rather than a
+ * per-colour rgba. 2.x generated two rules for every theme colour
+ * (`.d-icon-color-primary` and `.d-icon-color-primary.d-icon-has-circle`), each
+ * spelling out an `rgba(var(--bs-primary-rgb), …)` — which is exactly the
+ * pattern the `-rgb` channel existed to support and that `color-mix()` retires.
+ */
+@layer df.components {
+  .df-icon {
+    --df-icon-color: currentcolor;
+    --df-icon-bg: transparent;
+    --df-icon-inline-size: var(--df-icon-size);
+
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--df-icon-padding);
+    font-size: var(--df-icon-inline-size);
+    line-height: 1;
+    color: var(--df-icon-color);
+    background-color: var(--df-icon-bg);
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-icon > svg {
+    display: block;
+    width: var(--df-icon-inline-size);
+    height: var(--df-icon-inline-size);
+    color: inherit;
+  }
+
+  /* A circle needs room around the glyph, and a tinted ground taken from the
+     icon's own colour — so it works for any colour, including one a client
+     added, with no extra rule. */
+  .df-icon[data-circle] {
+    padding: var(--df-icon-circle-padding);
+    background-color: color-mix(in oklab, var(--df-icon-color) 12%, transparent);
+  }
+
+  .df-icon[data-loading] {
+    animation: df-spin var(--df-icon-loading-duration) linear infinite;
+  }
+}

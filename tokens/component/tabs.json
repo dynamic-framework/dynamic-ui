@@ -1,0 +1,30 @@
+{
+  "$description": "Tabs tokens. Three visual styles share one set: the underline default, the pill `toggle` group, and a plain `link` row.",
+  "tabs": {
+    "gap": {"$type": "dimension", "$value": "{size.1}"},
+    "tab-padding-block": {"$type": "dimension", "$value": "{size.3}"},
+    "tab-padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+    "tab-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "tab-font-weight": {"$type": "fontWeight", "$value": "{font-weight.normal}"},
+    "tab-font-weight-active": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+    "tab-radius": {"$type": "dimension", "$value": "{shape.control}"},
+
+    "tab-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "tab-fg-hover": {"$type": "color", "$value": "{fg.default}"},
+    "tab-fg-active": {"$type": "color", "$value": "{role.primary.emphasis}"},
+    "tab-bg-hover": {"$type": "color", "$value": "{bg.muted}"},
+
+    "indicator-size": {"$type": "dimension", "$value": "{border-width.2}"},
+    "indicator-color": {"$type": "color", "$value": "{role.primary.base}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+
+    "toggle-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "toggle-padding": {"$type": "dimension", "$value": "{size.1}"},
+    "toggle-radius": {"$type": "dimension", "$value": "{shape.pill}"},
+    "toggle-border-color": {"$type": "color", "$value": "{border.muted}"},
+    "toggle-active-bg": {"$type": "color", "$value": "{role.primary.base}"},
+    "toggle-active-fg": {"$type": "color", "$value": "{role.primary.on-base}"},
+
+    "panel-padding-block": {"$type": "dimension", "$value": "{size.4}"}
+  }
+}

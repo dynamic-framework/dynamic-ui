@@ -261,8 +261,8 @@ export const Interactive: Story = {
           value={password}
           onChange={setPassword}
         />
-        <div className="mt-3 p-3 bg-light rounded">
-          <small className="text-muted">
+        <div className="df-mt-3 df-p-3 df-bg-muted df-rounded-control">
+          <small className="df-text-muted">
             Current password:
             {' '}
             <code>{password || '(empty)'}</code>
@@ -381,8 +381,8 @@ export const CustomChecksInteractive: Story = {
           onChange={setPassword}
           enabledChecks={['lowercase', 'number', 'specialChar']}
         />
-        <div className="mt-3 p-3 bg-light rounded">
-          <small className="text-muted">
+        <div className="df-mt-3 df-p-3 df-bg-muted df-rounded-control">
+          <small className="df-text-muted">
             <strong>Note:</strong>
             {' '}
             This example only requires lowercase, number, and special character (3 checks total)

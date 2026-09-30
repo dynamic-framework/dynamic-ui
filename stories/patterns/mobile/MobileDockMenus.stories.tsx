@@ -91,7 +91,7 @@ function MobileViewport(
 ) {
   return (
     <div
-      className="bg-gray-25 border position-relative overflow-hidden rounded-2"
+      className="df-bg-surface df-border-1 df-relative df-overflow-hidden df-rounded-control"
       style={{
         width: '390px',
         maxWidth: '100%',
@@ -137,22 +137,22 @@ const GRID_DOCK_ITEMS = [
 
 function FixedGridDockMenuExample() {
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '104px' }}>
-          <h5 className="mb-1">Overview</h5>
-          <small className="text-muted">Fixed menu in mobile app style</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Available</small>
-            <h3 className="mb-0">$8,430.20</h3>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '104px' }}>
+          <h5 className="df-mb-1">Overview</h5>
+          <small className="df-text-muted">Fixed menu in mobile app style</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Available</small>
+            <h3 className="df-mb-0">$8,430.20</h3>
           </div>
         </div>
-        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
-          <nav aria-label="Fixed grid mobile menu" className="bg-white border rounded-2" style={{ borderColor: 'var(--bs-gray-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
-            <div className="d-grid p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+        <div className="df-absolute df-start-0 df-end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Fixed grid mobile menu" className="df-bg-surface df-border-1 df-rounded-control" style={{ borderColor: 'var(--df-color-neutral-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
+            <div className="df-grid df-p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
               {GRID_DOCK_ITEMS.map((item) => (
-                <DButton key={item.id} variant="link" className="flex-column align-items-center justify-content-center">
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                <DButton key={item.id} variant="link" className="df-flex-col df-items-center df-justify-center">
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
@@ -178,22 +178,22 @@ const H_SCROLL_DOCK_ITEMS = [
 
 function HorizontalScrollDockMenuExample() {
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Services</h5>
-          <small className="text-muted">Quick shortcuts with horizontal scroll</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Active products</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Services</h5>
+          <small className="df-text-muted">Quick shortcuts with horizontal scroll</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Active products</small>
             <strong>7 products</strong>
           </div>
         </div>
-        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
-          <nav aria-label="Horizontal scroll mobile menu" className="bg-white border rounded-2 p-1" style={{ borderColor: 'var(--bs-gray-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
-            <div className="d-flex p-1 align-items-stretch gap-1 no-visible-scroll">
+        <div className="df-absolute df-start-0 df-end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Horizontal scroll mobile menu" className="df-bg-surface df-border-1 df-rounded-control df-p-1" style={{ borderColor: 'var(--df-color-neutral-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
+            <div className="df-flex df-p-1 df-items-stretch df-gap-1 no-visible-scroll">
               {H_SCROLL_DOCK_ITEMS.map((item) => (
-                <DButton key={item.id} variant="link" className="flex-column align-items-center justify-content-center">
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                <DButton key={item.id} variant="link" className="df-flex-col df-items-center df-justify-center">
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
@@ -242,27 +242,27 @@ function HorizontalScrollDockMenuWithGradientMaskExample() {
   }, []);
 
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Quick actions</h5>
-          <small className="text-muted">Swipe to reveal more options</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Active products</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Quick actions</h5>
+          <small className="df-text-muted">Swipe to reveal more options</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Active products</small>
             <strong>9 products</strong>
           </div>
         </div>
-        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
-          <nav aria-label="Horizontal scroll mobile menu with gradient cue" className="bg-white border rounded-2 p-1 position-relative" style={{ borderColor: 'var(--bs-gray-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
-            <div ref={scrollRef} className="d-flex p-1 align-items-stretch gap-1 no-visible-scroll" style={{ overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch' }}>
+        <div className="df-absolute df-start-0 df-end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Horizontal scroll mobile menu with gradient cue" className="df-bg-surface df-border-1 df-rounded-control df-p-1 df-relative" style={{ borderColor: 'var(--df-color-neutral-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
+            <div ref={scrollRef} className="df-flex df-p-1 df-items-stretch df-gap-1 no-visible-scroll" style={{ overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch' }}>
               {H_SCROLL_DOCK_ITEMS.map((item) => (
-                <DButton key={item.id} variant="link" className="flex-column align-items-center justify-content-center">
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                <DButton key={item.id} variant="link" className="df-flex-col df-items-center df-justify-center">
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
             {showEndFade && (
-              <div aria-hidden="true" style={{ position: 'absolute', top: '8px', bottom: '8px', right: '8px', width: '28px', pointerEvents: 'none', background: 'linear-gradient(to left, var(--bs-white), rgba(255, 255, 255, 0))' }} />
+              <div aria-hidden="true" style={{ position: 'absolute', top: '8px', bottom: '8px', right: '8px', width: '28px', pointerEvents: 'none', background: 'linear-gradient(to left, var(--df-color-white), rgba(255, 255, 255, 0))' }} />
             )}
           </nav>
         </div>
@@ -285,22 +285,22 @@ function ActiveStateDockMenuExample() {
   const [activeItem, setActiveItem] = useState('home');
 
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Navigation</h5>
-          <small className="text-muted">Active state with solid for the selected item</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Current section</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Navigation</h5>
+          <small className="df-text-muted">Active state with solid for the selected item</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Current section</small>
             <strong>{GRID_DOCK_ITEMS.find((item) => item.id === activeItem)?.label}</strong>
           </div>
         </div>
-        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
-          <nav aria-label="Active state dock menu" className="bg-white border rounded-2" style={{ borderColor: 'var(--bs-gray-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
-            <div className="d-grid p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+        <div className="df-absolute df-start-0 df-end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Active state dock menu" className="df-bg-surface df-border-1 df-rounded-control" style={{ borderColor: 'var(--df-color-neutral-200)', boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)' }}>
+            <div className="df-grid df-p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
               {GRID_DOCK_ITEMS.map((item) => {
                 const isActive = item.id === activeItem;
                 return (
-                  <DButton key={item.id} variant={isActive ? 'solid' : 'link'} color={isActive ? 'primary' : 'secondary'} className="flex-column align-items-center justify-content-center" onClick={() => setActiveItem(item.id)}>
+                  <DButton key={item.id} variant={isActive ? 'solid' : 'link'} color={isActive ? 'primary' : 'secondary'} className="df-flex-col df-items-center df-justify-center" onClick={() => setActiveItem(item.id)}>
                     <DIcon icon={item.icon} size="1.1rem" className={isActive ? 'text-white' : 'text-gray-700'} />
                     <small className={isActive ? 'text-white' : 'text-gray-700'} style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                   </DButton>
@@ -348,18 +348,18 @@ function TextOnlyDockMenuWithNotificationsExample() {
   ];
 
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Messages</h5>
-          <small className="text-muted">Text-only dock: active item in bold, one tab with notification count</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Current tab</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Messages</h5>
+          <small className="df-text-muted">Text-only dock: active item in bold, one tab with notification count</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Current tab</small>
             <strong>{TEXT_DOCK_ITEMS.find((item) => item.id === activeItem)?.label}</strong>
           </div>
         </div>
-        <div className="position-absolute start-0 bottom-0">
-          <nav aria-label="Text dock menu with notifications" className="bg-white border-top">
-            <div className="d-grid p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+        <div className="df-absolute df-start-0 df-bottom-0">
+          <nav aria-label="Text dock menu with notifications" className="df-bg-surface df-border-t-1">
+            <div className="df-grid df-p-1" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
               {TEXT_DOCK_ITEMS.map((item) => {
                 const isActive = item.id === activeItem;
                 if (item.id === 'more') {
@@ -371,7 +371,7 @@ function TextOnlyDockMenuWithNotificationsExample() {
                   <DButton key={item.id} variant="link" size="sm" color="secondary" onClick={() => setActiveItem(item.id)} className={isActive ? 'fw-semibold' : 'fw-normal'}>
                     {item.label}
                     {typeof item.notifications === 'number' && item.notifications > 0 && (
-                      <span className="rounded-pill text-white bg-danger d-inline-flex align-items-center justify-content-center" style={{ minWidth: '16px', height: '16px', paddingInline: '4px', fontSize: '8px', lineHeight: 1 }}>
+                      <span className="df-rounded-pill df-text-on-emphasis df-bg-danger df-inline-flex df-items-center df-justify-center" style={{ minWidth: '16px', height: '16px', paddingInline: '4px', fontSize: '8px', lineHeight: 1 }}>
                         {item.notifications}
                       </span>
                     )}
@@ -397,24 +397,24 @@ const ICON_ONLY_DOCK_ITEMS = [
 
 function IconOnlyDockMenuExample() {
   return (
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Icon shortcuts</h5>
-          <small className="text-muted">Icon-only dock with pill style actions</small>
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Quick access</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Icon shortcuts</h5>
+          <small className="df-text-muted">Icon-only dock with pill style actions</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Quick access</small>
             <strong>5 main actions</strong>
           </div>
         </div>
-        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
-          <nav aria-label="Icon-only dock menu" className="bg-primary rounded-pill p-2" style={{ boxShadow: '0 10px 24px rgba(13, 110, 253, 0.32)' }}>
-            <div className="d-grid" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+        <div className="df-absolute df-start-0 df-end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Icon-only dock menu" className="df-bg-primary df-rounded-pill df-p-2" style={{ boxShadow: '0 10px 24px rgba(13, 110, 253, 0.32)' }}>
+            <div className="df-grid" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
               {ICON_ONLY_DOCK_ITEMS.map((item) => (
-                <div key={item.id} className="d-flex justify-content-center">
+                <div key={item.id} className="df-flex df-justify-center">
                   <DButtonIcon
                     variant={item.id === 'home' ? 'solid' : 'link'}
                     color="light"
-                    className="rounded-pill hover:bg-primary-400 text-white"
+                    className="df-rounded-pill df-hover:bg-primary df-text-on-emphasis"
                     icon={item.icon}
                     aria-label={item.label}
                   />
@@ -441,19 +441,19 @@ export const FixedGridDockMenu: Story = {
   },
   render: () => (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '104px' }}>
-          <h5 className="mb-1">Overview</h5>
-          <small className="text-muted">Fixed menu in mobile app style</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '104px' }}>
+          <h5 className="df-mb-1">Overview</h5>
+          <small className="df-text-muted">Fixed menu in mobile app style</small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Available</small>
-            <h3 className="mb-0">$8,430.20</h3>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Available</small>
+            <h3 className="df-mb-0">$8,430.20</h3>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 end-0"
+          className="df-absolute df-start-0 df-end-0"
           style={{
             bottom: '12px',
             paddingInline: '12px',
@@ -461,14 +461,14 @@ export const FixedGridDockMenu: Story = {
         >
           <nav
             aria-label="Fixed grid mobile menu"
-            className="bg-white border rounded-2"
+            className="df-bg-surface df-border-1 df-rounded-control"
             style={{
-              borderColor: 'var(--bs-gray-200)',
+              borderColor: 'var(--df-color-neutral-200)',
               boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)',
             }}
           >
             <div
-              className="d-grid p-1"
+              className="df-grid df-p-1"
               style={{
                 gridTemplateColumns: `repeat(${GRID_DOCK_ITEMS.length}, minmax(0, 1fr))`,
               }}
@@ -477,10 +477,10 @@ export const FixedGridDockMenu: Story = {
                 <DButton
                   key={item.id}
                   variant="link"
-                  className="flex-column align-items-center justify-content-center"
+                  className="df-flex-col df-items-center df-justify-center"
                 >
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
@@ -505,19 +505,19 @@ export const HorizontalScrollDockMenu: Story = {
   },
   render: () => (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Services</h5>
-          <small className="text-muted">Quick shortcuts with horizontal scroll</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Services</h5>
+          <small className="df-text-muted">Quick shortcuts with horizontal scroll</small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Active products</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Active products</small>
             <strong>7 products</strong>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 end-0"
+          className="df-absolute df-start-0 df-end-0"
           style={{
             bottom: '12px',
             paddingInline: '12px',
@@ -525,23 +525,23 @@ export const HorizontalScrollDockMenu: Story = {
         >
           <nav
             aria-label="Horizontal scroll mobile menu"
-            className="bg-white border rounded-2 p-1"
+            className="df-bg-surface df-border-1 df-rounded-control df-p-1"
             style={{
-              borderColor: 'var(--bs-gray-200)',
+              borderColor: 'var(--df-color-neutral-200)',
               boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)',
             }}
           >
             <div
-              className="d-flex p-1 align-items-stretch gap-1 no-visible-scroll"
+              className="df-flex df-p-1 df-items-stretch df-gap-1 no-visible-scroll"
             >
               {H_SCROLL_DOCK_ITEMS.map((item) => (
                 <DButton
                   key={item.id}
                   variant="link"
-                  className="flex-column align-items-center justify-content-center"
+                  className="df-flex-col df-items-center df-justify-center"
                 >
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
@@ -580,19 +580,19 @@ function ScrollDockWithGradient() {
 
   return (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Quick actions</h5>
-          <small className="text-muted">Swipe to reveal more options</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Quick actions</h5>
+          <small className="df-text-muted">Swipe to reveal more options</small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Active products</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Active products</small>
             <strong>9 products</strong>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 end-0"
+          className="df-absolute df-start-0 df-end-0"
           style={{
             bottom: '12px',
             paddingInline: '12px',
@@ -600,15 +600,15 @@ function ScrollDockWithGradient() {
         >
           <nav
             aria-label="Horizontal scroll mobile menu with gradient cue"
-            className="bg-white border rounded-2 p-1 position-relative"
+            className="df-bg-surface df-border-1 df-rounded-control df-p-1 df-relative"
             style={{
-              borderColor: 'var(--bs-gray-200)',
+              borderColor: 'var(--df-color-neutral-200)',
               boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)',
             }}
           >
             <div
               ref={scrollRef}
-              className="d-flex p-1 align-items-stretch gap-1 no-visible-scroll"
+              className="df-flex df-p-1 df-items-stretch df-gap-1 no-visible-scroll"
               style={{
                 overflowX: 'auto',
                 overflowY: 'hidden',
@@ -619,10 +619,10 @@ function ScrollDockWithGradient() {
                 <DButton
                   key={item.id}
                   variant="link"
-                  className="flex-column align-items-center justify-content-center"
+                  className="df-flex-col df-items-center df-justify-center"
                 >
-                  <DIcon icon={item.icon} size="1.1rem" className="text-gray-700" />
-                  <small className="text-gray-700" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
+                  <DIcon icon={item.icon} size="1.1rem" className="df-text-default" />
+                  <small className="df-text-default" style={{ fontSize: '11px', lineHeight: 1.1 }}>{item.label}</small>
                 </DButton>
               ))}
             </div>
@@ -637,7 +637,7 @@ function ScrollDockWithGradient() {
                   right: '8px',
                   width: '28px',
                   pointerEvents: 'none',
-                  background: 'linear-gradient(to left, var(--bs-white), rgba(255, 255, 255, 0))',
+                  background: 'linear-gradient(to left, var(--df-color-white), rgba(255, 255, 255, 0))',
                 }}
               />
             )}
@@ -668,21 +668,21 @@ function ActiveStateDock() {
 
   return (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Navigation</h5>
-          <small className="text-muted">
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Navigation</h5>
+          <small className="df-text-muted">
             Active state with solid for the selected item
           </small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Current section</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Current section</small>
             <strong>{GRID_DOCK_ITEMS.find((item) => item.id === activeItem)?.label}</strong>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 end-0"
+          className="df-absolute df-start-0 df-end-0"
           style={{
             bottom: '12px',
             paddingInline: '12px',
@@ -690,14 +690,14 @@ function ActiveStateDock() {
         >
           <nav
             aria-label="Active state dock menu"
-            className="bg-white border rounded-2"
+            className="df-bg-surface df-border-1 df-rounded-control"
             style={{
-              borderColor: 'var(--bs-gray-200)',
+              borderColor: 'var(--df-color-neutral-200)',
               boxShadow: '0 8px 24px rgba(17, 24, 39, 0.06)',
             }}
           >
             <div
-              className="d-grid p-1"
+              className="df-grid df-p-1"
               style={{
                 gridTemplateColumns: `repeat(${GRID_DOCK_ITEMS.length}, minmax(0, 1fr))`,
               }}
@@ -710,7 +710,7 @@ function ActiveStateDock() {
                     key={item.id}
                     variant={isActive ? 'solid' : 'link'}
                     color={isActive ? 'primary' : 'secondary'}
-                    className="flex-column align-items-center justify-content-center"
+                    className="df-flex-col df-items-center df-justify-center"
                     onClick={() => setActiveItem(item.id)}
                   >
                     <DIcon
@@ -766,28 +766,28 @@ function TextOnlyDockWithNotifications() {
 
   return (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Messages</h5>
-          <small className="text-muted">
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Messages</h5>
+          <small className="df-text-muted">
             Text-only dock: active item in bold, one tab with notification count
           </small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Current tab</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Current tab</small>
             <strong>{TEXT_DOCK_ITEMS.find((item) => item.id === activeItem)?.label}</strong>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 bottom-0"
+          className="df-absolute df-start-0 df-bottom-0"
         >
           <nav
             aria-label="Text dock menu with notifications"
-            className="bg-white border-top"
+            className="df-bg-surface df-border-t-1"
           >
             <div
-              className="d-grid p-1"
+              className="df-grid df-p-1"
               style={{
                 gridTemplateColumns: `repeat(${TEXT_DOCK_ITEMS.length}, minmax(0, 1fr))`,
               }}
@@ -819,7 +819,7 @@ function TextOnlyDockWithNotifications() {
                     {item.label}
                     {typeof item.notifications === 'number' && item.notifications > 0 && (
                       <span
-                        className="rounded-pill text-white bg-danger d-inline-flex align-items-center justify-content-center"
+                        className="df-rounded-pill df-text-on-emphasis df-bg-danger df-inline-flex df-items-center df-justify-center"
                         style={{
                           minWidth: '16px',
                           height: '16px',
@@ -871,19 +871,19 @@ export const IconOnlyDockMenu: Story = {
   },
   render: () => (
     <MobileViewport>
-      <div className="h-100 position-relative bg-gray-25">
-        <div className="p-4" style={{ paddingBottom: '112px' }}>
-          <h5 className="mb-1">Icon shortcuts</h5>
-          <small className="text-muted">Icon-only dock with pill style actions</small>
+      <div className="df-h-full df-relative df-bg-surface">
+        <div className="df-p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="df-mb-1">Icon shortcuts</h5>
+          <small className="df-text-muted">Icon-only dock with pill style actions</small>
 
-          <div className="card p-3 mt-3">
-            <small className="text-muted">Quick access</small>
+          <div className="df-card df-p-3 df-mt-3">
+            <small className="df-text-muted">Quick access</small>
             <strong>5 main actions</strong>
           </div>
         </div>
 
         <div
-          className="position-absolute start-0 end-0"
+          className="df-absolute df-start-0 df-end-0"
           style={{
             bottom: '12px',
             paddingInline: '12px',
@@ -891,16 +891,16 @@ export const IconOnlyDockMenu: Story = {
         >
           <nav
             aria-label="Icon-only dock menu"
-            className="bg-primary rounded-pill p-1 shadow-lg"
+            className="df-bg-primary df-rounded-pill df-p-1 df-shadow-lg"
           >
             <div
-              className="d-grid"
+              className="df-grid"
               style={{
                 gridTemplateColumns: `repeat(${ICON_ONLY_DOCK_ITEMS.length}, minmax(0, 1fr))`,
               }}
             >
               {ICON_ONLY_DOCK_ITEMS.map((item) => (
-                <div key={item.id} className="d-flex justify-content-center">
+                <div key={item.id} className="df-flex df-justify-center">
                   <DButtonIcon
                     variant={item.id === 'home' ? 'solid' : 'link'}
                     color="light"

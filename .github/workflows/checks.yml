@@ -33,6 +33,28 @@ jobs:
         run: |
           npm run eslint
           npm run stylelint
+      # Enforces the token contract: ramp properties, alias-only layers,
+      # reference direction, name uniqueness, mode parity and contrast.
+      # See tokens/README.md for what each rule is protecting against.
+      - name: Verify and validate design tokens
+        run: |
+          npm run tokens:verify
+          npm run tokens:validate
+      # Builds the 3.x stylesheet and checks it end to end: no dangling custom
+      # properties (the shape every 2.x CSS typo took), every variant x role
+      # combination resolves, every opaque fill clears 4.5:1 in both colour
+      # modes, and every spacing and colour comes from a token rather than a
+      # literal or a raw palette step. Also enforces the size budgets.
+      - name: Build and verify the stylesheet
+        run: npm run css
+      - name: Check tokens/ is in sync with its generators
+        run: |
+          npm run tokens:primitives
+          if ! git diff --quiet -- tokens/; then
+            echo "::error::tokens/ is out of date. Run \`npm run tokens:primitives\` and commit the result."
+            git --no-pager diff -- tokens/
+            exit 1
+          fi
       - name: Validate PR commits
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
       - name: Test packages

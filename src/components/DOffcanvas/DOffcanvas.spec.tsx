@@ -21,7 +21,7 @@ jest.mock('../../contexts', () => ({
 }));
 
 // Matches the DS default Bootstrap breakpoints, so `DContextProvider`'s
-// `useLayoutEffect` (which reads `--bs-breakpoint-*` CSS variables) resolves
+// `useLayoutEffect` (which reads `--df-breakpoint-*` CSS variables) resolves
 // the same breakpoints used in a real browser.
 jest.mock('../../utils/getCssVariable', () => ({
   __esModule: true,
@@ -78,55 +78,57 @@ describe('<DOffcanvas />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            aria-hidden="false"
-            aria-labelledby="myOffcanvasLabel"
-            class="offcanvas portal show offcanvas-end"
-            id="myOffcanvas"
-            style="transition: none; transform: translateX(100%);"
-            tabindex="-1"
-          >
-            <div
-              class="offcanvas-header"
-            >
-              <div>
-                Test Header
-              </div>
-            </div>
-            <div
-              class="d-offcanvas-separator"
-            />
-            <div
-              class="offcanvas-body"
-            >
-              Test Body
-            </div>
-            <div
-              class="d-offcanvas-separator"
-            />
-            <div
-              class="d-offcanvas-footer"
-            >
-              Test Footer
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <div
+    aria-hidden="false"
+    aria-labelledby="myOffcanvasLabel"
+    class="df-overlay"
+    data-from="end"
+    data-kind="offcanvas"
+    id="myOffcanvas"
+    style="transition: none; transform: translateX(100%);"
+    tabindex="-1"
+  >
+    <div
+      class="df-overlay-header"
+    >
+      <div>
+        Test Header
+      </div>
+    </div>
+    <hr
+      class="df-overlay-separator"
+    />
+    <div
+      class="df-overlay-body"
+    >
+      Test Body
+    </div>
+    <hr
+      class="df-overlay-separator"
+    />
+    <div
+      class="df-overlay-footer"
+    >
+      Test Footer
+    </div>
+  </div>
+</div>
+`);
     });
 
     it.each([
-      ['start', 'offcanvas-start'],
-      ['top', 'offcanvas-top'],
-      ['bottom', 'offcanvas-bottom'],
-    ])('should render on position %s', (position, expectedClass) => {
+      ['start'],
+      ['top'],
+      ['bottom'],
+    ])('should render on position %s', (position) => {
       const { container } = render(<DOffcanvas name="test" openFrom={position as 'start' | 'top' | 'bottom'} />);
-      expect(container.firstChild).toHaveClass(expectedClass);
+      expect(container.firstChild).toHaveAttribute('data-from', position);
     });
 
     it('should render with a static backdrop', () => {
       const { container } = render(<DOffcanvas name="test" staticBackdrop />);
-      expect(container.firstChild).toHaveAttribute('data-bs-backdrop', 'static');
+      expect(container.firstChild).toHaveAttribute('data-static-backdrop');
     });
 
     it('should resolve responsive openFrom based on the current breakpoint', () => {
@@ -136,9 +138,9 @@ describe('<DOffcanvas />', () => {
           <DOffcanvas name="test" openFrom={{ xs: 'bottom', md: 'end', lg: 'top' }} />
         </DContextProvider>,
       );
-      expect(container.firstChild).toHaveClass('offcanvas-top');
-      expect(container.firstChild).not.toHaveClass('offcanvas-bottom');
-      expect(container.firstChild).not.toHaveClass('offcanvas-end');
+      expect(container.firstChild).toHaveAttribute('data-from', 'top');
+      expect(container.firstChild).not.toHaveAttribute('data-from', 'bottom');
+      expect(container.firstChild).not.toHaveAttribute('data-from', 'end');
     });
 
     it('should fall back to "end" when no breakpoint in the responsive openFrom object matches', () => {
@@ -148,17 +150,27 @@ describe('<DOffcanvas />', () => {
           <DOffcanvas name="test" openFrom={{ md: 'top', lg: 'start' }} />
         </DContextProvider>,
       );
-      expect(container.firstChild).toHaveClass('offcanvas-end');
+      expect(container.firstChild).toHaveAttribute('data-from', 'end');
     });
 
-    it('should inject --bs-offcanvas-width/height CSS variables when width/height are provided', () => {
+    /**
+     * 2.x injected `--bs-offcanvas-width` and `--bs-offcanvas-height` as two
+     * separate properties. 3.x has one `--df-overlay-size`: a start/end panel
+     * reads it as a width and a top/bottom one as a height, and the stylesheet
+     * decides which — so the component no longer has to.
+     */
+    it('should inject --df-overlay-size from width on a side panel', () => {
       const { container } = render(
-        <DOffcanvas name="test" openFrom="end" width="320px" height="50vh" />,
+        <DOffcanvas name="test" openFrom="end" width="320px" />,
       );
-      expect(container.firstChild).toHaveStyle({
-        '--bs-offcanvas-width': '320px',
-        '--bs-offcanvas-height': '50vh',
-      });
+      expect(container.firstChild).toHaveStyle({ '--df-overlay-size': '320px' });
+    });
+
+    it('should inject --df-overlay-size from height on a top panel', () => {
+      const { container } = render(
+        <DOffcanvas name="test" openFrom="top" height="50vh" />,
+      );
+      expect(container.firstChild).toHaveStyle({ '--df-overlay-size': '50vh' });
     });
 
     it('should resolve responsive width/height based on the current breakpoint', () => {
@@ -172,17 +184,17 @@ describe('<DOffcanvas />', () => {
           />
         </DContextProvider>,
       );
-      expect(container.firstChild).toHaveStyle({ '--bs-offcanvas-width': '320px' });
+      expect(container.firstChild).toHaveStyle({ '--df-overlay-size': '320px' });
     });
 
-    it('should not set --bs-offcanvas-width/height when width/height are not provided', () => {
+    it('should not set --df-overlay-size/height when width/height are not provided', () => {
       const { container } = render(<DOffcanvas name="test" openFrom="end" />);
-      expect(container.firstChild).not.toHaveStyle({ '--bs-offcanvas-width': '400px' });
+      expect(container.firstChild).not.toHaveStyle({ '--df-overlay-size': '400px' });
     });
 
     it('should render a scrollable offcanvas', () => {
       const { container } = render(<DOffcanvas name="test" scrollable />);
-      expect(container.firstChild).toHaveAttribute('data-bs-scroll', 'true');
+      expect(container.firstChild).toHaveAttribute('data-scrollable');
     });
   });
 
@@ -219,8 +231,8 @@ describe('<DOffcanvas />', () => {
         </DOffcanvas.Footer>,
       );
 
-      const footer = container.querySelector('.d-offcanvas-footer');
-      expect(footer).toHaveClass('d-offcanvas-action-start');
+      const footer = container.querySelector('.df-overlay-footer');
+      expect(footer).toHaveAttribute('data-align', 'start');
     });
   });
 });

@@ -1,0 +1,92 @@
+/**
+ * Credit card.
+ *
+ * The face gradient stays a literal here rather than becoming a token: it is
+ * decorative art, not a system colour, and rule B would have forced an
+ * `alias-only` token to point at something that does not exist in the palette.
+ * A client replaces it through `--df-credit-card-bg` like any other slot.
+ *
+ * This is the one place in the stylesheet with literal colours, and
+ * `.stylelintrc` has a scoped disable saying so.
+ */
+@layer df.components {
+  .df-credit-card {
+    /* The only literal colours in the stylesheet. This is decorative art, not
+       a system colour: there is no palette entry it could alias, and rule B
+       exists to stop a *semantic* value being hardcoded — not to ban a
+       gradient. A client replaces the whole thing through this slot. */
+    /* stylelint-disable color-no-hex, function-disallowed-list, alpha-value-notation */
+    --df-credit-card-bg:
+      radial-gradient(circle at 25% 10%, rgb(255 255 255 / 12%), transparent 18%),
+      linear-gradient(
+        135deg,
+        #ff9a8b 0%,
+        #ffb199 12%,
+        #caa6ff 40%,
+        #7aa7ff 65%,
+        #39e6d6 100%
+      );
+    /* stylelint-enable color-no-hex, function-disallowed-list, alpha-value-notation */
+    --df-credit-card-chip-bg: color-mix(in oklab, var(--df-color-white) 12%, transparent);
+    --df-credit-card-aspect-ratio: 16 / 9;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: var(--df-credit-card-aspect-ratio);
+    padding: var(--df-credit-card-padding);
+    overflow: hidden;
+    color: var(--df-credit-card-fg);
+    background: var(--df-credit-card-bg);
+    border-radius: var(--df-credit-card-radius);
+  }
+
+  .df-credit-card[data-orientation="vertical"] {
+    aspect-ratio: 9 / 16;
+  }
+
+  .df-credit-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .df-credit-card-chip {
+    padding: var(--df-credit-card-chip-padding);
+    background: var(--df-credit-card-chip-bg);
+    border-radius: var(--df-credit-card-chip-radius);
+  }
+
+  .df-credit-card-chip-image {
+    display: block;
+    width: var(--df-credit-card-chip-size);
+  }
+
+  .df-credit-card-logo {
+    width: 22%;
+  }
+
+  .df-credit-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-2);
+    margin-block-start: auto;
+  }
+
+  .df-credit-card-number {
+    font-family: var(--df-font-family-mono);
+    font-size: var(--df-credit-card-number-font-size);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--df-letter-spacing-wide);
+  }
+
+  .df-credit-card-holder-label {
+    font-size: var(--df-credit-card-label-font-size);
+    text-transform: uppercase;
+    opacity: var(--df-opacity-80);
+  }
+
+  .df-credit-card-name {
+    font-size: var(--df-credit-card-name-font-size);
+  }
+}

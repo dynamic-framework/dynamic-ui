@@ -21,10 +21,7 @@ function DCard(
   return (
     <div
       style={style}
-      className={classNames(
-        'card',
-        className,
-      )}
+      className={classNames('df-card', className)}
       {...dataAttributes}
     >
       {children}

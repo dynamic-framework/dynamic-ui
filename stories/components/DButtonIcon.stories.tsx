@@ -5,7 +5,6 @@ import type { ComponentProps } from 'react';
 import DButtonIcon from '../../src/components/DButtonIcon/DButtonIcon';
 
 import { DContextProvider } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 import {
   COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
@@ -24,11 +23,10 @@ const config: Meta<typeof DButtonIcon> = {
 > We work with button variables at two levels, variables in root per variant (default, outline, link)
 >and internal variables in each button that use the previous ones.
 
-> - in the root there are variables for color (\`--bs-primary\`, \`--bs-info\`, ...),
-> - then variables for variant and color for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
-> - and finally for selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
->   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
-
+> - in the root there are variables for color (\`--df-role-primary-base\`, \`--df-role-info-base\`, ...),
+> - then the variant and colour attributes (\`data-variant\`, \`data-color\`),
+> - and finally the component's own variables (\`--df-button-bg\`, \`--df-button-hover-bg\`, ...),
+>   which the variant&colour matrix fills from the ones above.
 
 The style of our buttons is highly based on bootstrap, however,
 boostrap darkens or lightens the color of a button to generate its different states,
@@ -73,34 +71,31 @@ we use the established palettes in the variables.
 
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/button.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                             | Class | Type            | Description                     |
-|--------------------------------------|-------|-----------------|---------------------------------|
-| --${PREFIX_BS}btn-padding-x          | .btn  | css length unit | Button padding horizontal       |
-| --${PREFIX_BS}btn-padding-y          | .btn  | css length unit | Button padding vertical         |
-| --${PREFIX_BS}btn-font-family        | .btn  | css font family | Button font family              |
-| --${PREFIX_BS}btn-font-size          | .btn  | css length unit | Button font size                |
-| --${PREFIX_BS}btn-font-weight        | .btn  | css weight unit | Button font weight              |
-| --${PREFIX_BS}btn-line-height        | .btn  | css length unit | Button line height              |
-| --${PREFIX_BS}btn-color              | .btn  | css color unit  | Button text color               |
-| --${PREFIX_BS}btn-bg                 | .btn  | css color unit  | Button background color         |
-| --${PREFIX_BS}btn-border-width       | .btn  | css length unit | Button border width             |
-| --${PREFIX_BS}btn-border-color       | .btn  | css color unit  | Button border color             |
-| --${PREFIX_BS}btn-hover-border-color | .btn  | css color unit  | Button hover border color       |
-| --${PREFIX_BS}btn-box-shadow         | .btn  | css box shadow  | Button box shadow               |
-| --${PREFIX_BS}btn-disabled-opacity   | .btn  | css length unit | Button link padding vertical    |
-| --${PREFIX_BS}btn-focus-box-shadow   | .btn  | css box shadow  | Button focus box shadow         |
-| --${PREFIX_BS}btn–text-decoration    | .btn  | text decoration | Button text decoration          |
-| --${PREFIX_BS}btn-lg-padding-x       | .btn  | css length unit | Button large padding horizontal |
-| --${PREFIX_BS}btn-lg-padding-y       | .btn  | css length unit | Button large padding vertical   |
-| --${PREFIX_BS}btn-lg-font-size       | .btn  | css length unit | Button large font size          |
-| --${PREFIX_BS}btn-sm-padding-x       | .btn  | css length unit | Button small padding horizontal |
-| --${PREFIX_BS}btn-sm-padding-y       | .btn  | css length unit | Button small padding vertical   |
-| --${PREFIX_BS}btn-sm-font-size       | .btn  | css length unit | Button small font size          |
-| --${PREFIX_BS}btn-border-radius      | :root | css length unit | Button border radius            |
-| --${PREFIX_BS}btn-lg-border-radius   | :root | css length unit | Button large border radius      |
-| --${PREFIX_BS}btn-sm-border-radius   | :root | css length unit | Button small border radius      |
+| Variable                          | Type        | Description       |
+|-----------------------------------|-------------|-------------------|
+| \`--df-button-padding-block\`     | css length  | Padding block     |
+| \`--df-button-padding-inline\`    | css length  | Padding inline    |
+| \`--df-button-gap\`               | css length  | Gap               |
+| \`--df-button-font-family\`       | font family | Font family       |
+| \`--df-button-font-size\`         | css length  | Font size         |
+| \`--df-button-font-weight\`       | font weight | Font weight       |
+| \`--df-button-line-height\`       | number      | Line height       |
+| \`--df-button-radius\`            | css length  | Radius            |
+| \`--df-button-border-width\`      | css length  | Border width      |
+| \`--df-button-disabled-opacity\`  | number      | Disabled opacity  |
+| \`--df-button-sm-padding-block\`  | css length  | Sm padding block  |
+| \`--df-button-sm-padding-inline\` | css length  | Sm padding inline |
+| \`--df-button-sm-font-size\`      | css length  | Sm font size      |
+| \`--df-button-sm-radius\`         | css length  | Sm radius         |
+| \`--df-button-lg-padding-block\`  | css length  | Lg padding block  |
+| \`--df-button-lg-padding-inline\` | css length  | Lg padding inline |
+| \`--df-button-lg-font-size\`      | css length  | Lg font size      |
+| \`--df-button-lg-radius\`         | css length  | Lg radius         |
+
         `,
       },
     },
@@ -299,12 +294,12 @@ export const Soft: Story = {
 export const VariantsByColor: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-column gap-4">
+      <div className="df-flex df-flex-col df-gap-4">
         <h6>
           Solid
-          <small className="text-muted fw-normal"> (default variant)</small>
+          <small className="df-text-muted df-fw-normal"> (default variant)</small>
         </h6>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
+        <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
           {THEMES.filter((color) => color !== 'light').map((color) => (
             <DButtonIcon
               key={color}
@@ -315,7 +310,7 @@ export const VariantsByColor: Story = {
           ))}
         </div>
         <h6>Outline</h6>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
+        <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
           {THEMES.filter((color) => color !== 'light').map((color) => (
             <DButtonIcon
               key={color}
@@ -327,7 +322,7 @@ export const VariantsByColor: Story = {
           ))}
         </div>
         <h6>Link</h6>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
+        <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
           {THEMES.filter((color) => color !== 'light').map((color) => (
             <DButtonIcon
               key={color}
@@ -339,7 +334,7 @@ export const VariantsByColor: Story = {
           ))}
         </div>
         <h6>Soft</h6>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
+        <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
           {THEMES.filter((color) => color !== 'light').map((color) => (
             <DButtonIcon
               key={color}
@@ -352,10 +347,10 @@ export const VariantsByColor: Story = {
         </div>
       </div>
 
-      <hr className="my-4" />
+      <hr className="df-my-4" />
       <div>
-        <p className="mb-1 small">The Light color for dark backgrounds</p>
-        <div className="d-flex gap-2 p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+        <p className="df-mb-1 df-fs-body-sm">The Light color for dark backgrounds</p>
+        <div className="df-flex df-gap-2 df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DButtonIcon
             variant="solid"
             color="light"

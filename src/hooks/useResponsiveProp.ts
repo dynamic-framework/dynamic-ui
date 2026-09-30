@@ -19,9 +19,15 @@ import {
  * Usage example:
  * ```ts
  * const prop: ResponsiveProp = { xs: "small", md: "medium", xl: "large" };
+ * const spans: ResponsiveProp<number> = { xs: 12, md: 6 };
  * ```
+ *
+ * The value type is a parameter defaulting to `string`, so `ResponsiveProp`
+ * keeps meaning exactly what it did while a numeric map — a grid span, a
+ * spacing step — no longer needs a cast at the call site.
  */
-export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
+export type ResponsiveProp<T = string> =
+  Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', T>>;
 
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
@@ -49,7 +55,7 @@ export function useResponsiveProp(useListener: boolean = false) {
   const bpXlUp = useMediaBreakpointUpXl(useListener);
   const bpXxlUp = useMediaBreakpointUpXxl(useListener);
 
-  const responsivePropValue = useCallback((prop: ResponsiveProp) => {
+  const responsivePropValue = useCallback(<T>(prop: ResponsiveProp<T>): T | undefined => {
     // Pick the highest matched breakpoint value that is defined in prop
     if (prop.xxl !== undefined && bpXxlUp) return prop.xxl;
     if (prop.xl !== undefined && bpXlUp) return prop.xl;

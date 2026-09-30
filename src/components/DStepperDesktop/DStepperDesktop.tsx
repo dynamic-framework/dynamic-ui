@@ -51,49 +51,42 @@ export default function DStepper(
     throw new Error('Current step should be in the range from 1 to options length');
   }
 
+  /** One axis with three values, where 2.x had two independent classes. */
+  const stateFor = (value: number): 'done' | 'current' | 'todo' => {
+    if (completed || value < currentStep) return 'done';
+    if (value === currentStep) return 'current';
+    return 'todo';
+  };
+
   return (
     <div
-      className={classNames(
-        {
-          'd-stepper-desktop': true,
-          'is-vertical': vertical,
-          'is-align-start': alignStart && !vertical,
-        },
-        className,
-      )}
+      className={classNames('df-stepper-desktop', className)}
+      {...vertical && { 'data-orientation': 'vertical' }}
+      {...alignStart && !vertical && { 'data-align': 'start' }}
       style={style}
     >
       {options.map(({ label, value, description }) => (
         <div
-          className={classNames({
-            'd-step': true,
-            'd-step-current': value === currentStep && !completed,
-          })}
+          className="df-step"
+          // 2.x used `d-step-current` on the step and `d-step-check` on the
+          // marker — two classes for what is one axis with three values.
+          data-state={stateFor(value)}
           key={value}
         >
-          <div className="d-step-value">
-            <div
-              className={classNames({
-                'd-step-icon-container': true,
-                'd-step-check': value < currentStep || completed,
-              })}
-            >
-              {((value < currentStep) || completed) && (
-                <DIcon
-                  icon={icon}
-                  familyClass={iconSuccessFamilyClass}
-                  familyPrefix={iconSuccessFamilyPrefix}
-                  materialStyle={iconSuccessMaterialStyle}
-                  className="d-step-icon"
-                />
-              )}
-              {value}
-            </div>
+          <div className="df-step-marker">
+            {((value < currentStep) || completed) ? (
+              <DIcon
+                icon={icon}
+                familyClass={iconSuccessFamilyClass}
+                familyPrefix={iconSuccessFamilyPrefix}
+                materialStyle={iconSuccessMaterialStyle}
+              />
+            ) : value}
           </div>
-          <div className="d-step-text-container">
-            <div className="d-step-label">{label}</div>
+          <div className="df-step-text">
+            <div className="df-step-label">{label}</div>
             {description && (
-              <div className="d-step-description">{description}</div>
+              <div className="df-step-description">{description}</div>
             )}
           </div>
         </div>

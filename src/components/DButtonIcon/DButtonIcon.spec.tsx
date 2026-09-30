@@ -12,9 +12,11 @@ describe('<DButtonIcon />', () => {
     );
 
     const button = container.querySelector('button');
-    const icon = button?.querySelector('.d-icon');
+    const icon = button?.querySelector('.df-icon');
 
-    expect(button).toHaveClass('btn', 'd-button-icon', 'btn-primary');
+    expect(button).toHaveClass('df-button');
+    expect(button).toHaveAttribute('data-icon-only');
+    expect(button).toHaveAttribute('data-color', 'primary');
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
@@ -49,7 +51,7 @@ describe('<DButtonIcon />', () => {
       />,
     );
 
-    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+    expect(container.querySelector('.df-spinner')).toBeInTheDocument();
     expect(container.querySelector('[aria-label="Loading..."]')).toBeInTheDocument();
   });
 
@@ -62,7 +64,7 @@ describe('<DButtonIcon />', () => {
       />,
     );
 
-    expect(container.querySelector('.btn-outline-secondary')).toBeInTheDocument();
+    expect(container.querySelector('[data-variant="outline"][data-color="secondary"]')).toBeInTheDocument();
   });
 
   it('Should disable button when state is disabled', () => {
@@ -114,7 +116,7 @@ describe('<DButtonIcon />', () => {
       />,
     );
 
-    expect(getByRole('button')).toHaveClass('active');
+    expect(getByRole('button')).toHaveClass('df-active');
   });
 
   it('Should not render icon when loading is true', () => {
@@ -137,7 +139,7 @@ describe('<DButtonIcon />', () => {
       />,
     );
 
-    expect(getByRole('button')).toHaveClass('btn-lg');
+    expect(getByRole('button')).toHaveAttribute('data-size', 'lg');
   });
 
   it('Should not throw if onClick is not provided', () => {

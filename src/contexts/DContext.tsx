@@ -17,7 +17,7 @@ import {
   ConfirmModalStoreContext,
 } from '../components/DConfirmModal/confirmModalStore';
 
-import { PREFIX_BS } from '../components/config';
+import { PREFIX } from '../components/config';
 import type { AlertThemeIconMap, IconComponent } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
@@ -72,6 +72,10 @@ export type IconMapProps = {
   calendar: string;
   /** Class suffix for the checkmark icon. */
   check: string;
+  /** Class suffix for the play icon, used by the carousel's autoplay control. */
+  play: string;
+  /** Class suffix for the pause icon, used by the carousel's autoplay control. */
+  pause: string;
   /** Icon class suffixes for text input adornments. */
   input: {
     /** Search/magnifier icon. */
@@ -92,17 +96,17 @@ export type IconMapProps = {
  * These are populated automatically by `DContextProvider` on mount.
  */
 export type BreakpointProps = {
-  /** `--bs-breakpoint-xs` value (usually `"0px"`). */
+  /** `--df-breakpoint-xs` value (usually `"0px"`). */
   xs: string;
-  /** `--bs-breakpoint-sm` value (usually `"576px"`). */
+  /** `--df-breakpoint-sm` value (usually `"576px"`). */
   sm: string;
-  /** `--bs-breakpoint-md` value (usually `"768px"`). */
+  /** `--df-breakpoint-md` value (usually `"768px"`). */
   md: string;
-  /** `--bs-breakpoint-lg` value (usually `"992px"`). */
+  /** `--df-breakpoint-lg` value (usually `"992px"`). */
   lg: string;
-  /** `--bs-breakpoint-xl` value (usually `"1200px"`). */
+  /** `--df-breakpoint-xl` value (usually `"1200px"`). */
   xl: string;
-  /** `--bs-breakpoint-xxl` value (usually `"1400px"`). */
+  /** `--df-breakpoint-xxl` value (usually `"1400px"`). */
   xxl: string;
 };
 
@@ -145,6 +149,8 @@ const DEFAULT_STATE = {
     upload: 'Upload',
     calendar: 'Calendar',
     check: 'Check',
+    play: 'Play',
+    pause: 'Pause',
     alert: {
       warning: 'AlertCircle',
       danger: 'AlertTriangle',
@@ -236,12 +242,12 @@ export function DContextProvider<T extends Record<string, unknown>>(
   useLayoutEffect(() => {
     setContext({
       breakpoints: {
-        xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
-        sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
-        md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
-        lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
-        xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
-        xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+        xs: getCssVariable(`--${PREFIX}breakpoint-xs`),
+        sm: getCssVariable(`--${PREFIX}breakpoint-sm`),
+        md: getCssVariable(`--${PREFIX}breakpoint-md`),
+        lg: getCssVariable(`--${PREFIX}breakpoint-lg`),
+        xl: getCssVariable(`--${PREFIX}breakpoint-xl`),
+        xxl: getCssVariable(`--${PREFIX}breakpoint-xxl`),
       },
     });
   }, [setContext]);

@@ -1,0 +1,147 @@
+{
+  "$description": "Semantic colour, LIGHT mode. Every value here is an alias — no literals. This is the layer a client overrides to rebrand, and the only colour vocabulary a designer should compose with.",
+  "bg": {
+    "$type": "color",
+    "canvas": {
+      "$value": "{color.neutral.50}",
+      "$description": "The page ground. 2.x hardcoded #f5f6fa here, which sat off the neutral ramp (bluer, and between steps 25 and 50); its own source comment asked whether it should be added to the palette. Resolved by using the ramp."
+    },
+    "surface": { "$value": "{color.white}", "$description": "Cards, panels, anything sitting on the canvas." },
+    "raised": { "$value": "{color.white}", "$description": "Menus, popovers, anything floating above a surface." },
+    "sunken": { "$value": "{color.neutral.100}", "$description": "Wells and inset areas." },
+    "muted": { "$value": "{color.neutral.50}" },
+    "inverse": { "$value": "{color.neutral.900}" },
+    "disabled": { "$value": "{color.neutral.50}" },
+    "overlay": { "$value": "{color.alpha.black.50}", "$description": "Modal and offcanvas scrim." }
+  },
+  "fg": {
+    "$type": "color",
+    "default": { "$value": "{color.neutral.900}" },
+    "muted": { "$value": "{color.neutral.600}", "$description": "2.x used gray-500 for `.text-muted`, which is 4.9:1 on white but only 4.44:1 on the page canvas — under AA. One step darker clears both grounds." },
+    "subtle": { "$value": "{color.neutral.400}" },
+    "disabled": { "$value": "{color.neutral.300}" },
+    "inverse": { "$value": "{color.neutral.25}" },
+    "on-emphasis": { "$value": "{color.white}", "$description": "Text on any saturated role fill." },
+    "link": { "$value": "{color.blue.500}" },
+    "link-hover": { "$value": "{color.blue.700}" }
+  },
+  "border": {
+    "$type": "color",
+    "default": { "$value": "{color.neutral.100}", "$description": "Matches 2.x `$border-color`." },
+    "muted": { "$value": "{color.neutral.50}" },
+    "strong": { "$value": "{color.neutral.400}", "$description": "Needs 3:1 against the surface to satisfy WCAG 1.4.11 for a UI boundary; neutral.300 gives 2.38:1." },
+    "disabled": { "$value": "{color.neutral.100}" }
+  },
+  "focus": {
+    "$type": "color",
+    "ring": {
+      "$value": "{color.blue.500}",
+      "$description": "Solid, not translucent. 2.x built the ring from rgba(var(--bs-…-rgb), opacity), which is unexportable. Step 500 rather than 300 because the ring must clear 3:1 against the surface it sits on; focus.ring-offset handles the case where the ring is adjacent to a primary fill."
+    }
+  },
+  "role": {
+    "$type": "color",
+    "$description": "Eight roles, each with the same nine sub-tokens. Component props map onto these names: color=\"light\" resolves to `neutral`, color=\"dark\" to `inverse`.",
+    "primary": {
+      "base": { "$value": "{color.blue.500}" },
+      "base-hover": { "$value": "{color.blue.600}" },
+      "base-active": { "$value": "{color.blue.700}" },
+      "on-base": { "$value": "{color.white}" },
+      "subtle": { "$value": "{color.blue.50}" },
+      "subtle-hover": { "$value": "{color.blue.100}" },
+      "subtle-active": { "$value": "{color.blue.200}" },
+      "on-subtle": { "$value": "{color.blue.700}" },
+      "border": { "$value": "{color.blue.200}" },
+      "emphasis": { "$value": "{color.blue.600}" }
+    },
+    "secondary": {
+      "$description": "The neutral low-emphasis action. Matches 2.x, where the secondary solid button was a gray-50 fill with gray-700 text.",
+      "base": { "$value": "{color.neutral.50}" },
+      "base-hover": { "$value": "{color.neutral.100}" },
+      "base-active": { "$value": "{color.neutral.200}" },
+      "on-base": { "$value": "{color.neutral.700}" },
+      "subtle": { "$value": "{color.neutral.25}" },
+      "subtle-hover": { "$value": "{color.neutral.50}" },
+      "subtle-active": { "$value": "{color.neutral.100}" },
+      "on-subtle": { "$value": "{color.neutral.700}" },
+      "border": { "$value": "{color.neutral.200}" },
+      "emphasis": { "$value": "{color.neutral.600}" }
+    },
+    "success": {
+      "base": { "$value": "{color.green.500}" },
+      "base-hover": { "$value": "{color.green.600}" },
+      "base-active": { "$value": "{color.green.700}" },
+      "on-base": { "$value": "{color.white}" },
+      "subtle": { "$value": "{color.green.50}" },
+      "subtle-hover": { "$value": "{color.green.100}" },
+      "subtle-active": { "$value": "{color.green.200}" },
+      "on-subtle": { "$value": "{color.green.700}" },
+      "border": { "$value": "{color.green.200}" },
+      "emphasis": { "$value": "{color.green.600}" }
+    },
+    "info": {
+      "$description": "Mapped to cyan. In 2.x `info` aliased blue — the same hue as `primary` — so an info alert was indistinguishable from a primary one. Needs design sign-off; reverting is a one-line change. Like warning, cyan is too light to carry white text, so `on-base` is dark.",
+      "base": { "$value": "{color.cyan.500}" },
+      "base-hover": { "$value": "{color.cyan.600}" },
+      "base-active": { "$value": "{color.cyan.700}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.cyan.50}" },
+      "subtle-hover": { "$value": "{color.cyan.100}" },
+      "subtle-active": { "$value": "{color.cyan.200}" },
+      "on-subtle": { "$value": "{color.cyan.800}" },
+      "border": { "$value": "{color.cyan.200}" },
+      "emphasis": { "$value": "{color.cyan.700}" }
+    },
+    "warning": {
+      "$description": "Yellow at step 500 has a 1.79 contrast ratio against white, so `on-base` must be dark. 2.x reached the same conclusion by hand-patching the soft warning button.",
+      "base": { "$value": "{color.yellow.500}" },
+      "base-hover": { "$value": "{color.yellow.600}" },
+      "base-active": { "$value": "{color.yellow.700}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.yellow.50}" },
+      "subtle-hover": { "$value": "{color.yellow.100}" },
+      "subtle-active": { "$value": "{color.yellow.200}" },
+      "on-subtle": { "$value": "{color.yellow.800}" },
+      "border": { "$value": "{color.yellow.200}" },
+      "emphasis": { "$value": "{color.yellow.800}" }
+    },
+    "danger": {
+      "base": { "$value": "{color.red.500}" },
+      "base-hover": { "$value": "{color.red.600}" },
+      "base-active": { "$value": "{color.red.700}" },
+      "on-base": { "$value": "{color.white}" },
+      "subtle": { "$value": "{color.red.50}" },
+      "subtle-hover": { "$value": "{color.red.100}" },
+      "subtle-active": { "$value": "{color.red.200}" },
+      "on-subtle": { "$value": "{color.red.700}" },
+      "border": { "$value": "{color.red.200}" },
+      "emphasis": { "$value": "{color.red.600}" }
+    },
+    "neutral": {
+      "$description": "Replaces the 2.x `light` role: a white ghost action that reads against the canvas.",
+      "base": { "$value": "{color.white}" },
+      "base-hover": { "$value": "{color.neutral.25}" },
+      "base-active": { "$value": "{color.neutral.100}" },
+      "on-base": { "$value": "{color.neutral.700}" },
+      "subtle": { "$value": "{color.neutral.25}" },
+      "subtle-hover": { "$value": "{color.neutral.50}" },
+      "subtle-active": { "$value": "{color.neutral.100}" },
+      "on-subtle": { "$value": "{color.neutral.700}" },
+      "border": { "$value": "{color.neutral.100}" },
+      "emphasis": { "$value": "{color.neutral.600}" }
+    },
+    "inverse": {
+      "$description": "Replaces the 2.x `dark` role.",
+      "base": { "$value": "{color.neutral.900}" },
+      "base-hover": { "$value": "{color.neutral.800}" },
+      "base-active": { "$value": "{color.neutral.700}" },
+      "on-base": { "$value": "{color.white}" },
+      "subtle": { "$value": "{color.neutral.100}" },
+      "subtle-hover": { "$value": "{color.neutral.200}" },
+      "subtle-active": { "$value": "{color.neutral.300}" },
+      "on-subtle": { "$value": "{color.neutral.900}" },
+      "border": { "$value": "{color.neutral.300}" },
+      "emphasis": { "$value": "{color.neutral.900}" }
+    }
+  }
+}

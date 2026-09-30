@@ -39,7 +39,7 @@ export default function DOffcanvasHeader(
   return (
     <>
       <div
-        className={classNames('offcanvas-header', className)}
+        className={classNames('df-overlay-header', className)}
         style={style}
       >
         <div>
@@ -48,7 +48,11 @@ export default function DOffcanvasHeader(
         {showCloseButton && (
           <button
             type="button"
-            className="d-close align-self-center"
+            className="df-button df-overlay-dismiss"
+            data-variant="link"
+            data-color="neutral"
+            data-size="sm"
+            data-icon-only=""
             aria-label="Close"
             onClick={onClose}
           >
@@ -61,7 +65,7 @@ export default function DOffcanvasHeader(
           </button>
         )}
       </div>
-      <div className="d-offcanvas-separator" />
+      <hr className="df-overlay-separator" />
     </>
   );
 }

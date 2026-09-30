@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
-import { PREFIX_BS } from '../../src/components/config';
 import DAvatar from '../../src/components/DAvatar/DAvatar';
 import { AVATAR_SIZE } from '../config/constants';
 
@@ -13,14 +12,26 @@ const config: Meta<typeof DAvatar> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                               | Class   | Type            | Description             |
-| -------------------------------------- | ------- | --------------- | ----------------------- |
-| --${PREFIX_BS}avatar-border            | .avatar | css border      | Border box              |
-| --${PREFIX_BS}avatar-size              | .avatar | css length unit | Size                    |
-| --${PREFIX_BS}avatar-bg                | .avatar | css color unit  | Text background         |
-| --${PREFIX_BS}avatar-color             | .avatar | css color unit  | Text color              |
-| --${PREFIX_BS}avatar-font-weight       | .avatar | css font weight | Text font weight        |
-| --${PREFIX_BS}avatar-border-radius     | .avatar | css length unit | Border radius           |
+
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/avatar.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                     | Type        | Description  |
+|------------------------------|-------------|--------------|
+| \`--df-avatar-size\`         | css length  | Size         |
+| \`--df-avatar-size-xs\`      | css length  | Size xs      |
+| \`--df-avatar-size-sm\`      | css length  | Size sm      |
+| \`--df-avatar-size-lg\`      | css length  | Size lg      |
+| \`--df-avatar-size-xl\`      | css length  | Size xl      |
+| \`--df-avatar-size-xxl\`     | css length  | Size xxl     |
+| \`--df-avatar-radius\`       | css length  | Radius       |
+| \`--df-avatar-border-width\` | css length  | Border width |
+| \`--df-avatar-bg\`           | css color   | Background   |
+| \`--df-avatar-fg\`           | css color   | Foreground   |
+| \`--df-avatar-border-color\` | css color   | Border color |
+| \`--df-avatar-font-weight\`  | font weight | Font weight  |
+
         `,
       },
     },
@@ -112,7 +123,7 @@ export const Large: Story = {
 
 export const Group: Story = {
   render: (args: ComponentProps<typeof DAvatar>) => (
-    <div className="d-avatar-group">
+    <div className="df-avatar-group">
       <DAvatar {...args} />
       <DAvatar {...args} />
       <DAvatar {...args} />

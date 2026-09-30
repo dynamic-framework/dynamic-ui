@@ -32,7 +32,7 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={2} />,
     );
 
-    const currentStepIcon = container.querySelector('.d-step-current');
+    const currentStepIcon = container.querySelector('[data-state="current"]');
     expect(currentStepIcon).toBeInTheDocument();
     expect(currentStepIcon).toHaveTextContent('2');
   });
@@ -42,10 +42,10 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={3} />,
     );
 
-    const checkIcons = container.querySelectorAll('.d-step-check');
+    const checkIcons = container.querySelectorAll('[data-state="done"]');
     expect(checkIcons).toHaveLength(2); // Step 1 and 2 should be completed
 
-    const iconElements = container.querySelectorAll('.d-step-check .d-step-icon');
+    const iconElements = container.querySelectorAll('[data-state="done"] .df-icon');
     expect(iconElements).toHaveLength(2);
   });
 
@@ -54,7 +54,7 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={3} completed />,
     );
 
-    const checkIcons = container.querySelectorAll('.d-step-check');
+    const checkIcons = container.querySelectorAll('[data-state="done"]');
     expect(checkIcons).toHaveLength(3); // All steps should be completed
   });
 
@@ -63,7 +63,7 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={1} vertical />,
     );
 
-    expect(container.firstChild).toHaveClass('is-vertical');
+    expect(container.firstChild).toHaveAttribute('data-orientation', 'vertical');
   });
 
   it('should render with align start', () => {
@@ -71,7 +71,7 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={1} alignStart />,
     );
 
-    expect(container.firstChild).toHaveClass('is-align-start');
+    expect(container.firstChild).toHaveAttribute('data-align', 'start');
   });
 
   it('should not apply align start class when vertical is true', () => {
@@ -79,8 +79,8 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={1} alignStart vertical />,
     );
 
-    expect(container.firstChild).not.toHaveClass('is-align-start');
-    expect(container.firstChild).toHaveClass('is-vertical');
+    expect(container.firstChild).not.toHaveAttribute('data-align', 'start');
+    expect(container.firstChild).toHaveAttribute('data-orientation', 'vertical');
   });
 
   it('should apply custom className and style', () => {
@@ -109,8 +109,8 @@ describe('<DStepperDesktop />', () => {
       />,
     );
 
-    const iconElement = container.querySelector('.d-step-check .d-step-icon');
-    expect(iconElement).toHaveClass('d-icon', 'fas', 'd-step-icon');
+    const iconElement = container.querySelector('[data-state="done"] .df-icon');
+    expect(iconElement).toHaveClass('df-icon', 'fas');
   });
 
   it('should throw error when currentStep is less than 1', () => {
@@ -141,7 +141,7 @@ describe('<DStepperDesktop />', () => {
 
     expect(screen.getByText('Step 1')).toBeInTheDocument();
     expect(screen.getByText('Step 2')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-description')).not.toBeInTheDocument();
+    expect(container.querySelector('.df-step-description')).not.toBeInTheDocument();
   });
 
   it('should have correct base classes', () => {
@@ -149,18 +149,18 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={1} />,
     );
 
-    expect(container.firstChild).toHaveClass('d-stepper-desktop');
+    expect(container.firstChild).toHaveClass('df-stepper-desktop');
 
-    const steps = container.querySelectorAll('.d-step');
+    const steps = container.querySelectorAll('.df-step');
     expect(steps).toHaveLength(3);
 
-    const stepValues = container.querySelectorAll('.d-step-value');
+    const stepValues = container.querySelectorAll('.df-step-marker');
     expect(stepValues).toHaveLength(3);
 
-    const stepTexts = container.querySelectorAll('.d-step-text-container');
+    const stepTexts = container.querySelectorAll('.df-step-text');
     expect(stepTexts).toHaveLength(3);
 
-    const stepLabels = container.querySelectorAll('.d-step-label');
+    const stepLabels = container.querySelectorAll('.df-step-label');
     expect(stepLabels).toHaveLength(3);
   });
 
@@ -169,7 +169,7 @@ describe('<DStepperDesktop />', () => {
       <DStepperDesktop options={mockSteps} currentStep={1} />,
     );
 
-    const stepIcons = container.querySelectorAll('.d-step-icon-container');
+    const stepIcons = container.querySelectorAll('.df-step-marker');
     expect(stepIcons[1]).toHaveTextContent('2'); // Step 2 should show number
     expect(stepIcons[2]).toHaveTextContent('3'); // Step 3 should show number
   });

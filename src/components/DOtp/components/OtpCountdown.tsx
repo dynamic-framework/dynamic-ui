@@ -23,14 +23,14 @@ export default function OtpCountdown(
   const { secondsLeft, restartCountdown } = useCountdown(seconds);
 
   return (
-    <div className="d-flex gap-2 align-items-center">
-      <p className="mb-0 flex-1">
+    <div className="df-otp-countdown">
+      <p className="df-otp-countdown-text">
         {message ? message(secondsLeft) : defaultMessage(secondsLeft)}
       </p>
       <DButton
         text={resendText}
         variant="link"
-        className="text-nowrap"
+        className="df-otp-contact-link"
         disabled={secondsLeft > 0}
         onClick={restartCountdown}
       />

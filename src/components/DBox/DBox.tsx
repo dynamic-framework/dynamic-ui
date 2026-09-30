@@ -17,10 +17,7 @@ export default function DBox(
   return (
     <div
       style={style}
-      className={classNames(
-        'd-box',
-        className,
-      )}
+      className={classNames('df-box', className)}
       {...dataAttributes}
     >
       {children}

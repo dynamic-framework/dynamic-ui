@@ -95,11 +95,10 @@ export default function DTooltip(
 
   const generateClasses = useMemo(
     () => ({
-      'tooltip show': true,
-      [`tooltip-${size}`]: !!size,
+      'df-floating': true,
       ...className && { [className]: true },
     }),
-    [size, className],
+    [className],
   );
 
   return (
@@ -116,6 +115,8 @@ export default function DTooltip(
         {isOpen && (
           <div
             className={classNames(generateClasses)}
+            data-kind="tooltip"
+            {...size && { 'data-size': size }}
             ref={refs.setFloating}
             style={{
               ...floatingStyles,
@@ -130,7 +131,7 @@ export default function DTooltip(
               width={ARROW_WIDTH}
               height={ARROW_HEIGHT}
             />
-            <div className="tooltip-inner">
+            <div className="df-tooltip-text">
               {children}
             </div>
           </div>

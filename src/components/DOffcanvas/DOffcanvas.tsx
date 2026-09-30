@@ -3,7 +3,7 @@ import { motion, type Transition, type Variants } from 'framer-motion';
 
 import { useMemo, type PropsWithChildren } from 'react';
 
-import { PREFIX_BS } from '../config';
+import { PREFIX } from '../config';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
@@ -103,18 +103,19 @@ function DOffcanvas(
 
   return (
     <motion.div
-      className={classNames(
-        'offcanvas portal show',
-        {
-          [`offcanvas-${resolvedOpenFrom}`]: resolvedOpenFrom,
-        },
-        className,
-      )}
+      // Same `.df-overlay` block as the modal: they are one panel anchored
+      // differently, which is what `data-from` says. 2.x had `.offcanvas` with
+      // four `offcanvas-{edge}` modifiers and its own token set.
+      className={classNames('df-overlay', className)}
+      data-kind="offcanvas"
+      data-from={resolvedOpenFrom}
       style={{
         ...style,
         transition: 'none',
-        ...(resolvedWidth && { [`--${PREFIX_BS}offcanvas-width`]: resolvedWidth }),
-        ...(resolvedHeight && { [`--${PREFIX_BS}offcanvas-height`]: resolvedHeight }),
+        // One slot for both axes: a left/right panel reads it as a width, a
+        // top/bottom one as a height, and the stylesheet decides which.
+        ...((resolvedWidth || resolvedHeight)
+          && { [`--${PREFIX}overlay-size`]: resolvedWidth ?? resolvedHeight }),
       }}
       id={name}
       tabIndex={-1}
@@ -129,14 +130,10 @@ function DOffcanvas(
         ...(transition ?? defaultTransition),
         delay: 0.15,
       }}
-      {...staticBackdrop && ({
-        [`data-${PREFIX_BS}backdrop`]: 'static',
-        [`data-${PREFIX_BS}keyboard`]: 'false',
-      })}
-      {...scrollable && ({
-        [`data-${PREFIX_BS}scroll`]: 'true',
-        [`data-${PREFIX_BS}keyboard`]: 'false',
-      })}
+      // See DModal: these were Bootstrap-JS config attributes and have never
+      // done anything in the React build. Plain state attributes now.
+      {...staticBackdrop && { 'data-static-backdrop': '' }}
+      {...scrollable && { 'data-scrollable': '' }}
       {...dataAttributes}
     >
       {children}

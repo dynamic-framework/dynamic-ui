@@ -63,19 +63,19 @@ export const OnboardingChecklist: Story = {
 
     const progressStyle = useMemo(
       () => ({
-        '--bs-progress-bar-bg': `color-mix(in srgb, var(--bs-warning), var(--bs-success) ${percentage}%)`,
+        '--df-progress-bar-bg': `color-mix(in srgb, var(--df-role-warning-base), var(--df-role-success-base) ${percentage}%)`,
       }) as CSSProperties,
       [percentage],
     );
 
     return (
-      <DBox className="p-6" style={{ width: '620px' }}>
-        <div className="d-flex justify-content-between align-items-center mb-3">
+      <DBox className="df-p-6" style={{ width: '620px' }}>
+        <div className="df-flex df-justify-between df-items-center df-mb-3">
           <div>
-            <h6 className="mb-1 fw-semibold">Workspace onboarding</h6>
-            <small className="text-secondary">{`Complete ${completed} of ${steps.length} tasks`}</small>
+            <h6 className="df-mb-1 df-fw-semibold">Workspace onboarding</h6>
+            <small className="df-text-secondary">{`Complete ${completed} of ${steps.length} tasks`}</small>
           </div>
-          <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+          <span className="df-badge df-bg-primary-subtle df-text-primary df-px-3 df-py-2 df-rounded-pill">
             {`${percentage}%`}
           </span>
         </div>
@@ -85,18 +85,18 @@ export const OnboardingChecklist: Story = {
           maxValue={100}
           hideCurrentValue
           height={8}
-          className="mb-4"
+          className="df-mb-4"
           style={progressStyle}
         />
 
-        <div className="d-flex flex-column gap-2">
+        <div className="df-flex df-flex-col df-gap-2">
           {steps.map((step) => (
             <button
               key={step.id}
               type="button"
               aria-pressed={done[step.id]}
               onClick={() => setDone((prev) => ({ ...prev, [step.id]: !prev[step.id] }))}
-              className="d-flex align-items-start gap-3 p-3 border rounded bg-white text-start"
+              className="df-flex df-items-start df-gap-3 df-p-3 df-border-1 df-rounded-control df-bg-surface df-text-start"
             >
               <span aria-hidden="true">
                 <DIcon
@@ -105,8 +105,8 @@ export const OnboardingChecklist: Story = {
                 />
               </span>
               <span>
-                <span className="d-block fw-medium">{step.title}</span>
-                <small className="text-secondary">{step.hint}</small>
+                <span className="df-block df-fw-medium">{step.title}</span>
+                <small className="df-text-secondary">{step.hint}</small>
               </span>
             </button>
           ))}
@@ -150,27 +150,27 @@ export const FileUploadQueue: Story = {
     ] as const;
 
     const styleByStatus: Record<string, CSSProperties> = {
-      completed: { '--bs-progress-bar-bg': 'var(--bs-success)' } as CSSProperties,
-      uploading: { '--bs-progress-bar-bg': 'var(--bs-primary)' } as CSSProperties,
-      retry: { '--bs-progress-bar-bg': 'var(--bs-warning)' } as CSSProperties,
+      completed: { '--df-progress-bar-bg': 'var(--df-role-success-base)' } as CSSProperties,
+      uploading: { '--df-progress-bar-bg': 'var(--df-role-primary-base)' } as CSSProperties,
+      retry: { '--df-progress-bar-bg': 'var(--df-role-warning-base)' } as CSSProperties,
     };
 
     return (
-      <DBox className="p-6" style={{ width: '620px' }}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
+      <DBox className="df-p-6" style={{ width: '620px' }}>
+        <div className="df-flex df-justify-between df-items-center df-mb-4">
           <div>
-            <h6 className="mb-1 fw-semibold">Bulk import progress</h6>
-            <small className="text-secondary">Track and retry failed uploads without leaving the flow</small>
+            <h6 className="df-mb-1 df-fw-semibold">Bulk import progress</h6>
+            <small className="df-text-secondary">Track and retry failed uploads without leaving the flow</small>
           </div>
           <DButton text="Add files" size="sm" />
         </div>
 
-        <div className="d-flex flex-column gap-3">
+        <div className="df-flex df-flex-col df-gap-3">
           {uploads.map((file) => (
-            <div key={file.id} className="p-3 border rounded bg-white">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="fw-medium">{file.name}</span>
-                <small className="text-secondary">{`${file.size} - ${file.progress}%`}</small>
+            <div key={file.id} className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
+              <div className="df-flex df-justify-between df-items-center df-mb-2">
+                <span className="df-fw-medium">{file.name}</span>
+                <small className="df-text-secondary">{`${file.size} - ${file.progress}%`}</small>
               </div>
               <DProgress
                 currentValue={file.progress}
@@ -202,14 +202,14 @@ export const SavingsGoalTracker: Story = {
     const percentage = Math.round((currentAmount * 100) / goalAmount);
 
     return (
-      <div className="p-12 bg-gray-50" style={{ width: '620px' }}>
-        <DBox className="p-6">
-          <div className="d-flex justify-content-between align-items-center mb-3">
+      <div className="df-p-12 df-bg-muted" style={{ width: '620px' }}>
+        <DBox className="df-p-6">
+          <div className="df-flex df-justify-between df-items-center df-mb-3">
             <div>
-              <small className="text-secondary d-block">Emergency fund</small>
-              <h5 className="mb-0 fw-semibold">{`$${currentAmount.toLocaleString()} saved`}</h5>
+              <small className="df-text-secondary df-block">Emergency fund</small>
+              <h5 className="df-mb-0 df-fw-semibold">{`$${currentAmount.toLocaleString()} saved`}</h5>
             </div>
-            <span className="badge bg-info-subtle text-info px-3 py-2 rounded-pill">
+            <span className="df-badge df-bg-info-subtle df-text-info df-px-3 df-py-2 df-rounded-pill">
               {`${percentage}% of goal`}
             </span>
           </div>
@@ -219,13 +219,13 @@ export const SavingsGoalTracker: Story = {
             maxValue={goalAmount}
             hideCurrentValue
             height={10}
-            className="mb-2"
-            style={{ '--bs-progress-bar-bg': 'var(--bs-info)' } as CSSProperties}
+            className="df-mb-2"
+            style={{ '--df-progress-bar-bg': 'var(--df-role-info-base)' } as CSSProperties}
           />
 
-          <div className="d-flex justify-content-between">
-            <small className="text-secondary">$0</small>
-            <small className="text-secondary">{`Goal: $${goalAmount.toLocaleString()}`}</small>
+          <div className="df-flex df-justify-between">
+            <small className="df-text-secondary">$0</small>
+            <small className="df-text-secondary">{`Goal: $${goalAmount.toLocaleString()}`}</small>
           </div>
         </DBox>
       </div>
@@ -250,29 +250,29 @@ export const GradientCampaignProgress: Story = {
         <style>
           {`
             .campaign-progress {
-              --bs-progress-height: auto;
-              --bs-progress-bg: transparent;
+              --df-progress-height: auto;
+              --df-progress-track-color: transparent;
               border-radius: 999px;
-              border: 2px solid var(--bs-primary-200);
+              border: 2px solid var(--df-role-primary-subtle);
               padding: 2px;
               overflow: hidden;
             }
 
             .campaign-progress .progress-bar {
-              background: var(--bs-primary-100);
-              border-radius: var(--bs-border-radius-pill);
-              color: var(--bs-primary-700);
+              background: var(--df-role-primary-subtle);
+              border-radius: var(--df-shape-pill);
+              color: var(--df-role-primary-base-hover);
             }
           `}
         </style>
-        <div className="p-12 bg-gray-50" style={{ width: '700px' }}>
+        <div className="df-p-12 df-bg-muted" style={{ width: '700px' }}>
           <DBox>
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className="df-flex df-justify-between df-items-center df-mb-3">
               <div>
-                <small className="text-secondary d-block">Q3 Growth Campaign</small>
-                <h6 className="mb-0 fw-semibold">Lead generation progress</h6>
+                <small className="df-text-secondary df-block">Q3 Growth Campaign</small>
+                <h6 className="df-mb-0 df-fw-semibold">Lead generation progress</h6>
               </div>
-              <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+              <span className="df-badge df-bg-primary-subtle df-text-primary df-px-3 df-py-2 df-rounded-pill">
                 {`${currentValue}%`}
               </span>
             </div>
@@ -284,9 +284,9 @@ export const GradientCampaignProgress: Story = {
               hideCurrentValue={false}
             />
 
-            <div className="d-flex justify-content-between mt-2">
-              <small className="text-secondary">0 leads</small>
-              <small className="text-secondary">Target: 1,200 leads</small>
+            <div className="df-flex df-justify-between df-mt-2">
+              <small className="df-text-secondary">0 leads</small>
+              <small className="df-text-secondary">Target: 1,200 leads</small>
             </div>
           </DBox>
         </div>

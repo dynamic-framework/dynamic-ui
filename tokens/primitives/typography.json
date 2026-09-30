@@ -1,0 +1,58 @@
+{
+  "$description": "Typography primitives. The numeric font-size scale replaces the 2.x `$font-size-values` / `$display-font-size-values` pair and the rfs() fluid sizing — see tokens/README.md on why fluid type cannot round-trip to Figma.",
+  "font-family": {
+    "$type": "fontFamily",
+    "sans": { "$value": ["Jost", "sans-serif"] },
+    "mono": { "$value": ["SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"] }
+  },
+  "font-size": {
+    "$type": "dimension",
+    "$description": "Numeric scale, ascending. Covers everything 2.x expressed as h1-h6, display-1-6 and small.",
+    "$extensions": {
+      "dev.dynamicframework.css": { "unit": "rem" }
+    },
+    "100": { "$value": { "value": 12, "unit": "px" } },
+    "200": { "$value": { "value": 14, "unit": "px" } },
+    "300": { "$value": { "value": 16, "unit": "px" } },
+    "400": { "$value": { "value": 18, "unit": "px" } },
+    "500": { "$value": { "value": 20, "unit": "px" } },
+    "600": { "$value": { "value": 24, "unit": "px" } },
+    "700": { "$value": { "value": 32, "unit": "px" } },
+    "800": { "$value": { "value": 40, "unit": "px" } },
+    "900": { "$value": { "value": 48, "unit": "px" } },
+    "1000": { "$value": { "value": 56, "unit": "px" } },
+    "1100": { "$value": { "value": 64, "unit": "px" } },
+    "1200": { "$value": { "value": 72, "unit": "px" } },
+    "1300": { "$value": { "value": 80, "unit": "px" } },
+    "1400": { "$value": { "value": 88, "unit": "px" } },
+    "1500": { "$value": { "value": 96, "unit": "px" } }
+  },
+  "font-weight": {
+    "$type": "fontWeight",
+    "$description": "Numeric weights. 2.x named its 600 `bold` and its 500 `semibold`; the names here are the CSS-standard ones and the semantic layer maps roles onto them, so the rendered weights are unchanged.",
+    "light": { "$value": 200 },
+    "normal": { "$value": 400 },
+    "medium": { "$value": 500 },
+    "semibold": { "$value": 600 },
+    "bold": { "$value": 700 }
+  },
+  "line-height": {
+    "$type": "number",
+    "tight": { "$value": 1.2 },
+    "snug": { "$value": 1.25 },
+    "normal": { "$value": 1.5 },
+    "relaxed": { "$value": 1.75 },
+    "loose": { "$value": 2 }
+  },
+  "letter-spacing": {
+    "$type": "dimension",
+    "tight": { "$value": { "value": -0.02, "unit": "rem" } },
+    "normal": { "$value": { "value": 0, "unit": "rem" } },
+    "wide": { "$value": { "value": 0.05, "unit": "rem" } }
+  },
+  "root-font-size": {
+    "$type": "dimension",
+    "$value": { "value": 16, "unit": "px" },
+    "$description": "The px-to-rem divisor used by the CSS emitter. Changing this rescales every rem-emitted token."
+  }
+}

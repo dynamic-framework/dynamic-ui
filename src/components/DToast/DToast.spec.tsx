@@ -12,13 +12,13 @@ describe('<DToast />', () => {
   it('toast className', () => {
     render(<DToast>Contenido</DToast>);
     const toast = screen.getByRole('alert');
-    expect(toast).toHaveClass('toast');
+    expect(toast).toHaveClass('df-toast');
   });
 
   it('Add custom className', () => {
     render(<DToast className="extra-clase">Contenido</DToast>);
     const toast = screen.getByRole('alert');
-    expect(toast).toHaveClass('toast', 'extra-clase');
+    expect(toast).toHaveClass('df-toast', 'extra-clase');
   });
 
   it('Add custom styles', () => {

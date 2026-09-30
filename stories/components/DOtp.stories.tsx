@@ -107,7 +107,7 @@ export const CustomTexts: Story = {
           {' '}
           <a
             href="https://www.modyo.com"
-            className="link-primary text-nowrap"
+            className="df-text-primary df-text-nowrap"
             target="_blank"
             rel="noreferrer"
           >

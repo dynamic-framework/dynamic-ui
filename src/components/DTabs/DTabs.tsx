@@ -21,7 +21,23 @@ export type DTabOption = {
   disabled?: boolean;
 };
 
-export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
+/**
+ * `tabs` and `toggle-button-group` are the 2.x names, kept working. They map to
+ * `boxed` and `toggle`, which say what they look like rather than echoing
+ * Bootstrap's `.nav-tabs` / the internal class name they used to produce.
+ */
+export type TabVariant =
+  | 'underline' | 'pills' | 'toggle' | 'boxed'
+  | 'tabs' | 'toggle-button-group';
+
+const VARIANT_STYLE: Record<TabVariant, string> = {
+  underline: 'underline',
+  pills: 'pills',
+  toggle: 'toggle',
+  boxed: 'boxed',
+  tabs: 'boxed',
+  'toggle-button-group': 'toggle',
+};
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;
@@ -63,15 +79,10 @@ function DTabs(
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
-  const generateClasses = useMemo(
-    () => ({
-      nav: true,
-      'flex-column align-items-center': vertical && variant !== 'tabs',
-      [`nav-${variant}`]: true,
-      ...className && { [className]: true },
-    }),
-    [vertical, variant, className],
-  );
+  const dataProps = useMemo(() => ({
+    'data-style': VARIANT_STYLE[variant] ?? 'underline',
+    ...(vertical ? { 'data-orientation': 'vertical' } : {}),
+  }), [variant, vertical]);
 
   const tabRefs = useRef<Array<React.RefObject<HTMLButtonElement>>>([]);
 
@@ -151,15 +162,13 @@ function DTabs(
   return (
     <TabContext.Provider value={value}>
       <div
-        className={classNames({
-          'd-flex w-100': true,
-          'flex-column': !vertical || variant === 'tabs',
-        })}
+        className={classNames('df-tabs', className)}
         style={style}
+        {...dataProps}
         {...dataAttributes}
       >
         <ul
-          className={classNames(generateClasses)}
+          className="df-tablist"
           role="tablist"
           aria-orientation={vertical ? 'vertical' : undefined}
           {...tablistProps}
@@ -170,16 +179,14 @@ function DTabs(
               <li
                 role="presentation"
                 key={option.tab}
-                className="nav-item"
+                className="df-tab-item"
               >
                 <button
                   ref={tabRefs.current[idx]}
                   id={`${option.tab}Tab`}
-                  className={classNames(
-                    'nav-link',
-                    { active: isTabSelected },
-                    classNameTab,
-                  )}
+                  // `aria-selected` is already on this element and is what the
+                  // stylesheet selects on, so the active state needs no class.
+                  className={classNames('df-tab', classNameTab)}
                   type="button"
                   role="tab"
                   aria-controls={`${option.tab}Pane`}
@@ -195,9 +202,7 @@ function DTabs(
             );
           })}
         </ul>
-        <div className="tab-content w-100">
-          {children}
-        </div>
+        {children}
       </div>
     </TabContext.Provider>
   );

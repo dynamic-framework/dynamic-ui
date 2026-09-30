@@ -42,7 +42,7 @@ The voucher component provides:
   decorators: [
     (Story) => (
       <DContextProvider>
-        <DBox className="p-8" style={{ width: '700px', margin: '0 auto' }}>
+        <DBox className="df-p-8" style={{ width: '700px', margin: '0 auto' }}>
           <Story />
         </DBox>
       </DContextProvider>
@@ -119,18 +119,18 @@ export const Default: Story = {
     downloadText: 'Download',
     shareText: 'Share',
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Transaction ID:</span>
-          <span className="fw-medium">TXN-123456789</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Transaction ID:</span>
+          <span className="df-fw-medium">TXN-123456789</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Date:</span>
-          <span className="fw-medium">Nov 13, 2025</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Date:</span>
+          <span className="df-fw-medium">Nov 13, 2025</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Payment Method:</span>
-          <span className="fw-medium">Credit Card ****1234</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Payment Method:</span>
+          <span className="df-fw-medium">Credit Card ****1234</span>
         </div>
       </div>
     ),
@@ -144,20 +144,20 @@ export const WithAmountDetails: Story = {
     message: 'Thank you for your payment',
     amount: '$250.00',
     amountDetails: (
-      <div className="text-center text-muted small">
+      <div className="df-text-center df-text-muted df-fs-body-sm">
         <div>Subtotal: $225.00</div>
         <div>Tax: $25.00</div>
       </div>
     ),
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Invoice:</span>
-          <span className="fw-medium">INV-2025-001</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Invoice:</span>
+          <span className="df-fw-medium">INV-2025-001</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Customer:</span>
-          <span className="fw-medium">John Doe</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Customer:</span>
+          <span className="df-fw-medium">John Doe</span>
         </div>
       </div>
     ),
@@ -170,14 +170,14 @@ export const ErrorState: Story = {
     title: 'Payment Failed',
     message: 'We could not process your payment. Please try again.',
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Error Code:</span>
-          <span className="fw-medium text-danger">ERR-500</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Error Code:</span>
+          <span className="df-fw-medium df-text-danger">ERR-500</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Attempted:</span>
-          <span className="fw-medium">Nov 13, 2025 15:45</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Attempted:</span>
+          <span className="df-fw-medium">Nov 13, 2025 15:45</span>
         </div>
       </div>
     ),
@@ -191,14 +191,14 @@ export const WarningState: Story = {
     message: 'Your payment is being processed. This may take a few minutes.',
     amount: '$99.99',
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Reference:</span>
-          <span className="fw-medium">REF-456789</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Reference:</span>
+          <span className="df-fw-medium">REF-456789</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Status:</span>
-          <span className="text-muted">Processing payment</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Status:</span>
+          <span className="df-text-muted">Processing payment</span>
         </div>
       </div>
     ),
@@ -211,18 +211,18 @@ export const WithoutAmount: Story = {
     title: 'Registration Complete',
     message: 'Welcome! Your account has been created successfully.',
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Username:</span>
-          <span className="fw-medium">johndoe</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Username:</span>
+          <span className="df-fw-medium">johndoe</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Email:</span>
-          <span className="fw-medium">john@example.com</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Email:</span>
+          <span className="df-fw-medium">john@example.com</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Member Since:</span>
-          <span className="fw-medium">Nov 13, 2025</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Member Since:</span>
+          <span className="df-fw-medium">Nov 13, 2025</span>
         </div>
       </div>
     ),
@@ -238,14 +238,14 @@ export const CustomButtonText: Story = {
     downloadText: 'Download Receipt',
     shareText: 'Share Receipt',
     children: (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Order Number:</span>
-          <span className="fw-medium">ORD-2025-1234</span>
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Order Number:</span>
+          <span className="df-fw-medium">ORD-2025-1234</span>
         </div>
-        <div className="d-flex justify-content-between">
-          <span className="text-muted">Merchant:</span>
-          <span className="fw-medium">Example Store</span>
+        <div className="df-flex df-justify-between">
+          <span className="df-text-muted">Merchant:</span>
+          <span className="df-fw-medium">Example Store</span>
         </div>
       </div>
     ),

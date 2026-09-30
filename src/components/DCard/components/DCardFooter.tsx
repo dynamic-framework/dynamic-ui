@@ -16,7 +16,7 @@ export default function DCardFooter(
   return (
     <div
       className={classNames(
-        'card-footer',
+        'df-card-footer',
         className,
       )}
       style={style}

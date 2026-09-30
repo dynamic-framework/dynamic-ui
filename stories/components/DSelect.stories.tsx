@@ -511,8 +511,8 @@ To understand in more detail the aspects covered by this component, review the f
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
-        <div className="position-relative">
+      <div style={{ height: '400px' }} className="df-flex df-justify-center df-items-center">
+        <div className="df-relative">
           <Story />
         </div>
       </div>

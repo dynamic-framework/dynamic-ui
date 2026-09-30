@@ -1,0 +1,34 @@
+{
+  "$description": "Stepper tokens, shared by the desktop and mobile layouts. 2.x kept two token sets under `step-*` and `stepper-*`, which is why the two layouts drifted apart.",
+  "stepper": {
+    "gap": {"$type": "dimension", "$value": "{size.2}"},
+    "marker-size": {"$type": "dimension", "$value": "{size.9}"},
+    "marker-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "marker-border-width": {"$type": "dimension", "$value": "{border-width.2}"},
+    "marker-radius": {"$type": "dimension", "$value": "{shape.pill}"},
+    "marker-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "marker-bg": {"$type": "color", "$value": "{bg.surface}"},
+    "marker-border-color": {"$type": "color", "$value": "{border.default}"},
+    "icon-size": {"$type": "dimension", "$value": "{size.6}"},
+
+    "done-bg": {"$type": "color", "$value": "{role.success.base}"},
+    "done-fg": {"$type": "color", "$value": "{role.success.on-base}"},
+    "done-border-color": {"$type": "color", "$value": "{role.success.base}"},
+    "current-fg": {"$type": "color", "$value": "{role.primary.emphasis}"},
+    "current-border-color": {"$type": "color", "$value": "{role.primary.base}"},
+
+    "line-size": {"$type": "dimension", "$value": "{border-width.2}"},
+    "line-color": {"$type": "color", "$value": "{border.default}"},
+    "line-done-color": {"$type": "color", "$value": "{role.success.base}"},
+
+    "label-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "label-padding": {"$type": "dimension", "$value": "{size.4}"},
+    "description-font-size": {"$type": "dimension", "$value": "{font-size.200}"},
+    "description-color": {"$type": "color", "$value": "{fg.muted}"},
+
+    "progress-size": {"$type": "dimension", "$value": "{size.14}"},
+    "progress-track-color": {"$type": "color", "$value": "{bg.sunken}"},
+    "progress-fill-color": {"$type": "color", "$value": "{role.primary.base}"},
+    "progress-thickness": {"$type": "dimension", "$value": "{size.1}"}
+  }
+}

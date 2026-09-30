@@ -10,24 +10,24 @@ describe('<DProgress />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="progress"
-        >
-          <div
-            aria-label="Progress bar"
-            aria-valuemax="100"
-            aria-valuemin="0"
-            aria-valuenow="33"
-            class="progress-bar"
-            role="progressbar"
-            style="width: 33%;"
-          >
-            33%
-          </div>
-        </div>
-      </div>
-    `);
+<div>
+  <div
+    class="df-progress"
+    style="--df-progress-value: 33%;"
+  >
+    <div
+      aria-label="Progress bar"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="33"
+      class="df-progress-bar"
+      role="progressbar"
+    >
+      33%
+    </div>
+  </div>
+</div>
+`);
   });
 
   it('renders with default minValue and maxValue (0 to 100)', () => {
@@ -38,7 +38,7 @@ describe('<DProgress />', () => {
     expect(progressBar).toHaveAttribute('aria-valuemin', '0');
     expect(progressBar).toHaveAttribute('aria-valuemax', '100');
     expect(progressBar).toHaveAttribute('aria-valuenow', '50');
-    expect(progressBar).toHaveStyle('width: 50%');
+    expect(progressBar.parentElement).toHaveStyle({ '--df-progress-value': '50%' });
     expect(progressBar).toHaveTextContent('50%');
   });
 
@@ -54,7 +54,7 @@ describe('<DProgress />', () => {
     expect(progressBar).toHaveAttribute('aria-valuemin', '0');
     expect(progressBar).toHaveAttribute('aria-valuemax', '50');
     expect(progressBar).toHaveAttribute('aria-valuenow', '25');
-    expect(progressBar).toHaveStyle('width: 50%');
+    expect(progressBar.parentElement).toHaveStyle({ '--df-progress-value': '50%' });
     expect(progressBar).toHaveTextContent('50%');
   });
 
@@ -72,8 +72,8 @@ describe('<DProgress />', () => {
       />,
     );
     const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveClass('progress-bar-striped');
-    expect(progressBar).toHaveClass('progress-bar-animated');
+    expect(progressBar.parentElement).toHaveAttribute('data-striped');
+    expect(progressBar.parentElement).toHaveAttribute('data-animated');
   });
 
   it('supports custom className on outer container', () => {
@@ -83,7 +83,7 @@ describe('<DProgress />', () => {
         className="my-progress"
       />,
     );
-    expect(screen.getByRole('progressbar').parentElement).toHaveClass('progress', 'my-progress');
+    expect(screen.getByRole('progressbar').parentElement).toHaveClass('df-progress', 'my-progress');
   });
 
   it('applies custom inline styles to outer container', () => {
@@ -97,7 +97,7 @@ describe('<DProgress />', () => {
     const progressContainer = progressBar.parentElement;
 
     expect(progressContainer).toHaveStyle('background-color: rgb(0, 0, 255)');
-    expect(progressBar).toHaveStyle('width: 40%');
+    expect(progressBar.parentElement).toHaveStyle({ '--df-progress-value': '40%' });
   });
 
   it('renders with data attributes when provided', () => {

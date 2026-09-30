@@ -16,7 +16,7 @@ describe('<DIcon />', () => {
       <DIcon {...props} />,
     );
 
-    const icon = container.querySelector('.d-icon');
+    const icon = container.querySelector('.df-icon');
     expect(icon).toBeInTheDocument();
     expect(icon?.tagName).toBe('SPAN');
     expect(icon?.querySelector('svg')).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('<DIcon />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon');
+    expect(icon).toHaveClass('df-icon');
     expect(icon.querySelector('svg')).toBeInTheDocument();
   });
 
@@ -44,8 +44,8 @@ describe('<DIcon />', () => {
         materialStyle={false}
       />,
     );
-    const icon = container.querySelector('.d-icon');
-    expect(icon).toHaveClass('d-icon');
+    const icon = container.querySelector('.df-icon');
+    expect(icon).toHaveClass('df-icon');
     expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
@@ -58,7 +58,7 @@ describe('<DIcon />', () => {
         materialStyle
       />,
     );
-    const icon = container.querySelector('.d-icon');
+    const icon = container.querySelector('.df-icon');
     expect(icon).toHaveClass('custom-family-class');
     expect(icon).toHaveTextContent('settings');
     expect(icon?.tagName).toBe('I');
@@ -94,7 +94,7 @@ describe('<DIcon />', () => {
       </DContextProvider>,
     );
 
-    const icon = container.querySelector('.d-icon');
+    const icon = container.querySelector('.df-icon');
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
     expect(screen.queryByTestId('custom-svg')).not.toBeInTheDocument();

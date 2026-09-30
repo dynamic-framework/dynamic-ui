@@ -27,7 +27,7 @@ const config: Meta<typeof DPopover> = {
     (Story) => (
       <div
         style={{ height: '250px' }}
-        className="d-flex justify-content-center align-items-center"
+        className="df-flex df-justify-center df-items-center"
       >
         <Story />
       </div>
@@ -41,7 +41,7 @@ type Story = StoryObj<typeof DPopover>;
 function ButtonRenderComponent(toggle: boolean) {
   return (
     <DButton
-      className="w-100"
+      className="df-w-full"
       text="Popover on bottom"
       iconEnd={`${toggle ? 'ChevronUp' : 'ChevronDown'}`}
     />

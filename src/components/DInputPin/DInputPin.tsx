@@ -152,7 +152,7 @@ export default function DInputPin(
 
   return (
     <div
-      className={classNames('d-input-pin', className)}
+      className={classNames('df-field', className)}
       style={style}
       {...dataAttributes}
     >
@@ -161,14 +161,12 @@ export default function DInputPin(
           {label}
         </label>
       )}
-      <div className="d-input-pin-group" id={id}>
+      <div className="df-pin" id={id}>
         {Array.from({ length: characters }).map((_, index) => (
           <input
-            className={classNames({
-              'form-control': true,
-              'is-invalid': invalid,
-              'is-valid': valid,
-            })}
+            className="df-pin-input"
+            {...invalid && { 'data-invalid': '' }}
+            {...valid && { 'data-valid': '' }}
             value={activeInput[index]}
             type={secret ? 'password' : type}
             aria-label={`${ariaLabel} ${index + 1} of ${characters}`}
@@ -194,20 +192,21 @@ export default function DInputPin(
           />
         ))}
         {loading && (
-          <div className="input-group-text">
+          <div className="df-input-group-addon">
             <span
-              className="spinner-border spinner-border-sm"
+              className="df-spinner"
+              data-size="sm"
               role="status"
               aria-hidden="true"
             >
-              <span className="visually-hidden">Loading...</span>
+              <span className="df-sr-only">Loading...</span>
             </span>
           </div>
         )}
       </div>
       {hint && (
         <div
-          className="form-text"
+          className="df-help"
           id={`${id}Hint`}
         >
           {hint}

@@ -38,7 +38,7 @@ export default function DModalHeader(
   return (
     <>
       <div
-        className={classNames('modal-header', className)}
+        className={classNames('df-overlay-header', className)}
         style={style}
       >
         <div>
@@ -47,7 +47,11 @@ export default function DModalHeader(
         {showCloseButton && (
           <button
             type="button"
-            className="d-close align-self-center"
+            className="df-button df-overlay-dismiss"
+            data-variant="link"
+            data-color="neutral"
+            data-size="sm"
+            data-icon-only=""
             aria-label="Close"
             onClick={onClose}
           >
@@ -60,7 +64,7 @@ export default function DModalHeader(
           </button>
         )}
       </div>
-      <div className="d-modal-separator" />
+      <hr className="df-overlay-separator" />
     </>
   );
 }

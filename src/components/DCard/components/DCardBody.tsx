@@ -16,7 +16,7 @@ export default function DCardBody(
   return (
     <div
       className={classNames(
-        'card-body',
+        'df-card-body',
         className,
       )}
       style={style}

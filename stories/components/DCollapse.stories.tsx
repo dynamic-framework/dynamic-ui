@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
-import { PREFIX_BS } from '../../src/components/config';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
@@ -15,21 +14,27 @@ const config: Meta<typeof DCollapse> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                 | Class               | Type            | Description                               |
-|------------------------------------------|---------------------|-----------------|-------------------------------------------|
-| --${PREFIX_BS}collapse-bg                | .collapse-container | css color unit  | Collapse background                       |
-| --${PREFIX_BS}collapse-border-radius     | .collapse-container | css length unit | Collapse border radius                    |
-| --${PREFIX_BS}collapse-box-shadow        | .collapse-container | css box shadow  | Collapse box shadow                       |
-| --${PREFIX_BS}collapse-button-padding-x  | .collapse-container | css length unit | Collapse header button padding horizontal |
-| --${PREFIX_BS}collapse-button-padding-y  | .collapse-container | css length unit | Collapse header button padding vertical   |
-| --${PREFIX_BS}collapse-button-gap        | .collapse-container | css length unit | Collapse header button gap                |
-| --${PREFIX_BS}collapse-body-padding-x        | .collapse-container | css length unit | Collapse body padding horizontal          |
-| --${PREFIX_BS}collapse-body-padding-y        | .collapse-container | css length unit | Collapse body padding vertical            |
-| --${PREFIX_BS}collapse-separator-display     | .collapse-container | css display     | Collapse separator display                |
-| --${PREFIX_BS}collapse-separator-height      | .collapse-container | css length unit | Collapse separator size                   |
-| --${PREFIX_BS}collapse-separator-bg          | .collapse-container | css color unit  | Collapse separator color                  |
-| --${PREFIX_BS}collapse-interpolate-size      | .collapse-container | css keyword     | Controls interpolate-size for animation   |
-| --${PREFIX_BS}collapse-transition            | .collapse-container | css transition  | Collapse body transition animation        |
+
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/collapse.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                                 | Type           | Description            |
+|------------------------------------------|----------------|------------------------|
+| \`--df-collapse-bg\`                     | css color      | Background             |
+| \`--df-collapse-fg\`                     | css color      | Foreground             |
+| \`--df-collapse-radius\`                 | css length     | Radius                 |
+| \`--df-collapse-shadow\`                 | css box-shadow | Shadow                 |
+| \`--df-collapse-trigger-padding-block\`  | css length     | Trigger padding block  |
+| \`--df-collapse-trigger-padding-inline\` | css length     | Trigger padding inline |
+| \`--df-collapse-trigger-gap\`            | css length     | Trigger gap            |
+| \`--df-collapse-trigger-font-weight\`    | font weight    | Trigger font weight    |
+| \`--df-collapse-body-padding-block\`     | css length     | Body padding block     |
+| \`--df-collapse-body-padding-inline\`    | css length     | Body padding inline    |
+| \`--df-collapse-separator-size\`         | css length     | Separator size         |
+| \`--df-collapse-separator-color\`        | css color      | Separator color        |
+| \`--df-collapse-duration\`               | css time       | Duration               |
+
         `,
       },
     },
@@ -51,9 +56,9 @@ const config: Meta<typeof DCollapse> = {
       mapping: {
         Text: 'Simple text',
         Custom: (
-          <div className="d-flex align-items-center gap-3">
+          <div className="df-flex df-items-center df-gap-3">
             <DIcon icon="Flame" hasCircle />
-            <h1 className="h4 m-0">Custom component</h1>
+            <h1 className="df-h4 df-m-0">Custom component</h1>
           </div>
         ),
       },
@@ -126,10 +131,10 @@ export const HeaderText: Story = {
   ],
   render: (args) => (
     <DCollapse {...args}>
-      <div className="row d-flex flex-column gap-3 pt-3">
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
     </DCollapse>
   ),
@@ -150,18 +155,18 @@ export const HeaderComponent: Story = {
   ],
   render: (args) => (
     <DCollapse {...args}>
-      <div className="row d-flex flex-column gap-3 pt-3">
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
     </DCollapse>
   ),
   args: {
     Component: (
-      <div className="d-flex align-items-center gap-3">
+      <div className="df-flex df-items-center df-gap-3">
         <DIcon icon="Flame" hasCircle />
-        <h1 className="h4 m-0">Custom component</h1>
+        <h1 className="df-h4 df-m-0">Custom component</h1>
       </div>
     ),
   },
@@ -177,10 +182,10 @@ export const Expanded: Story = {
   ],
   render: (args) => (
     <DCollapse {...args}>
-      <div className="row d-flex flex-column gap-3 pt-3">
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
     </DCollapse>
   ),
@@ -205,10 +210,10 @@ export const MaterialIcon: Story = {
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DCollapse {...args}>
-        <div className="row d-flex flex-column gap-3 pt-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
         </div>
       </DCollapse>
     </DContextProvider>
@@ -235,9 +240,12 @@ export const Controlled: Story = {
 
     return (
       <>
-        <div className="d-flex gap-2 mb-2">
+        <div className="df-flex df-gap-2 df-mb-2">
           <button
-            className="btn btn-sm btn-primary"
+            className="df-button"
+            data-variant="solid"
+            data-size="sm"
+            data-color="primary"
             type="button"
             onClick={() => setIsCollapsed((prev) => !prev)}
           >
@@ -249,10 +257,10 @@ export const Controlled: Story = {
           defaultCollapsed={isCollapsed}
           onChange={setIsCollapsed}
         >
-          <div className="row d-flex flex-column gap-3 pt-3">
-            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+            <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+            <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+            <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
           </div>
         </DCollapse>
       </>
@@ -276,9 +284,9 @@ export default function ControlledCollapseExample() {
 
   return (
     <>
-      <div className="d-flex gap-2 mb-2">
+      <div className="df-flex df-gap-2 df-mb-2">
         <button
-          className="btn btn-sm btn-primary"
+          className="df-button" data-variant="solid" data-size="sm" data-color="primary"
           type="button"
           onClick={() => setIsCollapsed((prev) => !prev)}
         >
@@ -290,10 +298,10 @@ export default function ControlledCollapseExample() {
         defaultCollapsed={isCollapsed}
         onChange={setIsCollapsed}
       >
-        <div className="row d-flex flex-column gap-3 pt-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="df-grid df-grid-cols-12 df-gap-4 df-flex df-flex-col df-gap-3 df-pt-3">
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="df-col-span-full">Lorem ipsum dolor sit amet consectetur.</div>
         </div>
       </DCollapse>
     </>

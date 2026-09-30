@@ -75,41 +75,36 @@ export default function DVoucher(
 
   return (
     <div
-      className={classNames('d-voucher', className)}
+      className={classNames('df-voucher', className)}
       ref={(el) => {
         shareRef.current = el;
         downloadRef.current = el;
       }}
     >
       <div>
-        <div className="d-voucher-header">
+        <div className="df-voucher-header">
           {resolvedIconProps && (
             <DIcon {...resolvedIconProps} />
           )}
-          <div className="text-center">
-            <h3 className="mb-2">{title}</h3>
-            <p className="m-0">{message}</p>
+          <div className="df-voucher-header">
+            <h3 className="df-voucher-title">{title}</h3>
+            <p className="df-voucher-message">{message}</p>
           </div>
         </div>
         {amount && (
-          <div className="d-voucher-amount">
-            <div
-              className={classNames(
-                'text-center fw-bold fs-3',
-                amountDetails ? 'mb-1' : 'm-0',
-              )}
-            >
-              {amount}
-            </div>
-            {amountDetails}
+          <div className="df-voucher-amount">
+            <div className="df-voucher-amount-value">{amount}</div>
+            {amountDetails && (
+              <div className="df-voucher-amount-details">{amountDetails}</div>
+            )}
           </div>
         )}
 
-        <hr className="my-4" />
+        <hr className="df-voucher-divider" />
         {children}
-        <hr className="my-4" />
+        <hr className="df-voucher-divider" />
 
-        <div className="d-voucher-footer">
+        <div className="df-voucher-footer">
           <DButton
             onClick={handleShare}
             iconStart="Share2"

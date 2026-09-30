@@ -8,7 +8,7 @@ type Props = PropsWithChildren<BaseProps>;
 export default function DToastBody({ children, className, style }: Props) {
   return (
     <div
-      className={classNames('toast-body', className)}
+      className={classNames('df-toast-content', className)}
       style={style}
     >
       {children}

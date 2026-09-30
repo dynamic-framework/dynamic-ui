@@ -63,19 +63,19 @@ describe('<DStepperMobile />', () => {
       />,
     );
 
-    expect(container.firstChild).toHaveClass('d-stepper', 'custom-stepper');
+    expect(container.firstChild).toHaveClass('df-stepper-mobile', 'custom-stepper');
     expect(container.firstChild).toHaveStyle({ margin: '10px' });
   });
 
   it('should have correct structure and classes', () => {
     const { container } = render(<DStepperMobile options={mockSteps} currentStep={1} />);
 
-    expect(container.querySelector('.d-stepper')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-bar')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-number')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-info')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-label')).toBeInTheDocument();
-    expect(container.querySelector('.d-step-description')).toBeInTheDocument();
+    expect(container.querySelector('.df-stepper-mobile')).toBeInTheDocument();
+    expect(container.querySelector('.df-step-progress')).toBeInTheDocument();
+    expect(container.querySelector('.df-step-progress-value')).toBeInTheDocument();
+    expect(container.querySelector('.df-step-info')).toBeInTheDocument();
+    expect(container.querySelector('.df-step-label')).toBeInTheDocument();
+    expect(container.querySelector('.df-step-description')).toBeInTheDocument();
   });
 
   it('should throw error when currentStep is less than 1', () => {
@@ -93,7 +93,7 @@ describe('<DStepperMobile />', () => {
   it('should animate progress bar angle', () => {
     const { container } = render(<DStepperMobile options={mockSteps} currentStep={2} />);
 
-    const stepBar = container.querySelector('.d-step-bar') as HTMLElement;
+    const stepBar = container.querySelector('.df-step-progress') as HTMLElement;
     expect(stepBar).toBeInTheDocument();
 
     // Initially should have background style (may not be set immediately)
@@ -134,11 +134,11 @@ describe('<DStepperMobile />', () => {
   it('should calculate correct progress style', () => {
     const { container } = render(<DStepperMobile options={mockSteps} currentStep={2} />);
 
-    const stepBar = container.querySelector('.d-step-bar') as HTMLElement;
+    const stepBar = container.querySelector('.df-step-progress') as HTMLElement;
 
     // Background style may not be populated in JSDOM test environment
     expect(stepBar).toBeInTheDocument();
-    expect(stepBar).toHaveClass('d-step-bar');
+    expect(stepBar).toHaveClass('df-step-progress');
   });
 
   it('should not render step info when currentOption is empty', () => {

@@ -8,12 +8,12 @@ import {
   ToastPosition,
   ValueFunction,
 } from 'react-hot-toast';
-import classNames from 'classnames';
 import DToast from '../DToast/DToast';
 import DIcon from '../DIcon';
 import { useDContext } from '../../contexts';
 
 import { ComponentStateColor } from '../interface';
+import { resolveRole } from '../roles';
 
 /**
  * Data used to render the default DToast component via `useDToast`.
@@ -32,7 +32,7 @@ export type ToastData = {
   icon?: string;
   /** Overrides the default close icon from the context icon map. */
   closeIcon?: string;
-  /** Applies the `toast-{color}` CSS modifier class. */
+  /** Sets `data-color` on the toast, which the role matrix selects on. */
   color?: ComponentStateColor;
 };
 
@@ -98,20 +98,21 @@ export default function useDToast() {
       }
       if (!description) {
         return (
-          <DToast className={classNames({
-            [`toast-${color}`]: !!color,
-          }, 'show')}
-          >
+          <DToast dataAttributes={color ? { 'data-color': resolveRole(color) } : undefined}>
             <DToast.Body>
               {icon && (
-                <DIcon className="toast-icon" icon={icon} />
+                <DIcon className="df-toast-icon" icon={icon} />
               )}
-              <p className="toast-title">
+              <p className="df-toast-title">
                 {title}
               </p>
               <button
                 type="button"
-                className="d-close align-self-center"
+                className="df-button df-toast-dismiss"
+                data-variant="link"
+                data-color="neutral"
+                data-size="sm"
+                data-icon-only=""
                 aria-label="Close"
                 onClick={() => reactHotToast.dismiss(id)}
               >
@@ -122,23 +123,24 @@ export default function useDToast() {
         );
       }
       return (
-        <DToast className={classNames({
-          [`toast-${color}`]: !!color,
-        }, 'show')}
-        >
+        <DToast dataAttributes={color ? { 'data-color': resolveRole(color) } : undefined}>
           <DToast.Header>
             {icon && (
-              <DIcon className="toast-icon" icon={icon} />
+              <DIcon className="df-toast-icon" icon={icon} />
             )}
-            <p className="toast-title">
+            <p className="df-toast-title">
               {title}
             </p>
             {timestamp && (
-              <small className="toast-timestamp">{timestamp}</small>
+              <small className="df-toast-timestamp">{timestamp}</small>
             )}
             <button
               type="button"
-              className="d-close align-self-center"
+              className="df-button df-toast-dismiss"
+              data-variant="link"
+              data-color="neutral"
+              data-size="sm"
+              data-icon-only=""
               aria-label="Close"
               onClick={() => reactHotToast.dismiss(id)}
             >

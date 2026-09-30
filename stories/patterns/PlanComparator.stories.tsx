@@ -66,10 +66,10 @@ export const FourPlans: StoryObj = {
           {fourPlanFeatures.map((feature, index) => (
             <tr key={index}>
               <td className="feature-name">{feature.name}</td>
-              <td>{feature.free ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
-              <td>{feature.basic ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
-              <td>{feature.pro ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
-              <td>{feature.enterprise ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
+              <td>{feature.free ? <DIcon size="1rem" icon="CheckCircle" className="df-text-success" /> : <DIcon icon="X" className="df-text-danger" />}</td>
+              <td>{feature.basic ? <DIcon size="1rem" icon="CheckCircle" className="df-text-success" /> : <DIcon icon="X" className="df-text-danger" />}</td>
+              <td>{feature.pro ? <DIcon size="1rem" icon="CheckCircle" className="df-text-success" /> : <DIcon icon="X" className="df-text-danger" />}</td>
+              <td>{feature.enterprise ? <DIcon size="1rem" icon="CheckCircle" className="df-text-success" /> : <DIcon icon="X" className="df-text-danger" />}</td>
             </tr>
           ))}
         </tbody>
@@ -80,7 +80,7 @@ export const FourPlans: StoryObj = {
               <DButton
                 color="primary"
                 variant="outline"
-                className="w-100"
+                className="df-w-full"
                 text="Choose Plan"
               />
             </td>
@@ -88,14 +88,14 @@ export const FourPlans: StoryObj = {
               <DButton
                 color="primary"
                 variant="outline"
-                className="w-100"
+                className="df-w-full"
                 text="Choose Plan"
               />
             </td>
             <td>
               <DButton
                 color="primary"
-                className="w-100"
+                className="df-w-full"
                 text="Choose Plan"
               />
             </td>
@@ -103,7 +103,7 @@ export const FourPlans: StoryObj = {
               <DButton
                 color="primary"
                 variant="outline"
-                className="w-100"
+                className="df-w-full"
                 text="Choose Plan"
               />
             </td>

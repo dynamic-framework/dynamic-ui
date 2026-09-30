@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputPin from '../../src/components/DInputPin/DInputPin';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputPin> = {
   title: 'Design System/Components/Input Pin',
@@ -14,23 +13,26 @@ Component with a partial API of \`d-input\` to take a pin/otp code.
 
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/pin.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                                | Class         | Type            | Description                 |
-|---------------------------------------------------------|---------------|-----------------|-----------------------------|
-| --${PREFIX_BS}label-color                               | :root         | css color unit  | Label color                 |
-| --${PREFIX_BS}label-font-weight                         | :root         | css font weight | Label font weight           |
-| --${PREFIX_BS}label-font-size                           | :root         | css length unit | Label font size             |
-| --${PREFIX_BS}label-padding-x                           | :root         | css length unit | Label horizontal padding    |
-| --${PREFIX_BS}label-padding-y                           | :root         | css length unit | Label vertical padding      |
-| --${PREFIX_BS}input-pin-form-gap                        | .d-input-pin  | css length unit | Space between inputs        |
-| --${PREFIX_BS}input-pin-form-control-size               | .d-input-pin  | css length unit | Input width                 |
-| --${PREFIX_BS}input-pin-form-control-focus-border-color | .d-input-pin  | css color unit  | Input focus border color    |
-| --${PREFIX_BS}input-pin-form-control-focus-box-shadow   | .d-input-pin  | css box shadow  | Input focus box shadow      |
-| --${PREFIX_BS}form-text-padding                         | .form-text    | css length unit | Hint padding                |
-| --${PREFIX_BS}form-text-gap                             | .form-text    | css length unit | Space between hint elements |
-| --${PREFIX_BS}form-text-color                           | .form-text    | css color unit  | Hint color                  |
-| --${PREFIX_BS}form-control-text-align                   | .form-control | css text align  | Input text align            |
+| Variable                          | Type       | Description          |
+|-----------------------------------|------------|----------------------|
+| \`--df-pin-gap\`                  | css length | Gap                  |
+| \`--df-pin-size\`                 | css length | Size                 |
+| \`--df-pin-font-size\`            | css length | Font size            |
+| \`--df-pin-radius\`               | css length | Radius               |
+| \`--df-pin-border-width\`         | css length | Border width         |
+| \`--df-pin-bg\`                   | css color  | Background           |
+| \`--df-pin-fg\`                   | css color  | Foreground           |
+| \`--df-pin-border-color\`         | css color  | Border color         |
+| \`--df-pin-focus-border-color\`   | css color  | Focus border color   |
+| \`--df-pin-invalid-border-color\` | css color  | Invalid border color |
+| \`--df-pin-valid-border-color\`   | css color  | Valid border color   |
+| \`--df-pin-disabled-bg\`          | css color  | Disabled background  |
+| \`--df-pin-disabled-fg\`          | css color  | Disabled foreground  |
+
         `,
       },
     },

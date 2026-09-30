@@ -1,0 +1,183 @@
+/**
+ * Tabs.
+ *
+ * 2.x built this from Bootstrap's `.nav` / `.nav-link` / `.tab-content` plus a
+ * `.nav-toggle-button-group` override, so the pill style inherited a stack of
+ * rules meant for navigation. Here the three styles — `underline`, `toggle`,
+ * `plain` — are one block with a `data-style` axis.
+ *
+ * The active indicator is a pseudo-element, not a border on the tab, so it can
+ * sit flush with the tab list's own bottom rule without the two fighting over
+ * the same pixel.
+ */
+@layer df.components {
+  .df-tabs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .df-tablist {
+    display: flex;
+    gap: var(--df-tabs-gap);
+    align-items: stretch;
+  }
+
+  /* The list items are pure structure; the tab itself is the button. */
+  .df-tab-item {
+    display: flex;
+  }
+
+  .df-tab {
+    position: relative;
+    display: inline-flex;
+    gap: var(--df-size-2);
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--df-tabs-tab-padding-block);
+    padding-inline: var(--df-tabs-tab-padding-inline);
+    font-family: inherit;
+    font-size: var(--df-tabs-tab-font-size);
+    font-weight: var(--df-tabs-tab-font-weight);
+    color: var(--df-tabs-tab-fg);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: var(--df-tabs-tab-radius);
+    transition:
+      color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  .df-tab:where(:hover) {
+    color: var(--df-tabs-tab-fg-hover);
+    background-color: var(--df-tabs-tab-bg-hover);
+  }
+
+  .df-tab:where([aria-selected="true"]) {
+    font-weight: var(--df-tabs-tab-font-weight-active);
+    color: var(--df-tabs-tab-fg-active);
+  }
+
+  .df-tab:where(:disabled, [aria-disabled="true"]) {
+    color: var(--df-fg-disabled);
+    pointer-events: none;
+  }
+
+  .df-tab:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  /* --- underline (default) ---------------------------------------------- */
+
+  .df-tabs[data-style="underline"] > .df-tablist {
+    border-block-end: var(--df-stroke-divider) solid var(--df-tabs-border-color);
+  }
+
+  .df-tabs[data-style="underline"] .df-tab {
+    border-radius: 0;
+  }
+
+  .df-tabs[data-style="underline"] .df-tab[aria-selected="true"]::after {
+    position: absolute;
+    inset-block-end: calc(var(--df-stroke-divider) * -1);
+    inset-inline: 0;
+    height: var(--df-tabs-indicator-size);
+    content: "";
+    background-color: var(--df-tabs-indicator-color);
+  }
+
+  /* --- toggle (pill group) ---------------------------------------------- */
+
+  .df-tabs[data-style="toggle"] > .df-tablist {
+    padding: var(--df-tabs-toggle-padding);
+    background-color: var(--df-tabs-toggle-bg);
+    border: var(--df-stroke-control) solid var(--df-tabs-toggle-border-color);
+    border-radius: var(--df-tabs-toggle-radius);
+  }
+
+  .df-tabs[data-style="toggle"] .df-tab {
+    flex: 1 1 auto;
+    border-radius: var(--df-tabs-toggle-radius);
+  }
+
+  .df-tabs[data-style="toggle"] .df-tab[aria-selected="true"] {
+    color: var(--df-tabs-toggle-active-fg);
+    background-color: var(--df-tabs-toggle-active-bg);
+  }
+
+  /* --- pills ------------------------------------------------------------ */
+
+  .df-tabs[data-style="pills"] .df-tab {
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-tabs[data-style="pills"] .df-tab[aria-selected="true"] {
+    color: var(--df-tabs-toggle-active-fg);
+    background-color: var(--df-tabs-toggle-active-bg);
+  }
+
+  /* --- boxed (the 2.x `tabs` variant) ----------------------------------- */
+
+  .df-tabs[data-style="boxed"] > .df-tablist {
+    gap: 0;
+    border-block-end: var(--df-stroke-divider) solid var(--df-tabs-border-color);
+  }
+
+  .df-tabs[data-style="boxed"] .df-tab {
+    border: var(--df-stroke-control) solid transparent;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  /* The negative margin lifts the active tab over the list's bottom rule, so
+     it reads as one continuous surface with the panel below. */
+  .df-tabs[data-style="boxed"] .df-tab[aria-selected="true"] {
+    margin-block-end: calc(var(--df-stroke-divider) * -1);
+    background-color: var(--df-bg-surface);
+    border-color: var(--df-tabs-border-color);
+    border-block-end-color: var(--df-bg-surface);
+  }
+
+  /* --- vertical --------------------------------------------------------- */
+
+  .df-tabs[data-orientation="vertical"] {
+    flex-direction: row;
+  }
+
+  .df-tabs[data-orientation="vertical"] > .df-tablist {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .df-tabs[data-orientation="vertical"][data-style="underline"] > .df-tablist {
+    border-block-end: 0;
+    border-inline-end: var(--df-stroke-divider) solid var(--df-tabs-border-color);
+  }
+
+  .df-tabs[data-orientation="vertical"][data-style="underline"]
+    .df-tab[aria-selected="true"]::after {
+    inset-block: 0;
+    inset-inline: auto calc(var(--df-stroke-divider) * -1);
+    width: var(--df-tabs-indicator-size);
+    height: auto;
+  }
+
+  /* --- panels ----------------------------------------------------------- */
+
+  .df-tabpanel {
+    padding-block: var(--df-tabs-panel-padding-block);
+  }
+
+  .df-tabpanel[hidden] {
+    display: none;
+  }
+
+  .df-tabs[data-orientation="vertical"] > .df-tabpanel {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-block: 0;
+    padding-inline-start: var(--df-tabs-panel-padding-block);
+  }
+}

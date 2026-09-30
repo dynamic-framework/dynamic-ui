@@ -31,78 +31,71 @@ describe('<DModal />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            aria-hidden="false"
-            aria-labelledby="myModalLabel"
-            class="modal portal show"
-            id="myModal"
-            style="opacity: 0; transform: scale(0.95);"
-            tabindex="-1"
-          >
-            <div
-              class="modal-dialog"
-            >
-              <div
-                class="modal-content"
-              >
-                <div
-                  class="modal-header"
-                >
-                  <div>
-                    Test Header
-                  </div>
-                </div>
-                <div
-                  class="d-modal-separator"
-                />
-                <div
-                  class="modal-body"
-                >
-                  Test Body
-                </div>
-                <div
-                  class="d-modal-separator"
-                />
-                <div
-                  class="modal-footer"
-                >
-                  Test Footer
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <div
+    aria-hidden="false"
+    aria-labelledby="myModalLabel"
+    class="df-overlay"
+    data-kind="modal"
+    id="myModal"
+    style="opacity: 0; transform: scale(0.95);"
+    tabindex="-1"
+  >
+    <div
+      class="df-overlay-header"
+    >
+      <div>
+        Test Header
+      </div>
+    </div>
+    <hr
+      class="df-overlay-separator"
+    />
+    <div
+      class="df-overlay-body"
+    >
+      Test Body
+    </div>
+    <hr
+      class="df-overlay-separator"
+    />
+    <div
+      class="df-overlay-footer"
+    >
+      Test Footer
+    </div>
+  </div>
+</div>
+`);
     });
 
     it('should render a centered and large modal', () => {
       const { container } = render(<DModal name="test" centered size="lg" />);
 
-      const dialog = container.querySelector('.modal-dialog');
-      expect(dialog).toHaveClass('modal-dialog-centered');
-      expect(dialog).toHaveClass('modal-lg');
+      const dialog = container.querySelector('.df-overlay');
+      expect(dialog).toHaveAttribute('data-centered');
+      expect(dialog).toHaveAttribute('data-size', 'lg');
     });
 
     it('should render with a static backdrop', () => {
       const { container } = render(<DModal name="test" staticBackdrop />);
 
-      const modal = container.querySelector('.modal');
-      expect(modal).toHaveAttribute('data-bs-backdrop', 'static');
+      const modal = container.querySelector('.df-overlay');
+      expect(modal).toHaveAttribute('data-static-backdrop');
     });
 
     it('should render a fullscreen modal', () => {
       const { container } = render(<DModal name="test" fullScreen />);
 
-      const dialog = container.querySelector('.modal-dialog');
-      expect(dialog).toHaveClass('modal-fullscreen');
+      const dialog = container.querySelector('.df-overlay');
+      expect(dialog).toHaveAttribute('data-fullscreen');
     });
 
     it('should render a fullscreen modal from a specific breakpoint', () => {
       const { container } = render(<DModal name="test" fullScreen fullScreenFrom="md" />);
 
-      const dialog = container.querySelector('.modal-dialog');
-      expect(dialog).toHaveClass('modal-fullscreen-md-down');
+      const dialog = container.querySelector('.df-overlay');
+      expect(dialog).toHaveAttribute('data-fullscreen', 'md');
     });
   });
 
@@ -139,8 +132,8 @@ describe('<DModal />', () => {
         </DModal.Footer>,
       );
 
-      const footer = container.querySelector('.modal-footer');
-      expect(footer).toHaveClass('d-modal-action-end');
+      const footer = container.querySelector('.df-overlay-footer');
+      expect(footer).toHaveAttribute('data-align', 'end');
     });
   });
 });

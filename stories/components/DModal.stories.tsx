@@ -90,10 +90,10 @@ function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) 
   return (
     <DModal name={name} centered staticBackdrop={false} transition={payload.transition}>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
-        <p className="m-0">Modal body</p>
+      <DModal.Body className="df-py-3 df-px-5">
+        <p className="df-m-0">Modal body</p>
         <small>{payload.description}</small>
         {payload.transition && (
           <pre>
@@ -123,7 +123,7 @@ function OpenConfirmModalButton() {
   const [selectedPreset, setSelectedPreset] = useState<TransitionPreset>(TRANSITION_PRESETS[0]);
   const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
-    <div className="d-flex flex-column gap-2 align-items-center">
+    <div className="df-flex df-flex-col df-gap-2 df-items-center">
       <DSelect<TransitionPreset>
         label="Transition Preset"
         options={TRANSITION_PRESETS}
@@ -140,7 +140,7 @@ function OpenConfirmModalButton() {
           },
         )}
       />
-      <div className="mt-4">
+      <div className="df-mt-4">
         <pre>
           <code>
             {JSON.stringify({ transition: selectedPreset.value }, null, 2)}
@@ -174,10 +174,10 @@ function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) 
   return (
     <DModal name={name} centered staticBackdrop={false} transition={springTransition}>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
-        <p className="m-0">Modal body</p>
+      <DModal.Body className="df-py-3 df-px-5">
+        <p className="df-m-0">Modal body</p>
         <small>{payload.description}</small>
       </DModal.Body>
       <DModal.Footer>
@@ -232,7 +232,7 @@ function App() {
   ),
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -242,7 +242,7 @@ function App() {
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -250,10 +250,10 @@ export const Default: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -279,7 +279,7 @@ export const Default: Story = {
 export const CloseIcon: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -290,10 +290,10 @@ export const CloseIcon: Story = {
         icon="XCircle"
         showCloseButton
       >
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -319,7 +319,7 @@ export const CloseIcon: Story = {
 export const ActionsPlacementStart: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -327,10 +327,10 @@ export const ActionsPlacementStart: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="start">
         <DButton
@@ -356,7 +356,7 @@ export const ActionsPlacementStart: Story = {
 export const ActionsPlacementEnd: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -364,10 +364,10 @@ export const ActionsPlacementEnd: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="end">
         <DButton
@@ -393,7 +393,7 @@ export const ActionsPlacementEnd: Story = {
 export const WithoutHeader: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -401,7 +401,7 @@ export const WithoutHeader: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -427,7 +427,7 @@ export const WithoutHeader: Story = {
 export const WithoutActions: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -435,10 +435,10 @@ export const WithoutActions: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -456,7 +456,7 @@ export const WithoutActions: Story = {
 export const OnlyBody: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -465,7 +465,7 @@ export const OnlyBody: Story = {
     <DModal {...args}>
       <DModal.Header showCloseButton />
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -483,7 +483,7 @@ export const OnlyBody: Story = {
 export const WithoutCancelX: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -491,10 +491,10 @@ export const WithoutCancelX: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="m-0">Modal body</p>
+        <p className="df-m-0">Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -532,7 +532,7 @@ export const MaterialStyleCloseIcon: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -545,10 +545,10 @@ export const MaterialStyleCloseIcon: Story = {
         <DModal.Header
           showCloseButton
         >
-          <h5 className="fw-bold">Do you want to reject the offer?</h5>
+          <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
         </DModal.Header>
         <DModal.Body>
-          <p className="m-0">Modal body</p>
+          <p className="df-m-0">Modal body</p>
         </DModal.Body>
         <DModal.Footer>
           <DButton

@@ -24,25 +24,28 @@ describe('<DInputMask />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div>
-          <label
-            for="inputId"
-          >
-            Label
-          </label>
-          <div
-            class="input-group"
-          >
-            <input
-              class="form-control"
-              id="inputId"
-              placeholder="Input"
-            />
-          </div>
-        </div>
-      </div>
-    `);
+<div>
+  <div
+    class="df-field"
+  >
+    <label
+      class="df-label"
+      for="inputId"
+    >
+      Label
+    </label>
+    <div
+      class="df-input-group"
+    >
+      <input
+        class="df-input"
+        id="inputId"
+        placeholder="Input"
+      />
+    </div>
+  </div>
+</div>
+`);
   });
 
   it('renders masked input', () => {

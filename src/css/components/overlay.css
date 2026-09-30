@@ -1,0 +1,178 @@
+/**
+ * Modal, offcanvas and their shared backdrop.
+ *
+ * One block for both: they are the same panel anchored differently — centred
+ * for a modal, edge-attached for an offcanvas. 2.x kept `.modal` and
+ * `.offcanvas` apart with their own token sets, which is how their header gaps,
+ * separators and close buttons drifted into three slightly different treatments.
+ *
+ * Neither takes its own backdrop element: `.df-backdrop` is one rule both use.
+ */
+@layer df.components {
+  .df-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--df-overlay-z-backdrop);
+    background-color: var(--df-overlay-backdrop-color);
+  }
+
+  .df-overlay {
+    position: fixed;
+    z-index: var(--df-overlay-z-panel);
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: hidden;
+    color: var(--df-overlay-fg);
+    background-color: var(--df-overlay-bg);
+    box-shadow: var(--df-overlay-shadow);
+  }
+
+  /* --- modal ------------------------------------------------------------ */
+
+  .df-overlay[data-kind="modal"] {
+    inset: 0;
+    width: calc(100% - var(--df-overlay-margin) * 2);
+    max-width: var(--df-overlay-width-lg);
+    max-height: calc(100% - var(--df-overlay-margin) * 2);
+    margin: auto;
+    border-radius: var(--df-overlay-radius);
+  }
+
+  .df-overlay[data-kind="modal"][data-size="sm"] { max-width: var(--df-overlay-width-sm); }
+  .df-overlay[data-kind="modal"][data-size="md"] { max-width: var(--df-overlay-width-md); }
+  .df-overlay[data-kind="modal"][data-size="lg"] { max-width: var(--df-overlay-width-lg); }
+  .df-overlay[data-kind="modal"][data-size="xl"] { max-width: var(--df-overlay-width-xl); }
+
+  .df-overlay[data-kind="modal"][data-fullscreen] {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  /* --- offcanvas -------------------------------------------------------- */
+
+  .df-overlay[data-kind="offcanvas"] {
+    /* Declared, not a `var()` fallback: the component writes a per-instance
+       width or height here, and a fallback would hide a missing definition. */
+    --df-overlay-size: var(--df-overlay-offcanvas-size);
+
+    max-height: none;
+  }
+
+  .df-overlay[data-kind="offcanvas"][data-from="start"] {
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--df-overlay-size);
+  }
+
+  .df-overlay[data-kind="offcanvas"][data-from="end"] {
+    inset-block: 0;
+    inset-inline-end: 0;
+    width: var(--df-overlay-size);
+  }
+
+  .df-overlay[data-kind="offcanvas"][data-from="top"] {
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: var(--df-overlay-size);
+  }
+
+  .df-overlay[data-kind="offcanvas"][data-from="bottom"] {
+    inset-block-end: 0;
+    inset-inline: 0;
+    height: var(--df-overlay-size);
+  }
+
+  /* --- shared parts ----------------------------------------------------- */
+
+  .df-overlay-header {
+    display: flex;
+    flex: none;
+    gap: var(--df-overlay-header-gap);
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--df-overlay-header-padding-block);
+    padding-inline: var(--df-overlay-header-padding-inline);
+    font-size: var(--df-overlay-header-font-size);
+    font-weight: var(--df-overlay-header-font-weight);
+  }
+
+  /* A header holding only a close button pushes it to the end, rather than
+     leaving it stranded on the left. */
+  .df-overlay-header:has(.df-overlay-dismiss:only-child) {
+    justify-content: flex-end;
+  }
+
+  .df-overlay-dismiss {
+    flex: none;
+    align-self: center;
+  }
+
+  .df-overlay-body {
+    flex: 1 1 auto;
+    padding-block: var(--df-overlay-body-padding-block);
+    padding-inline: var(--df-overlay-body-padding-inline);
+    overflow-y: auto;
+  }
+
+  .df-overlay-footer {
+    display: flex;
+    flex: none;
+    gap: var(--df-overlay-footer-gap);
+    align-items: center;
+    justify-content: flex-end;
+    padding-block: var(--df-overlay-footer-padding-block);
+    padding-inline: var(--df-overlay-footer-padding-inline);
+  }
+
+  .df-overlay-footer[data-align="start"] { justify-content: flex-start; }
+  .df-overlay-footer[data-align="center"] { justify-content: center; }
+  .df-overlay-footer[data-align="between"] { justify-content: space-between; }
+
+  .df-overlay-footer[data-fill] > * {
+    flex: 1 1 0;
+  }
+
+  /* --- confirm modal ---------------------------------------------------
+   *
+   * A modal with a fixed shape: a bold title, a roomier body, and a critical
+   * variant. 2.x spelled that out with `fw-bold`, `py-3 px-5` and two `mb-4`s
+   * in the markup.
+   */
+  .df-confirm-modal {
+    max-width: var(--df-overlay-width-md);
+  }
+
+  .df-confirm-modal-title {
+    margin: 0;
+    font-weight: var(--df-overlay-header-font-weight);
+  }
+
+  .df-confirm-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-4);
+    padding-inline: var(--df-size-6);
+  }
+
+  .df-confirm-modal-message,
+  .df-confirm-modal-field {
+    margin: 0;
+  }
+
+  .df-confirm-modal[data-critical] .df-confirm-modal-title {
+    color: var(--df-role-danger-emphasis);
+  }
+
+  .df-overlay-separator {
+    flex: none;
+    height: var(--df-overlay-separator-size);
+    margin-inline: var(--df-overlay-separator-margin-inline);
+    background-color: var(--df-overlay-separator-color);
+    border: 0;
+  }
+}

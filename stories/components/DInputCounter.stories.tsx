@@ -4,7 +4,6 @@ import type { ComponentProps } from 'react';
 
 import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputCounter> = {
@@ -18,28 +17,46 @@ Component composition with \`d-input\` to make a counter input component.
 
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
-and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/input.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                  | Class         | Type            | Description                 |
-|-------------------------------------------|---------------|-----------------|-----------------------------|
-| --${PREFIX_BS}label-color                 | :root         | css color unit  | Label color                 |
-| --${PREFIX_BS}label-font-weight           | :root         | css font weight | Label font weight           |
-| --${PREFIX_BS}label-font-size             | :root         | css length unit | Label font size             |
-| --${PREFIX_BS}label-padding-x             | :root         | css length unit | Label horizontal padding    |
-| --${PREFIX_BS}label-padding-y             | :root         | css length unit | Label vertical padding      |
-| --${PREFIX_BS}input-border-color          | .input-group  | css color unit  | Input border color          |
-| --${PREFIX_BS}input-border-width          | .input-group  | css length unit | Input border width          |
-| --${PREFIX_BS}input-border-radius         | .input-group  | css length unit | Input border radius         |
-| --${PREFIX_BS}input-focus-border-color    | .input-group  | css color unit  | Input focus border color    |
-| --${PREFIX_BS}input-focus-box-shadow      | .input-group  | css shadow      | Input focus box shadow      |
-| --${PREFIX_BS}input-disabled-bg           | .input-group  | css color unit  | Input disable background    |
-| --${PREFIX_BS}input-disabled-color        | .input-group  | css color unit  | Input disable color         |
-| --${PREFIX_BS}input-disabled-border-color | .input-group  | css color unit  | Input disable border color  |
-| --${PREFIX_BS}form-text-padding           | .form-text    | css length unit | Hint padding                |
-| --${PREFIX_BS}form-text-gap               | .form-text    | css length unit | Space between hint elements |
-| --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                  |
-| --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align            |
+| Variable                               | Type        | Description                                                                                                                                                                       |
+|----------------------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| \`--df-input-padding-block\`           | css length  | Padding block                                                                                                                                                                     |
+| \`--df-input-padding-inline\`          | css length  | Padding inline                                                                                                                                                                    |
+| \`--df-input-font-family\`             | font family | Font family                                                                                                                                                                       |
+| \`--df-input-font-size\`               | css length  | Font size                                                                                                                                                                         |
+| \`--df-input-line-height\`             | number      | Line height                                                                                                                                                                       |
+| \`--df-input-radius\`                  | css length  | Radius                                                                                                                                                                            |
+| \`--df-input-border-width\`            | css length  | Border width                                                                                                                                                                      |
+| \`--df-input-bg\`                      | css color   | Background                                                                                                                                                                        |
+| \`--df-input-fg\`                      | css color   | Foreground                                                                                                                                                                        |
+| \`--df-input-border-color\`            | css color   | Border color                                                                                                                                                                      |
+| \`--df-input-placeholder-color\`       | css color   | 2.x aliased the placeholder to $border-color (gray-100), which gives a 1.3:1 ratio against a white field — well under the 4.5:1 WCAG minimum for text. Moved to fg.muted (4.9:1). |
+| \`--df-input-hover-border-color\`      | css color   | Hover border color                                                                                                                                                                |
+| \`--df-input-focus-border-color\`      | css color   | Focus border color                                                                                                                                                                |
+| \`--df-input-invalid-border-color\`    | css color   | Invalid border color                                                                                                                                                              |
+| \`--df-input-invalid-fg\`              | css color   | Invalid foreground                                                                                                                                                                |
+| \`--df-input-valid-border-color\`      | css color   | Valid border color                                                                                                                                                                |
+| \`--df-input-valid-fg\`                | css color   | Valid foreground                                                                                                                                                                  |
+| \`--df-input-disabled-bg\`             | css color   | Disabled background                                                                                                                                                               |
+| \`--df-input-disabled-fg\`             | css color   | Disabled foreground                                                                                                                                                               |
+| \`--df-input-disabled-border-color\`   | css color   | Disabled border color                                                                                                                                                             |
+| \`--df-input-sm-padding-block\`        | css length  | Sm padding block                                                                                                                                                                  |
+| \`--df-input-sm-padding-inline\`       | css length  | Sm padding inline                                                                                                                                                                 |
+| \`--df-input-sm-font-size\`            | css length  | Sm font size                                                                                                                                                                      |
+| \`--df-input-lg-padding-block\`        | css length  | Lg padding block                                                                                                                                                                  |
+| \`--df-input-lg-padding-inline\`       | css length  | Lg padding inline                                                                                                                                                                 |
+| \`--df-input-lg-font-size\`            | css length  | Lg font size                                                                                                                                                                      |
+| \`--df-input-label-margin-block-end\`  | css length  | Label margin block end                                                                                                                                                            |
+| \`--df-input-label-font-size\`         | css length  | Label font size                                                                                                                                                                   |
+| \`--df-input-label-font-weight\`       | font weight | Label font weight                                                                                                                                                                 |
+| \`--df-input-label-color\`             | css color   | Label color                                                                                                                                                                       |
+| \`--df-input-help-margin-block-start\` | css length  | Help margin block start                                                                                                                                                           |
+| \`--df-input-help-font-size\`          | css length  | Help font size                                                                                                                                                                    |
+| \`--df-input-help-color\`              | css color   | 2.x used gray-400 here (3.5:1) and then forced gray-500 through _shame.scss with !important. Both paths now resolve to the same token.                                            |
+
         `,
       },
     },

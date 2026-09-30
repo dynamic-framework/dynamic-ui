@@ -32,7 +32,7 @@ describe('DTabContent component', () => {
 
     expect(screen.getByText('Visible Content')).toBeInTheDocument();
     expect(screen.getByRole('tabpanel')).toHaveAttribute('id', 'tab1Pane');
-    expect(screen.getByRole('tabpanel')).toHaveClass('tab-pane', 'fade', 'show', 'active');
+    expect(screen.getByRole('tabpanel')).toHaveClass('df-tabpanel');
   });
 
   it('Does not render anything when tab is not selected', () => {

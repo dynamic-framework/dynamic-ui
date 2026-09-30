@@ -1,0 +1,9 @@
+{
+  "$description": "Icon component tokens. The size defaults to the inline text size so an icon inside a button or a chip scales with it.",
+  "icon": {
+    "size": {"$type": "dimension", "$value": "{size.5}"},
+    "padding": {"$type": "dimension", "$value": "{size.0}"},
+    "circle-padding": {"$type": "dimension", "$value": "{size.2}"},
+    "loading-duration": {"$type": "duration", "$value": "{duration.slower}"}
+  }
+}

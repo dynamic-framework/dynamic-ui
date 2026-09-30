@@ -13,7 +13,7 @@ import type {
 } from 'react';
 
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
-import { PREFIX_BS } from '../config';
+import { PREFIX } from '../config';
 
 import type { BaseProps, CustomStyles } from '../interface';
 import type { Merge } from '../../types';
@@ -51,11 +51,10 @@ function DInputRange(
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 
-  const generateClasses = useMemo(
-    () => ({
-      'form-range': true,
-      'form-range-value-indicator': filledValue,
-    }),
+  // `filledValue` decided between two class names in 2.x. It is the one axis
+  // this control has, so it is an attribute.
+  const dataProps = useMemo(
+    () => (filledValue ? { 'data-filled': '' } : {}),
     [filledValue],
   );
 
@@ -68,7 +67,7 @@ function DInputRange(
 
     return {
       ...style,
-      [`--${PREFIX_BS}form-range-component-value`]: `${percentage}%`,
+      [`--${PREFIX}range-value`]: `${percentage}%`,
     };
   }, [min, max, value, style]);
 
@@ -76,7 +75,7 @@ function DInputRange(
     <input
       id={id}
       ref={innerRef}
-      className={classNames(generateClasses, className)}
+      className={classNames('df-range', className)}
       aria-label={ariaLabel}
       type="range"
       value={value}
@@ -84,12 +83,13 @@ function DInputRange(
       max={max}
       style={generateStyleVariables}
       onChange={onChange}
+      {...dataProps}
       {...props}
     />
   ), [
     ariaLabel,
     className,
-    generateClasses,
+    dataProps,
     generateStyleVariables,
     id,
     innerRef,
@@ -106,7 +106,7 @@ function DInputRange(
 
   return (
     <>
-      <label className="form-label" htmlFor={id}>
+      <label className="df-label" htmlFor={id}>
         {label}
       </label>
       {inputComponent}

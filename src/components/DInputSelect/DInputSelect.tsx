@@ -142,13 +142,10 @@ export default function DInputSelect<T extends object = DefaultOption>(
     <select
       id={id}
       name={name}
-      className={classNames({
-        'form-select': true,
-        [`form-select-${size}`]: !!size,
-        'floating-label': floatingLabel,
-        'is-invalid': invalid,
-        'is-valid': valid,
-      })}
+      className="df-select"
+      {...size && { 'data-size': size }}
+      {...invalid && { 'data-invalid': '' }}
+      {...valid && { 'data-valid': '' }}
       aria-label={label}
       disabled={disabled || loading}
       onChange={changeHandler}
@@ -178,14 +175,13 @@ export default function DInputSelect<T extends object = DefaultOption>(
     name,
     options,
     value,
-    floatingLabel,
     invalid,
     valid,
     size,
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <label className="df-label" htmlFor={id}>
       {label}
     </label>
   ), [
@@ -196,7 +192,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
   const dynamicComponent = useMemo(() => {
     if (floatingLabel) {
       return (
-        <div className="form-floating">
+        <div className="df-input-floating">
           {selectComponent}
           {labelComponent}
         </div>
@@ -214,13 +210,13 @@ export default function DInputSelect<T extends object = DefaultOption>(
         labelComponent
       )}
       <div className={classNames({
-        'input-group': true,
+        'df-input-group': true,
       })}
       >
         {iconStart && (
           <button
             type="button"
-            className="input-group-text"
+            className="df-input-group-addon"
             id={`${id}Start`}
             onClick={iconStartClickHandler}
             disabled={disabled || loading}
@@ -239,7 +235,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
         {iconEnd && !loading && (
           <button
             type="button"
-            className="input-group-text"
+            className="df-input-group-addon"
             id={`${id}End`}
             onClick={iconEndClickHandler}
             disabled={disabled || loading}
@@ -255,20 +251,21 @@ export default function DInputSelect<T extends object = DefaultOption>(
           </button>
         )}
         {loading && (
-          <div className="input-group-text form-control-icon loading">
+          <div className="df-input-group-addon">
             <span
-              className="spinner-border spinner-border-sm"
+              className="df-spinner"
+              data-size="sm"
               role="status"
               aria-hidden="true"
             >
-              <span className="visually-hidden">Loading...</span>
+              <span className="df-sr-only">Loading...</span>
             </span>
           </div>
         )}
       </div>
       {hint && (
         <div
-          className="form-text"
+          className="df-help"
           id={`${id}Hint`}
         >
           {hint}

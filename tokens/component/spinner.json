@@ -1,0 +1,9 @@
+{
+  "$description": "Spinner component tokens. Sized in em so a spinner inherits the scale of whatever it sits in — a button, a card, a page.",
+  "spinner": {
+    "size": {"$type": "dimension", "$value": "{size.4}"},
+    "border-width": {"$type": "dimension", "$value": "{border-width.2}"},
+    "track-color": {"$type": "color", "$value": "{border.default}"},
+    "duration": {"$type": "duration", "$value": "{duration.slower}"}
+  }
+}

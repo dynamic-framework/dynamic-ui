@@ -7,7 +7,7 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: build",
-			"detail": "npm run clean && npm run build:react && npm run build:scss && npm run cp"
+			"detail": "npm run clean && npm run build:react && npm run css"
 		},
 		{
 			"type": "npm",

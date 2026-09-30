@@ -6,9 +6,6 @@ import {
   DContextProvider,
   DInput,
 } from '../../src';
-import {
-  PREFIX_BS,
-} from '../../src/components/config';
 import DIcon from '../../src/components/DIcon/DIcon';
 import {
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
@@ -102,23 +99,29 @@ Resolution order:
 
 ## Classnames
 
-| Classname | Purpose | Applied when |
+| Selector | Purpose | Applied when |
 |---|---|---|
-| \`.d-icon\` | Base icon container | Always |
-| \`.d-icon-has-circle\` | Enables circle background and default opacity variable \`--${PREFIX_BS}icon-component-bg-opacity\` | \`hasCircle\` prop |
-| \`.d-icon-color-{theme}\` | Sets icon color and circle bg based on theme (primary, success, info, warning, danger, etc.) | \`color\` prop |
+| \`.df-icon\` | Base icon container | Always |
+| \`[data-circle]\` | Draws the circular background | \`hasCircle\` prop |
+| \`[data-loading]\` | Spins the glyph | \`loading\` prop |
+| \`[data-color]\` | Sets the glyph colour, and the circle fill with it | \`color\` prop |
+
+The colour is an attribute rather than a class per role: \`.d-icon-color-{theme}\`
+was one class per role shipped whether used or not, and adding a role meant
+adding a class. \`data-color\` takes any role the token layer defines.
 
 ## CSS Variables
 
-| Variable                             | Class                | Type            | Description                                    |
-|--------------------------------------|----------------------|-----------------|------------------------------------------------|
-| --${PREFIX_BS}icon-component-size    | .d-icon              | css length unit | Icon size                                       |
-| --${PREFIX_BS}icon-component-padding | .d-icon              | css length unit | Padding for circle background                   |
-| --${PREFIX_BS}icon-component-color   | .d-icon/.d-icon-color-* | css color unit  | Icon color (set via class)                      |
-| --${PREFIX_BS}icon-component-bg-color | .d-icon/.d-icon-has-circle | css color unit  | Circle background color (set via class)         |
-| --${PREFIX_BS}icon-component-bg-opacity | .d-icon-has-circle | number          | Opacity used in circle bg (default \`.1\`)     |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/icon.json\`,
+so it cannot fall out of step with the stylesheet.
 
-> Color and circle background are controlled through classnames; variables above are resolved by those classes.
+| Variable                       | Type       | Description      |
+|--------------------------------|------------|------------------|
+| \`--df-icon-size\`             | css length | Size             |
+| \`--df-icon-padding\`          | css length | Padding          |
+| \`--df-icon-circle-padding\`   | css length | Circle padding   |
+| \`--df-icon-loading-duration\` | css time   | Loading duration |
 
 ## Finding Icons
 
@@ -588,11 +591,11 @@ export const CustomColorClasses: Story = {
         <div style={{ fontSize: '12px', marginTop: '8px' }}>text-purple-500</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Star" size="32px" hasCircle className="bg-pink-500 text-white" />
+        <DIcon icon="Star" size="32px" hasCircle className="bg-pink-500 df-text-on-emphasis" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-pink-500 text-white</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Bolt" size="32px" hasCircle className="bg-purple-500 text-white" />
+        <DIcon icon="Bolt" size="32px" hasCircle className="bg-purple-500 df-text-on-emphasis" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-purple-500 text-white</div>
       </div>
     </div>

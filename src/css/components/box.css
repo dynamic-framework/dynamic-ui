@@ -1,0 +1,25 @@
+/**
+ * Box — a bare surface. The smallest component in the system: padding, a
+ * ground, a radius and an elevation, all from tokens.
+ */
+@layer df.components {
+  .df-box {
+    padding: var(--df-box-padding);
+    color: var(--df-box-fg);
+    background-color: var(--df-box-bg);
+    border-radius: var(--df-box-radius);
+    box-shadow: var(--df-box-shadow);
+  }
+
+  .df-box[data-bordered] {
+    border: var(--df-stroke-control) solid var(--df-box-border-color);
+  }
+
+  .df-box[data-elevation="none"] {
+    box-shadow: none;
+  }
+
+  .df-box[data-elevation="md"] {
+    box-shadow: var(--df-elevation-md);
+  }
+}

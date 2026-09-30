@@ -12,13 +12,13 @@ describe('<DToastHeader />', () => {
   it('toast className', () => {
     render(<DToastHeader>Content</DToastHeader>);
     const toast = screen.getByText('Content');
-    expect(toast).toHaveClass('toast-header');
+    expect(toast).toHaveClass('df-toast-header');
   });
 
   it('Add custom className', () => {
     render(<DToastHeader className="extra-clase">Content</DToastHeader>);
     const toast = screen.getByText('Content');
-    expect(toast).toHaveClass('toast-header', 'extra-clase');
+    expect(toast).toHaveClass('df-toast-header', 'extra-clase');
   });
 
   it('Add custom styles', () => {

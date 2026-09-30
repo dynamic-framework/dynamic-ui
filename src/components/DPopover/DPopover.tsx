@@ -23,7 +23,7 @@ import {
 
 import type { ReactElement, HTMLProps, PropsWithChildren } from 'react';
 import type { BaseProps } from '../interface';
-import { PREFIX_BS } from '../config';
+import { PREFIX } from '../config';
 
 type Props = BaseProps & PropsWithChildren<{
   renderComponent: (open: boolean) => ReactElement;
@@ -85,7 +85,7 @@ export default function DPopover(
   const generateStyleVariables = useMemo(() => ({
     ...style,
     ...(adjustContentToRender && {
-      [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
+      [`--${PREFIX}floating-min-width`]: 'auto',
     }),
   }), [style, adjustContentToRender]);
 
@@ -102,7 +102,7 @@ export default function DPopover(
 
   return (
     <div
-      className={classNames('d-popover', className)}
+      className={classNames('df-popover', className)}
       style={generateStyleVariables}
       {...dataAttributes}
     >
@@ -111,12 +111,9 @@ export default function DPopover(
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
-            className={classNames(
-              'd-popover-content',
-              {
-                'w-100': adjustContentToRender,
-              },
-            )}
+            className="df-floating"
+            data-kind="popover"
+            {...adjustContentToRender && { 'data-full-width': '' }}
             ref={refs.setFloating}
             style={floatingStyles}
             aria-labelledby={headingId}

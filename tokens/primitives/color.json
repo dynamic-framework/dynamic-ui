@@ -1,0 +1,570 @@
+{
+  "$description": "Colour primitives. GENERATED — do not edit by hand; edit the seeds in scripts/tokens/build-primitives.mjs and re-run `npm run tokens:primitives`.",
+  "color": {
+    "$type": "color",
+    "neutral": {
+      "25": {
+        "$value": "#fbfbfc"
+      },
+      "50": {
+        "$value": "#f0f0f2"
+      },
+      "100": {
+        "$value": "#e1e1e6"
+      },
+      "200": {
+        "$value": "#c4c4cd"
+      },
+      "300": {
+        "$value": "#a7a7b4"
+      },
+      "400": {
+        "$value": "#8a8a9b"
+      },
+      "500": {
+        "$value": "#6d6d82"
+      },
+      "600": {
+        "$value": "#575768"
+      },
+      "700": {
+        "$value": "#41414e"
+      },
+      "800": {
+        "$value": "#2b2b34"
+      },
+      "900": {
+        "$value": "#15151a"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#6d6d82",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "anchor-neutral",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      },
+      "$description": "Anchor ramp. Defines the shared lightness scale used by every other family."
+    },
+    "blue": {
+      "25": {
+        "$value": "#f9fbff"
+      },
+      "50": {
+        "$value": "#e8f1ff"
+      },
+      "100": {
+        "$value": "#d1e3fe"
+      },
+      "200": {
+        "$value": "#a3c6fd"
+      },
+      "300": {
+        "$value": "#73a8fb"
+      },
+      "400": {
+        "$value": "#4688f0"
+      },
+      "500": {
+        "$value": "#2068d5"
+      },
+      "600": {
+        "$value": "#0a51b5"
+      },
+      "700": {
+        "$value": "#053c8b"
+      },
+      "800": {
+        "$value": "#022861"
+      },
+      "900": {
+        "$value": "#001337"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#2068d5",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "indigo": {
+      "25": {
+        "$value": "#fbfbff"
+      },
+      "50": {
+        "$value": "#eeedff"
+      },
+      "100": {
+        "$value": "#dcdbfe"
+      },
+      "200": {
+        "$value": "#bbb6fc"
+      },
+      "300": {
+        "$value": "#9b8efb"
+      },
+      "400": {
+        "$value": "#7e5ff9"
+      },
+      "500": {
+        "$value": "#6610f2"
+      },
+      "600": {
+        "$value": "#5213c4"
+      },
+      "700": {
+        "$value": "#3e0c99"
+      },
+      "800": {
+        "$value": "#2b066e"
+      },
+      "900": {
+        "$value": "#170243"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#6610f2",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "purple": {
+      "25": {
+        "$value": "#fafbff"
+      },
+      "50": {
+        "$value": "#eaeeff"
+      },
+      "100": {
+        "$value": "#d5dbfe"
+      },
+      "200": {
+        "$value": "#adb7fc"
+      },
+      "300": {
+        "$value": "#8892ef"
+      },
+      "400": {
+        "$value": "#666dd7"
+      },
+      "500": {
+        "$value": "#4848b7"
+      },
+      "600": {
+        "$value": "#3934a2"
+      },
+      "700": {
+        "$value": "#2b208b"
+      },
+      "800": {
+        "$value": "#1e0d6d"
+      },
+      "900": {
+        "$value": "#100248"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#4848b7",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "pink": {
+      "25": {
+        "$value": "#fffafa"
+      },
+      "50": {
+        "$value": "#ffecee"
+      },
+      "100": {
+        "$value": "#fed8de"
+      },
+      "200": {
+        "$value": "#fdb0be"
+      },
+      "300": {
+        "$value": "#fc829c"
+      },
+      "400": {
+        "$value": "#f44c7c"
+      },
+      "500": {
+        "$value": "#d81b60"
+      },
+      "600": {
+        "$value": "#ae124c"
+      },
+      "700": {
+        "$value": "#830b37"
+      },
+      "800": {
+        "$value": "#590523"
+      },
+      "900": {
+        "$value": "#2f010f"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#d81b60",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "red": {
+      "25": {
+        "$value": "#fffaf9"
+      },
+      "50": {
+        "$value": "#ffedec"
+      },
+      "100": {
+        "$value": "#fedbd9"
+      },
+      "200": {
+        "$value": "#fdb6b3"
+      },
+      "300": {
+        "$value": "#fc8c8b"
+      },
+      "400": {
+        "$value": "#f65b62"
+      },
+      "500": {
+        "$value": "#dc3545"
+      },
+      "600": {
+        "$value": "#b8142f"
+      },
+      "700": {
+        "$value": "#8a0c21"
+      },
+      "800": {
+        "$value": "#5d0513"
+      },
+      "900": {
+        "$value": "#300105"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#dc3545",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "orange": {
+      "25": {
+        "$value": "#fffaf7"
+      },
+      "50": {
+        "$value": "#fff2eb"
+      },
+      "100": {
+        "$value": "#ffe7d9"
+      },
+      "200": {
+        "$value": "#fed0b6"
+      },
+      "300": {
+        "$value": "#fdb890"
+      },
+      "400": {
+        "$value": "#fc9e63"
+      },
+      "500": {
+        "$value": "#fd7e14"
+      },
+      "600": {
+        "$value": "#c56215"
+      },
+      "700": {
+        "$value": "#8f460c"
+      },
+      "800": {
+        "$value": "#5a2904"
+      },
+      "900": {
+        "$value": "#270d00"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#fd7e14",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "yellow": {
+      "25": {
+        "$value": "#fffbf3"
+      },
+      "50": {
+        "$value": "#fff6e8"
+      },
+      "100": {
+        "$value": "#ffefd8"
+      },
+      "200": {
+        "$value": "#fee2b7"
+      },
+      "300": {
+        "$value": "#fed493"
+      },
+      "400": {
+        "$value": "#fdc568"
+      },
+      "500": {
+        "$value": "#ffb300"
+      },
+      "600": {
+        "$value": "#c48b1b"
+      },
+      "700": {
+        "$value": "#8b6210"
+      },
+      "800": {
+        "$value": "#543a05"
+      },
+      "900": {
+        "$value": "#1f1300"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#ffb300",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "green": {
+      "25": {
+        "$value": "#f5fef8"
+      },
+      "50": {
+        "$value": "#e5f5eb"
+      },
+      "100": {
+        "$value": "#ceebd8"
+      },
+      "200": {
+        "$value": "#a0d5b4"
+      },
+      "300": {
+        "$value": "#73bd91"
+      },
+      "400": {
+        "$value": "#47a371"
+      },
+      "500": {
+        "$value": "#198754"
+      },
+      "600": {
+        "$value": "#0f6c42"
+      },
+      "700": {
+        "$value": "#085130"
+      },
+      "800": {
+        "$value": "#04361f"
+      },
+      "900": {
+        "$value": "#011c0d"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#198754",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "teal": {
+      "25": {
+        "$value": "#f2fff9"
+      },
+      "50": {
+        "$value": "#e5fbf1"
+      },
+      "100": {
+        "$value": "#d0f8e6"
+      },
+      "200": {
+        "$value": "#a6f0d1"
+      },
+      "300": {
+        "$value": "#79e6bc"
+      },
+      "400": {
+        "$value": "#4dd9a9"
+      },
+      "500": {
+        "$value": "#20c997"
+      },
+      "600": {
+        "$value": "#1b9c75"
+      },
+      "700": {
+        "$value": "#107053"
+      },
+      "800": {
+        "$value": "#064532"
+      },
+      "900": {
+        "$value": "#011b11"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#20c997",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "cyan": {
+      "25": {
+        "$value": "#f5fdff"
+      },
+      "50": {
+        "$value": "#e8faff"
+      },
+      "100": {
+        "$value": "#d6f5ff"
+      },
+      "200": {
+        "$value": "#b1ecfe"
+      },
+      "300": {
+        "$value": "#84e3fd"
+      },
+      "400": {
+        "$value": "#46d8fc"
+      },
+      "500": {
+        "$value": "#0dcaf0"
+      },
+      "600": {
+        "$value": "#1d9cb9"
+      },
+      "700": {
+        "$value": "#117085"
+      },
+      "800": {
+        "$value": "#064452"
+      },
+      "900": {
+        "$value": "#011920"
+      },
+      "$extensions": {
+        "dev.dynamicframework.ramp": {
+          "seed": "#0dcaf0",
+          "anchorStep": 500,
+          "space": "oklch",
+          "method": "oklch-envelope",
+          "generator": "scripts/tokens/build-primitives.mjs"
+        }
+      }
+    },
+    "white": {
+      "$value": "#ffffff",
+      "$description": "Absolute white. Never rebranded."
+    },
+    "black": {
+      "$value": "#000000",
+      "$description": "Absolute black. Never rebranded."
+    },
+    "transparent": {
+      "$value": "#00000000",
+      "$description": "Fully transparent. An absolute like white and black, and the only way to say \"no fill\" as a token — the alpha ramps below start at 5%."
+    },
+    "alpha": {
+      "$description": "Translucent black and white, for scrims and overlays.",
+      "black": {
+        "5": {
+          "$value": "#0000000d"
+        },
+        "10": {
+          "$value": "#0000001a"
+        },
+        "20": {
+          "$value": "#00000033"
+        },
+        "30": {
+          "$value": "#0000004d"
+        },
+        "40": {
+          "$value": "#00000066"
+        },
+        "50": {
+          "$value": "#00000080"
+        },
+        "60": {
+          "$value": "#00000099"
+        },
+        "70": {
+          "$value": "#000000b3"
+        },
+        "80": {
+          "$value": "#000000cc"
+        },
+        "90": {
+          "$value": "#000000e6"
+        }
+      },
+      "white": {
+        "5": {
+          "$value": "#ffffff0d"
+        },
+        "10": {
+          "$value": "#ffffff1a"
+        },
+        "20": {
+          "$value": "#ffffff33"
+        },
+        "30": {
+          "$value": "#ffffff4d"
+        },
+        "40": {
+          "$value": "#ffffff66"
+        },
+        "50": {
+          "$value": "#ffffff80"
+        },
+        "60": {
+          "$value": "#ffffff99"
+        },
+        "70": {
+          "$value": "#ffffffb3"
+        },
+        "80": {
+          "$value": "#ffffffcc"
+        },
+        "90": {
+          "$value": "#ffffffe6"
+        }
+      }
+    }
+  }
+}

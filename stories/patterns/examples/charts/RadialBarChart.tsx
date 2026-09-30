@@ -43,7 +43,7 @@ export default function DRadialBarChart({
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
-          className="h5"
+          className="df-h5"
           fill="#343a40"
         >
           {`${value}%`}

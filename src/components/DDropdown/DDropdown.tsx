@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import DButtonIcon from '../DButtonIcon';
 import DIcon from '../DIcon';
+import { resolveRole } from '../roles';
 
 export type DropdownAction = {
   onClick?: () => void;
@@ -40,10 +41,15 @@ type Props = {
   placement?: DropdownPlacement;
 };
 
-const getItemClass = (action: DropdownAction) => classNames({
-  'dropdown-item d-flex align-items-center': true,
-  [`dropdown-item-${action.color}`]: !!action.color,
-  disabled: action.disabled,
+/**
+ * 2.x put the colour and the disabled state in class names and the layout in
+ * two utilities. The item is one class; colour and state are attributes, so a
+ * ninth role works with no extra CSS.
+ */
+const getItemProps = (action: DropdownAction) => ({
+  className: 'df-menu-item',
+  ...(action.color ? { 'data-color': resolveRole(action.color) } : {}),
+  ...(action.disabled ? { 'aria-disabled': true as const } : {}),
 });
 
 export default function DDropdown(
@@ -249,18 +255,19 @@ export default function DDropdown(
     <ul
       ref={menuRef}
       role="menu"
-      className={classNames('dropdown-menu p-2', { show: open }, classNameMenu)}
+      className={classNames('df-floating', classNameMenu)}
+      data-kind="menu"
       style={portalMenuStyle ?? inlineMenuStyle}
     >
       {actions.map((action, index) => {
         if (action.isDivider) {
-          return <hr key={index} className="dropdown-divider" />;
+          return <hr key={index} className="df-menu-divider" />;
         }
         return (
           <li key={index}>
             {action.href ? (
               <a
-                className={getItemClass(action)}
+                {...getItemProps(action)}
                 href={action.href}
                 onClick={(e) => {
                   if (action.disabled) {
@@ -270,12 +277,12 @@ export default function DDropdown(
                   }
                 }}
               >
-                {action.icon && <DIcon icon={action.icon} className="me-2" size="1rem" />}
+                {action.icon && <DIcon icon={action.icon} size="16px" />}
                 {action.label}
               </a>
             ) : (
               <button
-                className={getItemClass(action)}
+                {...getItemProps(action)}
                 type="button"
                 onClick={() => {
                   if (!action.disabled) {
@@ -285,7 +292,7 @@ export default function DDropdown(
                 }}
                 disabled={action.disabled}
               >
-                {action.icon && <DIcon icon={action.icon} className="me-2" size="1rem" />}
+                {action.icon && <DIcon icon={action.icon} size="16px" />}
                 {action.label}
               </button>
             )}
@@ -297,7 +304,7 @@ export default function DDropdown(
 
   if (asPortal) {
     return (
-      <div ref={toggleRef} className={classNames('dropdown', className)}>
+      <div ref={toggleRef} className={classNames('df-dropdown', className)}>
         {ToggleElement}
         {open && menuCoords && createPortal(menuItems, document.body)}
       </div>
@@ -306,7 +313,8 @@ export default function DDropdown(
 
   return (
     <div
-      className={classNames(`dropdown drop-${resolvedInlinePosition}`, className)}
+      className={classNames('df-dropdown', className)}
+      data-position={resolvedInlinePosition}
       ref={dropdownRef}
     >
       {ToggleElement}

@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCheck> = {
   title: 'Design System/Components/Input Check',
@@ -14,19 +13,37 @@ Create consistent cross-browser and cross-device checkboxes with our completely 
 
 **Checkbox:** Allows the user to make multiple selections from a set of options.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
-+ [Bootstrap Checks](https://getbootstrap.com/docs/5.3/forms/checks-radios/#checks)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Check CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/choice.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                            | Class               | Type            | Description                 |
-|-----------------------------------------------------|---------------------|-----------------|-----------------------------|
-| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color          |
-| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow            |
+| Variable                              | Type       | Description           |
+|---------------------------------------|------------|-----------------------|
+| \`--df-choice-size\`                  | css length | Size                  |
+| \`--df-choice-gap\`                   | css length | Gap                   |
+| \`--df-choice-radius\`                | css length | Radius                |
+| \`--df-choice-border-width\`          | css length | Border width          |
+| \`--df-choice-bg\`                    | css color  | Background            |
+| \`--df-choice-border-color\`          | css color  | Border color          |
+| \`--df-choice-checked-bg\`            | css color  | Checked background    |
+| \`--df-choice-checked-border-color\`  | css color  | Checked border color  |
+| \`--df-choice-checked-mark-color\`    | css color  | Checked mark color    |
+| \`--df-choice-hover-border-color\`    | css color  | Hover border color    |
+| \`--df-choice-invalid-border-color\`  | css color  | Invalid border color  |
+| \`--df-choice-valid-border-color\`    | css color  | Valid border color    |
+| \`--df-choice-disabled-bg\`           | css color  | Disabled background   |
+| \`--df-choice-disabled-border-color\` | css color  | Disabled border color |
+| \`--df-choice-disabled-opacity\`      | number     | Disabled opacity      |
+| \`--df-choice-label-color\`           | css color  | Label color           |
+| \`--df-choice-label-font-size\`       | css length | Label font size       |
+| \`--df-choice-switch-width\`          | css length | Switch width          |
+| \`--df-choice-switch-height\`         | css length | Switch height         |
+| \`--df-choice-switch-thumb-inset\`    | css length | Switch thumb inset    |
+| \`--df-choice-switch-thumb-color\`    | css color  | Switch thumb color    |
+| \`--df-choice-switch-track-color\`    | css color  | Switch track color    |
+
         `,
       },
     },

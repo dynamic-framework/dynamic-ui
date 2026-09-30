@@ -1,0 +1,31 @@
+{
+  "$description": "Carousel tokens.",
+  "carousel": {
+    "gap": {"$type": "dimension", "$value": "{size.4}"},
+    "peek": {"$type": "dimension", "$value": "{size.0}"},
+
+    "arrow-size": {"$type": "dimension", "$value": "{size.10}"},
+    "arrow-icon-size": {"$type": "dimension", "$value": "{size.6}"},
+    "arrow-offset": {"$type": "dimension", "$value": "{size.2}"},
+    "arrow-radius": {"$type": "dimension", "$value": "{shape.pill}"},
+
+    "arrow-border-width": {"$type": "dimension", "$value": "{border-width.0}"},
+    "arrow-bg": {"$type": "color", "$value": "{color.transparent}"},
+    "arrow-shadow": {"$type": "shadow", "$value": "{elevation.none}"},
+    "arrow-fg": {"$type": "color", "$value": "{fg.default}"},
+    "arrow-border-color": {"$type": "color", "$value": "{border.default}"},
+    "arrow-hover-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "arrow-disabled-opacity": {"$type": "number", "$value": "{opacity.40}"},
+
+    "pagination-gap": {"$type": "dimension", "$value": "{size.2}"},
+    "pagination-offset": {"$type": "dimension", "$value": "{size.3}"},
+    "page-size": {"$type": "dimension", "$value": "{size.2}"},
+    "page-active-size": {"$type": "dimension", "$value": "{size.5}"},
+    "page-radius": {"$type": "dimension", "$value": "{shape.pill}"},
+    "page-color": {"$type": "color", "$value": "{border.strong}"},
+    "page-active-color": {"$type": "color", "$value": "{role.primary.base}"},
+
+    "duration": {"$type": "duration", "$value": "{duration.slow}"},
+    "easing": {"$type": "cubicBezier", "$value": "{easing.decelerate}"}
+  }
+}

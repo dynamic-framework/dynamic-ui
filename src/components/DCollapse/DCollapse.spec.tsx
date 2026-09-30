@@ -22,15 +22,15 @@ describe('<DCollapse />', () => {
       <DCollapse {...props} />,
     );
 
-    const collapseContainer = container.querySelector('.collapse-container');
-    const button = container.querySelector('button.collapse-button');
-    const icon = button?.querySelector('.d-icon');
+    const collapseContainer = container.querySelector('.df-collapse');
+    const button = container.querySelector('button.df-collapse-trigger');
+    const icon = button?.querySelector('.df-icon');
 
     expect(collapseContainer).toBeInTheDocument();
     expect(screen.getByText('Header Content')).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
-    expect(container.querySelector('.collapse-body-wrapper')).not.toHaveClass('show');
+    expect(container.querySelector('.df-collapse-body')).not.toHaveAttribute('data-expanded');
   });
 
   it('renders with header and without body by default', () => {
@@ -44,7 +44,7 @@ describe('<DCollapse />', () => {
 
     expect(screen.getByText('Header Content')).toBeInTheDocument();
     expect(screen.getByText('Collapsible Body')).toBeInTheDocument();
-    expect(screen.getByText('Collapsible Body').closest('.collapse-body-wrapper')).not.toHaveClass('show');
+    expect(screen.getByText('Collapsible Body').closest('.df-collapse-body')).not.toHaveAttribute('data-expanded');
   });
 
   it('shows the body when defaultCollapsed is false', () => {
@@ -88,7 +88,7 @@ describe('<DCollapse />', () => {
     fireEvent.click(toggleButton); // expand
     fireEvent.click(toggleButton); // collapse
 
-    expect(screen.getByText('Collapsible Body').closest('.collapse-body-wrapper')).not.toHaveClass('show');
+    expect(screen.getByText('Collapsible Body').closest('.df-collapse-body')).not.toHaveAttribute('data-expanded');
   });
 
   it('calls onChange with correct state on toggle', () => {
@@ -123,7 +123,7 @@ describe('<DCollapse />', () => {
         {BodyMock}
       </DCollapse>,
     );
-    expect(container.firstChild).toHaveClass('collapse-container', 'custom-collapse');
+    expect(container.firstChild).toHaveClass('df-collapse', 'custom-collapse');
     expect(container.firstChild).toHaveStyle({ marginTop: '10px' });
   });
 

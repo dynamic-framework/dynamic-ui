@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DStepperMobile from '../../src/components/DStepperMobile/DStepperMobile';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DStepperMobile> = {
   title: 'Design System/Components/Stepper Mobile',
@@ -11,24 +10,39 @@ const config: Meta<typeof DStepperMobile> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                                   |Class| Type               | Description                        |
-|------------------------------------------------------------|-|--------------------|------------------------------------|
-| --${PREFIX_BS}step-container-gap                           |.d-stepper| css length unit    | Container gap                      |
-| --${PREFIX_BS}step-progress-outter-size                    |.d-stepper| css length unit    | Outter circle size                 |
-| --${PREFIX_BS}step-progress-outter-z-index                 |.d-stepper| css index unit     | Outter circle z-index              |
-| --${PREFIX_BS}step-progress-outter-fill-background-color   |.d-stepper| css color unit     | Fill background color              |
-| --${PREFIX_BS}step-progress-outter-background-color        |.d-stepper| css color unit     | Unfilled background color          |
-| --${PREFIX_BS}step-progress-inner-size                     |.d-stepper| css length unit    | Inner circle size                  |
-| --${PREFIX_BS}step-progress-inner-z-index                  |.d-stepper| css index unit     | Inner circle z-index               |
-| --${PREFIX_BS}step-progress-inner-background-color         |.d-stepper| css color unit     | Inner background color             |
-| --${PREFIX_BS}step-current-step-z-index                    |.d-stepper| css index unit     | Current step text z-index          |
-| --${PREFIX_BS}step-current-step-font-weight                |.d-stepper| css weight unit    | Current step font weight           |
-| --${PREFIX_BS}step-current-step-color                      |.d-stepper| css color unit     | Current step text color            |
-| --${PREFIX_BS}step-info-max-width                          |.d-stepper| css length unit    | Step info max width                |
-| --${PREFIX_BS}step-info-label-font-size                    |.d-stepper| css length unit    | Step label font size               |
-| --${PREFIX_BS}step-info-label-color                        |.d-stepper| css color unit     | Step label color                   |
-| --${PREFIX_BS}step-info-description-font-size              |.d-stepper| css length unit    | Step description font size         |
-| --${PREFIX_BS}step-info-description-color                  |.d-stepper| css color unit     | Step description color             |
+
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/stepper.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                               | Type       | Description           |
+|----------------------------------------|------------|-----------------------|
+| \`--df-stepper-gap\`                   | css length | Gap                   |
+| \`--df-stepper-marker-size\`           | css length | Marker size           |
+| \`--df-stepper-marker-font-size\`      | css length | Marker font size      |
+| \`--df-stepper-marker-border-width\`   | css length | Marker border width   |
+| \`--df-stepper-marker-radius\`         | css length | Marker radius         |
+| \`--df-stepper-marker-fg\`             | css color  | Marker foreground     |
+| \`--df-stepper-marker-bg\`             | css color  | Marker background     |
+| \`--df-stepper-marker-border-color\`   | css color  | Marker border color   |
+| \`--df-stepper-icon-size\`             | css length | Icon size             |
+| \`--df-stepper-done-bg\`               | css color  | Done background       |
+| \`--df-stepper-done-fg\`               | css color  | Done foreground       |
+| \`--df-stepper-done-border-color\`     | css color  | Done border color     |
+| \`--df-stepper-current-fg\`            | css color  | Current foreground    |
+| \`--df-stepper-current-border-color\`  | css color  | Current border color  |
+| \`--df-stepper-line-size\`             | css length | Line size             |
+| \`--df-stepper-line-color\`            | css color  | Line color            |
+| \`--df-stepper-line-done-color\`       | css color  | Line done color       |
+| \`--df-stepper-label-font-size\`       | css length | Label font size       |
+| \`--df-stepper-label-padding\`         | css length | Label padding         |
+| \`--df-stepper-description-font-size\` | css length | Description font size |
+| \`--df-stepper-description-color\`     | css color  | Description color     |
+| \`--df-stepper-progress-size\`         | css length | Progress size         |
+| \`--df-stepper-progress-track-color\`  | css color  | Progress track color  |
+| \`--df-stepper-progress-fill-color\`   | css color  | Progress fill color   |
+| \`--df-stepper-progress-thickness\`    | css length | Progress thickness    |
+
         `,
       },
     },
@@ -61,7 +75,7 @@ export const Default: Story = {
     (Story) => (
       <div
         style={{ width: '768px', height: '420px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        className="df-flex df-flex-col df-items-stretch df-justify-center df-gap-3"
       >
         <Story />
       </div>

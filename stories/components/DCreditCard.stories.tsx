@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { PREFIX_BS } from '../../src/components/config';
 import DCreditCard from '../../src/components/DCreditCard/DCreditCard';
 
 const config: Meta<typeof DCreditCard> = {
@@ -20,16 +19,22 @@ To understand in more detail the aspects covered by this component, you can cust
 
 ## CSS Variables
 
-| Variable | Class | Type | Description |
-| -------- | ----- | ---- | ----------- |
-| --${PREFIX_BS}d-credit-card-bg | .d-credit-card | css gradient | Background gradient of the card |
-| --${PREFIX_BS}d-credit-card-aspect-ratio | .d-credit-card | ratio | Aspect ratio of the card (16/9 horizontal, 9/16 vertical) |
-| --${PREFIX_BS}d-credit-card-padding | .d-credit-card | css length unit | Inner padding of the card |
-| --${PREFIX_BS}d-credit-card-chip-bg | .d-credit-card-chip | css color unit | Background color of the chip area |
-| --${PREFIX_BS}d-credit-card-chip-size | .d-credit-card-chip-image | css length unit | Size of the chip image |
-| --${PREFIX_BS}d-credit-card-logo-size | .d-credit-card-logo | percentage | Width of the brand logo (22% horizontal, 30% vertical) |
-| --${PREFIX_BS}d-credit-card-font-family-number | .d-credit-card-number | css font family | Font family for card number |
-| --${PREFIX_BS}d-credit-card-number-size | .d-credit-card-number | css length unit | Font size of card number |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/credit-card.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                              | Type       | Description      |
+|---------------------------------------|------------|------------------|
+| \`--df-credit-card-padding\`          | css length | Padding          |
+| \`--df-credit-card-radius\`           | css length | Radius           |
+| \`--df-credit-card-fg\`               | css color  | Foreground       |
+| \`--df-credit-card-chip-size\`        | css length | Chip size        |
+| \`--df-credit-card-chip-padding\`     | css length | Chip padding     |
+| \`--df-credit-card-chip-radius\`      | css length | Chip radius      |
+| \`--df-credit-card-number-font-size\` | css length | Number font size |
+| \`--df-credit-card-name-font-size\`   | css length | Name font size   |
+| \`--df-credit-card-label-font-size\`  | css length | Label font size  |
+
         `,
       },
     },

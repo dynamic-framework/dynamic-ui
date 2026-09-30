@@ -4,7 +4,8 @@ import { createElement, useMemo } from 'react';
 import * as LucideIcons from 'lucide-react';
 import { isValidElementType } from 'react-is';
 import type { CSSProperties, ComponentType } from 'react';
-import { PREFIX_BS } from '../config';
+import { PREFIX } from '../config';
+import { resolveRole } from '../roles';
 
 import type {
   BaseProps,
@@ -80,18 +81,29 @@ export default function DIconBase(
     return responsivePropValue(size);
   }, [responsivePropValue, size]);
 
+  // Only the size is an inline style; it is per-instance and cannot be a class.
+  // The circle padding used to be computed here as a calc() of the size — that
+  // is now `--df-icon-circle-padding` in the stylesheet, where it belongs.
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
-    ...resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize },
-    ...hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` },
+    ...resolvedSize && { [`--${PREFIX}icon-inline-size`]: resolvedSize },
     ...style,
-  }), [resolvedSize, hasCircle, style]);
+  }), [resolvedSize, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
-    'd-icon': true,
+    'df-icon': true,
     ...className && { [className]: true },
-    'd-icon-has-circle': hasCircle,
-    ...color && { [`d-icon-color-${color}`]: true },
-  }), [className, hasCircle, color]);
+  }), [className]);
+
+  /**
+   * 2.x emitted a class per theme colour, plus a second rule pairing it with
+   * the circle modifier — sixteen rules whose only job was to pick a colour.
+   * Here the colour is one attribute and the circle derives its ground from it
+   * with color-mix(), so a client's ninth role works with no extra CSS.
+   */
+  const dataProps = useMemo(() => ({
+    ...color && { 'data-color': resolveRole(color) },
+    ...hasCircle && { 'data-circle': '' },
+  }), [color, hasCircle]);
 
   const iconSize = useMemo(() => {
     if (resolvedSize) {
@@ -107,6 +119,7 @@ export default function DIconBase(
       <i
         className={classNames(generateClasses, familyClass)}
         style={generateStyleVariables}
+        {...dataProps}
         {...dataAttributes}
       >
         {isStringIcon ? icon : null}
@@ -119,6 +132,7 @@ export default function DIconBase(
       <span
         className={classNames(generateClasses)}
         style={generateStyleVariables}
+        {...dataProps}
         {...dataAttributes}
       >
         {createElement(icon, {
@@ -137,6 +151,7 @@ export default function DIconBase(
         <i
           className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
           style={generateStyleVariables}
+          {...dataProps}
           {...dataAttributes}
         />
       );
@@ -148,6 +163,7 @@ export default function DIconBase(
       <span
         className={classNames(generateClasses)}
         style={generateStyleVariables}
+        {...dataProps}
         {...dataAttributes}
       >
         ?
@@ -159,6 +175,7 @@ export default function DIconBase(
     <span
       className={classNames(generateClasses)}
       style={generateStyleVariables}
+      {...dataProps}
       {...dataAttributes}
     >
       <LucideIcon

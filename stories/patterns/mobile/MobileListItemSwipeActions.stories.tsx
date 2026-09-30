@@ -75,7 +75,7 @@ function MobileViewport(
 ) {
   return (
     <div
-      className="bg-gray-25 border position-relative overflow-hidden rounded-2"
+      className="df-bg-surface df-border-1 df-relative df-overflow-hidden df-rounded-control"
       style={{
         width: '390px',
         maxWidth: '100%',
@@ -272,37 +272,37 @@ function SwipeActionsList() {
   });
 
   return (
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe each item left to reveal quick actions</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe each item left to reveal quick actions</small>
         </div>
 
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush className="gap-1">
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+          <DListGroup flush className="df-gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
+                  className="df-relative df-rounded-control df-overflow-hidden df-bg-surface df-border-1 df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-stretch px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-stretch df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: String(SWIPE_ACTIONS_WIDTH) + 'px',
                     }}
                   >
-                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--bs-white)', background: '#0d6efd' }}>
+                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--df-color-white)', background: '#0d6efd' }}>
                       Flag
                     </button>
-                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--bs-gray-900)', background: '#ffe69c' }}>
+                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--df-color-neutral-900)', background: '#ffe69c' }}>
                       Archive
                     </button>
-                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--bs-white)', background: '#dc3545' }}>
+                    <button type="button" onClick={swipe.closeRow} style={{ width: '56px', border: 0, color: 'var(--df-color-white)', background: '#dc3545' }}>
                       Delete
                     </button>
                   </div>
@@ -310,11 +310,11 @@ function SwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -322,10 +322,10 @@ function SwipeActionsList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}
@@ -444,23 +444,23 @@ function IconOnlySwipeActionsList() {
   });
 
   return (
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe left to reveal icon-only actions</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe left to reveal icon-only actions</small>
         </div>
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush className="gap-1">
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+          <DListGroup flush className="df-gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
+                  className="df-relative df-rounded-control df-overflow-hidden df-bg-surface df-border-1 df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-around px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-center df-justify-around df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: '144px',
@@ -491,11 +491,11 @@ function IconOnlySwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -503,10 +503,10 @@ function IconOnlySwipeActionsList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}
@@ -629,23 +629,23 @@ function SwipeActionsWithDropdownList() {
   });
 
   return (
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe left to reveal quick actions and a dropdown menu</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe left to reveal quick actions and a dropdown menu</small>
         </div>
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
           <DListGroup>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative overflow-hidden p-0"
+                  className="df-relative df-overflow-hidden df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-between px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-center df-justify-between df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: '172px',
@@ -653,17 +653,17 @@ function SwipeActionsWithDropdownList() {
                   >
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm"
+                      className="df-button" data-variant="solid" data-color="primary" data-size="sm"
                       onClick={swipe.closeRow}
                     >
-                      <span className="d-inline-flex align-items-center gap-1">
+                      <span className="df-inline-flex df-items-center df-gap-1">
                         <DIcon icon="Check" size="0.9rem" />
                         Done
                       </span>
                     </button>
                     <DDropdown
                       asPortal
-                      className="d-flex align-items-center"
+                      className="df-flex df-items-center"
                       classNameMenu="shadow-sm"
                       actions={[
                         { label: 'Schedule', icon: 'CalendarClock', onClick: swipe.closeRow },
@@ -676,11 +676,11 @@ function SwipeActionsWithDropdownList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -688,10 +688,10 @@ function SwipeActionsWithDropdownList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}
@@ -715,25 +715,25 @@ function SwipeActionsList() {
 
   return (
     <MobileViewport>
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe each item left to reveal quick actions</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe each item left to reveal quick actions</small>
         </div>
 
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush className="gap-1">
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+          <DListGroup flush className="df-gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
+                  className="df-relative df-rounded-control df-overflow-hidden df-bg-surface df-border-1 df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-stretch px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-stretch df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: `${SWIPE_ACTIONS_WIDTH}px`,
@@ -745,7 +745,7 @@ function SwipeActionsList() {
                       style={{
                         width: '56px',
                         border: 0,
-                        color: 'var(--bs-white)',
+                        color: 'var(--df-color-white)',
                         background: '#0d6efd',
                       }}
                     >
@@ -757,7 +757,7 @@ function SwipeActionsList() {
                       style={{
                         width: '56px',
                         border: 0,
-                        color: 'var(--bs-gray-900)',
+                        color: 'var(--df-color-neutral-900)',
                         background: '#ffe69c',
                       }}
                     >
@@ -769,7 +769,7 @@ function SwipeActionsList() {
                       style={{
                         width: '56px',
                         border: 0,
-                        color: 'var(--bs-white)',
+                        color: 'var(--df-color-white)',
                         background: '#dc3545',
                       }}
                     >
@@ -780,11 +780,11 @@ function SwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -792,10 +792,10 @@ function SwipeActionsList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}
@@ -837,25 +837,25 @@ function IconOnlySwipeActionsList() {
 
   return (
     <MobileViewport>
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe left to reveal icon-only actions</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe left to reveal icon-only actions</small>
         </div>
 
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush className="gap-1">
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+          <DListGroup flush className="df-gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
+                  className="df-relative df-rounded-control df-overflow-hidden df-bg-surface df-border-1 df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-around px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-center df-justify-around df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: `${ICON_ONLY_ACTIONS_WIDTH}px`,
@@ -887,11 +887,11 @@ function IconOnlySwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -899,10 +899,10 @@ function IconOnlySwipeActionsList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}
@@ -929,13 +929,13 @@ function SwipeActionsWithDropdownList() {
 
   return (
     <MobileViewport>
-      <div className="h-100 bg-gray-25 d-flex flex-column">
-        <div className="p-4 pb-2">
-          <h5 className="mb-1">Recent activity</h5>
-          <small className="text-muted">Swipe left to reveal quick actions and a dropdown menu</small>
+      <div className="df-h-full df-bg-surface df-flex df-flex-col">
+        <div className="df-p-4 df-pb-2">
+          <h5 className="df-mb-1">Recent activity</h5>
+          <small className="df-text-muted">Swipe left to reveal quick actions and a dropdown menu</small>
         </div>
 
-        <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
+        <div className="df-px-3 df-pb-3 df-overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
           <DListGroup>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
@@ -943,11 +943,11 @@ function SwipeActionsWithDropdownList() {
               return (
                 <DListGroup.Item
                   key={item.id}
-                  className="position-relative overflow-hidden p-0"
+                  className="df-relative df-overflow-hidden df-p-0"
                 >
                   <div
                     aria-hidden={swipe.openRowId !== item.id}
-                    className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-between px-2 bg-gray-50"
+                    className="df-absolute df-top-0 df-bottom-0 df-end-0 df-flex df-items-center df-justify-between df-px-2 df-bg-muted"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
                       width: `${DROPDOWN_ACTIONS_WIDTH}px`,
@@ -955,10 +955,13 @@ function SwipeActionsWithDropdownList() {
                   >
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm"
+                      className="df-button"
+                      data-variant="solid"
+                      data-color="primary"
+                      data-size="sm"
                       onClick={swipe.closeRow}
                     >
-                      <span className="d-inline-flex align-items-center gap-1">
+                      <span className="df-inline-flex df-items-center df-gap-1">
                         <DIcon icon="Check" size="0.9rem" />
                         Done
                       </span>
@@ -966,7 +969,7 @@ function SwipeActionsWithDropdownList() {
 
                     <DDropdown
                       asPortal
-                      className="d-flex align-items-center"
+                      className="df-flex df-items-center"
                       classNameMenu="shadow-sm"
                       actions={[
                         {
@@ -993,11 +996,11 @@ function SwipeActionsWithDropdownList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3 w-100 d-block"
+                    className="df-relative df-px-3 df-py-3 df-w-full df-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
-                      background: 'var(--bs-white)',
+                      background: 'var(--df-color-white)',
                       cursor: 'grab',
                       touchAction: 'pan-y',
                       userSelect: 'none',
@@ -1005,10 +1008,10 @@ function SwipeActionsWithDropdownList() {
                     {...swipe.getPointerHandlers(item.id)}
                     onKeyDown={swipe.getKeyboardHandler(item.id)}
                   >
-                    <div className="d-flex justify-content-between align-items-start gap-2">
+                    <div className="df-flex df-justify-between df-items-start df-gap-2">
                       <div>
-                        <strong className="d-block">{item.title}</strong>
-                        <small className="text-muted">{item.subtitle}</small>
+                        <strong className="df-block">{item.title}</strong>
+                        <small className="df-text-muted">{item.subtitle}</small>
                       </div>
                       <strong className={item.amount.startsWith('+') ? 'text-success' : 'text-gray-800'}>
                         {item.amount}

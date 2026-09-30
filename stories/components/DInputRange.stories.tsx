@@ -155,14 +155,14 @@ export const SeeMoreExamples: Story = {
   },
   render: () => (
     <div
-      className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+      className="df-alert df-flex df-items-start df-gap-3 df-p-4 df-rounded-control df-border-1 df-border-primary df-bg-primary-subtle"
       role="note"
       aria-label="See more examples"
     >
-      <span className="fs-4" aria-hidden="true">💡</span>
+      <span className="df-fs-heading-4" aria-hidden="true">💡</span>
       <div>
-        <strong className="d-block mb-1">Looking for more examples?</strong>
-        <span className="text-secondary">
+        <strong className="df-block df-mb-1">Looking for more examples?</strong>
+        <span className="df-text-secondary">
           To see more examples, you can review the
           {' '}
           <a href="/?path=/docs/patterns-input-range--docs" target="_parent">

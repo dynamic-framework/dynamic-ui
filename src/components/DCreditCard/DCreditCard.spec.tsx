@@ -16,10 +16,10 @@ describe('<Card />', () => {
       <DCreditCard {...props} />,
     );
 
-    const card = container.querySelector('.d-credit-card');
-    const cardNumber = container.querySelector('.d-credit-card-number');
-    const logo = container.querySelector('.d-credit-card-logo');
-    const chip = container.querySelector('.d-credit-card-chip-image');
+    const card = container.querySelector('.df-credit-card');
+    const cardNumber = container.querySelector('.df-credit-card-number');
+    const logo = container.querySelector('.df-credit-card-logo');
+    const chip = container.querySelector('.df-credit-card-chip-image');
 
     expect(card).toBeInTheDocument();
     expect(card).toHaveClass('custom-card');
@@ -33,7 +33,7 @@ describe('<Card />', () => {
       <DCreditCard number="123" brand="mastercard" />,
     );
 
-    const logo = container.querySelector('.d-credit-card-logo');
+    const logo = container.querySelector('.df-credit-card-logo');
     expect(logo).toBeInTheDocument();
     expect(logo?.getAttribute('src')).toBe(
       'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',

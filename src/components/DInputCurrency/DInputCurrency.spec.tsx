@@ -20,41 +20,43 @@ describe('<DInputCurrency />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          style="--bs-input-currency-component-symbol-color: var(--bs-secondary); --bs-input-currency-symbol-color: var(--bs-input-currency-component-symbol-color);"
+<div>
+  <div
+    class="df-field"
+    style="--df-input-currency-component-symbol-color: var(--df-secondary); --df-input-currency-symbol-color: var(--df-input-currency-component-symbol-color);"
+  >
+    <label
+      class="df-label"
+      for="currencyTest"
+    >
+      labelTest
+    </label>
+    <div
+      class="df-input-group"
+    >
+      <div
+        class="df-input-group-addon"
+        id="currencyTestInputStart"
+      >
+        <span
+          slot="input-start"
+          style="color: var(--df-input-currency-symbol-color);"
         >
-          <label
-            for="currencyTest"
-          >
-            labelTest
-          </label>
-          <div
-            class="input-group"
-          >
-            <div
-              class="input-group-text"
-              id="currencyTestInputStart"
-            >
-              <span
-                slot="input-start"
-                style="color: var(--bs-input-currency-symbol-color);"
-              >
-                $
-              </span>
-            </div>
-            <input
-              aria-describedby="currencyTestInputStart"
-              class="form-control"
-              id="currencyTest"
-              inputmode="decimal"
-              type="text"
-              value="0.00"
-            />
-          </div>
-        </div>
+          $
+        </span>
       </div>
-    `);
+      <input
+        aria-describedby="currencyTestInputStart"
+        class="df-input"
+        id="currencyTest"
+        inputmode="decimal"
+        type="text"
+        value="0.00"
+      />
+    </div>
+  </div>
+</div>
+`);
   });
 
   it('renders with default currency symbol', () => {

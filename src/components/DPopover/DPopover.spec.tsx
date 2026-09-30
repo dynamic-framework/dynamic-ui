@@ -20,18 +20,18 @@ describe('<DPopover />', () => {
       const { container } = render(<DPopover {...props} />);
 
       expect(container.firstChild).toMatchInlineSnapshot(`
-        <div
-          class="d-popover"
-        >
-          <button
-            aria-expanded="false"
-            aria-haspopup="dialog"
-            type="button"
-          >
-            Item 1
-          </button>
-        </div>
-      `);
+<div
+  class="df-popover"
+>
+  <button
+    aria-expanded="false"
+    aria-haspopup="dialog"
+    type="button"
+  >
+    Item 1
+  </button>
+</div>
+`);
     });
 
     it('should apply correct classes when adjustContentToRender is true', () => {
@@ -46,7 +46,8 @@ describe('<DPopover />', () => {
       );
 
       const popoverContent = screen.getByText('Content');
-      expect(popoverContent).toHaveClass('d-popover-content', 'w-100');
+      expect(popoverContent).toHaveClass('df-floating');
+      expect(popoverContent).toHaveAttribute('data-full-width');
     });
   });
 

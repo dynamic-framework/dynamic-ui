@@ -4,7 +4,7 @@ import { DAlert } from '../../src/components';
 
 <Meta title="Design System/Foundations/CSS Distribution" />
 
-<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--df-font-family-sans)' }}>
 
 # CSS Distribution & Customization
 
@@ -26,8 +26,8 @@ import { DAlert } from '../../src/components';
   Add your own stylesheet or snippet after the main CSS to override any design tokens or variables:
     ```css
     :root {
-      --bs-primary: #ff0055;
-      --bs-body-font-family: 'Montserrat', sans-serif;
+      --df-role-primary-base: #ff0055;
+      --df-font-family-sans: 'Montserrat', sans-serif;
       /* ...other overrides... */
     }
     ```
@@ -41,10 +41,10 @@ import { DAlert } from '../../src/components';
 <link rel="stylesheet" href="/path/to/dynamic-ui.css" />
 <style>
   :root {
-    --bs-primary: #ff0055;
-    --bs-body-font-family: 'Montserrat', sans-serif;
-    --bs-body-bg: #f5f5f5;
-    --bs-border-radius: 0.75rem;
+    --df-role-primary-base: #ff0055;
+    --df-font-family-sans: 'Montserrat', sans-serif;
+    --df-bg-canvas: #f5f5f5;
+    --df-shape-control: 0.75rem;
   }
 </style>
 ```

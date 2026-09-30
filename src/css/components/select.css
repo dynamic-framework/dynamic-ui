@@ -1,0 +1,93 @@
+/**
+ * Native select.
+ *
+ * Shares the input geometry so a select and a text field line up in one form —
+ * 2.x used `.form-select`, which had its own padding, so they did not.
+ *
+ * The chevron is a mask, not a background SVG with a baked fill, so it follows
+ * `--df-select-indicator-color` instead of ignoring the theme. In dark mode the
+ * 2.x version kept a dark chevron on a dark field.
+ */
+@layer df.components {
+  .df-select {
+    display: block;
+    width: 100%;
+    padding-block: var(--df-select-padding-block);
+    padding-inline: var(--df-select-padding-inline) var(--df-select-indicator-space);
+    font-family: inherit;
+    font-size: var(--df-select-font-size);
+    color: var(--df-select-fg);
+    appearance: none;
+    background-color: var(--df-select-bg);
+    border: var(--df-select-border-width) solid var(--df-select-border-color);
+    border-radius: var(--df-select-radius);
+    transition: border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  /* The indicator is drawn on a pseudo-element of the wrapper, because a
+     `select` cannot have one of its own. */
+  .df-select-wrapper {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .df-select-wrapper::after {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: var(--df-select-padding-inline);
+    width: var(--df-size-4);
+    pointer-events: none;
+    content: "";
+    background-color: var(--df-select-indicator-color);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  .df-select:hover:where(:not(:disabled)) {
+    border-color: var(--df-border-strong);
+  }
+
+  .df-select:focus {
+    border-color: var(--df-select-focus-border-color);
+
+    /* The browser's own ring is replaced, not removed: the next rule draws one
+       for keyboard focus, which is the only case it should appear in. */
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+  }
+
+  .df-select:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-select:is([data-valid]) {
+    border-color: var(--df-select-valid-border-color);
+  }
+
+  .df-select:is([data-invalid], [aria-invalid="true"]) {
+    border-color: var(--df-select-invalid-border-color);
+  }
+
+  .df-select[data-size="sm"] {
+    padding-block: var(--df-input-sm-padding-block);
+    padding-inline: var(--df-input-sm-padding-inline) var(--df-select-indicator-space);
+    font-size: var(--df-input-sm-font-size);
+  }
+
+  .df-select[data-size="lg"] {
+    padding-block: var(--df-input-lg-padding-block);
+    padding-inline: var(--df-input-lg-padding-inline) var(--df-select-indicator-space);
+    font-size: var(--df-input-lg-font-size);
+  }
+
+  .df-select:is(:disabled) {
+    color: var(--df-select-disabled-fg);
+    cursor: not-allowed;
+    background-color: var(--df-select-disabled-bg);
+  }
+}

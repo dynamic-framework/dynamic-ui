@@ -1,0 +1,136 @@
+{
+  "$description": "Semantic colour, DARK mode. Same key structure as color.light.json — the validator enforces that the two files declare exactly the same token set, because a mode that is missing a token is a token that silently falls back to the wrong theme.",
+  "bg": {
+    "$type": "color",
+    "canvas": { "$value": "{color.neutral.900}" },
+    "surface": { "$value": "{color.neutral.800}" },
+    "raised": { "$value": "{color.neutral.700}" },
+    "sunken": { "$value": "{color.black}" },
+    "muted": { "$value": "{color.neutral.800}" },
+    "inverse": { "$value": "{color.neutral.25}" },
+    "disabled": { "$value": "{color.neutral.800}" },
+    "overlay": { "$value": "{color.alpha.black.70}", "$description": "Heavier than in light mode: a 50% scrim over a dark canvas does not read as a scrim." }
+  },
+  "fg": {
+    "$type": "color",
+    "default": { "$value": "{color.neutral.50}" },
+    "muted": { "$value": "{color.neutral.300}" },
+    "subtle": { "$value": "{color.neutral.400}" },
+    "disabled": { "$value": "{color.neutral.600}" },
+    "inverse": { "$value": "{color.neutral.900}" },
+    "on-emphasis": { "$value": "{color.white}" },
+    "link": { "$value": "{color.blue.300}" },
+    "link-hover": { "$value": "{color.blue.200}" }
+  },
+  "border": {
+    "$type": "color",
+    "default": { "$value": "{color.neutral.700}" },
+    "muted": { "$value": "{color.neutral.800}" },
+    "strong": { "$value": "{color.neutral.400}", "$description": "Needs 3:1 against bg.surface; neutral.500 gives 2.78:1." },
+    "disabled": { "$value": "{color.neutral.700}" }
+  },
+  "focus": {
+    "$type": "color",
+    "ring": { "$value": "{color.blue.400}" }
+  },
+  "role": {
+    "$type": "color",
+    "$description": "Chromatic roles lighten and their `on-base` flips dark, because a step-500 fill on a step-900 canvas has too little separation to read as a button.",
+    "primary": {
+      "base": { "$value": "{color.blue.400}" },
+      "base-hover": { "$value": "{color.blue.300}" },
+      "base-active": { "$value": "{color.blue.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.blue.800}" },
+      "subtle-hover": { "$value": "{color.blue.700}" },
+      "subtle-active": { "$value": "{color.blue.600}" },
+      "on-subtle": { "$value": "{color.blue.100}" },
+      "border": { "$value": "{color.blue.700}" },
+      "emphasis": { "$value": "{color.blue.300}" }
+    },
+    "secondary": {
+      "base": { "$value": "{color.neutral.700}" },
+      "base-hover": { "$value": "{color.neutral.600}" },
+      "base-active": { "$value": "{color.neutral.500}" },
+      "on-base": { "$value": "{color.neutral.50}" },
+      "subtle": { "$value": "{color.neutral.800}" },
+      "subtle-hover": { "$value": "{color.neutral.700}" },
+      "subtle-active": { "$value": "{color.neutral.600}" },
+      "on-subtle": { "$value": "{color.neutral.200}" },
+      "border": { "$value": "{color.neutral.600}" },
+      "emphasis": { "$value": "{color.neutral.300}" }
+    },
+    "success": {
+      "base": { "$value": "{color.green.400}" },
+      "base-hover": { "$value": "{color.green.300}" },
+      "base-active": { "$value": "{color.green.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.green.800}" },
+      "subtle-hover": { "$value": "{color.green.700}" },
+      "subtle-active": { "$value": "{color.green.600}" },
+      "on-subtle": { "$value": "{color.green.100}" },
+      "border": { "$value": "{color.green.700}" },
+      "emphasis": { "$value": "{color.green.300}" }
+    },
+    "info": {
+      "base": { "$value": "{color.cyan.400}" },
+      "base-hover": { "$value": "{color.cyan.300}" },
+      "base-active": { "$value": "{color.cyan.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.cyan.800}" },
+      "subtle-hover": { "$value": "{color.cyan.700}" },
+      "subtle-active": { "$value": "{color.cyan.600}" },
+      "on-subtle": { "$value": "{color.cyan.100}" },
+      "border": { "$value": "{color.cyan.700}" },
+      "emphasis": { "$value": "{color.cyan.300}" }
+    },
+    "warning": {
+      "base": { "$value": "{color.yellow.400}" },
+      "base-hover": { "$value": "{color.yellow.300}" },
+      "base-active": { "$value": "{color.yellow.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.yellow.800}" },
+      "subtle-hover": { "$value": "{color.yellow.700}" },
+      "subtle-active": { "$value": "{color.yellow.600}" },
+      "on-subtle": { "$value": "{color.yellow.100}" },
+      "border": { "$value": "{color.yellow.700}" },
+      "emphasis": { "$value": "{color.yellow.300}" }
+    },
+    "danger": {
+      "base": { "$value": "{color.red.400}" },
+      "base-hover": { "$value": "{color.red.300}" },
+      "base-active": { "$value": "{color.red.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.red.800}" },
+      "subtle-hover": { "$value": "{color.red.700}" },
+      "subtle-active": { "$value": "{color.red.600}" },
+      "on-subtle": { "$value": "{color.red.100}" },
+      "border": { "$value": "{color.red.700}" },
+      "emphasis": { "$value": "{color.red.300}" }
+    },
+    "neutral": {
+      "base": { "$value": "{color.neutral.800}" },
+      "base-hover": { "$value": "{color.neutral.700}" },
+      "base-active": { "$value": "{color.neutral.600}" },
+      "on-base": { "$value": "{color.neutral.100}" },
+      "subtle": { "$value": "{color.neutral.800}" },
+      "subtle-hover": { "$value": "{color.neutral.700}" },
+      "subtle-active": { "$value": "{color.neutral.600}" },
+      "on-subtle": { "$value": "{color.neutral.200}" },
+      "border": { "$value": "{color.neutral.700}" },
+      "emphasis": { "$value": "{color.neutral.300}" }
+    },
+    "inverse": {
+      "base": { "$value": "{color.neutral.25}" },
+      "base-hover": { "$value": "{color.neutral.100}" },
+      "base-active": { "$value": "{color.neutral.200}" },
+      "on-base": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.neutral.700}" },
+      "subtle-hover": { "$value": "{color.neutral.600}" },
+      "subtle-active": { "$value": "{color.neutral.500}" },
+      "on-subtle": { "$value": "{color.neutral.25}" },
+      "border": { "$value": "{color.neutral.500}" },
+      "emphasis": { "$value": "{color.neutral.25}" }
+    }
+  }
+}

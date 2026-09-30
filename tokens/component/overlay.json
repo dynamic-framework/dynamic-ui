@@ -1,0 +1,37 @@
+{
+  "$description": "Modal, offcanvas and their shared backdrop. One token set for both: they are the same panel anchored differently, and 2.x kept `modal-*` and `offcanvas-*` apart, which is how their header gaps and separators drifted.",
+  "overlay": {
+    "backdrop-color": {"$type": "color", "$value": "{bg.overlay}"},
+    "z-backdrop": {"$type": "number", "$value": "{z.backdrop}"},
+    "z-panel": {"$type": "number", "$value": "{z.modal}"},
+
+    "bg": {"$type": "color", "$value": "{bg.raised}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "radius": {"$type": "dimension", "$value": "{shape.surface-lg}"},
+    "shadow": {"$type": "shadow", "$value": "{elevation.xl}"},
+    "margin": {"$type": "dimension", "$value": "{size.4}"},
+
+    "header-padding-block": {"$type": "dimension", "$value": "{size.5}"},
+    "header-padding-inline": {"$type": "dimension", "$value": "{size.5}"},
+    "header-gap": {"$type": "dimension", "$value": "{size.4}"},
+    "header-font-size": {"$type": "dimension", "$value": "{font-size.500}"},
+    "header-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+
+    "body-padding-block": {"$type": "dimension", "$value": "{size.5}"},
+    "body-padding-inline": {"$type": "dimension", "$value": "{size.5}"},
+
+    "footer-padding-block": {"$type": "dimension", "$value": "{size.5}"},
+    "footer-padding-inline": {"$type": "dimension", "$value": "{size.5}"},
+    "footer-gap": {"$type": "dimension", "$value": "{size.3}"},
+
+    "separator-size": {"$type": "dimension", "$value": "{border-width.1}"},
+    "separator-color": {"$type": "color", "$value": "{border.muted}"},
+    "separator-margin-inline": {"$type": "dimension", "$value": "{size.5}"},
+
+    "width-sm": {"$type": "dimension", "$value": "{measure.md}"},
+    "width-md": {"$type": "dimension", "$value": "{breakpoint.sm}"},
+    "width-lg": {"$type": "dimension", "$value": "{breakpoint.md}"},
+    "width-xl": {"$type": "dimension", "$value": "{breakpoint.lg}"},
+    "offcanvas-size": {"$type": "dimension", "$value": "{breakpoint.sm}"}
+  }
+}

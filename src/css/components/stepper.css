@@ -1,0 +1,237 @@
+/**
+ * Stepper.
+ *
+ * One token set for both layouts. 2.x kept two — `step-*` for the desktop
+ * stepper and `stepper-*` for the mobile one — which is how the two drifted to
+ * different marker sizes and different line colours.
+ *
+ * The connector line is a pseudo-element on the step rather than a rendered
+ * element, and `:last-child` removes it without the component tracking which
+ * step is last.
+ *
+ * The responsive switch between the two layouts is at the bottom. It was
+ * `d-block d-{bp}-none` in 2.x, which are responsive utilities and therefore
+ * live in the opt-in stylesheet — a component must never depend on an opt-in
+ * sheet being loaded.
+ *
+ * Those `min-width` values must match the `breakpoint.*` tokens, and
+ * `npm run css:validate` asserts it: a media query here that does not
+ * correspond to a token fails the build.
+ */
+@layer df.components {
+  /* --- shared ----------------------------------------------------------- */
+
+  /* The wrapper holding both layouts. It carries no appearance of its own —
+     it exists so a consumer has one element to target, and so the two layouts
+     below have a containing block. */
+  .df-stepper {
+    display: block;
+  }
+
+  .df-step-marker {
+    position: relative;
+    z-index: var(--df-z-raised);
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-stepper-marker-size);
+    height: var(--df-stepper-marker-size);
+    font-size: var(--df-stepper-marker-font-size);
+    color: var(--df-stepper-marker-fg);
+    background-color: var(--df-stepper-marker-bg);
+    border: var(--df-stepper-marker-border-width) solid var(--df-stepper-marker-border-color);
+    border-radius: var(--df-stepper-marker-radius);
+  }
+
+  .df-step-marker > svg {
+    width: var(--df-stepper-icon-size);
+    height: var(--df-stepper-icon-size);
+  }
+
+  .df-step-label {
+    font-size: var(--df-stepper-label-font-size);
+  }
+
+  .df-step-description {
+    font-size: var(--df-stepper-description-font-size);
+    color: var(--df-stepper-description-color);
+  }
+
+  /* --- desktop ---------------------------------------------------------- */
+
+  .df-step {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--df-stepper-gap);
+    align-items: center;
+    text-align: center;
+  }
+
+  /* The connector, drawn from this step's marker to the next one's. */
+  .df-step:not(:last-child)::after {
+    position: absolute;
+    inset-block-start: calc(var(--df-stepper-marker-size) / 2);
+    inset-inline-start: 50%;
+    width: 100%;
+    height: var(--df-stepper-line-size);
+    content: ;
+    background-color: var(--df-stepper-line-color);
+    translate: 0 -50%;
+  }
+
+  .df-step[data-state="done"] .df-step-marker {
+    color: var(--df-stepper-done-fg);
+    background-color: var(--df-stepper-done-bg);
+    border-color: var(--df-stepper-done-border-color);
+  }
+
+  .df-step[data-state="done"]:not(:last-child)::after {
+    background-color: var(--df-stepper-line-done-color);
+  }
+
+  .df-step[data-state="current"] .df-step-marker {
+    color: var(--df-stepper-current-fg);
+    border-color: var(--df-stepper-current-border-color);
+  }
+
+  .df-step-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-1);
+    padding-inline: var(--df-stepper-label-padding);
+  }
+
+  /* Vertical layout: the line runs down instead of across. */
+  .df-stepper-desktop[data-orientation="vertical"] {
+    flex-direction: column;
+  }
+
+  .df-stepper-desktop[data-orientation="vertical"] .df-step {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .df-stepper-desktop[data-orientation="vertical"] .df-step:not(:last-child)::after {
+    inset-block-start: var(--df-stepper-marker-size);
+    inset-inline-start: calc(var(--df-stepper-marker-size) / 2);
+    width: var(--df-stepper-line-size);
+    height: 100%;
+    translate: -50% 0;
+  }
+
+  /* --- mobile ----------------------------------------------------------- */
+
+  /* A conic gradient ring showing progress. The angle is a custom property the
+     component writes — 2.x built the same ring, but assembled the whole
+     `conic-gradient()` string in JavaScript. */
+  .df-step-progress {
+    /* Declared, not a `var()` fallback — the component overrides it per render
+       and a fallback would hide a missing definition. */
+    --df-step-progress-angle: 0deg;
+
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: var(--df-stepper-progress-size);
+    height: var(--df-stepper-progress-size);
+    background:
+      conic-gradient(
+        var(--df-stepper-progress-fill-color) var(--df-step-progress-angle),
+        var(--df-stepper-progress-track-color) 0deg
+      );
+    border-radius: var(--df-shape-pill);
+  }
+
+  /* The inner disc that turns the filled circle into a ring. */
+  .df-step-progress::before {
+    width: calc(
+      var(--df-stepper-progress-size) - var(--df-stepper-progress-thickness) * 2
+    );
+    height: calc(
+      var(--df-stepper-progress-size) - var(--df-stepper-progress-thickness) * 2
+    );
+    content: ;
+    background-color: var(--df-bg-surface);
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-step-progress-value {
+    position: absolute;
+    font-size: var(--df-stepper-description-font-size);
+    color: var(--df-stepper-description-color);
+  }
+
+  .df-step-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-1);
+    min-width: 0;
+  }
+
+  /* --- the responsive switch ------------------------------------------- */
+
+  .df-stepper-mobile {
+    display: flex;
+    gap: var(--df-size-4);
+    align-items: center;
+  }
+
+  .df-stepper-desktop {
+    position: relative;
+    display: none;
+  }
+
+  @media (min-width: 576px) {
+    .df-stepper-mobile[data-below="sm"] {
+      display: none;
+    }
+
+    .df-stepper-desktop[data-from="sm"] {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .df-stepper-mobile[data-below="md"] {
+      display: none;
+    }
+
+    .df-stepper-desktop[data-from="md"] {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .df-stepper-mobile[data-below="lg"] {
+      display: none;
+    }
+
+    .df-stepper-desktop[data-from="lg"] {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .df-stepper-mobile[data-below="xl"] {
+      display: none;
+    }
+
+    .df-stepper-desktop[data-from="xl"] {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .df-stepper-mobile[data-below="xxl"] {
+      display: none;
+    }
+
+    .df-stepper-desktop[data-from="xxl"] {
+      display: flex;
+    }
+  }
+}

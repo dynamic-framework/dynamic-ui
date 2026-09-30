@@ -60,21 +60,16 @@ export default function DInputSwitch(
 
   return (
     <div
-      className={classNames('form-check form-switch', className)}
+      className={classNames('df-choice', className)}
       {...dataAttributes}
     >
       <input
         id={id}
         name={name}
         onChange={readonly ? () => false : changeHandler}
-        className={classNames(
-          'form-check-input',
-          {
-            'is-invalid': invalid,
-            'is-valid': valid,
-          },
-          inputClassName,
-        )}
+        className={classNames('df-choice-input', inputClassName)}
+        {...invalid && { 'data-invalid': '' }}
+        {...valid && { 'data-valid': '' }}
         style={style}
         type="checkbox"
         role="switch"
@@ -84,7 +79,7 @@ export default function DInputSwitch(
       />
       {label && (
         <label
-          className="form-check-label"
+          className="df-choice-label"
           htmlFor={id}
         >
           {label}

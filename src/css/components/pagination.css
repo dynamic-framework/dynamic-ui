@@ -1,0 +1,136 @@
+/**
+ * Pagination.
+ *
+ * 2.x wrapped `react-responsive-pagination`, so this file was written against
+ * whatever class names that library was told to emit — `.df-pagination-item-active`,
+ * `.df-pagination-item-disabled`, `.df-pagination-item-nav`. One class per
+ * state, because a class was the only hook the library offered.
+ *
+ * The markup is ours now, so the states are attributes like everywhere else in
+ * v3, and the two that the DOM already knows — `aria-current` and `:disabled`
+ * — are read straight off the element rather than mirrored into a class that
+ * can disagree with it.
+ */
+@layer df.components {
+  .df-pagination {
+    display: flex;
+    gap: var(--df-pagination-gap);
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  /**
+   * The rule targets the link rather than a tag list because the same element
+   * is a `button` when paging is handled in JavaScript and an `a` when the
+   * pages are real URLs.
+   */
+  .df-pagination-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* `min-width` and not `width`: every page button is at least square, so 1
+       and 10 line up, and a four-digit page grows rather than clipping. */
+    min-width: var(--df-pagination-item-size);
+    height: var(--df-pagination-item-size);
+    padding-inline: var(--df-pagination-item-padding-inline);
+    font-size: var(--df-pagination-item-font-size);
+    color: var(--df-pagination-item-fg);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: var(--df-pagination-item-radius);
+  }
+
+  .df-pagination-link:where(:hover) {
+    background-color: var(--df-pagination-item-hover-bg);
+  }
+
+  /* --- previous and next -------------------------------------------------- */
+
+  /**
+   * An arrow needs no minimum width — that exists so digits line up — and it is
+   * quieter than the numbers, because it is the fallback way to move rather
+   * than the primary one.
+   *
+   * The ancestor is wrapped in `:where()` so this rule weighs the same as the
+   * base one and source order decides. Without it the selector outranks
+   * `.df-pagination-link:disabled` and an exhausted arrow keeps its normal
+   * colour — which is why a second rule used to exist here restating the
+   * disabled colour. Flattening removes the need for it.
+   */
+  :where(.df-pagination-item[data-nav]) .df-pagination-link {
+    min-width: auto;
+    color: var(--df-pagination-item-nav-fg);
+  }
+
+  /* The glyph is a `DIcon`, so its size is the icon's own custom property
+     rather than a rule about `svg` — `DIcon` is a styled `<i>` when the icon
+     set is a font. An author passing `iconArrowLeft={{ size }}` sets the same
+     property inline and wins, which is what should happen. */
+  .df-pagination-item[data-nav] .df-icon {
+    --df-icon-inline-size: var(--df-pagination-glyph-size);
+  }
+
+  /* --- the gap ------------------------------------------------------------ */
+
+  :where(.df-pagination-item[data-ellipsis]) .df-pagination-link {
+    color: var(--df-pagination-ellipsis-fg);
+    cursor: default;
+    background: none;
+  }
+
+  /* --- sizes -------------------------------------------------------------- */
+
+  :where(.df-pagination[data-size="sm"]) .df-pagination-link {
+    min-width: var(--df-pagination-item-size-sm);
+    height: var(--df-pagination-item-size-sm);
+    font-size: var(--df-pagination-item-font-size-sm);
+  }
+
+  :where(.df-pagination[data-size="lg"]) .df-pagination-link {
+    min-width: var(--df-pagination-item-size-lg);
+    height: var(--df-pagination-item-size-lg);
+    font-size: var(--df-pagination-item-font-size-lg);
+  }
+
+  /* --- states -------------------------------------------------------------
+   *
+   * Last, and in this order, because each one has to beat the rules above it:
+   * a page you are on beats its size and its position in the list, and a
+   * disabled arrow beats the muted colour every arrow gets. Keeping every
+   * higher-specificity rule below every flat one is also what stops
+   * `no-descending-specificity` from being a warning nobody reads. */
+
+  /* Read off `aria-current`, which the component has to set anyway for a screen
+     reader. A separate `is-active` class would be a second source of truth. */
+  .df-pagination-link[aria-current="page"] {
+    color: var(--df-pagination-item-active-fg);
+    background-color: var(--df-pagination-item-active-bg);
+  }
+
+  .df-pagination-link:disabled {
+    color: var(--df-pagination-item-disabled-fg);
+    cursor: default;
+    background: none;
+  }
+
+  .df-pagination-link:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+
+    /* Inset, because the ring on the first or last button would otherwise be
+       clipped by whatever the paginator sits in. */
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .df-pagination-link {
+      transition:
+        color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+        background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    }
+  }
+}

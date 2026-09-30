@@ -13,7 +13,7 @@ it('should render datepicker', () => {
 
   const input = container.querySelector('#datepicker');
   const button = container.querySelector('button[aria-label="open calendar"]');
-  const icon = button?.querySelector('.d-icon');
+  const icon = button?.querySelector('.df-icon');
 
   expect(input).toBeInTheDocument();
   expect(input).toHaveAttribute('type', 'text');

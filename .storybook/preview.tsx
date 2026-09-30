@@ -57,6 +57,10 @@ const config: Preview = {
       storySort: {
         method: 'alphabetical',
         order: [
+          // The 3.x port sits first while it is in progress: it is what the
+          // team is reviewing, and burying it under the 2.x catalogue defeats
+          // the point of having a sheet to look at.
+          'Dynamic 3.x',
           'Design System',
           [
             'Quick Start',

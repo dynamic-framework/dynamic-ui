@@ -15,8 +15,8 @@ Dynamic Framework extends Bootstrap utilities for speed and flexibility. Bootstr
 - Dark Utilities: <a href="/?path=/story/design-system-examples-dark-utilities">Design System/Examples/Dark Utilities</a>
 
 ```html
-<a class="text-body hover:text-danger">Danger on hover</a>
-<div class="text-body dark:text-success">Success in dark</div>
+<a class="df-text-default df-hover:text-danger">Danger on hover</a>
+<div class="df-text-default df-dark:text-success">Success in dark</div>
 ```
 
 <br />
@@ -25,7 +25,7 @@ Dynamic Framework extends Bootstrap utilities for speed and flexibility. Bootstr
 - Margin: `.m{t|b|s|e|x|y}-{0..30}`; Padding: `.p{t|b|s|e|x|y}-{0..30}` (responsive)
 
 ```html
-<div class="mt-15 px-30 py-2">...</div>
+<div class="df-mt-15 df-px-30 df-py-2">...</div>
 ```
 
 <br />
@@ -35,33 +35,34 @@ Dynamic Framework extends Bootstrap utilities for speed and flexibility. Bootstr
 - Vertical align: `.v-align-{baseline|top|bottom|text-top|text-bottom|sub|super|middle}` (responsive)
 
 ```html
-<div class="d-grid v-align-middle">...</div>
+<div class="df-grid df-align-middle">...</div>
 ```
 
 <br />
 
 ### Grid columns (CSS Grid)
-- `.g-col-{13…24}` for larger grid spans (responsive)
+- Past 12 columns, use `DLayout` with `columns={24}` — it writes the count and each pane's span as custom properties, so no extra classes ship.
 
 ```html
-<div class="d-grid" style="grid-template-columns: repeat(24, 1fr)">
-  <div class="g-col-6">6 cols</div>
-  <div class="g-col-18">18 cols</div>
+<div class="df-grid" style="grid-template-columns: repeat(24, 1fr)">
+  <!-- Past 12 the span is a custom property, since the utilities stop at 12. -->
+  <div style="grid-column: span 6">6 cols</div>
+  <div style="grid-column: span 18">18 cols</div>
 </div>
 ```
 
 <br />
 
 ### Typography utilities
-- Display font sizes: `.display-{1…6}` map to `--bs-fs-display-*` via `--bs-display-font-size`
+- Display font sizes: `.df-display-{1…6}` read `--df-text-display-{1…6}-font-size` directly
 - Body font size: `.fs-body`
 - Line-height: `.lh-1`, `.lh-sm`, `.lh-base`, `.lh-lg`
 - Text wrap: `.text-wrap-{balance|normal|truncate|wrap}`
 - Text truncate (lines): `.text-truncate-{1…6}` (responsive)
 
 ```html
-<div class="display-4">Display 4</div>
-<p class="lh-base text-wrap-balance">Balanced wrapping</p>
+<div class="df-display-4">Display 4</div>
+<p class="df-lh-normal text-wrap-balance">Balanced wrapping</p>
 <div class="text-truncate-3" style="max-width: 240px">Long text…</div>
 ```
 
@@ -75,7 +76,7 @@ See: <a href="/?path=/story/design-system-foundations-typography">Design System/
 - Opacity and text-opacity: support `40` in addition to Bootstrap defaults
 
 ```html
-<div class="bg-primary-100 overlay-50">Overlayed block</div>
+<div class="df-bg-primary-subtle overlay-50">Overlayed block</div>
 ```
 
 <br />
@@ -85,7 +86,7 @@ See: <a href="/?path=/story/design-system-foundations-typography">Design System/
 - Font-weight and position: responsive variants enabled
 
 ```html
-<div class="position-relative h-100 w-100">...</div>
+<div class="df-relative df-h-full df-w-full">...</div>
 ```
 
 <br />
@@ -94,7 +95,7 @@ See: <a href="/?path=/story/design-system-foundations-typography">Design System/
 - `.cursor-{auto|default|pointer|not-allowed|wait|text|crosshair|zoom-in|zoom-out|grab|grabbing}`
 
 ```html
-<button class="cursor-pointer">Clickable</button>
+<button class="df-cursor-pointer">Clickable</button>
 ```
 
 <br />

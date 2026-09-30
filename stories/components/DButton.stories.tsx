@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import DButton from '../../src/components/DButton/DButton';
 import { DContextProvider } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 import {
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
   ICONS,
@@ -25,13 +24,13 @@ design-system–specific theming, palette consistency, and semantic structure.
 We work with button variables at two levels:
 
 1. **Root variables** for color and theme  
-   (\`--bs-primary\`, \`--bs-info\`, …)
-2. **Variant-level variables**  
-   (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, …)
+   (\`--df-role-primary-base\`, \`--df-role-info-base\`, …)
+2. **Variant-level attributes**
+   (\`data-variant="outline"\`, \`data-color="primary"\`, \`data-size="sm"\`)
 3. **Component-level internal variables**  
-   (\`--bs-btn-bg\`, \`--bs-btn-color\`, …)
+   (\`--df-button-bg\`, \`--df-button-fg\`, …)
 
-Our button states use fixed palette shades instead of Bootstrap’s mix-based lightening/darkening system.
+Button states come from the role's own hover and active tokens (\`--df-role-primary-base-hover\`, \`--df-role-primary-base-active\`) rather than from lightening or darkening the base at render time, so a theme can set them independently.
 
 ---
 
@@ -58,19 +57,30 @@ Buttons support three sizes:
 
 ### 🧩 CSS Variables Reference
 
-For a full reference of default variables, see the [Bootstrap documentation](https://getbootstrap.com/docs/5.3/components/buttons/#css).
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/button.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable | Scope | Description |
-|-----------|--------|-------------|
-| \`--${PREFIX_BS}btn-padding-x\` | .btn | Horizontal padding |
-| \`--${PREFIX_BS}btn-padding-y\` | .btn | Vertical padding |
-| \`--${PREFIX_BS}btn-font-family\` | .btn | Font family |
-| \`--${PREFIX_BS}btn-font-size\` | .btn | Font size |
-| \`--${PREFIX_BS}btn-border-radius\` | :root | Border radius |
-| \`--${PREFIX_BS}btn-lg-padding-x\` | .btn-lg | Large padding X |
-| \`--${PREFIX_BS}btn-sm-font-size\` | .btn-sm | Small font size |
-
----
+| Variable                          | Type        | Description       |
+|-----------------------------------|-------------|-------------------|
+| \`--df-button-padding-block\`     | css length  | Padding block     |
+| \`--df-button-padding-inline\`    | css length  | Padding inline    |
+| \`--df-button-gap\`               | css length  | Gap               |
+| \`--df-button-font-family\`       | font family | Font family       |
+| \`--df-button-font-size\`         | css length  | Font size         |
+| \`--df-button-font-weight\`       | font weight | Font weight       |
+| \`--df-button-line-height\`       | number      | Line height       |
+| \`--df-button-radius\`            | css length  | Radius            |
+| \`--df-button-border-width\`      | css length  | Border width      |
+| \`--df-button-disabled-opacity\`  | number      | Disabled opacity  |
+| \`--df-button-sm-padding-block\`  | css length  | Sm padding block  |
+| \`--df-button-sm-padding-inline\` | css length  | Sm padding inline |
+| \`--df-button-sm-font-size\`      | css length  | Sm font size      |
+| \`--df-button-sm-radius\`         | css length  | Sm radius         |
+| \`--df-button-lg-padding-block\`  | css length  | Lg padding block  |
+| \`--df-button-lg-padding-inline\` | css length  | Lg padding inline |
+| \`--df-button-lg-font-size\`      | css length  | Lg font size      |
+| \`--df-button-lg-radius\`         | css length  | Lg radius         |
 
 ### 🧱 Material Symbols Integration
 
@@ -238,14 +248,14 @@ export const Example: Story = {
 export const Default: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-4">
+      <div className="df-flex df-flex-wrap df-gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton key={color} color={color} text={color} />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DButton color="light" text="Light" />
         </div>
       </div>
@@ -256,14 +266,14 @@ export const Default: Story = {
 export const Outline: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-4">
+      <div className="df-flex df-flex-wrap df-gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton key={color} variant="outline" color={color} text={color} />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light outline (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light outline (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DButton variant="outline" color="light" text="Light Outline" />
         </div>
       </div>
@@ -274,14 +284,14 @@ export const Outline: Story = {
 export const Link: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-4">
+      <div className="df-flex df-flex-wrap df-gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton key={color} variant="link" color={color} text={color} />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light link (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light link (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DButton variant="link" color="light" text="Light link" />
         </div>
       </div>
@@ -292,13 +302,13 @@ export const Link: Story = {
 export const Soft: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-4">
+      <div className="df-flex df-flex-wrap df-gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton key={color} variant="soft" color={color} text={color} />
         ))}
       </div>
 
-      <div className="d-flex flex-wrap gap-4 mt-4">
+      <div className="df-flex df-flex-wrap df-gap-4 df-mt-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton
             key={color}
@@ -310,14 +320,14 @@ export const Soft: Story = {
         ))}
       </div>
 
-      <div className="d-flex flex-wrap gap-4 mt-4">
+      <div className="df-flex df-flex-wrap df-gap-4 df-mt-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton disabled key={color} variant="soft" color={color} text="Disabled" />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light soft (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light soft (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DButton variant="soft" color="light" text="Light Soft" />
         </div>
       </div>
@@ -344,7 +354,7 @@ export const AsAnchor: Story = {
 
 export const IconEnd: Story = {
   render: (args) => (
-    <div className="d-flex gap-4">
+    <div className="df-flex df-gap-4">
       <DButton {...args} text="Default" />
       <DButton {...args} variant="outline" text="Outline" />
       <DButton {...args} variant="link" text="Link" />
@@ -357,7 +367,7 @@ export const IconEnd: Story = {
 
 export const IconStart: Story = {
   render: (args) => (
-    <div className="d-flex gap-4">
+    <div className="df-flex df-gap-4">
       <DButton {...args} text="Default" />
       <DButton {...args} variant="outline" text="Outline" />
       <DButton {...args} variant="link" text="Link" />
@@ -370,7 +380,7 @@ export const IconStart: Story = {
 
 export const LoadingAndLoadingWithText: Story = {
   render: (args) => (
-    <div className="d-flex gap-4">
+    <div className="df-flex df-gap-4">
       <DButton {...args} />
       <DButton {...args} loadingText="Loading..." />
     </div>
@@ -383,7 +393,7 @@ export const LoadingAndLoadingWithText: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-2 align-items-center">
+    <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
       <DButton color="primary" size="sm" text="Small" />
       <DButton color="primary" text="Medium" />
       <DButton color="primary" size="lg" text="Large" />
@@ -396,7 +406,7 @@ export const Sizes: Story = {
 
 export const ResponsiveSizes: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-2 align-items-center">
+    <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
       <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />
       <DButton color="success" size={{ sm: 'sm', lg: 'lg' }} text="SM=sm, LG=lg" />
       <DButton color="danger" size={{ xs: 'sm', xl: 'lg' }} text="XS=sm, XL=lg" />
@@ -419,7 +429,7 @@ export const ResponsiveSizes: Story = {
 
 export const OutlineSizes: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-2 align-items-center">
+    <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
       <DButton color="secondary" size="sm" variant="outline" text="Small" />
       <DButton color="secondary" variant="outline" text="Medium" />
       <DButton color="secondary" size="lg" variant="outline" text="Large" />
@@ -432,7 +442,7 @@ export const OutlineSizes: Story = {
 
 export const LinkSizes: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-2 align-items-center">
+    <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
       <DButton color="primary" size="sm" variant="link" text="Small" />
       <DButton color="primary" variant="link" text="Medium" />
       <DButton color="primary" size="lg" variant="link" text="Large" />
@@ -445,7 +455,7 @@ export const LinkSizes: Story = {
 
 export const SoftSizes: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-2 align-items-center">
+    <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
       <DButton color="primary" size="sm" variant="soft" text="Small" />
       <DButton color="primary" variant="soft" text="Medium" />
       <DButton color="primary" size="lg" variant="soft" text="Large" />
@@ -463,7 +473,7 @@ export const SoftSizes: Story = {
 export const ButtonsWithMaterialIcons: Story = {
   render: () => (
     <DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}>
-      <div className="d-flex flex-wrap gap-2 align-items-center">
+      <div className="df-flex df-flex-wrap df-gap-2 df-items-center">
         <DButton color="primary" size="sm" iconEnd="chevron_right" text="Small" />
         <DButton color="primary" iconEnd="chevron_right" text="Medium" />
         <DButton color="primary" size="lg" iconEnd="chevron_right" text="Large" />
@@ -481,18 +491,18 @@ export const ButtonsWithMaterialIcons: Story = {
 
 export const WithCustomChildren: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4">
+    <div className="df-flex df-flex-wrap df-gap-4">
       <DButton color="primary">
         <span>Notifications</span>
-        <strong className="ms-2">2</strong>
+        <strong className="df-ms-2">2</strong>
       </DButton>
       <DButton color="success">
         <span>Messages</span>
-        <strong className="ms-2">5</strong>
+        <strong className="df-ms-2">5</strong>
       </DButton>
       <DButton color="info" variant="outline">
         <span>Balance</span>
-        <strong className="ms-2">$1,250.00</strong>
+        <strong className="df-ms-2">$1,250.00</strong>
       </DButton>
     </div>
   ),

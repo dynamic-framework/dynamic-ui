@@ -88,14 +88,9 @@ export default function DInputCheck(
     <input
       ref={innerRef}
       onChange={handleChange}
-      className={classNames(
-        'form-check-input',
-        {
-          'is-invalid': invalid,
-          'is-valid': valid,
-        },
-        inputClassName,
-      )}
+      className={classNames('df-choice-input', inputClassName)}
+      {...invalid && { 'data-invalid': '' }}
+      {...valid && { 'data-valid': '' }}
       style={style}
       id={id}
       disabled={disabled}
@@ -128,16 +123,16 @@ export default function DInputCheck(
 
   return (
     <div
-      className={classNames('form-check', className)}
+      className={classNames('df-choice', className)}
       {...dataAttributes}
     >
       {inputComponent}
-      <label className="form-check-label" htmlFor={id}>
+      <label className="df-choice-label" htmlFor={id}>
         {label}
       </label>
       {hint && (
         <div
-          className="form-text"
+          className="df-help"
           id={`${id}Hint`}
         >
           {hint}

@@ -1,0 +1,15 @@
+{
+  "$description": "Opacity primitives. These exist so that a component token like a disabled state can ALIAS an opacity instead of holding a bare number, which rule B forbids outside this layer.",
+  "opacity": {
+    "$type": "number",
+    "0": { "$value": 0 },
+    "5": { "$value": 0.05 },
+    "10": { "$value": 0.1 },
+    "20": { "$value": 0.2 },
+    "40": { "$value": 0.4 },
+    "50": { "$value": 0.5 },
+    "65": { "$value": 0.65 },
+    "80": { "$value": 0.8 },
+    "100": { "$value": 1 }
+  }
+}

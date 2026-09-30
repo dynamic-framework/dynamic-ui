@@ -1,0 +1,142 @@
+/**
+ * Reset. Replaces Bootstrap's Reboot.
+ *
+ * Narrower than Reboot on purpose: Reboot also sets opinionated typography and
+ * element styling, which here lives in `base/` where it can be reasoned about
+ * separately. This file only normalises browser defaults.
+ */
+@layer df.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Browser default margins are a constant source of collapsing-margin bugs;
+     spacing is laid out with flex/grid `gap` instead. */
+  body,
+  h1, h2, h3, h4, h5, h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  pre,
+  fieldset {
+    margin: 0;
+  }
+
+  ul[class],
+  ol[class] {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  html {
+    text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  /* Media are inline by default, which leaves a phantom descender gap. */
+  img,
+  picture,
+  video,
+  canvas,
+  svg,
+  iframe {
+    display: block;
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    height: auto;
+  }
+
+  /* Form controls do not inherit type by default. */
+  input,
+  button,
+  textarea,
+  select,
+  optgroup {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+  }
+
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    appearance: button;
+    background: none;
+    border: 0;
+  }
+
+  /* Firefox pads the inner button box in a way no other engine does. */
+  ::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+  }
+
+  textarea {
+    overflow: auto;
+    resize: vertical;
+  }
+
+  /* Long words must wrap rather than force the page to scroll sideways. */
+  p,
+  h1, h2, h3, h4, h5, h6,
+  li,
+  dd,
+  dt,
+  figcaption {
+    overflow-wrap: break-word;
+  }
+
+  fieldset {
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    padding: 0;
+  }
+
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  /* Only `:focus-visible` gets a ring, so a mouse click on a button does not
+     leave one behind. Components that need a ring opt in; this is the floor. */
+  :focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* `hidden` is a browser-level assertion that the element is not rendered, so
+     it has to beat a display utility — `<div hidden class="df-flex">` must stay
+     hidden. This and the reduced-motion block below are the only two
+     `!important` declarations in the codebase. */
+  [hidden] {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+  }
+
+  /* A user asking for reduced motion must override every animation in the
+     system, including a consumer's own. That is what !important is for. */
+  /* stylelint-disable declaration-no-important */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  /* stylelint-enable declaration-no-important */
+}

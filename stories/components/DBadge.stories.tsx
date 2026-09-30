@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
 import { ICONS, THEMES } from '../config/constants';
 import {
@@ -16,18 +15,29 @@ const config: Meta<typeof DBadge> = {
         component: `
 Wrapper around Bootstrap Badge.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Badge](https://getbootstrap.com/docs/5.3/components/badge/)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Badge CSS Variables](https://getbootstrap.com/docs/5.3/components/badge/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/badge.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                  | Class            | Type             | Description              |
-|-------------------------------------------|------------------|------------------|--------------------------|
-| --${PREFIX_BS}badge-bg                    | .badge           | css color unit   | Background color         |
-| --${PREFIX_BS}badge-gap                   | .badge           | css length unit  | Spacing between elements |
+| Variable                         | Type        | Description       |
+|----------------------------------|-------------|-------------------|
+| \`--df-badge-padding-block\`     | css length  | Padding block     |
+| \`--df-badge-padding-inline\`    | css length  | Padding inline    |
+| \`--df-badge-gap\`               | css length  | Gap               |
+| \`--df-badge-font-size\`         | css length  | Font size         |
+| \`--df-badge-font-weight\`       | font weight | Font weight       |
+| \`--df-badge-line-height\`       | number      | Line height       |
+| \`--df-badge-radius\`            | css length  | Radius            |
+| \`--df-badge-border-width\`      | css length  | Border width      |
+| \`--df-badge-sm-padding-block\`  | css length  | Sm padding block  |
+| \`--df-badge-sm-padding-inline\` | css length  | Sm padding inline |
+| \`--df-badge-sm-font-size\`      | css length  | Sm font size      |
+| \`--df-badge-lg-padding-block\`  | css length  | Lg padding block  |
+| \`--df-badge-lg-padding-inline\` | css length  | Lg padding inline |
+| \`--df-badge-lg-font-size\`      | css length  | Lg font size      |
+
         `,
       },
     },
@@ -166,9 +176,9 @@ export const AllColors: Story = {
           <DBadge key={theme} color={theme} text={theme} />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light variant (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light variant (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DBadge color="light" text="Light" />
         </div>
       </div>

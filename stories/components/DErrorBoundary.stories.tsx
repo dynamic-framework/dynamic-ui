@@ -87,9 +87,9 @@ function Bomb({ explode }: { explode: boolean }) {
 
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
     <DButton
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => setExplode(true)}
     >
       Trigger error
@@ -106,9 +106,9 @@ return (
   render: function Render(args) {
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => setExplode(true)}
         >
           Trigger error
@@ -147,9 +147,9 @@ function Bomb({ explode }: { explode: boolean }) {
 
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
     <DButton
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => setExplode(true)}
     >
       Trigger error
@@ -157,7 +157,7 @@ return (
     <DErrorBoundary
       fallback={() => (
         <DAlert color="warning">
-          <p className="m-0">
+          <p className="df-m-0">
             An error occurred! Using a custom fallback.
           </p>
         </DAlert>
@@ -174,9 +174,9 @@ return (
   render: function Render(args) {
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => setExplode(true)}
         >
           Trigger error
@@ -185,7 +185,7 @@ return (
           {...args}
           fallback={() => (
             <DAlert color="warning">
-              <p className="m-0">
+              <p className="df-m-0">
                 An error occurred! Using a custom fallback.
               </p>
             </DAlert>
@@ -221,8 +221,8 @@ function Bomb({ explode }: { explode: boolean }) {
 const [version, setVersion] = useState(0);
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
-    <div className="d-flex gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
+    <div className="df-flex df-gap-2">
       <DButton
         onClick={() => setExplode(true)}
       >
@@ -250,8 +250,8 @@ return (
     const [version, setVersion] = useState(0);
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
-        <div className="d-flex gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-gap-2">
           <DButton
             onClick={() => setExplode(true)}
           >
@@ -299,9 +299,9 @@ function Bomb({ explode }: { explode: boolean }) {
 
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
     <DButton
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => setExplode(true)}
     >
       Trigger error
@@ -323,9 +323,9 @@ return (
   render: function Render(args) {
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => setExplode(true)}
         >
           Trigger error
@@ -356,7 +356,7 @@ function ChildTrigger() {
   const { showBoundary } = useErrorBoundary();
   return (
     <DButton
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => showBoundary(new Error('Error from hook'))}
     >
       Trigger error using hook
@@ -368,7 +368,7 @@ return (
   <DErrorBoundary
     name="HookBoundary"
   >
-    <div className="d-flex flex-column gap-2">
+    <div className="df-flex df-flex-col df-gap-2">
       <ChildTrigger />
       <DCard>
         <DCard.Body>
@@ -387,7 +387,7 @@ return (
       const { showBoundary } = useErrorBoundary();
       return (
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => showBoundary(new Error('Error from hook'))}
         >
           Trigger error using hook
@@ -399,7 +399,7 @@ return (
         {...args}
         name="HookBoundary"
       >
-        <div className="d-flex flex-column gap-2">
+        <div className="df-flex df-flex-col df-gap-2">
           <ChildTrigger />
           <DCard>
             <DCard.Body>
@@ -433,9 +433,9 @@ function Bomb({ explode }: { explode: boolean }) {
 
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
     <DButton
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => setExplode(true)}
     >
       Trigger error
@@ -454,9 +454,9 @@ return (
   render: function Render(args) {
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => setExplode(true)}
         >
           Trigger error
@@ -494,10 +494,10 @@ function Bomb({ explode }: { explode: boolean }) {
 
 const [explode, setExplode] = useState(false);
 return (
-  <div className="d-flex flex-column gap-2">
+  <div className="df-flex df-flex-col df-gap-2">
     <DButton
       
-      className="me-auto"
+      className="df-me-auto"
       onClick={() => setExplode(true)}
     >
       Trigger error
@@ -529,9 +529,9 @@ return (
   render: function Render(args) {
     const [explode, setExplode] = useState(false);
     return (
-      <div className="d-flex flex-column gap-2">
+      <div className="df-flex df-flex-col df-gap-2">
         <DButton
-          className="me-auto"
+          className="df-me-auto"
           onClick={() => setExplode(true)}
         >
           Trigger error

@@ -4,7 +4,6 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import { CSSProperties } from 'react';
 import DTabs from '../../src/components/DTabs';
 import DBox from '../../src/components/DBox';
-import { PREFIX_BS } from '../../src/components/config';
 import { TAB_VARIANTS } from '../config/constants';
 import { DChip, DIcon } from '../../src';
 
@@ -17,22 +16,36 @@ const config: Meta<typeof DTabs> = {
         component: `
 Wrapper around Bootstrap Navs & Tabs.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Navs & Tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
-
 ## CSS Variables
-The Bootstrap documentation provides details on the default [Tabs CSS Variables](https://getbootstrap.com/docs/5.3/components/navs-tabs/#css)
 
-| Variable                                              | Classes                               | Type            | Description                        |
-|-------------------------------------------------------|---------------------------------------|-----------------|------------------------------------|
-| --${PREFIX_BS}nav-tabs-nav-gap                        | .nav-pills, .nav-underline, .nav-tabs | css length unit | Space between nav links            |
-| --${PREFIX_BS}nav-tabs-link-border-active-font-weight | .nav-pills, .nav-underline, .nav-tabs | css font weight | Nav link border active font weight |
-| --${PREFIX_BS}nav-tabs-border-color                   | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav border color                   |
-| --${PREFIX_BS}nav-link-padding-x                      | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav link padding horizontal        |
-| --${PREFIX_BS}nav-link-padding-y                      | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav link padding vertical          |
-| --${PREFIX_BS}nav-link-hover-bg                       | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover background          |
-| --${PREFIX_BS}nav-link-hover-color                    | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover color               |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/tabs.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                             | Type        | Description              |
+|--------------------------------------|-------------|--------------------------|
+| \`--df-tabs-gap\`                    | css length  | Gap                      |
+| \`--df-tabs-tab-padding-block\`      | css length  | Tab padding block        |
+| \`--df-tabs-tab-padding-inline\`     | css length  | Tab padding inline       |
+| \`--df-tabs-tab-font-size\`          | css length  | Tab font size            |
+| \`--df-tabs-tab-font-weight\`        | font weight | Tab font weight          |
+| \`--df-tabs-tab-font-weight-active\` | font weight | Tab font weight active   |
+| \`--df-tabs-tab-radius\`             | css length  | Tab radius               |
+| \`--df-tabs-tab-fg\`                 | css color   | Tab foreground           |
+| \`--df-tabs-tab-fg-hover\`           | css color   | Tab foreground hover     |
+| \`--df-tabs-tab-fg-active\`          | css color   | Tab foreground active    |
+| \`--df-tabs-tab-bg-hover\`           | css color   | Tab background hover     |
+| \`--df-tabs-indicator-size\`         | css length  | Indicator size           |
+| \`--df-tabs-indicator-color\`        | css color   | Indicator color          |
+| \`--df-tabs-border-color\`           | css color   | Border color             |
+| \`--df-tabs-toggle-bg\`              | css color   | Toggle background        |
+| \`--df-tabs-toggle-padding\`         | css length  | Toggle padding           |
+| \`--df-tabs-toggle-radius\`          | css length  | Toggle radius            |
+| \`--df-tabs-toggle-border-color\`    | css color   | Toggle border color      |
+| \`--df-tabs-toggle-active-bg\`       | css color   | Toggle active background |
+| \`--df-tabs-toggle-active-fg\`       | css color   | Toggle active foreground |
+| \`--df-tabs-panel-padding-block\`    | css length  | Panel padding block      |
+
         `,
       },
     },
@@ -82,18 +95,18 @@ export const Default: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="overview">
-        <h4 className="mb-4">Account Overview</h4>
+        <h4 className="df-mb-4">Account Overview</h4>
         <p>
           Welcome to your account dashboard. Here you can view a comprehensive
           summary of your financial activity, including your current balance,
           recent transactions, and upcoming payments.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Current Balance:</strong>
           {' '}
           $12,450.00
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Available Credit:</strong>
           {' '}
           $7,550.00
@@ -105,18 +118,18 @@ export const Default: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="settings">
-        <h4 className="mb-4">Account Settings</h4>
+        <h4 className="df-mb-4">Account Settings</h4>
         <p>
           Manage your account preferences and personal information. You can
           update your contact details, communication preferences, and security
           settings from this section.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Email:</strong>
           {' '}
           user@example.com
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Phone:</strong>
           {' '}
           +1 (555) 123-4567
@@ -143,15 +156,15 @@ export const Default: Story = {
       { label: 'Settings', tab: 'settings' },
       {
         label: (
-          <span className="d-flex gap-2 align-items-center justify-content-center">
+          <span className="df-flex df-gap-2 df-items-center df-justify-center">
             Notifications
             <DChip
               color="info"
               style={{
-                '--bs-chip-font-size': '10px',
+                '--df-chip-font-size': '10px',
                 lineHeight: 1,
               } as CSSProperties}
-              className="p-1"
+              className="df-p-1"
               text="2"
             />
           </span>
@@ -175,22 +188,22 @@ export const Vertical: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="profile">
-        <h4 className="mb-4">Profile Information</h4>
+        <h4 className="df-mb-4">Profile Information</h4>
         <p>
           Keep your personal information up to date. This information is used
           to verify your identity and communicate important account updates.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Full Name:</strong>
           {' '}
           John Doe
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Date of Birth:</strong>
           {' '}
           January 15, 1990
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Address:</strong>
           {' '}
           123 Main Street, Apt 4B, New York, NY 10001
@@ -201,23 +214,23 @@ export const Vertical: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="security">
-        <h4 className="mb-4">Security Settings</h4>
+        <h4 className="df-mb-4">Security Settings</h4>
         <p>
           Protect your account with robust security measures. We recommend
           enabling all available security features to keep your account safe
           from unauthorized access.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Two-Factor Authentication:</strong>
           {' '}
           Enabled
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Last Password Change:</strong>
           {' '}
           February 28, 2024
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Login Alerts:</strong>
           {' '}
           Enabled via email and SMS
@@ -252,18 +265,18 @@ export const Pills: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="details">
-        <h4 className="mb-4">Transaction Details</h4>
+        <h4 className="df-mb-4">Transaction Details</h4>
         <p>
           Access detailed information about your most recent transactions,
           including merchant information, transaction amounts, and processing
           status.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Latest Transaction:</strong>
           {' '}
           Coffee Shop - $4.50 (March 20, 2024)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Pending:</strong>
           {' '}
           Online Purchase - $89.99 (Processing)
@@ -275,18 +288,18 @@ export const Pills: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="history">
-        <h4 className="mb-4">Transaction History</h4>
+        <h4 className="df-mb-4">Transaction History</h4>
         <p>
           Review your complete transaction history spanning the last 12 months.
           You can filter by date range, amount, merchant, or transaction type
           to find specific entries.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Transactions (Last 30 days):</strong>
           {' '}
           47
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Spent:</strong>
           {' '}
           $2,340.50
@@ -323,18 +336,18 @@ export const ToggleButtonGroup: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="details">
-        <h4 className="mb-4">Transaction Details</h4>
+        <h4 className="df-mb-4">Transaction Details</h4>
         <p>
           Access detailed information about your most recent transactions,
           including merchant information, transaction amounts, and processing
           status.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Latest Transaction:</strong>
           {' '}
           Coffee Shop - $4.50 (March 20, 2024)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Pending:</strong>
           {' '}
           Online Purchase - $89.99 (Processing)
@@ -346,18 +359,18 @@ export const ToggleButtonGroup: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="history">
-        <h4 className="mb-4">Transaction History</h4>
+        <h4 className="df-mb-4">Transaction History</h4>
         <p>
           Review your complete transaction history spanning the last 12 months.
           You can filter by date range, amount, merchant, or transaction type
           to find specific entries.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Transactions (Last 30 days):</strong>
           {' '}
           47
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Spent:</strong>
           {' '}
           $2,340.50
@@ -394,18 +407,18 @@ export const PillsWithIcons: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="details">
-        <h4 className="mb-4">Transaction Details</h4>
+        <h4 className="df-mb-4">Transaction Details</h4>
         <p>
           Access detailed information about your most recent transactions,
           including merchant information, transaction amounts, and processing
           status.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Latest Transaction:</strong>
           {' '}
           Coffee Shop - $4.50 (March 20, 2024)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Pending:</strong>
           {' '}
           Online Purchase - $89.99 (Processing)
@@ -417,18 +430,18 @@ export const PillsWithIcons: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="history">
-        <h4 className="mb-4">Transaction History</h4>
+        <h4 className="df-mb-4">Transaction History</h4>
         <p>
           Review your complete transaction history spanning the last 12 months.
           You can filter by date range, amount, merchant, or transaction type
           to find specific entries.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Transactions (Last 30 days):</strong>
           {' '}
           47
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Spent:</strong>
           {' '}
           $2,340.50
@@ -446,7 +459,7 @@ export const PillsWithIcons: Story = {
     options: [
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="Info" />
             Detail
           </span>),
@@ -454,7 +467,7 @@ export const PillsWithIcons: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="FileCheck" />
             History
           </span>),
@@ -462,7 +475,7 @@ export const PillsWithIcons: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="FlagTriangleLeft" />
             Reports
           </span>),
@@ -486,18 +499,18 @@ export const PillsWithIconsFull: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="details">
-        <h4 className="mb-4">Transaction Details</h4>
+        <h4 className="df-mb-4">Transaction Details</h4>
         <p>
           Access detailed information about your most recent transactions,
           including merchant information, transaction amounts, and processing
           status.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Latest Transaction:</strong>
           {' '}
           Coffee Shop - $4.50 (March 20, 2024)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Pending:</strong>
           {' '}
           Online Purchase - $89.99 (Processing)
@@ -509,18 +522,18 @@ export const PillsWithIconsFull: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="history">
-        <h4 className="mb-4">Transaction History</h4>
+        <h4 className="df-mb-4">Transaction History</h4>
         <p>
           Review your complete transaction history spanning the last 12 months.
           You can filter by date range, amount, merchant, or transaction type
           to find specific entries.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Transactions (Last 30 days):</strong>
           {' '}
           47
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Total Spent:</strong>
           {' '}
           $2,340.50
@@ -538,7 +551,7 @@ export const PillsWithIconsFull: Story = {
     options: [
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="Info" />
             Detail
           </span>),
@@ -546,7 +559,7 @@ export const PillsWithIconsFull: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="FileCheck" />
             History
           </span>),
@@ -554,7 +567,7 @@ export const PillsWithIconsFull: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="FlagTriangleLeft" />
             Reports
           </span>),
@@ -562,7 +575,7 @@ export const PillsWithIconsFull: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="ChartColumn" />
             Activities
           </span>),
@@ -570,7 +583,7 @@ export const PillsWithIconsFull: Story = {
       },
       {
         label: (
-          <span className="d-flex flex-column gap-2">
+          <span className="df-flex df-flex-col df-gap-2">
             <DIcon icon="ChartPie" />
             Products
           </span>),
@@ -594,23 +607,23 @@ export const VerticalPills: Story = {
   render: (args) => (
     <DTabs {...args}>
       <DTabs.Tab tab="general">
-        <h4 className="mb-4">General Settings</h4>
+        <h4 className="df-mb-4">General Settings</h4>
         <p>
           Customize your application experience with these general settings.
           Choose your preferred language, time zone, and display options to
           personalize your interface.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Language:</strong>
           {' '}
           English (US)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Time Zone:</strong>
           {' '}
           Eastern Standard Time (EST)
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Currency Display:</strong>
           {' '}
           USD ($)
@@ -621,23 +634,23 @@ export const VerticalPills: Story = {
         </p>
       </DTabs.Tab>
       <DTabs.Tab tab="notifications">
-        <h4 className="mb-4">Notification Preferences</h4>
+        <h4 className="df-mb-4">Notification Preferences</h4>
         <p>
           Control how you receive important updates and alerts. You can choose
           to receive notifications via email, SMS, or push notifications on
           your mobile device.
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Transaction Alerts:</strong>
           {' '}
           Enabled for amounts over $100
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Marketing Communications:</strong>
           {' '}
           Opted out
         </p>
-        <p className="mb-2">
+        <p className="df-mb-2">
           <strong>Security Alerts:</strong>
           {' '}
           Enabled (Email + SMS)
@@ -672,26 +685,26 @@ export const Tabs: Story = {
     ),
   ],
   render: (args) => (
-    <DBox className="p-8" style={{ width: '800px' }}>
+    <DBox className="df-p-8" style={{ width: '800px' }}>
       <DTabs {...args}>
         <DTabs.Tab tab="dashboard">
-          <h4 className="mb-4">Dashboard Overview</h4>
+          <h4 className="df-mb-4">Dashboard Overview</h4>
           <p>
             Welcome to your comprehensive dashboard. This central hub provides
             real-time insights into your account activity, financial health,
             and important notifications.
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Account Balance:</strong>
             {' '}
             $12,450.00 (+5.2% from last month)
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Monthly Spending:</strong>
             {' '}
             $3,240.75 (within budget)
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Upcoming Bills:</strong>
             {' '}
             3 payments due in the next 7 days
@@ -704,23 +717,23 @@ export const Tabs: Story = {
           </p>
         </DTabs.Tab>
         <DTabs.Tab tab="analytics">
-          <h4 className="mb-4">Financial Analytics</h4>
+          <h4 className="df-mb-4">Financial Analytics</h4>
           <p>
             Dive deep into your financial data with comprehensive analytics and
             visual reports. Track your spending patterns, identify savings
             opportunities, and monitor your progress toward financial goals.
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Spending by Category:</strong>
             {' '}
             Groceries (30%), Transportation (20%), Entertainment (15%)
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Monthly Trend:</strong>
             {' '}
             Average spending decreased by 8% compared to previous quarter
           </p>
-          <p className="mb-2">
+          <p className="df-mb-2">
             <strong>Savings Rate:</strong>
             {' '}
             22% of income (above recommended 20% target)

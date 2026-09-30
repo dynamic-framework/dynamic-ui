@@ -148,9 +148,9 @@ export function DeleteAccountButton() {
   });
 
   return (
-    <div className="d-flex flex-column align-items-center gap-3">
+    <div className="df-flex df-flex-col df-items-center df-gap-3">
       <DButton text="Delete Account" color="danger" onClick={confirm.open} />
-      {result && <p className="alert alert-danger mb-0">{result}</p>}
+      {result && <p className="df-alert df-mb-0" data-color="danger">{result}</p>}
     </div>
   );
 }`}
@@ -211,7 +211,7 @@ Pass a dynamic `message` by calling `useConfirmModal` inside the component that 
   });
 
   return (
-    <div className="d-flex align-items-center gap-3">
+    <div className="df-flex df-items-center df-gap-3">
       <span>{contact.name}</span>
       <DButton text="Delete" color="danger" variant="outline" onClick={confirm.open} />
     </div>
@@ -230,13 +230,13 @@ Pass a dynamic `message` by calling `useConfirmModal` inside the component that 
 ## See more examples
 
 <div
-  className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+  className="df-alert df-flex df-items-start df-gap-3 df-p-4 df-rounded-control df-border-1 df-border-primary df-bg-primary-subtle"
   role="note"
   aria-label="See more examples"
 >
-  <span className="fs-4" aria-hidden="true">💡</span>
+  <span className="df-fs-heading-4" aria-hidden="true">💡</span>
   <div>
-    <strong className="d-block mb-1">Looking for more examples?</strong>
-    <span className="text-secondary">To explore more real-world flows, visit <a href="/?path=/story/patterns-confirm-modal--docs" target="_parent"><strong>Patterns / Confirm Modal</strong></a> stories in Storybook.</span>
+    <strong className="df-block df-mb-1">Looking for more examples?</strong>
+    <span className="df-text-secondary">To explore more real-world flows, visit <a href="/?path=/story/patterns-confirm-modal--docs" target="_parent"><strong>Patterns / Confirm Modal</strong></a> stories in Storybook.</span>
   </div>
 </div>

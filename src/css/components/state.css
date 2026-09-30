@@ -1,0 +1,42 @@
+/**
+ * Empty, loading and error states.
+ *
+ * 2.x assembled each of these from a dozen utilities in the markup —
+ * `d-flex flex-column align-items-center justify-content-center p-5 text-center`
+ * plus `text-secondary mb-3` on every child. A block says the same thing once,
+ * and a client can retheme an empty state without editing JSX.
+ */
+@layer df.components {
+  .df-state {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-state-gap);
+    align-items: center;
+    justify-content: center;
+    padding: var(--df-state-padding);
+    color: var(--df-state-fg);
+    text-align: center;
+  }
+
+  .df-state-icon {
+    color: var(--df-state-icon-color);
+  }
+
+  .df-state-message {
+    margin: 0;
+  }
+
+  /* The loading state is the same block with less padding: it replaces content
+     in place rather than filling an empty region. */
+  .df-state[data-variant="loading"] {
+    padding: var(--df-size-8);
+  }
+
+  /* The error state is an alert, so it only needs the inline arrangement. */
+  .df-state[data-variant="error"] {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    text-align: start;
+  }
+}

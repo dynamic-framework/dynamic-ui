@@ -17,11 +17,11 @@ describe('<DChip />', () => {
       />,
     );
 
-    const chip = container.querySelector('.d-chip');
+    const chip = container.querySelector('.df-chip');
     const closeButton = container.querySelector('button[aria-label="close"]');
-    const icon = closeButton?.querySelector('.d-icon');
+    const icon = closeButton?.querySelector('.df-icon');
 
-    expect(chip).toHaveClass('d-chip-primary');
+    expect(chip).toHaveAttribute('data-color', 'primary');
     expect(screen.getByText('Chip content')).toBeInTheDocument();
     expect(closeButton).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
@@ -45,7 +45,8 @@ describe('<DChip />', () => {
       />,
     );
 
-    expect(container.firstChild).toHaveClass('d-chip', 'd-chip-primary');
+    expect(container.firstChild).toHaveClass('df-chip');
+    expect(container.firstChild).toHaveAttribute('data-color', 'primary');
   });
 
   it('should render the icon passed by props', () => {
@@ -56,7 +57,7 @@ describe('<DChip />', () => {
       />,
     );
 
-    const icon = container.querySelector('.d-icon');
+    const icon = container.querySelector('.df-icon');
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
   });

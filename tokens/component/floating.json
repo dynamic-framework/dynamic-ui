@@ -1,0 +1,40 @@
+{
+  "$description": "Dropdown, popover and tooltip. One token set: all three are a floating panel anchored to a trigger, and the only real difference is how much they hold.",
+  "floating": {
+    "bg": {"$type": "color", "$value": "{bg.raised}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control}"},
+    "shadow": {"$type": "shadow", "$value": "{elevation.lg}"},
+    "padding-block": {"$type": "dimension", "$value": "{size.2}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.0}"},
+    "min-width": {"$type": "dimension", "$value": "{measure.xs}"},
+    "z": {"$type": "number", "$value": "{z.dropdown}"},
+
+    "item-padding-block": {"$type": "dimension", "$value": "{size.2}"},
+    "item-padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+    "item-gap": {"$type": "dimension", "$value": "{size.2}"},
+    "item-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "item-fg": {"$type": "color", "$value": "{fg.default}"},
+    "item-hover-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "item-active-bg": {"$type": "color", "$value": "{role.primary.subtle}"},
+    "item-active-fg": {"$type": "color", "$value": "{role.primary.on-subtle}"},
+    "item-disabled-fg": {"$type": "color", "$value": "{fg.disabled}"},
+
+    "divider-color": {"$type": "color", "$value": "{border.muted}"},
+    "divider-margin-block": {"$type": "dimension", "$value": "{size.2}"},
+
+    "popover-padding": {"$type": "dimension", "$value": "{size.4}"},
+    "popover-z": {"$type": "number", "$value": "{z.popover}"},
+
+    "tooltip-bg": {"$type": "color", "$value": "{bg.inverse}"},
+    "tooltip-fg": {"$type": "color", "$value": "{fg.inverse}"},
+    "tooltip-padding-block": {"$type": "dimension", "$value": "{size.1}"},
+    "tooltip-padding-inline": {"$type": "dimension", "$value": "{size.2}"},
+    "tooltip-font-size": {"$type": "dimension", "$value": "{font-size.200}"},
+    "tooltip-radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "tooltip-max-width": {"$type": "dimension", "$value": "{measure.sm}"},
+    "tooltip-z": {"$type": "number", "$value": "{z.tooltip}"}
+  }
+}

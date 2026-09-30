@@ -25,7 +25,7 @@ export default function DTabContent(
 
   return (
     <div
-      className={classNames('tab-pane fade show active', className)}
+      className={classNames('df-tabpanel', className)}
       id={`${tab}Pane`}
       role="tabpanel"
       tabIndex={0}

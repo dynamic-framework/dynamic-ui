@@ -20,7 +20,7 @@ describe('<DTabs />', () => {
         <div>Tab Content</div>
       </DTabs>,
     );
-    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveAttribute('aria-selected', 'true');
   });
 
   it('arrow keys move focus and skip disabled tabs', () => {
@@ -75,7 +75,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+    expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByText('Tab Content')).toBeInTheDocument();
   });
 
@@ -95,7 +95,7 @@ describe('<DTabs />', () => {
     const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
     fireEvent.click(tab2);
 
-    expect(tab2).toHaveClass('active');
+    expect(tab2).toHaveAttribute('aria-selected', 'true');
     expect(handleChange).toHaveBeenCalledWith(options[1]);
   });
 
@@ -115,7 +115,7 @@ describe('<DTabs />', () => {
     const disabledTab = screen.getByRole('tab', { name: 'Tab 3' });
     fireEvent.click(disabledTab);
 
-    expect(disabledTab).not.toHaveClass('active');
+    expect(disabledTab).not.toHaveAttribute('aria-selected', 'true');
     expect(handleChange).not.toHaveBeenCalled();
   });
 
@@ -139,7 +139,7 @@ describe('<DTabs />', () => {
 
     expect(handleChange).toHaveBeenCalledWith(invalidOption);
     // No cambio de selección, porque tab es ''
-    expect(screen.getByRole('tab', { name: 'No Tab' })).not.toHaveClass('active');
+    expect(screen.getByRole('tab', { name: 'No Tab' })).not.toHaveAttribute('aria-selected', 'true');
   });
 
   it('Apply vertical classname', () => {
@@ -154,9 +154,8 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('flex-column', 'align-items-center');
-    expect(nav).toHaveClass('nav-pills');
+    expect(container.firstChild).toHaveAttribute('data-orientation', 'vertical');
+    expect(container.firstChild).toHaveAttribute('data-style', 'pills');
   });
 
   it('Add custom className to generateClasses', () => {
@@ -170,8 +169,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('custom-tabs');
+    expect(container.firstChild).toHaveClass('df-tabs', 'custom-tabs');
   });
 
   it('does not fail if onChange is not provided', () => {
@@ -202,8 +200,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('nav-pills');
+    expect(container.firstChild).toHaveAttribute('data-style', 'pills');
   });
 
   it('renders vertical layout when vertical is true', () => {
@@ -217,8 +214,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('ul[role="tablist"]');
-    expect(nav).toHaveClass('flex-column');
+    expect(container.firstChild).toHaveAttribute('data-orientation', 'vertical');
   });
 
   it('reacts to changes in defaultSelected prop', () => {
@@ -231,7 +227,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+    expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveAttribute('aria-selected', 'true');
 
     rerender(
       <DTabs
@@ -242,6 +238,6 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveAttribute('aria-selected', 'true');
   });
 });

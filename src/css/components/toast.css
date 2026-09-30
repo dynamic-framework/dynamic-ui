@@ -1,0 +1,67 @@
+/**
+ * Toast. Eight colour variants through the generated matrix, like alert.
+ */
+@layer df.components {
+  .df-toast {
+    --df-toast-accent: var(--df-fg-muted);
+
+    display: flex;
+    gap: var(--df-toast-gap);
+    align-items: flex-start;
+    min-width: var(--df-toast-min-width);
+    padding-block: var(--df-toast-padding-block);
+    padding-inline: var(--df-toast-padding-inline);
+    font-size: var(--df-toast-font-size);
+    color: var(--df-toast-fg);
+    background-color: var(--df-toast-bg);
+    border: var(--df-toast-border-width) solid var(--df-toast-border-color);
+    border-radius: var(--df-toast-radius);
+    box-shadow: var(--df-toast-shadow);
+  }
+
+  .df-toast-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    color: var(--df-toast-accent);
+  }
+
+  .df-toast-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--df-size-1);
+    min-width: 0;
+  }
+
+  .df-toast-header {
+    display: flex;
+    gap: var(--df-toast-gap);
+    align-items: center;
+    font-weight: var(--df-toast-header-font-weight);
+  }
+
+  .df-toast-title {
+    margin: 0;
+    font-weight: var(--df-toast-header-font-weight);
+  }
+
+  .df-toast-timestamp {
+    color: var(--df-fg-muted);
+  }
+
+  /* `align-self: center` was an `align-self-center` utility in the markup; it
+     is the component's own concern. */
+  .df-toast-dismiss {
+    flex: none;
+    align-self: center;
+    margin-inline-start: auto;
+  }
+
+  /* An accent bar rather than a tinted fill, for a toast that has to stay
+     legible over whatever the page is showing. */
+  .df-toast[data-accent="bar"] {
+    border-inline-start-color: var(--df-toast-accent);
+    border-inline-start-width: var(--df-stroke-emphasis);
+  }
+}

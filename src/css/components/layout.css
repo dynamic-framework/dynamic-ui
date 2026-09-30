@@ -1,0 +1,36 @@
+/**
+ * Layout grid.
+ *
+ * 2.x used Bootstrap's CSS Grid helpers: a `.grid` block reading `--bs-columns`,
+ * plus `.g-col-{n}` and a `.g-col-{breakpoint}-{n}` for every breakpoint — 12
+ * spans x 6 tiers, so 84 class names shipped to every page.
+ *
+ * Here the span is a custom property the pane writes, and the responsive value
+ * is resolved in JavaScript by `useResponsiveProp`, the same mechanism every
+ * other responsive prop in the library already uses. That is 84 class names
+ * replaced by two rules, and it means DLayout does not depend on the opt-in
+ * responsive utility stylesheet being loaded.
+ */
+@layer df.components {
+  .df-layout {
+    /* A local slot, not a token: the column count is a layout parameter the
+       component sets per instance, and rule B keeps literals out of the token
+       layers. */
+    --df-layout-columns: 12;
+
+    display: grid;
+    grid-template-columns: repeat(var(--df-layout-columns), minmax(0, 1fr));
+    gap: var(--df-layout-gap);
+  }
+
+  .df-layout-pane {
+    /* Declared here rather than relied on through a `var()` fallback: a
+       fallback hides a missing definition, which is exactly what
+       `npm run css:validate` refuses — every typo 2.x shipped had that shape.
+       A pane with no `cols` spans the full grid, which is the sensible default. */
+    --df-layout-pane-span: var(--df-layout-columns);
+
+    grid-column: span var(--df-layout-pane-span) / span var(--df-layout-pane-span);
+    min-width: 0;
+  }
+}

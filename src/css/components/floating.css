@@ -1,0 +1,111 @@
+/**
+ * Dropdown, popover and tooltip.
+ *
+ * One block for all three: each is a panel anchored to a trigger, and the only
+ * real difference is what it holds. 2.x inherited three separate Bootstrap
+ * components — `.dropdown-menu`, `.popover`, `.tooltip` — each with its own
+ * elevation, radius and arrow treatment.
+ *
+ * Position comes from `@floating-ui/dom`, which writes `left`/`top` inline, so
+ * nothing here places the panel. These rules are appearance only.
+ */
+@layer df.components {
+  .df-floating {
+    z-index: var(--df-floating-z);
+    display: flex;
+    flex-direction: column;
+    min-width: var(--df-floating-min-width);
+    padding-block: var(--df-floating-padding-block);
+    padding-inline: var(--df-floating-padding-inline);
+    color: var(--df-floating-fg);
+    background-color: var(--df-floating-bg);
+    border: var(--df-floating-border-width) solid var(--df-floating-border-color);
+    border-radius: var(--df-floating-radius);
+    box-shadow: var(--df-floating-shadow);
+  }
+
+  /* --- menu items ------------------------------------------------------- */
+
+  .df-menu-item {
+    display: flex;
+    gap: var(--df-floating-item-gap);
+    align-items: center;
+    width: 100%;
+    padding-block: var(--df-floating-item-padding-block);
+    padding-inline: var(--df-floating-item-padding-inline);
+    font: inherit;
+    font-size: var(--df-floating-item-font-size);
+    color: var(--df-floating-item-fg);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
+  .df-menu-item:where(:hover) {
+    background-color: var(--df-floating-item-hover-bg);
+  }
+
+  .df-menu-item:is([aria-current="true"], [data-active]) {
+    color: var(--df-floating-item-active-fg);
+    background-color: var(--df-floating-item-active-bg);
+  }
+
+  .df-menu-item:is(:disabled, [aria-disabled="true"]) {
+    color: var(--df-floating-item-disabled-fg);
+    pointer-events: none;
+  }
+
+  .df-menu-item:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  .df-menu-divider {
+    height: var(--df-stroke-divider);
+    margin-block: var(--df-floating-divider-margin-block);
+    background-color: var(--df-floating-divider-color);
+    border: 0;
+  }
+
+  /* --- popover ---------------------------------------------------------- */
+
+  .df-floating[data-kind="popover"] {
+    z-index: var(--df-floating-popover-z);
+    min-width: auto;
+    padding: var(--df-floating-popover-padding);
+  }
+
+  /* The anchor wrapper. Only `position: relative` and nothing else — the
+     panel itself is positioned by @floating-ui. */
+  .df-dropdown,
+  .df-popover {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .df-floating[data-kind="popover"][data-full-width] {
+    width: 100%;
+  }
+
+  /* --- tooltip ---------------------------------------------------------- */
+
+  .df-floating[data-kind="tooltip"] {
+    z-index: var(--df-floating-tooltip-z);
+    min-width: auto;
+    max-width: var(--df-floating-tooltip-max-width);
+    padding-block: var(--df-floating-tooltip-padding-block);
+    padding-inline: var(--df-floating-tooltip-padding-inline);
+    font-size: var(--df-floating-tooltip-font-size);
+    color: var(--df-floating-tooltip-fg);
+    text-align: center;
+    background-color: var(--df-floating-tooltip-bg);
+    border: 0;
+    border-radius: var(--df-floating-tooltip-radius);
+  }
+
+  .df-tooltip-text {
+    min-width: 0;
+  }
+}

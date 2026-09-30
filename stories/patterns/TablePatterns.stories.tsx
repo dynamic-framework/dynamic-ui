@@ -28,7 +28,7 @@ function DocsFullWidthStyle() {
           max-width: min(1800px, calc(100vw - 2rem)) !important;
         }
           .docs-story {
-          background: var(--bs-gray-25) !important;
+          background: var(--df-color-neutral-25) !important;
           }
       `}
     </style>
@@ -89,7 +89,7 @@ type Story = StoryObj<typeof DBox>;
 export const BasicTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table">
+      <table className="df-table">
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -116,7 +116,7 @@ export const BasicTable: Story = {
 export const Borderless: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table table-borderless">
+      <table className="df-table" data-borderless>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -144,7 +144,7 @@ export const StripedTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
       <h6>Striped Rows</h6>
-      <table className="table table-striped">
+      <table className="df-table" data-striped>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -166,7 +166,7 @@ export const StripedTable: Story = {
       </table>
       <br />
       <h6>Striped Columns</h6>
-      <table className="table table-striped-columns">
+      <table className="df-table" data-striped>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -194,7 +194,7 @@ export const HoverTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
       <h6>Hover Rows</h6>
-      <table className="table table-hover">
+      <table className="df-table" data-hover>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -216,7 +216,7 @@ export const HoverTable: Story = {
       </table>
       <br />
       <h6>Striped + Hover</h6>
-      <table className="table table-striped table-hover">
+      <table className="df-table" data-striped data-hover>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -244,7 +244,7 @@ export const DarkTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
       <h6>Dark</h6>
-      <table className="table table-dark">
+      <table className="df-table" data-df-theme="dark">
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -266,7 +266,7 @@ export const DarkTable: Story = {
       </table>
       <br />
       <h6>Dark Striped</h6>
-      <table className="table table-dark table-striped">
+      <table className="df-table" data-df-theme="dark" data-striped>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -294,7 +294,7 @@ export const BorderedTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
       <h6>Bordered</h6>
-      <table className="table table-bordered">
+      <table className="df-table" data-bordered>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -316,7 +316,7 @@ export const BorderedTable: Story = {
       </table>
       <br />
       <h6>Bordered Primary</h6>
-      <table className="table table-bordered border-primary">
+      <table className="df-table df-border-primary" data-bordered>
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -343,7 +343,7 @@ export const BorderedTable: Story = {
 export const SmallTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table table-sm">
+      <table className="df-table" data-size="sm">
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -370,7 +370,7 @@ export const SmallTable: Story = {
 export const ActiveTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table">
+      <table className="df-table">
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -397,7 +397,7 @@ export const ActiveTable: Story = {
 export const ColorTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table">
+      <table className="df-table">
         <thead>
           <tr>
             {HEADER_ENTRIES.map(([key, value]) => (
@@ -431,9 +431,9 @@ export const ColorTable: Story = {
 export const LoadingTable: Story = {
   render: () => (
     <DBox style={{ width: '1100px' }}>
-      <table className="table placeholder-wave">
+      <table className="df-table">
         <caption>
-          <div className="placeholder rounded-1 bg-gray-100 w-100" />
+          <div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" />
         </caption>
         <thead>
           <tr>
@@ -444,22 +444,22 @@ export const LoadingTable: Story = {
         </thead>
         <tbody>
           <tr>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
           </tr>
           <tr>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
           </tr>
           <tr>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-            <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+            <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
           </tr>
         </tbody>
       </table>
@@ -481,7 +481,7 @@ function CompleteTableComponent() {
 
   return (
     <DBox style={{ width: '1100px' }}>
-      <table className="table table-hover">
+      <table className="df-table" data-hover>
         <caption>List of users</caption>
         <thead>
           <tr>
@@ -518,11 +518,11 @@ function CompleteTableComponent() {
           ))}
         </tbody>
       </table>
-      <div className="row">
-        <div className="col-2">
+      <div className="df-grid df-grid-cols-12 df-gap-4">
+        <div className="df-col-span-2">
           <small>Per Page </small>
           <DInput
-            className="d-inline-block"
+            className="df-inline-block"
             style={{ width: '36px' }}
             size="sm"
             type="number"
@@ -530,7 +530,7 @@ function CompleteTableComponent() {
             onChange={(value) => setRows(parseInt(value, 10))}
           />
         </div>
-        <div className="col-8">
+        <div className="df-col-span-8">
           <DPaginator
             current={page}
             onPageChange={setPage}
@@ -561,7 +561,7 @@ export const CompleteTable: Story = {
 
   return (
     <DBox style={{ width: '1100px' }}>
-      <table className="table table-hover">
+      <table className="df-table" data-hover>
         <caption>List of users</caption>
         <thead>
           <tr>
@@ -600,11 +600,11 @@ export const CompleteTable: Story = {
           ))}
         </tbody>
       </table>
-      <div className="row">
-        <div className="col-2">
+      <div className="df-grid df-grid-cols-12 df-gap-4">
+        <div className="df-col-span-2">
           <small>Per Page </small>
           <DInput
-            className="d-inline-block"
+            className="df-inline-block"
             style={{ width: '36px' }}
             size="sm"
             type="number"
@@ -612,7 +612,7 @@ export const CompleteTable: Story = {
             onChange={(value) => setRows(parseInt(value, 10))}
           />
         </div>
-        <div className="col-8">
+        <div className="df-col-span-8">
           <DPaginator
             current={page}
             onPageChange={setPage}
@@ -630,9 +630,9 @@ export const CompleteTable: Story = {
 
 function CompositionTableLoading() {
   return (
-    <table className="table placeholder-wave">
+    <table className="df-table">
       <caption>
-        <div className="placeholder rounded-1 bg-gray-100 w-100" />
+        <div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" />
       </caption>
       <thead>
         <tr>
@@ -643,22 +643,22 @@ function CompositionTableLoading() {
       </thead>
       <tbody>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
       </tbody>
     </table>
@@ -691,7 +691,7 @@ function CompositionTable(
 
   return (
     <>
-      <table className="table table-hover">
+      <table className="df-table" data-hover>
         <caption>List of users</caption>
         <thead>
           <tr>
@@ -728,11 +728,11 @@ function CompositionTable(
           ))}
         </tbody>
       </table>
-      <div className="row">
-        <div className="col-2">
+      <div className="df-grid df-grid-cols-12 df-gap-4">
+        <div className="df-col-span-2">
           <small>Per Page </small>
           <DInput
-            className="d-inline-block"
+            className="df-inline-block"
             style={{ width: '36px' }}
             size="sm"
             type="number"
@@ -740,7 +740,7 @@ function CompositionTable(
             onChange={(value) => setRows(parseInt(value, 10))}
           />
         </div>
-        <div className="col-8">
+        <div className="df-col-span-8">
           <DPaginator
             current={page}
             onPageChange={setPage}
@@ -806,9 +806,9 @@ export const Composition: Story = {
       source: {
         code: `function CompositionTableLoading() {
   return (
-    <table className="table placeholder-wave">
+    <table className="df-table">
       <caption>
-        <div className="placeholder rounded-1 bg-gray-100 w-100" />
+        <div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" />
       </caption>
       <thead>
         <tr>
@@ -819,22 +819,22 @@ export const Composition: Story = {
       </thead>
       <tbody>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
         <tr>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
-          <td aria-hidden="true"><div className="placeholder rounded-1 bg-gray-100 w-100" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
+          <td aria-hidden="true"><div className="df-skeleton df-rounded-control-sm df-bg-muted df-w-full" /></td>
         </tr>
       </tbody>
     </table>
@@ -867,7 +867,7 @@ function CompositionTable(
 
   return (
     <>
-      <table className="table table-hover">
+      <table className="df-table" data-hover>
         <caption>List of users</caption>
         <thead>
           <tr>
@@ -904,11 +904,11 @@ function CompositionTable(
           ))}
         </tbody>
       </table>
-      <div className="row">
-        <div className="col-2">
+      <div className="df-grid df-grid-cols-12 df-gap-4">
+        <div className="df-col-span-2">
           <small>Per Page </small>
           <DInput
-            className="d-inline-block"
+            className="df-inline-block"
             style={{ width: '36px' }}
             size="sm"
             type="number"
@@ -916,7 +916,7 @@ function CompositionTable(
             onChange={(value) => setRows(parseInt(value, 10))}
           />
         </div>
-        <div className="col-8">
+        <div className="df-col-span-8">
           <DPaginator
             current={page}
             onPageChange={setPage}
@@ -1181,9 +1181,9 @@ function FinancialTransactionHistoryComponent() {
 
   return (
     <DBox style={{ width: '100%' }}>
-      <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
+      <div className="df-flex df-flex-wrap df-gap-3 df-items-end df-mb-3">
         <div style={{ minWidth: '320px', flex: 1 }}>
-          <small className="d-block text-secondary mb-1">Search transaction</small>
+          <small className="df-block df-text-secondary df-mb-1">Search transaction</small>
           <DInput
             type="text"
             value={search}
@@ -1193,10 +1193,10 @@ function FinancialTransactionHistoryComponent() {
           />
         </div>
         <div>
-          <small className="d-block text-secondary mb-1">Type</small>
+          <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
             aria-label="Filter by type"
-            className="form-select"
+            className="df-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value as 'all' | FinanceTransactionType)}
           >
@@ -1206,10 +1206,10 @@ function FinancialTransactionHistoryComponent() {
           </select>
         </div>
         <div>
-          <small className="d-block text-secondary mb-1">Status</small>
+          <small className="df-block df-text-secondary df-mb-1">Status</small>
           <select
             aria-label="Filter by status"
-            className="form-select"
+            className="df-select"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as 'all' | FinanceTransactionStatus)}
           >
@@ -1221,7 +1221,7 @@ function FinancialTransactionHistoryComponent() {
         </div>
       </div>
 
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Transaction History</caption>
         <thead>
           <tr>
@@ -1230,15 +1230,15 @@ function FinancialTransactionHistoryComponent() {
             <th>Account</th>
             <th>Category</th>
             <th>Status</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
               <td>
-                <div className="fw-semibold">{row.id}</div>
-                <small className="text-secondary">{row.reference}</small>
+                <div className="df-fw-semibold">{row.id}</div>
+                <small className="df-text-secondary">{row.reference}</small>
               </td>
               <td>{row.date}</td>
               <td>{row.account}</td>
@@ -1253,7 +1253,7 @@ function FinancialTransactionHistoryComponent() {
           ))}
           {rows.length === 0 && (
             <tr>
-              <td colSpan={6} className="text-center text-secondary py-4">
+              <td colSpan={6} className="df-text-center df-text-secondary df-py-4">
                 No transactions match your current filters.
               </td>
             </tr>
@@ -1288,9 +1288,9 @@ export const TransactionHistory: Story = {
 
   return (
     <DBox style={{ width: '100%' }}>
-      <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
+      <div className="df-flex df-flex-wrap df-gap-3 df-items-end df-mb-3">
         <div style={{ minWidth: '320px', flex: 1 }}>
-          <small className="d-block text-secondary mb-1">Search transaction</small>
+          <small className="df-block df-text-secondary df-mb-1">Search transaction</small>
           <DInput
             type="text"
             value={search}
@@ -1300,9 +1300,9 @@ export const TransactionHistory: Story = {
           />
         </div>
         <div>
-          <small className="d-block text-secondary mb-1">Type</small>
+          <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
-            className="form-select"
+            className="df-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value)}
             aria-label="Filter by type"
@@ -1313,9 +1313,9 @@ export const TransactionHistory: Story = {
           </select>
         </div>
         <div>
-          <small className="d-block text-secondary mb-1">Status</small>
+          <small className="df-block df-text-secondary df-mb-1">Status</small>
           <select
-            className="form-select"
+            className="df-select"
             aria-label="Filter by status"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
@@ -1328,7 +1328,7 @@ export const TransactionHistory: Story = {
         </div>
       </div>
 
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Transaction History</caption>
         <thead>
           <tr>
@@ -1337,15 +1337,15 @@ export const TransactionHistory: Story = {
             <th>Account</th>
             <th>Category</th>
             <th>Status</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
               <td>
-                <div className="fw-semibold">{row.id}</div>
-                <small className="text-secondary">{row.reference}</small>
+                <div className="df-fw-semibold">{row.id}</div>
+                <small className="df-text-secondary">{row.reference}</small>
               </td>
               <td>{row.date}</td>
               <td>{row.account}</td>
@@ -1360,7 +1360,7 @@ export const TransactionHistory: Story = {
           ))}
           {rows.length === 0 && (
             <tr>
-              <td colSpan={6} className="text-center text-secondary py-4">
+              <td colSpan={6} className="df-text-center df-text-secondary df-py-4">
                 No transactions match your current filters.
               </td>
             </tr>
@@ -1412,18 +1412,18 @@ function TransactionScreeningFiltersOffcanvas(
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <h6
-          className="mb-0"
+          className="df-mb-0"
           id={`${name}Label`}
         >
           Advanced Filters
         </h6>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Type</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
             aria-label="Filter by type"
-            className="form-select"
+            className="df-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value as TransactionScreeningFilters['typeFilter'])}
           >
@@ -1433,11 +1433,11 @@ function TransactionScreeningFiltersOffcanvas(
           </select>
         </div>
 
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Status</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Status</small>
           <select
             aria-label="Filter by status"
-            className="form-select"
+            className="df-select"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as TransactionScreeningFilters['statusFilter'])}
           >
@@ -1448,8 +1448,8 @@ function TransactionScreeningFiltersOffcanvas(
           </select>
         </div>
 
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Minimum absolute amount</small>
           <DInput
             type="number"
             min={0}
@@ -1462,7 +1462,9 @@ function TransactionScreeningFiltersOffcanvas(
       <DOffcanvas.Footer>
         <button
           type="button"
-          className="btn btn-primary"
+          className="df-button"
+          data-variant="solid"
+          data-color="primary"
           onClick={() => {
             payload.onApply({
               typeFilter,
@@ -1476,7 +1478,9 @@ function TransactionScreeningFiltersOffcanvas(
         </button>
         <button
           type="button"
-          className="btn btn-outline-secondary"
+          className="df-button"
+          data-variant="outline"
+          data-color="secondary"
           onClick={() => {
             payload.onClear();
             closePortal();
@@ -1517,7 +1521,7 @@ function FinancialTransactionOffcanvasContent() {
 
   return (
     <DBox style={{ width: '100%', position: 'relative' }}>
-      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
+      <div className="df-flex df-gap-2 df-items-end df-mb-3 df-flex-wrap">
         <div style={{ minWidth: '320px', flex: 1 }}>
           <DInput
             type="text"
@@ -1529,7 +1533,9 @@ function FinancialTransactionOffcanvasContent() {
         </div>
         <button
           type="button"
-          className="btn btn-outline-primary"
+          className="df-button"
+          data-variant="outline"
+          data-color="primary"
           onClick={() => openPortal('filters', {
             values: currentFilters,
             onApply: (values) => {
@@ -1549,14 +1555,14 @@ function FinancialTransactionOffcanvasContent() {
       </div>
 
       {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
-        <div className="d-flex gap-2 flex-wrap mb-3">
+        <div className="df-flex df-gap-2 df-flex-wrap df-mb-3">
           {typeFilter !== 'all' && <DChip text={`Type: ${typeFilter}`} color="primary" showClose onClose={() => setTypeFilter('all')} />}
           {statusFilter !== 'all' && <DChip text={`Status: ${statusFilter}`} color="warning" showClose onClose={() => setStatusFilter('all')} />}
           {minAmount > 0 && <DChip text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" showClose onClose={() => setMinAmountFilter('0')} />}
         </div>
       )}
 
-      <table className="table table-striped table-hover align-middle">
+      <table className="df-table df-align-middle" data-striped data-hover>
         <caption>Transaction Screening</caption>
         <thead>
           <tr>
@@ -1564,15 +1570,15 @@ function FinancialTransactionOffcanvasContent() {
             <th>Date</th>
             <th>Account</th>
             <th>Status</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
               <td>
-                <div className="fw-semibold">{row.id}</div>
-                <small className="text-secondary">{row.reference}</small>
+                <div className="df-fw-semibold">{row.id}</div>
+                <small className="df-text-secondary">{row.reference}</small>
               </td>
               <td>{row.date}</td>
               <td>{row.account}</td>
@@ -1586,7 +1592,7 @@ function FinancialTransactionOffcanvasContent() {
           ))}
           {rows.length === 0 && (
             <tr>
-              <td colSpan={5} className="text-center text-secondary py-4">
+              <td colSpan={5} className="df-text-center df-text-secondary df-py-4">
                 No transactions match your current filters.
               </td>
             </tr>
@@ -1637,16 +1643,16 @@ export const TransactionHistoryOffcanvas: Story = {
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h6 className="mb-0" id={\`\${name}Label\`}>
+        <h6 className="df-mb-0" id={\`\${name}Label\`}>
           Advanced Filters
         </h6>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Type</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
             aria-label="Filter by type"
-            className="form-select"
+            className="df-select"
             value={typeFilter}
             onChange={(event) => setTypeFilter(event.target.value)}
           >
@@ -1655,11 +1661,11 @@ export const TransactionHistoryOffcanvas: Story = {
             <option value="Debit">Debit</option>
           </select>
         </div>
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Status</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Status</small>
           <select
             aria-label="Filter by status"
-            className="form-select"
+            className="df-select"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
           >
@@ -1669,8 +1675,8 @@ export const TransactionHistoryOffcanvas: Story = {
             <option value="Flagged">Flagged</option>
           </select>
         </div>
-        <div className="mb-3">
-          <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
+        <div className="df-mb-3">
+          <small className="df-block df-text-secondary df-mb-1">Minimum absolute amount</small>
           <DInput
             type="number"
             min={0}
@@ -1683,7 +1689,7 @@ export const TransactionHistoryOffcanvas: Story = {
       <DOffcanvas.Footer>
         <button
           type="button"
-          className="btn btn-primary"
+          className="df-button" data-variant="solid" data-color="primary"
           onClick={() => {
             payload.onApply({ typeFilter, statusFilter, minAmountFilter });
             closePortal();
@@ -1693,7 +1699,7 @@ export const TransactionHistoryOffcanvas: Story = {
         </button>
         <button
           type="button"
-          className="btn btn-outline-secondary"
+          className="df-button" data-variant="outline" data-color="secondary"
           onClick={() => {
             payload.onClear();
             closePortal();
@@ -1730,7 +1736,7 @@ function FinancialTransactionOffcanvasContent() {
 
   return (
     <DBox style={{ width: '100%', position: 'relative' }}>
-      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
+      <div className="df-flex df-gap-2 df-items-end df-mb-3 df-flex-wrap">
         <div style={{ minWidth: '320px', flex: 1 }}>
           <DInput
             type="text"
@@ -1742,7 +1748,7 @@ function FinancialTransactionOffcanvasContent() {
         </div>
         <button
           type="button"
-          className="btn btn-outline-primary"
+          className="df-button" data-variant="outline" data-color="primary"
           onClick={() => openPortal('filters', {
             values: currentFilters,
             onApply: (values) => {
@@ -1762,14 +1768,14 @@ function FinancialTransactionOffcanvasContent() {
       </div>
 
       {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
-        <div className="d-flex gap-2 flex-wrap mb-3">
+        <div className="df-flex df-gap-2 df-flex-wrap df-mb-3">
           {typeFilter !== 'all' && <DChip text={\`Type: \${typeFilter}\`} color="primary" showClose onClose={() => setTypeFilter('all')} />}
           {statusFilter !== 'all' && <DChip text={\`Status: \${statusFilter}\`} color="warning" showClose onClose={() => setStatusFilter('all')} />}
           {minAmount > 0 && <DChip text={\`Min Amount: \${USD.format(minAmount)}\`} color="secondary" showClose onClose={() => setMinAmountFilter('0')} />}
         </div>
       )}
 
-      <table className="table table-striped table-hover align-middle">
+      <table className="df-table df-align-middle" data-striped data-hover>
         <caption>Transaction Screening</caption>
         <thead>
           <tr>
@@ -1777,15 +1783,15 @@ function FinancialTransactionOffcanvasContent() {
             <th>Date</th>
             <th>Account</th>
             <th>Status</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
               <td>
-                <div className="fw-semibold">{row.id}</div>
-                <small className="text-secondary">{row.reference}</small>
+                <div className="df-fw-semibold">{row.id}</div>
+                <small className="df-text-secondary">{row.reference}</small>
               </td>
               <td>{row.date}</td>
               <td>{row.account}</td>
@@ -1799,7 +1805,7 @@ function FinancialTransactionOffcanvasContent() {
           ))}
           {rows.length === 0 && (
             <tr>
-              <td colSpan={5} className="text-center text-secondary py-4">
+              <td colSpan={5} className="df-text-center df-text-secondary df-py-4">
                 No transactions match your current filters.
               </td>
             </tr>
@@ -1831,14 +1837,14 @@ function LoanPortfolioComponent() {
 
   const getSortIcon = (field: 'borrower' | 'disbursed' | 'daysPastDue') => {
     if (sortBy !== field) {
-      return <DIcon icon="ArrowUpDown" size="0.9rem" className="text-gray-300" />;
+      return <DIcon icon="ArrowUpDown" size="0.9rem" className="df-text-subtle" />;
     }
 
     if (sortDirection === 'asc') {
-      return <DIcon icon="ArrowUp" size="0.9rem" className="text-primary" />;
+      return <DIcon icon="ArrowUp" size="0.9rem" className="df-text-primary" />;
     }
 
-    return <DIcon icon="ArrowDown" size="0.9rem" className="text-primary" />;
+    return <DIcon icon="ArrowDown" size="0.9rem" className="df-text-primary" />;
   };
 
   const rows = [...PORTFOLIO_LOANS].sort((left, right) => {
@@ -1871,12 +1877,12 @@ function LoanPortfolioComponent() {
 
   return (
     <DBox style={{ width: '100%' }}>
-      <div className="d-flex justify-content-between align-items-center mb-2">
-        <h6 className="mb-0">Loan Portfolio</h6>
-        <small className="text-secondary">Click sortable columns to reorder</small>
+      <div className="df-flex df-justify-between df-items-center df-mb-2">
+        <h6 className="df-mb-0">Loan Portfolio</h6>
+        <small className="df-text-secondary">Click sortable columns to reorder</small>
       </div>
 
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Credit Risk Monitoring</caption>
         <thead>
           <tr>
@@ -1885,7 +1891,8 @@ function LoanPortfolioComponent() {
             >
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1"
+                data-variant="link"
                 onClick={() => onSort('borrower')}
               >
                 Borrower
@@ -1898,7 +1905,8 @@ function LoanPortfolioComponent() {
             >
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1"
+                data-variant="link"
                 onClick={() => onSort('disbursed')}
               >
                 Disbursed
@@ -1911,7 +1919,8 @@ function LoanPortfolioComponent() {
             >
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1"
+                data-variant="link"
                 onClick={() => onSort('daysPastDue')}
               >
                 Days Past Due
@@ -1928,11 +1937,11 @@ function LoanPortfolioComponent() {
             return (
               <tr key={loan.id}>
                 <td>
-                  <div className="fw-semibold">{loan.borrower}</div>
-                  <small className="text-secondary">{loan.id}</small>
+                  <div className="df-fw-semibold">{loan.borrower}</div>
+                  <small className="df-text-secondary">{loan.id}</small>
                 </td>
                 <td>{loan.product}</td>
-                <td className="fw-semibold">{USD.format(loan.disbursed)}</td>
+                <td className="df-fw-semibold">{USD.format(loan.disbursed)}</td>
                 <td>
                   {loan.paidInstallments}
                   /
@@ -1940,9 +1949,9 @@ function LoanPortfolioComponent() {
                 </td>
                 <td>
                   {loan.daysPastDue === 0 ? (
-                    <span className="text-success">Current</span>
+                    <span className="df-text-success">Current</span>
                   ) : (
-                    <span className="text-danger fw-semibold">
+                    <span className="df-text-danger df-fw-semibold">
                       {loan.daysPastDue}
                       {' '}
                       days
@@ -1972,9 +1981,9 @@ export const LoanPortfolio: Story = {
   const [sortDirection, setSortDirection] = useState('desc');
 
   const getSortIcon = (field) => {
-    if (sortBy !== field) return <DIcon icon="ArrowUpDown" size="0.9rem" className="text-gray-300" />;
-    if (sortDirection === 'asc') return <DIcon icon="ArrowUp" size="0.9rem" className="text-primary" />;
-    return <DIcon icon="ArrowDown" size="0.9rem" className="text-primary" />;
+    if (sortBy !== field) return <DIcon icon="ArrowUpDown" size="0.9rem" className="df-text-subtle" />;
+    if (sortDirection === 'asc') return <DIcon icon="ArrowUp" size="0.9rem" className="df-text-primary" />;
+    return <DIcon icon="ArrowDown" size="0.9rem" className="df-text-primary" />;
   };
 
   const rows = [...PORTFOLIO_LOANS].sort((left, right) => {
@@ -2001,14 +2010,14 @@ export const LoanPortfolio: Story = {
 
   return (
     <DBox style={{ width: '100%' }}>
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Credit Risk Monitoring</caption>
         <thead>
           <tr>
             <th aria-sort={getAriaSort('borrower')}>
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1" data-variant="link"
                 onClick={() => onSort('borrower')}
               >
                 Borrower
@@ -2019,7 +2028,7 @@ export const LoanPortfolio: Story = {
             <th aria-sort={getAriaSort('disbursed')}>
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1" data-variant="link"
                 onClick={() => onSort('disbursed')}
               >
                 Disbursed
@@ -2030,7 +2039,7 @@ export const LoanPortfolio: Story = {
             <th aria-sort={getAriaSort('daysPastDue')}>
               <button
                 type="button"
-                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                className="df-button df-p-0 df-no-underline df-inline-flex df-items-center df-gap-1" data-variant="link"
                 onClick={() => onSort('daysPastDue')}
               >
                 Days Past Due
@@ -2046,16 +2055,16 @@ export const LoanPortfolio: Story = {
             return (
               <tr key={loan.id}>
                 <td>
-                  <div className="fw-semibold">{loan.borrower}</div>
-                  <small className="text-secondary">{loan.id}</small>
+                  <div className="df-fw-semibold">{loan.borrower}</div>
+                  <small className="df-text-secondary">{loan.id}</small>
                 </td>
                 <td>{loan.product}</td>
-                <td className="fw-semibold">{USD.format(loan.disbursed)}</td>
+                <td className="df-fw-semibold">{USD.format(loan.disbursed)}</td>
                 <td>{loan.paidInstallments}/{loan.totalInstallments}</td>
                 <td>
                   {loan.daysPastDue === 0
-                    ? <span className="text-success">Current</span>
-                    : <span className="text-danger fw-semibold">{loan.daysPastDue} days</span>}
+                    ? <span className="df-text-success">Current</span>
+                    : <span className="df-text-danger df-fw-semibold">{loan.daysPastDue} days</span>}
                 </td>
                 <td><DBadge soft size="sm" text={risk.text} color={risk.color} /></td>
               </tr>
@@ -2086,37 +2095,46 @@ function BulkActionsComponent() {
   return (
     <DBox style={{ width: '100%' }}>
       {selectedItems.length > 0 && (
-        <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
+        <div className="df-alert df-flex df-justify-between df-items-center df-mb-3" data-color="primary">
           <span>
             <strong>{selectedItems.length}</strong>
             {' '}
             selected
             {' '}
-            <span className="text-secondary">
+            <span className="df-text-secondary">
               (Total:
               {' '}
               {USD.format(selectedAmount)}
               )
             </span>
           </span>
-          <div className="d-flex gap-2">
+          <div className="df-flex df-gap-2">
             <button
               type="button"
-              className="btn btn-sm btn-success"
+              className="df-button"
+              data-variant="solid"
+              data-size="sm"
+              data-color="success"
               onClick={() => setLastAction(`Approved ${selectedItems.length} payments`)}
             >
               Approve
             </button>
             <button
               type="button"
-              className="btn btn-sm btn-warning"
+              className="df-button"
+              data-variant="solid"
+              data-size="sm"
+              data-color="warning"
               onClick={() => setLastAction(`Sent ${selectedItems.length} payments to review`)}
             >
               Send to Review
             </button>
             <button
               type="button"
-              className="btn btn-sm btn-outline-secondary"
+              className="df-button"
+              data-variant="outline"
+              data-size="sm"
+              data-color="secondary"
               onClick={() => setLastAction(`Exported ${selectedItems.length} payments`)}
             >
               Export CSV
@@ -2125,9 +2143,9 @@ function BulkActionsComponent() {
         </div>
       )}
 
-      {lastAction && <p className="small text-muted">{lastAction}</p>}
+      {lastAction && <p className="df-fs-body-sm df-text-muted">{lastAction}</p>}
 
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Payment Approval Queue</caption>
         <thead>
           <tr>
@@ -2147,7 +2165,7 @@ function BulkActionsComponent() {
             <th>Beneficiary</th>
             <th>Account</th>
             <th>Due Date</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -2162,12 +2180,12 @@ function BulkActionsComponent() {
                 />
               </td>
               <td>
-                <div className="fw-semibold">{row.beneficiary}</div>
-                <small className="text-secondary">{row.id}</small>
+                <div className="df-fw-semibold">{row.beneficiary}</div>
+                <small className="df-text-secondary">{row.id}</small>
               </td>
               <td>{row.account}</td>
               <td>{row.dueDate}</td>
-              <td className="text-end fw-semibold">{USD.format(row.amount)}</td>
+              <td className="df-text-end df-fw-semibold">{USD.format(row.amount)}</td>
             </tr>
           ))}
         </tbody>
@@ -2197,28 +2215,28 @@ export const BulkActions: Story = {
   return (
     <DBox style={{ width: '100%' }}>
       {selectedItems.length > 0 && (
-        <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
+        <div className="df-alert df-flex df-justify-between df-items-center df-mb-3" data-color="primary">
           <span>
             <strong>{selectedItems.length}</strong> selected
-            <span className="text-secondary"> (Total: {USD.format(selectedAmount)})</span>
+            <span className="df-text-secondary"> (Total: {USD.format(selectedAmount)})</span>
           </span>
-          <div className="d-flex gap-2">
-            <button type="button" className="btn btn-sm btn-success"
+          <div className="df-flex df-gap-2">
+            <button type="button" className="df-button" data-variant="solid" data-size="sm" data-color="success"
               onClick={() => setLastAction(\`Approved \${selectedItems.length} payments\`)}
             >Approve</button>
-            <button type="button" className="btn btn-sm btn-warning"
+            <button type="button" className="df-button" data-variant="solid" data-size="sm" data-color="warning"
               onClick={() => setLastAction(\`Sent \${selectedItems.length} payments to review\`)}
             >Send to Review</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary"
+            <button type="button" className="df-button" data-variant="outline" data-size="sm" data-color="secondary"
               onClick={() => setLastAction(\`Exported \${selectedItems.length} payments\`)}
             >Export CSV</button>
           </div>
         </div>
       )}
 
-      {lastAction && <p className="small text-muted">{lastAction}</p>}
+      {lastAction && <p className="df-fs-body-sm df-text-muted">{lastAction}</p>}
 
-      <table className="table table-hover align-middle">
+      <table className="df-table df-align-middle" data-hover>
         <caption>Payment Approval Queue</caption>
         <thead>
           <tr>
@@ -2236,7 +2254,7 @@ export const BulkActions: Story = {
             <th>Beneficiary</th>
             <th>Account</th>
             <th>Due Date</th>
-            <th className="text-end">Amount</th>
+            <th className="df-text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -2251,12 +2269,12 @@ export const BulkActions: Story = {
                 />
               </td>
               <td>
-                <div className="fw-semibold">{row.beneficiary}</div>
-                <small className="text-secondary">{row.id}</small>
+                <div className="df-fw-semibold">{row.beneficiary}</div>
+                <small className="df-text-secondary">{row.id}</small>
               </td>
               <td>{row.account}</td>
               <td>{row.dueDate}</td>
-              <td className="text-end fw-semibold">{USD.format(row.amount)}</td>
+              <td className="df-text-end df-fw-semibold">{USD.format(row.amount)}</td>
             </tr>
           ))}
         </tbody>

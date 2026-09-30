@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ComponentProps } from 'react';
 import { DContextProvider } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 import DAlert from '../../src/components/DAlert/DAlert';
 import {
   COLOR_STATES,
@@ -18,19 +17,24 @@ const config: Meta<typeof DAlert> = {
     docs: {
       description: {
         component: `
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Alert CSS Variables](https://getbootstrap.com/docs/5.3/components/alerts/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/alert.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                  | Class            | Type             | Description              |
-|-------------------------------------------|------------------|------------------|--------------------------|
-| --${PREFIX_BS}alert-gap                   | .alert           | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-icon-color            | .alert           | css color unit   | Toast icon color         |
-| --${PREFIX_BS}alert-close-icon-size       | .alert           | css length unit  | Toast close icon size    |
+| Variable                         | Type        | Description       |
+|----------------------------------|-------------|-------------------|
+| \`--df-alert-padding-block\`     | css length  | Padding block     |
+| \`--df-alert-padding-inline\`    | css length  | Padding inline    |
+| \`--df-alert-gap\`               | css length  | Gap               |
+| \`--df-alert-radius\`            | css length  | Radius            |
+| \`--df-alert-border-width\`      | css length  | Border width      |
+| \`--df-alert-font-size\`         | css length  | Font size         |
+| \`--df-alert-line-height\`       | number      | Line height       |
+| \`--df-alert-icon-size\`         | css length  | Icon size         |
+| \`--df-alert-title-font-weight\` | font weight | Title font weight |
+
         `,
       },
     },
@@ -159,15 +163,15 @@ export const SuccessIcon: Story = {
   render: (args) => (
     <DAlert {...args}>
       <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
+        <h5 className="df-mb-2">Heading</h5>
+        <p className="df-m-0">
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services Our offices are open from 9:00 AM
           to 1:00 PM this Monday, December 1st. Please consider using our online services
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services
         </p>
-        <a href="#" className="text-primary">Link</a>
+        <a href="#" className="df-text-primary">Link</a>
       </div>
     </DAlert>
   ),
@@ -180,15 +184,15 @@ export const DangerIcon: Story = {
   render: (args) => (
     <DAlert {...args}>
       <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
+        <h5 className="df-mb-2">Heading</h5>
+        <p className="df-m-0">
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services Our offices are open from 9:00 AM
           to 1:00 PM this Monday, December 1st. Please consider using our online services
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services
         </p>
-        <a href="#" className="text-primary">Link</a>
+        <a href="#" className="df-text-primary">Link</a>
       </div>
     </DAlert>
   ),
@@ -201,15 +205,15 @@ export const InfoIcon: Story = {
   render: (args) => (
     <DAlert {...args}>
       <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
+        <h5 className="df-mb-2">Heading</h5>
+        <p className="df-m-0">
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services Our offices are open from 9:00 AM
           to 1:00 PM this Monday, December 1st. Please consider using our online services
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services
         </p>
-        <a href="#" className="text-primary">Link</a>
+        <a href="#" className="df-text-primary">Link</a>
       </div>
     </DAlert>
   ),
@@ -222,15 +226,15 @@ export const WarningIcon: Story = {
   render: (args) => (
     <DAlert {...args}>
       <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
+        <h5 className="df-mb-2">Heading</h5>
+        <p className="df-m-0">
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services Our offices are open from 9:00 AM
           to 1:00 PM this Monday, December 1st. Please consider using our online services
           Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
           Please consider using our online services
         </p>
-        <a href="#" className="text-primary">Link</a>
+        <a href="#" className="df-text-primary">Link</a>
       </div>
     </DAlert>
   ),
@@ -251,9 +255,9 @@ export const MaterialStyle: Story = {
     >
       <DAlert {...args}>
         <div>
-          <h5 className="mb-2">Heading</h5>
-          <p className="m-0">Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en línea</p>
-          <a href="#" className="text-primary">Link</a>
+          <h5 className="df-mb-2">Heading</h5>
+          <p className="df-m-0">Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en línea</p>
+          <a href="#" className="df-text-primary">Link</a>
         </div>
       </DAlert>
     </DContextProvider>

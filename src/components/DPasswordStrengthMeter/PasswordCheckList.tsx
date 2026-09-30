@@ -55,9 +55,9 @@ export default function PasswordChecksList({
   const total = passwordChecks.length;
 
   return (
-    <div className="mt-2">
+    <div className="df-password-strength">
       <PasswordStrengthBar strength={passed} total={total} />
-      <ul className="list-unstyled m-0 d-flex flex-column gap-2">
+      <ul className="df-password-checks">
         {passwordChecks.map(({ key, regex, text }) => (
           <PasswordCheckItem
             key={key}

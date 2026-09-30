@@ -160,7 +160,7 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    const closeButton = container.querySelector('.d-close');
+    const closeButton = container.querySelector('.df-toast-dismiss');
     expect(closeButton).toBeInTheDocument();
   });
 
@@ -181,7 +181,7 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
+    const closeButton = container.querySelector('.df-toast-dismiss') as HTMLButtonElement;
     expect(closeButton).toBeInTheDocument();
 
     await user.click(closeButton);
@@ -207,7 +207,7 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
+    const closeButton = container.querySelector('.df-toast-dismiss') as HTMLButtonElement;
     expect(closeButton).toBeInTheDocument();
 
     await user.click(closeButton);
@@ -235,10 +235,10 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    expect(container.querySelector('.toast-title')).toHaveTextContent('Test Title');
-    expect(container.querySelector('.toast-timestamp')).toHaveTextContent('10:30 AM');
+    expect(container.querySelector('.df-toast-title')).toHaveTextContent('Test Title');
+    expect(container.querySelector('.df-toast-timestamp')).toHaveTextContent('10:30 AM');
     expect(container).toHaveTextContent('Test Description');
-    expect(container.querySelector('.toast-icon')).toBeInTheDocument();
+    expect(container.querySelector('.df-toast-icon')).toBeInTheDocument();
   });
 
   it('should render toast without timestamp when not provided', () => {
@@ -258,7 +258,7 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    expect(container.querySelector('.toast-timestamp')).not.toBeInTheDocument();
+    expect(container.querySelector('.df-toast-timestamp')).not.toBeInTheDocument();
   });
 
   it('should render toast without icon when not provided', () => {
@@ -277,7 +277,7 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    expect(container.querySelector('.toast-icon')).not.toBeInTheDocument();
+    expect(container.querySelector('.df-toast-icon')).not.toBeInTheDocument();
   });
 
   it('should apply correct color classes', () => {
@@ -297,7 +297,9 @@ describe('useDToast', () => {
       </DContextProvider>,
     );
 
-    expect(container.querySelector('.toast-danger')).toBeInTheDocument();
-    expect(container.querySelector('.show')).toBeInTheDocument();
+    // The colour is an attribute, and `show` is gone: it was Bootstrap's
+    // JS-driven visibility class, and react-hot-toast already controls whether
+    // the toast is mounted, so it never did anything here.
+    expect(container.querySelector('[data-color="danger"]')).toBeInTheDocument();
   });
 });

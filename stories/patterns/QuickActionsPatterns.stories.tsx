@@ -47,54 +47,54 @@ export const BasicQuickActions: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Quick Actions</h5>
+      <h5 className="df-mb-3">Quick Actions</h5>
       <DLayout gap={3}>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
-            <h6 className="mb-1 text-center">Transfer</h6>
-            <small className="text-body-secondary text-center">Send money easily</small>
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="df-mb-3 df-text-primary df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Transfer</h6>
+            <small className="df-text-muted df-text-center">Send money easily</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
-            <h6 className="mb-1 text-center">Pay Bills</h6>
-            <small className="text-body-secondary text-center">Manage payments</small>
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="df-mb-3 df-text-success df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Pay Bills</h6>
+            <small className="df-text-muted df-text-center">Manage payments</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
-            <h6 className="mb-1 text-center">Loans</h6>
-            <small className="text-body-secondary text-center">Apply for credit</small>
+            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="df-mb-3 df-text-info df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Loans</h6>
+            <small className="df-text-muted df-text-center">Apply for credit</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="mb-3 text-indigo  bg-gray-50-500 bg-gray-50" />
-            <h6 className="mb-1 text-center">Help</h6>
-            <small className="text-body-secondary text-center">Support & FAQs</small>
+            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="df-mb-3 text-indigo df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Help</h6>
+            <small className="df-text-muted df-text-center">Support & FAQs</small>
           </button>
         </DLayout.Pane>
       </DLayout>
@@ -112,102 +112,102 @@ export const ExtendedQuickActions: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">All Services</h5>
+      <h5 className="df-mb-3">All Services</h5>
       <DLayout gap={3}>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
-            <h6 className="mb-1 text-center">Transfer</h6>
-            <small className="text-body-secondary text-center">Send money</small>
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="df-mb-3 df-text-primary df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Transfer</h6>
+            <small className="df-text-muted df-text-center">Send money</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Download" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
-            <h6 className="mb-1 text-center">Deposit</h6>
-            <small className="text-body-secondary text-center">Add funds</small>
+            <DIcon icon="Download" hasCircle size="2.5rem" className="df-mb-3 df-text-success df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Deposit</h6>
+            <small className="df-text-muted df-text-center">Add funds</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
-            <h6 className="mb-1 text-center">Pay Bills</h6>
-            <small className="text-body-secondary text-center">Manage payments</small>
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="df-mb-3 df-text-info df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Pay Bills</h6>
+            <small className="df-text-muted df-text-center">Manage payments</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="mb-3 text-purple bg-gray-50" />
-            <h6 className="mb-1 text-center">Cards</h6>
-            <small className="text-body-secondary text-center">Manage cards</small>
+            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="df-mb-3 text-purple df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Cards</h6>
+            <small className="df-text-muted df-text-center">Manage cards</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="mb-3 text-teal  bg-gray-50" />
-            <h6 className="mb-1 text-center">Investments</h6>
-            <small className="text-body-secondary text-center">Grow wealth</small>
+            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="df-mb-3 text-teal df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Investments</h6>
+            <small className="df-text-muted df-text-center">Grow wealth</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Wallet" hasCircle size="2.5rem" className="mb-3 text-orange bg-gray-50" />
-            <h6 className="mb-1 text-center">Loans</h6>
-            <small className="text-body-secondary text-center">Apply for credit</small>
+            <DIcon icon="Wallet" hasCircle size="2.5rem" className="df-mb-3 text-orange df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Loans</h6>
+            <small className="df-text-muted df-text-center">Apply for credit</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2.5rem" className="mb-3 text-indigo  bg-gray-50" />
-            <h6 className="mb-1 text-center">Insurance</h6>
-            <small className="text-body-secondary text-center">Protect assets</small>
+            <DIcon icon="Shield" hasCircle size="2.5rem" className="df-mb-3 text-indigo df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Insurance</h6>
+            <small className="df-text-muted df-text-center">Protect assets</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Headset" hasCircle size="2.5rem" className="mb-3 text-pink  bg-gray-50" />
-            <h6 className="mb-1 text-center">Support</h6>
-            <small className="text-body-secondary text-center">24/7 assistance</small>
+            <DIcon icon="Headset" hasCircle size="2.5rem" className="df-mb-3 text-pink df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Support</h6>
+            <small className="df-text-muted df-text-center">24/7 assistance</small>
           </button>
         </DLayout.Pane>
       </DLayout>
@@ -225,50 +225,50 @@ export const WithHoverEffects: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Services</h5>
+      <h5 className="df-mb-3">Services</h5>
       <DLayout gap={3}>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-hover:bg-muted"
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
-            <h6 className="mb-1 text-center">Transfer Money</h6>
-            <small className="text-body-secondary text-center">Between accounts</small>
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="df-mb-3 df-text-primary df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Transfer Money</h6>
+            <small className="df-text-muted df-text-center">Between accounts</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-hover:bg-muted"
             onClick={() => {}}
           >
-            <DIcon icon="Zap" hasCircle size="2.5rem" className="mb-3 text-warning  bg-gray-50" />
-            <h6 className="mb-1 text-center">Pay Services</h6>
-            <small className="text-body-secondary text-center">Utilities & more</small>
+            <DIcon icon="Zap" hasCircle size="2.5rem" className="df-mb-3 df-text-warning df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Pay Services</h6>
+            <small className="df-text-muted df-text-center">Utilities & more</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-hover:bg-muted"
             onClick={() => {}}
           >
-            <DIcon icon="DollarSign" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
-            <h6 className="mb-1 text-center">Request Credit</h6>
-            <small className="text-body-secondary text-center">Instant approval</small>
+            <DIcon icon="DollarSign" hasCircle size="2.5rem" className="df-mb-3 df-text-success df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Request Credit</h6>
+            <small className="df-text-muted df-text-center">Instant approval</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-hover:bg-muted"
             onClick={() => {}}
           >
-            <DIcon icon="MessageCircle" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
-            <h6 className="mb-1 text-center">Support</h6>
-            <small className="text-body-secondary text-center">We&apos;re here to help</small>
+            <DIcon icon="MessageCircle" hasCircle size="2.5rem" className="df-mb-3 df-text-info df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Support</h6>
+            <small className="df-text-muted df-text-center">We&apos;re here to help</small>
           </button>
         </DLayout.Pane>
       </DLayout>
@@ -286,57 +286,57 @@ export const WithBadges: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Your Services</h5>
+      <h5 className="df-mb-3">Your Services</h5>
       <DLayout gap={3}>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 position-relative"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-relative"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary bg-gray-50" />
-            <h6 className="mb-1 text-center">Transfer</h6>
-            <small className="text-body-secondary text-center">Send money now</small>
+            <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="df-mb-3 df-text-primary df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Transfer</h6>
+            <small className="df-text-muted df-text-center">Send money now</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 position-relative"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-relative"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DChip text="3" color="danger" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Receipt" hasCircle size="2.5rem" className="mb-3 text-warning  bg-gray-50" />
-            <h6 className="mb-1 text-center">Bills</h6>
-            <small className="text-body-secondary text-center">3 bills pending</small>
+            <DChip text="3" color="danger" className="df-absolute df-top-0 df-end-0 df-m-2" />
+            <DIcon icon="Receipt" hasCircle size="2.5rem" className="df-mb-3 df-text-warning df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Bills</h6>
+            <small className="df-text-muted df-text-center">3 bills pending</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 position-relative"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-relative"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DChip text="5" color="info" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Mail" hasCircle size="2.5rem" className="mb-3 text-info bg-gray-50" />
-            <h6 className="mb-1 text-center">Messages</h6>
-            <small className="text-body-secondary text-center">5 unread</small>
+            <DChip text="5" color="info" className="df-absolute df-top-0 df-end-0 df-m-2" />
+            <DIcon icon="Mail" hasCircle size="2.5rem" className="df-mb-3 df-text-info df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Messages</h6>
+            <small className="df-text-muted df-text-center">5 unread</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 position-relative"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-4 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full df-relative"
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DChip text="New" color="success" className="position-absolute top-0 end-0 m-2" />
-            <DIcon icon="Gift" hasCircle size="2.5rem" className="mb-3 text-success bg-gray-50" />
-            <h6 className="mb-1 text-center">Offers</h6>
-            <small className="text-body-secondary text-center">Special deals</small>
+            <DChip text="New" color="success" className="df-absolute df-top-0 df-end-0 df-m-2" />
+            <DIcon icon="Gift" hasCircle size="2.5rem" className="df-mb-3 df-text-success df-bg-muted" />
+            <h6 className="df-mb-1 df-text-center">Offers</h6>
+            <small className="df-text-muted df-text-center">Special deals</small>
           </button>
         </DLayout.Pane>
       </DLayout>
@@ -354,72 +354,72 @@ export const CompactGrid: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Quick Access</h5>
+      <h5 className="df-mb-3">Quick Access</h5>
       <DLayout gap={2}>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Send" hasCircle size="2rem" className="mb-2 text-primary bg-gray-50" />
-            <small className="fw-semibold text-center">Transfer</small>
+            <DIcon icon="Send" hasCircle size="2rem" className="df-mb-2 df-text-primary df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">Transfer</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2rem" className="mb-2 text-success bg-gray-50" />
-            <small className="fw-semibold text-center">Pay</small>
+            <DIcon icon="CreditCard" hasCircle size="2rem" className="df-mb-2 df-text-success df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">Pay</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Smartphone" hasCircle size="2rem" className="mb-2 text-info bg-gray-50" />
-            <small className="fw-semibold text-center">Recharge</small>
+            <DIcon icon="Smartphone" hasCircle size="2rem" className="df-mb-2 df-text-info df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">Recharge</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2rem" className="mb-2 text-purple bg-gray-50" />
-            <small className="fw-semibold text-center">Invest</small>
+            <DIcon icon="TrendingUp" hasCircle size="2rem" className="df-mb-2 text-purple df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">Invest</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2rem" className="mb-2 text-orange bg-gray-50" />
-            <small className="fw-semibold text-center">Insurance</small>
+            <DIcon icon="Shield" hasCircle size="2rem" className="df-mb-2 text-orange df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">Insurance</small>
           </button>
         </DLayout.Pane>
         <DLayout.Pane cols="4" colsMd="2">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-3 bg-white border rounded text-decoration-none w-100 h-100"
+            className="df-flex df-flex-col df-items-center df-justify-center df-p-3 df-bg-surface df-border-1 df-rounded-control df-no-underline df-w-full df-h-full"
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Grid" hasCircle size="2rem" className="mb-2 bg-gray-50" />
-            <small className="fw-semibold text-center">More</small>
+            <DIcon icon="Grid" hasCircle size="2rem" className="df-mb-2 df-bg-muted" />
+            <small className="df-fw-semibold df-text-center">More</small>
           </button>
         </DLayout.Pane>
       </DLayout>
@@ -437,51 +437,51 @@ export const SidebarListBasic: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Quick Actions Menu</h5>
-      <div className="bg-white border rounded" style={{ maxWidth: '320px' }}>
+      <h5 className="df-mb-3">Quick Actions Menu</h5>
+      <div className="df-bg-surface df-border-1 df-rounded-control" style={{ maxWidth: '320px' }}>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="2rem" className="me-3 text-primary bg-gray-50" />
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="ArrowLeftRight" hasCircle size="2rem" className="df-me-3 df-text-primary df-bg-muted" />
               <div>
-                <div className="fw-semibold">Transfer Money</div>
-                <small className="text-body-secondary">Send funds instantly</small>
+                <div className="df-fw-semibold">Transfer Money</div>
+                <small className="df-text-muted">Send funds instantly</small>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Receipt" hasCircle size="2rem" className="me-3 text-success bg-gray-50" />
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Receipt" hasCircle size="2rem" className="df-me-3 df-text-success df-bg-muted" />
               <div>
-                <div className="fw-semibold">Pay Bills</div>
-                <small className="text-body-secondary">Manage your payments</small>
+                <div className="df-fw-semibold">Pay Bills</div>
+                <small className="df-text-muted">Manage your payments</small>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Download" hasCircle size="2rem" className="me-3 text-info bg-gray-50" />
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Download" hasCircle size="2rem" className="df-me-3 df-text-info df-bg-muted" />
               <div>
-                <div className="fw-semibold">Deposit Check</div>
-                <small className="text-body-secondary">Mobile deposit</small>
+                <div className="df-fw-semibold">Deposit Check</div>
+                <small className="df-text-muted">Mobile deposit</small>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="2rem" className="me-3 text-warning  bg-gray-50" />
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="CreditCard" hasCircle size="2rem" className="df-me-3 df-text-warning df-bg-muted" />
               <div>
-                <div className="fw-semibold">Request Loan</div>
-                <small className="text-body-secondary">Apply for credit</small>
+                <div className="df-fw-semibold">Request Loan</div>
+                <small className="df-text-muted">Apply for credit</small>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="HelpCircle" hasCircle size="2rem" className="me-3 bg-gray-50" />
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="HelpCircle" hasCircle size="2rem" className="df-me-3 df-bg-muted" />
               <div>
-                <div className="fw-semibold">Help & Support</div>
-                <small className="text-body-secondary">24/7 assistance</small>
+                <div className="df-fw-semibold">Help & Support</div>
+                <small className="df-text-muted">24/7 assistance</small>
               </div>
             </div>
           </DListGroup.Item>
@@ -501,49 +501,49 @@ export const SidebarListWithIcons: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Sidebar Menu</h5>
-      <div className="bg-white border rounded" style={{ maxWidth: '280px' }}>
+      <h5 className="df-mb-3">Sidebar Menu</h5>
+      <div className="df-bg-surface df-border-1 df-rounded-control" style={{ maxWidth: '280px' }}>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
-              <span className="fw-medium">Dashboard</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="df-me-3 df-text-primary df-bg-muted" />
+              <span className="df-fw-medium">Dashboard</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
-              <span className="fw-medium">My Accounts</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Wallet" hasCircle size="1rem" className="df-me-3 df-text-success df-bg-muted" />
+              <span className="df-fw-medium">My Accounts</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
-              <span className="fw-medium">Transfers</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="df-me-3 df-text-info df-bg-muted" />
+              <span className="df-fw-medium">Transfers</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple bg-gray-50" />
-              <span className="fw-medium">Payments</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-purple df-bg-muted" />
+              <span className="df-fw-medium">Payments</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-orange bg-gray-50" />
-              <span className="fw-medium">Cards</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-orange df-bg-muted" />
+              <span className="df-fw-medium">Cards</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="DollarSign" hasCircle size="1rem" className="me-3 text-teal  bg-gray-50" />
-              <span className="fw-medium">Loans</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="DollarSign" hasCircle size="1rem" className="df-me-3 text-teal df-bg-muted" />
+              <span className="df-fw-medium">Loans</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 bg-gray-50" />
-              <span className="fw-medium">Settings</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Settings" hasCircle size="1rem" className="df-me-3 df-bg-muted" />
+              <span className="df-fw-medium">Settings</span>
             </div>
           </DListGroup.Item>
         </DListGroup>
@@ -562,48 +562,48 @@ export const SidebarListWithBadges: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Navigation with Notifications</h5>
-      <div className="bg-white border rounded" style={{ maxWidth: '300px' }}>
+      <h5 className="df-mb-3">Navigation with Notifications</h5>
+      <div className="df-bg-surface df-border-1 df-rounded-control" style={{ maxWidth: '300px' }}>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center justify-content-between py-2">
-              <div className="d-flex align-items-center">
-                <DIcon icon="Home" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
-                <span className="fw-medium">Dashboard</span>
+            <div className="df-flex df-items-center df-justify-between df-py-2">
+              <div className="df-flex df-items-center">
+                <DIcon icon="Home" hasCircle size="1rem" className="df-me-3 df-text-primary df-bg-muted" />
+                <span className="df-fw-medium">Dashboard</span>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center justify-content-between py-2">
-              <div className="d-flex align-items-center">
-                <DIcon icon="Mail" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
-                <span className="fw-medium">Messages</span>
+            <div className="df-flex df-items-center df-justify-between df-py-2">
+              <div className="df-flex df-items-center">
+                <DIcon icon="Mail" hasCircle size="1rem" className="df-me-3 df-text-info df-bg-muted" />
+                <span className="df-fw-medium">Messages</span>
               </div>
               <DChip text="5" color="danger" />
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center justify-content-between py-2">
-              <div className="d-flex align-items-center">
-                <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning  bg-gray-50" />
-                <span className="fw-medium">Pending Bills</span>
+            <div className="df-flex df-items-center df-justify-between df-py-2">
+              <div className="df-flex df-items-center">
+                <DIcon icon="Receipt" hasCircle size="1rem" className="df-me-3 df-text-warning df-bg-muted" />
+                <span className="df-fw-medium">Pending Bills</span>
               </div>
               <DChip text="3" color="warning" />
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center justify-content-between py-2">
-              <div className="d-flex align-items-center">
-                <DIcon icon="List" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
-                <span className="fw-medium">Transactions</span>
+            <div className="df-flex df-items-center df-justify-between df-py-2">
+              <div className="df-flex df-items-center">
+                <DIcon icon="List" hasCircle size="1rem" className="df-me-3 df-text-success df-bg-muted" />
+                <span className="df-fw-medium">Transactions</span>
               </div>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center justify-content-between py-2">
-              <div className="d-flex align-items-center">
-                <DIcon icon="Gift" hasCircle size="1rem" className="me-3 text-pink  bg-gray-50" />
-                <span className="fw-medium">Special Offers</span>
+            <div className="df-flex df-items-center df-justify-between df-py-2">
+              <div className="df-flex df-items-center">
+                <DIcon icon="Gift" hasCircle size="1rem" className="df-me-3 text-pink df-bg-muted" />
+                <span className="df-fw-medium">Special Offers</span>
               </div>
               <DChip text="New" color="success" />
             </div>
@@ -624,64 +624,64 @@ export const SidebarListGrouped: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Organized Sidebar Menu</h5>
-      <div className="bg-white border rounded" style={{ maxWidth: '300px' }}>
-        <div className="p-3 border-bottom">
-          <small className="text-body-secondary text-uppercase fw-semibold">Main Menu</small>
+      <h5 className="df-mb-3">Organized Sidebar Menu</h5>
+      <div className="df-bg-surface df-border-1 df-rounded-control" style={{ maxWidth: '300px' }}>
+        <div className="df-p-3 df-border-b-1">
+          <small className="df-text-muted df-text-uppercase df-fw-semibold">Main Menu</small>
         </div>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="me-3 text-primary bg-gray-50" />
-              <span className="fw-medium">Dashboard</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="LayoutDashboard" hasCircle size="1rem" className="df-me-3 df-text-primary df-bg-muted" />
+              <span className="df-fw-medium">Dashboard</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Wallet" hasCircle size="1rem" className="me-3 text-success bg-gray-50" />
-              <span className="fw-medium">Accounts</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Wallet" hasCircle size="1rem" className="df-me-3 df-text-success df-bg-muted" />
+              <span className="df-fw-medium">Accounts</span>
             </div>
           </DListGroup.Item>
         </DListGroup>
 
-        <div className="p-3 border-bottom border-top">
-          <small className="text-body-secondary text-uppercase fw-semibold">Services</small>
+        <div className="df-p-3 df-border-b-1 df-border-t-1">
+          <small className="df-text-muted df-text-uppercase df-fw-semibold">Services</small>
         </div>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="me-3 text-info bg-gray-50" />
-              <span className="fw-medium">Transfer</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="ArrowLeftRight" hasCircle size="1rem" className="df-me-3 df-text-info df-bg-muted" />
+              <span className="df-fw-medium">Transfer</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Receipt" hasCircle size="1rem" className="me-3 text-warning  bg-gray-50" />
-              <span className="fw-medium">Pay Bills</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Receipt" hasCircle size="1rem" className="df-me-3 df-text-warning df-bg-muted" />
+              <span className="df-fw-medium">Pay Bills</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="me-3 text-purple bg-gray-50" />
-              <span className="fw-medium">Loans</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-purple df-bg-muted" />
+              <span className="df-fw-medium">Loans</span>
             </div>
           </DListGroup.Item>
         </DListGroup>
 
-        <div className="p-3 border-bottom border-top">
-          <small className="text-body-secondary text-uppercase fw-semibold">Support</small>
+        <div className="df-p-3 df-border-b-1 df-border-t-1">
+          <small className="df-text-muted df-text-uppercase df-fw-semibold">Support</small>
         </div>
         <DListGroup flush>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="HelpCircle" hasCircle size="1rem" className="me-3 bg-gray-50" />
-              <span className="fw-medium">Help Center</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="HelpCircle" hasCircle size="1rem" className="df-me-3 df-bg-muted" />
+              <span className="df-fw-medium">Help Center</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
-            <div className="d-flex align-items-center py-2">
-              <DIcon icon="Settings" hasCircle size="1rem" className="me-3 bg-gray-50" />
-              <span className="fw-medium">Settings</span>
+            <div className="df-flex df-items-center df-py-2">
+              <DIcon icon="Settings" hasCircle size="1rem" className="df-me-3 df-bg-muted" />
+              <span className="df-fw-medium">Settings</span>
             </div>
           </DListGroup.Item>
         </DListGroup>

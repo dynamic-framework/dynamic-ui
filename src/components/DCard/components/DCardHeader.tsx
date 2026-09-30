@@ -16,7 +16,7 @@ export default function DCardHeader(
   return (
     <div
       className={classNames(
-        'card-header',
+        'df-card-header',
         className,
       )}
       style={style}

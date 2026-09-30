@@ -1,0 +1,85 @@
+/**
+ * Document-level styling: the page ground, the type defaults everything
+ * inherits, and the colour-scheme handshake with the browser.
+ */
+@layer df.base {
+  html {
+    /* Tells the browser to render its own chrome — scrollbars, form controls,
+       the canvas behind the page — in the matching scheme. Without this the
+       scrollbar stays light in dark mode. */
+    color-scheme: light dark;
+  }
+
+  html[data-df-theme="light"] {
+    color-scheme: light;
+  }
+
+  html[data-df-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--df-text-body-font-family);
+    font-size: var(--df-text-body-font-size);
+    font-weight: var(--df-text-body-font-weight);
+    line-height: var(--df-text-body-line-height);
+
+    /* Explicit, not inherited: the page must carry its own ground so it does
+       not borrow whatever is behind it. */
+    color: var(--df-fg-default);
+    background-color: var(--df-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    color: var(--df-role-primary-on-subtle);
+    background-color: var(--df-role-primary-subtle);
+  }
+
+  ::placeholder {
+    color: var(--df-fg-muted);
+    opacity: 1; /* Firefox dims placeholders on top of the colour. */
+  }
+
+  hr {
+    height: var(--df-stroke-divider);
+    margin-block: var(--df-size-4);
+    color: inherit;
+    background-color: var(--df-border-default);
+    border: 0;
+  }
+
+  /* Screen-reader-only text. A utility in 2.x; an element-level helper here,
+     because it is needed by components in the same layer. */
+  .df-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+
+    /* df-consistency-disable-next-line the 1px box and -1px pull are the fixed
+       screen-reader-only recipe, not a spacing decision */
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .df-sr-only-focusable:not(:focus, :focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+
+    /* df-consistency-disable-next-line the 1px box and -1px pull are the fixed
+       screen-reader-only recipe, not a spacing decision */
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}

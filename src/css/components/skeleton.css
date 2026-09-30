@@ -1,0 +1,52 @@
+/**
+ * Loading placeholder.
+ *
+ * Replaces 2.x's `.placeholder`, which was a `<span>` with an opacity and a
+ * `col-*` class for its width — so a placeholder could only be as wide as a
+ * grid column, and its shimmer was a second class you had to remember.
+ *
+ * Here the width comes from whatever sizes the element (a utility, a grid
+ * span, the parent), and the shimmer is on by default because a placeholder
+ * that does not move reads as a broken empty box rather than as pending work.
+ */
+@layer df.components {
+  .df-skeleton {
+    display: block;
+    min-height: var(--df-skeleton-height);
+    background-color: var(--df-skeleton-bg);
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--df-skeleton-shine) 50%,
+      transparent 100%
+    );
+    background-repeat: no-repeat;
+
+    /* 200% so the highlight starts fully off one edge and ends fully off the
+       other; at 100% it would be half-visible at both ends of every cycle. */
+    background-size: 200% 100%;
+    border-radius: var(--df-skeleton-radius);
+    animation: df-skeleton-shine var(--df-skeleton-duration) linear infinite;
+  }
+
+  /* Text inside a placeholder is the content that has not arrived; hiding it
+     rather than removing it keeps the element's own height honest. */
+  .df-skeleton:where(:not(:empty)) {
+    color: transparent;
+    user-select: none;
+  }
+
+  @keyframes df-skeleton-shine {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+
+  /* An indefinite animation is the exact thing a vestibular disorder reacts
+     to, so the resting state has to still read as "pending" on its own. */
+  @media (prefers-reduced-motion: reduce) {
+    .df-skeleton {
+      background-image: none;
+      animation: none;
+    }
+  }
+}

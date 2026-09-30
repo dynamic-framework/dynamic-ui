@@ -1,0 +1,13 @@
+{
+  "$description": "Chip component tokens.",
+  "chip": {
+    "padding-block": {"$type": "dimension", "$value": "{size.1}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.3}"},
+    "gap": {"$type": "dimension", "$value": "{size.2}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.200}"},
+    "line-height": {"$type": "number", "$value": "{line-height.snug}"},
+    "radius": {"$type": "dimension", "$value": "{shape.pill}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
+    "icon-size": {"$type": "dimension", "$value": "{size.4}"}
+  }
+}

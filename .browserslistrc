@@ -1,11 +1,32 @@
 # https://github.com/browserslist/browserslist#readme
+#
+# Dynamic Framework 3.x targets.
+#
+# The 3.x architecture depends on two CSS features the 2.x list excluded:
+#
+#   @layer       Chrome 99, Safari 15.4, Firefox 97    (2022)
+#   color-mix()  Chrome 111, Safari 16.2, Firefox 113  (2023)
+#
+# Neither is decoration. @layer is what lets a client's own (unlayered) CSS win
+# over the framework without !important — which is what removes _shame.scss and
+# the $enable-important-utilities flag. color-mix() is what replaces the
+# --bs-*-rgb channel, which doubled the 2.x colour system and could not be
+# expressed as a Figma variable.
+#
+# The floors below are the exact versions those two features require, rounded
+# up to a release boundary — NOT the `baseline widely available` query, which
+# resolves to Safari 17.4 / Chrome 123 and so drops users this system can
+# actually serve.
+#
+# Raising the floor is a 3.0 breaking change, made once and deliberately: 2.x
+# listed Chrome 60 (2017), Safari 12 (2018) and `op_mini all`, none of which can
+# render a token-driven system at all.
 
->= 0.5%
-last 2 major versions
+Chrome >= 111
+Edge >= 111
+Firefox >= 113
+Safari >= 16.4
+iOS >= 16.4
+Samsung >= 22
+Opera >= 97
 not dead
-Chrome >= 60
-Firefox >= 60
-Firefox ESR
-iOS >= 12
-Safari >= 12
-not Explorer <= 11

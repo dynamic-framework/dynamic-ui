@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import DButtonIcon from '../../src/components/DButtonIcon';
-import { PREFIX_BS } from '../../src/components/config';
 import DDropdown, { DropdownAction } from '../../src/components/DDropdown/DDropdown';
 import { DButton } from '../../src';
 
@@ -44,11 +43,44 @@ The dropdown automatically adjusts its position depending on the available space
 
 ## CSS Variables
 
-| Variable | Class | Type | Description |
-| -------- | ------ | ---- | ----------- |
-| --${PREFIX_BS}dropdown-bg | .dropdown-menu | color | Menu background color |
-| --${PREFIX_BS}dropdown-border-radius | .dropdown-menu | length | Border radius of the dropdown |
-| --${PREFIX_BS}dropdown-item-padding | .dropdown-item | length | Inner padding of each item |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/floating.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                                 | Type           | Description              |
+|------------------------------------------|----------------|--------------------------|
+| \`--df-floating-bg\`                     | css color      | Background               |
+| \`--df-floating-fg\`                     | css color      | Foreground               |
+| \`--df-floating-border-color\`           | css color      | Border color             |
+| \`--df-floating-border-width\`           | css length     | Border width             |
+| \`--df-floating-radius\`                 | css length     | Radius                   |
+| \`--df-floating-shadow\`                 | css box-shadow | Shadow                   |
+| \`--df-floating-padding-block\`          | css length     | Padding block            |
+| \`--df-floating-padding-inline\`         | css length     | Padding inline           |
+| \`--df-floating-min-width\`              | css length     | Min width                |
+| \`--df-floating-z\`                      | number         | Z                        |
+| \`--df-floating-item-padding-block\`     | css length     | Item padding block       |
+| \`--df-floating-item-padding-inline\`    | css length     | Item padding inline      |
+| \`--df-floating-item-gap\`               | css length     | Item gap                 |
+| \`--df-floating-item-font-size\`         | css length     | Item font size           |
+| \`--df-floating-item-fg\`                | css color      | Item foreground          |
+| \`--df-floating-item-hover-bg\`          | css color      | Item hover background    |
+| \`--df-floating-item-active-bg\`         | css color      | Item active background   |
+| \`--df-floating-item-active-fg\`         | css color      | Item active foreground   |
+| \`--df-floating-item-disabled-fg\`       | css color      | Item disabled foreground |
+| \`--df-floating-divider-color\`          | css color      | Divider color            |
+| \`--df-floating-divider-margin-block\`   | css length     | Divider margin block     |
+| \`--df-floating-popover-padding\`        | css length     | Popover padding          |
+| \`--df-floating-popover-z\`              | number         | Popover z                |
+| \`--df-floating-tooltip-bg\`             | css color      | Tooltip background       |
+| \`--df-floating-tooltip-fg\`             | css color      | Tooltip foreground       |
+| \`--df-floating-tooltip-padding-block\`  | css length     | Tooltip padding block    |
+| \`--df-floating-tooltip-padding-inline\` | css length     | Tooltip padding inline   |
+| \`--df-floating-tooltip-font-size\`      | css length     | Tooltip font size        |
+| \`--df-floating-tooltip-radius\`         | css length     | Tooltip radius           |
+| \`--df-floating-tooltip-max-width\`      | css length     | Tooltip max width        |
+| \`--df-floating-tooltip-z\`              | number         | Tooltip z                |
+
         `,
       },
     },

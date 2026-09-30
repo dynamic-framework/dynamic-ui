@@ -11,7 +11,7 @@ describe('<DDataStateWrapper />', () => {
       </DDataStateWrapper>,
     );
 
-    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+    expect(container.querySelector('.df-spinner')).toBeInTheDocument();
   });
 
   it('renders default error state and calls onRetry', () => {
@@ -34,7 +34,7 @@ describe('<DDataStateWrapper />', () => {
       </DDataStateWrapper>,
     );
 
-    expect(container.querySelector('.d-icon')).toBeInTheDocument();
+    expect(container.querySelector('.df-icon')).toBeInTheDocument();
   });
 
   it('renders children when data exists', () => {

@@ -4,7 +4,6 @@ import { motion, type Transition } from 'framer-motion';
 
 import type { PropsWithChildren } from 'react';
 
-import { PREFIX_BS } from '../config';
 import DModalHeader from './components/DModalHeader';
 import DModalBody from './components/DModalBody';
 import DModalFooter from './components/DModalFooter';
@@ -43,27 +42,23 @@ function DModal(
     dataAttributes,
   }: Props,
 ) {
-  const fullScreenClass = useMemo(() => {
-    if (fullScreen) {
-      if (fullScreenFrom) {
-        return `modal-fullscreen-${fullScreenFrom}-down`;
-      }
-      return 'modal-fullscreen';
-    }
-    return '';
-  }, [fullScreenFrom, fullScreen]);
-
-  const generateModalDialogClasses = useMemo(() => ({
-    'modal-dialog': true,
-    'modal-dialog-centered': !!centered,
-    'modal-dialog-scrollable': !!scrollable,
-    [fullScreenClass]: !!fullScreen,
-    ...size && { [`modal-${size}`]: true },
-  }), [fullScreenClass, centered, fullScreen, scrollable, size]);
+  /**
+   * 2.x split this across a `.modal` wrapper and a `.modal-dialog` child with
+   * five modifier classes between them. The panel is one element with an
+   * attribute per axis; `.df-overlay` is shared with the offcanvas, because
+   * the two are the same panel anchored differently.
+   */
+  const dataProps = useMemo(() => ({
+    'data-kind': 'modal',
+    ...(size ? { 'data-size': size } : {}),
+    ...(centered ? { 'data-centered': '' } : {}),
+    ...(scrollable ? { 'data-scrollable': '' } : {}),
+    ...(fullScreen ? { 'data-fullscreen': fullScreenFrom ?? '' } : {}),
+  }), [size, centered, scrollable, fullScreen, fullScreenFrom]);
 
   return (
     <motion.div
-      className={classNames('modal portal show', className)}
+      className={classNames('df-overlay', className)}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
@@ -76,17 +71,17 @@ function DModal(
         ...(transition ?? defaultTransition),
         delay: 0.15,
       }}
-      {...staticBackdrop && ({
-        [`data-${PREFIX_BS}backdrop`]: 'static',
-        [`data-${PREFIX_BS}keyboard`]: 'false',
-      })}
+      // `data-bs-backdrop` / `data-bs-keyboard` only ever meant something to
+      // Bootstrap's JS, which the React build never imports — so `staticBackdrop`
+      // has been inert here all along. Kept as a plain state attribute so the
+      // prop stays honest and the behaviour layer has something to read.
+      {...staticBackdrop && { 'data-static-backdrop': '' }}
+      {...dataProps}
       {...dataAttributes}
     >
-      <div className={classNames(generateModalDialogClasses)}>
-        <div className="modal-content">
-          {children}
-        </div>
-      </div>
+      {/* 2.x nested `.modal > .modal-dialog > .modal-content` — three elements
+          where one carries the panel. */}
+      {children}
     </motion.div>
   );
 }

@@ -14,7 +14,7 @@ import type {
 import type { Options } from 'currency.js';
 
 import useProvidedRefOrCreate from './useProvidedRefOrCreate';
-import { PREFIX_BS } from '../components/config';
+import { PREFIX } from '../components/config';
 
 import type { CustomStyles } from '../components/interface';
 
@@ -55,12 +55,12 @@ export default function useInputCurrency(
   }, [onBlur]);
 
   const generateStyleVariables = useMemo<CustomStyles>(() => ({
-    [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
-    [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
+    [`--${PREFIX}input-currency-component-symbol-color`]: `var(--${PREFIX}secondary)`,
+    [`--${PREFIX}input-currency-symbol-color`]: `var(--${PREFIX}input-currency-component-symbol-color)`,
   }), []);
 
   const generateSymbolStyleVariables = useMemo(() => ({
-    color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
+    color: `var(--${PREFIX}input-currency-symbol-color)`,
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {

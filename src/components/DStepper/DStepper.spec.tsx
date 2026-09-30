@@ -48,14 +48,14 @@ describe('DStepper', () => {
 
   it('uses "lg" as default breakpoint when none is provided', () => {
     const { container } = render(<DStepper {...baseProps} />);
-    expect(container.querySelector('.d-lg-none')).toBeInTheDocument();
-    expect(container.querySelector('.d-lg-block')).toBeInTheDocument();
+    expect(container.querySelector('[data-below="lg"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-from="lg"]')).toBeInTheDocument();
   });
 
   it('applies a custom breakpoint if specified', () => {
     const { container } = render(<DStepper {...baseProps} breakpoint="md" />);
-    expect(container.querySelector('.d-md-none')).toBeInTheDocument();
-    expect(container.querySelector('.d-md-block')).toBeInTheDocument();
+    expect(container.querySelector('[data-below="md"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-from="md"]')).toBeInTheDocument();
   });
 
   it('applies custom className, inline styles, and data attributes', () => {

@@ -14,7 +14,7 @@ import type {
 } from 'react';
 
 import DInput from '../DInput';
-import { PREFIX_BS } from '../config';
+import { PREFIX } from '../config';
 
 import type {
   CustomStyles,
@@ -88,7 +88,7 @@ function DInputCounter(
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
-    [`--${PREFIX_BS}form-control-component-text-align`]: 'center',
+    [`--${PREFIX}form-control-component-text-align`]: 'center',
   }), [style]);
 
   const valueString = useMemo(() => (

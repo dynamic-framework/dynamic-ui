@@ -1,0 +1,14 @@
+{
+  "$description": "Alert component tokens. Structural only; the eight colour variants are assigned per selector from the role semantics — see component/button.json for why.",
+  "alert": {
+    "padding-block": { "$type": "dimension", "$value": "{size.3}" },
+    "padding-inline": { "$type": "dimension", "$value": "{size.4}" },
+    "gap": { "$type": "dimension", "$value": "{size.3}" },
+    "radius": { "$type": "dimension", "$value": "{shape.control}" },
+    "border-width": { "$type": "dimension", "$value": "{stroke.control}" },
+    "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
+    "line-height": { "$type": "number", "$value": "{line-height.normal}" },
+    "icon-size": { "$type": "dimension", "$value": "{size.5}" },
+    "title-font-weight": { "$type": "fontWeight", "$value": "{font-weight.semibold}" }
+  }
+}

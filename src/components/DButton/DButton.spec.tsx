@@ -42,18 +42,23 @@ describe('<DButton />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-    <div>
-      <button
-        aria-busy="false"
-        aria-disabled="false"
-        aria-label="Test"
-        class="btn btn-primary"
-        type="button"
-      >
-        ${props.text}
-      </button>
-    </div>
-  `);
+<div>
+  <button
+    aria-busy="false"
+    aria-label="Test"
+    class="df-button"
+    data-color="primary"
+    data-variant="solid"
+    type="button"
+  >
+    <span
+      class="df-button-label"
+    >
+      Test
+    </span>
+  </button>
+</div>
+`);
   });
 
   it('Should call onClick when clicked and stopPropagation is true', () => {
@@ -86,7 +91,7 @@ describe('<DButton />', () => {
       />,
     );
 
-    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+    expect(container.querySelector('.df-spinner')).toBeInTheDocument();
     expect(container.querySelector('[aria-label="Loading..."]')).toBeInTheDocument();
   });
 
@@ -99,7 +104,7 @@ describe('<DButton />', () => {
       />,
     );
 
-    expect(container.querySelector('.btn-outline-secondary')).toBeInTheDocument();
+    expect(container.querySelector('[data-variant="outline"][data-color="secondary"]')).toBeInTheDocument();
   });
 
   it('Should render start and end icons', () => {
@@ -111,7 +116,7 @@ describe('<DButton />', () => {
       />,
     );
 
-    const icons = container.querySelectorAll('.d-icon');
+    const icons = container.querySelectorAll('.df-icon');
     expect(icons).toHaveLength(2);
     expect(icons[0].querySelector('svg')).toBeInTheDocument();
     expect(icons[1].querySelector('svg')).toBeInTheDocument();
@@ -171,7 +176,7 @@ describe('<DButton />', () => {
       />,
     );
 
-    expect(getByRole('button')).toHaveClass('btn-lg');
+    expect(getByRole('button')).toHaveAttribute('data-size', 'lg');
   });
 
   it('Should apply responsive size class (sm)', () => {
@@ -186,12 +191,12 @@ describe('<DButton />', () => {
         <DButton text="Responsive" size={{ sm: 'sm', lg: 'lg' }} />
       </DContextProvider>,
     );
-    expect([
-      'btn btn-primary',
-      'btn btn-primary btn-sm',
-      'btn btn-primary btn-md',
-      'btn btn-primary btn-lg',
-    ]).toContain(getByRole('button').className);
+    // Which breakpoint jsdom resolves to is not pinned down here, so the
+    // assertion is that whatever it picked is a valid size — or absent, when no
+    // breakpoint matched. With the size on a data attribute this no longer
+    // means enumerating whole className strings.
+    expect([null, 'sm', 'md', 'lg'])
+      .toContain(getByRole('button').getAttribute('data-size'));
   });
 
   it('Should apply responsive size class (lg)', () => {
@@ -206,7 +211,7 @@ describe('<DButton />', () => {
         <DButton text="Responsive" size={{ lg: 'lg' }} />
       </DContextProvider>,
     );
-    expect(getByRole('button')).toHaveClass('btn-lg');
+    expect(getByRole('button')).toHaveAttribute('data-size', 'lg');
   });
 
   it('Should not throw if onClick is not provided', () => {
@@ -253,7 +258,9 @@ describe('<DButton />', () => {
       />,
     );
 
-    expect(container.querySelector(`.btn-soft-${color}`)).toBeInTheDocument();
+    expect(
+      container.querySelector(`[data-variant="soft"][data-color="${color}"]`),
+    ).toBeInTheDocument();
   });
 
   it('Should render soft variant with size class', () => {
@@ -267,8 +274,9 @@ describe('<DButton />', () => {
     );
 
     const btn = container.querySelector('button');
-    expect(btn).toHaveClass('btn-soft-primary');
-    expect(btn).toHaveClass('btn-lg');
+    expect(btn).toHaveAttribute('data-variant', 'soft');
+    expect(btn).toHaveAttribute('data-color', 'primary');
+    expect(btn).toHaveAttribute('data-size', 'lg');
   });
 
   it('Should render soft variant in disabled state', () => {
@@ -282,7 +290,8 @@ describe('<DButton />', () => {
     );
 
     const btn = container.querySelector('button');
-    expect(btn).toHaveClass('btn-soft-primary');
+    expect(btn).toHaveAttribute('data-variant', 'soft');
+    expect(btn).toHaveAttribute('data-color', 'primary');
     expect(btn).toBeDisabled();
   });
 
@@ -296,7 +305,9 @@ describe('<DButton />', () => {
       />,
     );
 
-    expect(container.querySelector('.btn-soft-primary')).toBeInTheDocument();
-    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+    expect(
+      container.querySelector('[data-variant="soft"][data-color="primary"]'),
+    ).toBeInTheDocument();
+    expect(container.querySelector('.df-spinner')).toBeInTheDocument();
   });
 });

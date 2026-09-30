@@ -116,7 +116,7 @@ Props accepted by `DToastContainer`.
 
 <Unstyled>
   <div
-    className="d-flex flex-column justify-content-end align-items-end"
+    className="df-flex df-flex-col df-justify-end df-items-end"
     style={{ height: "200px" }}
   >
     <ExampleSimpleToastRoot />
@@ -153,7 +153,7 @@ export function App() {
 
 <Unstyled>
   <div
-    className="d-flex flex-column justify-content-end align-items-end"
+    className="df-flex df-flex-col df-justify-end df-items-end"
     style={{ height: "200px" }}
   >
     <ExampleSimpleToastRoot type="success" />
@@ -197,7 +197,7 @@ When `description` is provided the toast switches to a two-row layout with a hea
 
 <Unstyled>
   <div
-    className="d-flex flex-column justify-content-end align-items-end"
+    className="df-flex df-flex-col df-justify-end df-items-end"
     style={{ height: "200px" }}
   >
     <ExampleFullToastRoot type="base" />
@@ -244,7 +244,7 @@ export function App() {
 
 <Unstyled>
   <div
-    className="d-flex flex-column justify-content-end align-items-end"
+    className="df-flex df-flex-col df-justify-end df-items-end"
     style={{ height: "200px" }}
   >
     <ExampleFullToastRoot type="success" />
@@ -295,7 +295,7 @@ The function receives the react-hot-toast `Toast` object, which includes `id` an
 
 <Unstyled>
   <div
-    className="d-flex flex-column justify-content-end align-items-end"
+    className="df-flex df-flex-col df-justify-end df-items-end"
     style={{ height: "200px" }}
   >
     <ExampleCustomToastRoot />
@@ -313,8 +313,8 @@ export function CustomToastExample({ id, visible }: Toast) {
   if (!visible) return null;
 
   return (
-    <div className="bg-secondary-subtle rounded-2 p-4 text-center">
-      <p className="fw-bold mt-0">Toast!</p>
+    <div className="df-bg-secondary-subtle df-rounded-control df-p-4 df-text-center">
+      <p className="df-fw-semibold df-mt-0">Toast!</p>
       <DButton
         size="sm"
         variant="outline"

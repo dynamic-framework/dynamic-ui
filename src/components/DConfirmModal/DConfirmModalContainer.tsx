@@ -78,7 +78,7 @@ export default function DConfirmModalContainer({ nodeId }: Props) {
           transition={{ duration: 0.15, ease: 'linear' }}
         >
           <div
-            className="backdrop backdrop-confirm-modal"
+            className="df-backdrop"
             onClick={entry.onCloseAction}
             role="presentation"
           />

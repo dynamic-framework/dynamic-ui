@@ -55,9 +55,9 @@ export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>)
       staticBackdrop
     >
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        <h5 className="df-fw-semibold">Do you want to reject the offer?</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
+      <DModal.Body className="df-py-3 df-px-5">
         <p>Modal body</p>
         <small>{payload.description}</small>
       </DModal.Body>
@@ -66,10 +66,10 @@ export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>)
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
+          className="df-grid"
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" className="df-grid" />
       </DModal.Footer>
     </DModal>
   );
@@ -144,7 +144,7 @@ export function ExampleModalUsage() {
 />
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end">
+  <div className="df-flex df-flex-col df-justify-end df-items-end">
     <ExampleModalRoot />
   </div>
 </Unstyled>

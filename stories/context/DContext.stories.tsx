@@ -158,15 +158,15 @@ function CurrencyConsumptionCard() {
   const { values, format } = useFormatCurrency(1250.75);
 
   return (
-    <div className="card p-3" style={{ maxWidth: '420px' }}>
-      <h6 className="mb-2">Invoice total</h6>
-      <p className="mb-1">Stored amount: 1250.75</p>
-      <p className="mb-1">
+    <div className="df-card df-p-3" style={{ maxWidth: '420px' }}>
+      <h6 className="df-mb-2">Invoice total</h6>
+      <p className="df-mb-1">Stored amount: 1250.75</p>
+      <p className="df-mb-1">
         Auto from hook:
         {' '}
         {values[0]}
       </p>
-      <p className="mb-0">
+      <p className="df-mb-0">
         Manual format call:
         {' '}
         {format(99999.9)}
@@ -195,11 +195,11 @@ export const CurrencyConsumption: Story = {
   const { values, format } = useFormatCurrency(1250.75);
 
   return (
-    <div className="card p-3" style={{ maxWidth: '420px' }}>
-      <h6 className="mb-2">Invoice total</h6>
-      <p className="mb-1">Stored amount: 1250.75</p>
-      <p className="mb-1">Auto from hook: {values[0]}</p>
-      <p className="mb-0">Manual format call: {format(99999.9)}</p>
+    <div className="df-card df-p-3" style={{ maxWidth: '420px' }}>
+      <h6 className="df-mb-2">Invoice total</h6>
+      <p className="df-mb-1">Stored amount: 1250.75</p>
+      <p className="df-mb-1">Auto from hook: {values[0]}</p>
+      <p className="df-mb-0">Manual format call: {format(99999.9)}</p>
     </div>
   );
 }
@@ -224,14 +224,14 @@ function BreakpointConsumptionCard() {
   const { breakpoints } = useDContext();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '520px' }}>
-      <h6 className="mb-2">Breakpoint-aware content</h6>
-      <p className="mb-1">
+    <div className="df-card df-p-3" style={{ maxWidth: '520px' }}>
+      <h6 className="df-mb-2">Breakpoint-aware content</h6>
+      <p className="df-mb-1">
         Is md and up:
         {' '}
         <strong>{String(isMdUp)}</strong>
       </p>
-      <p className="mb-0">
+      <p className="df-mb-0">
         Resolved breakpoints: sm=
         {breakpoints.sm}
         {' '}
@@ -259,10 +259,10 @@ export const BreakpointConsumption: Story = {
   const { breakpoints } = useDContext();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '520px' }}>
-      <h6 className="mb-2">Breakpoint-aware content</h6>
-      <p className="mb-1">Is md and up: <strong>{String(isMdUp)}</strong></p>
-      <p className="mb-0">
+    <div className="df-card df-p-3" style={{ maxWidth: '520px' }}>
+      <h6 className="df-mb-2">Breakpoint-aware content</h6>
+      <p className="df-mb-1">Is md and up: <strong>{String(isMdUp)}</strong></p>
+      <p className="df-mb-0">
         Resolved breakpoints: sm={breakpoints.sm} md={breakpoints.md} lg={breakpoints.lg}
       </p>
     </div>
@@ -284,9 +284,9 @@ function IconConsumptionCard() {
   } = useDContext();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '540px' }}>
-      <h6 className="mb-2">Icon config in action</h6>
-      <p className="mb-2">
+    <div className="df-card df-p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="df-mb-2">Icon config in action</h6>
+      <p className="df-mb-2">
         Family:
         {' '}
         {icon.familyClass}
@@ -295,16 +295,16 @@ function IconConsumptionCard() {
         {' '}
         {icon.familyPrefix}
       </p>
-      <div className="d-flex align-items-center gap-3">
-        <span className="d-flex align-items-center gap-1">
+      <div className="df-flex df-items-center df-gap-3">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.calendar} />
           <small>calendar</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.upload} />
           <small>upload</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.input.search} />
           <small>search</small>
         </span>
@@ -356,19 +356,19 @@ export const IconConsumption: Story = {
   const { icon, iconMap } = useDContext();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '540px' }}>
-      <h6 className="mb-2">Icon config in action</h6>
-      <p className="mb-2">Family: {icon.familyClass} / Prefix: {icon.familyPrefix}</p>
-      <div className="d-flex align-items-center gap-3">
-        <span className="d-flex align-items-center gap-1">
+    <div className="df-card df-p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="df-mb-2">Icon config in action</h6>
+      <p className="df-mb-2">Family: {icon.familyClass} / Prefix: {icon.familyPrefix}</p>
+      <div className="df-flex df-items-center df-gap-3">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.calendar} />
           <small>calendar</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.upload} />
           <small>upload</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon={iconMap.input.search} />
           <small>search</small>
         </span>
@@ -402,21 +402,21 @@ export const IconConsumption: Story = {
 
 function IconRegistryConsumptionCard() {
   return (
-    <div className="card p-3" style={{ maxWidth: '540px' }}>
-      <h6 className="mb-2">iconRegistry in action</h6>
-      <p className="mb-2">
+    <div className="df-card df-p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="df-mb-2">iconRegistry in action</h6>
+      <p className="df-mb-2">
         String icon names can resolve to custom SVG components from the registry.
       </p>
-      <div className="d-flex align-items-center gap-3">
-        <span className="d-flex align-items-center gap-1">
+      <div className="df-flex df-items-center df-gap-3">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon="NMChevron" />
           <small>NMChevron (registry)</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon="NMSmile" />
           <small>NMSmile (registry)</small>
         </span>
-        <span className="d-flex align-items-center gap-1">
+        <span className="df-flex df-items-center df-gap-1">
           <DIcon icon="Home" />
           <small>Home (fallback)</small>
         </span>
@@ -471,22 +471,22 @@ function InvoicePreviewModal({ name, payload }: PortalProps<PortalDemoPayloads['
   return (
     <DModal name={name} centered>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-semibold">Invoice preview</h5>
+        <h5 className="df-fw-semibold">Invoice preview</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="mb-1">
+        <p className="df-mb-1">
           Invoice ID:
           {' '}
           {payload.invoiceId}
         </p>
-        <p className="mb-0">
+        <p className="df-mb-0">
           Total due:
           {' '}
           {format(payload.total)}
         </p>
       </DModal.Body>
       <DModal.Footer>
-        <DButton text="Close" onClick={closePortal} className="ms-auto" />
+        <DButton text="Close" onClick={closePortal} className="df-ms-auto" />
       </DModal.Footer>
     </DModal>
   );
@@ -499,9 +499,9 @@ function PortalActions() {
   } = useDPortalContext<PortalDemoPayloads>();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '460px' }}>
-      <h6 className="mb-2">Portal flow from DContextProvider</h6>
-      <p className="mb-2">
+    <div className="df-card df-p-3" style={{ maxWidth: '460px' }}>
+      <h6 className="df-mb-2">Portal flow from DContextProvider</h6>
+      <p className="df-mb-2">
         Open stack size:
         {' '}
         {stack.length}
@@ -545,14 +545,14 @@ function InvoicePreviewModal({ name, payload }: PortalProps<PortalDemoPayloads['
   return (
     <DModal name={name} centered>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-semibold">Invoice preview</h5>
+        <h5 className="df-fw-semibold">Invoice preview</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="mb-1">Invoice ID: {payload.invoiceId}</p>
-        <p className="mb-0">Total due: {format(payload.total)}</p>
+        <p className="df-mb-1">Invoice ID: {payload.invoiceId}</p>
+        <p className="df-mb-0">Total due: {format(payload.total)}</p>
       </DModal.Body>
       <DModal.Footer>
-        <DButton text="Close" onClick={closePortal} className="ms-auto" />
+        <DButton text="Close" onClick={closePortal} className="df-ms-auto" />
       </DModal.Footer>
     </DModal>
   );
@@ -562,9 +562,9 @@ function PortalActions() {
   const { openPortal, stack } = useDPortalContext<PortalDemoPayloads>();
 
   return (
-    <div className="card p-3" style={{ maxWidth: '460px' }}>
-      <h6 className="mb-2">Portal flow from DContextProvider</h6>
-      <p className="mb-2">Open stack size: {stack.length}</p>
+    <div className="df-card df-p-3" style={{ maxWidth: '460px' }}>
+      <h6 className="df-mb-2">Portal flow from DContextProvider</h6>
+      <p className="df-mb-2">Open stack size: {stack.length}</p>
       <DButton
         text="Open invoice modal"
         onClick={() => openPortal('invoicePreview', { invoiceId: 'INV-24009', total: 19875.4 })}
@@ -618,14 +618,14 @@ function RuntimeContextUpdateCard() {
   };
 
   return (
-    <div className="card p-3" style={{ maxWidth: '540px' }}>
-      <h6 className="mb-2">Runtime context updates</h6>
-      <p className="mb-1">
+    <div className="df-card df-p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="df-mb-2">Runtime context updates</h6>
+      <p className="df-mb-1">
         Language:
         {' '}
         {language}
       </p>
-      <p className="mb-3">
+      <p className="df-mb-3">
         Formatted value:
         {' '}
         {format(25600.89)}
@@ -678,10 +678,10 @@ export const RuntimeContextUpdate: Story = {
   };
 
   return (
-    <div className="card p-3" style={{ maxWidth: '540px' }}>
-      <h6 className="mb-2">Runtime context updates</h6>
-      <p className="mb-1">Language: {language}</p>
-      <p className="mb-3">Formatted value: {format(25600.89)}</p>
+    <div className="df-card df-p-3" style={{ maxWidth: '540px' }}>
+      <h6 className="df-mb-2">Runtime context updates</h6>
+      <p className="df-mb-1">Language: {language}</p>
+      <p className="df-mb-3">Formatted value: {format(25600.89)}</p>
       <DButton
         text={useChileFormat ? 'Switch to US format' : 'Switch to CL format'}
         onClick={toggleContext}
@@ -709,14 +709,14 @@ function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel'
   return (
     <DModal name={name} centered>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-semibold">
+        <h5 className="df-fw-semibold">
           Portal scope
           {' '}
           {payload.scope}
         </h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="mb-0">
+        <p className="df-mb-0">
           This modal belongs to provider
           {' '}
           {payload.scope}
@@ -724,7 +724,7 @@ function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel'
         </p>
       </DModal.Body>
       <DModal.Footer>
-        <DButton text="Close" onClick={closePortal} className="ms-auto" />
+        <DButton text="Close" onClick={closePortal} className="df-ms-auto" />
       </DModal.Footer>
     </DModal>
   );
@@ -734,8 +734,8 @@ function IsolationActions({ scope }: { scope: string }) {
   const { openPortal } = useDPortalContext<IsolationPayloads>();
 
   return (
-    <div className="card p-3" style={{ minWidth: '280px' }}>
-      <h6 className="mb-2">
+    <div className="df-card df-p-3" style={{ minWidth: '280px' }}>
+      <h6 className="df-mb-2">
         Provider
         {' '}
         {scope}
@@ -750,7 +750,7 @@ function IsolationActions({ scope }: { scope: string }) {
 
 export const PortalNameIsolation: Story = {
   render: () => (
-    <div className="d-flex flex-column flex-md-row gap-3">
+    <div className="df-flex df-flex-col df-md:flex-row df-gap-3">
       <DContextProvider<IsolationPayloads>
         portalName="portal-scope-a"
         availablePortals={{ panel: IsolationModal }}
@@ -780,13 +780,13 @@ function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel'
   return (
     <DModal name={name} centered>
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-semibold">Portal scope {payload.scope}</h5>
+        <h5 className="df-fw-semibold">Portal scope {payload.scope}</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="mb-0">This modal belongs to provider {payload.scope}.</p>
+        <p className="df-mb-0">This modal belongs to provider {payload.scope}.</p>
       </DModal.Body>
       <DModal.Footer>
-        <DButton text="Close" onClick={closePortal} className="ms-auto" />
+        <DButton text="Close" onClick={closePortal} className="df-ms-auto" />
       </DModal.Footer>
     </DModal>
   );
@@ -795,14 +795,14 @@ function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel'
 function IsolationActions({ scope }: { scope: string }) {
   const { openPortal } = useDPortalContext<IsolationPayloads>();
   return (
-    <div className="card p-3" style={{ minWidth: '280px' }}>
-      <h6 className="mb-2">Provider {scope}</h6>
+    <div className="df-card df-p-3" style={{ minWidth: '280px' }}>
+      <h6 className="df-mb-2">Provider {scope}</h6>
       <DButton text={\`Open \${scope} modal\`} onClick={() => openPortal('panel', { scope })} />
     </div>
   );
 }
 
-<div className="d-flex flex-column flex-md-row gap-3">
+<div className="df-flex df-flex-col df-md:flex-row df-gap-3">
   <DContextProvider<IsolationPayloads>
     portalName="portal-scope-a"
     availablePortals={{ panel: IsolationModal }}

@@ -82,9 +82,9 @@ function MobileViewport(
         maxWidth: '100%',
         height: '760px',
         borderRadius: '1.25rem',
-        border: '1px solid var(--bs-gray-200)',
+        border: '1px solid var(--df-color-neutral-200)',
         overflow: 'hidden',
-        background: 'var(--bs-gray-25)',
+        background: 'var(--df-color-neutral-25)',
         position: 'relative',
       }}
     >
@@ -95,13 +95,13 @@ function MobileViewport(
 
 function BottomSheetHandle() {
   return (
-    <div className="d-flex justify-content-center py-2">
+    <div className="df-flex df-justify-center df-py-2">
       <span
         style={{
           width: '44px',
           height: '4px',
           borderRadius: '999px',
-          background: 'var(--bs-gray-300)',
+          background: 'var(--df-color-neutral-300)',
         }}
       />
     </div>
@@ -120,19 +120,19 @@ function AccountActionsSheet({ name, payload }: PortalProps<AccountActionsPayloa
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <div>
-          <h5 className="mb-0 fw-semibold">{payload.accountName}</h5>
-          <small className="text-muted">
+          <h5 className="df-mb-0 df-fw-semibold">{payload.accountName}</h5>
+          <small className="df-text-muted">
             Available balance:
             {' '}
             {payload.balance}
           </small>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-2">
-        <DButton text="Transfer money" className="w-100" variant="soft" />
-        <DButton text="Pay credit card" className="w-100" variant="soft" />
-        <DButton text="Deposit check" className="w-100" variant="soft" />
-        <DButton text="View statement" className="w-100" variant="soft" />
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-2">
+        <DButton text="Transfer money" className="df-w-full" variant="soft" />
+        <DButton text="Pay credit card" className="df-w-full" variant="soft" />
+        <DButton text="Deposit check" className="df-w-full" variant="soft" />
+        <DButton text="View statement" className="df-w-full" variant="soft" />
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
         <DButton text="Close" variant="outline" color="secondary" onClick={closePortal} />
@@ -146,20 +146,20 @@ function AccountActionsMobileContent() {
 
   return (
     <MobileViewport>
-      <div className="p-4 d-flex flex-column h-100">
-        <div className="mb-4">
-          <small className="text-muted">Main account</small>
-          <h3 className="mb-0">$12,847.90</h3>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <div className="df-mb-4">
+          <small className="df-text-muted">Main account</small>
+          <h3 className="df-mb-0">$12,847.90</h3>
         </div>
 
-        <div className="card p-3 mb-3">
-          <small className="text-muted">Card ending in 4532</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">Card ending in 4532</small>
           <strong>Credit used: $1,235.00</strong>
         </div>
 
-        <div className="mt-auto">
+        <div className="df-mt-auto">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Open account actions"
             onClick={() => openPortal('accountActions', {
               accountName: 'Checking account ••4532',
@@ -204,9 +204,9 @@ function MobileViewport({ children }: { children: ReactNode }) {
         maxWidth: '100%',
         height: '760px',
         borderRadius: '1.25rem',
-        border: '1px solid var(--bs-gray-200)',
+        border: '1px solid var(--df-color-neutral-200)',
         overflow: 'hidden',
-        background: 'var(--bs-gray-25)',
+        background: 'var(--df-color-neutral-25)',
         position: 'relative',
       }}
     >
@@ -217,13 +217,13 @@ function MobileViewport({ children }: { children: ReactNode }) {
 
 function BottomSheetHandle() {
   return (
-    <div className="d-flex justify-content-center py-2">
+    <div className="df-flex df-justify-center df-py-2">
       <span
         style={{
           width: '44px',
           height: '4px',
           borderRadius: '999px',
-          background: 'var(--bs-gray-300)',
+          background: 'var(--df-color-neutral-300)',
         }}
       />
     </div>
@@ -238,15 +238,15 @@ function AccountActionsSheet({ name, payload }: PortalProps<AccountActionsPayloa
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <div>
-          <h5 className="mb-0 fw-semibold">{payload.accountName}</h5>
-          <small className="text-muted">Available balance: {payload.balance}</small>
+          <h5 className="df-mb-0 df-fw-semibold">{payload.accountName}</h5>
+          <small className="df-text-muted">Available balance: {payload.balance}</small>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-2">
-        <DButton text="Transfer money" className="w-100" variant="soft" />
-        <DButton text="Pay credit card" className="w-100" variant="soft" />
-        <DButton text="Deposit check" className="w-100" variant="soft" />
-        <DButton text="View statement" className="w-100" variant="soft" />
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-2">
+        <DButton text="Transfer money" className="df-w-full" variant="soft" />
+        <DButton text="Pay credit card" className="df-w-full" variant="soft" />
+        <DButton text="Deposit check" className="df-w-full" variant="soft" />
+        <DButton text="View statement" className="df-w-full" variant="soft" />
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
         <DButton text="Close" variant="outline" color="secondary" onClick={closePortal} />
@@ -260,18 +260,18 @@ function AccountActionsMobileContent() {
 
   return (
     <MobileViewport>
-      <div className="p-4 d-flex flex-column h-100">
-        <div className="mb-4">
-          <small className="text-muted">Main account</small>
-          <h3 className="mb-0">$12,847.90</h3>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <div className="df-mb-4">
+          <small className="df-text-muted">Main account</small>
+          <h3 className="df-mb-0">$12,847.90</h3>
         </div>
-        <div className="card p-3 mb-3">
-          <small className="text-muted">Card ending in 4532</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">Card ending in 4532</small>
           <strong>Credit used: $1,235.00</strong>
         </div>
-        <div className="mt-auto">
+        <div className="df-mt-auto">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Open account actions"
             onClick={() => openPortal('accountActions', {
               accountName: 'Checking account ••4532',
@@ -329,38 +329,38 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
     >
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="mb-0 fw-semibold">Review transfer</h5>
+        <h5 className="df-mb-0 df-fw-semibold">Review transfer</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <DListGroup>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Recipient</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Recipient</span>
             <strong>{payload.recipient}</strong>
           </DListGroup.Item>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Amount</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Amount</span>
             <strong>
               $
               {payload.amount.toFixed(2)}
             </strong>
           </DListGroup.Item>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Amount</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Amount</span>
             <strong>
               $
               {payload.amount.toFixed(2)}
             </strong>
           </DListGroup.Item>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Fee</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Fee</span>
             <strong>
               $
               {fee.toFixed(2)}
             </strong>
           </DListGroup.Item>
           <DListGroup.Item>
-            <div className="d-flex justify-content-between">
-              <span className="text-muted">Total debit</span>
+            <div className="df-flex df-justify-between">
+              <span className="df-text-muted">Total debit</span>
               <strong>
                 $
                 {total.toFixed(2)}
@@ -382,23 +382,23 @@ function TransferReviewMobileContent() {
 
   return (
     <MobileViewport>
-      <div className="p-4 d-flex flex-column h-100">
-        <h5 className="mb-1">New transfer</h5>
-        <small className="text-muted mb-4">From checking account</small>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <h5 className="df-mb-1">New transfer</h5>
+        <small className="df-text-muted df-mb-4">From checking account</small>
 
-        <div className="card p-3 mb-3">
-          <small className="text-muted">To</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">To</small>
           <strong>Sarah Mitchell</strong>
         </div>
 
-        <div className="card p-3 mb-3">
-          <small className="text-muted">Amount</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">Amount</small>
           <strong>$245.00</strong>
         </div>
 
-        <div className="mt-auto d-flex flex-column gap-2">
+        <div className="df-mt-auto df-flex df-flex-col df-gap-2">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Continue"
             onClick={() => openPortal('transferReview', {
               recipient: 'Sarah Mitchell',
@@ -436,8 +436,8 @@ const bottomSheetStyle = {
 
 function BottomSheetHandle() {
   return (
-    <div className="d-flex justify-content-center py-2">
-      <span style={{ width: '44px', height: '4px', borderRadius: '999px', background: 'var(--bs-gray-300)' }} />
+    <div className="df-flex df-justify-center df-py-2">
+      <span style={{ width: '44px', height: '4px', borderRadius: '999px', background: 'var(--df-color-neutral-300)' }} />
     </div>
   );
 }
@@ -451,25 +451,25 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
     <DOffcanvas name={name} openFrom="bottom" style={bottomSheetStyle}>
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="mb-0 fw-semibold">Review transfer</h5>
+        <h5 className="df-mb-0 df-fw-semibold">Review transfer</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <DListGroup>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Recipient</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Recipient</span>
             <strong>{payload.recipient}</strong>
           </DListGroup.Item>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Amount</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Amount</span>
             <strong>\${payload.amount.toFixed(2)}</strong>
           </DListGroup.Item>
-          <DListGroup.Item className="justify-content-between">
-            <span className="text-muted">Fee</span>
+          <DListGroup.Item className="df-justify-between">
+            <span className="df-text-muted">Fee</span>
             <strong>\${fee.toFixed(2)}</strong>
           </DListGroup.Item>
           <DListGroup.Item>
-            <div className="d-flex justify-content-between">
-              <span className="text-muted">Total debit</span>
+            <div className="df-flex df-justify-between">
+              <span className="df-text-muted">Total debit</span>
               <strong>\${total.toFixed(2)}</strong>
             </div>
           </DListGroup.Item>
@@ -487,20 +487,20 @@ function TransferReviewMobileContent() {
   const { openPortal } = useDPortalContext<TransferReviewPayloads>();
 
   return (
-      <div className="p-4 d-flex flex-column h-100">
-        <h5 className="mb-1">New transfer</h5>
-        <small className="text-muted mb-4">From checking account</small>
-        <div className="card p-3 mb-3">
-          <small className="text-muted">To</small>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <h5 className="df-mb-1">New transfer</h5>
+        <small className="df-text-muted df-mb-4">From checking account</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">To</small>
           <strong>Sarah Mitchell</strong>
         </div>
-        <div className="card p-3 mb-3">
-          <small className="text-muted">Amount</small>
+        <div className="df-card df-p-3 df-mb-3">
+          <small className="df-text-muted">Amount</small>
           <strong>$245.00</strong>
         </div>
-        <div className="mt-auto d-flex flex-column gap-2">
+        <div className="df-mt-auto df-flex df-flex-col df-gap-2">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Continue"
             onClick={() => openPortal('transferReview', {
               recipient: 'Sarah Mitchell',
@@ -558,15 +558,15 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <div>
-          <h5 className="mb-0 fw-semibold">{payload.cardLabel}</h5>
-          <small className="text-muted">
+          <h5 className="df-mb-0 df-fw-semibold">{payload.cardLabel}</h5>
+          <small className="df-text-muted">
             Card ending in
             {' '}
             {payload.cardLast4}
           </small>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-3">
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
         <DInputSwitch
           id="freeze-card-switch"
           label="Freeze card"
@@ -579,7 +579,7 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
           checked={onlinePayments}
           onChange={setOnlinePayments}
         />
-        <DButton text="Replace card" variant="outline" color="danger" className="w-100 mt-2" />
+        <DButton text="Replace card" variant="outline" color="danger" className="df-w-full df-mt-2" />
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
@@ -593,17 +593,17 @@ function CardControlsMobileContent() {
 
   return (
     <MobileViewport>
-      <div className="p-4 d-flex flex-column h-100">
-        <h5 className="mb-3">Cards</h5>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <h5 className="df-mb-3">Cards</h5>
 
-        <div className="card p-3 mb-3 bg-primary text-white">
-          <small className="opacity-75">Platinum card</small>
-          <h6 className="mb-0">•••• •••• •••• 4532</h6>
+        <div className="df-card df-p-3 df-mb-3 df-bg-primary df-text-on-emphasis">
+          <small className="df-opacity-80">Platinum card</small>
+          <h6 className="df-mb-0">•••• •••• •••• 4532</h6>
         </div>
 
-        <div className="mt-auto">
+        <div className="df-mt-auto">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Manage card"
             onClick={() => openPortal('cardControls', {
               cardLabel: 'Platinum card',
@@ -642,8 +642,8 @@ const bottomSheetStyle = {
 
 function BottomSheetHandle() {
   return (
-    <div className="d-flex justify-content-center py-2">
-      <span style={{ width: '44px', height: '4px', borderRadius: '999px', background: 'var(--bs-gray-300)' }} />
+    <div className="df-flex df-justify-center df-py-2">
+      <span style={{ width: '44px', height: '4px', borderRadius: '999px', background: 'var(--df-color-neutral-300)' }} />
     </div>
   );
 }
@@ -658,14 +658,14 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <div>
-          <h5 className="mb-0 fw-semibold">{payload.cardLabel}</h5>
-          <small className="text-muted">Card ending in {payload.cardLast4}</small>
+          <h5 className="df-mb-0 df-fw-semibold">{payload.cardLabel}</h5>
+          <small className="df-text-muted">Card ending in {payload.cardLast4}</small>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-3">
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
         <DInputSwitch id="freeze-card-switch" label="Freeze card" checked={isFrozen} onChange={setIsFrozen} />
         <DInputSwitch id="online-payments-switch" label="Online payments" checked={onlinePayments} onChange={setOnlinePayments} />
-        <DButton text="Replace card" variant="outline" color="danger" className="w-100 mt-2" />
+        <DButton text="Replace card" variant="outline" color="danger" className="df-w-full df-mt-2" />
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
@@ -678,15 +678,15 @@ function CardControlsMobileContent() {
   const { openPortal } = useDPortalContext<CardControlsPayloads>();
 
   return (
-      <div className="p-4 d-flex flex-column h-100">
-        <h5 className="mb-3">Cards</h5>
-        <div className="card p-3 mb-3 bg-primary text-white">
-          <small className="opacity-75">Platinum card</small>
-          <h6 className="mb-0">•••• •••• •••• 4532</h6>
+      <div className="df-p-4 df-flex df-flex-col df-h-full">
+        <h5 className="df-mb-3">Cards</h5>
+        <div className="df-card df-p-3 df-mb-3 df-bg-primary df-text-on-emphasis">
+          <small className="df-opacity-80">Platinum card</small>
+          <h6 className="df-mb-0">•••• •••• •••• 4532</h6>
         </div>
-        <div className="mt-auto">
+        <div className="df-mt-auto">
           <DButton
-            className="w-100"
+            className="df-w-full"
             text="Manage card"
             onClick={() => openPortal('cardControls', {
               cardLabel: 'Platinum card',

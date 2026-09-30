@@ -1,0 +1,42 @@
+/**
+ * Spinner.
+ *
+ * `currentColor` for the arc and a token for the track, so a spinner inside a
+ * solid button picks up the button's own foreground without any extra rule —
+ * that is why the button's loading state needs no colour of its own.
+ */
+@layer df.components {
+  .df-spinner {
+    display: inline-block;
+    flex: none;
+    width: var(--df-spinner-size);
+    height: var(--df-spinner-size);
+    vertical-align: middle;
+    border: var(--df-spinner-border-width) solid var(--df-spinner-track-color);
+    border-block-start-color: currentcolor;
+    border-radius: var(--df-shape-pill);
+    animation: df-spin var(--df-spinner-duration) linear infinite;
+  }
+
+  .df-spinner[data-size="sm"] {
+    width: var(--df-size-3);
+    height: var(--df-size-3);
+    border-width: var(--df-border-width-1);
+  }
+
+  .df-spinner[data-size="lg"] {
+    width: var(--df-size-8);
+    height: var(--df-size-8);
+  }
+
+  /* Inside a solid fill the neutral track is invisible, so the track becomes a
+     translucent version of the text colour instead. */
+  .df-button .df-spinner {
+    border-color: color-mix(in oklab, currentcolor 25%, transparent);
+    border-block-start-color: currentcolor;
+  }
+
+  @keyframes df-spin {
+    to { transform: rotate(360deg); }
+  }
+}

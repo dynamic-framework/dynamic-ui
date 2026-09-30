@@ -65,21 +65,21 @@ export const NotificationPreferences: Story = {
             transition: background-color 0.2s ease, border-color 0.2s ease;
           }
           .np-row:has(input:checked) {
-            background-color: var(--bs-primary-bg-subtle);
-            border-color: var(--bs-primary) !important;
+            background-color: var(--df-role-primary-subtle);
+            border-color: var(--df-role-primary-base) !important;
           }
         `}
         </style>
-        <div style={{ width: '480px' }} className="d-flex flex-column gap-2">
-          <h6 className="fw-semibold mb-1">Notification Preferences</h6>
+        <div style={{ width: '480px' }} className="df-flex df-flex-col df-gap-2">
+          <h6 className="df-fw-semibold df-mb-1">Notification Preferences</h6>
           {items.map(({ id, title, desc }) => (
             <label
               key={id}
-              className="np-row d-flex align-items-center justify-content-between gap-3 p-3 rounded border"
+              className="np-row df-flex df-items-center df-justify-between df-gap-3 df-p-3 df-rounded-control df-border-1"
             >
               <div>
-                <span className="d-block fw-medium">{title}</span>
-                <small className="text-secondary">{desc}</small>
+                <span className="df-block df-fw-medium">{title}</span>
+                <small className="df-text-secondary">{desc}</small>
               </div>
               <DInputSwitch
                 id={id}
@@ -140,20 +140,20 @@ export const FeatureCards: Story = {
             transition: background-color 0.2s ease, border-color 0.2s ease;
           }
           .fc-card:has(input:checked) {
-            border-color: var(--bs-primary) !important;
-            background-color: var(--bs-primary-bg-subtle);
+            border-color: var(--df-role-primary-base) !important;
+            background-color: var(--df-role-primary-subtle);
           }
           .fc-card .fc-icon {
-            color: var(--bs-secondary-color);
+            color: var(--df-fg-muted);
             transition: color 0.2s ease;
           }
           .fc-card:has(input:checked) .fc-icon {
-            color: var(--bs-primary);
+            color: var(--df-role-primary-base);
           }
         `}
         </style>
         <div
-          className="d-grid gap-3"
+          className="df-grid df-gap-3"
           style={{ gridTemplateColumns: '1fr 1fr', width: '520px' }}
         >
           {features.map(({
@@ -161,9 +161,9 @@ export const FeatureCards: Story = {
           }) => (
             <label
               key={id}
-              className="fc-card d-flex flex-column gap-3 p-4 rounded border"
+              className="fc-card df-flex df-flex-col df-gap-3 df-p-4 df-rounded-control df-border-1"
             >
-              <div className="d-flex justify-content-between align-items-start">
+              <div className="df-flex df-justify-between df-items-start">
                 <DIcon icon={icon} size="1.5rem" className="fc-icon" />
                 <DInputSwitch
                   id={id}
@@ -173,8 +173,8 @@ export const FeatureCards: Story = {
                 />
               </div>
               <div>
-                <span className="d-block fw-semibold">{title}</span>
-                <small className="text-secondary">{desc}</small>
+                <span className="df-block df-fw-semibold">{title}</span>
+                <small className="df-text-secondary">{desc}</small>
               </div>
             </label>
           ))}
@@ -230,31 +230,31 @@ export const PrivacySettings: Story = {
             transition: background-color 0.2s ease;
           }
           .ps-row:has(input:checked) {
-            background-color: var(--bs-primary-bg-subtle);
+            background-color: var(--df-role-primary-subtle);
           }
           .ps-row .ps-title {
             transition: color 0.2s ease;
           }
           .ps-row:has(input:checked) .ps-title {
-            color: var(--bs-primary);
+            color: var(--df-role-primary-base);
           }
         `}
         </style>
-        <div style={{ width: '480px' }} className="d-flex flex-column gap-4">
+        <div style={{ width: '480px' }} className="df-flex df-flex-col df-gap-4">
           {sections.map(({ heading, items }) => (
             <div key={heading}>
-              <small className="text-secondary text-uppercase fw-semibold d-block mb-2">
+              <small className="df-text-secondary df-text-uppercase df-fw-semibold df-block df-mb-2">
                 {heading}
               </small>
-              <div className="border rounded overflow-hidden">
+              <div className="df-border-1 df-rounded-control df-overflow-hidden">
                 {items.map(({ id, title, desc }, i) => (
                   <label
                     key={id}
                     className={`ps-row d-flex align-items-center m-0 justify-content-between gap-3 p-3${i < items.length - 1 ? ' border-bottom' : ''}`}
                   >
                     <div>
-                      <span className="d-block fw-medium ps-title">{title}</span>
-                      <small className="text-secondary">{desc}</small>
+                      <span className="df-block df-fw-medium ps-title">{title}</span>
+                      <small className="df-text-secondary">{desc}</small>
                     </div>
                     <DInputSwitch
                       id={id}
@@ -298,13 +298,13 @@ export const TermsAndConditionsCard: Story = {
             transition: background-color 0.2s ease, box-shadow 0.2s ease;
           }
           .tc-card:has(input:checked) {
-            background-color: var(--bs-primary-bg-subtle);
-            border: 1px solid var(--bs-primary-100) !important;
+            background-color: var(--df-role-primary-subtle);
+            border: 1px solid var(--df-role-primary-subtle) !important;
           }
           .tc-card .tc-check {
             opacity: 0;
             transform: scale(0.85);
-            color: var(--bs-primary);
+            color: var(--df-role-primary-base);
             transition: opacity 0.2s ease, transform 0.2s ease;
           }
           .tc-card:has(input:checked) .tc-check {
@@ -314,9 +314,9 @@ export const TermsAndConditionsCard: Story = {
         `}
         </style>
 
-        <div className="p-16 bg-gray-50">
+        <div className="df-p-16 df-bg-muted">
           <label
-            className="d-box tc-card d-flex align-items-start gap-3"
+            className="d-box tc-card df-flex df-items-start df-gap-3"
             style={{ width: '560px' }}
           >
             <DInputSwitch
@@ -326,9 +326,9 @@ export const TermsAndConditionsCard: Story = {
               onChange={() => setAccepted((prev) => !prev)}
             />
 
-            <div className="flex-grow-1">
-              <span className="d-block fw-semibold mb-1">I accept the Terms & Conditions</span>
-              <small className="text-secondary d-block">
+            <div className="df-grow">
+              <span className="df-block df-fw-semibold df-mb-1">I accept the Terms & Conditions</span>
+              <small className="df-text-secondary df-block">
                 By enabling this option, you agree to our terms of service, privacy policy,
                 and electronic communications consent.
               </small>

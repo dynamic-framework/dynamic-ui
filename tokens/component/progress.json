@@ -1,0 +1,12 @@
+{
+  "$description": "Progress bar tokens.",
+  "progress": {
+    "height": {"$type": "dimension", "$value": "{size.4}"},
+    "radius": {"$type": "dimension", "$value": "{shape.pill}"},
+    "track-color": {"$type": "color", "$value": "{bg.sunken}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.100}"},
+    "fg": {"$type": "color", "$value": "{role.primary.on-base}"},
+    "stripe-size": {"$type": "dimension", "$value": "{size.4}"},
+    "stripe-duration": {"$type": "duration", "$value": "{duration.slower}"}
+  }
+}

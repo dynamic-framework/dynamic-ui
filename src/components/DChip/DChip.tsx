@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import DIcon from '../DIcon';
 
 import type { BaseProps, ComponentColor, FamilyIconProps } from '../interface';
+import { resolveRole } from '../roles';
 import { useDContext } from '../../contexts';
 
 type Props =
@@ -42,11 +43,8 @@ export default function DChip(
     onClose,
   }: Props,
 ) {
-  const generateClasses = useMemo(
-    () => ({
-      'd-chip': true,
-      [`d-chip-${color}`]: !!color,
-    }),
+  const dataProps = useMemo(
+    () => ({ 'data-color': resolveRole(color) }),
     [color],
   );
   const {
@@ -57,12 +55,13 @@ export default function DChip(
   const iconClose = useMemo(() => iconCloseProp || xLg, [iconCloseProp, xLg]);
   return (
     <span
-      className={classNames(generateClasses, className)}
+      className={classNames('df-chip', className)}
       style={style}
+      {...dataProps}
       {...dataAttributes}
     >
       {icon && (
-        <div className="d-chip-icon-container">
+        <div className="df-chip-icon">
           <DIcon
             icon={icon}
             familyClass={iconFamilyClass}
@@ -75,7 +74,7 @@ export default function DChip(
       {showClose && (
         <button
           type="button"
-          className="d-chip-icon-container"
+          className="df-chip-dismiss"
           onClick={onClose}
           aria-label={closeAriaLabel}
         >

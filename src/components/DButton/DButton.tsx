@@ -1,21 +1,19 @@
 import {
   forwardRef,
   useMemo,
+  useCallback,
   type MouseEvent,
   type ButtonHTMLAttributes,
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
+  type ReactNode,
 } from 'react';
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
+import { resolveRole } from '../roles';
 import type {
   BaseProps,
   ButtonVariant,
-  ClassMap,
   ComponentColor,
   EndIconProps,
   StartIconProps,
@@ -36,6 +34,11 @@ interface Props
   loading?: boolean;
   loadingText?: string;
   loadingAriaLabel?: string;
+  /** Renders as a square icon button. The accessible name must come from `aria-label`. */
+  iconOnly?: boolean;
+  /** `pill` fully rounds the ends; `square` removes the radius. */
+  shape?: 'pill' | 'square';
+  fullWidth?: boolean;
 }
 
 const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props, ref) => {
@@ -57,6 +60,9 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     loadingText,
     loadingAriaLabel,
     disabled = false,
+    iconOnly = false,
+    shape,
+    fullWidth = false,
     className,
     style,
     dataAttributes,
@@ -69,7 +75,6 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     ...rest
   } = props;
 
-  // Responsive size resolution using useResponsiveProp
   const { responsivePropValue } = useResponsiveProp(true);
   const resolvedSize = useMemo(() => {
     if (!size) return undefined;
@@ -77,37 +82,33 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     return responsivePropValue(size);
   }, [responsivePropValue, size]);
 
-  const [buttonWidth, setButtonWidth] = useState<number>();
-  const buttonRef = useRef<HTMLElement>(null);
+  const isDisabled = useMemo(() => disabled || loading, [disabled, loading]);
+  const content = useMemo(() => children || text, [children, text]);
 
-  const isDisabled = useMemo(
-    () => disabled || loading,
-    [disabled, loading],
-  );
-
-  const content = useMemo(
-    () => children || text,
-    [children, text],
-  );
-
-  const classes = useMemo<ClassMap>(() => {
-    const variantClass = variant === 'solid'
-      ? `btn-${color}`
-      : `btn-${variant}-${color}`;
-
-    return {
-      btn: true,
-      [variantClass]: true,
-      [`btn-${resolvedSize}`]: !!resolvedSize,
-      loading,
-    };
-  }, [variant, color, loading, resolvedSize]);
+  /**
+   * The variant x colour matrix is a CSS concern, not a class-assembly one.
+   *
+   * 2.x built a class name per combination (`btn-soft-warning`) and shipped a
+   * rule plus ~350 global custom properties for the full matrix. 3.x renders
+   * the axes as data attributes and lets one generated selector per combination
+   * fill the component's local custom properties. Same markup cost, a fraction
+   * of the stylesheet, and the attributes map 1:1 onto the attributes the
+   * framework-free custom element will take.
+   */
+  const dataProps = useMemo(() => ({
+    'data-variant': variant,
+    'data-color': resolveRole(color),
+    ...(resolvedSize ? { 'data-size': resolvedSize } : {}),
+    ...(shape ? { 'data-shape': shape } : {}),
+    ...(iconOnly ? { 'data-icon-only': '' } : {}),
+    ...(fullWidth ? { 'data-full-width': '' } : {}),
+    ...(loading ? { 'data-loading': '' } : {}),
+  }), [variant, color, resolvedSize, shape, iconOnly, fullWidth, loading]);
 
   const ariaLabel = useMemo(
-    () => (
-      loading
-        ? loadingAriaLabel || ariaLabelProp || text
-        : ariaLabelProp || text),
+    () => (loading
+      ? loadingAriaLabel || ariaLabelProp || text
+      : ariaLabelProp || text),
     [loading, loadingAriaLabel, text, ariaLabelProp],
   );
 
@@ -122,132 +123,87 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     [disabled, loading, onClick],
   );
 
-  useEffect(() => {
-    if (!loading && buttonRef.current) {
-      const width = buttonRef.current.offsetWidth;
-      if (width > 0) setButtonWidth(width);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content, iconEnd, iconStart]);
+  /**
+   * The label keeps its box while loading and is hidden with `visibility`, so
+   * the button does not resize when the spinner appears.
+   *
+   * 2.x achieved that by measuring `offsetWidth` in an effect and pinning it as
+   * an inline `min-width`, which cost a state variable, a ref, a layout read on
+   * every content change, and produced a visible jump on the first render. The
+   * CSS in `src/css/components/button.css` does it with no script at all.
+   */
+  const body: ReactNode = (
+    <>
+      {loading && (
+        <span className="df-button-spinner">
+          <span className="df-spinner" aria-hidden="true" />
+          {loadingText && <span role="status">{loadingText}</span>}
+        </span>
+      )}
+      <span className="df-button-label">
+        {iconStart && (
+          <DIcon
+            className="df-button-icon"
+            icon={iconStart}
+            familyClass={iconStartFamilyClass}
+            familyPrefix={iconStartFamilyPrefix}
+            materialStyle={iconStartMaterialStyle}
+          />
+        )}
+        {content}
+        {iconEnd && (
+          <DIcon
+            className="df-button-icon"
+            icon={iconEnd}
+            familyClass={iconEndFamilyClass}
+            familyPrefix={iconEndFamilyPrefix}
+            materialStyle={iconEndMaterialStyle}
+          />
+        )}
+      </span>
+    </>
+  );
 
   if (href) {
     return (
       <a
-        href={href}
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={isDisabled ? undefined : href}
         target={target}
         rel={rel}
-        ref={(node) => {
-          buttonRef.current = node;
-          if (typeof ref === 'function') ref(node);
-          // eslint-disable-next-line max-len
-          // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-          else if (ref) (ref as any).current = node;
-        }}
-        className={classNames(classes, className)}
-        style={{
-          ...style,
-          ...(loading && buttonWidth
-            ? { minWidth: `${buttonWidth}px` }
-            : undefined),
-        }}
+        className={classNames('df-button', className)}
+        style={style}
         aria-label={ariaLabel}
         aria-busy={loading}
         aria-disabled={isDisabled}
+        // An anchor has no `disabled`, so it stays in the tab order and must be
+        // taken out of it explicitly when the button is disabled.
+        tabIndex={isDisabled ? -1 : undefined}
         onClick={handleClick}
+        {...dataProps}
         {...dataAttributes}
       >
-        {loading && (
-          <span className="btn-loading">
-            <span
-              className="spinner-border spinner-border-sm"
-              aria-hidden="true"
-            />
-            {loadingText && <span role="status">{loadingText}</span>}
-          </span>
-        )}
-
-        {!loading && (
-          <>
-            {iconStart && (
-              <DIcon
-                icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-                materialStyle={iconStartMaterialStyle}
-              />
-            )}
-            {content}
-            {iconEnd && (
-              <DIcon
-                icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-                materialStyle={iconEndMaterialStyle}
-              />
-            )}
-          </>
-        )}
+        {body}
       </a>
     );
   }
 
   return (
     <button
-      ref={(node) => {
-        buttonRef.current = node;
-        if (typeof ref === 'function') ref(node);
-        // eslint-disable-next-line max-len
-        // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-        else if (ref) (ref as any).current = node;
-      }}
+      ref={ref as React.Ref<HTMLButtonElement>}
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={classNames(classes, className)}
-      style={{
-        ...style,
-        ...(loading && buttonWidth
-          ? { minWidth: `${buttonWidth}px` }
-          : undefined),
-      }}
+      className={classNames('df-button', className)}
+      style={style}
       disabled={isDisabled}
       aria-label={ariaLabel}
       aria-busy={loading}
-      aria-disabled={isDisabled}
       onClick={handleClick}
+      {...dataProps}
       {...dataAttributes}
       {...rest}
     >
-      {loading && (
-        <span className="btn-loading">
-          <span
-            className="spinner-border spinner-border-sm"
-            aria-hidden="true"
-          />
-          {loadingText && <span role="status">{loadingText}</span>}
-        </span>
-      )}
-
-      {!loading && (
-        <>
-          {iconStart && (
-            <DIcon
-              icon={iconStart}
-              familyClass={iconStartFamilyClass}
-              familyPrefix={iconStartFamilyPrefix}
-              materialStyle={iconStartMaterialStyle}
-            />
-          )}
-          {content}
-          {iconEnd && (
-            <DIcon
-              icon={iconEnd}
-              familyClass={iconEndFamilyClass}
-              familyPrefix={iconEndFamilyPrefix}
-              materialStyle={iconEndMaterialStyle}
-            />
-          )}
-        </>
-      )}
+      {body}
     </button>
   );
 });

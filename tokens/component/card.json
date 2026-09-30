@@ -1,0 +1,27 @@
+{
+  "$description": "Card component tokens. A card has one appearance rather than a colour matrix, so its colours belong here.",
+  "card": {
+    "padding-block": { "$type": "dimension", "$value": "{size.5}" },
+    "padding-inline": { "$type": "dimension", "$value": "{size.5}" },
+    "gap": { "$type": "dimension", "$value": "{size.4}" },
+    "radius": { "$type": "dimension", "$value": "{shape.surface}" },
+    "border-width": { "$type": "dimension", "$value": "{stroke.control}" },
+
+    "bg": { "$type": "color", "$value": "{bg.surface}" },
+    "fg": { "$type": "color", "$value": "{fg.default}" },
+    "border-color": { "$type": "color", "$value": "{border.default}" },
+    "shadow": { "$type": "shadow", "$value": "{elevation.sm}" },
+
+    "header-padding-block": { "$type": "dimension", "$value": "{size.4}" },
+    "header-border-color": { "$type": "color", "$value": "{border.muted}" },
+    "header-font-size": { "$type": "dimension", "$value": "{font-size.500}" },
+    "header-font-weight": { "$type": "fontWeight", "$value": "{font-weight.semibold}" },
+
+    "footer-padding-block": { "$type": "dimension", "$value": "{size.4}" },
+    "footer-border-color": { "$type": "color", "$value": "{border.muted}" },
+    "footer-bg": { "$type": "color", "$value": "{bg.muted}" },
+
+    "interactive-border-color-hover": { "$type": "color", "$value": "{border.strong}" },
+    "interactive-shadow-hover": { "$type": "shadow", "$value": "{elevation.md}" }
+  }
+}

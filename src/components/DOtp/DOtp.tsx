@@ -34,7 +34,7 @@ const TEXT_PROPS = {
       {' '}
       <a
         href="https://www.modyo.com"
-        className="link-primary text-nowrap"
+        className="df-otp-contact-link"
         target="_blank"
         rel="noreferrer"
       >
@@ -75,10 +75,9 @@ export default function DOtp(
   return (
     <div className={className}>
       <p>{texts.title}</p>
-      <div className="d-flex flex-column gap-6 pb-4 px-3">
-        <div className="d-flex flex-column gap-6">
+      <div className="df-otp">
+        <div className="df-otp-group">
           <DInputPin
-            className="modal-otp-pin"
             characters={otpSize}
             onChange={(e) => setOtp(e)}
             invalid={invalid && otp.length < otpSize}
@@ -89,8 +88,8 @@ export default function DOtp(
             resendText={texts.resend}
           />
         </div>
-        <hr className="m-0" />
-        <div className="d-flex flex-column flex-lg-row gap-4 align-items-center">
+        <hr className="df-otp-divider" />
+        <div className="df-otp-actions">
           <DButton
             text={texts.submit}
             onClick={() => {
@@ -101,7 +100,7 @@ export default function DOtp(
             }}
             loading={isLoading}
           />
-          <p className="small ms-lg-auto mb-0">
+          <p className="df-otp-note">
             {texts.contact}
           </p>
         </div>

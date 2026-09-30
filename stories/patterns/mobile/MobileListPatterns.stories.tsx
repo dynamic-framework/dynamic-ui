@@ -144,9 +144,9 @@ function MobileViewport(
         maxWidth: '100%',
         height: '760px',
         borderRadius: '1.25rem',
-        border: '1px solid var(--bs-gray-200)',
+        border: '1px solid var(--df-color-neutral-200)',
         overflow: 'hidden',
-        background: 'var(--bs-gray-25)',
+        background: 'var(--df-color-neutral-25)',
         position: 'relative',
       }}
     >
@@ -157,13 +157,13 @@ function MobileViewport(
 
 function BottomSheetHandle() {
   return (
-    <div className="d-flex justify-content-center py-2">
+    <div className="df-flex df-justify-center df-py-2">
       <span
         style={{
           width: '44px',
           height: '4px',
           borderRadius: '999px',
-          background: 'var(--bs-gray-300)',
+          background: 'var(--df-color-neutral-300)',
         }}
       />
     </div>
@@ -182,16 +182,16 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
       <BottomSheetHandle />
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <div>
-          <h5 className="mb-1 fw-semibold">{payload.title}</h5>
-          <div className="d-flex align-items-center gap-2">
-            <small className="text-muted">{payload.dateLabel}</small>
+          <h5 className="df-mb-1 df-fw-semibold">{payload.title}</h5>
+          <div className="df-flex df-items-center df-gap-2">
+            <small className="df-text-muted">{payload.dateLabel}</small>
             <span
-              className="rounded-pill px-2 py-1"
+              className="df-rounded-pill df-px-2 df-py-1"
               style={{
                 fontSize: '11px',
                 lineHeight: 1,
-                background: 'var(--bs-gray-100)',
-                color: 'var(--bs-gray-700)',
+                background: 'var(--df-color-neutral-100)',
+                color: 'var(--df-color-neutral-700)',
               }}
             >
               {payload.mode}
@@ -199,10 +199,10 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
           </div>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-3">
-        <div className="p-3 border rounded-2 bg-white d-flex justify-content-between align-items-center">
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+        <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface df-flex df-justify-between df-items-center">
           <div>
-            <small className="text-muted d-block">Trainer</small>
+            <small className="df-text-muted df-block">Trainer</small>
             <strong>{payload.trainer}</strong>
           </div>
           <DButtonIcon
@@ -212,20 +212,20 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
           />
         </div>
 
-        <div className="p-3 border rounded-2 bg-white">
-          <small className="text-muted d-block mb-1">Session time</small>
+        <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
+          <small className="df-text-muted df-block df-mb-1">Session time</small>
           <strong>{payload.timeLabel}</strong>
         </div>
 
-        <div className="p-3 border rounded-2 bg-white">
-          <small className="text-muted d-block mb-1">About this class</small>
-          <p className="mb-0">{payload.description}</p>
+        <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
+          <small className="df-text-muted df-block df-mb-1">About this class</small>
+          <p className="df-mb-0">{payload.description}</p>
         </div>
 
-        <div className="d-flex align-items-center gap-2">
-          <small className="text-muted">Rating</small>
-          <span style={{ color: 'var(--bs-warning)' }}>{'★'.repeat(payload.rating)}</span>
-          <span className="text-muted">{'☆'.repeat(Math.max(0, 5 - payload.rating))}</span>
+        <div className="df-flex df-items-center df-gap-2">
+          <small className="df-text-muted">Rating</small>
+          <span style={{ color: 'var(--df-role-warning-base)' }}>{'★'.repeat(payload.rating)}</span>
+          <span className="df-text-muted">{'☆'.repeat(Math.max(0, 5 - payload.rating))}</span>
         </div>
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
@@ -245,15 +245,15 @@ function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['
       style={{ width: '360px', maxWidth: '100vw' }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <div className="d-flex align-items-center gap-2">
-          <DIcon icon={payload.icon} className="text-primary" />
-          <h5 className="mb-0 fw-semibold">{payload.title}</h5>
+        <div className="df-flex df-items-center df-gap-2">
+          <DIcon icon={payload.icon} className="df-text-primary" />
+          <h5 className="df-mb-0 df-fw-semibold">{payload.title}</h5>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-3">
-        <div className="p-3 border rounded-2 bg-white">
-          <small className="text-muted d-block mb-1">Description</small>
-          <p className="mb-0">{payload.subtitle}</p>
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+        <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
+          <small className="df-text-muted df-block df-mb-1">Description</small>
+          <p className="df-mb-0">{payload.subtitle}</p>
         </div>
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
@@ -265,10 +265,10 @@ function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['
 
 const COVER_LIST_SOURCE = String.raw`function CoverListExample() {
   return (
-    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
-      <h5 className="mb-1">Top picks</h5>
-      <small className="text-muted d-block mb-3">Card-style rows with visual emphasis</small>
-      <DListGroup className="d-flex flex-column gap-2 border-0 bg-transparent">
+    <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
+      <h5 className="df-mb-1">Top picks</h5>
+      <small className="df-text-muted df-block df-mb-3">Card-style rows with visual emphasis</small>
+      <DListGroup className="df-flex df-flex-col df-gap-2 df-border-0 df-bg-transparent">
         {[
           {
             id: '1',
@@ -289,12 +289,12 @@ const COVER_LIST_SOURCE = String.raw`function CoverListExample() {
             accent: '#f97316',
           },
         ].map((item) => (
-          <DListGroup.Item key={item.id} className="rounded-3 border bg-white p-3 shadow-sm d-block">
-            <div className="d-flex gap-3 align-items-center">
-              <div className="rounded-3" style={{ width: '64px', height: '64px', background: item.accent }} />
+          <DListGroup.Item key={item.id} className="df-rounded-control df-border-1 df-bg-surface df-p-3 df-shadow-sm df-block">
+            <div className="df-flex df-gap-3 df-items-center">
+              <div className="df-rounded-control" style={{ width: '64px', height: '64px', background: item.accent }} />
               <div>
-                <strong className="d-block">{item.title}</strong>
-                <small className="text-muted">{item.subtitle}</small>
+                <strong className="df-block">{item.title}</strong>
+                <small className="df-text-muted">{item.subtitle}</small>
               </div>
             </div>
           </DListGroup.Item>
@@ -335,15 +335,15 @@ function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['
   return (
     <DOffcanvas name={name} openFrom="end" style={{ width: '360px', maxWidth: '100vw' }}>
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <div className="d-flex align-items-center gap-2">
-          <DIcon icon={payload.icon} className="text-primary" />
-          <h5 className="mb-0 fw-semibold">{payload.title}</h5>
+        <div className="df-flex df-items-center df-gap-2">
+          <DIcon icon={payload.icon} className="df-text-primary" />
+          <h5 className="df-mb-0 df-fw-semibold">{payload.title}</h5>
         </div>
       </DOffcanvas.Header>
-      <DOffcanvas.Body className="d-flex flex-column gap-3">
-        <div className="p-3 border rounded-2 bg-white">
-          <small className="text-muted d-block mb-1">Description</small>
-          <p className="mb-0">{payload.subtitle}</p>
+      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+        <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
+          <small className="df-text-muted df-block df-mb-1">Description</small>
+          <p className="df-mb-0">{payload.subtitle}</p>
         </div>
       </DOffcanvas.Body>
       <DOffcanvas.Footer actionPlacement="fill">
@@ -357,18 +357,18 @@ function IconListExample() {
   const { openPortal } = useDPortalContext<QuickServicePayloads>();
 
   return (
-    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
-      <h5 className="mb-1">Quick services</h5>
-      <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
-      <DListGroup className="rounded-3 bg-white overflow-hidden">
+    <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
+      <h5 className="df-mb-1">Quick services</h5>
+      <small className="df-text-muted df-block df-mb-3">Rows with icon, metadata and trailing action</small>
+      <DListGroup className="df-rounded-control df-bg-surface df-overflow-hidden">
         {QUICK_SERVICES.map((item) => (
-          <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
-            <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />
-            <div className="flex-grow-1">
-              <strong className="d-block">{item.title}</strong>
-              <small className="text-muted">{item.subtitle}</small>
+          <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="df-flex df-items-center">
+            <DIcon icon={item.icon} className="df-me-3 df-text-primary" size="1.15rem" />
+            <div className="df-grow">
+              <strong className="df-block">{item.title}</strong>
+              <small className="df-text-muted">{item.subtitle}</small>
             </div>
-            <DIcon icon="ChevronRight" className="text-muted" />
+            <DIcon icon="ChevronRight" className="df-text-muted" />
           </DListGroup.Item>
         ))}
       </DListGroup>
@@ -389,19 +389,19 @@ export const IconList = {
 
 const TEXT_ONLY_LIST_SOURCE = String.raw`function TextOnlyListExample() {
   return (
-    <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
-      <h5 className="mb-1">Recent notes</h5>
-      <small className="text-muted d-block mb-3">Minimal typography-first rows</small>
-      <DListGroup className="rounded-3">
+    <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
+      <h5 className="df-mb-1">Recent notes</h5>
+      <small className="df-text-muted df-block df-mb-3">Minimal typography-first rows</small>
+      <DListGroup className="df-rounded-control">
         {[
           { id: '1', title: 'Quarterly review draft', meta: 'Edited 2h ago' },
           { id: '2', title: 'Client onboarding checklist', meta: 'Edited yesterday' },
           { id: '3', title: 'Design tokens migration', meta: 'Edited 2 days ago' },
           { id: '4', title: 'Release notes v3.4', meta: 'Edited 5 days ago' },
         ].map((item) => (
-          <DListGroup.Item key={item.id} className="px-3 py-3 border-bottom bg-white">
-            <strong className="d-block" style={{ fontSize: '15px' }}>{item.title}</strong>
-            <small className="text-muted">{item.meta}</small>
+          <DListGroup.Item key={item.id} className="df-px-3 df-py-3 df-border-b-1 df-bg-surface">
+            <strong className="df-block" style={{ fontSize: '15px' }}>{item.title}</strong>
+            <small className="df-text-muted">{item.meta}</small>
           </DListGroup.Item>
         ))}
       </DListGroup>
@@ -484,31 +484,31 @@ function AddActionListWithPayloadExample() {
   );
 
   return (
-    <div className="h-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg, #8041c3 0%, #f8f1f4 28%, #ffffff00 100%)' }}>
-      <div className="px-4 pt-4 pb-3 text-white">
+    <div className="df-h-full df-flex df-flex-col" style={{ background: 'linear-gradient(180deg, #8041c3 0%, #f8f1f4 28%, #ffffff00 100%)' }}>
+      <div className="df-px-4 df-pt-4 df-pb-3 df-text-on-emphasis">
         <DIcon icon="Dumbbell" size="2rem" hasCircle />
-        <h5 className="mb-0">Gym schedule</h5>
-        <small className="opacity-75">Tap plus to open detail with payload</small>
+        <h5 className="df-mb-0">Gym schedule</h5>
+        <small className="df-opacity-80">Tap plus to open detail with payload</small>
       </div>
 
-      <DListGroup className="gap-2 mx-3" flush>
+      <DListGroup className="df-gap-2 df-mx-3" flush>
         {sessionsWithRandomRating.map((session) => (
           <DListGroup.Item
             key={session.title}
-            className="d-flex align-items-center justify-content-between rounded-3 shadow-sm bg-white"
+            className="df-flex df-items-center df-justify-between df-rounded-control df-shadow-sm df-bg-surface"
           >
-            <div className="d-flex align-items-center gap-2">
+            <div className="df-flex df-items-center df-gap-2">
               <DAvatar name={session.trainer} size="sm" />
               <div>
-                <strong className="d-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
-                <small className="text-muted">
+                <strong className="df-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
+                <small className="df-text-muted">
                   {session.timeLabel}
                   {', '}
                   {session.mode}
                 </small>
-                <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--bs-warning)' }}>
+                <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--df-role-warning-base)' }}>
                   {'★'.repeat(session.rating)}
-                  <span className="text-muted">
+                  <span className="df-text-muted">
                     {'☆'.repeat(Math.max(0, 5 - session.rating))}
                   </span>
                 </div>
@@ -518,7 +518,7 @@ function AddActionListWithPayloadExample() {
             <DButtonIcon
               icon="Plus"
               size="sm"
-              className="rounded-pill"
+              className="df-rounded-pill"
               color="primary"
               aria-label={'Open details for ' + session.title}
               onClick={() => openPortal('scheduleDetail', session)}
@@ -533,11 +533,11 @@ function AddActionListWithPayloadExample() {
 function CoverListExample() {
   return (
     <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Top picks</h5>
-        <small className="text-muted d-block mb-3">Card-style rows with visual emphasis</small>
+      <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #f4faf7 0%, #ffffff 34%)' }}>
+        <h5 className="df-mb-1">Top picks</h5>
+        <small className="df-text-muted df-block df-mb-3">Card-style rows with visual emphasis</small>
 
-        <DListGroup className="d-flex flex-column gap-2 border-0 bg-transparent">
+        <DListGroup className="df-flex df-flex-col df-gap-2 df-border-0 df-bg-transparent">
           {[
             {
               id: '1',
@@ -558,12 +558,12 @@ function CoverListExample() {
               accent: '#f97316',
             },
           ].map((item) => (
-            <DListGroup.Item key={item.id} className="rounded-3 border bg-white p-3 shadow-sm d-block">
-              <div className="d-flex gap-3 align-items-center">
-                <div className="rounded-3" style={{ width: '64px', height: '64px', background: item.accent }} />
+            <DListGroup.Item key={item.id} className="df-rounded-control df-border-1 df-bg-surface df-p-3 df-shadow-sm df-block">
+              <div className="df-flex df-gap-3 df-items-center">
+                <div className="df-rounded-control" style={{ width: '64px', height: '64px', background: item.accent }} />
                 <div>
-                  <strong className="d-block">{item.title}</strong>
-                  <small className="text-muted">{item.subtitle}</small>
+                  <strong className="df-block">{item.title}</strong>
+                  <small className="df-text-muted">{item.subtitle}</small>
                 </div>
               </div>
             </DListGroup.Item>
@@ -579,19 +579,19 @@ function IconListExample() {
 
   return (
     <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Quick services</h5>
-        <small className="text-muted d-block mb-3">Rows with icon, metadata and trailing action</small>
+      <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #eef4ff 0%, #ffffff 34%)' }}>
+        <h5 className="df-mb-1">Quick services</h5>
+        <small className="df-text-muted df-block df-mb-3">Rows with icon, metadata and trailing action</small>
 
-        <DListGroup className="rounded-3 bg-white overflow-hidden">
+        <DListGroup className="df-rounded-control df-bg-surface df-overflow-hidden">
           {QUICK_SERVICES.map((item) => (
-            <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="d-flex align-items-center">
-              <DIcon icon={item.icon} className="me-3 text-primary" size="1.15rem" />
-              <div className="flex-grow-1">
-                <strong className="d-block">{item.title}</strong>
-                <small className="text-muted">{item.subtitle}</small>
+            <DListGroup.Item key={item.id} action onClick={() => openPortal('quickService', item)} className="df-flex df-items-center">
+              <DIcon icon={item.icon} className="df-me-3 df-text-primary" size="1.15rem" />
+              <div className="df-grow">
+                <strong className="df-block">{item.title}</strong>
+                <small className="df-text-muted">{item.subtitle}</small>
               </div>
-              <DIcon icon="ChevronRight" className="text-muted" />
+              <DIcon icon="ChevronRight" className="df-text-muted" />
             </DListGroup.Item>
           ))}
         </DListGroup>
@@ -603,20 +603,20 @@ function IconListExample() {
 function TextOnlyListExample() {
   return (
     <MobileViewport>
-      <div className="h-100 p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
-        <h5 className="mb-1">Recent notes</h5>
-        <small className="text-muted d-block mb-3">Minimal typography-first rows</small>
+      <div className="df-h-full df-p-3" style={{ background: 'linear-gradient(180deg, #fff8ef 0%, #ffffff 34%)' }}>
+        <h5 className="df-mb-1">Recent notes</h5>
+        <small className="df-text-muted df-block df-mb-3">Minimal typography-first rows</small>
 
-        <DListGroup className="rounded-3">
+        <DListGroup className="df-rounded-control">
           {[
             { id: '1', title: 'Quarterly review draft', meta: 'Edited 2h ago' },
             { id: '2', title: 'Client onboarding checklist', meta: 'Edited yesterday' },
             { id: '3', title: 'Design tokens migration', meta: 'Edited 2 days ago' },
             { id: '4', title: 'Release notes v3.4', meta: 'Edited 5 days ago' },
           ].map((item) => (
-            <DListGroup.Item key={item.id} className="px-3 py-3 border-bottom bg-white">
-              <strong className="d-block" style={{ fontSize: '15px' }}>{item.title}</strong>
-              <small className="text-muted">{item.meta}</small>
+            <DListGroup.Item key={item.id} className="df-px-3 df-py-3 df-border-b-1 df-bg-surface">
+              <strong className="df-block" style={{ fontSize: '15px' }}>{item.title}</strong>
+              <small className="df-text-muted">{item.meta}</small>
             </DListGroup.Item>
           ))}
         </DListGroup>
@@ -638,38 +638,38 @@ function AddActionListWithPayloadExample() {
   return (
     <MobileViewport>
       <div
-        className="h-100 d-flex flex-column"
+        className="df-h-full df-flex df-flex-col"
         style={{
           background: 'linear-gradient(180deg, #8041c3 0%, #f8f1f4 28%, #ffffff00 100%)',
         }}
       >
-        <div className="px-4 pt-4 pb-3 text-white">
+        <div className="df-px-4 df-pt-4 df-pb-3 df-text-on-emphasis">
           <DIcon icon="Dumbbell" size="2rem" hasCircle />
-          <h5 className="mb-0">Gym schedule</h5>
-          <small className="opacity-75">Tap plus to open detail with payload</small>
+          <h5 className="df-mb-0">Gym schedule</h5>
+          <small className="df-opacity-80">Tap plus to open detail with payload</small>
         </div>
 
-        <DListGroup className="gap-2 mx-3" flush>
+        <DListGroup className="df-gap-2 df-mx-3" flush>
           {sessionsWithRandomRating.map((session) => (
             <DListGroup.Item
               key={session.title}
-              className="d-flex align-items-center justify-content-between rounded-3 shadow-sm bg-white"
+              className="df-flex df-items-center df-justify-between df-rounded-control df-shadow-sm df-bg-surface"
             >
-              <div className="d-flex align-items-center gap-2">
+              <div className="df-flex df-items-center df-gap-2">
                 <DAvatar
                   name={session.trainer}
                   size="sm"
                 />
                 <div>
-                  <strong className="d-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
-                  <small className="text-muted">
+                  <strong className="df-block" style={{ fontSize: '15px', lineHeight: 1.15 }}>{session.title}</strong>
+                  <small className="df-text-muted">
                     {session.timeLabel}
                     {', '}
                     {session.mode}
                   </small>
-                  <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--bs-warning)' }}>
+                  <div style={{ fontSize: '11px', lineHeight: 1, color: 'var(--df-role-warning-base)' }}>
                     {'★'.repeat(session.rating)}
-                    <span className="text-muted">{'☆'.repeat(Math.max(0, 5 - session.rating))}</span>
+                    <span className="df-text-muted">{'☆'.repeat(Math.max(0, 5 - session.rating))}</span>
                   </div>
                 </div>
               </div>
@@ -677,7 +677,7 @@ function AddActionListWithPayloadExample() {
               <DButtonIcon
                 icon="Plus"
                 size="sm"
-                className="rounded-pill"
+                className="df-rounded-pill"
                 color="primary"
                 aria-label={`Open details for ${session.title}`}
                 onClick={() => openPortal('scheduleDetail', session)}

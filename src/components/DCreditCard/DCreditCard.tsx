@@ -34,39 +34,36 @@ export default function DCreditCard(
 ) {
   return (
     <div
-      className={classNames(
-        'd-credit-card',
-        isVertical && 'is-vertical',
-        className,
-      )}
+      className={classNames('df-credit-card', className)}
+      {...isVertical && { 'data-orientation': 'vertical' }}
     >
-      <div className="d-credit-card-header">
+      <div className="df-credit-card-header">
         <img
           src={logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE}
           alt={brand}
-          className="d-credit-card-logo"
+          className="df-credit-card-logo"
           width={100}
         />
         {isChipVisible && (
-          <div className="d-credit-card-chip">
+          <div className="df-credit-card-chip">
             <img
               src={CHIP_IMAGE}
               alt="chip"
               width={30}
-              className="d-credit-card-chip-image"
+              className="df-credit-card-chip-image"
             />
           </div>
         )}
       </div>
 
-      <div className="d-credit-card-details">
-        <div className="d-credit-card-number">
+      <div className="df-credit-card-details">
+        <div className="df-credit-card-number">
           {number}
         </div>
-        <small className="d-credit-card-holder-text">
+        <small className="df-credit-card-holder-label">
           {holderText}
         </small>
-        <span className="d-credit-card-name">{name}</span>
+        <span className="df-credit-card-name">{name}</span>
       </div>
     </div>
   );

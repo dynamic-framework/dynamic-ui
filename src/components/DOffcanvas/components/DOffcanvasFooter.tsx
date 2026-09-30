@@ -15,16 +15,17 @@ export default function DOffcanvasFooter(
     style,
   }: Props,
 ) {
-  const generateClasses = useMemo(() => ({
-    'd-offcanvas-footer': true,
-    [`d-offcanvas-action-${actionPlacement}`]: !!actionPlacement,
-  }), [actionPlacement]);
+  const dataProps = useMemo(
+    () => (actionPlacement ? { 'data-align': actionPlacement } : {}),
+    [actionPlacement],
+  );
 
   return (
     <>
-      <div className="d-offcanvas-separator" />
+      <hr className="df-overlay-separator" />
       <div
-        className={classNames(generateClasses, className)}
+        className={classNames('df-overlay-footer', className)}
+        {...dataProps}
         style={style}
       >
         {children}

@@ -4,22 +4,22 @@ import DCard from '../../src/components/DCard';
 
 export function ExampleHoverShadowBoxes() {
   return (
-    <div className="d-flex flex-wrap gap-3">
-      <DBox className="p-4 rounded border shadow-none hover:shadow-sm" style={{ width: 220 }}>
+    <div className="df-flex df-flex-wrap df-gap-3">
+      <DBox className="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-sm" style={{ width: 220 }}>
         <strong>hover:shadow-sm</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Subtle shadow on hover</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Subtle shadow on hover</p>
       </DBox>
-      <DBox className="p-4 rounded border shadow-none hover:shadow" style={{ width: 220 }}>
+      <DBox className="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-md" style={{ width: 220 }}>
         <strong>hover:shadow</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Default shadow on hover</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Default shadow on hover</p>
       </DBox>
-      <DBox className="p-4 rounded border shadow-none hover:shadow-lg" style={{ width: 220 }}>
+      <DBox className="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-lg" style={{ width: 220 }}>
         <strong>hover:shadow-lg</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Large shadow on hover</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Large shadow on hover</p>
       </DBox>
-      <DBox className="p-4 rounded border shadow-sm hover:shadow-none" style={{ width: 220 }}>
+      <DBox className="df-p-4 df-rounded-control df-border-1 df-shadow-sm df-hover:shadow-none" style={{ width: 220 }}>
         <strong>hover:shadow-none</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Remove shadow on hover</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Remove shadow on hover</p>
       </DBox>
     </div>
   );
@@ -27,12 +27,12 @@ export function ExampleHoverShadowBoxes() {
 
 export function ExampleHoverBackgroundCard() {
   return (
-    <DCard className="hover:bg-secondary-100 border" style={{ width: 360 }}>
+    <DCard className="df-hover:bg-secondary-subtle df-border-1" style={{ width: 360 }}>
       <DCard.Header>
-        <h5 className="card-title mb-0">Background on hover</h5>
+        <h5 className="df-fs-heading-5 df-fw-semibold df-mb-0">Background on hover</h5>
       </DCard.Header>
       <DCard.Body>
-        <p className="mb-0">Hover to apply a soft secondary background.</p>
+        <p className="df-mb-0">Hover to apply a soft secondary background.</p>
       </DCard.Body>
     </DCard>
   );
@@ -40,12 +40,12 @@ export function ExampleHoverBackgroundCard() {
 
 export function ExampleHoverTextLinks() {
   return (
-    <div className="d-flex flex-column gap-2">
+    <div className="df-flex df-flex-col df-gap-2">
       <a
         href="#"
         role="button"
         onClick={(e) => e.preventDefault()}
-        className="text-body hover:text-primary"
+        className="df-text-default df-hover:text-primary"
       >
         Primary on hover
       </a>
@@ -53,7 +53,7 @@ export function ExampleHoverTextLinks() {
         href="#"
         role="button"
         onClick={(e) => e.preventDefault()}
-        className="text-body hover:text-danger"
+        className="df-text-default df-hover:text-danger"
       >
         Danger on hover
       </a>
@@ -61,7 +61,7 @@ export function ExampleHoverTextLinks() {
         href="#"
         role="button"
         onClick={(e) => e.preventDefault()}
-        className="text-body hover:text-success"
+        className="df-text-default df-hover:text-success"
       >
         Success on hover
       </a>
@@ -71,11 +71,11 @@ export function ExampleHoverTextLinks() {
 
 export function ExampleHoverOverflow() {
   return (
-    <div className="border rounded p-2 overflow-hidden hover:overflow-auto" style={{ width: 280, height: 120 }}>
-      <div className="d-flex flex-column gap-2">
+    <div className="df-border-1 df-rounded-control df-p-2 df-overflow-hidden df-hover:overflow-auto" style={{ width: 280, height: 120 }}>
+      <div className="df-flex df-flex-col df-gap-2">
         {Array.from({ length: 12 }).map((_, i) => (
           /* eslint-disable-next-line react/no-array-index-key */
-          <div key={i} className="bg-light rounded px-2 py-1">
+          <div key={i} className="df-bg-muted df-rounded-control df-px-2 df-py-1">
             Item #
             {i + 1}
           </div>
@@ -87,14 +87,14 @@ export function ExampleHoverOverflow() {
 
 export function ExampleHoverBorderColors() {
   return (
-    <div className="d-flex flex-wrap gap-3">
-      <div className="p-3 rounded border border-2 border-secondary hover:border-primary" style={{ width: 220 }}>
+    <div className="df-flex df-flex-wrap df-gap-3">
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-primary" style={{ width: 220 }}>
         <strong>hover:border-primary</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to primary</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to primary</p>
       </div>
-      <div className="p-3 rounded border border-2 border-dark hover:border-success" style={{ width: 220 }}>
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-strong df-hover:border-success" style={{ width: 220 }}>
         <strong>hover:border-success</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to success</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to success</p>
       </div>
     </div>
   );
@@ -102,10 +102,10 @@ export function ExampleHoverBorderColors() {
 
 export function ExampleHoverOpacity() {
   return (
-    <div className="d-flex flex-wrap gap-3">
-      <div className="p-3 rounded border opacity-100 hover:opacity-40" style={{ width: 220 }}>
+    <div className="df-flex df-flex-wrap df-gap-3">
+      <div className="df-p-3 df-rounded-control df-border-1 df-opacity-100 df-hover:opacity-40" style={{ width: 220 }}>
         <strong>hover:opacity-40</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Reduce opacity on hover</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Reduce opacity on hover</p>
       </div>
     </div>
   );
@@ -113,35 +113,35 @@ export function ExampleHoverOpacity() {
 
 export function ExampleHoverTextColorVariants() {
   return (
-    <div className="d-flex flex-column gap-2">
-      <span className="hover:text-primary-100">hover:text-primary-100</span>
-      <span className="hover:text-primary-300">hover:text-primary-300</span>
-      <span className="hover:text-primary-700">hover:text-primary-700</span>
-      <span className="hover:text-danger-200">hover:text-danger-200</span>
-      <span className="hover:text-success-400">hover:text-success-400</span>
-      <span className="hover:text-warning-500">hover:text-warning-500</span>
+    <div className="df-flex df-flex-col df-gap-2">
+      <span className="df-hover:text-primary">hover:text-primary-100</span>
+      <span className="df-hover:text-primary">hover:text-primary-300</span>
+      <span className="df-hover:text-primary">hover:text-primary-700</span>
+      <span className="df-hover:text-danger">hover:text-danger-200</span>
+      <span className="df-hover:text-success">hover:text-success-400</span>
+      <span className="df-hover:text-warning">hover:text-warning-500</span>
     </div>
   );
 }
 
 export function ExampleHoverBorderColorVariants() {
   return (
-    <div className="d-flex flex-wrap gap-3">
-      <div className="p-3 rounded border border-2 border-secondary hover:border-primary-100" style={{ width: 220 }}>
+    <div className="df-flex df-flex-wrap df-gap-3">
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-primary" style={{ width: 220 }}>
         <strong>hover:border-primary-100</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to primary-100</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to primary-100</p>
       </div>
-      <div className="p-3 rounded border border-2 border-secondary hover:border-primary-300" style={{ width: 220 }}>
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-primary" style={{ width: 220 }}>
         <strong>hover:border-primary-300</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to primary-300</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to primary-300</p>
       </div>
-      <div className="p-3 rounded border border-2 border-secondary hover:border-danger-200" style={{ width: 220 }}>
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-danger" style={{ width: 220 }}>
         <strong>hover:border-danger-200</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to danger-200</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to danger-200</p>
       </div>
-      <div className="p-3 rounded border border-2 border-secondary hover:border-success-400" style={{ width: 220 }}>
+      <div className="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-success" style={{ width: 220 }}>
         <strong>hover:border-success-400</strong>
-        <p className="mb-0 mt-2 text-body-secondary">Border changes to success-400</p>
+        <p className="df-mb-0 df-mt-2 df-text-muted">Border changes to success-400</p>
       </div>
     </div>
   );

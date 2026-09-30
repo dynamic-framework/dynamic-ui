@@ -50,7 +50,7 @@ export const Default: Story = {
     children: (
       <>
         <h4>Hello world</h4>
-        <p className="m-0">Loren ipsum dolor</p>
+        <p className="df-m-0">Loren ipsum dolor</p>
       </>
     ),
   },
@@ -69,7 +69,7 @@ export const CustomPadding: Story = {
     children: (
       <>
         <h4>Hello world</h4>
-        <p className="m-0">Lorem ipsum dolor</p>
+        <p className="df-m-0">Lorem ipsum dolor</p>
       </>
     ),
   },

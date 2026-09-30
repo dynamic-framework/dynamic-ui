@@ -28,26 +28,27 @@ describe('<DInputRange />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <label
-            class="form-label"
-            for="range"
-          >
-            Range
-          </label>
-          <input
-            class="form-range form-range-value-indicator"
-            id="range"
-            max="10"
-            min="0"
-            readonly=""
-            step="2"
-            style="--bs-form-range-component-value: 40%;"
-            type="range"
-            value="4"
-          />
-        </div>
-      `);
+<div>
+  <label
+    class="df-label"
+    for="range"
+  >
+    Range
+  </label>
+  <input
+    class="df-range"
+    data-filled=""
+    id="range"
+    max="10"
+    min="0"
+    readonly=""
+    step="2"
+    style="--df-range-value: 40%;"
+    type="range"
+    value="4"
+  />
+</div>
+`);
     });
 
     it('should be disabled when disabled prop is true', () => {

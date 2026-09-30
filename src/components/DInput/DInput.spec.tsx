@@ -21,26 +21,29 @@ describe('', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-    <div>
-      <div>
-        <label
-          for="inputId"
-        >
-          Label
-        </label>
-        <div
-          class="input-group"
-        >
-          <input
-            class="form-control"
-            id="inputId"
-            placeholder="Input"
-            value="Value"
-          />
-        </div>
-      </div>
+<div>
+  <div
+    class="df-field"
+  >
+    <label
+      class="df-label"
+      for="inputId"
+    >
+      Label
+    </label>
+    <div
+      class="df-input-group"
+    >
+      <input
+        class="df-input"
+        id="inputId"
+        placeholder="Input"
+        value="Value"
+      />
     </div>
-    `);
+  </div>
+</div>
+`);
   });
 
   it('renders the input with label', () => {
@@ -62,7 +65,7 @@ describe('', () => {
     );
 
     expect(screen.getByText('Input label')).toBeInTheDocument();
-    expect(screen.getByLabelText('Input label').closest('.form-floating')).toBeInTheDocument();
+    expect(screen.getByLabelText('Input label').closest('.df-input-floating')).toBeInTheDocument();
   });
 
   it('renders hint text', () => {
@@ -85,7 +88,7 @@ describe('', () => {
     );
 
     const input = screen.getByLabelText('Input label');
-    expect(input).toHaveClass('is-invalid');
+    expect(input).toHaveAttribute('data-invalid');
   });
 
   it('shows valid state', () => {
@@ -97,7 +100,7 @@ describe('', () => {
     );
 
     const input = screen.getByLabelText('Input label');
-    expect(input).toHaveClass('is-valid');
+    expect(input).toHaveAttribute('data-valid');
   });
 
   it('calls onChange with input value', () => {

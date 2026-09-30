@@ -16,14 +16,14 @@ describe('<Card />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="card custom-card"
-        >
-          Card body
-        </div>
-      </div>
-    `);
+<div>
+  <div
+    class="df-card custom-card"
+  >
+    Card body
+  </div>
+</div>
+`);
   });
 
   it('should render a card with header, body and footer', () => {
@@ -35,10 +35,10 @@ describe('<Card />', () => {
       </DCard>,
     );
 
-    const card = container.querySelector('.card');
-    const header = card?.querySelector('.card-header');
-    const body = card?.querySelector('.card-body');
-    const footer = card?.querySelector('.card-footer');
+    const card = container.querySelector('.df-card');
+    const header = card?.querySelector('.df-card-header');
+    const body = card?.querySelector('.df-card-body');
+    const footer = card?.querySelector('.df-card-footer');
 
     expect(header).toHaveTextContent('Header');
     expect(body).toHaveTextContent('Body');
@@ -52,6 +52,6 @@ describe('<Card />', () => {
       </DCard>,
     );
 
-    expect(container.querySelector('.card')).toHaveAttribute('data-test', 'card');
+    expect(container.querySelector('.df-card')).toHaveAttribute('data-test', 'card');
   });
 });

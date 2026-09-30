@@ -1,0 +1,83 @@
+{
+  "$description": "PIN / OTP input tokens. One box per character; the boxes are inputs, not a styled text field. The `otp-*` group is the panel DOtp arranges around them — 2.x built that layout from a dozen utilities in the markup, two of them responsive and therefore in the opt-in stylesheet.",
+  "pin": {
+    "gap": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "size": {
+      "$type": "dimension",
+      "$value": "{size.12}"
+    },
+    "font-size": {
+      "$type": "dimension",
+      "$value": "{font-size.500}"
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "{shape.control-sm}"
+    },
+    "border-width": {
+      "$type": "dimension",
+      "$value": "{stroke.control}"
+    },
+    "bg": {
+      "$type": "color",
+      "$value": "{bg.surface}"
+    },
+    "fg": {
+      "$type": "color",
+      "$value": "{fg.default}"
+    },
+    "border-color": {
+      "$type": "color",
+      "$value": "{border.default}"
+    },
+    "focus-border-color": {
+      "$type": "color",
+      "$value": "{role.primary.base}"
+    },
+    "invalid-border-color": {
+      "$type": "color",
+      "$value": "{role.danger.base}"
+    },
+    "valid-border-color": {
+      "$type": "color",
+      "$value": "{role.success.base}"
+    },
+    "disabled-bg": {
+      "$type": "color",
+      "$value": "{bg.disabled}"
+    },
+    "disabled-fg": {
+      "$type": "color",
+      "$value": "{fg.disabled}"
+    }
+  },
+  "otp": {
+    "gap": {
+      "$type": "dimension",
+      "$value": "{size.6}"
+    },
+    "padding-block-end": {
+      "$type": "dimension",
+      "$value": "{size.4}"
+    },
+    "padding-inline": {
+      "$type": "dimension",
+      "$value": "{size.3}"
+    },
+    "actions-gap": {
+      "$type": "dimension",
+      "$value": "{size.4}"
+    },
+    "note-font-size": {
+      "$type": "dimension",
+      "$value": "{font-size.200}"
+    },
+    "divider-color": {
+      "$type": "color",
+      "$value": "{border.muted}"
+    }
+  }
+}

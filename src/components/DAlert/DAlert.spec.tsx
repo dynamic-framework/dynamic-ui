@@ -26,9 +26,10 @@ describe('<DAlert />', () => {
     );
 
     const alert = container.querySelector('#alertID');
-    const icon = alert?.querySelector('.d-icon');
+    const icon = alert?.querySelector('.df-icon');
 
-    expect(alert).toHaveClass('alert', 'alert-info');
+    expect(alert).toHaveClass('df-alert');
+    expect(alert).toHaveAttribute('data-color', 'info');
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
     expect(screen.getByText('Alert content')).toBeInTheDocument();
@@ -39,9 +40,9 @@ describe('<DAlert />', () => {
 
     render(<DAlert>{message}</DAlert>);
     const alert = screen.getByRole('alert');
-    const icon = alert.querySelector('.d-icon');
+    const icon = alert.querySelector('.df-icon');
 
-    expect(alert).toHaveClass('alert-success');
+    expect(alert).toHaveAttribute('data-color', 'success');
     expect(screen.getByText(message)).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
@@ -111,12 +112,12 @@ describe('<DAlert />', () => {
       </DAlert>,
     );
 
-    const alertIcon = screen.getByRole('alert').querySelector('.d-icon');
+    const alertIcon = screen.getByRole('alert').querySelector('.df-icon');
     expect(alertIcon?.className).toContain('material-symbols-outlined');
     expect(alertIcon).toHaveTextContent('heart');
     expect(alertIcon?.tagName).toBe('I');
 
-    const closeIcon = screen.getByRole('button').querySelector('.d-icon');
+    const closeIcon = screen.getByRole('button').querySelector('.df-icon');
     expect(closeIcon?.className).toContain('material-symbols-outlined');
     expect(closeIcon).toHaveTextContent('x');
     expect(closeIcon?.tagName).toBe('I');
@@ -132,7 +133,7 @@ describe('<DAlert />', () => {
       </DAlert>,
     );
     const button = screen.getByRole('button');
-    const closeIcon = button.querySelector('.d-icon');
+    const closeIcon = button.querySelector('.df-icon');
     expect(closeIcon).toBeInTheDocument();
     expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
   });

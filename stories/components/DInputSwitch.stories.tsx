@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputSwitch> = {
   title: 'Design System/Components/Input Switch',
@@ -12,24 +11,37 @@ const config: Meta<typeof DInputSwitch> = {
         component: `
 Graphical control element that allows the user to choose between two mutually exclusive states.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Switch](https://getbootstrap.com/docs/5.3/forms/checks-radios/#switches)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/choice.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                            | Class               | Type              | Description                |
-|-----------------------------------------------------|---------------------|-------------------|----------------------------|
-| --${PREFIX_BS}form-switch-width                     | .form-switch        | css length unit   | Switch width               |
-| --${PREFIX_BS}form-switch-padding-start             | .form-switch        | css length unit   | Padding start              |
-| --${PREFIX_BS}form-switch-border-radius             | .form-switch        | css length unit   | Border radius              |
-| --${PREFIX_BS}form-switch-bg                        | .form-switch        | data url svg      | Regular image background   |
-| --${PREFIX_BS}form-switch-focus-bg-image            | .form-switch        | data url svg      | Focus image background     |
-| --${PREFIX_BS}form-switch-checked-bg-image          | .form-switch        | data url svg      | Checked image backgound    |
-| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit    | Focus border color         |
-| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow    | Focus box shadow           |
+| Variable                              | Type       | Description           |
+|---------------------------------------|------------|-----------------------|
+| \`--df-choice-size\`                  | css length | Size                  |
+| \`--df-choice-gap\`                   | css length | Gap                   |
+| \`--df-choice-radius\`                | css length | Radius                |
+| \`--df-choice-border-width\`          | css length | Border width          |
+| \`--df-choice-bg\`                    | css color  | Background            |
+| \`--df-choice-border-color\`          | css color  | Border color          |
+| \`--df-choice-checked-bg\`            | css color  | Checked background    |
+| \`--df-choice-checked-border-color\`  | css color  | Checked border color  |
+| \`--df-choice-checked-mark-color\`    | css color  | Checked mark color    |
+| \`--df-choice-hover-border-color\`    | css color  | Hover border color    |
+| \`--df-choice-invalid-border-color\`  | css color  | Invalid border color  |
+| \`--df-choice-valid-border-color\`    | css color  | Valid border color    |
+| \`--df-choice-disabled-bg\`           | css color  | Disabled background   |
+| \`--df-choice-disabled-border-color\` | css color  | Disabled border color |
+| \`--df-choice-disabled-opacity\`      | number     | Disabled opacity      |
+| \`--df-choice-label-color\`           | css color  | Label color           |
+| \`--df-choice-label-font-size\`       | css length | Label font size       |
+| \`--df-choice-switch-width\`          | css length | Switch width          |
+| \`--df-choice-switch-height\`         | css length | Switch height         |
+| \`--df-choice-switch-thumb-inset\`    | css length | Switch thumb inset    |
+| \`--df-choice-switch-thumb-color\`    | css color  | Switch thumb color    |
+| \`--df-choice-switch-track-color\`    | css color  | Switch track color    |
+
         `,
       },
     },
@@ -198,14 +210,14 @@ export const SeeMoreExamples: Story = {
   },
   render: () => (
     <div
-      className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+      className="df-alert df-flex df-items-start df-gap-3 df-p-4 df-rounded-control df-border-1 df-border-primary df-bg-primary-subtle"
       role="note"
       aria-label="See more examples"
     >
-      <span className="fs-4" aria-hidden="true">💡</span>
+      <span className="df-fs-heading-4" aria-hidden="true">💡</span>
       <div>
-        <strong className="d-block mb-1">Looking for more examples?</strong>
-        <span className="text-secondary">
+        <strong className="df-block df-mb-1">Looking for more examples?</strong>
+        <span className="df-text-secondary">
           To see more examples, you can review the
           {' '}
           <a href="/?path=/docs/patterns-input-switch--docs" target="_parent">

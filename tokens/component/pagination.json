@@ -1,0 +1,23 @@
+{
+  "$description": "Pagination tokens.",
+  "pagination": {
+    "gap": {"$type": "dimension", "$value": "{size.1}"},
+    "item-size": {"$type": "dimension", "$value": "{size.9}"},
+    "item-size-sm": {"$type": "dimension", "$value": "{size.7}"},
+    "item-size-lg": {"$type": "dimension", "$value": "{size.11}"},
+    "item-padding-inline": {"$type": "dimension", "$value": "{size.2}"},
+    "item-radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "item-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "item-font-size-sm": {"$type": "dimension", "$value": "{font-size.200}"},
+    "item-font-size-lg": {"$type": "dimension", "$value": "{font-size.400}"},
+    "glyph-size": {"$type": "dimension", "$value": "{size.4}"},
+
+    "item-fg": {"$type": "color", "$value": "{fg.default}"},
+    "item-nav-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "item-hover-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "item-active-bg": {"$type": "color", "$value": "{role.primary.base}"},
+    "item-active-fg": {"$type": "color", "$value": "{role.primary.on-base}"},
+    "item-disabled-fg": {"$type": "color", "$value": "{fg.disabled}"},
+    "ellipsis-fg": {"$type": "color", "$value": "{fg.subtle}"}
+  }
+}

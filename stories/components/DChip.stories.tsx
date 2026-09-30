@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 import DChip from '../../src/components/DChip/DChip';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
 
@@ -13,17 +12,22 @@ const config: Meta<typeof DChip> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                         | Class   | Type            | Description                      |
-|----------------------------------|---------|-----------------|----------------------------------|
-| --${PREFIX_BS}chip-bg            | .d-chip | css color unit  | Background color                 |
-| --${PREFIX_BS}chip-gap           | .d-chip | css length unit | Separation between chip elements |
-| --${PREFIX_BS}chip-color         | .d-chip | css color unit  | Text color                       |
-| --${PREFIX_BS}chip-border-radius | .d-chip | css length unit | Border radius                    |
-| --${PREFIX_BS}chip-padding-x     | .d-chip | css length unit | Padding horizontal               |
-| --${PREFIX_BS}chip-padding-y     | .d-chip | css length unit | Padding vertical                 |
-| --${PREFIX_BS}chip-font-size     | .d-chip | css length unit | Font size                        |
-| --${PREFIX_BS}chip-font-weight   | .d-chip | css font weight | Font weight                      |
-| --${PREFIX_BS}chip-line-height   | .d-chip | css length unit | Line height                      |
+
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/chip.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                     | Type       | Description    |
+|------------------------------|------------|----------------|
+| \`--df-chip-padding-block\`  | css length | Padding block  |
+| \`--df-chip-padding-inline\` | css length | Padding inline |
+| \`--df-chip-gap\`            | css length | Gap            |
+| \`--df-chip-font-size\`      | css length | Font size      |
+| \`--df-chip-line-height\`    | number     | Line height    |
+| \`--df-chip-radius\`         | css length | Radius         |
+| \`--df-chip-border-width\`   | css length | Border width   |
+| \`--df-chip-icon-size\`      | css length | Icon size      |
+
         `,
       },
     },
@@ -143,9 +147,9 @@ export const AllColors: Story = {
           <DChip key={theme} color={theme} text={theme} />
         ))}
       </div>
-      <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light variant (for dark backgrounds)</p>
-        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+      <div className="df-mt-4">
+        <p className="df-mb-1 df-mt-8 df-fs-body-sm">Light variant (for dark backgrounds)</p>
+        <div className="df-p-4 df-rounded-control" style={{ background: 'var(--df-role-primary-base-active, #1a237e)' }}>
           <DChip color="light" text="Light" />
         </div>
       </div>

@@ -24,7 +24,7 @@ const config: Meta<typeof DDatePicker> = {
     (Story) => (
       <div
         style={{ height: '400px' }}
-        className="position-relative"
+        className="df-relative"
       >
         <Story />
       </div>

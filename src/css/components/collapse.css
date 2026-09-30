@@ -1,0 +1,92 @@
+/**
+ * Collapse.
+ *
+ * The open/close transition uses `interpolate-size: allow-keywords` so
+ * `height: auto` can animate — no JavaScript measuring the content, which is
+ * what 2.x's approach needed. `@starting-style` gives the opening direction a
+ * starting point; without it only the close animates.
+ *
+ * Browsers without `interpolate-size` simply snap open, which is the correct
+ * degradation for a disclosure.
+ */
+@layer df.components {
+  .df-collapse {
+    color: var(--df-collapse-fg);
+    background-color: var(--df-collapse-bg);
+    border-radius: var(--df-collapse-radius);
+    box-shadow: var(--df-collapse-shadow);
+    interpolate-size: allow-keywords;
+  }
+
+  .df-collapse-trigger {
+    display: flex;
+    gap: var(--df-collapse-trigger-gap);
+    align-items: center;
+    width: 100%;
+    padding-block: var(--df-collapse-trigger-padding-block);
+    padding-inline: var(--df-collapse-trigger-padding-inline);
+    font: inherit;
+    font-weight: var(--df-collapse-trigger-font-weight);
+    color: inherit;
+    text-align: start;
+    cursor: pointer;
+    user-select: none;
+    background: transparent;
+    border: 0;
+  }
+
+  .df-collapse-trigger:focus-visible {
+    border-radius: var(--df-collapse-radius);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  /* 2.x asked the markup for a `.flex-grow-1` utility here, which put a layout
+     class inside the component's own DOM. It belongs in the component. */
+  .df-collapse-trigger-label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Pushes anything after the label — a chevron, a badge — to the far edge. */
+  .df-collapse-trigger-end {
+    margin-inline-start: auto;
+  }
+
+  .df-collapse-trigger-icon {
+    transition: rotate var(--df-motion-duration-enter) var(--df-motion-easing-standard);
+  }
+
+  .df-collapse-trigger[aria-expanded="true"] .df-collapse-trigger-icon {
+    rotate: 180deg;
+  }
+
+  .df-collapse-body {
+    height: 0;
+    overflow: hidden;
+    transition:
+      height var(--df-collapse-duration) var(--df-motion-easing-standard),
+      content-visibility var(--df-collapse-duration) allow-discrete;
+    content-visibility: hidden;
+  }
+
+  .df-collapse-body[data-expanded] {
+    height: auto;
+    content-visibility: visible;
+  }
+
+  @starting-style {
+    .df-collapse-body[data-expanded] {
+      height: 0;
+    }
+  }
+
+  .df-collapse-body-inner {
+    padding-block: var(--df-collapse-body-padding-block);
+    padding-inline: var(--df-collapse-body-padding-inline);
+  }
+
+  .df-collapse[data-separator] .df-collapse-body-inner {
+    border-block-start: var(--df-collapse-separator-size) solid var(--df-collapse-separator-color);
+  }
+}

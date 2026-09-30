@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import type { AvatarSize, BaseProps, ClassMap } from '../interface';
+import type { AvatarSize, BaseProps } from '../interface';
 
 type Props =
 & BaseProps
@@ -24,10 +24,10 @@ export default function DAvatar(
     dataAttributes,
   }: Props,
 ) {
-  const generateClasses = useMemo<ClassMap>(() => ({
-    'd-avatar': true,
-    [`d-avatar-${size}`]: !!size,
-  }), [size]);
+  const dataProps = useMemo(
+    () => (size ? { 'data-size': size } : {}),
+    [size],
+  );
 
   const name = useMemo(() => {
     if (!nameProp) {
@@ -43,13 +43,14 @@ export default function DAvatar(
 
   return (
     <div
-      className={classNames(generateClasses, className)}
+      className={classNames('df-avatar', className)}
       style={style}
       id={id}
+      {...dataProps}
       {...dataAttributes}
     >
-      {image && <img src={image} alt={nameProp} className="d-avatar-img" />}
-      {(name && !image) && <span className="d-avatar-name">{name}</span>}
+      {image && <img src={image} alt={nameProp} className="df-avatar-img" />}
+      {(name && !image) && <span className="df-avatar-name">{name}</span>}
     </div>
   );
 }

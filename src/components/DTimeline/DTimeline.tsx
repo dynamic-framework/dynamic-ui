@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import type { BaseProps } from '../interface';
+import { resolveRole } from '../roles';
 import DIcon from '../DIcon';
 
 export type DTimelineItem = {
@@ -24,25 +25,27 @@ export default function DTimeline({
   return (
     <div
       style={style}
-      className={classNames('d-timeline', className)}
+      className={classNames('df-timeline', className)}
       {...dataAttributes}
     >
       {items.map((item, index) => (
         <div
           // eslint-disable-next-line react/no-array-index-key
           key={index}
-          className={classNames('d-timeline-item', {
-            [`d-timeline-item-${item.status}`]: item.status,
-          })}
+          className="df-timeline-item"
+          {...item.status && { 'data-color': resolveRole(item.status) }}
         >
-          <div className="d-timeline-item-connector" />
-          <div className="d-timeline-item-icon">
-            <DIcon icon={item.icon || 'check'} size="1rem" />
+          {/* The connector is a pseudo-element on the item now, so there is no
+              node here whose only job is to sometimes be invisible. */}
+          <div className="df-timeline-item-marker">
+            <DIcon icon={item.icon || 'Check'} size="16px" />
           </div>
-          <div className="d-timeline-item-content">
-            <div className="d-timeline-item-title">{item.title}</div>
-            {item.description && <div className="d-timeline-item-description">{item.description}</div>}
-            {item.time && <div className="d-timeline-item-time">{item.time}</div>}
+          <div className="df-timeline-item-content">
+            <div className="df-timeline-item-title">{item.title}</div>
+            {item.description && (
+              <div className="df-timeline-item-description">{item.description}</div>
+            )}
+            {item.time && <div className="df-timeline-item-time">{item.time}</div>}
             {item.children}
           </div>
         </div>

@@ -16,7 +16,7 @@ export default function DOffcanvasBody(
 ) {
   return (
     <div
-      className={classNames('offcanvas-body', className)}
+      className={classNames('df-overlay-body', className)}
       style={style}
     >
       {children}

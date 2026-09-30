@@ -140,10 +140,9 @@ function DInput(
     <input
       ref={inputRef}
       id={id}
-      className={classNames('form-control', {
-        'is-invalid': invalid,
-        'is-valid': valid,
-      })}
+      className="df-input"
+      {...invalid && { 'data-invalid': '' }}
+      {...valid && { 'data-valid': '' }}
       disabled={disabled || loading}
       readOnly={readonly}
       value={value}
@@ -169,7 +168,7 @@ function DInput(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <label className="df-label" htmlFor={id}>
       {label}
     </label>
   ), [
@@ -180,7 +179,7 @@ function DInput(
   const dynamicComponent = useMemo(() => {
     if (floatingLabel) {
       return (
-        <div className="form-floating">
+        <div className="df-input-floating">
           {inputComponent}
           {labelComponent}
         </div>
@@ -191,20 +190,18 @@ function DInput(
 
   return (
     <div
-      className={className}
+      className={classNames('df-field', className)}
       style={style}
       {...dataAttributes}
     >
       {label && !floatingLabel && labelComponent}
       <div
-        className={classNames({
-          [`input-group-${size}`]: !!size,
-          'input-group': true,
-          'has-validation': invalid || valid,
-        })}
+        className="df-input-group"
+        {...size && { 'data-size': size }}
+        {...(invalid || valid) && { 'data-validated': '' }}
       >
         {!!inputStart && (
-          <div className="input-group-text" id={`${id}InputStart`}>
+          <div className="df-input-group-addon" id={`${id}InputStart`}>
             {inputStart}
           </div>
         )}
@@ -212,7 +209,7 @@ function DInput(
           onIconStartClick ? (
             <button
               type="button"
-              className="input-group-text"
+              className="df-input-group-addon"
               id={`${id}Start`}
               onClick={handleOnIconStartClick}
               disabled={disabled || loading || iconStartDisabled}
@@ -228,7 +225,7 @@ function DInput(
             </button>
           ) : (
             <div
-              className="input-group-text"
+              className="df-input-group-addon"
               id={`${id}Start`}
               aria-hidden="true"
               tabIndex={-1}
@@ -247,7 +244,7 @@ function DInput(
           onIconEndClick ? (
             <button
               type="button"
-              className="input-group-text"
+              className="df-input-group-addon"
               id={`${id}End`}
               onClick={handleOnIconEndClick}
               disabled={disabled || loading || iconEndDisabled}
@@ -263,7 +260,7 @@ function DInput(
             </button>
           ) : (
             <div
-              className="input-group-text"
+              className="df-input-group-addon"
               id={`${id}End`}
               aria-hidden="true"
               tabIndex={-1}
@@ -278,26 +275,26 @@ function DInput(
           )
         )}
         {loading && (
-          <div className="input-group-text" id={`${id}Loading`}>
+          <div className="df-input-group-addon" id={`${id}Loading`}>
             <span
-              className="spinner-border spinner-border-sm"
+              className="df-spinner"
               role="status"
               aria-hidden="true"
               data-testid="loading-spinner"
             >
-              <span className="visually-hidden">Loading...</span>
+              <span className="df-sr-only">Loading...</span>
             </span>
           </div>
         )}
         {!!inputEnd && (
-          <div className="input-group-text" id={`${id}InputEnd`}>
+          <div className="df-input-group-addon" id={`${id}InputEnd`}>
             {inputEnd}
           </div>
         )}
       </div>
       {hint && (
         <div
-          className="form-text"
+          className="df-help"
           id={`${id}Hint`}
         >
           {hint}

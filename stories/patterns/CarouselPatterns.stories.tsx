@@ -44,33 +44,29 @@ export const LightBackgrounds: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Marketing Campaigns</h5>
+      <h5 className="df-mb-3">Marketing Campaigns</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 5000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        label="Marketing campaigns"
+        loop
+        perPage={1}
+        autoplay
+        interval={5000}
       >
         <DCarousel.Slide>
-          <div className="bg-white rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-surface df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">Summer Sale 2024</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">Summer Sale 2024</h4>
+                  <p className="df-text-muted df-mb-4">
                     Get up to 50% off on selected items. Dont miss out on our
                     biggest sale of the year!
                   </p>
@@ -82,20 +78,20 @@ export const LightBackgrounds: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-gray-25 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-surface df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">New Customer Bonus</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">New Customer Bonus</h4>
+                  <p className="df-text-muted df-mb-4">
                     Open an account today and receive $100 bonus. Terms and conditions apply.
                   </p>
                   <DButton text="Get Started" color="success" />
@@ -106,20 +102,20 @@ export const LightBackgrounds: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-primary-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-primary-subtle df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">Investment Opportunities</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">Investment Opportunities</h4>
+                  <p className="df-text-muted df-mb-4">
                     Discover high-yield investment options tailored to your financial goals.
                   </p>
                   <DButton text="Learn More" color="info" />
@@ -143,33 +139,29 @@ export const DarkBackgrounds: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Premium Offers</h5>
+      <h5 className="df-mb-3">Premium Offers</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 5000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        label="Premium offers"
+        loop
+        perPage={1}
+        autoplay
+        interval={5000}
       >
         <DCarousel.Slide>
-          <div className="bg-primary rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-primary df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5 text-white">
-                  <h4 className="mb-3">Premium Credit Card</h4>
-                  <p className="mb-4" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5 df-text-on-emphasis">
+                  <h4 className="df-mb-3">Premium Credit Card</h4>
+                  <p className="df-mb-4" style={{ opacity: 0.9 }}>
                     Unlock exclusive benefits with our premium card.
                     Travel rewards, concierge service, and more.
                   </p>
@@ -181,20 +173,20 @@ export const DarkBackgrounds: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-dark rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-inverse df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5 text-white">
-                  <h4 className="mb-3">Black Friday Special</h4>
-                  <p className="mb-4" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5 df-text-on-emphasis">
+                  <h4 className="df-mb-3">Black Friday Special</h4>
+                  <p className="df-mb-4" style={{ opacity: 0.9 }}>
                     Limited time offer! Get exclusive deals on all our services. Dont miss out!
                   </p>
                   <DButton text="View Deals" color="light" />
@@ -205,20 +197,20 @@ export const DarkBackgrounds: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-success rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-6">
+          <div className="df-bg-success df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-6">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '400px' }}
                 />
               </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="p-5 text-white">
-                  <h4 className="mb-3">Go Green with Us</h4>
-                  <p className="mb-4" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-6 df-flex df-items-center">
+                <div className="df-p-5 df-text-on-emphasis">
+                  <h4 className="df-mb-3">Go Green with Us</h4>
+                  <p className="df-mb-4" style={{ opacity: 0.9 }}>
                     Join our sustainability program and earn rewards while helping the planet.
                   </p>
                   <DButton text="Join Now" color="light" />
@@ -242,33 +234,29 @@ export const ImageLeft: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Featured Campaigns</h5>
+      <h5 className="df-mb-3">Featured Campaigns</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 4000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        label="Featured campaigns"
+        loop
+        perPage={1}
+        autoplay
+        interval={4000}
       >
         <DCarousel.Slide>
-          <div className="bg-white rounded overflow-hidden border">
-            <div className="row g-0">
-              <div className="col-md-5">
+          <div className="df-bg-surface df-rounded-control df-overflow-hidden df-border-1">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4">
-                  <h4 className="mb-3">Low Interest Loans</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4">
+                  <h4 className="df-mb-3">Low Interest Loans</h4>
+                  <p className="df-text-muted df-mb-4">
                     Get approved in minutes with rates starting at 4.99% APR.
                     No hidden fees, flexible terms.
                   </p>
@@ -280,20 +268,20 @@ export const ImageLeft: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-warning-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-5">
+          <div className="df-bg-warning-subtle df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4">
-                  <h4 className="mb-3">Insurance Plans</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4">
+                  <h4 className="df-mb-3">Insurance Plans</h4>
+                  <p className="df-text-muted df-mb-4">
                     Protect what matters most.
                     Compare plans and find the perfect coverage for you and your family.
                   </p>
@@ -305,20 +293,20 @@ export const ImageLeft: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-info-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-5">
+          <div className="df-bg-info-subtle df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4">
-                  <h4 className="mb-3">Savings Account</h4>
-                  <p className="text-body-secondary mb-4">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4">
+                  <h4 className="df-mb-3">Savings Account</h4>
+                  <p className="df-text-muted df-mb-4">
                     Earn competitive interest rates on your savings. No minimum balance required.
                   </p>
                   <DButton text="Open Account" color="info" />
@@ -342,36 +330,32 @@ export const ImageRight: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Special Offers</h5>
+      <h5 className="df-mb-3">Special Offers</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 4500,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        label="Special offers"
+        loop
+        perPage={1}
+        autoplay
+        interval={4500}
       >
         <DCarousel.Slide>
-          <div className="bg-success-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">Business Banking</h4>
-                  <p className="text-body-secondary mb-4">
+          <div className="df-bg-success-subtle df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">Business Banking</h4>
+                  <p className="df-text-muted df-mb-4">
                     Powerful tools to help your business grow.
                     From payment processing to payroll management.
                   </p>
                   <DButton text="Get Started" color="success" />
                 </div>
               </div>
-              <div className="col-md-5">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
@@ -380,23 +364,23 @@ export const ImageRight: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-purple-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">Student Discounts</h4>
-                  <p className="text-body-secondary mb-4">
+          <div className="bg-purple-50 df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">Student Discounts</h4>
+                  <p className="df-text-muted df-mb-4">
                     Special rates for students.
                     No monthly fees and exclusive benefits designed for you.
                   </p>
                   <DButton text="Learn More" color="purple" />
                 </div>
               </div>
-              <div className="col-md-5">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
@@ -405,23 +389,23 @@ export const ImageRight: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-danger-50 rounded overflow-hidden">
-            <div className="row g-0">
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-5">
-                  <h4 className="mb-3">Limited Time Offer</h4>
-                  <p className="text-body-secondary mb-4">
+          <div className="df-bg-danger-subtle df-rounded-control df-overflow-hidden">
+            <div className="df-grid df-grid-cols-12 df-gap-0">
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-5">
+                  <h4 className="df-mb-3">Limited Time Offer</h4>
+                  <p className="df-text-muted df-mb-4">
                     Dont miss our exclusive promotion!
                     Open an account this month and get special benefits.
                   </p>
                   <DButton text="Claim Offer" color="danger" />
                 </div>
               </div>
-              <div className="col-md-5">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                   style={{ minHeight: '350px' }}
                 />
               </div>
@@ -443,33 +427,29 @@ export const CompactVersion: Story = {
   },
   render: () => (
     <DBox style={{ width: 800 }}>
-      <h5 className="mb-3">Quick Promotions</h5>
+      <h5 className="df-mb-3">Quick Promotions</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 3000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-          height: '250px',
-        }}
+        label="Quick promotions"
+        loop
+        perPage={1}
+        autoplay
+        interval={3000}
+        height="250px"
       >
         <DCarousel.Slide>
-          <div className="bg-primary rounded overflow-hidden h-100">
-            <div className="row g-0 h-100">
-              <div className="col-md-5">
+          <div className="df-bg-primary df-rounded-control df-overflow-hidden df-h-full">
+            <div className="df-grid df-grid-cols-12 df-gap-0 df-h-full">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4 text-white">
-                  <h5 className="mb-2">Quick Transfer</h5>
-                  <p className="mb-3 small" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4 df-text-on-emphasis">
+                  <h5 className="df-mb-2">Quick Transfer</h5>
+                  <p className="df-mb-3 df-fs-body-sm" style={{ opacity: 0.9 }}>
                     Send money instantly with zero fees
                   </p>
                   <DButton text="Try Now" color="light" size="sm" />
@@ -480,19 +460,19 @@ export const CompactVersion: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-success rounded overflow-hidden h-100">
-            <div className="row g-0 h-100">
-              <div className="col-md-5">
+          <div className="df-bg-success df-rounded-control df-overflow-hidden df-h-full">
+            <div className="df-grid df-grid-cols-12 df-gap-0 df-h-full">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4 text-white">
-                  <h5 className="mb-2">Cashback Rewards</h5>
-                  <p className="mb-3 small" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4 df-text-on-emphasis">
+                  <h5 className="df-mb-2">Cashback Rewards</h5>
+                  <p className="df-mb-3 df-fs-body-sm" style={{ opacity: 0.9 }}>
                     Earn up to 5% cashback on purchases
                   </p>
                   <DButton text="Join Now" color="light" size="sm" />
@@ -503,19 +483,19 @@ export const CompactVersion: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-info rounded overflow-hidden h-100">
-            <div className="row g-0 h-100">
-              <div className="col-md-5">
+          <div className="df-bg-info df-rounded-control df-overflow-hidden df-h-full">
+            <div className="df-grid df-grid-cols-12 df-gap-0 df-h-full">
+              <div className="df-md:col-span-5">
                 <img
                   src={SAMPLE_IMAGE}
                   alt="Campaign"
-                  className="w-100 h-100 object-fit-cover"
+                  className="df-w-full df-h-full df-object-cover"
                 />
               </div>
-              <div className="col-md-7 d-flex align-items-center">
-                <div className="p-4 text-white">
-                  <h5 className="mb-2">Mobile App</h5>
-                  <p className="mb-3 small" style={{ opacity: 0.9 }}>
+              <div className="df-md:col-span-7 df-flex df-items-center">
+                <div className="df-p-4 df-text-on-emphasis">
+                  <h5 className="df-mb-2">Mobile App</h5>
+                  <p className="df-mb-3 df-fs-body-sm" style={{ opacity: 0.9 }}>
                     Download our app for exclusive features
                   </p>
                   <DButton text="Download" color="light" size="sm" />

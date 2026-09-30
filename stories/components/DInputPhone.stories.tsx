@@ -445,7 +445,7 @@ const FormikExample = {
         handleBlur,
         values,
       }) => (
-        <Form className="d-flex flex-column gap-4">
+        <Form className="df-flex df-flex-col df-gap-4">
           <DInputPhone
             value={values.phone}
             onChange={({ phone }) => setFieldValue('phone', phone)}
@@ -489,7 +489,7 @@ const validationSchema = Yup.object().shape({
     handleBlur,
     values,
   }) => (
-    <Form className="d-flex flex-column gap-4">
+    <Form className="df-flex df-flex-col df-gap-4">
       <DInputPhone
         id="phone"
         name="phone"

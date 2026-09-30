@@ -24,10 +24,10 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<div class="p-4 rounded border shadow-none hover:shadow-sm">...</div>
-<div class="p-4 rounded border shadow-none hover:shadow">...</div>
-<div class="p-4 rounded border shadow-none hover:shadow-lg">...</div>
-<div class="p-4 rounded border shadow-sm hover:shadow-none">...</div>
+<div class="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-sm">...</div>
+<div class="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-md">...</div>
+<div class="df-p-4 df-rounded-control df-border-1 df-shadow-none df-hover:shadow-lg">...</div>
+<div class="df-p-4 df-rounded-control df-border-1 df-shadow-sm df-hover:shadow-none">...</div>
   `}
   language="html"
 />
@@ -40,7 +40,7 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<div class="card hover:bg-secondary-100">...</div>
+<div class="df-card df-hover:bg-secondary-subtle">...</div>
   `}
   language="html"
 />
@@ -53,9 +53,9 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<a class="text-body hover:text-primary">Primary on hover</a>
-<a class="text-body hover:text-danger">Danger on hover</a>
-<a class="text-body hover:text-success">Success on hover</a>
+<a class="df-text-default df-hover:text-primary">Primary on hover</a>
+<a class="df-text-default df-hover:text-danger">Danger on hover</a>
+<a class="df-text-default df-hover:text-success">Success on hover</a>
   `}
   language="html"
 />
@@ -68,7 +68,7 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<div class="border rounded p-2 overflow-hidden hover:overflow-auto">...</div>
+<div class="df-border-1 df-rounded-control df-p-2 df-overflow-hidden df-hover:overflow-auto">...</div>
   `}
   language="html"
 />
@@ -81,8 +81,8 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<div class="p-3 rounded border border-2 border-secondary hover:border-primary">...</div>
-<div class="p-3 rounded border border-2 border-dark hover:border-success">...</div>
+<div class="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-hover:border-primary">...</div>
+<div class="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-strong df-hover:border-success">...</div>
   `}
   language="html"
 />
@@ -95,7 +95,7 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
 <Source
   code={`
-<div class="p-3 rounded border opacity-100 hover:opacity-40">...</div>
+<div class="df-p-3 df-rounded-control df-border-1 df-opacity-100 df-hover:opacity-40">...</div>
   `}
   language="html"
 />
@@ -110,12 +110,12 @@ Palette-level variants (e.g., `hover:text-primary-100`, `hover:text-danger-200`)
 
 <Source
   code={`
-<span class="hover:text-primary-100">hover:text-primary-100</span>
-<span class="hover:text-primary-300">hover:text-primary-300</span>
-<span class="hover:text-primary-700">hover:text-primary-700</span>
-<span class="hover:text-danger-200">hover:text-danger-200</span>
-<span class="hover:text-success-400">hover:text-success-400</span>
-<span class="hover:text-warning-500">hover:text-warning-500</span>
+<span class="df-hover:text-primary">hover:text-primary-100</span>
+<span class="df-hover:text-primary">hover:text-primary-300</span>
+<span class="df-hover:text-primary">hover:text-primary-700</span>
+<span class="df-hover:text-danger">hover:text-danger-200</span>
+<span class="df-hover:text-success">hover:text-success-400</span>
+<span class="df-hover:text-warning">hover:text-warning-500</span>
   `}
   language="html"
 />
@@ -130,10 +130,10 @@ Palette-level variants (e.g., `hover:border-primary-100`, `hover:border-danger-2
 
 <Source
   code={`
-<div class="border border-2 hover:border-primary-100">...</div>
-<div class="border border-2 hover:border-primary-300">...</div>
-<div class="border border-2 hover:border-danger-200">...</div>
-<div class="border border-2 hover:border-success-400">...</div>
+<div class="df-border-1 df-border-2 df-hover:border-primary">...</div>
+<div class="df-border-1 df-border-2 df-hover:border-primary">...</div>
+<div class="df-border-1 df-border-2 df-hover:border-danger">...</div>
+<div class="df-border-1 df-border-2 df-hover:border-success">...</div>
   `}
   language="html"
 />

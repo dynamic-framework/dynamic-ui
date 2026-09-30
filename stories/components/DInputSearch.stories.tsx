@@ -120,7 +120,7 @@ export const DummyApiSearch: Story = {
     const totalText = useMemo(() => `${results.length} result(s)`, [results.length]);
 
     return (
-      <div className="d-flex flex-column gap-3" style={{ maxWidth: '640px' }}>
+      <div className="df-flex df-flex-col df-gap-3" style={{ maxWidth: '640px' }}>
         <DInputSearch
           {...args}
           value={rawQuery}
@@ -128,7 +128,7 @@ export const DummyApiSearch: Story = {
           onChange={setDebouncedQuery}
         />
 
-        <div className="small text-secondary">
+        <div className="df-fs-body-sm df-text-secondary">
           <strong>Immediate query:</strong>
           {' '}
           {rawQuery || '(empty)'}
@@ -145,10 +145,10 @@ export const DummyApiSearch: Story = {
         >
           {(items) => (
             <div>
-              <div className="small text-secondary mb-2">{totalText}</div>
-              <ul className="list-group">
+              <div className="df-fs-body-sm df-text-secondary df-mb-2">{totalText}</div>
+              <ul className="df-list">
                 {items.map((item) => (
-                  <li key={item} className="list-group-item">
+                  <li key={item} className="df-list-item">
                     {item}
                   </li>
                 ))}

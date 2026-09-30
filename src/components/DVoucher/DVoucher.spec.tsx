@@ -43,7 +43,7 @@ describe('<DVoucher />', () => {
   it('renders with default icon and color', () => {
     render(<DVoucher {...defaultProps} />);
 
-    const voucherElement = screen.getByText('Payment Successful').closest('.d-voucher');
+    const voucherElement = screen.getByText('Payment Successful').closest('.df-voucher');
     expect(voucherElement).toBeInTheDocument();
   });
 
@@ -87,7 +87,7 @@ describe('<DVoucher />', () => {
   it('does not render amount section when amount is not provided', () => {
     const { container } = render(<DVoucher {...defaultProps} />);
 
-    const amountSection = container.querySelector('.d-voucher-amount');
+    const amountSection = container.querySelector('.df-voucher-amount');
     expect(amountSection).not.toBeInTheDocument();
   });
 
@@ -238,8 +238,8 @@ describe('<DVoucher />', () => {
   it('has proper CSS classes', () => {
     const { container } = render(<DVoucher {...defaultProps} />);
 
-    expect(container.querySelector('.d-voucher')).toBeInTheDocument();
-    expect(container.querySelector('.d-voucher-header')).toBeInTheDocument();
-    expect(container.querySelector('.d-voucher-footer')).toBeInTheDocument();
+    expect(container.querySelector('.df-voucher')).toBeInTheDocument();
+    expect(container.querySelector('.df-voucher-header')).toBeInTheDocument();
+    expect(container.querySelector('.df-voucher-footer')).toBeInTheDocument();
   });
 });

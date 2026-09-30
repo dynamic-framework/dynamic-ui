@@ -56,21 +56,18 @@ export default function DBoxFile(
   return (
     <>
       <section
-        className={classnames(
-          'd-box-file',
-          {
-            'd-box-file-selected': files.length > 0,
-            'd-box-file-disabled': props.disabled,
-            'd-box-file-valid': isDragValid,
-            'd-box-file-invalid': isDragInvalid,
-          },
-          className,
-        )}
+        className={classnames('df-dropzone-wrapper', className)}
         style={style}
         {...dataAttributes}
       >
         <div
-          className="d-box-file-dropzone"
+          className="df-dropzone"
+          // State as attributes rather than four class names, so the drag-over
+          // state can be driven from JS without swapping classes.
+          {...files.length > 0 && { 'data-selected': '' }}
+          {...props.disabled && { 'data-disabled': '' }}
+          {...isDragValid && { 'data-valid': '' }}
+          {...isDragInvalid && { 'data-invalid': '' }}
           ref={rootRef}
           onDragEnter={handleDragEnter}
           onDragOver={(e) => e.preventDefault()}
@@ -100,11 +97,11 @@ export default function DBoxFile(
               materialStyle={iconMaterialStyle}
             />
           )}
-          <div className="d-box-content">
+          <div className="df-dropzone-prompt">
             {typeof children === 'function'
               ? children(openFileDialog)
               : children || (
-                <p className="text-center m-0">
+                <p className="df-dropzone-hint">
                   Drag and drop some files here, or click to select files
                 </p>
               )}
@@ -112,7 +109,7 @@ export default function DBoxFile(
         </div>
       </section>
       {!!files.length && (
-        <ul className="d-box-files">
+        <ul className="df-dropzone-files">
           {files.map((file, index) => (
             <DInput
               key={`${file.name} ${index}`}

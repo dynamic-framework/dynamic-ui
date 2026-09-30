@@ -11,52 +11,51 @@ describe('<DBadge />', () => {
     };
     const { container } = render(<DBadge {...props} />);
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <span
-          class="badge badge-primary"
-        >
-          <span>
-            Badge content
-          </span>
-        </span>
-      </div>
-    `);
+<div>
+  <span
+    class="df-badge"
+    data-color="primary"
+    data-variant="solid"
+  >
+    <span>
+      Badge content
+    </span>
+  </span>
+</div>
+`);
   });
 
   it('Renders with size prop', () => {
     render(<DBadge text="Badge content" size="sm" />);
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge-sm');
+    expect(badge).toHaveAttribute('data-size', 'sm');
   });
 
   it('Renders with responsive size object', () => {
     render(<DBadge text="Badge content" size={{ xs: 'sm', md: 'lg' }} />);
     const badge = screen.getByText('Badge content').parentElement!;
-    expect([
-      'badge badge-primary',
-      'badge badge-primary badge-sm',
-      'badge badge-primary badge-md',
-      'badge badge-primary badge-lg',
-    ]).toContain(badge.className);
+    expect([null, 'sm', 'md', 'lg']).toContain(badge.getAttribute('data-size'));
   });
 
   it('Renders with default props', () => {
     render(<DBadge text="Badge content" />);
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge', 'badge-primary');
+    expect(badge).toHaveClass('df-badge');
+    expect(badge).toHaveAttribute('data-color', 'primary');
+    expect(badge).toHaveAttribute('data-variant', 'solid');
   });
 
   it('Renders with soft info color', () => {
     render(<DBadge text="Badge content" color="info" soft />);
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge-soft-info');
-    expect(badge).not.toHaveClass('badge-info');
+    expect(badge).toHaveAttribute('data-variant', 'soft');
+    expect(badge).toHaveAttribute('data-color', 'info');
   });
 
   it('Renders rounded badge', () => {
     render(<DBadge text="Badge content" rounded />);
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('rounded-pill');
+    expect(badge).toHaveAttribute('data-shape', 'pill');
   });
 });
 
@@ -72,16 +71,18 @@ describe('<DBadge />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <span
-          class="badge badge-primary"
-        >
-          <span>
-            Badge content
-          </span>
-        </span>
-      </div>
-    `);
+<div>
+  <span
+    class="df-badge"
+    data-color="primary"
+    data-variant="solid"
+  >
+    <span>
+      Badge content
+    </span>
+  </span>
+</div>
+`);
   });
 
   it('Renders with size prop', () => {
@@ -89,7 +90,7 @@ describe('<DBadge />', () => {
       <DBadge text="Badge content" size="sm" />,
     );
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge-sm');
+    expect(badge).toHaveAttribute('data-size', 'sm');
   });
 
   it('Renders with default props', () => {
@@ -100,7 +101,9 @@ describe('<DBadge />', () => {
     );
 
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge', 'badge-primary');
+    expect(badge).toHaveClass('df-badge');
+    expect(badge).toHaveAttribute('data-color', 'primary');
+    expect(badge).toHaveAttribute('data-variant', 'solid');
   });
 
   it('Renders with soft info color', () => {
@@ -113,8 +116,8 @@ describe('<DBadge />', () => {
     );
 
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('badge-soft-info');
-    expect(badge).not.toHaveClass('badge-info');
+    expect(badge).toHaveAttribute('data-variant', 'soft');
+    expect(badge).toHaveAttribute('data-color', 'info');
   });
 
   it('Renders rounded badge', () => {
@@ -126,7 +129,7 @@ describe('<DBadge />', () => {
     );
 
     const badge = screen.getByText('Badge content').parentElement!;
-    expect(badge).toHaveClass('rounded-pill');
+    expect(badge).toHaveAttribute('data-shape', 'pill');
   });
 
   it('Applies id, className, and style', () => {
@@ -154,7 +157,7 @@ describe('<DBadge />', () => {
     );
 
     const badge = screen.getByText('Badge content').parentElement!;
-    const startIcon = badge.querySelector('.d-icon');
+    const startIcon = badge.querySelector('.df-icon');
     expect(startIcon).toBeInTheDocument();
     expect(startIcon?.querySelector('svg')).toBeInTheDocument();
   });
@@ -168,7 +171,7 @@ describe('<DBadge />', () => {
     );
 
     const badge = screen.getByText('Badge content').parentElement!;
-    const iconEnd = badge.querySelector('.d-icon');
+    const iconEnd = badge.querySelector('.df-icon');
     expect(iconEnd).toBeInTheDocument();
     expect(iconEnd?.querySelector('svg')).toBeInTheDocument();
   });

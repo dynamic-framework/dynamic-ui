@@ -21,7 +21,7 @@ describe('<DInputPassword />', () => {
 
     const input = container.querySelector('#passwordId');
     const button = container.querySelector('button[aria-label="show/hide password"]');
-    const icon = button?.querySelector('.d-icon');
+    const icon = button?.querySelector('.df-icon');
 
     expect(input).toHaveAttribute('type', 'password');
     expect(button).toBeInTheDocument();

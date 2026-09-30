@@ -1,0 +1,63 @@
+/**
+ * Avatar.
+ *
+ * The glyph size derives from the avatar size rather than being its own token,
+ * so a custom `--df-avatar-size` stays proportional. 2.x did the same with
+ * `calc(size / 3)`; kept, because it is the rare case where a calc() in the
+ * stylesheet is the right answer — the ratio is the design decision, not the
+ * result.
+ */
+@layer df.components {
+  .df-avatar {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: var(--df-avatar-size);
+    height: var(--df-avatar-size);
+    font-size: calc(var(--df-avatar-size) / 3);
+    border: var(--df-avatar-border-width) solid var(--df-avatar-border-color);
+    border-radius: var(--df-avatar-radius);
+  }
+
+  .df-avatar[data-size="xs"] { --df-avatar-size: var(--df-avatar-size-xs); }
+  .df-avatar[data-size="sm"] { --df-avatar-size: var(--df-avatar-size-sm); }
+  .df-avatar[data-size="lg"] { --df-avatar-size: var(--df-avatar-size-lg); }
+  .df-avatar[data-size="xl"] { --df-avatar-size: var(--df-avatar-size-xl); }
+  .df-avatar[data-size="xxl"] { --df-avatar-size: var(--df-avatar-size-xxl); }
+
+  .df-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--df-avatar-radius);
+  }
+
+  .df-avatar-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-weight: var(--df-avatar-font-weight);
+    color: var(--df-avatar-fg);
+    white-space: pre-wrap;
+    background-color: var(--df-avatar-bg);
+    border-radius: var(--df-avatar-radius);
+  }
+
+  /* Overlapping stack. The shadow reads as a gap against the avatar behind it,
+     and is taken from the elevation token instead of a literal rgba. */
+  .df-avatar-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .df-avatar-group > .df-avatar + .df-avatar {
+    margin-inline-start: calc(var(--df-avatar-size) * -0.25);
+  }
+
+  .df-avatar-group .df-avatar-img,
+  .df-avatar-group .df-avatar-name {
+    box-shadow: var(--df-elevation-sm);
+  }
+}

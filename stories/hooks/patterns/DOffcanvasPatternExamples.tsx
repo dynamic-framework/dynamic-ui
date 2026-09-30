@@ -23,7 +23,7 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -34,10 +34,10 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
+          className="df-grid"
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" className="df-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   );

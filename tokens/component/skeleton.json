@@ -1,0 +1,10 @@
+{
+  "$description": "Loading placeholder tokens.",
+  "skeleton": {
+    "radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "height": {"$type": "dimension", "$value": "{size.4}"},
+    "bg": {"$type": "color", "$value": "{bg.sunken}"},
+    "shine": {"$type": "color", "$value": "{bg.muted}"},
+    "duration": {"$type": "duration", "$value": "{duration.slower}"}
+  }
+}

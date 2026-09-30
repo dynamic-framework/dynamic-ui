@@ -56,7 +56,7 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -67,10 +67,10 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
+          className="df-grid"
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" className="df-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   );
@@ -145,7 +145,7 @@ export function ExampleOffcanvasUsage() {
 />
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end">
+  <div className="df-flex df-flex-col df-justify-end df-items-end">
     <ExampleOffcanvasRoot />
   </div>
 </Unstyled>

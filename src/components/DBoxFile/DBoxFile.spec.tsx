@@ -16,11 +16,11 @@ it('should render base box file', () => {
     </DBoxFile>,
   );
 
-  const boxFile = container.querySelector('.d-box-file');
-  const dropzone = container.querySelector('.d-box-file-dropzone');
+  const boxFile = container.querySelector('.df-dropzone-wrapper');
+  const dropzone = container.querySelector('.df-dropzone');
   const input = container.querySelector('input[type="file"]');
-  const icon = container.querySelector('.d-icon');
-  const content = container.querySelector('.d-box-content');
+  const icon = container.querySelector('.df-icon');
+  const content = container.querySelector('.df-dropzone-prompt');
 
   expect(boxFile).toBeInTheDocument();
   expect(dropzone).toBeInTheDocument();

@@ -1,0 +1,97 @@
+/**
+ * File dropzone.
+ *
+ * The dashed border is the affordance, so it is the block's own border rather
+ * than a background image. States are attributes, which means the drag-over
+ * state can be driven from JavaScript without swapping class names.
+ */
+@layer df.components {
+  .df-dropzone {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-dropzone-gap);
+    align-items: center;
+    justify-content: center;
+    padding: var(--df-dropzone-padding);
+    color: var(--df-dropzone-fg);
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--df-dropzone-bg);
+    border: var(--df-dropzone-border-width) dashed var(--df-dropzone-border-color);
+    border-radius: var(--df-dropzone-radius);
+    transition:
+      background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  .df-dropzone:where(:hover, [data-dragging]) {
+    background-color: var(--df-dropzone-hover-bg);
+    border-color: var(--df-dropzone-hover-border-color);
+  }
+
+  .df-dropzone:where([data-valid]) {
+    border-color: var(--df-dropzone-valid-border-color);
+  }
+
+  .df-dropzone:where([data-invalid]) {
+    border-color: var(--df-dropzone-invalid-border-color);
+  }
+
+  .df-dropzone:where([data-disabled]) {
+    color: var(--df-dropzone-disabled-fg);
+    pointer-events: none;
+    background-color: var(--df-dropzone-disabled-bg);
+    border-color: var(--df-border-disabled);
+  }
+
+  .df-dropzone:focus-within {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-dropzone-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-dropzone-gap);
+  }
+
+  .df-dropzone-prompt {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-1);
+    align-items: center;
+  }
+
+  /* 2.x asked the markup for `.text-center m-0`; the reset already removes the
+     paragraph margin and the prompt centres its own children. */
+  .df-dropzone-hint {
+    text-align: center;
+  }
+
+  /* The selected-files list. Left-aligned, unlike the centred prompt above it. */
+  .df-dropzone-files {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-dropzone-file-gap);
+    width: 100%;
+    text-align: start;
+  }
+
+  .df-dropzone-file {
+    display: flex;
+    gap: var(--df-dropzone-file-gap);
+    align-items: center;
+    padding-block: var(--df-dropzone-file-padding-block);
+    color: var(--df-fg-default);
+  }
+
+  .df-dropzone-file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .df-dropzone-file-actions {
+    margin-inline-start: auto;
+  }
+}

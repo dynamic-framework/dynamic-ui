@@ -15,7 +15,7 @@ function BasicExampleContent() {
   });
 
   return (
-    <div className="d-flex flex-column align-items-center gap-3">
+    <div className="df-flex df-flex-col df-items-center df-gap-3">
       <DButton text="Proceed" onClick={confirm.open} />
     </div>
   );
@@ -42,9 +42,9 @@ function CriticalExampleContent() {
   });
 
   return (
-    <div className="d-flex flex-column align-items-center gap-3">
+    <div className="df-flex df-flex-col df-items-center df-gap-3">
       <DButton text="Delete Account" color="danger" onClick={confirm.open} />
-      {result && <p className="alert alert-danger mb-0">{result}</p>}
+      {result && <p className="df-alert df-mb-0" data-color="danger">{result}</p>}
     </div>
   );
 }
@@ -70,13 +70,13 @@ function CloseCallbackExampleContent() {
   });
 
   return (
-    <div className="d-flex flex-column align-items-center gap-3" style={{ minWidth: 320 }}>
+    <div className="df-flex df-flex-col df-items-center df-gap-3" style={{ minWidth: 320 }}>
       <DButton text="Archive Record" variant="outline" onClick={confirm.open} />
       {log.length > 0 && (
-        <ul className="list-group w-100">
+        <ul className="df-list df-w-full">
           {log.map((entry, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <li key={i} className="list-group-item list-group-item-light small">
+            <li key={i} className="df-list-item df-bg-muted df-fs-body-sm">
               {entry}
             </li>
           ))}
@@ -103,15 +103,15 @@ function ContactRowExampleContent() {
   });
 
   if (deleted) {
-    return <p className="alert alert-success">Contact removed successfully.</p>;
+    return <p className="df-alert" data-color="success">Contact removed successfully.</p>;
   }
 
   return (
-    <div className="card p-4 d-flex flex-row align-items-center gap-3" style={{ minWidth: 320 }}>
+    <div className="df-card df-p-4 df-flex df-flex-row df-items-center df-gap-3" style={{ minWidth: 320 }}>
       <DAvatar name={contactName} size="sm" />
-      <div className="flex-grow-1">
-        <div className="fw-semibold">{contactName}</div>
-        <div className="text-muted small">sarah.mitchell@email.com</div>
+      <div className="df-grow">
+        <div className="df-fw-semibold">{contactName}</div>
+        <div className="df-text-muted df-fs-body-sm">sarah.mitchell@email.com</div>
       </div>
       <DButton
         text="Delete"

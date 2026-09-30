@@ -22,28 +22,28 @@ describe('<DListGroup />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <ul
-            class="list-group"
-          >
-            <li
-              class="list-group-item"
-            >
-              Item A
-            </li>
-            <li
-              class="list-group-item"
-            >
-              Item B
-            </li>
-            <li
-              class="list-group-item"
-            >
-              Item C
-            </li>
-          </ul>
-        </div>
-      `);
+<div>
+  <ul
+    class="df-list"
+  >
+    <li
+      class="df-list-item"
+    >
+      Item A
+    </li>
+    <li
+      class="df-list-item"
+    >
+      Item B
+    </li>
+    <li
+      class="df-list-item"
+    >
+      Item C
+    </li>
+  </ul>
+</div>
+`);
     });
 
     it('should render as an ordered list when numbered', () => {
@@ -56,7 +56,7 @@ describe('<DListGroup />', () => {
       );
       const list = screen.getByRole('list');
       expect(list.tagName).toBe('OL');
-      expect(list).toHaveClass('list-group-numbered');
+      expect(list).toHaveAttribute('data-numbered');
     });
 
     it('should render a flush list', () => {
@@ -67,13 +67,15 @@ describe('<DListGroup />', () => {
           </DListGroup>
         </DContextProvider>,
       );
-      expect(screen.getByRole('list')).toHaveClass('list-group-flush');
+      expect(screen.getByRole('list')).toHaveAttribute('data-flush');
     });
 
+    // `horizontal` is one attribute now; its value is the breakpoint, or the
+    // empty string for "at every width".
     it.each([
-      [true, 'list-group-horizontal'],
-      ['md', 'list-group-horizontal-md'],
-    ])('should render a horizontal list with prop %s', (prop, expectedClass) => {
+      [true, ''],
+      ['md', 'md'],
+    ])('should render a horizontal list with prop %s', (prop, expectedValue) => {
       render(
         <DContextProvider>
           <DListGroup horizontal={prop as true | 'md'}>
@@ -81,7 +83,7 @@ describe('<DListGroup />', () => {
           </DListGroup>
         </DContextProvider>,
       );
-      expect(screen.getByRole('list')).toHaveClass(expectedClass);
+      expect(screen.getByRole('list')).toHaveAttribute('data-horizontal', expectedValue);
     });
   });
 });
@@ -100,7 +102,7 @@ describe('<DListGroup.Item />', () => {
       const item = screen.getByRole('link', { name: 'Link Item' });
       expect(item).toBeInTheDocument();
       expect(item).toHaveAttribute('href', '/test');
-      expect(item).toHaveClass('list-group-item-action');
+      expect(item).toHaveAttribute('data-action');
     });
 
     it('should render as a button when action is true', () => {
@@ -126,9 +128,9 @@ describe('<DListGroup.Item />', () => {
       );
 
       const textElement = screen.getByText('Stateful Item');
-      const item = textElement.closest('.list-group-item');
-      expect(item).toHaveClass('active');
-      expect(item).toHaveClass('disabled');
+      const item = textElement.closest('.df-list-item');
+      expect(item).toHaveAttribute('data-active');
+      expect(item).toHaveAttribute('aria-disabled', 'true');
       expect(item).toHaveAttribute('aria-disabled', 'true');
     });
 
@@ -142,8 +144,8 @@ describe('<DListGroup.Item />', () => {
       );
 
       const textElement = screen.getByText('Themed Item');
-      const item = textElement.closest('.list-group-item');
-      expect(item).toHaveClass('list-group-item-success');
+      const item = textElement.closest('.df-list-item');
+      expect(item).toHaveAttribute('data-color', 'success');
     });
 
     it('should apply active state to an action item (button)', () => {
@@ -156,7 +158,7 @@ describe('<DListGroup.Item />', () => {
       );
 
       const item = screen.getByRole('button', { name: 'Active Button' });
-      expect(item).toHaveClass('active');
+      expect(item).toHaveAttribute('data-active');
       expect(item).toHaveAttribute('aria-current', 'true');
     });
 
@@ -170,8 +172,9 @@ describe('<DListGroup.Item />', () => {
       );
 
       const item = screen.getByRole('button', { name: 'Disabled Button' });
+      // A <button> carries the real `disabled` attribute; `aria-disabled` is
+      // for the li/a cases, which have no native disabled state.
       expect(item).toBeDisabled();
-      expect(item).toHaveClass('disabled');
     });
   });
 

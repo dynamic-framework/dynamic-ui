@@ -22,15 +22,15 @@ function InfoModal({ payload }: PortalProps<ExamplePayloads['info']>) {
       staticBackdrop={false}
     >
       <DModal.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Information</h5>
+        <h5 className="df-fw-semibold">Information</h5>
       </DModal.Header>
-      <DModal.Body className="py-3 px-5">
+      <DModal.Body className="df-py-3 df-px-5">
         <p>{payload.message}</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
           text="Close"
-          className="d-grid"
+          className="df-grid"
           onClick={() => closePortal()}
         />
       </DModal.Footer>

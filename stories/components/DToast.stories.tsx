@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DToast } from '../../src/components';
 import { DIcon } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DToast> = {
   title: 'Design System/Components/Toast',
@@ -14,21 +13,28 @@ const config: Meta<typeof DToast> = {
         component: `
 > ⚠️ To achieve the behavior of a toast it is necessary to use the **\`DToastContainer\`** and the **\`useDToast\`** hook. For detailed guidance on the **correct usage** of toasts, please refer to the [Toast Usage](/docs/design-system-components-toast-usage--docs) page in our documentation.
 
-
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)
-
 ## CSS Variables
-The Bootstrap documentation provides details on the default [Toast CSS Variables](https://getbootstrap.com/docs/5.3/components/toasts/#css)
 
-| Variable                                | Classes    | Type              | Description                        |
-|-----------------------------------------|------------|-------------------|------------------------------------|
-| --${PREFIX_BS}toast-header-gap          | .toast     | css length unit   | Space between content              |
-| --${PREFIX_BS}toast-body-gap            | .toast     | css font weight   | Space between content              |
-| --${PREFIX_BS}toast-color               | .toast     | css color         | Toast body text color              |
-| --${PREFIX_BS}toast-close-color         | .toast     | css length unit   | Close icon color                   |
-| --${PREFIX_BS}toast-header-color        | .toast     | css length unit   | Toast header text color            |
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/toast.json\`,
+so it cannot fall out of step with the stylesheet.
+
+| Variable                           | Type           | Description         |
+|------------------------------------|----------------|---------------------|
+| \`--df-toast-min-width\`           | css length     | Min width           |
+| \`--df-toast-padding-block\`       | css length     | Padding block       |
+| \`--df-toast-padding-inline\`      | css length     | Padding inline      |
+| \`--df-toast-gap\`                 | css length     | Gap                 |
+| \`--df-toast-radius\`              | css length     | Radius              |
+| \`--df-toast-border-width\`        | css length     | Border width        |
+| \`--df-toast-font-size\`           | css length     | Font size           |
+| \`--df-toast-bg\`                  | css color      | Background          |
+| \`--df-toast-fg\`                  | css color      | Foreground          |
+| \`--df-toast-border-color\`        | css color      | Border color        |
+| \`--df-toast-shadow\`              | css box-shadow | Shadow              |
+| \`--df-toast-header-font-weight\`  | font weight    | Header font weight  |
+| \`--df-toast-header-border-color\` | css color      | Header border color |
+
         `,
       },
     },
@@ -53,7 +59,7 @@ type Story = StoryObj<typeof DToast>;
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -61,9 +67,9 @@ export const Default: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="Disc" color="primary" className="me-2" />
-        <strong className="me-auto">Notification</strong>
-        <small className="me-2">just now</small>
+        <DIcon icon="Disc" color="primary" className="df-me-2" />
+        <strong className="df-me-auto">Notification</strong>
+        <small className="df-me-2">just now</small>
         <button
           type="button"
           className="d-close"
@@ -85,7 +91,7 @@ export const Default: Story = {
 export const Success: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -93,9 +99,9 @@ export const Success: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="CircleCheck" color="success" className="me-2" />
-        <strong className="me-auto">Success</strong>
-        <small className="me-2">2 mins ago</small>
+        <DIcon icon="CircleCheck" color="success" className="df-me-2" />
+        <strong className="df-me-auto">Success</strong>
+        <small className="df-me-2">2 mins ago</small>
         <button
           type="button"
           className="d-close"
@@ -117,7 +123,7 @@ export const Success: Story = {
 export const Warning: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -125,9 +131,9 @@ export const Warning: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="AlertTriangle" color="warning" className="me-2" />
-        <strong className="me-auto">Warning</strong>
-        <small className="me-2">5 mins ago</small>
+        <DIcon icon="AlertTriangle" color="warning" className="df-me-2" />
+        <strong className="df-me-auto">Warning</strong>
+        <small className="df-me-2">5 mins ago</small>
         <button
           type="button"
           className="d-close"
@@ -149,7 +155,7 @@ export const Warning: Story = {
 export const Danger: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -157,9 +163,9 @@ export const Danger: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="CircleX" color="danger" className="me-2" />
-        <strong className="me-auto">Error</strong>
-        <small className="me-2">1 min ago</small>
+        <DIcon icon="CircleX" color="danger" className="df-me-2" />
+        <strong className="df-me-auto">Error</strong>
+        <small className="df-me-2">1 min ago</small>
         <button
           type="button"
           className="d-close"
@@ -181,7 +187,7 @@ export const Danger: Story = {
 export const Info: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -189,9 +195,9 @@ export const Info: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="Info" color="info" className="me-2" />
-        <strong className="me-auto">Information</strong>
-        <small className="me-2">10 mins ago</small>
+        <DIcon icon="Info" color="info" className="df-me-2" />
+        <strong className="df-me-auto">Information</strong>
+        <small className="df-me-2">10 mins ago</small>
         <button
           type="button"
           className="d-close"
@@ -213,47 +219,47 @@ export const Info: Story = {
 export const ColoredBackgrounds: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '600px', padding: '20px' }} className="position-relative d-flex flex-column gap-3">
+      <div style={{ height: '600px', padding: '20px' }} className="df-relative df-flex df-flex-col df-gap-3">
         <Story />
       </div>
     ),
   ],
   render: () => (
     <>
-      <DToast className="show text-bg-primary">
-        <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast className="show df-bg-primary df-text-on-emphasis">
+        <DToast.Body className="df-flex df-justify-between df-items-center">
           <span>Primary background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
             <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
-      <DToast className="show text-bg-success">
-        <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast className="show df-bg-success df-text-on-emphasis">
+        <DToast.Body className="df-flex df-justify-between df-items-center">
           <span>Success background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
             <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
-      <DToast className="show text-bg-warning">
-        <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast className="show df-bg-warning df-text-on-emphasis">
+        <DToast.Body className="df-flex df-justify-between df-items-center">
           <span>Warning background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
             <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
-      <DToast className="show text-bg-danger">
-        <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast className="show df-bg-danger df-text-on-emphasis">
+        <DToast.Body className="df-flex df-justify-between df-items-center">
           <span>Danger background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
             <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
-      <DToast className="show text-bg-info">
-        <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast className="show df-bg-info df-text-on-emphasis">
+        <DToast.Body className="df-flex df-justify-between df-items-center">
           <span>Info background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
             <DIcon icon="X" />
@@ -274,14 +280,14 @@ export const ColoredBackgrounds: Story = {
 export const WithoutHeader: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
   ],
   render: (args) => (
     <DToast {...args}>
-      <DToast.Body className="d-flex justify-content-between align-items-center">
+      <DToast.Body className="df-flex df-justify-between df-items-center">
         <span>Simple toast without header</span>
         <button type="button" className="d-close d-close-white" aria-label="Close">
           <DIcon icon="X" />
@@ -297,18 +303,18 @@ export const WithoutHeader: Story = {
 export const Stacked: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '600px' }} className="position-relative">
+      <div style={{ height: '600px' }} className="df-relative">
         <Story />
       </div>
     ),
   ],
   render: () => (
-    <div className="toast-container position-absolute top-0 end-0 p-3">
-      <DToast className="show mb-2">
+    <div className="df-absolute df-top-0 df-end-0 df-p-3">
+      <DToast className="show df-mb-2">
         <DToast.Header>
-          <DIcon icon="Disc" color="primary" className="me-2" />
-          <strong className="me-auto">Message 1</strong>
-          <small className="me-2">just now</small>
+          <DIcon icon="Disc" color="primary" className="df-me-2" />
+          <strong className="df-me-auto">Message 1</strong>
+          <small className="df-me-2">just now</small>
           <button type="button" className="d-close" aria-label="Close">
             <DIcon icon="X" />
           </button>
@@ -317,11 +323,11 @@ export const Stacked: Story = {
           First notification message
         </DToast.Body>
       </DToast>
-      <DToast className="show mb-2">
+      <DToast className="show df-mb-2">
         <DToast.Header>
-          <DIcon icon="CircleCheck" color="success" className="me-2" />
-          <strong className="me-auto">Message 2</strong>
-          <small className="me-2">2 mins ago</small>
+          <DIcon icon="CircleCheck" color="success" className="df-me-2" />
+          <strong className="df-me-auto">Message 2</strong>
+          <small className="df-me-2">2 mins ago</small>
           <button type="button" className="d-close" aria-label="Close">
             <DIcon icon="X" />
           </button>
@@ -332,9 +338,9 @@ export const Stacked: Story = {
       </DToast>
       <DToast className="show">
         <DToast.Header>
-          <DIcon icon="Info" color="info" className="me-2" />
-          <strong className="me-auto">Message 3</strong>
-          <small className="me-2">5 mins ago</small>
+          <DIcon icon="Info" color="info" className="df-me-2" />
+          <strong className="df-me-auto">Message 3</strong>
+          <small className="df-me-2">5 mins ago</small>
           <button type="button" className="d-close" aria-label="Close">
             <DIcon icon="X" />
           </button>

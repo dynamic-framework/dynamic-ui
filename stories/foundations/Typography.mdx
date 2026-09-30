@@ -2,7 +2,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Design System/Foundations/Typography" />
 
-<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--df-font-family-sans)' }}>
 
 # Typography Foundations
 
@@ -17,39 +17,40 @@ Dynamic Framework standardizes typography on top of Bootstrap 5 using the Jost t
 - Size utilities: `.fs-1` … `.fs-6`, `.small`
 - Body size: `.fs-body`
 
-<div className="d-flex flex-column gap-2 mt-2 mb-4">
-  <div className="display-1">Display 1</div>
-  <div className="display-4">Display 4</div>
+<div className="df-flex df-flex-col df-gap-2 df-mt-2 df-mb-4">
+  <div className="df-display-1">Display 1</div>
+  <div className="df-display-4">Display 4</div>
   <h1>Heading H1</h1>
   <h3>Heading H3</h3>
-  <p className="h1 m-0">Heading utility (.h1)</p>
-  <p className="h4 m-0">Heading utility (.h4)</p>
-  <p className="fs-4 m-0">Text with .fs-4</p>
-  <p className="fs-body m-0">Body default (.fs-body)</p>
-  <p className="small m-0 text-body-secondary">Small text (.small)</p>
+  <p className="df-h1 df-m-0">Heading utility (.h1)</p>
+  <p className="df-h4 df-m-0">Heading utility (.h4)</p>
+  <p className="df-fs-heading-4 df-m-0">Text with .fs-4</p>
+  <p className="fs-body df-m-0">Body default (.fs-body)</p>
+  <p className="df-fs-body-sm df-m-0 df-text-muted">Small text (.small)</p>
 </div>
 
 ```css
-/* Display utilities map to CSS vars used by type rendering */
-.display-1 { --bs-display-font-size: var(--bs-fs-display-1); }
-.display-2 { --bs-display-font-size: var(--bs-fs-display-2); }
-.display-3 { --bs-display-font-size: var(--bs-fs-display-3); }
-.display-4 { --bs-display-font-size: var(--bs-fs-display-4); }
-.display-5 { --bs-display-font-size: var(--bs-fs-display-5); }
-.display-6 { --bs-display-font-size: var(--bs-fs-display-6); }
-/* Base type consumes it: font-size: var(--bs-display-font-size) */
+/* Display sizes come straight from the type set. 2.x routed them through a
+   second variable that every display class rewrote — a level of indirection
+   that only existed so one rule could serve six classes. */
+.df-display-1 { font-size: var(--df-text-display-1-font-size); }
+.df-display-2 { font-size: var(--df-text-display-2-font-size); }
+.df-display-3 { font-size: var(--df-text-display-3-font-size); }
+.df-display-4 { font-size: var(--df-text-display-4-font-size); }
+.df-display-5 { font-size: var(--df-text-display-5-font-size); }
+.df-display-6 { font-size: var(--df-text-display-6-font-size); }
 
 /* Size utilities */
-.fs-1 { font-size: var(--bs-fs-1); }
-.fs-2 { font-size: var(--bs-fs-2); }
-.fs-3 { font-size: var(--bs-fs-3); }
-.fs-4 { font-size: var(--bs-fs-4); }
-.fs-5 { font-size: var(--bs-fs-5); }
-.fs-6 { font-size: var(--bs-fs-6); }
-.small { font-size: var(--bs-fs-small); }
+.fs-1 { font-size: var(--df-text-heading-1-font-size); }
+.fs-2 { font-size: var(--df-text-heading-2-font-size); }
+.fs-3 { font-size: var(--df-text-heading-3-font-size); }
+.fs-4 { font-size: var(--df-text-heading-4-font-size); }
+.fs-5 { font-size: var(--df-text-heading-5-font-size); }
+.fs-6 { font-size: var(--df-text-heading-6-font-size); }
+.small { font-size: var(--df-font-size-200); }
 
 /* Body size utility */
-.fs-body    { font-size: var(--bs-body-font-size); }
+.fs-body    { font-size: var(--df-font-size-300); }
 ```
 
 <br />
@@ -61,17 +62,17 @@ Use `.text-{token}` with semantic states and extended palettes:
 - Shades: `{25|50|100|200|300|400|500|600|700|800|900}` for background tints: `.bg-{token}-{shade}`
 - Light variants are intended for dark backgrounds
 
-<div className="d-flex flex-wrap gap-3 mb-2 mb-4">
-  <p className="m-0 text-primary">Primary text</p>
-  <p className="m-0 text-success">Success text</p>
-  <p className="m-0 text-warning">Warning text</p>
-  <p className="m-0 text-danger">Danger text</p>
-  <p className="m-0 text-info">Info text</p>
-  <p className="m-0 text-secondary">Secondary text</p>
-  <p className="m-0 text-dark">Dark text</p>
+<div className="df-flex df-flex-wrap df-gap-3 df-mb-2 df-mb-4">
+  <p className="df-m-0 df-text-primary">Primary text</p>
+  <p className="df-m-0 df-text-success">Success text</p>
+  <p className="df-m-0 df-text-warning">Warning text</p>
+  <p className="df-m-0 df-text-danger">Danger text</p>
+  <p className="df-m-0 df-text-info">Info text</p>
+  <p className="df-m-0 df-text-secondary">Secondary text</p>
+  <p className="df-m-0 df-text-default">Dark text</p>
 </div>
 
-<div className="mt-2 p-2 rounded bg-dark text-light">Text-light over dark background</div>
+<div className="df-mt-2 df-p-2 df-rounded-control df-bg-inverse df-text-inverse">Text-light over dark background</div>
 
 <br />
 
@@ -80,22 +81,22 @@ Use `.text-{token}` with semantic states and extended palettes:
 - Font weight utilities (responsive enabled): `.fw-light`, `.fw-normal`, `.fw-semibold`, `.fw-bold`
 - Line-height utilities: `.lh-1`, `.lh-sm`, `.lh-base`, `.lh-lg`
 
-<div className="d-flex flex-column gap-2 mt-2 mb-4">
-  <p className="fw-light my-1">Light weight</p>
-  <p className="fw-normal my-1">Normal weight</p>
-  <p className="fw-semibold my-1">Semibold weight</p>
-  <p className="fw-bold my-1">Bold weight</p>
-  <p className="lh-1 my-1">Line-height 1</p>
-  <p className="lh-sm my-1">Line-height sm</p>
-  <p className="lh-base my-1">Line-height base</p>
-  <p className="lh-lg my-1">Line-height lg</p>
+<div className="df-flex df-flex-col df-gap-2 df-mt-2 df-mb-4">
+  <p className="df-fw-light df-my-1">Light weight</p>
+  <p className="df-fw-normal df-my-1">Normal weight</p>
+  <p className="df-fw-semibold df-my-1">Semibold weight</p>
+  <p className="df-fw-semibold df-my-1">Bold weight</p>
+  <p className="df-lh-tight df-my-1">Line-height 1</p>
+  <p className="df-lh-snug df-my-1">Line-height sm</p>
+  <p className="df-lh-normal df-my-1">Line-height base</p>
+  <p className="df-lh-loose df-my-1">Line-height lg</p>
 </div>
 
 ```css
 /* Line-height utilities map to variables */
-.lh-sm   { line-height: var(--bs-lh-sm); }
-.lh-base { line-height: var(--bs-lh-base); }
-.lh-lg   { line-height: var(--bs-lh-lg); }
+.lh-sm   { line-height: var(--df-line-height-snug); }
+.lh-base { line-height: var(--df-line-height-normal); }
+.lh-lg   { line-height: var(--df-line-height-loose); }
 ```
 
 <br />
@@ -106,10 +107,10 @@ Use `.text-{token}` with semantic states and extended palettes:
 - Line-through: `.text-decoration-line-through`
 - Italic: `.fst-italic`
 
-<div className="d-flex flex-column gap-2 mt-2 mb-4">
-  <p className="text-decoration-underline m-0">Underlined text</p>
-  <p className="text-decoration-line-through m-0">Line-through text</p>
-  <p className="fst-italic m-0">Italic text</p>
+<div className="df-flex df-flex-col df-gap-2 df-mt-2 df-mb-4">
+  <p className="df-underline df-m-0">Underlined text</p>
+  <p className="df-line-through df-m-0">Line-through text</p>
+  <p className="df-italic df-m-0">Italic text</p>
 </div>
 
 <br />
@@ -120,7 +121,7 @@ Use `.text-{token}` with semantic states and extended palettes:
 - Normal wrapping: `.text-wrap-normal`; Force wrap: `.text-wrap-wrap`
 - Truncation by lines (responsive): `.text-truncate-{1..6}`
 
-<div className="d-flex flex-column gap-2 mt-2 mb-4" style={{ maxWidth: 360 }}>
+<div className="df-flex df-flex-col df-gap-2 df-mt-2 df-mb-4" style={{ maxWidth: 360 }}>
   <p className="text-wrap-balance">
     Balanced wrapping strives for visually even lines for better readability across varying widths.
   </p>
@@ -150,8 +151,8 @@ Use `.text-{token}` with semantic states and extended palettes:
 - Hover variant: `.hover:text-{token}` provides interactive feedback on text
 
 ```html
-<a class="text-body hover:text-danger">Hover to see danger color</a>
-<div class="text-body dark:text-success">Text turns success in dark</div>
+<a class="df-text-default df-hover:text-danger">Hover to see danger color</a>
+<div class="df-text-default df-dark:text-success">Text turns success in dark</div>
 ```
 
 </div>

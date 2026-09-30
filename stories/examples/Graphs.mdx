@@ -88,16 +88,16 @@ export function ExampleLineChart() {
         <Line
           type="monotone"
           dataKey="conservative"
-          stroke="var(--bs-primary)"
-          activeDot={{ r: 8, stroke: 'var(--bs-primary-100)', strokeWidth: 2 }}
+          stroke="var(--df-role-primary-base)"
+          activeDot={{ r: 8, stroke: 'var(--df-role-primary-subtle)', strokeWidth: 2 }}
           dot={false}
           name="Conservative Differentiated Oct24"
         />
         <Line
           type="monotone"
           dataKey="tech"
-          stroke="var(--bs-secondary)"
-          activeDot={{ r: 8, stroke: 'var(--bs-secondary-100)', strokeWidth: 2 }}
+          stroke="var(--df-role-secondary-base)"
+          activeDot={{ r: 8, stroke: 'var(--df-role-secondary-subtle)', strokeWidth: 2 }}
           dot={false}
           name="Technological"
         />
@@ -132,10 +132,10 @@ import {
 import type { PieLabelRenderProps } from 'recharts';
 
 const PIE_CHART_COLORS = [
-  'var(--bs-primary)',
-  'var(--bs-primary-300)',
-  'var(--bs-primary-100)',
-  'var(--bs-primary-600)',
+  'var(--df-role-primary-base)',
+  'var(--df-role-primary-base)',
+  'var(--df-role-primary-subtle)',
+  'var(--df-role-primary-base-hover)',
 ];
 const PIE_CHART_DATA = [
   { id: 1, name: 'Group A', value: 6500 },
@@ -153,10 +153,10 @@ const renderCustomizedLabel = ({ cx, cy }: PieLabelRenderProps) => (
   <text
     x={cx}
     y={cy}
-    fill="var(--bs-gray-900)"
+    fill="var(--df-color-neutral-900)"
     textAnchor="middle"
     dominantBaseline="central"
-    className="fs-3"
+    className="df-fs-heading-3"
   >
     {\`$\${total.toLocaleString()}\`}
   </text>
@@ -231,9 +231,9 @@ export function ExampleBarChart() {
         />
         <Tooltip
           formatter={(value: number) => \`$\${value.toLocaleString()}\`}
-          cursor={{ fill: 'var(--bs-secondary-100)' }}
+          cursor={{ fill: 'var(--df-role-secondary-subtle)' }}
         />
-        <Bar dataKey="value" fill="var(--bs-secondary)" />
+        <Bar dataKey="value" fill="var(--df-role-secondary-base)" />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -277,56 +277,56 @@ const PROGRESSIVE_BAR_CHART_DATA = [
     name: 'Item A',
     value: 22500,
     down: 0,
-    color: 'var(--bs-blue)',
+    color: 'var(--df-color-blue-500)',
   },
   {
     id: 2,
     name: 'Item B',
     value: 1000,
     down: 21500,
-    color: 'var(--bs-orange)',
+    color: 'var(--df-color-orange-500)',
   },
   {
     id: 3,
     name: 'Item C',
     value: 2000,
     down: 19500,
-    color: 'var(--bs-orange)',
+    color: 'var(--df-color-orange-500)',
   },
   {
     id: 4,
     name: 'Item D',
     value: 3000,
     down: 16500,
-    color: 'var(--bs-orange)',
+    color: 'var(--df-color-orange-500)',
   },
   {
     id: 5,
     name: 'Item E',
     value: 16500,
     down: 0,
-    color: 'var(--bs-green)',
+    color: 'var(--df-color-green-500)',
   },
   {
     id: 6,
     name: 'Item F',
     value: 1000,
     down: 16500,
-    color: 'var(--bs-blue)',
+    color: 'var(--df-color-blue-500)',
   },
   {
     id: 7,
     name: 'Item G',
     value: 8000,
     down: 16500,
-    color: 'var(--bs-blue)',
+    color: 'var(--df-color-blue-500)',
   },
   {
     id: 8,
     name: 'Item H',
     value: 24500,
     down: 0,
-    color: 'var(--bs-green)',
+    color: 'var(--df-color-green-500)',
   },
 ];
 
@@ -343,7 +343,7 @@ export function ExampleProgressiveBarChart() {
         />
         <Tooltip
           formatter={(value: number) => \`$\${value.toLocaleString()}\`}
-          cursor={{ fill: 'var(--bs-gray-100)' }}
+          cursor={{ fill: 'var(--df-color-neutral-100)' }}
         />
         <Bar dataKey="down" stackId="a" fill="transparent" />
         <Bar dataKey="value" stackId="a">

@@ -1,0 +1,23 @@
+{
+  "$description": "Badge component tokens. Structural only; the colour variants are assigned per selector from the role semantics.",
+  "badge": {
+    "padding-block": {"$type": "dimension", "$value": "{size.1}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.2}"},
+    "gap": {"$type": "dimension", "$value": "{size.1}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.100}"},
+    "font-weight": {"$type": "fontWeight", "$value": "{font-weight.medium}"},
+    "line-height": {"$type": "number", "$value": "{line-height.snug}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
+    "sm": {
+      "padding-block": {"$type": "dimension", "$value": "{size.0}"},
+      "padding-inline": {"$type": "dimension", "$value": "{size.1}"},
+      "font-size": {"$type": "dimension", "$value": "{font-size.100}"}
+    },
+    "lg": {
+      "padding-block": {"$type": "dimension", "$value": "{size.1}"},
+      "padding-inline": {"$type": "dimension", "$value": "{size.3}"},
+      "font-size": {"$type": "dimension", "$value": "{font-size.200}"}
+    }
+  }
+}

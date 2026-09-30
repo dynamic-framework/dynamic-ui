@@ -1,0 +1,278 @@
+/**
+ * Text input, and the field scaffolding around it (label, help, error).
+ *
+ * Unlike button, an input has one appearance plus states rather than a variant
+ * x colour matrix, so its colours are real component tokens.
+ */
+@layer df.components {
+  .df-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-input-label-margin-block-end);
+  }
+
+  .df-label {
+    font-size: var(--df-input-label-font-size);
+    font-weight: var(--df-input-label-font-weight);
+    color: var(--df-input-label-color);
+  }
+
+  /* A required marker belongs to the label, not to the input, so a screen
+     reader announces it with the name. `aria-hidden` because `required` on the
+     control is what actually conveys it. */
+  .df-label[data-required]::after {
+    margin-inline-start: 0.25ch;
+    color: var(--df-role-danger-emphasis);
+    content: "*";
+  }
+
+  .df-input {
+    display: block;
+    width: 100%;
+    padding-block: var(--df-input-padding-block);
+    padding-inline: var(--df-input-padding-inline);
+    font-family: var(--df-input-font-family);
+    font-size: var(--df-input-font-size);
+    line-height: var(--df-input-line-height);
+    color: var(--df-input-fg);
+    background-color: var(--df-input-bg);
+    border: var(--df-input-border-width) solid var(--df-input-border-color);
+    border-radius: var(--df-input-radius);
+    transition:
+      border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  .df-input::placeholder {
+    color: var(--df-input-placeholder-color);
+  }
+
+  /* --- States ----------------------------------------------------------
+   *
+   * Every state selector below is deliberately the SAME specificity (0,2,0),
+   * so source order alone decides which one wins, and they are ordered by
+   * increasing priority: hover, then focus, then validity, then disabled.
+   *
+   * `:where()` and `:is()` are what make that possible. Written the obvious
+   * way, `:hover:not(:disabled, [readonly])` is 0,3,0 and `:focus` is 0,2,0 —
+   * so hovering a focused field would paint the hover border over the focus
+   * border no matter what order the rules appear in. `:where()` contributes
+   * zero specificity and `:is()` contributes its most specific argument, which
+   * flattens all of these to 0,2,0.
+   */
+
+  .df-input:hover:where(:not(:disabled, [readonly])) {
+    border-color: var(--df-input-hover-border-color);
+  }
+
+  .df-input:focus {
+    border-color: var(--df-input-focus-border-color);
+
+    /* The browser's own ring is replaced, not removed: the next rule draws one
+       for keyboard focus, which is the only case it should appear in. Chrome
+       shows its default ring on :focus for text inputs, so suppressing it here
+       is the only way to own the treatment. */
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+  }
+
+  .df-input:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-input:is([data-valid]) {
+    border-color: var(--df-input-valid-border-color);
+  }
+
+  /* `:user-invalid` fires only after the user has interacted, so a pristine
+     empty required field is not painted red on load. `[data-invalid]` and
+     `aria-invalid` are the escape hatches for server-side validation. */
+  .df-input:is(:user-invalid, [data-invalid], [aria-invalid="true"]) {
+    border-color: var(--df-input-invalid-border-color);
+  }
+
+  .df-input:is(:disabled) {
+    color: var(--df-input-disabled-fg);
+    cursor: not-allowed;
+    background-color: var(--df-input-disabled-bg);
+    border-color: var(--df-input-disabled-border-color);
+  }
+
+  .df-input:is([readonly]) {
+    background-color: var(--df-bg-muted);
+  }
+
+  .df-input[data-size="sm"] {
+    padding-block: var(--df-input-sm-padding-block);
+    padding-inline: var(--df-input-sm-padding-inline);
+    font-size: var(--df-input-sm-font-size);
+  }
+
+  .df-input[data-size="lg"] {
+    padding-block: var(--df-input-lg-padding-block);
+    padding-inline: var(--df-input-lg-padding-inline);
+    font-size: var(--df-input-lg-font-size);
+  }
+
+  .df-input[data-multiline] {
+    min-height: calc(var(--df-input-line-height) * 3em);
+  }
+
+  /* --- Help and error text --------------------------------------------- */
+
+  .df-help {
+    margin-block-start: var(--df-input-help-margin-block-start);
+    font-size: var(--df-input-help-font-size);
+    color: var(--df-input-help-color);
+  }
+
+  .df-error {
+    margin-block-start: var(--df-input-help-margin-block-start);
+    font-size: var(--df-input-help-font-size);
+    color: var(--df-input-invalid-fg);
+  }
+
+  /* --- Adornments ------------------------------------------------------ */
+
+  /* An icon or button sitting inside the field. The group owns the border so
+     the adornment and the input read as one control; the input drops its own
+     border rather than nesting two. */
+  .df-input-group {
+    display: flex;
+    align-items: stretch;
+    background-color: var(--df-input-bg);
+    border: var(--df-input-border-width) solid var(--df-input-border-color);
+    border-radius: var(--df-input-radius);
+  }
+
+  .df-input-group > .df-input {
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* The group draws the border and the focus ring, so the inner field draws
+     neither — otherwise the control renders two nested rings. */
+  .df-input-group > .df-input:is(:focus, :focus-visible) {
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+  }
+
+  .df-input-group:focus-within {
+    border-color: var(--df-input-focus-border-color);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  .df-input-group:is([data-invalid]) {
+    border-color: var(--df-input-invalid-border-color);
+  }
+
+  /* Higher specificity than the rule above — `:has()` takes its argument's —
+     so the field's own validity state wins over a stale group attribute. */
+  .df-input-group:has(.df-input:is(:user-invalid, [aria-invalid="true"])) {
+    border-color: var(--df-input-invalid-border-color);
+  }
+
+  .df-input-group-addon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    padding-inline: var(--df-input-padding-inline);
+    color: var(--df-fg-muted);
+  }
+
+  .df-input-group-addon:first-child {
+    padding-inline-end: 0;
+  }
+
+  .df-input-group-addon:last-child {
+    padding-inline-start: 0;
+  }
+
+  /* An addon that is a real button — a reveal toggle, a clear control — keeps
+     the addon's box but gains its own affordances. */
+  button.df-input-group-addon {
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
+  button.df-input-group-addon:disabled {
+    color: var(--df-fg-disabled);
+    cursor: not-allowed;
+  }
+
+  button.df-input-group-addon:focus-visible {
+    border-radius: var(--df-input-radius);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  /* The size lives on the group, because the group owns the padding once an
+     addon is present. */
+  .df-input-group[data-size="sm"] > .df-input {
+    padding-block: var(--df-input-sm-padding-block);
+    padding-inline: var(--df-input-sm-padding-inline);
+    font-size: var(--df-input-sm-font-size);
+  }
+
+  .df-input-group[data-size="sm"] > .df-input-group-addon {
+    padding-inline: var(--df-input-sm-padding-inline);
+    font-size: var(--df-input-sm-font-size);
+  }
+
+  .df-input-group[data-size="lg"] > .df-input {
+    padding-block: var(--df-input-lg-padding-block);
+    padding-inline: var(--df-input-lg-padding-inline);
+    font-size: var(--df-input-lg-font-size);
+  }
+
+  .df-input-group[data-size="lg"] > .df-input-group-addon {
+    padding-inline: var(--df-input-lg-padding-inline);
+    font-size: var(--df-input-lg-font-size);
+  }
+
+  /* --- Floating label --------------------------------------------------
+   *
+   * The label sits over the field and moves up once there is a value or the
+   * field has focus. `:placeholder-shown` is what detects "empty", which is
+   * why the component renders an empty placeholder rather than none: a field
+   * with no placeholder attribute never matches it.
+   */
+  .df-input-floating {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .df-input-floating > .df-input:is(.df-input) {
+    padding-block:
+      calc(var(--df-input-padding-block) + var(--df-size-3))
+      calc(var(--df-input-padding-block) - var(--df-size-1));
+  }
+
+  .df-input-floating > .df-label {
+    position: absolute;
+    inset-block-start: var(--df-input-padding-block);
+    inset-inline-start: var(--df-input-padding-inline);
+    color: var(--df-fg-muted);
+    pointer-events: none;
+    transition:
+      transform var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    transform-origin: left top;
+  }
+
+  .df-input-floating > .df-input:not(:placeholder-shown) + .df-label,
+  .df-input-floating > .df-input:focus + .df-label {
+    transform: translateY(calc(var(--df-size-2) * -1)) scale(0.8);
+  }
+
+  .df-input-floating > .df-input:focus + .df-label {
+    color: var(--df-input-focus-border-color);
+  }
+}

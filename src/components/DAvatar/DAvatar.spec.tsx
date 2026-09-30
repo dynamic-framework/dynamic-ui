@@ -13,18 +13,18 @@ describe('<DAvatar />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="d-avatar"
-        >
-          <img
-            alt="John Doe"
-            class="d-avatar-img"
-            src="https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png"
-          />
-        </div>
-      </div>
-    `);
+<div>
+  <div
+    class="df-avatar"
+  >
+    <img
+      alt="John Doe"
+      class="df-avatar-img"
+      src="https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png"
+    />
+  </div>
+</div>
+`);
   });
 
   it('Should render initials from name when image is not provided', () => {
@@ -52,7 +52,7 @@ describe('<DAvatar />', () => {
     const { container } = render(<DAvatar />);
 
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('d-avatar');
+    expect(avatar).toHaveClass('df-avatar');
     expect(avatar).toHaveTextContent('');
   });
 

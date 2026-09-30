@@ -21,25 +21,25 @@ describe('<DInputSwitch />', () => {
         </DContextProvider>,
       );
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            class="form-check form-switch"
-          >
-            <input
-              class="form-check-input"
-              id="switchTest"
-              role="switch"
-              type="checkbox"
-            />
-            <label
-              class="form-check-label"
-              for="switchTest"
-            >
-              toggle
-            </label>
-          </div>
-        </div>
-      `);
+<div>
+  <div
+    class="df-choice"
+  >
+    <input
+      class="df-choice-input"
+      id="switchTest"
+      role="switch"
+      type="checkbox"
+    />
+    <label
+      class="df-choice-label"
+      for="switchTest"
+    >
+      toggle
+    </label>
+  </div>
+</div>
+`);
     });
 
     it('should be checked when the checked prop is true', () => {
@@ -72,7 +72,7 @@ describe('<DInputSwitch />', () => {
       );
 
       const switchControl = screen.getByLabelText('My Switch');
-      expect(switchControl).toHaveClass('is-invalid');
+      expect(switchControl).toHaveAttribute('data-invalid');
     });
 
     it('should show a valid state', () => {
@@ -83,7 +83,7 @@ describe('<DInputSwitch />', () => {
       );
 
       const switchControl = screen.getByLabelText('My Switch');
-      expect(switchControl).toHaveClass('is-valid');
+      expect(switchControl).toHaveAttribute('data-valid');
     });
   });
 

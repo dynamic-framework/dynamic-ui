@@ -1,0 +1,76 @@
+/**
+ * Voucher — a transaction receipt.
+ *
+ * 2.x drove the layout from utilities in the markup (`text-center`, `mb-2`,
+ * `m-0`, `my-4`, `fs-3`, `fw-bold`). The block owns them now, which is what
+ * lets a client retheme a receipt without editing the component's JSX.
+ */
+@layer df.components {
+  .df-voucher {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-voucher-gap);
+    padding: var(--df-voucher-padding);
+    color: var(--df-voucher-fg);
+    text-align: center;
+    background-color: var(--df-voucher-bg);
+    border: var(--df-stroke-control) solid var(--df-voucher-border-color);
+    border-radius: var(--df-voucher-radius);
+  }
+
+  .df-voucher-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-2);
+    align-items: center;
+  }
+
+  .df-voucher-title {
+    margin: 0;
+    font-size: var(--df-voucher-title-font-size);
+    font-weight: var(--df-voucher-title-font-weight);
+  }
+
+  .df-voucher-message {
+    margin: 0;
+    color: var(--df-fg-muted);
+  }
+
+  .df-voucher-amount {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-1);
+    align-items: center;
+  }
+
+  .df-voucher-amount-value {
+    font-size: var(--df-voucher-amount-font-size);
+    font-weight: var(--df-voucher-amount-font-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .df-voucher-amount-details {
+    color: var(--df-fg-muted);
+  }
+
+  .df-voucher-divider {
+    width: 100%;
+    height: var(--df-stroke-divider);
+    margin: 0;
+    background-color: var(--df-voucher-divider-color);
+    border: 0;
+  }
+
+  .df-voucher-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-size-2);
+    text-align: start;
+  }
+
+  .df-voucher-footer {
+    display: flex;
+    gap: var(--df-size-3);
+    justify-content: center;
+  }
+}

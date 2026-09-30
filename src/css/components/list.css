@@ -1,0 +1,192 @@
+/**
+ * List group.
+ *
+ * The horizontal variant is the one place 2.x had a real class explosion:
+ * `list-group-horizontal` plus one per breakpoint, five more classes to ship
+ * whether used or not. Here it is `data-horizontal` with an optional breakpoint
+ * value, and the media queries live in this file rather than in a generated
+ * matrix.
+ */
+@layer df.components {
+  .df-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    font-size: var(--df-list-font-size);
+    list-style: none;
+    background-color: var(--df-list-bg);
+    border: var(--df-list-border-width) solid var(--df-list-border-color);
+    border-radius: var(--df-list-radius);
+  }
+
+  .df-list-item {
+    display: flex;
+    gap: var(--df-list-gap);
+    align-items: center;
+    padding-block: var(--df-list-padding-block);
+    padding-inline: var(--df-list-padding-inline);
+    color: var(--df-list-item-fg, var(--df-list-fg));
+    text-align: start;
+    text-decoration: none;
+    background-color: var(--df-list-item-bg, transparent);
+    border: 0;
+    border-block-start: var(--df-list-border-width) solid var(--df-list-border-color);
+  }
+
+  .df-list-item:where(:first-child) {
+    border-block-start: 0;
+  }
+
+  /* An item that is a button or a link. `:where()` keeps the specificity flat
+     so the active and disabled rules below win by source order. */
+  .df-list-item:where([data-action]) {
+    width: 100%;
+    cursor: pointer;
+    transition: background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  .df-list-item:where([data-action]:hover) {
+    background-color: var(--df-list-hover-bg);
+  }
+
+  .df-list-item:is([aria-current="true"], [data-active]) {
+    color: var(--df-list-active-fg);
+    background-color: var(--df-list-active-bg);
+  }
+
+  .df-list-item:is(:disabled, [aria-disabled="true"]) {
+    color: var(--df-list-disabled-fg);
+    pointer-events: none;
+    background-color: transparent;
+  }
+
+  .df-list-item:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  /* An icon at the end of an item is pushed to the far edge. 2.x asked the
+     consumer to pass `ms-auto`, which meant a layout utility leaked into the
+     component's own markup. */
+  .df-list-item > .df-list-item-end {
+    margin-inline-start: auto;
+  }
+
+  /* --- Modifiers -------------------------------------------------------- */
+
+  .df-list[data-flush] {
+    border-inline: 0;
+    border-radius: 0;
+  }
+
+  .df-list[data-flush] > .df-list-item:where(:first-child) {
+    border-block-start: 0;
+  }
+
+  .df-list[data-numbered] {
+    counter-reset: df-list;
+  }
+
+  .df-list[data-numbered] > .df-list-item {
+    counter-increment: df-list;
+  }
+
+  .df-list[data-numbered] > .df-list-item::before {
+    color: var(--df-list-marker-color);
+    content: counter(df-list) ".";
+  }
+
+  /* Horizontal at every width. */
+  .df-list[data-horizontal=""] {
+    flex-direction: row;
+  }
+
+  .df-list[data-horizontal=""] > .df-list-item {
+    border-block-start: 0;
+    border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+  }
+
+  .df-list[data-horizontal=""] > .df-list-item:where(:first-child) {
+    border-inline-start: 0;
+  }
+}
+
+/* Horizontal from a breakpoint up. Generated from the breakpoint tokens
+   by hand once — if the scale changes, regenerate. */
+@layer df.components {
+  @media (min-width: 576px) {
+    .df-list[data-horizontal="sm"] {
+      flex-direction: row;
+    }
+
+    .df-list[data-horizontal="sm"] > .df-list-item {
+      border-block-start: 0;
+      border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+    }
+
+    .df-list[data-horizontal="sm"] > .df-list-item:where(:first-child) {
+      border-inline-start: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .df-list[data-horizontal="md"] {
+      flex-direction: row;
+    }
+
+    .df-list[data-horizontal="md"] > .df-list-item {
+      border-block-start: 0;
+      border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+    }
+
+    .df-list[data-horizontal="md"] > .df-list-item:where(:first-child) {
+      border-inline-start: 0;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .df-list[data-horizontal="lg"] {
+      flex-direction: row;
+    }
+
+    .df-list[data-horizontal="lg"] > .df-list-item {
+      border-block-start: 0;
+      border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+    }
+
+    .df-list[data-horizontal="lg"] > .df-list-item:where(:first-child) {
+      border-inline-start: 0;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .df-list[data-horizontal="xl"] {
+      flex-direction: row;
+    }
+
+    .df-list[data-horizontal="xl"] > .df-list-item {
+      border-block-start: 0;
+      border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+    }
+
+    .df-list[data-horizontal="xl"] > .df-list-item:where(:first-child) {
+      border-inline-start: 0;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .df-list[data-horizontal="2xl"] {
+      flex-direction: row;
+    }
+
+    .df-list[data-horizontal="2xl"] > .df-list-item {
+      border-block-start: 0;
+      border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
+    }
+
+    .df-list[data-horizontal="2xl"] > .df-list-item:where(:first-child) {
+      border-inline-start: 0;
+    }
+  }
+}

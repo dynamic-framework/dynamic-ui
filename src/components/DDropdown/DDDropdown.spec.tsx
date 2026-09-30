@@ -25,7 +25,7 @@ describe('<DDropdown />', () => {
       <DDropdown {...props} />,
     );
 
-    const dropdown = container.querySelector('.dropdown');
+    const dropdown = container.querySelector('.df-dropdown');
     const toggle = container.querySelector('button');
 
     expect(dropdown).toBeInTheDocument();
@@ -87,7 +87,7 @@ describe('<DDropdown />', () => {
       <DDropdown actions={baseActions} asPortal placement="end" />,
     );
 
-    const dropdown = container.querySelector('.dropdown') as HTMLDivElement;
+    const dropdown = container.querySelector('.df-dropdown') as HTMLDivElement;
     dropdown.getBoundingClientRect = () => ({
       width: 40,
       height: 24,

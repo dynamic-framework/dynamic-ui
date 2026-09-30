@@ -109,7 +109,7 @@ function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filt
       transition={payload.transition}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -135,7 +135,7 @@ function OpenFiltersOffcanvasButton() {
   const [selectedPreset, setSelectedPreset] = useState<TransitionPreset>(TRANSITION_PRESETS[0]);
   const { openPortal } = useDPortalContext<OffcanvasPayloads>();
   return (
-    <div className="d-flex flex-column gap-2 align-items-center">
+    <div className="df-flex df-flex-col df-gap-2 df-items-center">
       <DSelect<TransitionPreset>
         label="Transition Preset"
         options={TRANSITION_PRESETS}
@@ -152,7 +152,7 @@ function OpenFiltersOffcanvasButton() {
           },
         )}
       />
-      <div className="mt-4">
+      <div className="df-mt-4">
         <pre>
           <code>
             {JSON.stringify({ transition: selectedPreset.value }, null, 2)}
@@ -186,7 +186,7 @@ function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filt
   return (
     <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end" transition={springTransition}>
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -236,7 +236,7 @@ function App() {
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -254,7 +254,7 @@ function App() {
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -262,7 +262,7 @@ export const Default: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -288,7 +288,7 @@ export const Default: Story = {
 export const CloseIcon: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -299,7 +299,7 @@ export const CloseIcon: Story = {
         icon="XCircle"
         showCloseButton
       >
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -325,7 +325,7 @@ export const CloseIcon: Story = {
 export const ActionsPlacementStart: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -333,7 +333,7 @@ export const ActionsPlacementStart: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -359,7 +359,7 @@ export const ActionsPlacementStart: Story = {
 export const ActionsPlacementEnd: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -367,7 +367,7 @@ export const ActionsPlacementEnd: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -393,7 +393,7 @@ export const ActionsPlacementEnd: Story = {
 export const WithoutHeader: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -425,7 +425,7 @@ export const WithoutHeader: Story = {
 export const WithoutActions: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -433,7 +433,7 @@ export const WithoutActions: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -451,7 +451,7 @@ export const WithoutActions: Story = {
 export const OnlyBody: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -484,7 +484,7 @@ function ResponsiveFiltersOffcanvas({ name }: PortalProps<OffcanvasPayloads['fil
       }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -551,7 +551,7 @@ function OpenResponsiveFiltersOffcanvasButton() {
 export const ResponsivePlacement: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+      <div style={{ height: '400px' }} className="df-flex df-justify-center df-items-center">
         <Story />
       </div>
     ),
@@ -587,7 +587,7 @@ function ResponsiveFiltersOffcanvas({ name }: PortalProps<OffcanvasPayloads['fil
       }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -631,7 +631,7 @@ function App() {
       portalName="dOffcanvasResponsiveStoryPortal"
       availablePortals={{ filters: ResponsiveFiltersOffcanvas }}
     >
-      <div className="d-flex flex-column gap-2 align-items-center">
+      <div className="df-flex df-flex-col df-gap-2 df-items-center">
         <OpenResponsiveFiltersOffcanvasButton />
         <pre>
           <code>
@@ -662,7 +662,7 @@ function ResponsiveWidthOffcanvas({ name }: PortalProps<OffcanvasPayloads['filte
       width={{ xs: '100%', sm: '320px', lg: '480px' }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -720,7 +720,7 @@ function OpenResponsiveWidthOffcanvasButton() {
 export const ResponsiveWidth: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+      <div style={{ height: '400px' }} className="df-flex df-justify-center df-items-center">
         <Story />
       </div>
     ),
@@ -755,7 +755,7 @@ function ResponsiveWidthOffcanvas({ name }: PortalProps<OffcanvasPayloads['filte
       width={{ xs: '100%', sm: '320px', lg: '480px' }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -799,7 +799,7 @@ function App() {
       portalName="dOffcanvasResponsiveWidthStoryPortal"
       availablePortals={{ filters: ResponsiveWidthOffcanvas }}
     >
-      <div className="d-flex flex-column gap-2 align-items-center">
+      <div className="df-flex df-flex-col df-gap-2 df-items-center">
         <OpenResponsiveWidthOffcanvasButton />
         <pre>
           <code>
@@ -824,7 +824,7 @@ function ResponsiveHeightOffcanvas({ name }: PortalProps<OffcanvasPayloads['filt
       height={{ xs: '50vh', md: '75vh', lg: '100%' }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -882,7 +882,7 @@ function OpenResponsiveHeightOffcanvasButton() {
 export const ResponsiveHeight: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+      <div style={{ height: '400px' }} className="df-flex df-justify-center df-items-center">
         <Story />
       </div>
     ),
@@ -917,7 +917,7 @@ function ResponsiveHeightOffcanvas({ name }: PortalProps<OffcanvasPayloads['filt
       height={{ xs: '50vh', md: '75vh', lg: '100%' }}
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -961,7 +961,7 @@ function App() {
       portalName="dOffcanvasResponsiveHeightStoryPortal"
       availablePortals={{ filters: ResponsiveHeightOffcanvas }}
     >
-      <div className="d-flex flex-column gap-2 align-items-center">
+      <div className="df-flex df-flex-col df-gap-2 df-items-center">
         <OpenResponsiveHeightOffcanvasButton />
         <pre>
           <code>
@@ -978,7 +978,7 @@ function App() {
 export const WithoutCancelX: Story = {
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -986,7 +986,7 @@ export const WithoutCancelX: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header>
-        <h5 className="fw-bold">Advanced filters</h5>
+        <h5 className="df-fw-semibold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
@@ -1025,7 +1025,7 @@ export const MaterialStyleCloseIcon: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
+      <div style={{ height: '400px' }} className="df-relative">
         <Story />
       </div>
     ),
@@ -1038,7 +1038,7 @@ export const MaterialStyleCloseIcon: Story = {
         <DOffcanvas.Header
           showCloseButton
         >
-          <h5 className="fw-bold">Advanced filters</h5>
+          <h5 className="df-fw-semibold">Advanced filters</h5>
         </DOffcanvas.Header>
         <DOffcanvas.Body>
           <p>Offcanvas body</p>

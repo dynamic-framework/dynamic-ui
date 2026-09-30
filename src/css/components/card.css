@@ -1,0 +1,89 @@
+/**
+ * Card.
+ */
+@layer df.components {
+  .df-card {
+    display: flex;
+    flex-direction: column;
+    color: var(--df-card-fg);
+    background-color: var(--df-card-bg);
+    border: var(--df-card-border-width) solid var(--df-card-border-color);
+    border-radius: var(--df-card-radius);
+    box-shadow: var(--df-card-shadow);
+  }
+
+  .df-card-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--df-card-gap);
+    padding-block: var(--df-card-padding-block);
+    padding-inline: var(--df-card-padding-inline);
+  }
+
+  .df-card-header {
+    display: flex;
+    gap: var(--df-card-gap);
+    align-items: center;
+    padding-block: var(--df-card-header-padding-block);
+    padding-inline: var(--df-card-padding-inline);
+    font-size: var(--df-card-header-font-size);
+    font-weight: var(--df-card-header-font-weight);
+    border-block-end: var(--df-card-border-width) solid var(--df-card-header-border-color);
+  }
+
+  .df-card-footer {
+    display: flex;
+    gap: var(--df-card-gap);
+    align-items: center;
+    padding-block: var(--df-card-footer-padding-block);
+    padding-inline: var(--df-card-padding-inline);
+    background-color: var(--df-card-footer-bg);
+    border-block-start: var(--df-card-border-width) solid var(--df-card-footer-border-color);
+  }
+
+  /* The header and footer sit flush against the card's rounded corners, so they
+     need the inner radius or they square them off. */
+  .df-card-header:first-child {
+    border-start-start-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+    border-start-end-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+  }
+
+  .df-card-footer:last-child {
+    border-end-start-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+    border-end-end-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+  }
+
+  .df-card > img:first-child,
+  .df-card > .df-card-media:first-child {
+    border-start-start-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+    border-start-end-radius: calc(var(--df-card-radius) - var(--df-card-border-width));
+  }
+
+  .df-card[data-elevation="none"] {
+    box-shadow: none;
+  }
+
+  .df-card[data-elevation="md"] {
+    box-shadow: var(--df-elevation-md);
+  }
+
+  /* A whole-card link or button target. `:focus-within` rather than
+     `:focus-visible` so the ring shows when the inner anchor is focused. */
+  .df-card[data-interactive] {
+    cursor: pointer;
+    transition:
+      border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      box-shadow var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  .df-card[data-interactive]:hover {
+    border-color: var(--df-card-interactive-border-color-hover);
+    box-shadow: var(--df-card-interactive-shadow-hover);
+  }
+
+  .df-card[data-interactive]:focus-within {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+}

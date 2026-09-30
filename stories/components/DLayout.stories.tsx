@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DLayout from '../../src/components/DLayout/DLayout';
@@ -455,12 +454,12 @@ The \`DLayout\` component is built on top of a set of pure CSS utility classes. 
 
 ---
 
-### Container: \`.grid\`
+### Container: \`.df-grid\`
 
-The root wrapper must have the \`.grid\` class. Optionally, override the column count with the CSS custom property \`--bs-columns\`.
+The root wrapper needs \`.df-grid\` plus a column count: \`.df-grid-cols-12\` for the usual twelve, or any of \`.df-grid-cols-1\` through \`.df-grid-cols-12\`.
 
 \`\`\`html
-<div class="grid gap-3">
+<div class="df-grid df-grid-cols-12 df-gap-3">
   <!-- children -->
 </div>
 \`\`\`
@@ -482,7 +481,7 @@ Each child uses \`.g-col-{n}\` to declare how many columns it occupies. The defa
 | \`.g-col-9\` | 9 |
 | \`.g-col-12\` | 12 (full width) |
 
-> **Extended spans (13–24):** Classes \`.g-col-13\` through \`.g-col-24\` are also available. They become useful when you increase the column count via \`--bs-columns\` on the container or via the \`columns\` prop on \`DLayout\` (e.g. \`columns={24}\`). See the *Custom column count* section below and the *24-column layout* story for an example.
+> **More than 12 columns:** the utility classes stop at 12 on purpose — 24 spans across 6 breakpoints is 144 class names shipped to every page for a layout most pages never use. Past twelve, use \`DLayout\` with \`columns={24}\`: it writes the count and each pane's span as custom properties, so any number works and nothing extra is downloaded. See the *24-column layout* story.
 
 ---
 
@@ -501,7 +500,7 @@ Append a breakpoint infix to make the column span apply only from that breakpoin
 
 \`\`\`html
 <!-- Full width on mobile, half on tablet, one-third on desktop -->
-<div class="g-col-12 g-col-md-6 g-col-lg-4">…</div>
+<div class="df-col-span-12 df-md:col-span-6 df-lg:col-span-4">…</div>
 \`\`\`
 
 ---
@@ -523,16 +522,16 @@ Control the spacing between columns with Bootstrap gap utility classes. DLayout 
 
 ### Custom column count
 
-Override the number of columns with the \`--bs-columns\` CSS variable on the container.
+Pick the column count with a \`.df-grid-cols-{n}\` class, up to 12. In React, \`DLayout\`'s \`columns\` prop takes any number.
 
 \`\`\`html
 <!-- 5-column grid -->
-<div class="grid gap-2" style="--bs-columns: 5">
-  <div class="g-col-1">1/5</div>
-  <div class="g-col-1">2/5</div>
-  <div class="g-col-1">3/5</div>
-  <div class="g-col-1">4/5</div>
-  <div class="g-col-1">5/5</div>
+<div class="df-grid df-grid-cols-5 df-gap-2">
+  <div class="df-col-span-1">1/5</div>
+  <div class="df-col-span-1">2/5</div>
+  <div class="df-col-span-1">3/5</div>
+  <div class="df-col-span-1">4/5</div>
+  <div class="df-col-span-1">5/5</div>
 </div>
 \`\`\`
 
@@ -541,20 +540,20 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
 ### Full example: sidebar layout (CSS-only)
 
 \`\`\`html
-<div class="grid gap-3">
-  <div class="g-col-3">Sidebar</div>
-  <div class="g-col-9">Main content</div>
+<div class="df-grid df-grid-cols-12 df-gap-3">
+  <div class="df-col-span-3">Sidebar</div>
+  <div class="df-col-span-9">Main content</div>
 </div>
 \`\`\`
 
 ### Full example: responsive cards (CSS-only)
 
 \`\`\`html
-<div class="grid gap-1 gap-md-2 gap-lg-4">
-  <div class="g-col-12 g-col-md-6 g-col-lg-3">Card 1</div>
-  <div class="g-col-12 g-col-md-6 g-col-lg-3">Card 2</div>
-  <div class="g-col-12 g-col-md-6 g-col-lg-3">Card 3</div>
-  <div class="g-col-12 g-col-md-6 g-col-lg-3">Card 4</div>
+<div class="df-grid df-grid-cols-12 df-gap-1 df-md:gap-2 df-lg:gap-4">
+  <div class="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">Card 1</div>
+  <div class="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">Card 2</div>
+  <div class="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">Card 3</div>
+  <div class="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">Card 4</div>
 </div>
 \`\`\`
 
@@ -566,7 +565,7 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <p className="mb-2 fw-semibold">
+        <p className="df-mb-2 df-fw-semibold">
           {'Sidebar layout - '}
           <code>.grid .gap-3</code>
           {' with '}
@@ -574,104 +573,103 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           {' / '}
           <code>.g-col-9</code>
         </p>
-        <div className="grid gap-3">
-          <div className="g-col-3">
+        <div className="df-grid df-grid-cols-12 df-gap-3">
+          <div className="df-col-span-3">
             <DBox>
               <strong>Sidebar</strong>
-              <p className="mb-0">.g-col-3</p>
+              <p className="df-mb-0">.g-col-3</p>
             </DBox>
           </div>
-          <div className="g-col-9">
+          <div className="df-col-span-9">
             <DBox>
               <strong>Main Content</strong>
-              <p className="mb-0">.g-col-9</p>
+              <p className="df-mb-0">.g-col-9</p>
             </DBox>
           </div>
         </div>
       </div>
 
       <div>
-        <p className="mb-2 fw-semibold">
+        <p className="df-mb-2 df-fw-semibold">
           {'Three equal columns - '}
           <code>.grid</code>
           {' with '}
           <code>.g-col-4</code>
         </p>
-        <div className="grid gap-2">
-          <div className="g-col-4">
-            <DBox><p className="mb-0">.g-col-4</p></DBox>
+        <div className="df-grid df-grid-cols-12 df-gap-2">
+          <div className="df-col-span-4">
+            <DBox><p className="df-mb-0">.g-col-4</p></DBox>
           </div>
-          <div className="g-col-4">
-            <DBox><p className="mb-0">.g-col-4</p></DBox>
+          <div className="df-col-span-4">
+            <DBox><p className="df-mb-0">.g-col-4</p></DBox>
           </div>
-          <div className="g-col-4">
-            <DBox><p className="mb-0">.g-col-4</p></DBox>
+          <div className="df-col-span-4">
+            <DBox><p className="df-mb-0">.g-col-4</p></DBox>
           </div>
         </div>
       </div>
 
       <div>
-        <p className="mb-2 fw-semibold">
+        <p className="df-mb-2 df-fw-semibold">
           {'Responsive columns - '}
           <code>.g-col-12 .g-col-md-6 .g-col-lg-4</code>
         </p>
-        <div className="grid gap-2">
-          <div className="g-col-12 g-col-md-6 g-col-lg-4">
-            <DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox>
+        <div className="df-grid df-grid-cols-12 df-gap-2">
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-4">
+            <DBox><p className="df-mb-0">12 / md:6 / lg:4</p></DBox>
           </div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-4">
-            <DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox>
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-4">
+            <DBox><p className="df-mb-0">12 / md:6 / lg:4</p></DBox>
           </div>
-          <div className="g-col-12 g-col-md-12 g-col-lg-4">
-            <DBox><p className="mb-0">12 / md:12 / lg:4</p></DBox>
+          <div className="df-col-span-12 df-md:col-span-12 df-lg:col-span-4">
+            <DBox><p className="df-mb-0">12 / md:12 / lg:4</p></DBox>
           </div>
         </div>
       </div>
 
       <div>
-        <p className="mb-2 fw-semibold">
+        <p className="df-mb-2 df-fw-semibold">
           {'Custom 5-column grid - '}
-          <code>--bs-columns: 5</code>
+          <code>.df-grid-cols-5</code>
         </p>
         <div
-          className="grid gap-2"
-          style={{ '--bs-columns': 5 } as CSSProperties}
+          className="df-grid df-grid-cols-5 df-gap-2"
         >
-          <div className="g-col-1">
-            <DBox><p className="mb-0">1/5</p></DBox>
+          <div className="df-col-span-1">
+            <DBox><p className="df-mb-0">1/5</p></DBox>
           </div>
-          <div className="g-col-1">
-            <DBox><p className="mb-0">2/5</p></DBox>
+          <div className="df-col-span-1">
+            <DBox><p className="df-mb-0">2/5</p></DBox>
           </div>
-          <div className="g-col-1">
-            <DBox><p className="mb-0">3/5</p></DBox>
+          <div className="df-col-span-1">
+            <DBox><p className="df-mb-0">3/5</p></DBox>
           </div>
-          <div className="g-col-1">
-            <DBox><p className="mb-0">4/5</p></DBox>
+          <div className="df-col-span-1">
+            <DBox><p className="df-mb-0">4/5</p></DBox>
           </div>
-          <div className="g-col-1">
-            <DBox><p className="mb-0">5/5</p></DBox>
+          <div className="df-col-span-1">
+            <DBox><p className="df-mb-0">5/5</p></DBox>
           </div>
         </div>
       </div>
 
       <div>
-        <p className="mb-2 fw-semibold">
+        <p className="df-mb-2 df-fw-semibold">
           {'Responsive gap - '}
           <code>.gap-1 .gap-md-2 .gap-lg-4</code>
         </p>
-        <div className="grid gap-1 gap-md-2 gap-lg-4">
-          <div className="g-col-12 g-col-md-6 g-col-lg-3">
-            <DBox><p className="mb-0">Card 1</p></DBox>
+        <div className="df-grid df-grid-cols-12 df-gap-1 df-md:gap-2 df-lg:gap-4">
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">
+            <DBox><p className="df-mb-0">Card 1</p></DBox>
           </div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3">
-            <DBox><p className="mb-0">Card 2</p></DBox>
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">
+            <DBox><p className="df-mb-0">Card 2</p></DBox>
           </div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3">
-            <DBox><p className="mb-0">Card 3</p></DBox>
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">
+            <DBox><p className="df-mb-0">Card 3</p></DBox>
           </div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3">
-            <DBox><p className="mb-0">Card 4</p></DBox>
+          <div className="df-col-span-12 df-md:col-span-6 df-lg:col-span-3">
+            <DBox><p className="df-mb-0">Card 4</p></DBox>
           </div>
         </div>
       </div>

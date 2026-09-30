@@ -1,0 +1,99 @@
+/**
+ * Data table.
+ *
+ * 2.x shipped nine classes for what are three independent decisions — where
+ * the rules go, whether rows alternate, and whether rows react to a pointer —
+ * so `table-bordered table-striped table-hover table-sm` was the normal way to
+ * write a table. Here each decision is its own attribute and they compose.
+ *
+ * The element is a real `<table>`. A grid of `div`s loses the row and column
+ * relationships a screen reader announces, and there is no visual gain to
+ * trade for that.
+ */
+@layer df.components {
+  .df-table {
+    width: 100%;
+    font-size: var(--df-table-font-size);
+    color: var(--df-table-fg);
+    text-align: start;
+
+    /* Separate borders would double every internal rule and leave the corners
+       unresolved; collapsing is what makes a single hairline possible. */
+    border-collapse: collapse;
+    background-color: var(--df-table-bg);
+  }
+
+  .df-table :where(th, td) {
+    padding-block: var(--df-table-padding-block);
+    padding-inline: var(--df-table-padding-inline);
+    text-align: start;
+    vertical-align: middle;
+    border-block-end: var(--df-table-border-width) solid var(--df-table-border-color);
+  }
+
+  .df-table :where(thead th) {
+    font-size: var(--df-table-head-font-size);
+    font-weight: var(--df-font-weight-semibold);
+    color: var(--df-table-head-fg);
+    letter-spacing: var(--df-letter-spacing-wide);
+  }
+
+  /* The last row's rule is the table's own bottom edge, which the container
+     usually already draws. */
+  .df-table :where(tbody tr:last-child) :where(th, td) {
+    border-block-end: 0;
+  }
+
+  /* Numbers only line up if the figures are tabular AND the column is aligned
+     to its end. Both, or neither is worth doing. */
+  .df-table :where([data-numeric]) {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  .df-table[data-size="sm"] :where(th, td) {
+    padding-block: var(--df-table-padding-block-sm);
+    padding-inline: var(--df-table-padding-inline-sm);
+  }
+
+  .df-table[data-head="filled"] :where(thead th) {
+    background-color: var(--df-table-head-bg);
+  }
+
+  .df-table[data-striped] :where(tbody tr:nth-child(odd)) {
+    background-color: var(--df-table-stripe-bg);
+  }
+
+  .df-table[data-bordered] :where(th, td) {
+    border: var(--df-table-border-width) solid var(--df-table-border-color);
+  }
+
+  .df-table[data-borderless] :where(th, td) {
+    border: 0;
+  }
+
+  /* Hover is a pointer affordance, so it is announced to a pointer only: on a
+     touch screen the row would light up on tap and stay lit. */
+  @media (hover: hover) {
+    .df-table[data-hover] :where(tbody tr:hover) {
+      background-color: var(--df-table-hover-bg);
+    }
+  }
+
+  .df-table :where(tbody tr):is([aria-selected="true"], [data-active]) {
+    background-color: var(--df-table-active-bg);
+  }
+
+  /**
+   * A table wider than its column does not reflow — it pushes the page
+   * sideways. The wrapper is the fix, and it is a separate class so a table
+   * that fits is not paying for a scroll container.
+   */
+  .df-table-scroll {
+    overflow-x: auto;
+
+    /* Keeps the keyboard-reachable scroll region announced, since a focusable
+       scroll container is how a keyboard user reaches a clipped column. */
+    scrollbar-gutter: stable;
+  }
+}

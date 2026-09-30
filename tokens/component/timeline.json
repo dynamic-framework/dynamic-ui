@@ -1,0 +1,18 @@
+{
+  "$description": "Timeline tokens.",
+  "timeline": {
+    "connector-size": {"$type": "dimension", "$value": "{border-width.2}"},
+    "connector-color": {"$type": "color", "$value": "{border.default}"},
+    "marker-size": {"$type": "dimension", "$value": "{size.4}"},
+    "marker-padding": {"$type": "dimension", "$value": "{size.1}"},
+    "marker-bg": {"$type": "color", "$value": "{bg.surface}"},
+    "marker-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "marker-border-color": {"$type": "color", "$value": "{border.default}"},
+    "item-gap": {"$type": "dimension", "$value": "{size.8}"},
+    "content-indent": {"$type": "dimension", "$value": "{size.8}"},
+    "title-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
+    "description-color": {"$type": "color", "$value": "{fg.muted}"},
+    "time-color": {"$type": "color", "$value": "{fg.subtle}"},
+    "time-font-size": {"$type": "dimension", "$value": "{font-size.200}"}
+  }
+}

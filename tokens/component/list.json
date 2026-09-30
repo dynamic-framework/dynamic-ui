@@ -1,0 +1,20 @@
+{
+  "$description": "List group tokens.",
+  "list": {
+    "padding-block": {"$type": "dimension", "$value": "{size.3}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.4}"},
+    "gap": {"$type": "dimension", "$value": "{size.3}"},
+    "radius": {"$type": "dimension", "$value": "{shape.surface}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.divider}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+
+    "bg": {"$type": "color", "$value": "{bg.surface}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+    "hover-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "active-bg": {"$type": "color", "$value": "{role.primary.base}"},
+    "active-fg": {"$type": "color", "$value": "{role.primary.on-base}"},
+    "disabled-fg": {"$type": "color", "$value": "{fg.disabled}"},
+    "marker-color": {"$type": "color", "$value": "{fg.muted}"}
+  }
+}

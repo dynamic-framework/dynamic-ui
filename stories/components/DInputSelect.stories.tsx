@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSelect from '../../src/components/DInputSelect';
 import { ICONS } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
 
 import type { DInputSelectProps } from '../../src/components/DInputSelect';
 
@@ -15,33 +14,30 @@ const config: Meta<typeof DInputSelect> = {
         component: `
 Customize the native \`<select>s\` with custom CSS that changes the element’s initial appearance, with a partial API of \`d-input\` over the HTML select component.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Select](https://getbootstrap.com/docs/5.3/forms/select/)
-+ [Bootstrap Custom Select](https://getbootstrap.com/docs/5.3/forms/input-group/#custom-select)
-
 ## CSS Variables
 
-The Bootstrap documentation provides details on the default [Select CSS Variables](https://getbootstrap.com/docs/5.3/forms/select/#css)
+Every value below is a design token: set it on the component, on an ancestor, or
+on \`:root\` to retheme. The table is generated from \`tokens/component/select.json\`,
+so it cannot fall out of step with the stylesheet.
 
-| Variable                                  | Class        | Type            | Description                 |
-|-------------------------------------------|--------------|-----------------|-----------------------------|
-| --${PREFIX_BS}label-color                 | :root        | css color unit  | Label color                 |
-| --${PREFIX_BS}label-font-weight           | :root        | css font weight | Label font weight           |
-| --${PREFIX_BS}label-font-size             | :root        | css length unit | Label font size             |
-| --${PREFIX_BS}label-padding-x             | :root        | css length unit | Label horizontal padding    |
-| --${PREFIX_BS}label-padding-y             | :root        | css length unit | Label vertical padding      |
-| --${PREFIX_BS}input-border-color          | .input-group | css color unit  | Input border color          |
-| --${PREFIX_BS}input-border-width          | .input-group | css length unit | Input border width          |
-| --${PREFIX_BS}input-border-radius         | .input-group | css length unit | Input border radius         |
-| --${PREFIX_BS}input-focus-border-color    | .input-group | css color unit  | Input focus border color    |
-| --${PREFIX_BS}input-focus-box-shadow      | .input-group | css shadow      | Input focus box shadow      |
-| --${PREFIX_BS}input-disabled-bg           | .input-group | css color unit  | Input disable background    |
-| --${PREFIX_BS}input-disabled-color        | .input-group | css color unit  | Input disable color         |
-| --${PREFIX_BS}input-disabled-border-color | .input-group | css color unit  | Input disable border color  |
-| --${PREFIX_BS}form-text-padding           | .form-text   | css length unit | Hint padding                |
-| --${PREFIX_BS}form-text-gap               | .form-text   | css length unit | Space between hint elements |
-| --${PREFIX_BS}form-text-color             | .form-text   | css color unit  | Hint color                  |
+| Variable                             | Type       | Description          |
+|--------------------------------------|------------|----------------------|
+| \`--df-select-padding-block\`        | css length | Padding block        |
+| \`--df-select-padding-inline\`       | css length | Padding inline       |
+| \`--df-select-indicator-space\`      | css length | Indicator space      |
+| \`--df-select-font-size\`            | css length | Font size            |
+| \`--df-select-radius\`               | css length | Radius               |
+| \`--df-select-border-width\`         | css length | Border width         |
+| \`--df-select-bg\`                   | css color  | Background           |
+| \`--df-select-fg\`                   | css color  | Foreground           |
+| \`--df-select-border-color\`         | css color  | Border color         |
+| \`--df-select-indicator-color\`      | css color  | Indicator color      |
+| \`--df-select-focus-border-color\`   | css color  | Focus border color   |
+| \`--df-select-invalid-border-color\` | css color  | Invalid border color |
+| \`--df-select-valid-border-color\`   | css color  | Valid border color   |
+| \`--df-select-disabled-bg\`          | css color  | Disabled background  |
+| \`--df-select-disabled-fg\`          | css color  | Disabled foreground  |
+
         `,
       },
     },

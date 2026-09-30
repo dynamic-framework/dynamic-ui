@@ -38,10 +38,10 @@ export const LiveValueBadge: Story = {
   render: function Render() {
     const [value, setValue] = useState(40);
     return (
-      <div style={{ width: '400px' }} className="d-flex flex-column gap-2">
-        <div className="d-flex justify-content-between align-items-center">
-          <span className="form-label mb-0 fw-semibold">Opacity</span>
-          <span className="bg-gray-100 rounded p-1 text-gray-700 small">
+      <div style={{ width: '400px' }} className="df-flex df-flex-col df-gap-2">
+        <div className="df-flex df-justify-between df-items-center">
+          <span className="df-label df-mb-0 df-fw-semibold">Opacity</span>
+          <span className="df-bg-muted df-rounded-control df-p-1 df-text-default df-fs-body-sm">
             {`${value}%`}
           </span>
         </div>
@@ -53,9 +53,9 @@ export const LiveValueBadge: Story = {
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
         />
-        <div className="d-flex justify-content-between">
-          <small className="text-secondary">0%</small>
-          <small className="text-secondary">100%</small>
+        <div className="df-flex df-justify-between">
+          <small className="df-text-secondary">0%</small>
+          <small className="df-text-secondary">100%</small>
         </div>
       </div>
     );
@@ -90,9 +90,9 @@ export const StepMarkers: Story = {
     };
 
     return (
-      <div style={{ width: '400px' }} className="d-flex flex-column gap-3">
-        <div className="d-flex justify-content-between align-items-center">
-          <span className="form-label mb-0 fw-semibold">Risk level</span>
+      <div style={{ width: '400px' }} className="df-flex df-flex-col df-gap-3">
+        <div className="df-flex df-justify-between df-items-center">
+          <span className="df-label df-mb-0 df-fw-semibold">Risk level</span>
           {active && (
             <DBadge
               color={colorMap[active.value] || 'danger'}
@@ -109,7 +109,7 @@ export const StepMarkers: Story = {
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
         />
-        <div className="d-flex justify-content-between px-1">
+        <div className="df-flex df-justify-between df-px-1">
           {markers.map((m) => (
             <small
               key={m.value}
@@ -146,7 +146,7 @@ export const LoanSimulator: Story = {
     const monthly = Math.ceil(amount / MONTHS);
 
     return (
-      <div style={{ width: '420px' }} className="d-flex flex-column gap-2">
+      <div style={{ width: '420px' }} className="df-flex df-flex-col df-gap-2">
         <DInputRange
           label="Loan amount"
           min={MIN}
@@ -155,24 +155,24 @@ export const LoanSimulator: Story = {
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
         />
-        <div className="d-flex justify-content-between">
-          <small className="text-secondary">{formatCurrency(MIN)}</small>
-          <small className="text-secondary">{formatCurrency(MAX)}</small>
+        <div className="df-flex df-justify-between">
+          <small className="df-text-secondary">{formatCurrency(MIN)}</small>
+          <small className="df-text-secondary">{formatCurrency(MAX)}</small>
         </div>
 
-        <div className="card border-2 border-primary mt-2">
-          <div className="card-body d-flex flex-column align-items-center gap-1 py-4">
-            <small className="text-secondary text-uppercase fw-semibold ls-1">
+        <div className="df-card df-border-2 df-border-primary df-mt-2">
+          <div className="df-card-body df-flex df-flex-col df-items-center df-gap-1 df-py-4">
+            <small className="df-text-secondary df-text-uppercase df-fw-semibold ls-1">
               Selected amount
             </small>
-            <span className="display-6 fw-bold text-primary">
+            <span className="df-display-6 df-fw-semibold df-text-primary">
               {formatCurrency(amount)}
             </span>
-            <hr className="w-100 my-2" />
-            <small className="text-secondary">
+            <hr className="df-w-full df-my-2" />
+            <small className="df-text-secondary">
               {`Estimated monthly payment (${MONTHS} months)`}
             </small>
-            <span className="fs-4 fw-semibold">
+            <span className="df-fs-heading-4 df-fw-semibold">
               {`${formatCurrency(monthly)} / mo`}
             </span>
           </div>

@@ -1,0 +1,42 @@
+{
+  "$description": "Motion and stacking primitives. Neither maps to a Figma variable type, so both groups are marked `publish: false` — they exist for CSS and for the docs.",
+  "duration": {
+    "$type": "duration",
+    "$extensions": {
+      "dev.dynamicframework.figma": { "publish": false }
+    },
+    "instant": { "$value": { "value": 0, "unit": "ms" } },
+    "fast": { "$value": { "value": 150, "unit": "ms" } },
+    "normal": { "$value": { "value": 200, "unit": "ms" } },
+    "slow": { "$value": { "value": 300, "unit": "ms" } },
+    "slower": { "$value": { "value": 500, "unit": "ms" } }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "$extensions": {
+      "dev.dynamicframework.figma": { "publish": false }
+    },
+    "standard": { "$value": [0.2, 0, 0, 1] },
+    "decelerate": { "$value": [0, 0, 0, 1] },
+    "accelerate": { "$value": [0.3, 0, 1, 1] },
+    "linear": { "$value": [0, 0, 1, 1] }
+  },
+  "z": {
+    "$type": "number",
+    "$description": "Stacking order. A single ordered list, unlike 2.x where offcanvas and modal shared 1055 and could not be layered over each other.",
+    "$extensions": {
+      "dev.dynamicframework.figma": { "publish": false }
+    },
+    "base": { "$value": 0 },
+    "raised": { "$value": 10 },
+    "dropdown": { "$value": 1000 },
+    "sticky": { "$value": 1020 },
+    "fixed": { "$value": 1030 },
+    "backdrop": { "$value": 1040 },
+    "offcanvas": { "$value": 1045 },
+    "modal": { "$value": 1055 },
+    "popover": { "$value": 1070 },
+    "tooltip": { "$value": 1080 },
+    "toast": { "$value": 1090 }
+  }
+}

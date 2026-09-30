@@ -1,0 +1,186 @@
+/**
+ * Button.
+ *
+ * ## The pattern every component here follows
+ *
+ * The block rule declares a set of LOCAL custom properties — `--df-button-bg`
+ * and friends — and styles itself entirely through them. A generated selector
+ * per variant x colour then fills those slots from the role semantics:
+ *
+ *   .df-button[data-variant="solid"][data-color="primary"] {
+ *     --df-button-bg: var(--df-role-primary-base);
+ *   }
+ *
+ * See `scripts/css/build-variants.mjs` for the generator.
+ *
+ * Three things this buys over the 2.x approach of one class per combination:
+ *
+ *   1. State lives here, once. `:hover` reads `--df-button-bg-hover`, so the
+ *      32 variant x colour selectors never mention a state.
+ *   2. The slots are the documented override surface. A client retunes one
+ *      combination with the same selector, or retunes the role and moves
+ *      everything at once.
+ *   3. Those ~350 combinations stop being global custom properties in :root,
+ *      which is a large part of why the 2.x stylesheet is 1.29 MB.
+ */
+@layer df.components {
+  .df-button {
+    /* Slots. The variant x colour matrix overrides these; the fallbacks make an
+       undecorated `.df-button` render as a plain neutral button rather than an
+       invisible one. */
+    --df-button-bg: transparent;
+    --df-button-bg-hover: var(--df-button-bg);
+    --df-button-bg-active: var(--df-button-bg-hover);
+    --df-button-fg: var(--df-fg-default);
+    --df-button-fg-hover: var(--df-button-fg);
+    --df-button-border-color: transparent;
+    --df-button-border-color-hover: var(--df-button-border-color);
+    --df-button-decoration-hover: none;
+
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--df-button-gap);
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--df-button-padding-block);
+    padding-inline: var(--df-button-padding-inline);
+    font-family: var(--df-button-font-family);
+    font-size: var(--df-button-font-size);
+    font-weight: var(--df-button-font-weight);
+    line-height: var(--df-button-line-height);
+    color: var(--df-button-fg);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--df-button-bg);
+    border: var(--df-button-border-width) solid var(--df-button-border-color);
+    border-radius: var(--df-button-radius);
+    transition:
+      color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+  }
+
+  /* `:where()` keeps specificity at zero so the variant selectors, and a
+     client's own plain selector, both still win. */
+  .df-button:where(:hover, .df-hover) {
+    color: var(--df-button-fg-hover);
+    text-decoration: var(--df-button-decoration-hover);
+    background-color: var(--df-button-bg-hover);
+    border-color: var(--df-button-border-color-hover);
+  }
+
+  .df-button:where(:active, .df-active) {
+    background-color: var(--df-button-bg-active);
+  }
+
+  .df-button:where(:disabled, [aria-disabled="true"], .df-disabled) {
+    cursor: not-allowed;
+    opacity: var(--df-button-disabled-opacity);
+  }
+
+  /* An `aria-disabled` button is still focusable — that is the point of using
+     it over `disabled` — but it must not respond to hover. */
+  .df-button:where(:disabled, [aria-disabled="true"], .df-disabled):hover {
+    color: var(--df-button-fg);
+    background-color: var(--df-button-bg);
+    border-color: var(--df-button-border-color);
+  }
+
+  /* Last, and higher specificity than the state rules above, so a focused
+     disabled button still shows where the keyboard is.
+     `.df-focus-visible` is the forced-state companion to `.df-hover` and
+     `.df-active`: it lets a story or a visual test pin the ring without
+     scripting real focus. */
+  .df-button:focus-visible,
+  .df-button.df-focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* --- Sizes ----------------------------------------------------------- */
+
+  .df-button[data-size="sm"] {
+    padding-block: var(--df-button-sm-padding-block);
+    padding-inline: var(--df-button-sm-padding-inline);
+    font-size: var(--df-button-sm-font-size);
+    border-radius: var(--df-button-sm-radius);
+  }
+
+  .df-button[data-size="lg"] {
+    padding-block: var(--df-button-lg-padding-block);
+    padding-inline: var(--df-button-lg-padding-inline);
+    font-size: var(--df-button-lg-font-size);
+    border-radius: var(--df-button-lg-radius);
+  }
+
+  /* --- Shape and width ------------------------------------------------- */
+
+  .df-button[data-shape="pill"] {
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-button[data-shape="square"] {
+    border-radius: var(--df-shape-none);
+  }
+
+  .df-button[data-full-width] {
+    width: 100%;
+  }
+
+  /* An icon-only button is square, so the inline padding matches the block
+     padding rather than the text padding. */
+  .df-button[data-icon-only] {
+    aspect-ratio: 1;
+    padding-inline: var(--df-button-padding-block);
+  }
+
+  .df-button[data-icon-only][data-size="sm"] {
+    padding-inline: var(--df-button-sm-padding-block);
+  }
+
+  .df-button[data-icon-only][data-size="lg"] {
+    padding-inline: var(--df-button-lg-padding-block);
+  }
+
+  /* --- Loading --------------------------------------------------------- */
+
+  /* The label is hidden rather than removed so the button keeps its width and
+     the layout does not jump. 2.x measured the rendered width in JavaScript and
+     pinned it with an inline min-width; this needs no script. */
+  .df-button[data-loading] {
+    cursor: progress;
+  }
+
+  .df-button[data-loading] > .df-button-label {
+    visibility: hidden;
+  }
+
+  .df-button-spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    gap: var(--df-button-gap);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .df-button:not([data-loading]) > .df-button-spinner {
+    display: none;
+  }
+
+  .df-button-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .df-button-icon > svg {
+    width: 1em;
+    height: 1em;
+  }
+}

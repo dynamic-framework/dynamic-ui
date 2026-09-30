@@ -34,22 +34,24 @@ export default function DProgress(
     [percentage],
   );
 
-  const generateClasses = useMemo(() => ({
-    'progress-bar': true,
-    'progress-bar-striped progress-bar-animated': enableStripedAnimation,
-  }), [enableStripedAnimation]);
-
   return (
     <div
-      className={classNames('progress', className)}
-      style={{ height, ...style }}
+      className={classNames('df-progress', className)}
+      // The fill is a live value, not a design decision, so it is the one thing
+      // set inline — as a custom property rather than `width`, which leaves the
+      // stylesheet in control of how it is used.
+      style={{
+        ...height !== undefined && { height },
+        '--df-progress-value': formatProgress,
+        ...style,
+      } as React.CSSProperties}
+      {...enableStripedAnimation && { 'data-striped': '', 'data-animated': '' }}
       {...dataAttributes}
     >
       <div
-        className={classNames(generateClasses)}
+        className="df-progress-bar"
         role="progressbar"
         aria-label="Progress bar"
-        style={{ width: formatProgress }}
         aria-valuenow={currentValue}
         aria-valuemin={minValue}
         aria-valuemax={maxValue}

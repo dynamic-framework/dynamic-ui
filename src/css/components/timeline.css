@@ -1,0 +1,78 @@
+/**
+ * Timeline.
+ *
+ * The connector is a pseudo-element on the item rather than a rendered `<div>`,
+ * which removes one node per entry and means `:last-child` can hide it without
+ * the component tracking which item is last. 2.x rendered a connector element
+ * and hid it with a `:last-child` rule, so the markup carried a node whose only
+ * job was to sometimes be invisible.
+ */
+@layer df.components {
+  .df-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .df-timeline-item {
+    position: relative;
+    display: flex;
+    padding-block-end: var(--df-timeline-item-gap);
+  }
+
+  .df-timeline-item::before {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(
+      var(--df-timeline-marker-size) / 2 + var(--df-timeline-marker-padding)
+    );
+    width: var(--df-timeline-connector-size);
+    content: "";
+    background-color: var(--df-timeline-connector-color);
+    translate: -50% 0;
+  }
+
+  .df-timeline-item:last-child::before {
+    content: none;
+  }
+
+  .df-timeline-item-marker {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: calc(
+      var(--df-timeline-marker-size) / 2 + var(--df-timeline-marker-padding)
+    );
+    z-index: var(--df-z-raised);
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-timeline-marker-size);
+    height: var(--df-timeline-marker-size);
+    padding: var(--df-timeline-marker-padding);
+    line-height: 1;
+    color: var(--df-timeline-marker-fg);
+    background-color: var(--df-timeline-marker-bg);
+    border: var(--df-stroke-control) solid var(--df-timeline-marker-border-color);
+    border-radius: var(--df-shape-pill);
+    translate: -50% 0;
+  }
+
+  .df-timeline-item-content {
+    padding-inline-start: var(--df-timeline-content-indent);
+  }
+
+  .df-timeline-item-title {
+    margin-block-end: var(--df-size-1);
+    font-weight: var(--df-timeline-title-font-weight);
+  }
+
+  .df-timeline-item-description {
+    color: var(--df-timeline-description-color);
+  }
+
+  .df-timeline-item-time {
+    font-size: var(--df-timeline-time-font-size);
+    color: var(--df-timeline-time-color);
+  }
+}

@@ -102,30 +102,27 @@ const ONBOARDING_SLIDES = [
 
 function MobileWelcomeCarouselPatternExample() {
   return (
-    <div className="border position-relative overflow-hidden rounded-2" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #53c9cc 0%, #61d1d2 35%, #7ad7d6 100%)' }}>
-      <div className="h-100 p-3">
-        <div className="bg-white rounded-3 h-100 d-flex flex-column shadow-sm">
-          <div className="flex-grow-1 px-2 pt-3 pb-2">
+    <div className="df-border-1 df-relative df-overflow-hidden df-rounded-control" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #53c9cc 0%, #61d1d2 35%, #7ad7d6 100%)' }}>
+      <div className="df-h-full df-p-3">
+        <div className="df-bg-surface df-rounded-control df-h-full df-flex df-flex-col df-shadow-sm">
+          <div className="df-grow df-px-2 df-pt-3 df-pb-2">
             <DCarousel
-              options={{
-                perPage: 1,
-                perMove: 1,
-                rewind: true,
-                arrows: false,
-                pagination: true,
-                drag: true,
-                gap: '0.75rem',
-              }}
+              label="Onboarding"
+              loop="rewind"
+              perPage={1}
+              perMove={1}
+              arrows={false}
+              gap={3}
             >
               {ONBOARDING_SLIDES.map((slide) => (
                 <DCarousel.Slide key={slide.id}>
-                  <div className="h-100 d-flex flex-column align-items-center justify-content-center text-center px-3 py-4">
-                    <div className="d-flex align-items-center justify-content-center rounded-circle mb-4" style={{ width: '176px', height: '176px', background: 'linear-gradient(180deg, #e4f6f7 0%, #f5f7f8 100%)' }}>
-                      <DIcon icon={slide.icon} size="5.5rem" className="text-primary" />
+                  <div className="df-h-full df-flex df-flex-col df-items-center df-justify-center df-text-center df-px-3 df-py-4">
+                    <div className="df-flex df-items-center df-justify-center df-rounded-pill df-mb-4" style={{ width: '176px', height: '176px', background: 'linear-gradient(180deg, #e4f6f7 0%, #f5f7f8 100%)' }}>
+                      <DIcon icon={slide.icon} size="5.5rem" className="df-text-primary" />
                     </div>
-                    <h5 className="mb-2" style={{ letterSpacing: '0.06em' }}>{slide.title}</h5>
-                    <span className="d-block rounded-pill mb-3" style={{ width: '44px', height: '4px', backgroundColor: slide.accentColor }} />
-                    <p className="text-body-secondary mb-0" style={{ maxWidth: '260px' }}>
+                    <h5 className="df-mb-2" style={{ letterSpacing: '0.06em' }}>{slide.title}</h5>
+                    <span className="df-block df-rounded-pill df-mb-3" style={{ width: '44px', height: '4px', backgroundColor: slide.accentColor }} />
+                    <p className="df-text-muted df-mb-0" style={{ maxWidth: '260px' }}>
                       {slide.description}
                     </p>
                   </div>
@@ -134,13 +131,13 @@ function MobileWelcomeCarouselPatternExample() {
             </DCarousel>
           </div>
 
-          <div className="px-3 pb-3 pt-2">
-            <div className="d-grid gap-2">
+          <div className="df-px-3 df-pb-3 df-pt-2">
+            <div className="df-grid df-gap-2">
               <DButton
                 text="Log in"
                 variant="outline"
                 color="light"
-                className="border-secondary text-secondary"
+                className="df-border-secondary df-text-secondary"
               />
               <DButton text="Continue" color="primary" />
             </div>
@@ -179,38 +176,35 @@ const ONBOARDING_PHOTO_SLIDES = [
 
 function WelcomeOnboardingSplitActionsExample() {
   return (
-    <div className="border position-relative overflow-hidden rounded-2" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #0f2f35 0%, #164952 44%, #1a5d67 100%)' }}>
+    <div className="df-border-1 df-relative df-overflow-hidden df-rounded-control" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #0f2f35 0%, #164952 44%, #1a5d67 100%)' }}>
       <style>
         {'.welcome-photo-carousel .splide__pagination { bottom: 156px; z-index: 4; } .welcome-photo-carousel .splide__track { height: 100%; }'}
       </style>
-      <div className="h-100 position-relative">
-        <div className="position-absolute top-0 start-0 bottom-0 end-0">
+      <div className="df-h-full df-relative">
+        <div className="df-absolute df-top-0 df-start-0 df-bottom-0 df-end-0">
           <DCarousel
-            className="h-100 welcome-photo-carousel"
-            options={{
-              perPage: 1,
-              perMove: 1,
-              rewind: true,
-              arrows: false,
-              pagination: true,
-              drag: true,
-              gap: '0',
-              height: '100%',
-            }}
+            className="df-h-full welcome-photo-carousel"
+            label="Welcome"
+            loop="rewind"
+            perPage={1}
+            perMove={1}
+            arrows={false}
+            gap={0}
+            height="100%"
           >
             {ONBOARDING_PHOTO_SLIDES.map((slide) => (
-              <DCarousel.Slide className="w-100" key={slide.id}>
+              <DCarousel.Slide className="df-w-full" key={slide.id}>
                 <article
-                  className="position-relative overflow-hidden h-100"
+                  className="df-relative df-overflow-hidden df-h-full"
                   style={{ minHeight: '100%', paddingBottom: '180px', backgroundImage: 'url(' + slide.imageUrl + ')', backgroundSize: 'cover', backgroundPosition: 'center' }}
                 >
-                <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'linear-gradient(180deg, rgba(3, 16, 23, 0.12) 0%, rgba(3, 16, 23, 0.48) 44%, rgba(3, 16, 23, 0.86) 100%)' }} />
-                <div className="position-relative h-100 w-100 d-flex flex-column justify-content-end p-4 text-white">
-                  <div className="d-flex align-items-center justify-content-center rounded-circle mb-3" style={{ width: '56px', height: '56px', backgroundColor: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(3px)' }}>
+                <div className="df-absolute df-top-0 df-start-0 df-w-full df-h-full" style={{ background: 'linear-gradient(180deg, rgba(3, 16, 23, 0.12) 0%, rgba(3, 16, 23, 0.48) 44%, rgba(3, 16, 23, 0.86) 100%)' }} />
+                <div className="df-relative df-h-full df-w-full df-flex df-flex-col df-justify-end df-p-4 df-text-on-emphasis">
+                  <div className="df-flex df-items-center df-justify-center df-rounded-pill df-mb-3" style={{ width: '56px', height: '56px', backgroundColor: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(3px)' }}>
                     <DIcon icon={slide.icon} size="1.75rem" />
                   </div>
-                  <h3 className="mb-2">{slide.title}</h3>
-                  <p className="mb-0" style={{ opacity: 0.95, maxWidth: '90%' }}>{slide.description}</p>
+                  <h3 className="df-mb-2">{slide.title}</h3>
+                  <p className="df-mb-0" style={{ opacity: 0.95, maxWidth: '90%' }}>{slide.description}</p>
                 </div>
                 </article>
               </DCarousel.Slide>
@@ -218,10 +212,10 @@ function WelcomeOnboardingSplitActionsExample() {
           </DCarousel>
         </div>
 
-        <div className="position-absolute bottom-0 start-0 end-0 p-3" style={{ zIndex: 3 }}>
-          <div className="p-3 text-center">
-            <DButton text="Start now" color="light" className="fw-semibold w-100" />
-            <a href="/register" className="d-inline-block mt-3 text-white text-decoration-underline">Register</a>
+        <div className="df-absolute df-bottom-0 df-start-0 df-end-0 df-p-3" style={{ zIndex: 3 }}>
+          <div className="df-p-3 df-text-center">
+            <DButton text="Start now" color="light" className="df-fw-semibold df-w-full" />
+            <a href="/register" className="df-inline-block df-mt-3 df-text-on-emphasis df-underline">Register</a>
           </div>
         </div>
       </div>
@@ -256,12 +250,12 @@ function MobileViewport(
 ) {
   return (
     <div
-      className="border position-relative overflow-hidden rounded-2"
+      className="df-border-1 df-relative df-overflow-hidden df-rounded-control"
       style={{
         width: '390px',
         maxWidth: '100%',
         height: '760px',
-        background: 'linear-gradient(180deg, var(--bs-primary) 0%, var(--bs-primary-100) 35%, var(--bs-primary-25) 100%)',
+        background: 'linear-gradient(180deg, var(--df-role-primary-base) 0%, var(--df-role-primary-subtle) 35%, var(--df-role-primary-subtle) 100%)',
       }}
     >
       {children}
@@ -283,39 +277,36 @@ export const WelcomeOnboardingCarousel: Story = {
   },
   render: () => (
     <MobileViewport>
-      <div className="h-100 p-3">
-        <div className="bg-white rounded-3 h-100 d-flex flex-column shadow-sm">
-          <div className="flex-grow-1 px-2 pt-3 pb-2">
+      <div className="df-h-full df-p-3">
+        <div className="df-bg-surface df-rounded-control df-h-full df-flex df-flex-col df-shadow-sm">
+          <div className="df-grow df-px-2 df-pt-3 df-pb-2">
             <DCarousel
-              options={{
-                perPage: 1,
-                perMove: 1,
-                rewind: true,
-                arrows: false,
-                pagination: true,
-                drag: true,
-                gap: '0.75rem',
-              }}
+              label="Onboarding"
+              loop="rewind"
+              perPage={1}
+              perMove={1}
+              arrows={false}
+              gap={3}
             >
               {ONBOARDING_SLIDES.map((slide) => (
                 <DCarousel.Slide key={slide.id}>
-                  <div className="h-100 d-flex flex-column align-items-center justify-content-center text-center px-3 py-4">
+                  <div className="df-h-full df-flex df-flex-col df-items-center df-justify-center df-text-center df-px-3 df-py-4">
                     <div
-                      className="d-flex bg-primary-25 align-items-center justify-content-center rounded-circle mb-4"
+                      className="df-flex df-bg-primary-subtle df-items-center df-justify-center df-rounded-pill df-mb-4"
                       style={{
                         width: '176px',
                         height: '176px',
                       }}
                     >
-                      <DIcon icon={slide.icon} size="5.5rem" className="text-primary" />
+                      <DIcon icon={slide.icon} size="5.5rem" className="df-text-primary" />
                     </div>
 
-                    <h5 className="mb-2" style={{ letterSpacing: '0.06em' }}>
+                    <h5 className="df-mb-2" style={{ letterSpacing: '0.06em' }}>
                       {slide.title}
                     </h5>
 
                     <span
-                      className="d-block rounded-pill mb-3"
+                      className="df-block df-rounded-pill df-mb-3"
                       style={{
                         width: '44px',
                         height: '4px',
@@ -323,7 +314,7 @@ export const WelcomeOnboardingCarousel: Story = {
                       }}
                     />
 
-                    <p className="text-body-secondary mb-0" style={{ maxWidth: '260px' }}>
+                    <p className="df-text-muted df-mb-0" style={{ maxWidth: '260px' }}>
                       {slide.description}
                     </p>
                   </div>
@@ -332,13 +323,13 @@ export const WelcomeOnboardingCarousel: Story = {
             </DCarousel>
           </div>
 
-          <div className="px-3 pb-3 pt-2">
-            <div className="d-grid gap-2">
+          <div className="df-px-3 df-pb-3 df-pt-2">
+            <div className="df-grid df-gap-2">
               <DButton
                 text="Log in"
                 variant="outline"
                 color="light"
-                className="border-secondary text-secondary"
+                className="df-border-secondary df-text-secondary"
               />
               <DButton text="Continue" color="primary" />
             </div>
@@ -363,7 +354,7 @@ export const WelcomeOnboardingSplitActions: Story = {
   },
   render: () => (
     <div
-      className="border position-relative overflow-hidden rounded-2"
+      className="df-border-1 df-relative df-overflow-hidden df-rounded-control"
       style={{
         width: '390px',
         maxWidth: '100%',
@@ -382,25 +373,22 @@ export const WelcomeOnboardingSplitActions: Story = {
           }
         `}
       </style>
-      <div className="h-100 position-relative">
-        <div className="position-absolute top-0 start-0 bottom-0 end-0">
+      <div className="df-h-full df-relative">
+        <div className="df-absolute df-top-0 df-start-0 df-bottom-0 df-end-0">
           <DCarousel
-            className="h-100 welcome-photo-carousel"
-            options={{
-              perPage: 1,
-              perMove: 1,
-              rewind: true,
-              arrows: false,
-              pagination: true,
-              drag: true,
-              gap: '0',
-              height: '100%',
-            }}
+            className="df-h-full welcome-photo-carousel"
+            label="Welcome"
+            loop="rewind"
+            perPage={1}
+            perMove={1}
+            arrows={false}
+            gap={0}
+            height="100%"
           >
             {ONBOARDING_PHOTO_SLIDES.map((slide) => (
-              <DCarousel.Slide className="w-100" key={slide.id}>
+              <DCarousel.Slide className="df-w-full" key={slide.id}>
                 <article
-                  className="position-relative overflow-hidden h-100"
+                  className="df-relative df-overflow-hidden df-h-full"
                   style={{
                     minHeight: '100%',
                     paddingBottom: '180px',
@@ -410,15 +398,15 @@ export const WelcomeOnboardingSplitActions: Story = {
                   }}
                 >
                   <div
-                    className="position-absolute top-0 start-0 w-100 h-100"
+                    className="df-absolute df-top-0 df-start-0 df-w-full df-h-full"
                     style={{
                       background: 'linear-gradient(180deg, rgba(3, 16, 23, 0.12) 0%, rgba(3, 16, 23, 0.48) 44%, rgba(3, 16, 23, 0.86) 100%)',
                     }}
                   />
 
-                  <div className="position-relative h-100 w-100 d-flex flex-column justify-content-end p-4 text-white">
+                  <div className="df-relative df-h-full df-w-full df-flex df-flex-col df-justify-end df-p-4 df-text-on-emphasis">
                     <div
-                      className="d-flex align-items-center justify-content-center rounded-circle mb-3"
+                      className="df-flex df-items-center df-justify-center df-rounded-pill df-mb-3"
                       style={{
                         width: '56px',
                         height: '56px',
@@ -428,8 +416,8 @@ export const WelcomeOnboardingSplitActions: Story = {
                     >
                       <DIcon icon={slide.icon} size="1.75rem" />
                     </div>
-                    <h3 className="mb-2">{slide.title}</h3>
-                    <p className="mb-0" style={{ opacity: 0.95, maxWidth: '90%' }}>
+                    <h3 className="df-mb-2">{slide.title}</h3>
+                    <p className="df-mb-0" style={{ opacity: 0.95, maxWidth: '90%' }}>
                       {slide.description}
                     </p>
                   </div>
@@ -439,10 +427,10 @@ export const WelcomeOnboardingSplitActions: Story = {
           </DCarousel>
         </div>
 
-        <div className="position-absolute bottom-0 start-0 end-0 p-3" style={{ zIndex: 3 }}>
-          <div className="p-3 text-center">
-            <DButton text="Start now" color="light" className="fw-semibold w-100" />
-            <a href="/register" className="d-inline-block mt-3 text-white text-decoration-underline">Register</a>
+        <div className="df-absolute df-bottom-0 df-start-0 df-end-0 df-p-3" style={{ zIndex: 3 }}>
+          <div className="df-p-3 df-text-center">
+            <DButton text="Start now" color="light" className="df-fw-semibold df-w-full" />
+            <a href="/register" className="df-inline-block df-mt-3 df-text-on-emphasis df-underline">Register</a>
           </div>
         </div>
       </div>

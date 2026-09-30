@@ -1,0 +1,83 @@
+/**
+ * Range input.
+ *
+ * The filled portion is a gradient on the track whose stop is
+ * `--df-range-value`, a custom property the component writes. 2.x used the same
+ * idea; kept, because the alternative is a second element sized in JavaScript.
+ *
+ * `appearance: none` plus per-engine thumb pseudo-elements is unavoidable here:
+ * there is still no standard way to style a range thumb.
+ */
+@layer df.components {
+  .df-range {
+    --df-range-value: 0%;
+
+    width: 100%;
+    height: var(--df-range-thumb-size);
+    appearance: none;
+    cursor: pointer;
+    background: none;
+  }
+
+  .df-range:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* Track — one rule per engine, which is what the spec still requires. */
+  .df-range::-webkit-slider-runnable-track {
+    height: var(--df-range-track-height);
+    background:
+      linear-gradient(
+        to right,
+        var(--df-range-fill-color) var(--df-range-value),
+        var(--df-range-track-color) var(--df-range-value)
+      );
+    border-radius: var(--df-range-track-radius);
+  }
+
+  .df-range::-moz-range-track {
+    height: var(--df-range-track-height);
+    background:
+      linear-gradient(
+        to right,
+        var(--df-range-fill-color) var(--df-range-value),
+        var(--df-range-track-color) var(--df-range-value)
+      );
+    border-radius: var(--df-range-track-radius);
+  }
+
+  /* Thumb. The negative margin centres it on the track in WebKit, which does
+     not centre it the way Firefox does. */
+  .df-range::-webkit-slider-thumb {
+    width: var(--df-range-thumb-size);
+    height: var(--df-range-thumb-size);
+    margin-block-start: calc(
+      (var(--df-range-track-height) - var(--df-range-thumb-size)) / 2
+    );
+    appearance: none;
+    background-color: var(--df-range-thumb-color);
+    border: var(--df-range-thumb-border-width) solid var(--df-range-thumb-border-color);
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-range::-moz-range-thumb {
+    width: var(--df-range-thumb-size);
+    height: var(--df-range-thumb-size);
+    background-color: var(--df-range-thumb-color);
+    border: var(--df-range-thumb-border-width) solid var(--df-range-thumb-border-color);
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-range:disabled {
+    --df-range-fill-color: var(--df-range-disabled-fill-color);
+    --df-range-thumb-color: var(--df-range-disabled-fill-color);
+
+    cursor: not-allowed;
+  }
+
+  .df-range-value {
+    font-size: var(--df-range-value-font-size);
+    color: var(--df-range-value-color);
+  }
+}

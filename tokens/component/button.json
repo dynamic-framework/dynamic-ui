@@ -1,0 +1,29 @@
+{
+  "$description": "Button component tokens.\n\nSTRUCTURAL ONLY — on purpose. The variant x colour matrix (4 variants x 8 roles x 4 states) is NOT expressed here. 2.x emitted roughly 350 of those combinations as global custom properties in :root, which is a large part of why the stylesheet is 1.29 MB, and none of them are decisions a designer makes: they are derivations of the role semantics.\n\nInstead the CSS assigns local custom properties per variant/colour selector:\n\n  .df-button[data-variant=\"solid\"][data-color=\"primary\"] {\n    --df-button-bg: var(--df-role-primary-base);\n    --df-button-fg: var(--df-role-primary-on-base);\n  }\n\nA client can still override any single combination with that same selector, and overriding the role instead propagates everywhere at once. What lives here is what a designer genuinely specifies: geometry and type per size.",
+  "button": {
+    "padding-block": { "$type": "dimension", "$value": "{size.2}" },
+    "padding-inline": { "$type": "dimension", "$value": "{size.4}" },
+    "gap": { "$type": "dimension", "$value": "{size.2}" },
+    "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
+    "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
+    "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" },
+    "line-height": { "$type": "number", "$value": "{line-height.normal}" },
+    "radius": { "$type": "dimension", "$value": "{shape.control}" },
+    "border-width": { "$type": "dimension", "$value": "{stroke.control}" },
+    "disabled-opacity": { "$type": "number", "$value": "{opacity.disabled}" },
+
+    "sm": {
+      "padding-block": { "$type": "dimension", "$value": "{size.1}" },
+      "padding-inline": { "$type": "dimension", "$value": "{size.3}" },
+      "font-size": { "$type": "dimension", "$value": "{font-size.200}" },
+      "radius": { "$type": "dimension", "$value": "{shape.control-sm}" }
+    },
+    "lg": {
+      "$description": "2.x set the large font size to a bare 1.15rem, the only off-scale type value in the button. Snapped to the nearest scale step (18px).",
+      "padding-block": { "$type": "dimension", "$value": "{size.3}" },
+      "padding-inline": { "$type": "dimension", "$value": "{size.5}" },
+      "font-size": { "$type": "dimension", "$value": "{font-size.400}" },
+      "radius": { "$type": "dimension", "$value": "{shape.control}" }
+    }
+  }
+}

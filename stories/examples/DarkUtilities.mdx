@@ -12,7 +12,7 @@ import {
 
 This project extends Bootstrap utilities to support Tailwind-like `dark:` variants (e.g., `dark:bg-primary-100`, `dark:text-success`, `dark:shadow`).
 
-Dark variants are applied automatically when the user's system prefers a dark color scheme (`prefers-color-scheme: dark`), and can also be opt-in by adding a `dark` class to any ancestor element.
+Dark variants are applied automatically when the user's system prefers a dark color scheme (`prefers-color-scheme: dark`), and can also be opted into by putting `data-df-theme="dark"` on any ancestor element. It is an attribute rather than a class so a theme can be set on a subtree — a dark panel on a light page — and not only on the document root.
 
 ## Backgrounds
 
@@ -22,8 +22,8 @@ Dark variants are applied automatically when the user's system prefers a dark co
 
 <Source
   code={`
-<div class="dark">
-  <div class="card dark:bg-secondary-100">...</div>
+<div data-df-theme="dark">
+  <div class="df-card df-dark:bg-secondary-subtle">...</div>
 </div>
   `}
   language="html"
@@ -37,10 +37,10 @@ Dark variants are applied automatically when the user's system prefers a dark co
 
 <Source
   code={`
-<div class="dark">
-  <a class="text-body dark:text-primary">Primary in dark</a>
-  <a class="text-body dark:text-success">Success in dark</a>
-  <a class="text-body dark:text-danger">Danger in dark</a>
+<div data-df-theme="dark">
+  <a class="df-text-default df-dark:text-primary">Primary in dark</a>
+  <a class="df-text-default df-dark:text-success">Success in dark</a>
+  <a class="df-text-default df-dark:text-danger">Danger in dark</a>
 </div>
   `}
   language="html"
@@ -54,15 +54,15 @@ Dark variants are applied automatically when the user's system prefers a dark co
 
 <Source
   code={`
-<div class="dark">
-  <div class="p-3 rounded border border-2 border-secondary dark:border-primary">...</div>
-  <div class="p-4 rounded border shadow-none dark:shadow">...</div>
+<div data-df-theme="dark">
+  <div class="df-p-3 df-rounded-control df-border-1 df-border-2 df-border-secondary df-dark:border-primary">...</div>
+  <div class="df-p-4 df-rounded-control df-border-1 df-shadow-none df-dark:shadow-md">...</div>
 </div>
   `}
   language="html"
 />
 
-## Automatic dark (no .dark class)
+## Automatic dark (no `data-df-theme`)
 
 <Unstyled>
   <ExampleDarkAutoBackgrounds />
@@ -71,19 +71,19 @@ Dark variants are applied automatically when the user's system prefers a dark co
 <Source
   code={`
 <div>
-  <!-- No .dark ancestor. Will apply automatically if the OS/browser has dark mode enabled -->
-  <div class="card dark:bg-secondary-100">...</div>
-  <div class="p-3 rounded border dark:bg-primary-100">...</div>
+  <!-- No themed ancestor. Will apply automatically if the OS/browser has dark mode enabled -->
+  <div class="df-card df-dark:bg-secondary-subtle">...</div>
+  <div class="df-p-3 df-rounded-control df-border-1 df-dark:bg-primary-subtle">...</div>
 </div>
   `}
   language="html"
 />
 
-> Tip: Without the `dark` class, these utilities will also activate automatically when the browser/OS switches to night mode via `prefers-color-scheme: dark`.
+> Tip: Without `data-df-theme`, these utilities will also activate automatically when the browser/OS switches to night mode via `prefers-color-scheme: dark`.
 
 ## Customizing Bootstrap button CSS variables in dark mode
 
-You can override component CSS variables in a plain CSS/SCSS file to tailor dark mode. Use either the automatic system preference or the `.dark` opt-in class:
+You can override component CSS variables in a plain CSS/SCSS file to tailor dark mode. Use either the automatic system preference or the `data-df-theme="dark"` opt-in:
 
 <Source
   code={`
@@ -91,40 +91,40 @@ You can override component CSS variables in a plain CSS/SCSS file to tailor dark
 @media (prefers-color-scheme: dark) {
   .btn-primary {
     /* Base and text */
-    --bs-btn-bg: var(--bs-primary-600);
-    --bs-btn-color: var(--bs-body-bg);
-    --bs-btn-border-color: var(--bs-primary-600);
+    --df-button-bg: var(--df-role-primary-base-hover);
+    --df-button-fg: var(--df-bg-canvas);
+    --df-button-border-color: var(--df-role-primary-base-hover);
 
     /* Hover */
-    --bs-btn-hover-bg: var(--bs-primary-700);
-    --bs-btn-hover-border-color: var(--bs-primary-700);
+    --df-button-hover-bg: var(--df-role-primary-base-hover);
+    --df-button-hover-border-color: var(--df-role-primary-base-hover);
 
-    /* Focus */
-    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
+    /* Focus — the ring is shared across components in 3.x, so a button does
+       not carry its own. Restyle it once and every control follows. */
 
     /* Active */
-    --bs-btn-active-bg: var(--bs-primary-800);
-    --bs-btn-active-border-color: var(--bs-primary-800);
+    --df-button-active-bg: var(--df-role-primary-base-active);
+    --df-button-active-border-color: var(--df-role-primary-base-active);
   }
 
-  .btn-outline-secondary {
-    --bs-btn-color: var(--bs-secondary-300);
-    --bs-btn-border-color: var(--bs-secondary-300);
-    --bs-btn-hover-bg: rgba(var(--bs-secondary-rgb), .12);
-    --bs-btn-hover-border-color: var(--bs-secondary-400);
+  .df-button[data-variant="outline"][data-color="secondary"] {
+    --df-button-fg: var(--df-role-secondary-base);
+    --df-button-border-color: var(--df-role-secondary-base);
+    --df-button-hover-bg: color-mix(in oklab, var(--df-role-secondary-base) 12%, transparent);
+    --df-button-hover-border-color: var(--df-role-secondary-base);
   }
 }
 
 /* Opt-in dark container */
-.dark {
+[data-df-theme="dark"] {
   .btn-primary {
-    --bs-btn-bg: var(--bs-primary-600);
-    --bs-btn-color: var(--bs-body-bg);
-    --bs-btn-border-color: var(--bs-primary-600);
-    --bs-btn-hover-bg: var(--bs-primary-700);
-    --bs-btn-hover-border-color: var(--bs-primary-700);
-    --bs-btn-active-bg: var(--bs-primary-800);
-    --bs-btn-active-border-color: var(--bs-primary-800);
+    --df-button-bg: var(--df-role-primary-base-hover);
+    --df-button-fg: var(--df-bg-canvas);
+    --df-button-border-color: var(--df-role-primary-base-hover);
+    --df-button-hover-bg: var(--df-role-primary-base-hover);
+    --df-button-hover-border-color: var(--df-role-primary-base-hover);
+    --df-button-active-bg: var(--df-role-primary-base-active);
+    --df-button-active-border-color: var(--df-role-primary-base-active);
   }
 }
   `}

@@ -1,0 +1,14 @@
+{
+  "$description": "Credit card tokens. The face gradient stays a component default rather than a token: it is decorative art, not a design-system colour, and a client sets it with the same custom property.",
+  "credit-card": {
+    "padding": {"$type": "dimension", "$value": "{size.4}"},
+    "radius": {"$type": "dimension", "$value": "{shape.surface}"},
+    "fg": {"$type": "color", "$value": "{color.white}"},
+    "chip-size": {"$type": "dimension", "$value": "{size.8}"},
+    "chip-padding": {"$type": "dimension", "$value": "{size.1}"},
+    "chip-radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "number-font-size": {"$type": "dimension", "$value": "{font-size.400}"},
+    "name-font-size": {"$type": "dimension", "$value": "{font-size.200}"},
+    "label-font-size": {"$type": "dimension", "$value": "{font-size.100}"}
+  }
+}
