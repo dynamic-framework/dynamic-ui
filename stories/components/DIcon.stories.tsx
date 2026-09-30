@@ -422,12 +422,12 @@ export const WithResponsiveSizes: Story = {
   args: {
     icon: 'Settings',
     size: {
-      xs: '8',
-      sm: '16',
-      md: '32',
-      lg: '64',
-      xl: '128',
-      xxl: '256',
+      xs: '8px',
+      sm: '16px',
+      md: '32px',
+      lg: '64px',
+      xl: '128px',
+      xxl: '256px',
     },
     useListenerSize: true,
     hasCircle: false,
