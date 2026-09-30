@@ -1,8 +1,0 @@
-[class*="text-truncate-"] {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: var(--#{$prefix}text-truncate);
-  -webkit-box-orient: vertical;
-  white-space: normal;
-}
