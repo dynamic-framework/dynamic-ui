@@ -38,6 +38,14 @@ function formatValue(value: number | undefined, currencyOptions: Options) {
  * With `clamp: false` the value is never changed: the bounds only feed
  * `isOverMax` / `isUnderMin`, so the consumer can show its own message (e.g.
  * "You exceeded the limit") and keep the entered amount.
+ *
+ * Controlled usage follows the same contract as a native controlled input:
+ * reflect `onChange` into `value` in the same event (`setState` in the
+ * handler). The hook keeps showing `value` whenever it isn't being edited, so
+ * a consumer can reject a change by keeping `value` as it was. Deferring the
+ * update (a timer, awaiting a request) makes the hook see a stale `value` in
+ * between: the field can flash the previous amount and a clamp can be
+ * reported again when the deferred value arrives.
  */
 export default function useInputCurrency(
   currencyOptions: Options,

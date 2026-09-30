@@ -145,6 +145,40 @@ describe('useInputCurrency range handling', () => {
     });
   });
 
+  it('shows the controlled value again when the consumer rejects a change', () => {
+    const onChangeSpy = jest.fn();
+    function Fixed() {
+      const {
+        inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur,
+      } = useInputCurrency(
+        STABLE_OPTIONS,
+        1000,
+        undefined,
+        onChangeSpy,
+        undefined,
+        undefined,
+        0,
+        MAX,
+      );
+      return (
+        <input
+          aria-label="Monto"
+          ref={inputRef}
+          type={innerType}
+          value={innerValue}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          onChange={(event) => handleOnChange(event.target.value)}
+        />
+      );
+    }
+    render(<Fixed />);
+    fireEvent.focus(input());
+    fireEvent.change(input(), { target: { value: '5000000' } });
+    fireEvent.blur(input());
+    expect(input().value).toBe('1.000,00');
+  });
+
   it('does not loop or diverge under StrictMode', () => {
     const onChangeSpy = jest.fn();
     render(
@@ -194,7 +228,7 @@ describe('useInputCurrency range handling', () => {
     expect(screen.getByTestId('formatted').textContent).toBe('10 USD');
   });
 
-  it('reports a blur clamp once when the consumer reflects onChange asynchronously', async () => {
+  it('reports a blur clamp once when each onChange is reflected before the next event', async () => {
     const onChangeSpy = jest.fn();
     function AsyncWidget() {
       const [value, setValue] = useState<number | undefined>();
