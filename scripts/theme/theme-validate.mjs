@@ -736,9 +736,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     ...textBgRoles(root),
     ...zoneBlocks.flatMap((block) => [...touched(block.decls).roles, ...textBgRoles(block.decls)]),
   ])];
+  // `.text-bg-<role>` se mide para todos los roles, toque el theme el role o
+  // no: su texto por defecto apunta a otros tokens (`--bs-white`,
+  // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
+  // de ellos lo mueve sin declarar nada del role.
+  const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
   const bakedPairs = [
     ...BAKED_PAIRS,
-    ...pairRoles.flatMap((role) => bakedRolePairs(role)),
+    ...pairRoles.flatMap((role) => bakedRolePairs(role).filter((pair) => !isTextBg(pair))),
+    ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
   ];
 
   /** Token al que cae un lado del par cuando el theme no declara su variable. */
