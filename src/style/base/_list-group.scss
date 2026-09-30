@@ -39,14 +39,17 @@
   }
 }
 
-// The counter sits before the link, so it takes the padding the link gives up
-// and the text keeps the position it has in a plain numbered item.
-.list-group-numbered > .d-list-group-item-interactive {
-  padding-left: var(--#{$prefix}list-group-item-padding-x);
+// In a numbered list the counter goes inside the link or button, so the whole
+// row, number included, is clickable. The <li> drops its own counter.
+.list-group-numbered > .list-group-item.d-list-group-item-interactive::before {
+  content: none;
+  counter-increment: none;
+}
 
-  > .d-list-group-item-link {
-    padding-left: 0;
-  }
+.list-group-numbered > .d-list-group-item-interactive > .d-list-group-item-link::before {
+  content: counters(section, ".") ". ";
+  content: counters(section, ".") ". " / "";
+  counter-increment: section;
 }
 
 // The generated number is decoration: an <ol> already announces the position,
