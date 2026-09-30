@@ -1003,6 +1003,22 @@ describe('theme-validate — pares horneados', () => {
     expect(zona.stderr).toContain('.text-bg-info dentro de [data-bs-theme="oscura"]');
   });
 
+  it('mide .text-bg-<role> cuando una zona sólo cambia el token de su texto por defecto', () => {
+    // El texto por defecto de .text-bg-warning es var(--bs-gray-700): una zona
+    // que lo pone en blanco deja 1.79:1 sin declarar nada del role.
+    const result = validate(expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-gray-700-rgb': '255, 255, 255' },
+        },
+      },
+    }));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('.text-bg-warning dentro de [data-bs-theme="oscura"]');
+  });
+
   it('mide .text-bg-<role> también dentro de cada zona', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
