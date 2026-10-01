@@ -785,9 +785,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // apareciendo como roto.
       const owners = pair.owners ?? [];
       const scope = new Map(ctx.decls);
-      for (const block of blocks) {
-        if (block.isRoot) continue;
-        const split = splitZone(block.prelude);
+      // Los bloques de la zona (`[data-bs-theme] .x`) tienen más especificidad
+      // que los globales (`.x`) y ganan sin importar el orden del CSS: se
+      // aplican después.
+      const ownerBlocks = blocks
+        .filter((block) => !block.isRoot)
+        .map((block) => ({ block, split: splitZone(block.prelude) }))
+        .sort((a, b) => Number(Boolean(a.split.zone)) - Number(Boolean(b.split.zone)));
+      for (const { block, split } of ownerBlocks) {
         if (split.zone && split.zone !== ctx.zone) continue;
         const applies = split.bare
           .split(',')
@@ -800,10 +805,13 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // se hereda ya calculada. Si la variable de texto viene del raíz (del
       // theme o de la librería), dentro de una zona vale lo que valía en el
       // raíz, aunque la zona cambie el token al que apunta.
-      const fgFromRoot = ctx.zone && pair.fgResolvesWhereDeclared
-        && scope.get(pair.fg.variable) === root.get(pair.fg.variable);
-      const fg = resolveSide(pair.fg, pair.role, fgFromRoot ? root : scope);
-      const bg = resolveSide(pair.bg, pair.role, scope);
+      const sideScope = (side) => (
+        ctx.zone && side.resolvesWhereDeclared && scope.get(side.variable) === root.get(side.variable)
+          ? root
+          : scope
+      );
+      const fg = resolveSide(pair.fg, pair.role, sideScope(pair.fg));
+      const bg = resolveSide(pair.bg, pair.role, sideScope(pair.bg));
       const where = `${pair.component}${inContext(ctx)}`;
 
       if (!fg.rgb || !bg.rgb) {

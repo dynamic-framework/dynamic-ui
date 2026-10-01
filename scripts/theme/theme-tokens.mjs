@@ -537,12 +537,14 @@ export function bakedRolePairs(role) {
   if (solid) {
     pairs.push(role === 'secondary'
       ? {
-        // `.text-bg-secondary` se pinta con su propia rampa (700 sobre 50),
-        // sin una variable de texto que el theme pueda declarar aparte.
+        // `.text-bg-secondary` se pinta con los wrappers de su rampa
+        // (`--bs-secondary-700` sobre `--bs-secondary-50`), sin una variable de
+        // texto propia. Los wrappers se resuelven en :root y se heredan.
         component: `.text-bg-${role}`,
         why: 'el color sale de la rampa de secondary, no de una variable propia',
-        fg: { fallback: solid.fg },
-        bg: { fallback: solid.bg },
+        owners: [`.text-bg-${role}`],
+        fg: { variable: '--bs-secondary-700', fallback: solid.fg, resolvesWhereDeclared: true },
+        bg: { variable: '--bs-secondary-50', fallback: solid.bg, resolvesWhereDeclared: true },
         role,
         noCorregible: true,
       }
@@ -556,8 +558,7 @@ export function bakedRolePairs(role) {
         owners: [`.text-bg-${role}`],
         // Declarada en :root, la variable se resuelve allí y se hereda ya
         // calculada: una zona que sólo cambia el token al que apunta no la mueve.
-        fgResolvesWhereDeclared: true,
-        fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg },
+        fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg, resolvesWhereDeclared: true },
         // The class paints `--bs-<role>-rgb`, so that is what gets measured;
         // the step only applies when the theme doesn't declare the role.
         bg: { variable: `--bs-${role}-rgb`, fallback: solid.bg },

@@ -1028,6 +1028,31 @@ describe('theme-validate — pares horneados', () => {
     expect(result.stderr).toContain('".text-bg-warning"');
   });
 
+  it('no culpa a una zona que sólo cambia la rampa de secondary', () => {
+    // .text-bg-secondary lee los wrappers --bs-secondary-700/-50, que se
+    // resuelven en :root y se heredan: el navegador sigue pintando el raíz.
+    const result = validate(expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-secondary-700-rgb': '240, 240, 242' },
+        },
+      },
+    }));
+    expect(result.stderr).not.toContain('.text-bg-secondary');
+  });
+
+  it('da prioridad al bloque de zona sobre el global aunque venga antes en el CSS', () => {
+    const base = expandCss(MINIMAL_THEME);
+    const zona = '[data-bs-theme="oscura"] {\n  --bs-body-bg-rgb: 247, 248, 250;\n}\n\n';
+    const enOrden = `${base}\n${zona}[data-bs-theme="oscura"] .text-bg-info {\n  --bs-info-text-bg-color: var(--bs-white);\n}\n\n.text-bg-info {\n  --bs-info-text-bg-color: var(--bs-black);\n}\n`;
+    const result = validate(enOrden);
+    // El global (negro, 4.00:1) falla en el raíz; en la zona gana el blanco.
+    expect(result.stderr).toContain('".text-bg-info"');
+    expect(result.stderr).not.toContain('.text-bg-info dentro de [data-bs-theme="oscura"]');
+  });
+
   it('mide los bloques de componente sobre .text-bg-<role>', () => {
     const roto = validate(expandCss({
       ...MINIMAL_THEME,
