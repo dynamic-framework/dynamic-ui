@@ -213,30 +213,58 @@
    * A checkbox with a track and a thumb. The thumb is a `background-image`
    * radial gradient positioned with `background-position`, so the slide is a
    * single animatable property and there is no extra element.
+   *
+   * Outlined, like its siblings. It used to paint the whole track — grey when
+   * off, the accent when on — with a white thumb punched out of it and a
+   * transparent border, which made it the one control in this file that
+   * disagreed with the rule at the top: the border does the work, the
+   * background shows the page through.
+   *
+   * So the track is `--df-choice-bg` like a checkbox, the border is the grey
+   * resting border, and checking it turns that border to the tone. The THUMB
+   * carries the colour instead of the track, which is why it has to follow the
+   * same two values — a thumb that stayed one colour would be invisible
+   * against the track on one side or the other.
    */
   .df-choice-input[role="switch"] {
+    /* The thumb's colour, as a slot: one place for the two rules below to
+       set, rather than restating the whole gradient in each. */
+    --df-choice-switch-thumb: var(--df-choice-border-color);
+
     width: var(--df-choice-switch-width);
     height: var(--df-choice-switch-height);
-    background-color: var(--df-choice-switch-track-color);
+    background-color: var(--df-choice-bg);
     background-image: radial-gradient(
       circle at center,
-      var(--df-choice-switch-thumb-color) 42%,
+      var(--df-choice-switch-thumb) 42%,
       transparent 44%
     );
     background-repeat: no-repeat;
     background-position: left center;
     background-size: var(--df-choice-switch-height) var(--df-choice-switch-height);
-    border-color: transparent;
     border-radius: var(--df-shape-pill);
     transition:
       background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+      border-color var(--df-motion-duration-hover) var(--df-motion-easing-standard),
       background-position var(--df-motion-duration-hover) var(--df-motion-easing-standard);
   }
 
+  /*
+   * On: the track fills and the thumb becomes the colour that reads on top of
+   * it. Off it is an outline, on it is solid — the state is legible from
+   * across the room rather than from a one-pixel border.
+   *
+   * The fill and the border both read `--df-choice-tone`, the same as every
+   * other checked control, so a switch that is checked AND invalid comes out
+   * danger-filled rather than primary-filled with a red edge — and validity
+   * needs no rule of its own here.
+   */
   .df-choice-input[role="switch"]:checked {
+    --df-choice-switch-thumb: var(--df-choice-switch-thumb-on-color);
+
     background-color: var(--df-choice-tone);
     background-position: right center;
-    border-color: transparent;
+    border-color: var(--df-choice-tone);
     box-shadow: none;
     mask-image: none;
   }

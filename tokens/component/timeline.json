@@ -4,6 +4,7 @@
     "connector-size": {"$type": "dimension", "$value": "{border-width.2}"},
     "connector-color": {"$type": "color", "$value": "{border.default}"},
     "marker-size": {"$type": "dimension", "$value": "{size.4}"},
+    "marker-icon-size": {"$type": "dimension", "$value": "{size.4}", "$description": "The glyph inside a marker. In the stylesheet rather than on the component, so markup written by hand gets it too."},
     "marker-padding": {"$type": "dimension", "$value": "{size.1}"},
     "marker-bg": {"$type": "color", "$value": "{bg.surface}"},
     "marker-fg": {"$type": "color", "$value": "{fg.muted}"},

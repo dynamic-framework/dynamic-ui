@@ -10,7 +10,15 @@
  * who needed it, and a documented-but-removed one is a class a template author
  * writes and gets nothing from.
  */
-import data from '../../dist/css/utilities.manifest.json';
+/*
+ * Imported from the source tree, not from `dist/`.
+ *
+ * `dist/` is a `staticDirs` entry, so Vite serves it as static assets and
+ * leaves it out of the module graph — a story importing from there never sees
+ * a rebuild, and the import does not resolve at all on a fresh clone. The CSS
+ * build writes this copy next to the stories for exactly that reason.
+ */
+import data from './utilities.manifest.json';
 
 export type Rule = { name: string; decls: [string, string][] };
 export type Family = {

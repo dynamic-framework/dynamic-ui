@@ -81,45 +81,58 @@ export default function DVoucher(
         downloadRef.current = el;
       }}
     >
-      <div>
-        <div className="df-voucher-header">
-          {resolvedIconProps && (
-            <DIcon {...resolvedIconProps} />
-          )}
-          <div className="df-voucher-header">
-            <h3 className="df-voucher-title">{title}</h3>
-            <p className="df-voucher-message">{message}</p>
-          </div>
-        </div>
-        {amount && (
-          <div className="df-voucher-amount">
-            <div className="df-voucher-amount-value">{amount}</div>
-            {amountDetails && (
-              <div className="df-voucher-amount-details">{amountDetails}</div>
-            )}
-          </div>
+      {/*
+        * No wrapper.
+        *
+        * Everything below used to sit inside an unclassed `<div>`, which made
+        * `.df-voucher` a flex column with exactly ONE child — so its `gap`
+        * had nothing to apply between and every piece of internal spacing the
+        * block was supposed to own did nothing. The only thing separating
+        * anything was a margin on the divider.
+        */}
+      <div className="df-voucher-header">
+        {resolvedIconProps && (
+          <DIcon {...resolvedIconProps} />
         )}
-
-        <hr className="df-voucher-divider" />
-        {children}
-        <hr className="df-voucher-divider" />
-
-        <div className="df-voucher-footer">
-          <DButton
-            onClick={handleShare}
-            iconStart="Share2"
-            text={shareText}
-            variant="outline"
-            size="sm"
-          />
-          <DButton
-            onClick={handleDownload}
-            iconStart="Download"
-            text={downloadText}
-            variant="outline"
-            size="sm"
-          />
+        {/* The title block was itself `.df-voucher-header`, nested inside the
+            header — one class doing two jobs, with its gap applied twice. */}
+        <div className="df-voucher-heading">
+          <h3 className="df-voucher-title">{title}</h3>
+          <p className="df-voucher-message">{message}</p>
         </div>
+      </div>
+
+      {amount && (
+        <div className="df-voucher-amount">
+          <div className="df-voucher-amount-value">{amount}</div>
+          {amountDetails && (
+            <div className="df-voucher-amount-details">{amountDetails}</div>
+          )}
+        </div>
+      )}
+
+      <hr className="df-voucher-divider" />
+      {/* `.df-voucher-body` was defined in the stylesheet and rendered by
+          nothing: `children` went in bare, so the slot's own padding and
+          text alignment never applied. */}
+      <div className="df-voucher-body">{children}</div>
+      <hr className="df-voucher-divider" />
+
+      <div className="df-voucher-footer">
+        <DButton
+          onClick={handleShare}
+          iconStart="Share2"
+          text={shareText}
+          variant="outline"
+          size="sm"
+        />
+        <DButton
+          onClick={handleDownload}
+          iconStart="Download"
+          text={downloadText}
+          variant="outline"
+          size="sm"
+        />
       </div>
     </div>
   );

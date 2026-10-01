@@ -8,7 +8,7 @@
     "fg": {"$type": "color", "$value": "{fg.default}"},
     "border-color": {"$type": "color", "$value": "{border.default}"},
     "divider-color": {"$type": "color", "$value": "{border.muted}"},
-    "divider-margin": {"$type": "dimension", "$value": "{size.4}", "$description": "Above and below each rule. Separate from `gap` because a divider is a break in the receipt rather than another item in the stack — and because `gap` currently reaches nothing: the component wraps its whole body in an unclassed `<div>`, so `.df-voucher` has a single flex child and no gap to apply."},
+    "divider-margin": {"$type": "dimension", "$value": "{size.2}", "$description": "Extra room above and below each rule, ON TOP of the block's `gap`. Separate from it because a divider is a break in the receipt rather than another item in the stack. Smaller than it looks: it was {size.4} while the block gap reached nothing, and now that the gap works the two add up."},
     "title-font-size": {"$type": "dimension", "$value": "{font-size.500}"},
     "title-font-weight": {"$type": "fontWeight", "$value": "{font-weight.semibold}"},
     "amount-font-size": {"$type": "dimension", "$value": "{font-size.700}"},

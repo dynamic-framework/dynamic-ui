@@ -42,6 +42,28 @@ export const FAMILIES = {
   green: { seed: '#198754' },
   teal: { seed: '#20c997' },
   cyan: { seed: '#0dcaf0' },
+
+  /*
+   * Decorative hues.
+   *
+   * No role points at these and none should: they exist for illustration,
+   * category colour-coding and marketing pages — the places a template author
+   * needs a specific hue rather than a meaning. The eleven above are the
+   * 2.x palette; these fill the gaps between them, at the values Tailwind
+   * settled on, because those are the names people already reach for.
+   *
+   * They go through the same OKLCh generator, so a `slate-700` sits at the
+   * same perceptual step as a `blue-700` — which is the whole reason the
+   * generator exists and is not true of Bootstrap's or Tailwind's own ramps.
+   */
+  slate: { seed: '#64748b', description: 'Blue-leaning grey, for surfaces that should not read as pure neutral.' },
+  sky: { seed: '#0ea5e9', description: 'Between cyan and blue.' },
+  violet: { seed: '#8b5cf6', description: 'Between indigo and purple.' },
+  fuchsia: { seed: '#d946ef', description: 'Between purple and pink.' },
+  rose: { seed: '#f43f5e', description: 'Between pink and red.' },
+  amber: { seed: '#f59e0b', description: 'Between yellow and orange.' },
+  lime: { seed: '#84cc16', description: 'Between yellow and green.' },
+  emerald: { seed: '#10b981', description: 'Between green and teal.' },
 };
 
 function build() {

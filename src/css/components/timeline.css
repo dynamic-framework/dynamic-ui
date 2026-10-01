@@ -36,6 +36,18 @@
     content: none;
   }
 
+  /*
+   * The glyph, sized here rather than by a `size` prop on the component.
+   *
+   * `DTimeline` passed `size="16px"`, so the measurement lived in the React
+   * component and markup written by hand had to repeat it — the vanilla story
+   * carried an inline `--df-icon-inline-size` for exactly that reason. One
+   * place now, and both builds read it.
+   */
+  .df-timeline-item-marker .df-icon {
+    --df-icon-inline-size: var(--df-timeline-marker-icon-size);
+  }
+
   .df-timeline-item-marker {
     position: absolute;
     inset-block-start: 0;

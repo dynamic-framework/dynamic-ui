@@ -24,6 +24,7 @@ import {
   hexToOklch, contrastRatio, parseHex, hex,
 } from './lib/color.mjs';
 import { ROOT } from './lib/model.mjs';
+import { FAMILIES } from './build-primitives.mjs';
 
 /**
  * The gray ramp as shipped by Dynamic 2.x (`src/style/abstracts/variables/_colors.scss`).
@@ -154,9 +155,23 @@ if (!failures.length) {
 
 /* --- 4. every generated ramp is monotonic and in gamut ---------------- */
 
-const allRamps = { neutral: STEPS.map((s) => neutral[s]), ...Object.fromEntries(
-  Object.keys(SEEDS_2X).map((fam, f) => [fam, generated[f]]),
-) };
+/*
+ * Every ramp the generator produces, not just the ones 2.x had.
+ *
+ * This iterated `SEEDS_2X`, which is the legacy comparison set — so the eight
+ * decorative hues added later were generated, shipped and never checked for
+ * monotonic lightness or gamut. A ramp that reverses direction somewhere in
+ * the middle looks like a palette decision, not a bug.
+ */
+const allRamps = Object.fromEntries(
+  /* The `neutral` family carries the anchor chroma profile; dropping that
+     flag here made the generated grays differ from the committed ones by a
+     few units, and the sync check reported `color.json` stale. */
+  Object.entries(FAMILIES).map(([fam, { seed, neutral: isAnchor = false }]) => [
+    fam,
+    STEPS.map((s) => buildRamp(seed, { neutral: isAnchor })[s]),
+  ]),
+);
 
 for (const [fam, colors] of Object.entries(allRamps)) {
   const ls = colors.map((c) => hexToOklch(c).L);

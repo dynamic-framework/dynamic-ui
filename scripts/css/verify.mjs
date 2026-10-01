@@ -333,6 +333,39 @@ const UA_DIALOG_PROPS = [
   }
 }
 
+/* --- a border utility must not outrank a border colour --------------- */
+
+/**
+ * `df-border-1` sets `border-color` as well as width and style, because CSS
+ * initialises `border-color` to `currentcolor` and a width-only utility drew
+ * a hairline in the TEXT colour — near black on body copy, and different on
+ * every element it touched.
+ *
+ * Setting it means the width family and the colour families now write the
+ * same property, and every utility sits in one layer — so the order they are
+ * EMITTED in decides, not the order of the class attribute. Emitted after the
+ * colour families, `df-border-1 df-border-primary` comes out grey.
+ *
+ * Checked here because the failure is silent and looks like a design choice:
+ * nothing errors, the border is simply the wrong colour, and whoever wrote it
+ * assumes the utility does not exist.
+ */
+{
+  const at = (name) => css.indexOf(`.${name} {`);
+  const width = at('df-border-1');
+  const colour = at('df-border-primary');
+
+  if (width < 0 || colour < 0) {
+    errors.push('[border] .df-border-1 or .df-border-primary is missing from the bundle');
+  } else if (width > colour) {
+    errors.push(
+      '[border] .df-border-1 is emitted AFTER .df-border-primary, so it overwrites it — '
+      + '`df-border-1 df-border-primary` renders grey. Move the border-width group before '
+      + 'the colour families in build-utilities.mjs.',
+    );
+  }
+}
+
 /* --- the stacked stepper must still draw a line ----------------------- */
 
 /**
@@ -504,6 +537,7 @@ process.stdout.write(`css-verify: ${CONTROL_PARITY.length} form-control properti
 process.stdout.write(`css-verify: ${UA_DIALOG_PROPS.length} UA \`<dialog>\` properties answered by .df-overlay\n`);
 process.stdout.write(`css-verify: ${Object.keys(FILLS).length} overlay placements fill the axes they should\n`);
 process.stdout.write('css-verify: the stacked stepper draws a connector at its shortest step\n');
+process.stdout.write('css-verify: an explicit border colour outranks the width utility\n');
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

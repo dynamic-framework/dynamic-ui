@@ -201,12 +201,41 @@ function colorRules() {
   const stepText = [];
   const stepBg = [];
   const stepBorder = [];
+  const hueText = [];
+  const hueBg = [];
+  const hueBorder = [];
 
   for (const t of tokensUnder('ramp', { layer: 'semantic' })) {
     const [, role, step] = t.path;
     stepText.push({ name: `text-${role}-${step}`, decls: [['color', cssVar(t.id)]] });
     stepBg.push({ name: `bg-${role}-${step}`, decls: [['background-color', cssVar(t.id)]] });
     stepBorder.push({ name: `border-${role}-${step}`, decls: [['border-color', cssVar(t.id)]] });
+  }
+
+  /*
+   * Decorative hues, straight off the palette.
+   *
+   * These reach into the primitive layer, which every other utility is
+   * forbidden from doing — `css:consistency` fails a COMPONENT that does it,
+   * for good reason: a component reaching past the semantic layer cannot be
+   * rebranded. A utility named `bg-pink-400` is the opposite case. There is no
+   * role called pink and there should not be; the author has asked for that
+   * hue, and routing it through an invented semantic would be indirection that
+   * points nowhere.
+   *
+   * What they are for: illustration, category colour-coding, marketing pages.
+   * What they are not for: UI state. A chip that means "error" takes
+   * `bg-danger-subtle`, which follows a rebrand and flips in dark mode. One
+   * that takes `bg-rose-100` does neither.
+   */
+  for (const t of tokensUnder('color', { layer: 'primitive' })) {
+    if (t.path.length !== 3) continue;
+    const [, hue, step] = t.path;
+    if (!/^\d+$/.test(step)) continue;
+
+    hueText.push({ name: `text-${hue}-${step}`, decls: [['color', cssVar(t.id)]] });
+    hueBg.push({ name: `bg-${hue}-${step}`, decls: [['background-color', cssVar(t.id)]] });
+    hueBorder.push({ name: `border-${hue}-${step}`, decls: [['border-color', cssVar(t.id)]] });
   }
 
   return {
@@ -216,8 +245,12 @@ function colorRules() {
     stepText,
     stepBg,
     stepBorder,
+    hueText,
+    hueBg,
+    hueBorder,
     roleCount: roles.length,
     rampSteps: stepBg.length,
+    hueCount: hueBg.length,
   };
 }
 
@@ -302,6 +335,20 @@ const BORDER_EDGES = {
  */
 const EDGE_WIDTHS = new Set(['0', '1']);
 
+/**
+ * Width, style AND colour — all three, because two of them draw nothing.
+ *
+ * These used to set width and style only. CSS initialises `border-color` to
+ * `currentcolor`, so `df-border-1` on anything took the TEXT colour: a near
+ * black hairline on body copy, and a different colour on every element it was
+ * applied to. Not "no colour" — the wrong one, confidently.
+ *
+ * 2.x's `.border` set all three from `--bs-border-color`, which is the
+ * behaviour worth keeping: a border utility should draw a border.
+ *
+ * An explicit colour still wins, because this family is emitted BEFORE the
+ * colour families. That ordering is load-bearing — see `GROUPS`.
+ */
 const borderWidthRules = () => tokensUnder('border-width', { layer: 'primitive' })
   .flatMap((t) => Object.entries(BORDER_EDGES)
     .filter(([suffix]) => suffix === '' || EDGE_WIDTHS.has(t.path[1]))
@@ -310,6 +357,7 @@ const borderWidthRules = () => tokensUnder('border-width', { layer: 'primitive' 
       decls: props.flatMap((prop) => [
         [`${prop}-width`, cssVar(t.id)],
         [`${prop}-style`, 'solid'],
+        [`${prop}-color`, 'var(--df-border-default)'],
       ]),
     })));
 
@@ -523,6 +571,18 @@ const GROUPS = [
   { name: 'font-size', rules: typeRules(), responsive: true },
   { name: 'font-weight', rules: weightRules(), responsive: false },
   { name: 'line-height', rules: leadingRules(), responsive: false },
+  /*
+   * BEFORE the colour families, and that is not cosmetic.
+   *
+   * A width utility now sets `border-color` too, so `df-border-1` draws a
+   * grey line instead of a `currentcolor` one. Emitted after the colour
+   * families it would overwrite every one of them, and
+   * `df-border-1 df-border-primary` would come out grey — the utilities sit
+   * in one layer, so the stylesheet's order decides, not the class
+   * attribute's.
+   */
+  { name: 'border-width', rules: borderWidthRules(), responsive: false },
+
   { name: 'text-colour', rules: colors.text, responsive: false, hover: true, dark: true },
   { name: 'background', rules: colors.bg, responsive: false, hover: true, dark: true },
   { name: 'border-colour', rules: colors.border, responsive: false, hover: true, dark: true },
@@ -546,7 +606,12 @@ const GROUPS = [
   { name: 'text-step', rules: colors.stepText, responsive: false },
   { name: 'background-step', rules: colors.stepBg, responsive: false },
   { name: 'border-step', rules: colors.stepBorder, responsive: false },
-  { name: 'border-width', rules: borderWidthRules(), responsive: false },
+
+  /* Decorative hues — see `colorRules`. No variants, for the same reason the
+     stepped role colours have none: a hue is a hue in either theme. */
+  { name: 'text-hue', rules: colors.hueText, responsive: false },
+  { name: 'background-hue', rules: colors.hueBg, responsive: false },
+  { name: 'border-hue', rules: colors.hueBorder, responsive: false },
   { name: 'radius', rules: radiusRules(), responsive: false },
   { name: 'shadow', rules: shadowRules(), responsive: false, hover: true, dark: true },
   { name: 'z-index', rules: zRules(), responsive: false },

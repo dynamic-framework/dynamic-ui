@@ -243,3 +243,45 @@ describe('<DVoucher />', () => {
     expect(container.querySelector('.df-voucher-footer')).toBeInTheDocument();
   });
 });
+
+/**
+ * The block lays itself out, which it could not do before.
+ *
+ * Every section used to sit inside an unclassed `<div>`, so `.df-voucher` —
+ * a flex column with a `gap` — had exactly ONE child and nothing to apply it
+ * between. All the internal spacing the block owns did nothing, and the only
+ * thing separating anything was a margin someone later put on the divider.
+ *
+ * Counting children is a blunt assertion and the right one here: the bug was
+ * not a wrong value, it was a wrapper, and no assertion about classes or text
+ * could see it.
+ */
+describe('<DVoucher /> structure', () => {
+  const renderVoucher = () => render(
+    <DVoucher title="Transfer sent" message="To Ana Pérez" amount="$1,200.00">
+      <div>Reference 884-221</div>
+    </DVoucher>,
+  );
+
+  it('should put its sections directly in the block', () => {
+    const { container } = renderVoucher();
+    const voucher = container.querySelector('.df-voucher')!;
+
+    expect(voucher.children.length).toBeGreaterThan(1);
+    expect(Array.from(voucher.children).every((child) => child.className !== '')).toBe(true);
+  });
+
+  it('should not nest the header inside itself', () => {
+    const { container } = renderVoucher();
+    const header = container.querySelector('.df-voucher-header')!;
+
+    expect(header.querySelector('.df-voucher-header')).toBeNull();
+    expect(header.querySelector('.df-voucher-heading')).toBeInTheDocument();
+  });
+
+  it('should put children in the body slot the stylesheet defines', () => {
+    const { container } = renderVoucher();
+
+    expect(container.querySelector('.df-voucher-body')).toHaveTextContent('Reference 884-221');
+  });
+});

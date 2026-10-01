@@ -34,6 +34,24 @@
     margin-block: 0 var(--df-text-body-margin-block-end);
   }
 
+  /**
+   * A fieldset caption, sized like a small heading.
+   *
+   * 2.x carried this in `_shame.scss` wrapped in `@media (min-width: 1200px)`.
+   * The media query was not a breakpoint decision — it was where Bootstrap's
+   * own `legend` rule lived, because rfs scaled the size fluidly below that
+   * width, so an override had to sit in the same media context to win. Below
+   * 1200px the fluid value applied and 2.x never touched it.
+   *
+   * No Bootstrap and no rfs here, so one discrete rule at every width. Same
+   * three values, now applying to the small screens the media query excluded.
+   */
+  legend {
+    margin-block-end: var(--df-text-legend-margin-block-end);
+    font-size: var(--df-text-legend-font-size);
+    line-height: var(--df-text-legend-line-height);
+  }
+
   h1, h2, h3, h4, h5, h6 {
     margin-block:
       var(--df-text-heading-margin-block-start)

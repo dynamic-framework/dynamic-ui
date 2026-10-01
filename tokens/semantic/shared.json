@@ -49,6 +49,12 @@
     "display-4": { "font-size": { "$type": "dimension", "$value": "{font-size.1200}" } },
     "display-5": { "font-size": { "$type": "dimension", "$value": "{font-size.1100}" } },
     "display-6": { "font-size": { "$type": "dimension", "$value": "{font-size.1000}" } },
+    "legend": {
+      "$description": "A fieldset caption. 2.x set these in `_shame.scss`, inside `@media (min-width: 1200px)` — not a design decision but the only way to override Bootstrap, whose own legend rule lived in that media query because rfs scaled it fluidly below. There is no rfs here, so the values are discrete and apply at every width, which is the whole of the design rather than its top half.",
+      "font-size": { "$type": "dimension", "$value": "{font-size.500}" },
+      "line-height": { "$type": "number", "$value": "{line-height.none}" },
+      "margin-block-end": { "$type": "dimension", "$value": "{size.4}" }
+    },
     "list": {
       "$description": "Lists in running text. Items sit closer together than paragraphs do, because a list is one thought broken up rather than several.",
       "item-margin-block-start": { "$type": "dimension", "$value": "{size.2}" },

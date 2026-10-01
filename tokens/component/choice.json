@@ -18,8 +18,7 @@
 
 
     "switch-width": {"$type": "dimension", "$value": "{size.9}"},
-    "switch-height": {"$type": "dimension", "$value": "{size.5}"},
-    "switch-thumb-color": {"$type": "color", "$value": "{bg.surface}"},
-    "switch-track-color": {"$type": "color", "$value": "{border.strong}"}
+    "switch-thumb-on-color": {"$type": "color", "$value": "{role.primary.on-base}", "$description": "The thumb once the track is filled. Reads the role's ON colour rather than a literal white, so it follows the theme — in dark mode the filled track is lighter and a white thumb would sit on it at barely any contrast. `primary`, `danger` and `success` share the same on-colour in each mode, so one token covers every tone the switch can take."},
+    "switch-height": {"$type": "dimension", "$value": "{size.5}"}
   }
 }

@@ -18,6 +18,13 @@ const ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', '
 const STEPPED = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'neutral'];
 const STEPS = [25, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
+/** Every palette ramp, read from the build so a new seed shows up here. */
+const HUES: string[] = [];
+(families.find((f) => f.name === 'background-hue')?.rules ?? []).forEach((rule) => {
+  const hue = rule.name.replace(/^bg-/, '').replace(/-\d+$/, '');
+  if (!HUES.includes(hue)) HUES.push(hue);
+});
+
 const namesIn = (family: string) => (families.find((f) => f.name === family)?.rules ?? [])
   .map((rule) => rule.name);
 
@@ -261,6 +268,67 @@ export const Steps: Story = {
       <div className="df-bg-muted df-p-4 df-rounded-control">
         <strong>No steps on `inverse`.</strong>
         {' It is neutral-900 in light and neutral-25 in dark — inverted by definition — so a numbered step has no stable meaning for it.'}
+      </div>
+    </div>
+  ),
+};
+
+/**
+ * The palette itself, by hue.
+ *
+ * These reach straight into the primitives, which every other utility is
+ * forbidden from doing — and that is right here. There is no role called pink
+ * and there should not be; the author has asked for that hue, and routing it
+ * through an invented semantic would be indirection pointing nowhere.
+ *
+ * Every ramp goes through the same OKLCh generator, so `slate-700` sits at the
+ * same perceptual step as `blue-700`. That is not true of Bootstrap's or
+ * Tailwind's own palettes and it is the reason the generator exists.
+ */
+export const Palette: Story = {
+  render: () => (
+    <div className="df-p-6">
+      <h2 className="df-mb-1">Palette</h2>
+      <p className="df-text-muted df-mb-6">
+        {`${HUES.length} ramps, eleven steps each, for `}
+        <code>bg</code>
+        {', '}
+        <code>text</code>
+        {' and '}
+        <code>border</code>
+        .
+      </p>
+
+      {HUES.map((hue) => (
+        <section key={hue} className="df-mb-5">
+          <div className="df-flex df-gap-2 df-items-baseline df-mb-2">
+            <h3 className="df-m-0">{hue}</h3>
+            <code className="df-fs-caption df-text-muted">{`df-bg-${hue}-500`}</code>
+          </div>
+          <div className="df-flex df-flex-wrap df-gap-1">
+            {STEPS.map((step) => (
+              <div key={step} className="df-flex df-flex-col df-gap-1">
+                <span
+                  className={`df-bg-${hue}-${step} df-border-1 df-border-muted`}
+                  style={{
+                    display: 'block', inlineSize: '3.5rem', blockSize: '2.25rem', borderRadius: 'var(--df-shape-control)',
+                  }}
+                />
+                <code className="df-fs-caption df-text-subtle">{step}</code>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div className="df-bg-warning-subtle df-p-4 df-rounded-control">
+        <strong>These are not for UI state.</strong>
+        {' A chip that means "error" takes '}
+        <code>df-bg-danger-subtle</code>
+        {', which follows a rebrand and flips in dark mode. One that takes '}
+        <code>df-bg-rose-100</code>
+        {' does neither. Reach for a hue when you want that colour — illustration, '}
+        category coding, a marketing page — and for a role when the colour means something.
       </div>
     </div>
   ),

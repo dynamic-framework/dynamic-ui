@@ -74,8 +74,8 @@
     "css:audit": "node scripts/css/audit.mjs",
     "eslint": "npm run eslint:src && npm run eslint:stories && npm run eslint:test",
     "eslint:src": "eslint 'src/**/*.ts' 'src/**/*.tsx' --ignore-pattern '**/*.spec.tsx'",
-    "eslint:stories": "eslint stories/**/*.stories.tsx",
-    "eslint:test": "eslint src/**/*.spec.tsx",
+    "eslint:stories": "eslint 'stories/**/*.stories.tsx' 'stories/**/*.tsx'",
+    "eslint:test": "eslint 'src/**/*.spec.tsx' 'src/**/*.spec.ts'",
     "stylelint": "stylelint '**/*.css' '**/*.scss' --rd",
     "publish:cdn": "npm run publish:cdn-version && npm run publish:cdn-latest",
     "publish:cdn-version": "node scripts/publish-cdn.js",
@@ -94,7 +94,8 @@
     "css:attributes": "node scripts/css/attributes.mjs",
     "typecheck:stories": "node scripts/typecheck-stories.mjs",
     "tokens:orphans": "node scripts/tokens/orphans.mjs",
-    "css:flow": "node scripts/css/flow.mjs"
+    "css:flow": "node scripts/css/flow.mjs",
+    "css:generated": "node scripts/css/generated.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

@@ -38,6 +38,7 @@
   },
   "line-height": {
     "$type": "number",
+    "none": { "$value": 1, "$description": "No leading at all. For a single line of text sized as a heading — a fieldset legend, a numeric readout — where the line box should be the glyph height." },
     "tight": { "$value": 1.2 },
     "snug": { "$value": 1.25 },
     "normal": { "$value": 1.5 },

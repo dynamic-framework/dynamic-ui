@@ -364,7 +364,7 @@ export const ImageRight: Story = {
         </DCarousel.Slide>
 
         <DCarousel.Slide>
-          <div className="bg-purple-50 df-rounded-control df-overflow-hidden">
+          <div className="df-bg-purple-50 df-rounded-control df-overflow-hidden">
             <div className="df-grid df-grid-cols-12 df-gap-0">
               <div className="df-md:col-span-7 df-flex df-items-center">
                 <div className="df-p-5">

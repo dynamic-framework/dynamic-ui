@@ -290,11 +290,33 @@ for (const n of [0, 5, 10, 20, 40, 50, 65, 80, 100]) EXACT[`opacity-${n}`] ??= `
  * roles, or decide 3.x ships a documented decorative escape hatch. Mapping them
  * to a role would make the report go quiet and quietly change the design.
  */
-const UNDECIDED_DECORATIVE = new Set([
-  'text-pink', 'text-purple', 'text-teal', 'text-orange', 'text-indigo',
-  'text-pink-500', 'text-purple-500',
-  'bg-pink-500', 'bg-purple-500', 'bg-purple-50',
-]);
+/**
+ * Decorative hue classes, RESOLVED.
+ *
+ * These were left unmapped and reported on every run, because 3.x had no
+ * decorative colour surface: the utilities came from the role vocabulary, and
+ * there is no role called pink. The palette now exposes nineteen ramps as
+ * `bg-/text-/border-{hue}-{step}`, so each of these has an answer.
+ *
+ * The bare ones — `text-pink` with no step — take 500, which is what 2.x's
+ * `$pink` meant.
+ */
+const DECORATIVE = {
+  'text-pink': 'df-text-pink-500',
+  'text-purple': 'df-text-purple-500',
+  'text-teal': 'df-text-teal-500',
+  'text-orange': 'df-text-orange-500',
+  'text-indigo': 'df-text-indigo-500',
+  'text-pink-500': 'df-text-pink-500',
+  'text-purple-500': 'df-text-purple-500',
+  'bg-pink-500': 'df-bg-pink-500',
+  'bg-purple-500': 'df-bg-purple-500',
+  'bg-purple-50': 'df-bg-purple-50',
+};
+
+const UNDECIDED_DECORATIVE = new Set([]);
+
+Object.assign(EXACT, DECORATIVE);
 
 const STORY_LOCAL = new Set([
   'campaign-progress', 'fc-card', 'fc-icon', 'feature-name', 'featured',

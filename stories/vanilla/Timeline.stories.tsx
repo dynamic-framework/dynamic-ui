@@ -64,7 +64,7 @@ export const Default: Story = htmlStory(`
 <div class="df-timeline">
   <div class="df-timeline-item" data-color="success">
     <div class="df-timeline-item-marker">
-      <span class="df-icon" style="--df-icon-inline-size: 16px">${CHECK}</span>
+      <span class="df-icon">${CHECK}</span>
     </div>
     <div class="df-timeline-item-content">
       <div class="df-timeline-item-title">Order placed</div>
@@ -75,7 +75,7 @@ export const Default: Story = htmlStory(`
 
   <div class="df-timeline-item" data-color="info">
     <div class="df-timeline-item-marker">
-      <span class="df-icon" style="--df-icon-inline-size: 16px">${CHECK}</span>
+      <span class="df-icon">${CHECK}</span>
     </div>
     <div class="df-timeline-item-content">
       <div class="df-timeline-item-title">In transit</div>

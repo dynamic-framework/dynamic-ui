@@ -164,7 +164,19 @@ const COMPONENTS = [
 //                     block in the token layer. That is the cost of being able
 //                     to put a dark panel on a light page.
 const BUDGETS = {
-  'dynamic.min.css': 390,
+  /*
+   *  390 -> 440  627 decorative hue classes: nineteen palette ramps across
+   *              eleven steps, for background, text and border. Measured
+   *              415.6 KB min / 50.4 KB gzip.
+   *
+   *              Shipped in the main sheet rather than as an opt-in file, on
+   *              purpose. The responsive utilities were opt-in once and the
+   *              result was 117 classes that silently did nothing on any page
+   *              that had not linked the extra stylesheet — and there is no
+   *              build step on a Modyo template to catch it. 4.5 KB gzip,
+   *              cached immutably, is the cheaper side of that trade.
+   */
+  'dynamic.min.css': 440,
   'dynamic.core.min.css': 68,
   'dynamic.components.min.css': 132,
   /*
@@ -174,12 +186,22 @@ const BUDGETS = {
    *              component, not enough for a page. Measured 67.3 KB min /
    *              8.8 KB gzip, plus the usual headroom.
    */
-  'dynamic.utilities.min.css': 78,
+  /*
+   *   78 -> 115  The same 627 classes, in the utilities-only slice. Measured
+   *              102.0 KB min / 12.5 KB gzip.
+   */
+  'dynamic.utilities.min.css': 115,
   'dynamic.utilities.responsive.min.css': 160,
-  // 110 relative-colour declarations, one per derived palette step across the
-  // eleven families. Each is longer than the hex it replaces and that is the
-  // whole cost — it buys a ramp that follows its own 500 at runtime.
-  'dynamic.live-ramp.min.css': 14,
+  /*
+   * One relative-colour declaration per derived palette step.
+   *
+   *   14 -> 24   eleven families to nineteen: the eight decorative hues get a
+   *              live ramp too, so overriding `--df-color-slate-500` moves its
+   *              scale exactly as overriding `--df-color-blue-500` does.
+   *              190 declarations, 20.6 KB min / 3.2 KB gzip, and still
+   *              opt-in.
+   */
+  'dynamic.live-ramp.min.css': 24,
 };
 
 /* ------------------------------------------------------------------ */
@@ -366,11 +388,29 @@ process.stdout.write(
  * did. Written into `dist/` rather than `stories/` because it is a build
  * output: it is regenerated every run and never edited.
  */
-writeFileSync(
-  resolve(OUT, 'utilities.manifest.json'),
-  `${JSON.stringify({ breakpoints: utilityBreakpoints, groups: utilityManifest }, null, 2)}\n`,
-  'utf8',
-);
+const manifestJson = `${JSON.stringify(
+  { breakpoints: utilityBreakpoints, groups: utilityManifest },
+  null,
+  2,
+)}\n`;
+
+writeFileSync(resolve(OUT, 'utilities.manifest.json'), manifestJson, 'utf8');
+
+/*
+ * A second copy, in the source tree, and the stories import THAT one.
+ *
+ * `dist/` is a `staticDirs` entry in `.storybook/main.ts`, so Vite serves
+ * everything in it as a static asset rather than putting it in the module
+ * graph. A story importing from there gets a snapshot: editing a seed and
+ * rebuilding changes the file on disk and nothing in a running dev server,
+ * which looks exactly like a story that does not work.
+ *
+ * It also means Storybook could not start on a fresh clone — the import
+ * pointed at a build output that did not exist yet. Committed here, it can.
+ *
+ * Both are written from one object, so there is nothing to drift.
+ */
+writeFileSync(resolve(ROOT, 'stories/utilities/utilities.manifest.json'), manifestJson, 'utf8');
 process.stdout.write(
   `css: utilities.manifest.json — ${utilityManifest.length} families, `
   + `${utilityManifest.reduce((n, g) => n + g.rules.length, 0)} rules\n`,

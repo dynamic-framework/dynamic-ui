@@ -583,19 +583,19 @@ export const CustomColorClasses: Story = {
     }}
     >
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Heart" size="32px" className="text-pink-500" />
+        <DIcon icon="Heart" size="32px" className="df-text-pink-500" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>text-pink-500</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Sparkles" size="32px" className="text-purple-500" />
+        <DIcon icon="Sparkles" size="32px" className="df-text-purple-500" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>text-purple-500</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Star" size="32px" hasCircle className="bg-pink-500 df-text-on-emphasis" />
+        <DIcon icon="Star" size="32px" hasCircle className="df-bg-pink-500 df-text-on-emphasis" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-pink-500 text-white</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <DIcon icon="Bolt" size="32px" hasCircle className="bg-purple-500 df-text-on-emphasis" />
+        <DIcon icon="Bolt" size="32px" hasCircle className="df-bg-purple-500 df-text-on-emphasis" />
         <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-purple-500 text-white</div>
       </div>
     </div>

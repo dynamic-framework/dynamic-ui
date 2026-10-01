@@ -92,7 +92,7 @@ export const BasicQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="df-mb-3 text-indigo df-bg-muted" />
+            <DIcon icon="CircleQuestionMark" hasCircle size="2.5rem" className="df-mb-3 df-text-indigo-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Help</h6>
             <small className="df-text-muted df-text-center">Support & FAQs</small>
           </button>
@@ -157,7 +157,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="df-mb-3 text-purple df-bg-muted" />
+            <DIcon icon="CreditCard" hasCircle size="2.5rem" className="df-mb-3 df-text-purple-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Cards</h6>
             <small className="df-text-muted df-text-center">Manage cards</small>
           </button>
@@ -169,7 +169,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="df-mb-3 text-teal df-bg-muted" />
+            <DIcon icon="TrendingUp" hasCircle size="2.5rem" className="df-mb-3 df-text-teal-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Investments</h6>
             <small className="df-text-muted df-text-center">Grow wealth</small>
           </button>
@@ -181,7 +181,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Wallet" hasCircle size="2.5rem" className="df-mb-3 text-orange df-bg-muted" />
+            <DIcon icon="Wallet" hasCircle size="2.5rem" className="df-mb-3 df-text-orange-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Loans</h6>
             <small className="df-text-muted df-text-center">Apply for credit</small>
           </button>
@@ -193,7 +193,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2.5rem" className="df-mb-3 text-indigo df-bg-muted" />
+            <DIcon icon="Shield" hasCircle size="2.5rem" className="df-mb-3 df-text-indigo-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Insurance</h6>
             <small className="df-text-muted df-text-center">Protect assets</small>
           </button>
@@ -205,7 +205,7 @@ export const ExtendedQuickActions: Story = {
             style={{ minHeight: '160px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Headset" hasCircle size="2.5rem" className="df-mb-3 text-pink df-bg-muted" />
+            <DIcon icon="Headset" hasCircle size="2.5rem" className="df-mb-3 df-text-pink-500 df-bg-muted" />
             <h6 className="df-mb-1 df-text-center">Support</h6>
             <small className="df-text-muted df-text-center">24/7 assistance</small>
           </button>
@@ -396,7 +396,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="TrendingUp" hasCircle size="2rem" className="df-mb-2 text-purple df-bg-muted" />
+            <DIcon icon="TrendingUp" hasCircle size="2rem" className="df-mb-2 df-text-purple-500 df-bg-muted" />
             <small className="df-fw-semibold df-text-center">Invest</small>
           </button>
         </DLayout.Pane>
@@ -407,7 +407,7 @@ export const CompactGrid: Story = {
             style={{ minHeight: '120px', cursor: 'pointer' }}
             onClick={() => {}}
           >
-            <DIcon icon="Shield" hasCircle size="2rem" className="df-mb-2 text-orange df-bg-muted" />
+            <DIcon icon="Shield" hasCircle size="2rem" className="df-mb-2 df-text-orange-500 df-bg-muted" />
             <small className="df-fw-semibold df-text-center">Insurance</small>
           </button>
         </DLayout.Pane>
@@ -524,19 +524,19 @@ export const SidebarListWithIcons: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="df-flex df-items-center df-py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-purple df-bg-muted" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 df-text-purple-500 df-bg-muted" />
               <span className="df-fw-medium">Payments</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="df-flex df-items-center df-py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-orange df-bg-muted" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 df-text-orange-500 df-bg-muted" />
               <span className="df-fw-medium">Cards</span>
             </div>
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="df-flex df-items-center df-py-2">
-              <DIcon icon="DollarSign" hasCircle size="1rem" className="df-me-3 text-teal df-bg-muted" />
+              <DIcon icon="DollarSign" hasCircle size="1rem" className="df-me-3 df-text-teal-500 df-bg-muted" />
               <span className="df-fw-medium">Loans</span>
             </div>
           </DListGroup.Item>
@@ -602,7 +602,7 @@ export const SidebarListWithBadges: Story = {
           <DListGroup.Item action onClick={() => {}}>
             <div className="df-flex df-items-center df-justify-between df-py-2">
               <div className="df-flex df-items-center">
-                <DIcon icon="Gift" hasCircle size="1rem" className="df-me-3 text-pink df-bg-muted" />
+                <DIcon icon="Gift" hasCircle size="1rem" className="df-me-3 df-text-pink-500 df-bg-muted" />
                 <span className="df-fw-medium">Special Offers</span>
               </div>
               <DChip text="New" color="success" />
@@ -662,7 +662,7 @@ export const SidebarListGrouped: Story = {
           </DListGroup.Item>
           <DListGroup.Item action onClick={() => {}}>
             <div className="df-flex df-items-center df-py-2">
-              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 text-purple df-bg-muted" />
+              <DIcon icon="CreditCard" hasCircle size="1rem" className="df-me-3 df-text-purple-500 df-bg-muted" />
               <span className="df-fw-medium">Loans</span>
             </div>
           </DListGroup.Item>

@@ -67,6 +67,26 @@ export const Examples: Story = {
       </Demo>
 
       <Demo
+        title="Borders draw a colour"
+        note={(
+          <>
+            {'A width utility sets all three: width, style and colour. It used to set only the first two, and CSS initialises '}
+            <code>border-color</code>
+            {' to '}
+            <code>currentcolor</code>
+            {' — so the line took the text colour. An explicit colour still wins.'}
+          </>
+        )}
+        markup={'<div class="df-border-1">grey by default</div>\n<div class="df-border-2 df-border-primary">explicit colour wins</div>'}
+      >
+        <div className="df-flex df-gap-3">
+          <span className="df-border-1 df-rounded-control df-p-3">df-border-1</span>
+          <span className="df-border-2 df-border-primary df-rounded-control df-p-3">+ df-border-primary</span>
+          <span className="df-border-2 df-border-danger df-rounded-control df-p-3">+ df-border-danger</span>
+        </div>
+      </Demo>
+
+      <Demo
         title="Corners, per side"
         note="`t` and `b` are block start and end; `s` and `e` follow the writing direction."
         markup={'<div class="df-rounded-t-surface-lg">…</div>'}

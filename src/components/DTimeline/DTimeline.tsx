@@ -37,8 +37,20 @@ export default function DTimeline({
         >
           {/* The connector is a pseudo-element on the item now, so there is no
               node here whose only job is to sometimes be invisible. */}
+          {/*
+            * No icon unless one is given, and an empty marker is a dot.
+            *
+            * This was `item.icon || 'Check'`, so EVERY event got a tick —
+            * including the ones that have not happened. A timeline whose last
+            * step reads "Delivered · Pending" beside a completed checkmark
+            * says the opposite of the truth, and it looked deliberate.
+            *
+            * `status` deliberately does not supply one either: a check is
+            * right for `success` and wrong for `warning` and `danger`, so the
+            * glyph is the caller's to choose.
+            */}
           <div className="df-timeline-item-marker">
-            <DIcon icon={item.icon || 'Check'} size="16px" />
+            {item.icon && <DIcon icon={item.icon} />}
           </div>
           <div className="df-timeline-item-content">
             <div className="df-timeline-item-title">{item.title}</div>
