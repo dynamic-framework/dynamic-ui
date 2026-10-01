@@ -74,9 +74,26 @@ That is the whole operation for a hue swap. Two caveats:
 
 - **You are overriding one step, not a ramp.** `--df-color-blue-500` is step 500;
   steps 25–900 keep their old values and will no longer be tints of your new
-  hue. For a real rebrand, regenerate the ramp from the seed
-  (`tokens/README.md` § 4) and override all eleven steps, or override the
-  semantic layer directly.
+  hue. Three ways out, in order of preference:
+
+  1. **Link `dynamic.live-ramp.css`.** An opt-in sheet that redefines the ten
+     derived steps in terms of their own 500, so overriding one variable moves
+     the whole ramp — no build step, which is the case a CDN consumer is in.
+
+     ```html
+     <link rel="stylesheet" href=".../dynamic.css">
+     <link rel="stylesheet" href=".../dynamic.live-ramp.css">
+     <style>:root { --df-color-blue-500: #0a7d4b; }</style>
+     ```
+
+     Every expression in it evaluates to the hex it replaces — the build fails
+     if one does not — so linking it changes nothing until you override a seed.
+     It needs relative colour syntax (Chrome 119, Safari 16.4, Firefox 128).
+
+  2. **Regenerate from the seed** (`tokens/README.md` § 4) and override all
+     eleven steps. This is what the library itself does.
+
+  3. **Override the semantic layer directly**, below.
 - **Contrast is not re-checked at runtime.** Dynamic asserts every
   foreground/background pair in CI against *its* values. Your values are yours
   to verify.

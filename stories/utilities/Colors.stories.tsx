@@ -14,6 +14,10 @@ import { families } from './manifest';
 
 const ROLES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'neutral', 'inverse'];
 
+/** The roles that carry a numbered scale. `inverse` has none — see below. */
+const STEPPED = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'neutral'];
+const STEPS = [25, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+
 const namesIn = (family: string) => (families.find((f) => f.name === family)?.rules ?? [])
   .map((rule) => rule.name);
 
@@ -196,6 +200,67 @@ export const HoverAndDark: Story = {
         <code>df-md:text-primary</code>
         {' matches no rule — it is not an error, it is a class name with nothing behind it. '}
         The layout, spacing and font-size families are the responsive ones.
+      </div>
+    </div>
+  ),
+};
+
+/**
+ * The numbered scale.
+ *
+ * `bg-primary` and `bg-primary-subtle` are the two shades the ROLE vocabulary
+ * exposes, and for a component that is right — a button does not need eleven
+ * blues. For a page it is not enough: there is nothing between `subtle` and
+ * `base`.
+ */
+export const Steps: Story = {
+  render: () => (
+    <div className="df-p-6">
+      <h2 className="df-mb-1">Steps</h2>
+      <p className="df-text-muted df-mb-6">
+        {'Eleven steps per role, for '}
+        <code>bg</code>
+        {', '}
+        <code>text</code>
+        {' and '}
+        <code>border</code>
+        . They go through the role, not straight at the palette, so repointing
+        a role moves every numbered class with it.
+      </p>
+
+      {STEPPED.map((role) => (
+        <section key={role} className="df-mb-6">
+          <h3 className="df-mb-2">{role}</h3>
+          <div className="df-flex df-flex-wrap df-gap-2">
+            {STEPS.map((step) => (
+              <div key={step} className="df-flex df-flex-col df-gap-1">
+                <span
+                  className={`df-bg-${role}-${step} df-border-1 df-border-muted`}
+                  style={{
+                    display: 'block', inlineSize: '4rem', blockSize: '2.5rem', borderRadius: 'var(--df-shape-control)',
+                  }}
+                />
+                <code className="df-fs-caption df-text-muted">{step}</code>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div className="df-bg-warning-subtle df-p-4 df-rounded-control df-mb-4">
+        <strong>A step is not a state.</strong>
+        {' A number names a position on a scale, so '}
+        <code>df-bg-primary-100</code>
+        {' is the same pale blue on a dark page as on a light one — it does not flip, and there is no '}
+        <code>dark:</code>
+        {' variant for it. '}
+        <code>df-bg-primary-subtle</code>
+        {' is the one that adapts. Reach for the role when the colour means something, and for the step when you just want that shade.'}
+      </div>
+
+      <div className="df-bg-muted df-p-4 df-rounded-control">
+        <strong>No steps on `inverse`.</strong>
+        {' It is neutral-900 in light and neutral-25 in dark — inverted by definition — so a numbered step has no stable meaning for it.'}
       </div>
     </div>
   ),

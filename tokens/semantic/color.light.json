@@ -3,7 +3,7 @@
   "bg": {
     "$type": "color",
     "canvas": {
-      "$value": "{color.neutral.50}",
+      "$value": "{color.white}",
       "$description": "The page ground. 2.x hardcoded #f5f6fa here, which sat off the neutral ramp (bluer, and between steps 25 and 50); its own source comment asked whether it should be added to the palette. Resolved by using the ramp."
     },
     "surface": { "$value": "{color.white}", "$description": "Cards, panels, anything sitting on the canvas." },

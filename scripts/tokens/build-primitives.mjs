@@ -30,7 +30,7 @@ const OUT = resolve(ROOT, 'tokens/primitives/color.json');
  * lightness scale included — is derived from this one ramp, so it is the last
  * seed you should change casually.
  */
-const FAMILIES = {
+export const FAMILIES = {
   neutral: { seed: '#6d6d82', neutral: true, description: 'Anchor ramp. Defines the shared lightness scale used by every other family.' },
   blue: { seed: '#2068d5' },
   indigo: { seed: '#6610f2' },
@@ -100,5 +100,14 @@ function build() {
   };
 }
 
-writeFileSync(OUT, `${JSON.stringify(build(), null, 2)}\n`, 'utf8');
-process.stdout.write(`tokens: wrote ${OUT.replace(`${ROOT}/`, '')}\n`);
+/*
+ * Guarded, because `FAMILIES` is imported elsewhere.
+ *
+ * `build-live-ramp.mjs` needs the seeds, and importing this file used to
+ * REWRITE `tokens/primitives/color.json` as a side effect of asking for them —
+ * so a CSS build silently regenerated a committed token file.
+ */
+if (process.argv[1] && process.argv[1].endsWith('build-primitives.mjs')) {
+  writeFileSync(OUT, `${JSON.stringify(build(), null, 2)}\n`, 'utf8');
+  process.stdout.write(`tokens: wrote ${OUT.replace(`${ROOT}/`, '')}\n`);
+}

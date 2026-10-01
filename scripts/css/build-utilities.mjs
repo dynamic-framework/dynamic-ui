@@ -180,7 +180,45 @@ function colorRules() {
     border.push({ name: `border-${role}`, decls: [['border-color', cssVar(`role.${role}.border`)]] });
   }
 
-  return { text, bg, border, roleCount: roles.length };
+  /*
+   * Numbered steps, for all three properties.
+   *
+   * `bg-primary` and `bg-primary-subtle` are the two shades the role
+   * vocabulary exposes, which is right for a component — a button does not
+   * need eleven blues. It is not enough for a template author laying out a
+   * page, who reaches for "a light primary" and finds nothing between
+   * `subtle` and `base`.
+   *
+   * These come through `ramp.*`, not straight from the palette, so they keep
+   * the indirection: repoint the role and every numbered class follows. They
+   * are also the reason `dynamic.live-ramp.css` matters — with it, overriding
+   * one `-500` moves all eleven.
+   *
+   * They do NOT flip in dark mode. A step names a position on a scale, not a
+   * relationship to the page, so `bg-primary-100` is a pale blue on a dark
+   * ground too. `bg-primary-subtle` is the one that adapts.
+   */
+  const stepText = [];
+  const stepBg = [];
+  const stepBorder = [];
+
+  for (const t of tokensUnder('ramp', { layer: 'semantic' })) {
+    const [, role, step] = t.path;
+    stepText.push({ name: `text-${role}-${step}`, decls: [['color', cssVar(t.id)]] });
+    stepBg.push({ name: `bg-${role}-${step}`, decls: [['background-color', cssVar(t.id)]] });
+    stepBorder.push({ name: `border-${role}-${step}`, decls: [['border-color', cssVar(t.id)]] });
+  }
+
+  return {
+    text,
+    bg,
+    border,
+    stepText,
+    stepBg,
+    stepBorder,
+    roleCount: roles.length,
+    rampSteps: stepBg.length,
+  };
 }
 
 const colors = colorRules();
@@ -488,6 +526,26 @@ const GROUPS = [
   { name: 'text-colour', rules: colors.text, responsive: false, hover: true, dark: true },
   { name: 'background', rules: colors.bg, responsive: false, hover: true, dark: true },
   { name: 'border-colour', rules: colors.border, responsive: false, hover: true, dark: true },
+
+  /*
+   * Stepped colour, in its own families so they can take `hover:` and NOT
+   * `dark:`.
+   *
+   * A numbered step names a position on a scale, so it is the same colour in
+   * either theme — `df-dark:bg-primary-100` would set what `df-bg-primary-100`
+   * already set. Emitting it anyway cost 231 rules that changed nothing and
+   * pushed the bundle 6 KB over budget before this split.
+   *
+   * No `hover:` either, and that one is a judgement call rather than a
+   * correctness one. Hovering to a specific shade is a real thing to want, but
+   * it is 231 more rules — +1.5 KB gzip on every page — against a role-based
+   * hover that already exists (`df-hover:bg-primary`, `-subtle`). The
+   * granular case is one line of a consumer's own CSS; the common case is
+   * already covered. Turn the flag on here if that trade stops holding.
+   */
+  { name: 'text-step', rules: colors.stepText, responsive: false },
+  { name: 'background-step', rules: colors.stepBg, responsive: false },
+  { name: 'border-step', rules: colors.stepBorder, responsive: false },
   { name: 'border-width', rules: borderWidthRules(), responsive: false },
   { name: 'radius', rules: radiusRules(), responsive: false },
   { name: 'shadow', rules: shadowRules(), responsive: false, hover: true, dark: true },

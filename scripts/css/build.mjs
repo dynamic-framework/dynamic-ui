@@ -38,6 +38,7 @@ import autoprefixer from 'autoprefixer';
 import browserslist from 'browserslist';
 
 import { css as variantsCss, stats as variantStats } from './build-variants.mjs';
+import { buildLiveRamp } from './build-live-ramp.mjs';
 import {
   css as utilitiesCss,
   responsiveCss,
@@ -166,8 +167,19 @@ const BUDGETS = {
   'dynamic.min.css': 390,
   'dynamic.core.min.css': 68,
   'dynamic.components.min.css': 132,
-  'dynamic.utilities.min.css': 61,
+  /*
+   *   61 -> 78   231 stepped colour classes: `bg-primary-100` and the text and
+   *              border versions, for seven roles across eleven palette steps.
+   *              The role vocabulary exposes two shades per role — right for a
+   *              component, not enough for a page. Measured 67.3 KB min /
+   *              8.8 KB gzip, plus the usual headroom.
+   */
+  'dynamic.utilities.min.css': 78,
   'dynamic.utilities.responsive.min.css': 160,
+  // 110 relative-colour declarations, one per derived palette step across the
+  // eleven families. Each is longer than the hex it replaces and that is the
+  // whole cost — it buys a ramp that follows its own 500 at runtime.
+  'dynamic.live-ramp.min.css': 14,
 };
 
 /* ------------------------------------------------------------------ */
@@ -281,6 +293,9 @@ await emit('dynamic.components.css', [...componentParts, variantsCss], 'componen
 await emit('dynamic.utilities.css', [utilitiesCss], 'utilities only');
 await emit('dynamic.utilities.responsive.css', [responsiveCss], 'responsive utilities (opt-in)');
 
+const liveRamp = buildLiveRamp();
+await emit('dynamic.live-ramp.css', [liveRamp.css], 'runtime palette ramp (opt-in)');
+
 // Per-component files, for a page that needs two components and not forty.
 for (const rel of COMPONENTS) {
   const name = basename(rel, '.css');
@@ -325,6 +340,24 @@ process.stdout.write(
   + `(${utilityStats.hover} hover:, ${utilityStats.dark} dark:), `
   + `${utilityStats.responsive} responsive (opt-in)\n`,
 );
+/*
+ * The runtime ramp must resolve to the palette it replaces.
+ *
+ * Every expression in `dynamic.live-ramp.css` is evaluated here against its
+ * own seed and compared to the committed hex. A sheet that shifted the colours
+ * even slightly would be worse than no sheet: a consumer links it to make
+ * rebranding work, and silently gets a palette that matches nothing in Figma
+ * and nothing in the contrast report.
+ */
+if (liveRamp.mismatches.length) {
+  process.stderr.write('\ncss: the live ramp does not reproduce the palette:\n');
+  for (const line of liveRamp.mismatches) process.stderr.write(`  ${line}\n`);
+  process.exit(1);
+}
+process.stdout.write(
+  `css: live ramp — ${liveRamp.count} derived steps, every one resolves to its committed hex\n`,
+);
+
 /*
  * The utility surface, as data, next to the stylesheet it describes.
  *
