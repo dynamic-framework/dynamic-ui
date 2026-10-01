@@ -333,6 +333,52 @@ const UA_DIALOG_PROPS = [
   }
 }
 
+/* --- the UA cannot be left to decide a margin ------------------------- */
+
+/**
+ * Every element the UA stylesheet gives a margin must have an author answer.
+ *
+ * "Leave it undecided" is not a state a browser offers. The UA has already
+ * decided, in `em`, and `em` resolves against the font size the DESIGN set —
+ * so removing an author rule does not yield no margin, it yields the
+ * browser's, scaled by our type scale.
+ *
+ * That is not hypothetical. Dropping the heading margin rule left `h6` with
+ * `2.33em` of the 16px we give it: 37px, more than the 32px around an `h1`.
+ * The smallest heading became the most widely spaced thing on the page, and
+ * the rule that caused it was the one that had just been deleted.
+ *
+ * Checked as "is it mentioned in a margin declaration at all" rather than "is
+ * it zero" — an author margin is a decision, and the point is that one was
+ * made.
+ */
+{
+  /* The elements Chrome's UA stylesheet gives a non-zero margin. */
+  const UA_MARGINS = [
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'p', 'blockquote', 'figure', 'dl', 'dd', 'pre', 'fieldset', 'ul', 'ol',
+  ];
+
+  const decided = new Set();
+  for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const [, selector, body] = rule;
+    if (!/(^|[;{\s])margin(-block|-inline|-top|-bottom|-left|-right)?(-start|-end)?\s*:/.test(body)) continue;
+    for (const one of selector.split(',')) {
+      const tag = one.trim();
+      if (UA_MARGINS.includes(tag)) decided.add(tag);
+    }
+  }
+
+  const left = UA_MARGINS.filter((tag) => !decided.has(tag));
+  if (left.length) {
+    errors.push(
+      `[ua-margin] nothing in the bundle sets a margin on ${left.join(', ')}, so the `
+      + 'UA value applies — which is in `em` of the font size we set, not a neutral '
+      + 'default. Zero it in the reset or give it one.',
+    );
+  }
+}
+
 /* --- a border utility must not outrank a border colour --------------- */
 
 /**
@@ -538,6 +584,7 @@ process.stdout.write(`css-verify: ${UA_DIALOG_PROPS.length} UA \`<dialog>\` prop
 process.stdout.write(`css-verify: ${Object.keys(FILLS).length} overlay placements fill the axes they should\n`);
 process.stdout.write('css-verify: the stacked stepper draws a connector at its shortest step\n');
 process.stdout.write('css-verify: an explicit border colour outranks the width utility\n');
+process.stdout.write('css-verify: no element is left to the UA for its margin\n');
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

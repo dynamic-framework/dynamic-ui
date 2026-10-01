@@ -256,3 +256,47 @@ describe('', () => {
     expect(handleIconEndClick).toHaveBeenCalledWith('value');
   });
 });
+
+/**
+ * Validity has to reach a screen reader, not just the border.
+ *
+ * `data-invalid` is a styling hook. On its own it turned the field red and
+ * told assistive technology nothing — the one cue that the field was wrong
+ * was the colour, which is the cue least likely to reach the people who most
+ * need it.
+ *
+ * And `aria-describedby` listed an id, `${id}State`, that nothing rendered. A
+ * dangling reference is dropped rather than fallen back from, so it bought
+ * nothing while reading like validity was being announced.
+ */
+describe('<DInput /> validity', () => {
+  it('should announce an invalid field, not only paint it', () => {
+    const { container } = render(<DInput label="Amount" invalid />);
+    const input = container.querySelector('.df-input')!;
+
+    expect(input).toHaveAttribute('data-invalid');
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('should not say it is invalid when it is not', () => {
+    const { container } = render(<DInput label="Amount" />);
+
+    expect(container.querySelector('.df-input')).not.toHaveAttribute('aria-invalid');
+  });
+
+  /**
+   * Every id in `aria-describedby` must resolve. Asserted as a set rather
+   * than a string so a new description can be added without rewriting this.
+   */
+  it('should describe itself only with ids that exist', () => {
+    const { container } = render(
+      <DInput label="Amount" invalid hint="Not enough funds" inputStart="$" inputEnd="USD" />,
+    );
+    const input = container.querySelector('.df-input')!;
+    const ids = (input.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(Boolean);
+
+    expect(ids.length).toBeGreaterThan(0);
+    const dangling = ids.filter((id) => !container.querySelector(`#${CSS.escape(id)}`));
+    expect(dangling).toEqual([]);
+  });
+});

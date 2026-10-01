@@ -116,7 +116,12 @@ function DInput(
     [
       !!inputStart && `${id}InputStart`,
       !!iconStart && `${id}Start`,
-      (invalid || valid) && !iconEnd && !loading && `${id}State`,
+      /*
+       * No `${id}State`. It was listed here and the element was never
+       * rendered — a dangling `aria-describedby` is dropped, not fallen back
+       * from, so the id bought nothing and read as though validity were being
+       * announced. `aria-invalid` above is what actually announces it.
+       */
       (iconEnd && !loading) && `${id}End`,
       loading && `${id}Loading`,
       !!inputEnd && `${id}InputEnd`,
@@ -128,8 +133,8 @@ function DInput(
     id,
     inputStart,
     iconStart,
-    invalid,
-    valid,
+    /* `invalid` and `valid` left the list with the `${id}State` id that used
+       to read them; `aria-invalid` is set on the input directly. */
     iconEnd,
     loading,
     inputEnd,
@@ -141,7 +146,16 @@ function DInput(
       ref={inputRef}
       id={id}
       className="df-input"
-      {...invalid && { 'data-invalid': '' }}
+      /*
+       * `aria-invalid` as well as `data-invalid`.
+       *
+       * The attribute was `data-invalid` alone, which is a styling hook — it
+       * turned the border red and told assistive technology nothing. A screen
+       * reader user heard the label, the value and the hint, with no
+       * indication the field was wrong; the one cue that it WAS wrong was the
+       * colour, which is the cue least likely to reach them.
+       */
+      {...invalid && { 'data-invalid': '', 'aria-invalid': true }}
       {...valid && { 'data-valid': '' }}
       disabled={disabled || loading}
       readOnly={readonly}

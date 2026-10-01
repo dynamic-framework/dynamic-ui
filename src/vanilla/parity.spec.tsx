@@ -7,6 +7,11 @@ import { render } from '@testing-library/react';
 
 import DButton from '../components/DButton';
 import DCarousel from '../components/DCarousel';
+import DInput from '../components/DInput';
+import DInputCheck from '../components/DInputCheck';
+import DInputSelect from '../components/DInputSelect';
+import DListGroup from '../components/DListGroup';
+import DProgress from '../components/DProgress';
 import DCollapse from '../components/DCollapse';
 import DModal from '../components/DModal';
 import DStepper from '../components/DStepper';
@@ -77,6 +82,8 @@ const ALLOWED_ABSENT: Record<string, string[]> = {
   collapse: [],
   tabs: [],
   button: [],
+  form: [],
+  list: [],
   carousel: [
     // The React build clones slides for `loop`; the vanilla one does not
     // implement looping at all, which the story states outright.
@@ -125,6 +132,31 @@ describe.each([
       <DCarousel.Slide><div>Two</div></DCarousel.Slide>
     </DCarousel>,
   ), () => storySource('Carousel.stories.tsx')],
+
+  /*
+   * The form controls, which have no behaviour at all — a native input with
+   * classes on it. Their story is pure markup documentation, and an omitted
+   * class is a control that looks wrong in a template while looking right in
+   * Storybook's React pages.
+   */
+  ['form', () => reactClasses(
+    <>
+      <DInput label="Amount" hint="h" invalid inputStart="$" inputEnd="USD" />
+      <DInput label="Recipient" floatingLabel />
+      <DInputCheck type="checkbox" label="Agree" />
+      <DInputCheck type="radio" name="k" label="Savings" />
+      <DInputSelect label="Currency" options={[{ label: 'USD', value: 'usd' }]} />
+    </>,
+  ), () => storySource('Form.stories.tsx')],
+
+  ['list', () => reactClasses(
+    <>
+      <DListGroup>
+        <DListGroup.Item>One</DListGroup.Item>
+      </DListGroup>
+      <DProgress currentValue={62} />
+    </>,
+  ), () => storySource('ListProgress.stories.tsx')],
 
   ['timeline', () => reactClasses(
     <DTimeline

@@ -30,8 +30,28 @@
    * So the flow margins live in `base/typography.css`, on the elements, from
    * the `text.*` roles; and component chrome turns them off in its own
    * stylesheet, where the component layer beats the base layer cleanly.
+   *
+   * ## Headings are zeroed here and given nothing above
+   *
+   * They used to carry a margin from `text.heading`, and that rule was
+   * removed on the reasoning that a heading's spacing depends on what it
+   * opens, which the element cannot know — most frameworks leave it to an
+   * opt-in `prose` scope.
+   *
+   * Removing the rule is not how you reach that, and this line is why.
+   * "No decision" is not available: the UA stylesheet has already decided,
+   * in `em`, and `em` resolves against the font size WE set. Dropping the
+   * author rule did not give headings no margin, it gave them the browser's —
+   * which on our type scale is 32px around an h1 and **37px around an h6**,
+   * so the smallest heading ended up the most widely spaced thing on the
+   * page.
+   *
+   * Zeroing is the decision those frameworks make too; Tailwind's Preflight
+   * and Bootstrap's Reboot both do exactly this line. What they leave to
+   * `prose` is what comes AFTER the zero.
    */
   body,
+  h1, h2, h3, h4, h5, h6,
   fieldset {
     margin: 0;
   }

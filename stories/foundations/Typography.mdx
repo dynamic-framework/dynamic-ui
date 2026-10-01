@@ -100,55 +100,65 @@ Use `.text-{token}` with semantic states and extended palettes:
 
 ### Flow spacing
 
-`p`, the headings, lists, `blockquote`, `pre`, `figure` and `table` carry their
-own vertical rhythm, from the `text.*` roles. No class, no wrapper:
+`p`, lists, `blockquote`, `pre`, `figure` and `table` carry a bottom margin
+from `text.body`. **Headings do not.**
 
-```html
-<h3>Terms</h3>
-<p>The first paragraph.</p>
-<p>The second, with room above it.</p>
+```css
+p, ul, ol, dl, blockquote, figure, pre, table {
+  margin-block: 0 var(--df-text-body-margin-block-end);
+}
 ```
 
+That split is deliberate and it is worth knowing which half you are in.
+
+**Why running text keeps a margin.** A CMS body, a Liquid template, a block of
+terms pasted into a modal — the author writes `<p>` and has no class to hang
+spacing on. Zeroed and never restored, it runs together, and the design tokens
+a client hands over describe spacing on those elements.
+
+**Why headings do not.** A heading's spacing depends on what it opens, which
+the element cannot know. Most frameworks leave it to an opt-in `prose` scope
+for the same reason.
+
+**But "undecided" is not a state a browser offers.** The UA stylesheet has
+already decided — in `em`, which resolves against the font size *we* set. So
+headings are zeroed in the reset, the same line Tailwind's Preflight and
+Bootstrap's Reboot both carry. What those frameworks leave to `prose` is what
+comes *after* the zero.
+
+Removing the rule without zeroing is what it looks like:
+
+| | font-size | UA margin | result |
+|---|---|---|---|
+| `h1` | 48px | `0.67em` | 32px |
+| `h6` | 16px | `2.33em` | **37px** |
+
+The smallest heading ends up the most widely spaced thing on the page. In
+DevTools the UA rule shows either way — struck through when something overrode
+it, which is the only signal that it lost. `css:verify` fails the build if any
+element the UA gives a margin is left without an author answer.
+
+The consequence, so it is not a surprise: a heading between two paragraphs sits
+`--df-text-body-margin-block-end` below the one above it and **flush against
+the one below**. If that is wrong for your content, the heading's spacing is
+yours to set — which is the point of leaving it undecided.
+
 <div className="df-p-4 df-mb-4" style={{ border: '1px solid var(--df-border-muted)', borderRadius: 'var(--df-radius-md)' }}>
-  <h3 style={{ marginBlockStart: 0 }}>Terms</h3>
-  <p>The first paragraph.</p>
-  <p>The second, with room above it.</p>
-  <ul>
-    <li>Lists too.</li>
-    <li>With tighter spacing between items.</li>
-  </ul>
+  <p>A paragraph before the heading.</p>
+  <h3>A heading</h3>
+  <p>And the paragraph it introduces, flush against it.</p>
 </div>
 
-This is deliberate, and it was the other way round for a while. The argument
-for zeroing everything is real: component chrome lays itself out with flex or
-grid `gap`, and a browser margin there leaks out of the flex item, collapses
-against its neighbours and fights the gap.
+Two more things:
 
-But that only serves markup the library *draws*. Markup it *displays* — a CMS
-body, a Liquid template, a block of terms pasted into a modal — has no class to
-hang spacing on, and a design handoff describes spacing on those elements.
-Spacing that has to be opted into is spacing that gets forgotten, and the
-symptom reads as a content problem rather than a missing class.
-
-So the margins live on the elements, and **component chrome switches them off
-in the component layer**, which beats the base layer cleanly — no
-`!important`, no specificity games. `css:flow` fails the build if a component
-renders a flow element without doing so.
-
-Worth knowing:
-
-- Adjacent margins **collapse**, which is the point. A heading after a
-  paragraph takes the larger of the paragraph's bottom and the heading's top,
-  not the sum — the browser's own model, and the one a CMS author already has.
-- A heading gets more room **above** than **below**: it opens a section and
-  belongs with the text it introduces.
-- The library's own content slots — a modal body, a card body — trim the first
-  and last child, so text sits flush against the container's padding instead of
+- Adjacent margins **collapse**, so stacked blocks take the larger of the two
+  rather than their sum — the browser's own model.
+- The library's content slots — a modal body, a card body — trim the first and
+  last child, so text sits flush against the container's padding instead of
   adding to it.
-- The tokens: `--df-text-body-margin-block-end`,
-  `--df-text-heading-margin-block-start`, `--df-text-heading-margin-block-end`,
-  `--df-text-list-item-margin-block-start`,
-  `--df-text-list-nested-margin-block`.
+
+`css:flow` fails the build if a component renders a flow element without
+deciding its margin.
 
 <br />
 

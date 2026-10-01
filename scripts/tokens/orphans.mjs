@@ -16,6 +16,22 @@
  * and two icon-size tokens orphaned when eight components moved to
  * `--df-icon-inline-size`.
  *
+ * ## Two layers, two tests
+ *
+ * A COMPONENT token has to be read by a stylesheet: that is its only job.
+ *
+ * A SEMANTIC token is checked but only WARNED about, and the difference is
+ * deliberate. The manifest calls that layer "the only colour vocabulary a
+ * designer should compose with" — so one can legitimately exist in Figma
+ * before any rule reads it, and failing the build would make the system
+ * refuse a token the design had agreed on. An unread semantic token is a
+ * question, not an error.
+ *
+ * That second check was added after removing one rule left
+ * `text.heading.margin-block-start` and `-end` behind: published in the
+ * stylesheet, listed in the documentation, read by nothing. The
+ * component-only check could not see them.
+ *
  * Usage: node scripts/tokens/orphans.mjs
  */
 
@@ -24,7 +40,8 @@ import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const TOKENS = join(ROOT, 'tokens/component');
+const COMPONENT = join(ROOT, 'tokens/component');
+const SEMANTIC = join(ROOT, 'tokens/semantic');
 const SOURCES = ['src/css/components', 'src/css/base', 'src/css/utilities'];
 
 /**
@@ -71,10 +88,53 @@ const read = new Set([
   ...[...fromJs.matchAll(/PREFIX\}([a-z0-9-]+)/g)].map((m) => `--df-${m[1]}`),
 ]);
 
-/** Every component token, as the custom property name it is emitted under. */
+/** Every token in a directory, as the custom property name it is emitted under. */
+function tokensIn(dir, layer) {
+  const declared = [];
+  for (const file of readdirSync(dir).filter((f) => f.endsWith('.json'))) {
+    const json = JSON.parse(readFileSync(join(dir, file), 'utf8'));
+    const walk = (node, path) => {
+      for (const [key, value] of Object.entries(node)) {
+        if (key.startsWith('$') || value === null || typeof value !== 'object') continue;
+        if ('$value' in value) {
+          declared.push({ name: `--df-${[...path, key].join('-')}`, id: [...path, key].join('.'), file, layer });
+        } else walk(value, [...path, key]);
+      }
+    };
+    walk(json, []);
+  }
+  return declared;
+}
+
+/**
+ * Every `var()` in the BUILT bundle, which is where a semantic token's readers
+ * actually are.
+ *
+ * Reading the source stylesheets is enough for a component token but not for a
+ * semantic one: `build-variants.mjs` generates the role x variant matrix, and
+ * `role.primary.base-hover` is referenced only there. Checked against source
+ * alone, 225 perfectly live tokens came back as orphans — a guard that cries
+ * wolf on a fifth of the layer is a guard nobody will read.
+ *
+ * Token-to-token aliasing counts, and should: `fg.default` earns its keep by
+ * being what a dozen component tokens point at.
+ */
+const bundle = (() => {
+  const file = resolve(ROOT, 'dist/css/dynamic.css');
+  if (!existsSync(file)) {
+    process.stderr.write('tokens-orphans: dist/css/dynamic.css is missing — run `npm run css` first\n');
+    process.exit(1);
+  }
+  return readFileSync(file, 'utf8');
+})();
+
+const referenced = new Set(
+  [...bundle.matchAll(/var\(\s*(--df-[a-z0-9-]+)/g)].map((m) => m[1]),
+);
+
 const declared = [];
-for (const file of readdirSync(TOKENS).filter((f) => f.endsWith('.json'))) {
-  const json = JSON.parse(readFileSync(join(TOKENS, file), 'utf8'));
+for (const file of readdirSync(COMPONENT).filter((f) => f.endsWith('.json'))) {
+  const json = JSON.parse(readFileSync(join(COMPONENT, file), 'utf8'));
   const walk = (node, path) => {
     for (const [key, value] of Object.entries(node)) {
       if (key.startsWith('$') || value === null || typeof value !== 'object') continue;
@@ -85,12 +145,27 @@ for (const file of readdirSync(TOKENS).filter((f) => f.endsWith('.json'))) {
   walk(json, []);
 }
 
-const orphans = declared.filter(({ name }) => !read.has(name) && !EXPECTED_UNREAD.has(name));
+const semantic = tokensIn(SEMANTIC, 'semantic');
 
-process.stdout.write(`tokens-orphans: ${declared.length} component token(s) checked\n`);
+const orphans = declared.filter(({ name }) => !read.has(name) && !EXPECTED_UNREAD.has(name));
+const unread = semantic.filter(({ name }) => !referenced.has(name) && !EXPECTED_UNREAD.has(name));
+
+process.stdout.write(
+  `tokens-orphans: ${declared.length} component and ${semantic.length} semantic token(s) checked\n`,
+);
+
+if (unread.length) {
+  process.stdout.write(`\ntokens-orphans: ${unread.length} semantic token(s) no rule reads —\n`);
+  for (const { name, file } of unread) process.stdout.write(`  ${name.padEnd(44)} ${file}\n`);
+  process.stdout.write(
+    '  Each is either vocabulary waiting for a rule or a leftover. Not a build\n'
+    + '  failure: the semantic layer is what a designer composes with, so a token\n'
+    + '  can precede its use.\n',
+  );
+}
 
 if (!orphans.length) {
-  process.stdout.write('tokens-orphans: every one is read by a stylesheet or by the components\n');
+  process.stdout.write('tokens-orphans: every component token is read by a stylesheet\n');
   process.exit(0);
 }
 

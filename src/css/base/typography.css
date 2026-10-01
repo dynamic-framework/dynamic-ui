@@ -52,12 +52,6 @@
     line-height: var(--df-text-legend-line-height);
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    margin-block:
-      var(--df-text-heading-margin-block-start)
-      var(--df-text-heading-margin-block-end);
-  }
-
   /* A list is one thought broken up, so its items sit closer than paragraphs. */
   li + li {
     margin-block-start: var(--df-text-list-item-margin-block-start);

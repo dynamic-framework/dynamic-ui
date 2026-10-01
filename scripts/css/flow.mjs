@@ -28,8 +28,15 @@ import { fileURLToPath } from 'url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const BUNDLE = resolve(ROOT, 'dist/css/dynamic.css');
 
-/** The elements `base/typography.css` gives a flow margin to. */
-const FLOW = /<(p|h[1-6]|ul|ol|dl|blockquote|figure|pre|table)[\s>]/;
+/**
+ * The elements `base/typography.css` gives a flow margin to.
+ *
+ * Headings are NOT on this list. They carried one and no longer do — the rule
+ * was removed deliberately, so there is nothing for a component to neutralise
+ * and demanding a decision about it would be asking for a reset of a default
+ * that does not exist.
+ */
+const FLOW = /<(p|ul|ol|dl|blockquote|figure|pre|table)[\s>]/;
 
 /**
  * Components still wrapping a third party, exempted whole.

@@ -31,10 +31,8 @@
       "line-height": { "$type": "number", "$value": "{line-height.snug}" }
     },
     "heading": {
-      "$description": "Shared across h1-h6. 2.x used $font-weight-bold, whose value was 600 — the token named `semibold` here, so the rendered weight is unchanged. More room above than below, because a heading opens a section and belongs with the text it introduces; adjacent margins collapse, so a heading after a paragraph takes the larger of the two rather than their sum.",
+      "$description": "Shared across h1-h6. 2.x used $font-weight-bold, whose value was 600 — the token named `semibold` here, so the rendered weight is unchanged.",
       "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
-      "margin-block-start": { "$type": "dimension", "$value": "{size.7}" },
-      "margin-block-end": { "$type": "dimension", "$value": "{size.2}" },
       "font-weight": { "$type": "fontWeight", "$value": "{font-weight.semibold}" },
       "line-height": { "$type": "number", "$value": "{line-height.tight}" }
     },
