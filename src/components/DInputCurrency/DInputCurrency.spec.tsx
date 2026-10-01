@@ -215,6 +215,7 @@ describe('<DInputCurrency />', () => {
       const input = screen.getByRole('textbox');
       expect(input).toHaveValue('5,000,000.00');
       expect(input).toHaveClass('is-invalid');
+      expect(input).toHaveAttribute('aria-invalid', 'true');
       expect(onChange).not.toHaveBeenCalled();
     });
 
@@ -224,6 +225,7 @@ describe('<DInputCurrency />', () => {
       );
       rerender(<DInputCurrency value={2000000} maxValue={3000000} clamp={false} />);
       expect(screen.getByRole('textbox')).not.toHaveClass('is-invalid');
+      expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-invalid');
     });
 
     it('does not render valid and invalid at the same time', () => {
