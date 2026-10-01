@@ -18,7 +18,6 @@ function InfoModal({ payload }: PortalProps<ExamplePayloads['info']>) {
   return (
     <DModal
       name="info"
-      centered
       staticBackdrop={false}
     >
       <DModal.Header onClose={closePortal} showCloseButton>

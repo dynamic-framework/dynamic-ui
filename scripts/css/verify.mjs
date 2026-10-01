@@ -283,6 +283,148 @@ for (const [what, a, b] of CONTROL_PARITY) {
   }
 }
 
+/* --- the UA `<dialog>` box must be answered whole --------------------- */
+
+/**
+ * Every property Chrome's UA stylesheet sets on a `<dialog>`.
+ *
+ * An author rule beats a UA rule whatever its specificity — but only for the
+ * properties it declares. Anything the UA sets and `.df-overlay` leaves alone
+ * is inherited silently, and `<dialog>`'s UA block is unusually opinionated:
+ * it is a sizing and positioning rule, not just a cosmetic one.
+ *
+ * This check exists because the same cause produced three bugs that looked
+ * unrelated and were each fixed on its own: a stray 2px border, a ring of
+ * `1em` padding, and then `width`/`height: fit-content` with `margin: auto`,
+ * which left every offcanvas content-sized and centred instead of filling its
+ * edge — a drawer rendering as a modal that slid in from the side.
+ *
+ * Listing the properties turns "did we remember this one" into a build error.
+ * `display` is absent on purpose: the base rule sets it, and the separate
+ * `dialog.df-overlay:not([open])` rule is what answers the UA's hiding rule.
+ */
+const UA_DIALOG_PROPS = [
+  ['width', 'UA: width: fit-content'],
+  ['height', 'UA: height: fit-content'],
+  ['max-width', 'UA: dialog:modal max-width: calc(100% - 6px - 2em)'],
+  ['max-height', 'UA: dialog:modal max-height: calc(100% - 6px - 2em)'],
+  ['margin', 'UA: margin: auto — centres an over-constrained box'],
+  ['padding', 'UA: padding: 1em'],
+  ['border', 'UA: border: solid'],
+  ['inset', 'UA: inset-inline: 0 and dialog:modal inset-block: 0'],
+  ['overflow', 'UA: dialog:modal overflow: auto'],
+];
+
+{
+  const base = allRules.find((r) => r.selector.split(',').some((s2) => s2.trim() === '.df-overlay'));
+  if (!base) {
+    errors.push('[dialog] no `.df-overlay` rule in the bundle — the panel has no base styles');
+  } else {
+    const declared = new Set(
+      [...base.body.matchAll(/(^|[;{])\s*([a-z-]+)\s*:/g)].map((m) => m[2].toLowerCase()),
+    );
+    for (const [prop, why] of UA_DIALOG_PROPS) {
+      if (declared.has(prop)) continue;
+      errors.push(
+        `[dialog] .df-overlay does not declare \`${prop}\` (${why}) — the UA value `
+        + 'applies instead, and nothing in the build will say so',
+      );
+    }
+  }
+}
+
+/* --- which axes each placement fills ---------------------------------- */
+
+/**
+ * The overlay geometry contract, as a table.
+ *
+ * A box FILLS an axis when both of that axis's insets are pinned and its size
+ * on that axis is `auto` — then the browser zeroes any `auto` margins and
+ * solves for the size. It CENTRES on that axis when the size is definite
+ * instead, because that over-constrains the box and the leftover space goes to
+ * the margins.
+ *
+ * One property decides which, and getting it wrong is invisible in every other
+ * check: the stylesheet is valid, every token resolves, no class is undefined.
+ * It has now gone wrong three times on this one component —
+ *
+ * - a drawer pinned one axis and left the other to the UA's `fit-content`
+ *   plus `margin: auto`, so every offcanvas came out centred and content-sized;
+ * - resetting the UA box replaced that `fit-content` with `auto`, and the
+ *   centred dialog — which had been relying on the UA value — started filling
+ *   the viewport height;
+ * - and `top`/`bottom` needed the opposite fix from `start`/`end`.
+ *
+ * Each looked like a different bug. They are one question asked four times, so
+ * the answer is written down once here.
+ */
+const FILLS = {
+  center: { inline: false, block: false },
+  start: { inline: false, block: true },
+  end: { inline: false, block: true },
+  top: { inline: true, block: false },
+  bottom: { inline: true, block: false },
+  fill: { inline: true, block: true },
+};
+
+/** Expands the `inset*` shorthands into the four physical-ish longhands. */
+function applyInsets(into, prop, value) {
+  const parts = value.trim().split(/\s+/);
+  const set = (key, v) => { into[key] = v; };
+  if (prop === 'inset') {
+    const [a, b = a, c = a, d = b] = parts;
+    set('block-start', a); set('inline-end', b); set('block-end', c); set('inline-start', d);
+  } else if (prop === 'inset-block' || prop === 'inset-inline') {
+    const axis = prop.slice(6);
+    const [a, b = a] = parts;
+    set(`${axis}-start`, a); set(`${axis}-end`, b);
+  } else if (/^inset-(block|inline)-(start|end)$/.test(prop)) {
+    set(prop.slice(6), parts[0]);
+  }
+}
+
+{
+  const applies = (selector, placement) => selector.split(',').some((one) => {
+    const trimmed = one.trim();
+    if (trimmed.includes(':') || trimmed.startsWith('dialog')) return false;
+    return trimmed === '.df-overlay'
+      || trimmed === `.df-overlay[data-placement="${placement}"]`;
+  });
+
+  for (const [placement, expected] of Object.entries(FILLS)) {
+    const insets = {};
+    const size = {};
+
+    for (const rule of allRules) {
+      if (!applies(rule.selector, placement)) continue;
+      for (const m of rule.body.matchAll(/(^|[;{])\s*([a-z-]+)\s*:\s*([^;}]+)/g)) {
+        const prop = m[2].toLowerCase();
+        const value = m[3].trim();
+        if (prop.startsWith('inset')) applyInsets(insets, prop, value);
+        if (prop === 'width') size.inline = value;
+        if (prop === 'height') size.block = value;
+      }
+    }
+
+    for (const axis of ['inline', 'block']) {
+      const pinned = insets[`${axis}-start`] !== undefined
+        && insets[`${axis}-start`] !== 'auto'
+        && insets[`${axis}-end`] !== undefined
+        && insets[`${axis}-end`] !== 'auto';
+      const fills = pinned && size[axis] === 'auto';
+
+      if (fills === expected[axis]) continue;
+      errors.push(
+        `[geometry] placement "${placement}" ${fills ? 'FILLS' : 'does not fill'} the ${axis} `
+        + `axis and should ${expected[axis] ? '' : 'not '}— both insets `
+        + `${pinned ? 'are' : 'are not'} pinned and ${axis === 'inline' ? 'width' : 'height'} `
+        + `is \`${size[axis] ?? '(undeclared)'}\`. A pinned axis with an \`auto\` size fills; `
+        + 'a definite size centres.',
+      );
+    }
+  }
+}
+
 /* --- the dark block must actually change something -------------------- */
 
 const darkOnly = modeDecls('dark');
@@ -305,6 +447,8 @@ const worst = [...checked].sort((a, b) => a.ratio - b.ratio).slice(0, 3);
 process.stdout.write(`css-verify: resolved ${allRules.length} rules, ${LIGHT.size} root properties\n`);
 process.stdout.write(`css-verify: checked ${checked.length} opaque fill(s) for contrast\n`);
 process.stdout.write(`css-verify: ${CONTROL_PARITY.length} form-control properties agree across input and combobox\n`);
+process.stdout.write(`css-verify: ${UA_DIALOG_PROPS.length} UA \`<dialog>\` properties answered by .df-overlay\n`);
+process.stdout.write(`css-verify: ${Object.keys(FILLS).length} overlay placements fill the axes they should\n`);
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

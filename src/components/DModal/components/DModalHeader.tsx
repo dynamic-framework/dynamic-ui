@@ -3,6 +3,7 @@ import { type PropsWithChildren, useMemo } from 'react';
 import classNames from 'classnames';
 import DIcon from '../../DIcon';
 
+import { useOverlayLabelId } from '../../DOverlayContext';
 import type { BaseProps, FamilyIconProps } from '../../interface';
 import { useDContext } from '../../../contexts';
 
@@ -35,13 +36,23 @@ export default function DModalHeader(
     },
   } = useDContext();
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
+
+  /*
+   * The id the panel's `aria-labelledby` points at.
+   *
+   * It lives here because this is where the title is, and it comes from a
+   * context because the panel is the thing that owns the id — passing it down
+   * by hand would put the burden on every call site, which is how the
+   * reference came to dangle in the first place.
+   */
+  const labelId = useOverlayLabelId();
   return (
     <>
       <div
         className={classNames('df-overlay-header', className)}
         style={style}
       >
-        <div>
+        <div id={labelId}>
           {children}
         </div>
         {showCloseButton && (

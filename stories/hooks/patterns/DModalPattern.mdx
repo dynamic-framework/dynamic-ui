@@ -13,6 +13,11 @@ This part of the documentation talks about `DModal` and directly covers its beha
 
 <Meta title="Design System/Components/Modal/Usage" />
 
+> A drawer or a bottom sheet is this same page with a `placement`. There is no
+> separate offcanvas component and no separate usage pattern — the panel is
+> registered and opened exactly as below, and `placement="end"` anchors it to
+> the edge. See **Placement** on the Modal page.
+
 ## Modal Types `types.ts`
 
 Type to define the payload of all the modals, its structure is an object literal
@@ -51,7 +56,6 @@ export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>)
   return (
     <DModal
       name="example"
-      centered
       staticBackdrop
     >
       <DModal.Header onClose={closePortal} showCloseButton>

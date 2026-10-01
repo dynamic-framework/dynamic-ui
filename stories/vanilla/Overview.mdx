@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Vanilla/Overview" />
+
+# Dynamic without a framework
+
+The behaviour layer for pages that are HTML and Liquid rather than React —
+which at Modyo is most of them.
+
+```html
+<link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/3/css/dynamic.css">
+<script type="module" src="https://cdn.dynamicframework.dev/assets/3/vanilla/dynamic.js"></script>
+```
+
+That is the whole setup. **1.8 KB gzipped** for the four behaviours in this
+phase.
+
+## It enhances, it does not render
+
+Nothing here generates a component. You write the markup — the same markup the
+React components produce — add a `data-df-*` attribute, and the script makes it
+work.
+
+```html
+<div class="df-tabs" data-df-tabs>
+  <div class="df-tablist" role="tablist">
+    <button class="df-tab" role="tab" aria-controls="p1" aria-selected="true">One</button>
+    <button class="df-tab" role="tab" aria-controls="p2">Two</button>
+  </div>
+  <div class="df-tabpanel" id="p1">…</div>
+  <div class="df-tabpanel" id="p2" hidden>…</div>
+</div>
+```
+
+Three things follow from that, and they are the reason for the choice:
+
+**One stylesheet.** The DOM is identical to React's, so there is no second set
+of class names to keep in step and no chance of the two drifting.
+
+**It means something before the script runs.** Those tabs are headings and
+their content. A collapse is a button and a paragraph. A modal is a `<dialog>`
+the browser can open by itself. If the script fails to load — a CDN blip, a
+blocked domain, a slow connection — the page is still readable.
+
+**The layer sets only what the stylesheet already reads.** `aria-selected` and
+`hidden` on tabs, `data-expanded` on a collapse. It invents no state of its
+own, so there is nothing to disagree about.
+
+## Markup that arrives later
+
+Modyo renders widgets after the page does. The layer watches for that and
+enhances what appears, so a widget that loads a second late works the same as
+one in the initial HTML.
+
+This is not a nicety. A layer that enhanced once would leave everything that
+arrived afterwards inert — and silently: the markup is there, the CSS is there,
+nothing happens when you click.
+
+If you build markup somewhere the DOM cannot see it, enhance it yourself:
+
+```js
+DF.enhance(myContainer);
+```
+
+## The three builds
+
+| File | Use it when |
+|---|---|
+| `vanilla/dynamic.js` | The default. `<script type="module">` defers on its own, so it never blocks rendering. |
+| `vanilla/dynamic.iife.js` | A template that cannot emit `type="module"`. Defines `window.DF`. |
+| `vanilla/tabs.js`, `collapse.js`, … | A page that wants one behaviour and not the rest. |
+
+## What is here, and what is next
+
+**This phase:** tabs, collapse, modal, toast.
+
+Each one is small for a reason. The modal is a real `<dialog>`, so focus
+trapping, page inertness, Escape, the backdrop and the top layer are the
+browser's and cannot be got wrong. The collapse animates `height: auto` through
+`interpolate-size`, so there is no measuring. The carousel, when it arrives,
+is already a scroll container in CSS.
+
+**Next:** the positioning family — dropdown, popover, tooltip — which share one
+engine; then carousel and select, which need their behaviour extracted out of
+the React hooks into something both builds consume.
+
+## The API
+
+Everything is on the `DF` global, and is a named export of the module build.
+
+| | |
+|---|---|
+| `DF.enhance(root?)` | Enhance a subtree now. |
+| `DF.destroy(root?)` | Remove every behaviour from a subtree. |
+| `DF.openModal(id)` / `DF.closeModal(id)` | Open or close a `<dialog>` by id. |
+| `DF.toast({ title, … })` | Show a toast. Returns a function that dismisses it. |
+| `DF.define({ name, selector, mount })` | Register a behaviour of your own. |
+
+Every behaviour also dispatches a bubbling event — `df:tabs:change`,
+`df:collapse:toggle`, `df:modal:open`, `df:modal:close` — so a page can react
+without reaching inside.

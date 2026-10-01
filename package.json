@@ -1,7 +1,9 @@
 {
   "name": "@dynamic-framework/ui-react",
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "./dist/vanilla/*",
+    "./src/vanilla/*"
   ],
   "version": "2.6.0",
   "description": "React Dynamic Framework",
@@ -24,12 +26,12 @@
   },
   "contributors": [
     {
-      "name": "Abraham José González Barboza",
+      "name": "Abraham Jos\u00e9 Gonz\u00e1lez Barboza",
       "email": "agonzalez@modyo.com",
       "url": "https://github.com/abe-modyo"
     },
     {
-      "name": "Eduard Fabián Barón Gutiérrez",
+      "name": "Eduard Fabi\u00e1n Bar\u00f3n Guti\u00e9rrez",
       "email": "ebaron@modyo.com",
       "url": "https://github.com/efbarong"
     },
@@ -44,7 +46,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:storybook": "test-storybook",
-    "build": "npm run clean && npm run build:react && npm run css",
+    "build": "npm run clean && npm run build:react && npm run css && npm run build:vanilla",
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "dev:ts": "tsc -p tsconfig.build.json",
@@ -64,7 +66,7 @@
     "tokens:verify": "node scripts/tokens/verify.mjs",
     "tokens:figma:push": "node scripts/tokens/figma-push.mjs",
     "tokens:figma:pull": "node scripts/tokens/figma-pull.mjs",
-    "css": "npm run tokens && npm run css:build && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage",
+    "css": "npm run tokens && npm run css:build && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage && npm run css:attributes",
     "css:build": "node scripts/css/build.mjs",
     "css:validate": "node scripts/css/validate.mjs",
     "css:verify": "node scripts/css/verify.mjs",
@@ -87,7 +89,10 @@
     "axe": "npx tsx scripts/generate-a11y-report.ts",
     "css:usage": "node scripts/css/usage.mjs",
     "css:migrate": "node scripts/css/migrate-classes.mjs && node scripts/css/migrate-components.mjs && node scripts/css/migrate-variables.mjs",
-    "css:docs": "node scripts/css/migrate-docs-tables.mjs"
+    "css:docs": "node scripts/css/migrate-docs-tables.mjs",
+    "build:vanilla": "node scripts/build-vanilla.mjs",
+    "css:attributes": "node scripts/css/attributes.mjs",
+    "typecheck:stories": "node scripts/typecheck-stories.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

@@ -9,7 +9,7 @@ import {
   DContextProvider,
   DIcon,
   DListGroup,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../../src';
@@ -174,13 +174,13 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
   const { closePortal } = useDPortalContext<SchedulePayloads>();
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
-      openFrom="bottom"
+      placement="bottom"
       style={bottomSheetStyle}
     >
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div>
           <h5 className="df-mb-1 df-fw-semibold">{payload.title}</h5>
           <div className="df-flex df-items-center df-gap-2">
@@ -198,8 +198,8 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
             </span>
           </div>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-3">
         <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface df-flex df-justify-between df-items-center">
           <div>
             <small className="df-text-muted df-block">Trainer</small>
@@ -227,11 +227,11 @@ function ScheduleDetailSheet({ name, payload }: PortalProps<SchedulePayloads['sc
           <span style={{ color: 'var(--df-role-warning-base)' }}>{'★'.repeat(payload.rating)}</span>
           <span className="df-text-muted">{'☆'.repeat(Math.max(0, 5 - payload.rating))}</span>
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Add to my schedule" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -239,27 +239,27 @@ function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['
   const { closePortal } = useDPortalContext<QuickServicePayloads>();
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
-      openFrom="end"
+      placement="end"
       style={{ width: '360px', maxWidth: '100vw' }}
     >
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div className="df-flex df-items-center df-gap-2">
           <DIcon icon={payload.icon} className="df-text-primary" />
           <h5 className="df-mb-0 df-fw-semibold">{payload.title}</h5>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-3">
         <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
           <small className="df-text-muted df-block df-mb-1">Description</small>
           <p className="df-mb-0">{payload.subtitle}</p>
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -310,7 +310,7 @@ const ICON_LIST_SOURCE = String.raw`import {
   DContextProvider,
   DIcon,
   DListGroup,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../src';
@@ -333,23 +333,23 @@ const QUICK_SERVICES: QuickServicePayloads['quickService'][] = [
 function QuickServiceSheet({ name, payload }: PortalProps<QuickServicePayloads['quickService']>) {
   const { closePortal } = useDPortalContext<QuickServicePayloads>();
   return (
-    <DOffcanvas name={name} openFrom="end" style={{ width: '360px', maxWidth: '100vw' }}>
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+    <DModal name={name} placement="end" style={{ width: '360px', maxWidth: '100vw' }}>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div className="df-flex df-items-center df-gap-2">
           <DIcon icon={payload.icon} className="df-text-primary" />
           <h5 className="df-mb-0 df-fw-semibold">{payload.title}</h5>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-3">
         <div className="df-p-3 df-border-1 df-rounded-control df-bg-surface">
           <small className="df-text-muted df-block df-mb-1">Description</small>
           <p className="df-mb-0">{payload.subtitle}</p>
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -417,7 +417,7 @@ import {
   DContextProvider,
   DIcon,
   DListGroup,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../src';

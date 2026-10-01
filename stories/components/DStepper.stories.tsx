@@ -28,6 +28,12 @@ at \`992px\`, however this breakpoint can be customized to meet specific require
 + **\`DStepperMobile\`** is displayed on screens narrower than 992px.
 + **\`DStepperDesktop\`** is displayed on screens wider than 992px.
 
+> **The pane you see here depends on the width of this preview, not of your
+> screen.** The media query reads the viewport of the frame the story renders
+> in, and the documentation column is usually narrower than 992px — so the
+> mobile pane is what shows, even on a wide display. Open a story on its own, or
+> lower \`breakpoint\`, to see the desktop one.
+
 If your project's requirements do not require dynamic switching between components based on screen size, you can use
 the single \`DStepperDesktop\` or \`DStepperMobile\` component independently and fine-tune its behavior and appearance to suit your needs. This
 provides a simpler alternative for scenarios where responsive behavior is not needed.

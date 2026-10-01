@@ -45,6 +45,49 @@ const SOURCES = ['src', 'stories'];
  */
 const INTENTIONALLY_UNSTYLED = new Set([]);
 
+/**
+ * Class names in `src/` that are allowed not to carry the `df-` prefix.
+ *
+ * Everything the library renders should be a `df-` class, because that is the
+ * only name the stylesheet is written against. A bare one is either a leftover
+ * from the Bootstrap port or a third party's.
+ *
+ * This exists because a leftover is invisible to every other check: `css:usage`
+ * below only looks at `df-` classes, and `css:audit` only flags names that
+ * exist in the 2.x Sass tree. `DPortalContext` rendered the modal scrim as
+ * `.backdrop` — a name neither Bootstrap nor this library ever defined — so
+ * every modal in the React build had a completely transparent backdrop, and
+ * nothing said a word.
+ */
+const ALLOWED_BARE = new Map([
+  // The four components still wrapping a third party own these names.
+  ['d-input-phone', 'DInputPhone keeps react-international-phone\'s class'],
+  ['rdp', 'react-day-picker'],
+  ['splide', 'removed, kept for a template that still has the markup'],
+  // Icon-font families, which a consumer chooses.
+  ['bi', 'Bootstrap Icons font family'],
+  ['material-symbols-outlined', 'Material Symbols font family'],
+  ['lucide', 'lucide-react puts this on the svg it renders'],
+]);
+
+/** Prefixes that belong to a third party, matched rather than listed. */
+const ALLOWED_BARE_PREFIXES = [/^rdp-/, /^react-/, /^splide/, /^bi-/, /^lucide-/, /^material-symbols/];
+
+/**
+ * Components not yet ported, exempted whole.
+ *
+ * The exemption is "this component still wraps a third party", not "these
+ * sixteen class names are fine" — so porting one removes its line here and the
+ * check starts holding it to the rule, rather than leaving a list of names
+ * nobody remembers the reason for.
+ *
+ * Both of these are the last of the 2.x wrappers; the audit counts them too.
+ */
+const UNPORTED = [
+  /^src\/components\/DDatePicker\//,
+  /^src\/components\/DInputPhone\//,
+];
+
 /* ------------------------------------------------------------------ */
 
 let css = '';
@@ -81,7 +124,14 @@ function walk(dir, out = []) {
 }
 
 const used = new Map();
+/** Bare class names rendered by `src/`, which should not exist. */
+const bare = new Map();
 let files = 0;
+
+const isAllowedBare = (name) => ALLOWED_BARE.has(name)
+  || ALLOWED_BARE_PREFIXES.some((pattern) => pattern.test(name));
+
+const isUnported = (file) => UNPORTED.some((pattern) => pattern.test(file));
 
 for (const dir of SOURCES) {
   const abs = resolve(ROOT, dir);
@@ -91,9 +141,26 @@ for (const dir of SOURCES) {
     if (/\.spec\.[jt]sx?$/.test(file)) continue;
     files += 1;
     const source = readFileSync(file, 'utf8');
+    const inLibrary = dir === 'src';
+
     for (const m of source.matchAll(/\b(?:class|className)="([^"{}]*)"/g)) {
       for (const cls of m[1].split(/\s+/)) {
-        if (!cls.startsWith('df-')) continue;
+        if (!cls) continue;
+
+        if (!cls.startsWith('df-')) {
+          /*
+           * Only `src/` is held to this. A story is a page, and a page may use
+           * whatever classes it likes — it is the LIBRARY that must not render
+           * a name the stylesheet never defines.
+           */
+          if (!inLibrary || isAllowedBare(cls)) continue;
+          if (isUnported(relative(ROOT, file))) continue;
+          const seen = bare.get(cls) ?? new Set();
+          seen.add(relative(ROOT, file));
+          bare.set(cls, seen);
+          continue;
+        }
+
         const list = used.get(cls) ?? new Set();
         list.add(relative(ROOT, file));
         used.set(cls, list);
@@ -108,14 +175,28 @@ process.stdout.write(
   `css-usage: ${used.size} distinct df- class(es) used across ${files} file(s)\n`,
 );
 
-if (!missing.length) {
+if (bare.size) {
+  process.stderr.write(`\n${bare.size} unprefixed class(es) rendered by the library:\n`);
+  for (const [cls, where] of bare) {
+    process.stderr.write(`  ${cls.padEnd(32)} ${[...where].join(', ')}\n`);
+  }
+  process.stderr.write(
+    '\ncss-usage: the stylesheet is written against `df-` names, so a bare one is '
+    + 'styled by nothing — prefix it, or add it to ALLOWED_BARE with the reason\n',
+  );
+}
+
+if (!missing.length && !bare.size) {
   process.stdout.write('css-usage: every one is defined in the bundle\n');
+  process.stdout.write('css-usage: the library renders no unprefixed class names\n');
   process.exit(0);
 }
 
-process.stderr.write(`\n${missing.length} used but never defined — each renders as nothing:\n`);
-for (const [cls, where] of missing.sort((a, b) => b[1].size - a[1].size)) {
-  process.stderr.write(`  ${cls.padEnd(32)} ${where.size} file(s)  e.g. ${[...where][0]}\n`);
+if (missing.length) {
+  process.stderr.write(`\n${missing.length} used but never defined — each renders as nothing:\n`);
+  for (const [cls, where] of missing.sort((a, b) => b[1].size - a[1].size)) {
+    process.stderr.write(`  ${cls.padEnd(32)} ${where.size} file(s)  e.g. ${[...where][0]}\n`);
+  }
+  process.stderr.write('\ncss-usage: add the rule, fix the class name, or list it as intentionally unstyled\n');
 }
-process.stderr.write('\ncss-usage: add the rule, fix the class name, or list it as intentionally unstyled\n');
 process.exit(1);

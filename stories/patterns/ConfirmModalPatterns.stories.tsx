@@ -10,7 +10,6 @@ import {
 } from '../../src';
 import DModal from '../../src/components/DModal/DModal';
 import DDropdown from '../../src/components/DDropdown/DDropdown';
-import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import type { PortalProps } from '../../src';
 import { useConfirmModal } from '../../src/hooks';
 
@@ -664,7 +663,7 @@ function EditProfileModal() {
   });
 
   return (
-    <DModal name="editProfileModal" centered size="lg">
+    <DModal name="editProfileModal" size="lg">
       <DModal.Header onClose={confirmDiscard.open} showCloseButton>
         <h5 className="df-fw-semibold">Edit Profile</h5>
       </DModal.Header>
@@ -761,7 +760,7 @@ function EditProfileModal({ }: PortalProps<EditProfilePayloads['editProfile']>) 
   });
 
   return (
-    <DModal name="editProfileModal" centered size="lg">
+    <DModal name="editProfileModal" size="lg">
       <DModal.Header onClose={confirmDiscard.open} showCloseButton>
         <h5 className="df-fw-semibold">Edit Profile</h5>
       </DModal.Header>
@@ -812,11 +811,11 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
   });
 
   return (
-    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
-      <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
+    <DModal name={name} staticBackdrop={false} placement="end">
+      <DModal.Header onClose={confirmDiscard.open} showCloseButton>
         <h5 className="df-fw-semibold">Settings</h5>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         <p className="df-text-muted df-mb-4">
           Update your preferences below. Changes are not saved until you click
           {' '}
@@ -828,8 +827,8 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
           <DInputSwitch label="Email notifications" />
           <DInputSwitch label="Newsletter subscription" />
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer>
+      </DModal.Body>
+      <DModal.Footer>
         <DButton
           text="Discard"
           variant="outline"
@@ -841,8 +840,8 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
           color="primary"
           onClick={() => closePortal()}
         />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -901,18 +900,18 @@ function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['sett
   });
 
   return (
-    <DOffcanvas name={name} openFrom="end">
-      <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
+    <DModal name={name} placement="end">
+      <DModal.Header onClose={confirmDiscard.open} showCloseButton>
         <h5 className="df-fw-semibold">Settings</h5>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         {/* form fields */}
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer>
+      </DModal.Body>
+      <DModal.Footer>
         <DButton text="Discard" variant="outline" onClick={confirmDiscard.open} />
         <DButton text="Save" color="primary" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 

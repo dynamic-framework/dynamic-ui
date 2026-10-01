@@ -328,6 +328,8 @@ export const IconConsumption: Story = {
         chevronDown: 'expand_more',
         chevronLeft: 'chevron_left',
         chevronRight: 'chevron_right',
+        play: 'play_arrow',
+        pause: 'pause',
         upload: 'upload',
         calendar: 'calendar_month',
         check: 'check',
@@ -469,7 +471,7 @@ function InvoicePreviewModal({ name, payload }: PortalProps<PortalDemoPayloads['
   const { format } = useFormatCurrency();
 
   return (
-    <DModal name={name} centered>
+    <DModal name={name}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-fw-semibold">Invoice preview</h5>
       </DModal.Header>
@@ -543,7 +545,7 @@ function InvoicePreviewModal({ name, payload }: PortalProps<PortalDemoPayloads['
   const { format } = useFormatCurrency();
 
   return (
-    <DModal name={name} centered>
+    <DModal name={name}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-fw-semibold">Invoice preview</h5>
       </DModal.Header>
@@ -707,7 +709,7 @@ type IsolationPayloads = {
 function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel']>) {
   const { closePortal } = useDPortalContext<IsolationPayloads>();
   return (
-    <DModal name={name} centered>
+    <DModal name={name}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-fw-semibold">
           Portal scope
@@ -778,7 +780,7 @@ export const PortalNameIsolation: Story = {
 function IsolationModal({ name, payload }: PortalProps<IsolationPayloads['panel']>) {
   const { closePortal } = useDPortalContext<IsolationPayloads>();
   return (
-    <DModal name={name} centered>
+    <DModal name={name}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-fw-semibold">Portal scope {payload.scope}</h5>
       </DModal.Header>

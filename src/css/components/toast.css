@@ -65,3 +65,58 @@
     border-inline-start-width: var(--df-stroke-emphasis);
   }
 }
+
+/**
+ * The region toasts stack in.
+ *
+ * Not used by the React build yet — that still stacks through
+ * `react-hot-toast`, which positions its container with inline styles. This is
+ * the class the vanilla build uses, and the one React will use when that
+ * dependency goes; naming it now means the two do not end up with different
+ * answers to "where do toasts live".
+ */
+@layer df.components {
+  .df-toast-region {
+    position: fixed;
+    inset-block-start: var(--df-toast-region-inset);
+    inset-inline-end: var(--df-toast-region-inset);
+    z-index: var(--df-z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-toast-region-gap);
+
+    /* The region covers a strip of the page; only the toasts in it should
+       intercept anything. */
+    pointer-events: none;
+  }
+
+  .df-toast-region > * {
+    pointer-events: auto;
+  }
+
+  .df-toast-region[data-placement="top-start"] {
+    inset-inline: var(--df-toast-region-inset) auto;
+  }
+
+  .df-toast-region[data-placement="top-center"] {
+    inset-inline: 50% auto;
+    align-items: center;
+    translate: -50%;
+  }
+
+  .df-toast-region[data-placement="bottom-end"] {
+    inset-block: auto var(--df-toast-region-inset);
+  }
+
+  .df-toast-region[data-placement="bottom-start"] {
+    inset-block: auto var(--df-toast-region-inset);
+    inset-inline: var(--df-toast-region-inset) auto;
+  }
+
+  .df-toast-region[data-placement="bottom-center"] {
+    inset-block: auto var(--df-toast-region-inset);
+    inset-inline: 50% auto;
+    align-items: center;
+    translate: -50%;
+  }
+}

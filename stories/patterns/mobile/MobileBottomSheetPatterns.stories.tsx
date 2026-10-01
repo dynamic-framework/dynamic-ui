@@ -8,7 +8,7 @@ import {
   DContextProvider,
   DInputSwitch,
   DListGroup,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../../src';
@@ -50,7 +50,7 @@ const meta: Meta<typeof DBox> = {
     docs: {
       page: DocsTemplate,
       description: {
-        component: `Mobile-first experiences using DOffcanvas as a bottom sheet. These patterns are designed for banking, insurance, and lending interfaces where contextual actions should appear from bottom to top.
+        component: `Mobile-first experiences using DModal as a bottom sheet. These patterns are designed for banking, insurance, and lending interfaces where contextual actions should appear from bottom to top.
 
 Open each example in its own Storybook canvas:
 
@@ -112,13 +112,13 @@ function AccountActionsSheet({ name, payload }: PortalProps<AccountActionsPayloa
   const { closePortal } = useDPortalContext<AccountActionsPayloads>();
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
-      openFrom="bottom"
+      placement="bottom"
       style={bottomSheetStyle}
     >
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div>
           <h5 className="df-mb-0 df-fw-semibold">{payload.accountName}</h5>
           <small className="df-text-muted">
@@ -127,17 +127,17 @@ function AccountActionsSheet({ name, payload }: PortalProps<AccountActionsPayloa
             {payload.balance}
           </small>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-2">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-2">
         <DButton text="Transfer money" className="df-w-full" variant="soft" />
         <DButton text="Pay credit card" className="df-w-full" variant="soft" />
         <DButton text="Deposit check" className="df-w-full" variant="soft" />
         <DButton text="View statement" className="df-w-full" variant="soft" />
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Close" variant="outline" color="secondary" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -177,7 +177,7 @@ import {
   DBox,
   DButton,
   DContextProvider,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../src';
@@ -234,24 +234,24 @@ function AccountActionsSheet({ name, payload }: PortalProps<AccountActionsPayloa
   const { closePortal } = useDPortalContext<AccountActionsPayloads>();
 
   return (
-    <DOffcanvas name={name} openFrom="bottom" style={bottomSheetStyle}>
+    <DModal name={name} placement="bottom" style={bottomSheetStyle}>
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div>
           <h5 className="df-mb-0 df-fw-semibold">{payload.accountName}</h5>
           <small className="df-text-muted">Available balance: {payload.balance}</small>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-2">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-2">
         <DButton text="Transfer money" className="df-w-full" variant="soft" />
         <DButton text="Pay credit card" className="df-w-full" variant="soft" />
         <DButton text="Deposit check" className="df-w-full" variant="soft" />
         <DButton text="View statement" className="df-w-full" variant="soft" />
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Close" variant="outline" color="secondary" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -322,16 +322,16 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
   const total = payload.amount + fee;
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
-      openFrom="bottom"
+      placement="bottom"
       style={bottomSheetStyle}
     >
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-mb-0 df-fw-semibold">Review transfer</h5>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         <DListGroup>
           <DListGroup.Item className="df-justify-between">
             <span className="df-text-muted">Recipient</span>
@@ -368,12 +368,12 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
             </div>
           </DListGroup.Item>
         </DListGroup>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Edit" color="secondary" variant="outline" onClick={closePortal} />
         <DButton text="Confirm transfer" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -415,7 +415,7 @@ const TRANSFER_REVIEW_SOURCE = String.raw`import {
   DButton,
   DContextProvider,
   DListGroup,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../src';
@@ -448,12 +448,12 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
   const total = payload.amount + fee;
 
   return (
-    <DOffcanvas name={name} openFrom="bottom" style={bottomSheetStyle}>
+    <DModal name={name} placement="bottom" style={bottomSheetStyle}>
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="df-mb-0 df-fw-semibold">Review transfer</h5>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         <DListGroup>
           <DListGroup.Item className="df-justify-between">
             <span className="df-text-muted">Recipient</span>
@@ -474,12 +474,12 @@ function TransferReviewSheet({ name, payload }: PortalProps<TransferReviewPayloa
             </div>
           </DListGroup.Item>
         </DListGroup>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Edit" color="secondary" variant="outline" onClick={closePortal} />
         <DButton text="Confirm transfer" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -550,13 +550,13 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
   const [onlinePayments, setOnlinePayments] = useState(true);
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
-      openFrom="bottom"
+      placement="bottom"
       style={bottomSheetStyle}
     >
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div>
           <h5 className="df-mb-0 df-fw-semibold">{payload.cardLabel}</h5>
           <small className="df-text-muted">
@@ -565,8 +565,8 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
             {payload.cardLast4}
           </small>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-3">
         <DInputSwitch
           id="freeze-card-switch"
           label="Freeze card"
@@ -580,11 +580,11 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
           onChange={setOnlinePayments}
         />
         <DButton text="Replace card" variant="outline" color="danger" className="df-w-full df-mt-2" />
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -621,7 +621,7 @@ import {
   DButton,
   DContextProvider,
   DInputSwitch,
-  DOffcanvas,
+  DModal,
   type PortalProps,
   useDPortalContext,
 } from '../../src';
@@ -654,23 +654,23 @@ function CardControlsSheet({ name, payload }: PortalProps<CardControlsPayloads['
   const [onlinePayments, setOnlinePayments] = useState(true);
 
   return (
-    <DOffcanvas name={name} openFrom="bottom" style={bottomSheetStyle}>
+    <DModal name={name} placement="bottom" style={bottomSheetStyle}>
       <BottomSheetHandle />
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <div>
           <h5 className="df-mb-0 df-fw-semibold">{payload.cardLabel}</h5>
           <small className="df-text-muted">Card ending in {payload.cardLast4}</small>
         </div>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body className="df-flex df-flex-col df-gap-3">
+      </DModal.Header>
+      <DModal.Body className="df-flex df-flex-col df-gap-3">
         <DInputSwitch id="freeze-card-switch" label="Freeze card" checked={isFrozen} onChange={setIsFrozen} />
         <DInputSwitch id="online-payments-switch" label="Online payments" checked={onlinePayments} onChange={setOnlinePayments} />
         <DButton text="Replace card" variant="outline" color="danger" className="df-w-full df-mt-2" />
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer actionPlacement="fill">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="fill">
         <DButton text="Done" onClick={closePortal} />
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 

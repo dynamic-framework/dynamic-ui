@@ -27,6 +27,7 @@ export default function DStepper(
     options,
     currentStep,
     className,
+    dataAttributes,
     style,
   } : Props,
 ) {
@@ -61,6 +62,7 @@ export default function DStepper(
     <div
       className={classNames('df-stepper-mobile', className)}
       style={style}
+      {...dataAttributes}
     >
       {/* 2.x assembled the whole `conic-gradient()` string in JavaScript. Only
           the angle is a live value, so only the angle is written here and the

@@ -29,6 +29,21 @@
     border-color: var(--df-dropzone-hover-border-color);
   }
 
+  /*
+   * A dropzone that already holds files has done its job, so it stops
+   * advertising itself: the dashed border is the "drop here" affordance, and a
+   * solid one reads as settled.
+   *
+   * `DBoxFile` has emitted `data-selected` since it was written — its own
+   * comment says the states are attributes so they can be styled — and this
+   * rule was never written, so the attribute sat there doing nothing. Found by
+   * `css:attributes`, which exists because the same gap in `DModal` hid three
+   * dead props.
+   */
+  .df-dropzone:where([data-selected]) {
+    border-style: solid;
+  }
+
   .df-dropzone:where([data-valid]) {
     border-color: var(--df-dropzone-valid-border-color);
   }

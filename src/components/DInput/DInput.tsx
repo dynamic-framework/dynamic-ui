@@ -198,7 +198,6 @@ function DInput(
       <div
         className="df-input-group"
         {...size && { 'data-size': size }}
-        {...(invalid || valid) && { 'data-validated': '' }}
       >
         {!!inputStart && (
           <div className="df-input-group-addon" id={`${id}InputStart`}>

@@ -19,7 +19,16 @@ import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements';
 
-type PortalComponent<P = any> = FC<PortalProps<P>>;
+/**
+ * A component the portal can mount.
+ *
+ * `nativeDialog` says it renders a `<dialog>` and opens it with `showModal()`,
+ * which means the BROWSER owns the backdrop, the focus trap, page inertness,
+ * Escape and the top layer. The portal then renders none of its own and runs
+ * none of its own handlers — two implementations of a focus trap on one
+ * element is worse than either alone.
+ */
+type PortalComponent<P = any> = FC<PortalProps<P>> & { nativeDialog?: boolean };
 
 type PortalAvailableList<T extends Record<string, unknown>> = {
   [K in keyof T]: PortalComponent<T[K]>;
@@ -95,6 +104,14 @@ export type PortalProps<P = unknown> = {
   name: string;
   /** Data passed via `openPortal`. */
   payload: P;
+  /**
+   * Pops this panel off the stack.
+   *
+   * A `<dialog>` can close itself — Escape, or `close()` — and the portal has
+   * no way to know it happened. Without this the stack kept an entry for a
+   * panel that was already gone, and reopening it did nothing.
+   */
+  onClose?: () => void;
 };
 
 export const DPortalContext = createContext<PortalContextType<any> | undefined>(undefined);
@@ -130,7 +147,16 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
       push({ name, Component, payload } as unknown as InternalStackItem<T>);
-      (document.activeElement as HTMLElement)?.blur();
+      /*
+       * The trigger is deliberately NOT blurred.
+       *
+       * It used to be, which looked harmless and broke two things at once:
+       * `showModal()` returns focus on close to whatever had it when the dialog
+       * opened, so blurring first meant focus came back to `<body>` and a
+       * keyboard user was dumped at the top of the page. And the old Tab trap
+       * only engaged once focus was already inside the panel, so starting from
+       * `<body>` meant it never engaged at all.
+       */
     },
     [availablePortals, push],
   ) as PortalContextType<T>['openPortal'];
@@ -154,21 +180,50 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     closePortal,
   }), [publicStack, openPortal, closePortal]) as PortalContextType<any>;
 
+  /**
+   * Closes when the click landed outside the panel.
+   *
+   * Three names in here were Bootstrap's and were never ported, so all three
+   * silently did nothing:
+   *
+   * - `.backdrop` had no stylesheet rule, so the scrim rendered transparent —
+   *   a modal with no visible backdrop at all.
+   * - `.portal` was never on any element, so a click on the panel's own padding
+   *   fell through to the next branch instead of being ignored.
+   * - `data-bs-backdrop` is Bootstrap's attribute; the components emit
+   *   `data-static-backdrop`, so a static backdrop closed on a click like any
+   *   other.
+   *
+   * The panel is `.df-overlay` and the scrim is `.df-backdrop`, which are the
+   * names the stylesheet is written against.
+   */
+  /** True when the panel on top is a `<dialog>` the browser is managing. */
+  const topIsNativeDialog = stack.length > 0
+    && Boolean(stack[stack.length - 1].Component.nativeDialog);
+
   const handleClose = useCallback((target: Element) => {
+    // A native dialog closes itself: Escape, and a click outside the panel.
+    // Doing it here as well would close two panels for one press.
+    if (topIsNativeDialog) return;
+
     if (!(target instanceof HTMLDivElement)) {
       return;
     }
-    if (target.classList.contains('portal') && !('bsBackdrop' in target.dataset)) {
-      closePortal();
+
+    const isStatic = (element: HTMLElement) => 'staticBackdrop' in element.dataset;
+
+    if (target.classList.contains('df-overlay')) {
+      if (!isStatic(target)) closePortal();
       return;
     }
-    if (target.classList.contains('backdrop')) {
-      const lastPortal = target.nextElementSibling as HTMLElement;
-      if (lastPortal && lastPortal.classList.contains('portal') && !('bsBackdrop' in lastPortal.dataset)) {
+
+    if (target.classList.contains('df-backdrop')) {
+      const panel = target.nextElementSibling as HTMLElement | null;
+      if (panel?.classList.contains('df-overlay') && !isStatic(panel)) {
         closePortal();
       }
     }
-  }, [closePortal]);
+  }, [closePortal, topIsNativeDialog]);
 
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
@@ -179,7 +234,15 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
           return;
         }
       }
-      if (event.key === 'Tab') {
+      /*
+       * The Tab trap, for panels that are not a `<dialog>`.
+       *
+       * A native dialog traps focus itself, and correctly — this version only
+       * cycles between the first and last focusable element it can find, which
+       * does nothing if focus is outside the panel to begin with, and nothing
+       * at all for a screen reader's virtual cursor.
+       */
+      if (event.key === 'Tab' && !topIsNativeDialog) {
         const focusableElements = getKeyboardFocusableElements(lastPortal as HTMLElement);
         if (focusableElements.length === 0) return;
         const firstElement = focusableElements[0];
@@ -200,7 +263,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     return () => {
       window.removeEventListener('keydown', keyEvent);
     };
-  }, [handleClose, portalName, stack.length]);
+  }, [handleClose, portalName, stack.length, topIsNativeDialog]);
 
   return (
     <DPortalContext.Provider value={value}>
@@ -220,18 +283,42 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
                 payload,
               },
             ) => [
-              <motion.div
+              /*
+               * A `<dialog>` paints its own scrim through `::backdrop`, styled
+               * from the same token in `overlay.css`. Rendering this one as
+               * well would stack two 50% scrims into one much darker than the
+               * design says.
+               */
+              ...(Component.nativeDialog ? [] : [<motion.div
                 key={`${name}-backdrop`}
-                className="backdrop"
+                className="df-backdrop"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0, transition: { delay: 0.3 } }}
+                /*
+                 * To 1, not to 0.5. The darkness is
+                 * `--df-overlay-backdrop-color`, which already carries 50%
+                 * alpha — animating opacity to 0.5 as well multiplied the two
+                 * and produced a 25% scrim, which is most of why this looked
+                 * like no backdrop even once the class name was right.
+                 */
+                animate={{ opacity: 1 }}
+                /*
+                 * No delay on the way out.
+                 *
+                 * The 300ms that used to be here existed to let the PANEL
+                 * animate away first, back when the panel was a `framer-motion`
+                 * element with a matching delay. The panel animates in CSS now,
+                 * so the delay only meant the scrim stayed mounted for 450ms
+                 * after the close — still covering the page, still swallowing
+                 * the next click, so dismissing appeared to need two presses.
+                 */
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.15, ease: 'linear' }}
-              />,
+              />]),
               <Component
                 key={name}
                 name={name}
                 payload={payload}
+                onClose={closePortal}
               />,
             ])}
           </AnimatePresence>

@@ -53,12 +53,6 @@ export {
   DModalBody,
   DModalFooter,
 } from './DModal';
-export {
-  default as DOffcanvas,
-  DOffcanvasHeader,
-  DOffcanvasBody,
-  DOffcanvasFooter,
-} from './DOffcanvas';
 export { default as DPaginator } from './DPaginator';
 export { default as DPopover } from './DPopover';
 export { default as DProgress } from './DProgress';

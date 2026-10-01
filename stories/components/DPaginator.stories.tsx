@@ -3,9 +3,18 @@ import { useState } from 'react';
 
 import DPaginator from '../../src/components/DPaginator';
 
-type Story = StoryObj<typeof DPaginator>;
+/**
+ * The paginator is controlled, so the stories carry one extra arg of their own:
+ * `start`, the initial page the wrapper below holds in state. It is NOT a
+ * `DPaginator` prop, so the story type has to say so — typed as
+ * `StoryObj<typeof DPaginator>` it read as a prop that does not exist, in eight
+ * stories, and nothing said a word because `stories/` was excluded from
+ * `tsconfig.json`.
+ */
+type StoryArgs = React.ComponentProps<typeof DPaginator> & { start?: number };
+type Story = StoryObj<StoryArgs>;
 
-const meta: Meta<typeof DPaginator> = {
+const meta: Meta<StoryArgs> = {
   title: 'Design System/Components/Paginator',
   component: DPaginator,
   parameters: {
@@ -127,9 +136,9 @@ export default meta;
  * The paginator is controlled: it renders `current` and reports a press. This
  * wrapper is the state a real page would already have.
  */
-function Controlled({ start = 1, ...args }: { start?: number } & Record<string, unknown>) {
+function Controlled({ start = 1, ...args }: StoryArgs) {
   const [page, setPage] = useState(start);
-  return <DPaginator {...args as never} current={page} onPageChange={setPage} />;
+  return <DPaginator {...args} current={page} onPageChange={setPage} />;
 }
 
 const render: Story['render'] = (args) => <Controlled {...args} />;

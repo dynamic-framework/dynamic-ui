@@ -62,7 +62,23 @@ export type InputCheckType = 'checkbox' | 'radio';
 export type PinInputMode = 'numeric' | 'text' | 'tel';
 export type PinInputType = 'number' | 'text' | 'tel';
 
-export type ModalSize = 'sm' | 'lg' | 'xl';
-export type ModalFullScreenFrom = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+/**
+ * Where a modal panel is anchored. `center` is a dialog, the four edges are
+ * drawers and sheets, `fill` covers the viewport.
+ *
+ * Replaces `OverlayPlacement` plus the modal's `centered` and
+ * `fullScreen`/`fullScreenFrom` — one question with one answer. Because the
+ * prop is responsive, `{ xs: 'fill', md: 'center' }` is what
+ * `fullScreenFrom="md"` was trying to say; that prop emitted its value into an
+ * attribute no rule ever matched, so it went fullscreen at every width.
+ */
+export type OverlayPlacement = 'center' | 'start' | 'end' | 'top' | 'bottom' | 'fill';
 
-export type OffcanvasPositionToggleFrom = 'top' | 'bottom' | 'start' | 'end';
+/**
+ * One size scale for every placement: the width of a side drawer, the height
+ * of a top/bottom sheet, the max-width of a centred dialog.
+ *
+ * `md` was missing from the old `OverlaySize` while the token and the CSS rule
+ * for it both existed, so one of the four rungs was unreachable.
+ */
+export type OverlaySize = 'sm' | 'md' | 'lg' | 'xl';

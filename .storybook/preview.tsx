@@ -111,6 +111,13 @@ const config: Preview = {
             'Components',
             '*'
           ],
+          // The framework-free layer sits beside the React catalogue rather
+          // than under it: the same components, a different way of using them.
+          'Vanilla',
+          [
+            'Overview',
+            '*'
+          ],
           'Patterns',
           [
             'Mobile',

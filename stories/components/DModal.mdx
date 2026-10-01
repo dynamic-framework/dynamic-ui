@@ -29,37 +29,84 @@ This section provides guidance specifically for using `DModal` in **inline** sce
   </DAlert>
 </Unstyled>
 
+## Placement
+
+One component covers the centred dialog, the four drawers and the fullscreen
+panel, because they were never different things: each pins some edges, fills
+the axis it does not size, and takes its size from one scale.
+
+| `placement` | what it is          | fills        | sized by        |
+|-------------|---------------------|--------------|-----------------|
+| `center`    | a dialog (default)  | nothing      | `max-width`     |
+| `start`     | a drawer            | block axis   | `width`         |
+| `end`       | a drawer            | block axis   | `width`         |
+| `top`       | a sheet             | inline axis  | `height`        |
+| `bottom`    | a sheet             | inline axis  | `height`        |
+| `fill`      | the whole viewport  | both         | nothing         |
+
+`placement` is responsive, so one panel can be a bottom sheet on a phone and a
+dialog on a desktop:
+
+```tsx
+<DModal name="filters" placement={{ xs: 'bottom', md: 'center' }} size="md" />
+```
+
+### Migrating from `DOffcanvas`
+
+`DOffcanvas` is gone. It was the same `<dialog>`, the same stylesheet and the
+same parts, with a second prop set — and the split did not hold up: `centered`
+and `scrollable` were emitted as attributes no rule matched, and
+`fullScreenFrom`'s value was never read, so a modal told to go fullscreen below
+`md` went fullscreen at every width.
+
+| was                        | is now                                      |
+|----------------------------|---------------------------------------------|
+| `<DOffcanvas>`             | `<DModal placement="end">`                  |
+| `openFrom="top"`           | `placement="top"`                           |
+| `centered`                 | — `placement="center"` is centred by definition |
+| `fullScreen`               | `placement="fill"`                          |
+| `fullScreenFrom="md"`      | `placement={{ xs: 'fill', md: 'center' }}`  |
+| `scrollable`               | — removed; `showModal()` makes the page inert |
+| `size` (`sm`/`lg`/`xl`)    | `size` (`sm`/`md`/`lg`/`xl`), at any placement |
+
+`node scripts/css/migrate-overlay.mjs --write` does all of it except
+`fullScreenFrom`, which it reports with its file and line — the old prop's value
+was ignored, so there is no breakpoint to carry over and a person has to say
+which one was meant.
+
 ## CSS Variables
 
 Every value below is a design token: set it on the component, on an ancestor, or
 on `:root` to retheme. The table is generated from `tokens/component/overlay.json`,
 so it cannot fall out of step with the stylesheet.
 
-| Variable                               | Type           | Description             |
-|----------------------------------------|----------------|-------------------------|
-| `--df-overlay-backdrop-color`          | css color      | Backdrop color          |
-| `--df-overlay-z-backdrop`              | number         | Z backdrop              |
-| `--df-overlay-z-panel`                 | number         | Z panel                 |
-| `--df-overlay-bg`                      | css color      | Background              |
-| `--df-overlay-fg`                      | css color      | Foreground              |
-| `--df-overlay-radius`                  | css length     | Radius                  |
-| `--df-overlay-shadow`                  | css box-shadow | Shadow                  |
-| `--df-overlay-margin`                  | css length     | Margin                  |
-| `--df-overlay-header-padding-block`    | css length     | Header padding block    |
-| `--df-overlay-header-padding-inline`   | css length     | Header padding inline   |
-| `--df-overlay-header-gap`              | css length     | Header gap              |
-| `--df-overlay-header-font-size`        | css length     | Header font size        |
-| `--df-overlay-header-font-weight`      | font weight    | Header font weight      |
-| `--df-overlay-body-padding-block`      | css length     | Body padding block      |
-| `--df-overlay-body-padding-inline`     | css length     | Body padding inline     |
-| `--df-overlay-footer-padding-block`    | css length     | Footer padding block    |
-| `--df-overlay-footer-padding-inline`   | css length     | Footer padding inline   |
-| `--df-overlay-footer-gap`              | css length     | Footer gap              |
-| `--df-overlay-separator-size`          | css length     | Separator size          |
-| `--df-overlay-separator-color`         | css color      | Separator color         |
-| `--df-overlay-separator-margin-inline` | css length     | Separator margin inline |
-| `--df-overlay-width-sm`                | css length     | Width sm                |
-| `--df-overlay-width-md`                | css length     | Width md                |
-| `--df-overlay-width-lg`                | css length     | Width lg                |
-| `--df-overlay-width-xl`                | css length     | Width xl                |
-| `--df-overlay-offcanvas-size`          | css length     | Offcanvas size          |
+| Variable                               | Type           | Description                                                    |
+|----------------------------------------|----------------|----------------------------------------------------------------|
+| `--df-overlay-duration`                | css time       | Duration                                                       |
+| `--df-overlay-easing`                  | css easing     | Easing                                                         |
+| `--df-overlay-enter-scale`             | number         | Enter scale                                                    |
+| `--df-overlay-backdrop-color`          | css color      | Backdrop color                                                 |
+| `--df-overlay-z-backdrop`              | number         | Z backdrop                                                     |
+| `--df-overlay-z-panel`                 | number         | Z panel                                                        |
+| `--df-overlay-bg`                      | css color      | Background                                                     |
+| `--df-overlay-fg`                      | css color      | Foreground                                                     |
+| `--df-overlay-radius`                  | css length     | Radius                                                         |
+| `--df-overlay-shadow`                  | css box-shadow | Shadow                                                         |
+| `--df-overlay-margin`                  | css length     | Margin                                                         |
+| `--df-overlay-header-padding-block`    | css length     | Header padding block                                           |
+| `--df-overlay-header-padding-inline`   | css length     | Header padding inline                                          |
+| `--df-overlay-header-gap`              | css length     | Header gap                                                     |
+| `--df-overlay-header-font-size`        | css length     | Header font size                                               |
+| `--df-overlay-header-font-weight`      | font weight    | Header font weight                                             |
+| `--df-overlay-body-padding-block`      | css length     | Body padding block                                             |
+| `--df-overlay-body-padding-inline`     | css length     | Body padding inline                                            |
+| `--df-overlay-footer-padding-block`    | css length     | Footer padding block                                           |
+| `--df-overlay-footer-padding-inline`   | css length     | Footer padding inline                                          |
+| `--df-overlay-footer-gap`              | css length     | Footer gap                                                     |
+| `--df-overlay-separator-size`          | css length     | Separator size                                                 |
+| `--df-overlay-separator-color`         | css color      | Separator color                                                |
+| `--df-overlay-separator-margin-inline` | css length     | Separator margin inline                                        |
+| `--df-overlay-size-sm`                 | css length     | Smallest rung: drawer width, sheet height, or dialog max-width |
+| `--df-overlay-size-md`                 | css length     | Default drawer width                                           |
+| `--df-overlay-size-lg`                 | css length     | Default dialog max-width                                       |
+| `--df-overlay-size-xl`                 | css length     | Largest rung                                                   |

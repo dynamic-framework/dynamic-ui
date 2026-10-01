@@ -36,6 +36,7 @@ export default function DStepper(
     completed,
     alignStart = false,
     className,
+    dataAttributes,
     style,
   } : Props,
 ) {
@@ -64,6 +65,7 @@ export default function DStepper(
       {...vertical && { 'data-orientation': 'vertical' }}
       {...alignStart && !vertical && { 'data-align': 'start' }}
       style={style}
+      {...dataAttributes}
     >
       {options.map(({ label, value, description }) => (
         <div

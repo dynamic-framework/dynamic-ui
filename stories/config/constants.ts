@@ -26,6 +26,12 @@ export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
     chevronDown: 'expand_more',
     chevronLeft: 'chevron_left',
     chevronRight: 'chevron_right',
+    // Required by `IconMapProps` since the carousel gained its own controls.
+    // Missing here, this constant failed to typecheck in every story that uses
+    // it — fourteen of them — which is why `.storybook/tsconfig.json` was never
+    // usable as a gate.
+    play: 'play_arrow',
+    pause: 'pause',
     upload: 'cloud_upload',
     calendar: 'calendar_month',
     check: 'verified',

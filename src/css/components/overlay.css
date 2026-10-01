@@ -16,76 +16,327 @@
     background-color: var(--df-overlay-backdrop-color);
   }
 
+  /**
+   * The same backdrop, for an overlay that is a real `<dialog>`.
+   *
+   * The React build inserts a `.df-backdrop` element; the framework-free build
+   * uses `<dialog>` and gets `::backdrop` from the browser. Both read the same
+   * token, so there is one answer to "how dark is a modal backdrop" — and
+   * without this rule a `<dialog>` opened with `showModal()` gets the UA
+   * default, which is a barely-there grey that reads as no backdrop at all.
+   */
+  .df-overlay::backdrop {
+    background-color: var(--df-overlay-backdrop-color);
+  }
+
+  /**
+   * The panel itself, and the whole of the UA `<dialog>` box answered in one
+   * place.
+   *
+   * An author rule beats a UA rule whatever its specificity — but only for the
+   * properties it actually declares. Everything the UA sets and the author
+   * does not is inherited as-is, and the UA stylesheet sets a lot:
+   *
+   *   dialog        { width: fit-content; height: fit-content; margin: auto;
+   *                   border: solid; padding: 1em; inset-inline: 0 }
+   *   dialog:modal  { position: fixed; inset-block: 0; overflow: auto;
+   *                   max-width: calc(100% - 6px - 2em);
+   *                   max-height: calc(100% - 6px - 2em) }
+   *
+   * That list was answered one line at a time, as each symptom appeared: first
+   * the 2px border, then the `1em` of padding, then `display` overriding
+   * `dialog:not([open])`. The three that were still missing —
+   * `width`/`height: fit-content` and `margin: auto` — are what broke the
+   * offcanvas: a drawer pins one axis, the UA pins the other at `fit-content`
+   * with both of its insets at 0, and an over-constrained box with `auto`
+   * margins is resolved by CENTRING it. So every offcanvas came out
+   * content-sized and centred, which is to say it rendered as a modal that
+   * happened to slide in from the side.
+   *
+   * Answered as a block now rather than per symptom, because the next property
+   * to leak would have looked like a fourth unrelated bug.
+   */
   .df-overlay {
+    /*
+     * The two size inputs, declared `initial` — guaranteed-invalid, so the
+     * `var()` fallbacks further down apply while the properties still exist as
+     * far as `css:validate` is concerned. `DModal` writes whichever ones its
+     * `width`/`height` props resolved to.
+     *
+     * One slot per AXIS, not one for both. A single slot would force the
+     * component to decide in JavaScript which axis an author's value belongs
+     * to, and `placement` is responsive, so there is no single answer:
+     * `placement={{ xs: 'bottom', md: 'end' }}` makes the same value a height
+     * at `xs` and a width at `md`. The stylesheet already knows the placement
+     * it is applying, so it picks.
+     */
+    --df-overlay-size-inline: initial;
+    --df-overlay-size-block: initial;
+
     position: fixed;
+    inset: auto;
     z-index: var(--df-overlay-z-panel);
     display: flex;
     flex-direction: column;
+    width: auto;
+    max-width: 100%;
+    height: auto;
     max-height: 100%;
+    padding: 0;
+    margin: 0;
     overflow: hidden;
     color: var(--df-overlay-fg);
     background-color: var(--df-overlay-bg);
+    border: 0;
     box-shadow: var(--df-overlay-shadow);
   }
 
-  /* --- modal ------------------------------------------------------------ */
+  /**
+   * A closed `<dialog>` stays closed.
+   *
+   * The UA stylesheet hides it with `dialog:not([open]) { display: none }`, and
+   * `display: flex` above overrides that — author styles win over UA styles
+   * regardless of specificity. The panel was therefore sitting on the page
+   * before anything opened it.
+   *
+   * Restated rather than removed from the base rule, because the base rule has
+   * to keep applying to the `<div>` the React build renders, which has no
+   * `open` attribute to match on.
+   */
+  dialog.df-overlay:not([open]) {
+    display: none;
+  }
 
-  .df-overlay[data-kind="modal"] {
+  /**
+   * The open and close animation, in CSS rather than in JavaScript.
+   *
+   * A top-layer `<dialog>` cannot be animated the obvious way: `display` and
+   * `overlay` are discrete properties, so the browser would jump straight to
+   * the end of each. `transition-behavior: allow-discrete` tells it to hold
+   * both at their old value until the rest of the transition finishes, and
+   * `@starting-style` supplies the "before" frame for an element that was
+   * `display: none` a moment ago and therefore has no previous style to
+   * interpolate from.
+   *
+   * This is what replaced `framer-motion` on this path. The library was doing
+   * the animation AND owning when the panel mounted, and `showModal()` has to
+   * be called on an element that is already in the document — so the two were
+   * fighting over the same moment. CSS has no such problem, and the modal path
+   * no longer pulls an animation library onto the page.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    dialog.df-overlay {
+      transition:
+        opacity var(--df-overlay-duration) var(--df-overlay-easing),
+        translate var(--df-overlay-duration) var(--df-overlay-easing),
+        scale var(--df-overlay-duration) var(--df-overlay-easing),
+        display var(--df-overlay-duration) allow-discrete,
+        overlay var(--df-overlay-duration) allow-discrete;
+    }
+
+    dialog.df-overlay::backdrop {
+      transition:
+        opacity var(--df-overlay-duration) var(--df-overlay-easing),
+        display var(--df-overlay-duration) allow-discrete,
+        overlay var(--df-overlay-duration) allow-discrete;
+    }
+
+    dialog.df-overlay:not([open]),
+    dialog.df-overlay:not([open])::backdrop {
+      opacity: 0;
+    }
+
+    /* A centred panel grows into place; an edge-anchored one slides in from
+       its own edge. One `translate` per edge, the same four the `data-placement`
+       rules anchor. */
+    dialog.df-overlay[data-placement="center"]:not([open]),
+    dialog.df-overlay[data-placement="fill"]:not([open]) {
+      scale: var(--df-overlay-enter-scale);
+    }
+
+    dialog.df-overlay[data-placement="start"]:not([open]) {
+      translate: -100% 0;
+    }
+
+    dialog.df-overlay[data-placement="end"]:not([open]) {
+      translate: 100% 0;
+    }
+
+    dialog.df-overlay[data-placement="top"]:not([open]) {
+      translate: 0 -100%;
+    }
+
+    dialog.df-overlay[data-placement="bottom"]:not([open]) {
+      translate: 0 100%;
+    }
+
+    /**
+     * The frame before it opened.
+     *
+     * An element that was `display: none` has no previous computed style to
+     * interpolate from, so without this it would simply appear at its final
+     * position. `@starting-style` is the only way to give a top-layer element
+     * an entry animation in CSS.
+     */
+    @starting-style {
+      dialog.df-overlay[open],
+      dialog.df-overlay[open]::backdrop {
+        opacity: 0;
+      }
+
+      dialog.df-overlay[data-placement="center"][open],
+      dialog.df-overlay[data-placement="fill"][open] {
+        scale: var(--df-overlay-enter-scale);
+      }
+
+      dialog.df-overlay[data-placement="start"][open] {
+        translate: -100% 0;
+      }
+
+      dialog.df-overlay[data-placement="end"][open] {
+        translate: 100% 0;
+      }
+
+      dialog.df-overlay[data-placement="top"][open] {
+        translate: 0 -100%;
+      }
+
+      dialog.df-overlay[data-placement="bottom"][open] {
+        translate: 0 100%;
+      }
+    }
+  }
+
+  /* --- geometry ---------------------------------------------------------
+   *
+   * One model for every panel: a PLACEMENT and a SIZE.
+   *
+   * This replaced `data-kind` + `data-from` + `data-size` + `data-fullscreen`
+   * + `data-centered`. Those five said one thing between them, and splitting
+   * it let three of them rot: `data-centered` and `data-scrollable` were
+   * emitted by the component and matched by no rule at all, and
+   * `data-fullscreen="md"` had its value ignored, so a modal told to go
+   * fullscreen only below `md` went fullscreen everywhere.
+   *
+   * A drawer and a centred dialog were never two models. Both pin some edges,
+   * fill the axis they do not size, and take their size from the same scale.
+   * `center` is the placement that pins all four and fills neither.
+   */
+
+
+  /*
+   * Every placement pins BOTH axes and BOTH insets of each.
+   *
+   * An axis the panel does not size has to be pinned at both ends and left
+   * `auto` — that is what makes it fill. Leaving it out does not fall back to
+   * filling: the UA's `fit-content` and `margin: auto` take over and centre
+   * the panel instead, which is what turned every drawer into a modal that
+   * slid in from the side. See the base rule above.
+   */
+
+  /**
+   * Centred: all four edges pinned, `auto` margins doing the centring, and a
+   * size that CAPS rather than sets — a dialog hugs its content.
+   *
+   * `height: fit-content`, NOT `auto`, and the difference is the whole
+   * behaviour. With both block insets at 0 and the height `auto`, the box is
+   * not over-constrained: the browser sets the `auto` margins to 0 and SOLVES
+   * for the height, so the dialog fills the viewport and the `margin: auto`
+   * never centres anything. A definite height is what makes it
+   * over-constrained, and that is the case the cascade resolves by handing the
+   * leftover space to the margins.
+   *
+   * It read as working before this block existed because the base rule
+   * declared no `height` at all and the UA's `dialog { height: fit-content }`
+   * supplied one. Resetting the UA box replaced that with `auto` and took the
+   * centring with it.
+   */
+  .df-overlay[data-placement="center"] {
     inset: 0;
     width: calc(100% - var(--df-overlay-margin) * 2);
-    max-width: var(--df-overlay-width-lg);
-    max-height: calc(100% - var(--df-overlay-margin) * 2);
+    max-width: var(--df-overlay-size-inline, var(--df-overlay-size-lg));
+    height: fit-content;
+    max-height: var(--df-overlay-size-block, calc(100% - var(--df-overlay-margin) * 2));
     margin: auto;
     border-radius: var(--df-overlay-radius);
   }
 
-  .df-overlay[data-kind="modal"][data-size="sm"] { max-width: var(--df-overlay-width-sm); }
-  .df-overlay[data-kind="modal"][data-size="md"] { max-width: var(--df-overlay-width-md); }
-  .df-overlay[data-kind="modal"][data-size="lg"] { max-width: var(--df-overlay-width-lg); }
-  .df-overlay[data-kind="modal"][data-size="xl"] { max-width: var(--df-overlay-width-xl); }
-
-  .df-overlay[data-kind="modal"][data-fullscreen] {
-    width: 100%;
-    max-width: none;
-    height: 100%;
+  /* Edge-anchored on the inline axis: sized across, filling down. */
+  .df-overlay[data-placement="start"],
+  .df-overlay[data-placement="end"] {
+    inset-block: 0;
+    width: var(--df-overlay-size-inline, var(--df-overlay-size-md));
+    height: auto;
     max-height: none;
-    margin: 0;
+  }
+
+  /*
+   * Edge-anchored on the block axis: filling across, and covering the viewport
+   * height unless given one.
+   *
+   * 2.x reached the same default by overriding Bootstrap's `30vh`, with the
+   * reason written down: a fixed height cuts long content off and puts a
+   * second scrollbar inside the body. The body already scrolls on its own.
+   */
+  .df-overlay[data-placement="top"],
+  .df-overlay[data-placement="bottom"] {
+    inset-inline: 0;
+    width: auto;
+    max-width: none;
+    height: var(--df-overlay-size-block, 100%);
+  }
+
+  /* The whole viewport. Replaces `fullScreen`/`fullScreenFrom`: because
+     `placement` is responsive, `{ xs: 'fill', md: 'center' }` is the thing
+     `fullScreenFrom="md"` was trying to say and never managed. */
+  .df-overlay[data-placement="fill"] {
+    inset: 0;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
     border-radius: 0;
   }
 
-  /* --- offcanvas -------------------------------------------------------- */
+  .df-overlay[data-placement="start"] { inset-inline: 0 auto; }
 
-  .df-overlay[data-kind="offcanvas"] {
-    /* Declared, not a `var()` fallback: the component writes a per-instance
-       width or height here, and a fallback would hide a missing definition. */
-    --df-overlay-size: var(--df-overlay-offcanvas-size);
+  .df-overlay[data-placement="end"] { inset-inline: auto 0; }
 
-    max-height: none;
-  }
+  .df-overlay[data-placement="top"] { inset-block: 0 auto; }
 
-  .df-overlay[data-kind="offcanvas"][data-from="start"] {
-    inset-block: 0;
-    inset-inline-start: 0;
-    width: var(--df-overlay-size);
-  }
+  .df-overlay[data-placement="bottom"] { inset-block: auto 0; }
 
-  .df-overlay[data-kind="offcanvas"][data-from="end"] {
-    inset-block: 0;
-    inset-inline-end: 0;
-    width: var(--df-overlay-size);
-  }
+  /*
+   * One size scale for every placement.
+   *
+   * A drawer could not take a named size and a modal could not take a free
+   * length — an arbitrary split. `width-*` was modal-only and `offcanvas-size`
+   * was drawer-only; one scale replaces both.
+   *
+   * `size-lg` and `size-xl` still resolve to viewport breakpoints, which is
+   * the wrong scale for a panel width — the same category error as the
+   * carousel's arrows taking `measure.*`. The `measure` scale stops at 800px,
+   * so closing that gap is a change to the PRIMITIVE scale and is deliberately
+   * not made here. `size` now sets whichever axis the placement
+   * sizes, so `size="md"` is a 480px-wide drawer, a 480px-tall sheet, or a
+   * modal capped at 480px, and an app gets the same four rungs everywhere.
+   */
+  .df-overlay[data-size="sm"] { --df-overlay-size-inline: var(--df-overlay-size-sm); }
+  .df-overlay[data-size="md"] { --df-overlay-size-inline: var(--df-overlay-size-md); }
+  .df-overlay[data-size="lg"] { --df-overlay-size-inline: var(--df-overlay-size-lg); }
+  .df-overlay[data-size="xl"] { --df-overlay-size-inline: var(--df-overlay-size-xl); }
 
-  .df-overlay[data-kind="offcanvas"][data-from="top"] {
-    inset-block-start: 0;
-    inset-inline: 0;
-    height: var(--df-overlay-size);
-  }
+  .df-overlay[data-placement="top"][data-size="sm"],
+  .df-overlay[data-placement="bottom"][data-size="sm"] { --df-overlay-size-block: var(--df-overlay-size-sm); }
 
-  .df-overlay[data-kind="offcanvas"][data-from="bottom"] {
-    inset-block-end: 0;
-    inset-inline: 0;
-    height: var(--df-overlay-size);
-  }
+  .df-overlay[data-placement="top"][data-size="md"],
+  .df-overlay[data-placement="bottom"][data-size="md"] { --df-overlay-size-block: var(--df-overlay-size-md); }
+
+  .df-overlay[data-placement="top"][data-size="lg"],
+  .df-overlay[data-placement="bottom"][data-size="lg"] { --df-overlay-size-block: var(--df-overlay-size-lg); }
+
+  .df-overlay[data-placement="top"][data-size="xl"],
+  .df-overlay[data-placement="bottom"][data-size="xl"] { --df-overlay-size-block: var(--df-overlay-size-xl); }
 
   /* --- shared parts ----------------------------------------------------- */
 
@@ -142,11 +393,13 @@
    * A modal with a fixed shape: a bold title, a roomier body, and a critical
    * variant. 2.x spelled that out with `fw-bold`, `py-3 px-5` and two `mb-4`s
    * in the markup.
+   *
+   * No `max-width` on the block itself: `.df-confirm-modal` is one class and
+   * `[data-placement="center"]` is two attributes, so this rule lost the width
+   * argument it looked like it was winning — the dialog was `size="lg"` wide
+   * while this said `md`. It asks for `size="md"` now, which is the same
+   * request made where the cascade can hear it.
    */
-  .df-confirm-modal {
-    max-width: var(--df-overlay-width-md);
-  }
-
   .df-confirm-modal-title {
     margin: 0;
     font-weight: var(--df-overlay-header-font-weight);

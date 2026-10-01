@@ -64,7 +64,7 @@ export default function DConfirmModalUI({ entry }: Props) {
   return (
     <DModal
       name={entry.id}
-      size="lg"
+      size="md"
       className="df-confirm-modal"
       {...critical && { 'data-critical': '' }}
     >

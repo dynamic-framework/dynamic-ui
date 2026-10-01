@@ -1,6 +1,8 @@
 {
   "$description": "Toast tokens.",
   "toast": {
+    "region-gap": {"$type": "dimension", "$value": "{size.3}"},
+    "region-inset": {"$type": "dimension", "$value": "{size.4}"},
     "min-width": {"$type": "dimension", "$value": "{measure.md}"},
     "padding-block": {"$type": "dimension", "$value": "{size.3}"},
     "padding-inline": {"$type": "dimension", "$value": "{size.4}"},

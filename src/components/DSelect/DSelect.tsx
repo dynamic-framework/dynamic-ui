@@ -204,7 +204,7 @@ export default function DSelect<Value extends string | number = string>(
    * else.
    *
    * `scrollIntoView` was the obvious call and the wrong one: it scrolls every
-   * scrollable ancestor, and the menu lives in a portal on `document.body`. On
+   * ancestor, and the menu lives in a portal on `document.body`. On
    * the frame it mounts, floating-ui has not positioned it yet, so it sits at
    * the document's top-left — and asking the browser to bring that into view
    * scrolls the whole page back to the top the moment the control is clicked.

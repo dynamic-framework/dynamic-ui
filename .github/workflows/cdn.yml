@@ -120,6 +120,12 @@ jobs:
       # source of truth now, so there is nothing left to reverse-engineer.
       - name: Upload design tokens to CDN (versioned)
         run: |
+          aws s3 sync dist/css/ \
+            s3://${{ secrets.AWS_S3_BUCKET }}/assets/${{ steps.version.outputs.semver }}/css/ \
+            --cache-control "public, max-age=31536000, immutable"
+          aws s3 sync dist/vanilla/ \
+            s3://${{ secrets.AWS_S3_BUCKET }}/assets/${{ steps.version.outputs.semver }}/vanilla/ \
+            --cache-control "public, max-age=31536000, immutable"
           aws s3 sync dist/tokens/ \
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/tokens/ \
             --exclude "dynamic.figma.json" \

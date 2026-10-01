@@ -21,6 +21,8 @@ so it cannot fall out of step with the stylesheet.
 
 | Variable                           | Type           | Description         |
 |------------------------------------|----------------|---------------------|
+| \`--df-toast-region-gap\`          | css length     | Region gap          |
+| \`--df-toast-region-inset\`        | css length     | Region inset        |
 | \`--df-toast-min-width\`           | css length     | Min width           |
 | \`--df-toast-padding-block\`       | css length     | Padding block       |
 | \`--df-toast-padding-inline\`      | css length     | Padding inline      |

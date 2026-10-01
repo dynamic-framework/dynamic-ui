@@ -297,7 +297,7 @@ describe('<DSelect />', () => {
     /**
      * Opening the menu used to scroll the page back to the top.
      *
-     * `scrollIntoView` scrolls EVERY scrollable ancestor, and the menu is in a
+     * `scrollIntoView` scrolls EVERY ancestor, and the menu is in a
      * portal on `document.body`; on the frame it mounts it has not been
      * positioned yet, so it is at the document's top-left and bringing it into
      * view takes the whole page with it.

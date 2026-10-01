@@ -17,7 +17,7 @@ moved by a transform. That is not an implementation detail — it is most of the
 behaviour:
 
 - **Touch drag, with the right momentum.** The browser's, tuned per platform.
-- **Trackpad and shift+wheel** scroll it, because it is a scrollable thing.
+- **Trackpad and shift+wheel** scroll it, because it is a thing.
 - **Keyboard** works once the strip is focused: it is a focusable scroll region,
   so the arrow keys already scroll it. There is no key handler to get wrong.
 - **It works before JavaScript runs**, and if JavaScript never runs it is still
@@ -489,7 +489,7 @@ export const NoControls: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'With the arrows and dots off it is a plain scrollable strip — which is still fully operable by touch, trackpad and keyboard, because the scrolling was never the controls\' job.',
+        story: 'With the arrows and dots off it is a plain strip — which is still fully operable by touch, trackpad and keyboard, because the scrolling was never the controls\' job.',
       },
     },
   },

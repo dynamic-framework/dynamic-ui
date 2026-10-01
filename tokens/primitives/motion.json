@@ -38,5 +38,10 @@
     "popover": { "$value": 1070 },
     "tooltip": { "$value": 1080 },
     "toast": { "$value": 1090 }
+  },
+  "scale": {
+    "$type": "number",
+    "$description": "Scale an element enters and leaves from. A panel that grows from nothing reads as appearing out of thin air; starting near its final size reads as arriving.",
+    "enter": {"$value": 0.95}
   }
 }

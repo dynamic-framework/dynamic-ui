@@ -1,6 +1,10 @@
 {
   "$description": "Modal, offcanvas and their shared backdrop. One token set for both: they are the same panel anchored differently, and 2.x kept `modal-*` and `offcanvas-*` apart, which is how their header gaps and separators drifted.",
   "overlay": {
+    "duration": {"$type": "duration", "$value": "{duration.normal}"},
+    "easing": {"$type": "cubicBezier", "$value": "{easing.decelerate}"},
+    "enter-scale": {"$type": "number", "$value": "{scale.enter}"},
+
     "backdrop-color": {"$type": "color", "$value": "{bg.overlay}"},
     "z-backdrop": {"$type": "number", "$value": "{z.backdrop}"},
     "z-panel": {"$type": "number", "$value": "{z.modal}"},
@@ -28,10 +32,9 @@
     "separator-color": {"$type": "color", "$value": "{border.muted}"},
     "separator-margin-inline": {"$type": "dimension", "$value": "{size.5}"},
 
-    "width-sm": {"$type": "dimension", "$value": "{measure.md}"},
-    "width-md": {"$type": "dimension", "$value": "{breakpoint.sm}"},
-    "width-lg": {"$type": "dimension", "$value": "{breakpoint.md}"},
-    "width-xl": {"$type": "dimension", "$value": "{breakpoint.lg}"},
-    "offcanvas-size": {"$type": "dimension", "$value": "{breakpoint.sm}"}
+    "size-sm": {"$type": "dimension", "$value": "{measure.md}", "$description": "Smallest rung: drawer width, sheet height, or dialog max-width"},
+    "size-md": {"$type": "dimension", "$value": "{measure.lg}", "$description": "Default drawer width"},
+    "size-lg": {"$type": "dimension", "$value": "{breakpoint.md}", "$description": "Default dialog max-width"},
+    "size-xl": {"$type": "dimension", "$value": "{breakpoint.lg}", "$description": "Largest rung"}
   }
 }

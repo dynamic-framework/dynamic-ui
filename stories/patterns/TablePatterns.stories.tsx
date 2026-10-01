@@ -7,7 +7,7 @@ import {
   DBadge,
   DBox,
   DIcon,
-  DOffcanvas,
+  DModal,
   DInput,
   DInputCheck,
   DPaginator,
@@ -1404,21 +1404,20 @@ function TransactionScreeningFiltersOffcanvas(
   }, [payload.values.minAmountFilter, payload.values.statusFilter, payload.values.typeFilter]);
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
       staticBackdrop={false}
-      scrollable
-      openFrom="end"
+      placement="end"
     >
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h6
           className="df-mb-0"
           id={`${name}Label`}
         >
           Advanced Filters
         </h6>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         <div className="df-mb-3">
           <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
@@ -1458,8 +1457,8 @@ function TransactionScreeningFiltersOffcanvas(
             onChange={setMinAmountFilter}
           />
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer>
+      </DModal.Body>
+      <DModal.Footer>
         <button
           type="button"
           className="df-button"
@@ -1488,8 +1487,8 @@ function TransactionScreeningFiltersOffcanvas(
         >
           Clear Filters
         </button>
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 
@@ -1620,7 +1619,7 @@ export const TransactionHistoryOffcanvas: Story = {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: 'Uses `DContextProvider` + `openPortal` + `DOffcanvas` to open a responsive advanced-filters panel with apply/clear actions.',
+        story: 'Uses `DContextProvider` + `openPortal` + `DModal` to open a responsive advanced-filters panel with apply/clear actions.',
       },
       source: {
         code: `function TransactionScreeningFiltersOffcanvas({ name, payload }) {
@@ -1636,18 +1635,17 @@ export const TransactionHistoryOffcanvas: Story = {
   }, [payload.values.minAmountFilter, payload.values.statusFilter, payload.values.typeFilter]);
 
   return (
-    <DOffcanvas
+    <DModal
       name={name}
       staticBackdrop={false}
-      scrollable
-      openFrom="end"
+      placement="end"
     >
-      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h6 className="df-mb-0" id={\`\${name}Label\`}>
           Advanced Filters
         </h6>
-      </DOffcanvas.Header>
-      <DOffcanvas.Body>
+      </DModal.Header>
+      <DModal.Body>
         <div className="df-mb-3">
           <small className="df-block df-text-secondary df-mb-1">Type</small>
           <select
@@ -1685,8 +1683,8 @@ export const TransactionHistoryOffcanvas: Story = {
             onChange={setMinAmountFilter}
           />
         </div>
-      </DOffcanvas.Body>
-      <DOffcanvas.Footer>
+      </DModal.Body>
+      <DModal.Footer>
         <button
           type="button"
           className="df-button" data-variant="solid" data-color="primary"
@@ -1707,8 +1705,8 @@ export const TransactionHistoryOffcanvas: Story = {
         >
           Clear Filters
         </button>
-      </DOffcanvas.Footer>
-    </DOffcanvas>
+      </DModal.Footer>
+    </DModal>
   );
 }
 

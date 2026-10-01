@@ -2,11 +2,22 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DStepper from './DStepper';
 
-// Mock mobile and desktop stepper components
+/**
+ * Stand-ins for the two panes.
+ *
+ * They forward `dataAttributes` because the real components do, and because
+ * that is the whole mechanism being tested here: `DStepper` puts the breakpoint
+ * attribute on the PANE, and the media queries in `stepper.css` read it there.
+ *
+ * A mock that dropped it would pass while the real thing was broken — which is
+ * what happened. The attribute used to go on a wrapper `DStepper` rendered
+ * itself, so these mocks never had to carry it, and the nesting bug that made
+ * the desktop pane invisible at every width was invisible to this file too.
+ */
 jest.mock('../DStepperMobile', () => ({
   __esModule: true,
-  default: jest.fn(({ currentStep }) => (
-    <div data-testid="mobile-stepper">
+  default: jest.fn(({ currentStep, dataAttributes }) => (
+    <div data-testid="mobile-stepper" className="df-stepper-mobile" {...dataAttributes}>
       {`Mobile Step: ${currentStep}`}
     </div>
   )),
@@ -14,8 +25,8 @@ jest.mock('../DStepperMobile', () => ({
 
 jest.mock('../DStepperDesktop', () => ({
   __esModule: true,
-  default: jest.fn((props: { currentStep: number }) => (
-    <div data-testid="desktop-stepper">
+  default: jest.fn((props: { currentStep: number; dataAttributes?: Record<string, string> }) => (
+    <div data-testid="desktop-stepper" className="df-stepper-desktop" {...props.dataAttributes}>
       {`Desktop Step: ${props.currentStep}`}
     </div>
   )),

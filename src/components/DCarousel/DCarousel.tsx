@@ -272,7 +272,7 @@ function DCarousel(
         ref={viewportRef}
         className="df-carousel-viewport"
         /*
-         * Focusable because it SCROLLS. A scrollable region a keyboard cannot
+         * Focusable because it SCROLLS. A region a keyboard cannot
          * reach fails WCAG 2.1.1, and once it is focused the browser's own
          * arrow-key scrolling is the navigation — which is why there is no key
          * handler here to get wrong. The lint rule is about decorative elements

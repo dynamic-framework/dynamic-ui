@@ -18,7 +18,6 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
   return (
     <DModal
       name="example"
-      centered
       staticBackdrop={false}
     >
       <DModal.Header onClose={closePortal} showCloseButton>
