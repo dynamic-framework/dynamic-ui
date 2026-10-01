@@ -18,7 +18,10 @@
     text-align: center;
   }
 
+  /* The state block is a flex column with its own `gap`; the document's flow
+     margin would stack on top of it. `.df-state-message` already said so. */
   .df-state-icon {
+    margin-block: 0;
     color: var(--df-state-icon-color);
   }
 

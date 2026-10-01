@@ -3,7 +3,9 @@
   "text": {
     "$description": "Type roles. 2.x expressed these as `$h1-font-size` .. `$h6-font-size` plus `$display1..6`, each wired through rfs() fluid sizing. Fluid sizing cannot round-trip to Figma, so the sizes here are discrete; responsive scaling belongs in the Breakpoint collection.",
     "body": {
+      "$description": "Running text. `margin-block-end` is what makes a paragraph a paragraph in a CMS body: the reset zeroes browser defaults because component chrome spaces itself with `gap`, and this token puts the rhythm back on the element, where a design handoff expects to find it.",
       "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
+      "margin-block-end": { "$type": "dimension", "$value": "{size.4}" },
       "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
       "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" },
       "line-height": { "$type": "number", "$value": "{line-height.normal}" }
@@ -17,8 +19,10 @@
       "line-height": { "$type": "number", "$value": "{line-height.snug}" }
     },
     "heading": {
-      "$description": "Shared across h1-h6. 2.x used $font-weight-bold, whose value was 600 — the token named `semibold` here, so the rendered weight is unchanged.",
+      "$description": "Shared across h1-h6. 2.x used $font-weight-bold, whose value was 600 — the token named `semibold` here, so the rendered weight is unchanged. More room above than below, because a heading opens a section and belongs with the text it introduces; adjacent margins collapse, so a heading after a paragraph takes the larger of the two rather than their sum.",
       "font-family": { "$type": "fontFamily", "$value": "{font-family.sans}" },
+      "margin-block-start": { "$type": "dimension", "$value": "{size.7}" },
+      "margin-block-end": { "$type": "dimension", "$value": "{size.2}" },
       "font-weight": { "$type": "fontWeight", "$value": "{font-weight.semibold}" },
       "line-height": { "$type": "number", "$value": "{line-height.tight}" }
     },
@@ -34,6 +38,11 @@
     "display-4": { "font-size": { "$type": "dimension", "$value": "{font-size.1200}" } },
     "display-5": { "font-size": { "$type": "dimension", "$value": "{font-size.1100}" } },
     "display-6": { "font-size": { "$type": "dimension", "$value": "{font-size.1000}" } },
+    "list": {
+      "$description": "Lists in running text. Items sit closer together than paragraphs do, because a list is one thought broken up rather than several.",
+      "item-margin-block-start": { "$type": "dimension", "$value": "{size.2}" },
+      "nested-margin-block": { "$type": "dimension", "$value": "{size.2}" }
+    },
     "label": {
       "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
       "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" }

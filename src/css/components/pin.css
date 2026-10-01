@@ -80,6 +80,11 @@
     padding-inline: var(--df-otp-padding-inline);
   }
 
+  /* The OTP heading is chrome: the block below spaces itself. */
+  .df-otp-title {
+    margin-block: 0 var(--df-otp-gap);
+  }
+
   .df-otp-group {
     display: flex;
     flex-direction: column;

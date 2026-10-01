@@ -9,6 +9,52 @@
  * Responsive scaling arrives as the Breakpoint token collection.
  */
 @layer df.base {
+  /**
+   * Flow rhythm, on the elements, from the `text.*` roles.
+   *
+   * These are real `margin-block` values rather than an opt-in `* + *` scope,
+   * because the markup this has to serve is markup nobody can add a class to:
+   * a CMS body, a Liquid template, a block of terms pasted into a modal. A
+   * scope that has to be remembered is a scope that gets forgotten, and the
+   * symptom — text running together — looks like a content problem rather than
+   * a missing class.
+   *
+   * Adjacent margins collapse, which is the point. A heading after a paragraph
+   * takes the LARGER of the paragraph's bottom and the heading's top, not the
+   * sum; that is the browser's own model and the one a CMS author already has
+   * in their head. Component chrome switches these off in the component layer,
+   * which wins cleanly over this one.
+   */
+  p,
+  ul, ol, dl,
+  blockquote,
+  figure,
+  pre,
+  table {
+    margin-block: 0 var(--df-text-body-margin-block-end);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-block:
+      var(--df-text-heading-margin-block-start)
+      var(--df-text-heading-margin-block-end);
+  }
+
+  /* A list is one thought broken up, so its items sit closer than paragraphs. */
+  li + li {
+    margin-block-start: var(--df-text-list-item-margin-block-start);
+  }
+
+  /* A nested list belongs to the item above it; the full paragraph gap would
+     detach it. */
+  :is(ul, ol) :is(ul, ol) {
+    margin-block: var(--df-text-list-nested-margin-block);
+  }
+
+  dd {
+    margin-inline-start: var(--df-size-6);
+  }
+
   h1, h2, h3, h4, h5, h6,
   .df-h1, .df-h2, .df-h3, .df-h4, .df-h5, .df-h6 {
     font-family: var(--df-text-heading-font-family);

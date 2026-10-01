@@ -66,7 +66,7 @@
     "tokens:verify": "node scripts/tokens/verify.mjs",
     "tokens:figma:push": "node scripts/tokens/figma-push.mjs",
     "tokens:figma:pull": "node scripts/tokens/figma-pull.mjs",
-    "css": "npm run tokens && npm run css:build && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage && npm run css:attributes",
+    "css": "npm run tokens && npm run css:build && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage && npm run css:attributes && npm run css:flow",
     "css:build": "node scripts/css/build.mjs",
     "css:validate": "node scripts/css/validate.mjs",
     "css:verify": "node scripts/css/verify.mjs",
@@ -93,7 +93,8 @@
     "build:vanilla": "node scripts/build-vanilla.mjs",
     "css:attributes": "node scripts/css/attributes.mjs",
     "typecheck:stories": "node scripts/typecheck-stories.mjs",
-    "tokens:orphans": "node scripts/tokens/orphans.mjs"
+    "tokens:orphans": "node scripts/tokens/orphans.mjs",
+    "css:flow": "node scripts/css/flow.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

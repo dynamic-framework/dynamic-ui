@@ -5,9 +5,12 @@ import { join } from 'path';
 
 import { render } from '@testing-library/react';
 
+import DButton from '../components/DButton';
 import DCollapse from '../components/DCollapse';
 import DModal from '../components/DModal';
+import DStepper from '../components/DStepper';
 import DTabs from '../components/DTabs';
+import DTimeline from '../components/DTimeline';
 
 /**
  * The vanilla markup must contain everything React renders.
@@ -72,6 +75,9 @@ const ALLOWED_ABSENT: Record<string, string[]> = {
   ],
   collapse: [],
   tabs: [],
+  button: [],
+  timeline: [],
+  stepper: [],
 };
 
 describe.each([
@@ -89,6 +95,45 @@ describe.each([
       <p>Answer</p>
     </DCollapse>,
   ), () => storySource('Collapse.stories.tsx')],
+
+  /*
+   * The presentational three.
+   *
+   * These have no behaviour at all — no `data-df-` attribute, no script — so
+   * their vanilla stories are PURE documentation: a page of markup claiming to
+   * be what React renders. Nothing else checks that claim, and a class the
+   * stories forget is a component that silently looks wrong in a template
+   * while looking right in Storybook's React pages.
+   */
+  ['button', () => reactClasses(
+    <>
+      <DButton text="Transfer" />
+      <DButton text="Download" iconStart="download" />
+      <DButton text="Saving" loading />
+    </>,
+  ), () => storySource('Button.stories.tsx')],
+
+  ['timeline', () => reactClasses(
+    <DTimeline
+      items={[
+        {
+          title: 'Order placed', description: 'We received your order.', time: '09:30', status: 'success',
+        },
+        { title: 'Delivered', time: 'Pending' },
+      ]}
+    />,
+  ), () => storySource('Timeline.stories.tsx')],
+
+  ['stepper', () => reactClasses(
+    <DStepper
+      options={[
+        { label: 'Amount', value: 1 },
+        { label: 'Review', value: 2, description: 'Check the details' },
+        { label: 'Done', value: 3 },
+      ]}
+      currentStep={2}
+    />,
+  ), () => storySource('Stepper.stories.tsx')],
 
   ['modal', () => reactClasses(
     <DModal name="m">

@@ -101,6 +101,60 @@ Use `.text-{token}` with semantic states and extended palettes:
 
 <br />
 
+### Flow spacing
+
+`p`, the headings, lists, `blockquote`, `pre`, `figure` and `table` carry their
+own vertical rhythm, from the `text.*` roles. No class, no wrapper:
+
+```html
+<h3>Terms</h3>
+<p>The first paragraph.</p>
+<p>The second, with room above it.</p>
+```
+
+<div className="df-p-4 df-mb-4" style={{ border: '1px solid var(--df-border-muted)', borderRadius: 'var(--df-radius-md)' }}>
+  <h3 style={{ marginBlockStart: 0 }}>Terms</h3>
+  <p>The first paragraph.</p>
+  <p>The second, with room above it.</p>
+  <ul>
+    <li>Lists too.</li>
+    <li>With tighter spacing between items.</li>
+  </ul>
+</div>
+
+This is deliberate, and it was the other way round for a while. The argument
+for zeroing everything is real: component chrome lays itself out with flex or
+grid `gap`, and a browser margin there leaks out of the flex item, collapses
+against its neighbours and fights the gap.
+
+But that only serves markup the library *draws*. Markup it *displays* — a CMS
+body, a Liquid template, a block of terms pasted into a modal — has no class to
+hang spacing on, and a design handoff describes spacing on those elements.
+Spacing that has to be opted into is spacing that gets forgotten, and the
+symptom reads as a content problem rather than a missing class.
+
+So the margins live on the elements, and **component chrome switches them off
+in the component layer**, which beats the base layer cleanly — no
+`!important`, no specificity games. `css:flow` fails the build if a component
+renders a flow element without doing so.
+
+Worth knowing:
+
+- Adjacent margins **collapse**, which is the point. A heading after a
+  paragraph takes the larger of the paragraph's bottom and the heading's top,
+  not the sum — the browser's own model, and the one a CMS author already has.
+- A heading gets more room **above** than **below**: it opens a section and
+  belongs with the text it introduces.
+- The library's own content slots — a modal body, a card body — trim the first
+  and last child, so text sits flush against the container's padding instead of
+  adding to it.
+- The tokens: `--df-text-body-margin-block-end`,
+  `--df-text-heading-margin-block-start`, `--df-text-heading-margin-block-end`,
+  `--df-text-list-item-margin-block-start`,
+  `--df-text-list-nested-margin-block`.
+
+<br />
+
 ### Text decoration and font style
 
 - Underline: `.text-decoration-underline`

@@ -74,7 +74,7 @@ export default function DOtp(
 
   return (
     <div className={className}>
-      <p>{texts.title}</p>
+      <p className="df-otp-title">{texts.title}</p>
       <div className="df-otp">
         <div className="df-otp-group">
           <DInputPin

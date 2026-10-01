@@ -72,7 +72,19 @@ DF.enhance(myContainer);
 
 ## What is here, and what is next
 
-**This phase:** tabs, collapse, modal, toast.
+**Behaviours this phase:** tabs, collapse, modal, toast.
+
+**Markup only — no script at all:** button, timeline, stepper.
+
+That second group is the larger one, and it is worth saying plainly: most of
+this library needs no JavaScript. A button is a `<button>`, a timeline is a
+list of things that already happened, a stepper is a status display. Their
+pages here document the markup contract and nothing else — load the stylesheet
+and they work with the bundle absent.
+
+`src/vanilla/parity.spec.tsx` holds every one of those pages to the DOM the
+React component renders, because a page of markup claiming to be the contract
+is worth exactly as much as the thing that checks the claim.
 
 Each one is small for a reason. The modal is a real `<dialog>`, so focus
 trapping, page inertness, Escape, the backdrop and the top layer are the

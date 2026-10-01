@@ -12,16 +12,26 @@
     box-sizing: border-box;
   }
 
-  /* Browser default margins are a constant source of collapsing-margin bugs;
-     spacing is laid out with flex/grid `gap` instead. */
+  /**
+   * Only the elements whose default margin is never wanted.
+   *
+   * `p`, the headings and the other flow elements used to be here too, and
+   * that was half a system. It is correct for everything the library DRAWS —
+   * a card title, a modal header, a toast title all sit in a flex or grid
+   * container whose `gap` owns the spacing, and a browser margin there leaks
+   * out of the flex item and fights the gap.
+   *
+   * It is wrong for everything the library DISPLAYS. A CMS body, a terms
+   * block, a Liquid template: the author writes `<p>` and `<h3>` and has no
+   * class to hang spacing on. Zeroed globally, that runs together — and the
+   * design tokens a client hands over describe spacing on those elements,
+   * which has to land somewhere.
+   *
+   * So the flow margins live in `base/typography.css`, on the elements, from
+   * the `text.*` roles; and component chrome turns them off in its own
+   * stylesheet, where the component layer beats the base layer cleanly.
+   */
   body,
-  h1, h2, h3, h4, h5, h6,
-  p,
-  figure,
-  blockquote,
-  dl,
-  dd,
-  pre,
   fieldset {
     margin: 0;
   }

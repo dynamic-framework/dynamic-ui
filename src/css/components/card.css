@@ -87,3 +87,46 @@
     outline-offset: var(--df-focus-ring-offset);
   }
 }
+
+/**
+ * Flow content inside the library's content slots.
+ *
+ * These are the places a consumer puts text the library did not write: a card
+ * body, a modal body, the inside of a collapse. The flow elements in there
+ * SHOULD carry the document rhythm — that is the whole reason the margins moved
+ * onto the elements — but the first one's top margin and the last one's bottom
+ * margin have nothing to separate them from. They just add to the container's
+ * padding, so a card with 16px of padding reads as 32px at the top and bottom.
+ *
+ * Trimming the ends is the standard answer and it keeps the rhythm BETWEEN
+ * items intact. In its own block rather than inside each component's, because
+ * it is one rule about one idea: where a slot ends.
+ *
+ * `:where()` keeps the whole thing at zero specificity, so a component that
+ * wants different behaviour, or a consumer's own rule, wins without a fight.
+ */
+@layer df.components {
+  :where(
+    .df-alert-content,
+    .df-card-body,
+    .df-collapse-body-inner,
+    .df-confirm-modal-body,
+    .df-overlay-body,
+    .df-timeline-item-content,
+    .df-voucher-body
+  ) > :first-child {
+    margin-block-start: 0;
+  }
+
+  :where(
+    .df-alert-content,
+    .df-card-body,
+    .df-collapse-body-inner,
+    .df-confirm-modal-body,
+    .df-overlay-body,
+    .df-timeline-item-content,
+    .df-voucher-body
+  ) > :last-child {
+    margin-block-end: 0;
+  }
+}

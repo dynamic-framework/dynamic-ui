@@ -59,6 +59,13 @@
     border-color: var(--df-border-disabled);
   }
 
+  /* Chrome, not content: the dropzone is a flex column and its `gap` owns the
+     spacing, so the document's flow margin would be added on top of it. */
+  .df-dropzone-hint,
+  .df-dropzone-files {
+    margin-block: 0;
+  }
+
   .df-dropzone:focus-within {
     outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
     outline-offset: var(--df-focus-ring-offset);

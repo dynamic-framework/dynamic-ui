@@ -311,13 +311,20 @@ export const ScrollingBody: Story = story(
         payload={{
           size: 'md',
           title: 'Terms',
+          /*
+           * Plain paragraphs, spaced by the element defaults.
+           *
+           * `p` carries `margin-block-end` from `text.body`, so a block of
+           * written text reads correctly with no class on it — which is the
+           * only thing that can work for markup out of a CMS.
+           */
           body: (
-            <>
+            <div>
               {Array.from({ length: 24 }, (unused, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <p key={i}>{`Clause ${i + 1}. The body is the only part that scrolls.`}</p>
               ))}
-            </>
+            </div>
           ),
         }}
       />
