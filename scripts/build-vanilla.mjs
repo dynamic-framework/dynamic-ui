@@ -38,10 +38,17 @@ const OUT = join(ROOT, 'dist/vanilla');
  *            drop the bare side-effect imports for tabs and collapse, so 4.6 KB
  *            was the size of a build that did not work. 6.8 KB is the first
  *            honest measurement, plus the usual ~15% headroom.
+ *
+ *   8 -> 10  `collapse-toggle`: a trigger that lives outside the collapse it
+ *            controls, mirroring the modal's `data-df-modal-open`. It adds a
+ *            registry keyed by body id, a `toggle(id, expanded?)` export, and
+ *            a second behaviour registration — 8.2 KB min / 3.0 KB gzip for
+ *            the ESM build, 8.7 / 3.2 for the IIFE, which carries the global
+ *            wrapper. 10 is that plus the usual headroom.
  */
 const BUDGETS = {
-  'dynamic.min.js': 8,
-  'dynamic.iife.min.js': 8,
+  'dynamic.min.js': 10,
+  'dynamic.iife.min.js': 10,
 };
 
 const TARGET = ['chrome111', 'edge111', 'firefox113', 'safari16.4'];
@@ -147,10 +154,26 @@ for (const name of results) {
  * Each module now exports its behaviour and the entry imports the value, which
  * cannot be dropped. This asserts it stayed that way.
  */
-const bundled = readFileSync(join(OUT, "dynamic.min.js"), "utf8");
-const missing = modules
-  .flatMap((name) => (name === 'modal' ? ['modal', 'modal-open'] : [name]))
-  .filter((name) => !bundled.includes(`"${name}"`) && !bundled.includes(`${String.fromCharCode(39)}${name}${String.fromCharCode(39)}`));
+const bundled = readFileSync(join(OUT, 'dynamic.min.js'), 'utf8');
+
+/*
+ * The names are READ from the source, not listed here.
+ *
+ * This used to carry `name === 'modal' ? ['modal', 'modal-open']` — a hand-kept
+ * exception for the one module that registers two behaviours. A second such
+ * module is exactly the case a hand-kept list misses, and the check's whole
+ * value is that it notices a behaviour going missing: a list that has to be
+ * updated alongside the thing it checks does not notice anything.
+ */
+const declared = modules.flatMap((module) => {
+  const source = readFileSync(join(SRC, `${module}.ts`), 'utf8');
+  return Array.from(source.matchAll(/:\s*Behaviour\s*=\s*\{[\s\S]*?name:\s*'([^']+)'/g))
+    .map((match) => match[1]);
+});
+
+const missing = declared.filter(
+  (name) => !bundled.includes(`"${name}"`) && !bundled.includes(`'${name}'`),
+);
 
 if (missing.length) {
   process.stderr.write(
@@ -160,7 +183,7 @@ if (missing.length) {
   process.exit(1);
 }
 
-process.stdout.write(`\nvanilla: ${modules.length} behaviour(s) — ${modules.join(', ')}, all present in the bundle\n`);
+process.stdout.write(`\nvanilla: ${declared.length} behaviour(s) — ${declared.join(', ')}, all present in the bundle\n`);
 
 if (over) {
   process.stderr.write(`\nvanilla: ${over} file(s) over budget\n`);

@@ -3,7 +3,7 @@
 import userEvent from '@testing-library/user-event';
 
 import {
-  destroy, enhance, start, stop, toast,
+  destroy, enhance, start, stop, toast, toggleCollapse,
 } from './index';
 
 /**
@@ -88,6 +88,24 @@ describe('vanilla registry', () => {
 
     expect(document.querySelector('.df-collapse-trigger')).toHaveAttribute('aria-expanded');
     spy.mockRestore();
+  });
+});
+
+/**
+ * The handle a Liquid template actually has.
+ *
+ * Every documented snippet loads the bundle with `<script type="module">` and
+ * then calls `DF.toast(...)` from a later script. Under a module script there
+ * is no global unless one is set: esbuild's `globalName` applies to the IIFE
+ * build only, so the ESM build — the one the docs link — left `DF` undefined
+ * and the documented path failed with the page looking fine.
+ */
+describe('vanilla global', () => {
+  it('should put DF on window, since a template cannot import', () => {
+    expect(window.DF).toBeDefined();
+    expect(typeof window.DF.toast).toBe('function');
+    expect(typeof window.DF.enhance).toBe('function');
+    expect(typeof window.DF.toggleCollapse).toBe('function');
   });
 });
 
@@ -224,6 +242,83 @@ describe('vanilla collapse', () => {
   it('should wire the trigger to the body when the author did not', () => {
     html(COLLAPSE);
     expect(document.getElementById('trigger')).toHaveAttribute('aria-controls', 'body');
+  });
+
+  /* --- a trigger that lives somewhere else ---------------------------- */
+
+  /**
+   * The outside trigger names the BODY id.
+   *
+   * The same id `aria-controls` already names, so an author who wired the
+   * disclosure correctly has nothing new to invent. It mirrors the modal's
+   * `data-df-modal-open="<dialog id>"`.
+   */
+  const OUTSIDE = `
+    <button id="toggle" data-df-collapse-toggle="body">Toggle</button>
+    <button id="open" data-df-collapse-open="body">Open</button>
+    <button id="close" data-df-collapse-close="body">Close</button>
+    ${COLLAPSE}`;
+
+  it('should toggle from a trigger outside the collapse', async () => {
+    const user = userEvent.setup();
+    html(OUTSIDE);
+
+    await user.click(document.getElementById('toggle')!);
+    expect(document.getElementById('body')).toHaveAttribute('data-expanded');
+    expect(document.getElementById('trigger')).toHaveAttribute('aria-expanded', 'true');
+
+    await user.click(document.getElementById('toggle')!);
+    expect(document.getElementById('body')).not.toHaveAttribute('data-expanded');
+  });
+
+  /** A one-way trigger stays one-way: pressing it twice is not a toggle. */
+  it('should only open from an open trigger and only close from a close one', async () => {
+    const user = userEvent.setup();
+    html(OUTSIDE);
+
+    await user.click(document.getElementById('open')!);
+    await user.click(document.getElementById('open')!);
+    expect(document.getElementById('body')).toHaveAttribute('data-expanded');
+
+    await user.click(document.getElementById('close')!);
+    await user.click(document.getElementById('close')!);
+    expect(document.getElementById('body')).not.toHaveAttribute('data-expanded');
+  });
+
+  /**
+   * A torn-down collapse must leave the registry.
+   *
+   * Otherwise the id keeps resolving to a toggle holding a detached node and
+   * the entry leaks for the life of the page.
+   *
+   * Asserted through `toggleCollapse` rather than by clicking the outside
+   * trigger: `destroy` removes that trigger's listener too, so a click proves
+   * nothing — it would stay silent whether the registry was cleaned or not.
+   * Calling the registry directly is the only way to ask it what it still
+   * holds.
+   */
+  it('should drop the panel from the registry when destroyed', () => {
+    html(OUTSIDE);
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    toggleCollapse('body', true);
+    expect(warn).not.toHaveBeenCalled();
+    expect(document.getElementById('body')).toHaveAttribute('data-expanded');
+
+    destroy(document);
+    toggleCollapse('body');
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('body'));
+    warn.mockRestore();
+  });
+
+  it('should warn rather than throw when the id matches nothing', async () => {
+    const user = userEvent.setup();
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    html('<button id="ghost" data-df-collapse-toggle="nope">Toggle</button>');
+
+    await user.click(document.getElementById('ghost')!);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('nope'));
+    warn.mockRestore();
   });
 });
 

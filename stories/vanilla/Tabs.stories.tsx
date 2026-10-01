@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import Html, { htmlStory } from './Html';
 
+/* The box the React tab stories use, so the two pages read the same. */
+const FRAME = { width: '800px', height: '400px' };
+
 const meta: Meta<typeof Html> = {
   title: 'Vanilla/Tabs',
   component: Html,
@@ -86,7 +89,7 @@ export const Default: Story = htmlStory(`
   <div class="df-tabpanel" id="vp-3" role="tabpanel" aria-labelledby="vt-3" hidden>
     <p class="df-m-0">Statements back to 2019.</p>
   </div>
-</div>`.trim());
+</div>`.trim(), { frame: FRAME });
 
 /**
  * `aria-selected="true"` on the second tab, and nothing else changed. Note that
@@ -109,7 +112,7 @@ export const StartingOnAnotherTab: Story = htmlStory(`
   <div class="df-tabpanel" id="vap-1" role="tabpanel" aria-labelledby="va-1" hidden>Balance</div>
   <div class="df-tabpanel" id="vap-2" role="tabpanel" aria-labelledby="va-2">Transactions</div>
   <div class="df-tabpanel" id="vap-3" role="tabpanel" aria-labelledby="va-3" hidden>Statements</div>
-</div>`.trim());
+</div>`.trim(), { frame: FRAME });
 
 /**
  * No `hidden` and no `aria-selected` anywhere — the markup a template author
@@ -128,7 +131,7 @@ export const IncompleteMarkup: Story = htmlStory(`
   </ul>
   <div class="df-tabpanel" id="vip-1" role="tabpanel">Balance</div>
   <div class="df-tabpanel" id="vip-2" role="tabpanel">Transactions</div>
-</div>`.trim());
+</div>`.trim(), { frame: FRAME });
 
 /** `aria-orientation="vertical"` on the list swaps the arrows to up and down. */
 export const Vertical: Story = htmlStory(`
@@ -143,7 +146,7 @@ export const Vertical: Story = htmlStory(`
   </ul>
   <div class="df-tabpanel" id="vvp-1" role="tabpanel" aria-labelledby="vv-1">Your name and address.</div>
   <div class="df-tabpanel" id="vvp-2" role="tabpanel" aria-labelledby="vv-2" hidden>Password and devices.</div>
-</div>`.trim());
+</div>`.trim(), { frame: FRAME });
 
 /** A disabled tab is stepped over by the arrows, not landed on and refused. */
 export const DisabledTab: Story = htmlStory(`
@@ -162,4 +165,4 @@ export const DisabledTab: Story = htmlStory(`
   <div class="df-tabpanel" id="dp-1" role="tabpanel" aria-labelledby="dt-1">How much?</div>
   <div class="df-tabpanel" id="dp-2" role="tabpanel" aria-labelledby="dt-2" hidden>Not yet.</div>
   <div class="df-tabpanel" id="dp-3" role="tabpanel" aria-labelledby="dt-3" hidden>Call 600 123 456.</div>
-</div>`.trim());
+</div>`.trim(), { frame: FRAME });

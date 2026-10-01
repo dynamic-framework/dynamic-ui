@@ -6,11 +6,16 @@
  * markup the React components already produce and makes it work.
  *
  * ```html
- * <link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/3/css/dynamic.css">
- * <script type="module" src="https://cdn.dynamicframework.dev/assets/3/vanilla/dynamic.js"></script>
+ * <link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/3/css/dynamic.min.css">
+ * <script type="module" src="https://cdn.dynamicframework.dev/assets/3/vanilla/dynamic.min.js"></script>
  * ```
  *
- * That is the whole setup. Markup carrying a `data-df-*` attribute is enhanced
+ * That is the whole setup, and it is stated once in `stories/vanilla/Html.tsx`
+ * so every example prints the same thing. NOTE: `.github/workflows/cdn.yml`
+ * publishes `dist/css/` and `dist/vanilla/` under `assets/<semver>/` only —
+ * nothing creates the `assets/3/` major alias these URLs use.
+ *
+ * Markup carrying a `data-df-*` attribute is enhanced
  * on load and again whenever more of it arrives — which matters, because Modyo
  * widgets render after the page does.
  *
@@ -42,17 +47,17 @@ import {
 import { toast, toastBehaviour } from './toast';
 
 import { tabs } from './tabs';
-import { collapse } from './collapse';
+import { collapse, collapseToggle, toggle as toggleCollapse } from './collapse';
 
 export { define } from './registry';
 /* Re-exported so the modules that register them cannot be tree-shaken away. */
 export {
-  tabs, collapse, modal, modalOpener, toastBehaviour,
+  tabs, collapse, collapseToggle, modal, modalOpener, toastBehaviour,
 };
 export type { Behaviour, Teardown } from './registry';
 export type { ToastOptions, ToastPlacement } from './toast';
 
-export const DF = {
+const DF = {
   /** Enhances a subtree now. For markup inserted by code that bypasses the DOM. */
   enhance,
   /** Removes every behaviour from a subtree, before a framework discards it. */
@@ -63,11 +68,12 @@ export const DF = {
 
   openModal,
   closeModal,
+  toggleCollapse,
   toast,
 };
 
 export {
-  enhance, destroy, start, stop, openModal, closeModal, toast,
+  enhance, destroy, start, stop, openModal, closeModal, toggleCollapse, toast,
 };
 
 /*
@@ -77,8 +83,24 @@ export {
  * author to add a second line calling `start()` would mean the common failure
  * is a page where nothing works and nothing says why.
  *
+ * `DF` goes on `window` for the same reason. The IIFE build gets a global from
+ * esbuild's `globalName`, but the ESM build does not — and every snippet in
+ * the documentation pairs `<script type="module">` with a later
+ * `DF.toast(...)`, which under a module script is a `DF is not defined` in the
+ * console of a page that otherwise looks fine. A template author cannot
+ * `import` from a Liquid file, so the global is the only handle they have.
+ *
  * Guarded so importing this from a test or a server build does nothing.
  */
-if (typeof document !== 'undefined') start();
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var DF: typeof import('./index').default;
+}
 
+if (typeof document !== 'undefined') {
+  start();
+  window.DF = DF;
+}
+
+export { DF };
 export default DF;

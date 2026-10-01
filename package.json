@@ -59,7 +59,7 @@
     "build:storybook": "storybook build --docs -o docs",
     "generate:registry": "node scripts/generate-api.mjs && node scripts/generate-schema.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
-    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build",
+    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build && npm run tokens:orphans",
     "tokens:primitives": "node scripts/tokens/build-primitives.mjs",
     "tokens:build": "node scripts/tokens/build.mjs",
     "tokens:validate": "node scripts/tokens/validate.mjs",
@@ -92,7 +92,8 @@
     "css:docs": "node scripts/css/migrate-docs-tables.mjs",
     "build:vanilla": "node scripts/build-vanilla.mjs",
     "css:attributes": "node scripts/css/attributes.mjs",
-    "typecheck:stories": "node scripts/typecheck-stories.mjs"
+    "typecheck:stories": "node scripts/typecheck-stories.mjs",
+    "tokens:orphans": "node scripts/tokens/orphans.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

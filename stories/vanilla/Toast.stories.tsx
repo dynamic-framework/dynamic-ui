@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { toast } from '../../src/vanilla';
 import type { ToastOptions } from '../../src/vanilla';
+import { SETUP } from './Html';
 
 const meta: Meta = {
   title: 'Vanilla/Toast',
@@ -64,12 +65,27 @@ export default meta;
  * exists only so the documentation has something to click. Nobody writes that;
  * they write `DF.toast(...)`.
  */
+/**
+ * The complete snippet, not just the call.
+ *
+ * A toast has no markup to copy — it is one function — so the source is the
+ * whole of what a page needs: the two setup lines and the script that calls
+ * it. `DF` is a global because a Liquid template cannot `import`; see the note
+ * in `src/vanilla/index.ts`.
+ */
 function source(options: ToastOptions | ToastOptions[]): Record<string, unknown> {
   const calls = (Array.isArray(options) ? options : [options])
-    .map((entry) => `DF.toast(${JSON.stringify(entry, null, 2)});`)
+    .map((entry) => `  DF.toast(${JSON.stringify(entry, null, 2).replace(/\n/g, '\n  ')});`)
     .join('\n\n');
 
-  return { docs: { source: { code: calls, language: 'js' } } };
+  return {
+    docs: {
+      source: {
+        code: `${SETUP}\n\n<script type="module">\n${calls}\n</script>`,
+        language: 'html',
+      },
+    },
+  };
 }
 
 function Trigger({ label, options }: { label: string; options: ToastOptions }) {

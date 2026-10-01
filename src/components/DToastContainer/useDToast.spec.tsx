@@ -241,6 +241,79 @@ describe('useDToast', () => {
     expect(container.querySelector('.df-toast-icon')).toBeInTheDocument();
   });
 
+  /**
+   * The header and the body are SIBLINGS, and the stylesheet has to agree.
+   *
+   * `toast.css` had `.df-toast` as a flex ROW with `.df-toast-content` set to
+   * `flex-direction: column` and `flex: 1 1 auto` — a shape that only makes
+   * sense if the content WRAPS the header. It does not; both builds render
+   * them side by side. So a toast with a description came out as one long
+   * line: icon, title, timestamp, close button, then the description off to
+   * the right of all of it.
+   *
+   * Nothing caught it. Every other test asserts that an element is present,
+   * and all of them were — in the wrong arrangement. This pins the arrangement
+   * instead, so a later change to the nesting has to be a deliberate one made
+   * alongside the CSS.
+   */
+  it('should render the header and the body as siblings, not nested', () => {
+    const { result } = renderWithContext(() => useDToast());
+
+    act(() => {
+      result.current.toast({
+        title: 'Test Title',
+        description: 'Test Description',
+        timestamp: '10:30 AM',
+        icon: 'info',
+      });
+    });
+
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
+    const { container } = render(
+      <DContextProvider>
+        {renderFunction(createMockToast({ visible: true }))}
+      </DContextProvider>,
+    );
+
+    const toast = container.querySelector('.df-toast')!;
+    const header = toast.querySelector('.df-toast-header')!;
+    const content = toast.querySelector('.df-toast-content')!;
+
+    expect(header.parentElement).toBe(toast);
+    expect(content.parentElement).toBe(toast);
+    expect(header.contains(content)).toBe(false);
+
+    // The description is in the body, below the title row — not beside it.
+    expect(content).toHaveTextContent('Test Description');
+    expect(header).toHaveTextContent('Test Title');
+    expect(header).not.toHaveTextContent('Test Description');
+  });
+
+  /**
+   * The compact toast has no header at all: the icon, the title and the
+   * dismiss live in `.df-toast-content`, which is why that rule is a ROW.
+   */
+  it('should put everything in the body when there is no description', () => {
+    const { result } = renderWithContext(() => useDToast());
+
+    act(() => {
+      result.current.toast({ title: 'Test Title', icon: 'info' });
+    });
+
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
+    const { container } = render(
+      <DContextProvider>
+        {renderFunction(createMockToast({ visible: true }))}
+      </DContextProvider>,
+    );
+
+    const content = container.querySelector('.df-toast-content')!;
+    expect(container.querySelector('.df-toast-header')).toBeNull();
+    expect(content.querySelector('.df-toast-icon')).toBeInTheDocument();
+    expect(content.querySelector('.df-toast-title')).toBeInTheDocument();
+    expect(content.querySelector('.df-toast-dismiss')).toBeInTheDocument();
+  });
+
   it('should render toast without timestamp when not provided', () => {
     const { result } = renderWithContext(() => useDToast());
 

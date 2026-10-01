@@ -4,7 +4,6 @@
     "padding": {"$type": "dimension", "$value": "{size.10}"},
     "gap": {"$type": "dimension", "$value": "{size.3}"},
     "fg": {"$type": "color", "$value": "{fg.muted}"},
-    "icon-size": {"$type": "dimension", "$value": "{size.12}"},
     "icon-color": {"$type": "color", "$value": "{fg.subtle}"}
   }
 }

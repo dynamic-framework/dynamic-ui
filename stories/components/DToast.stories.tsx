@@ -19,23 +19,24 @@ Every value below is a design token: set it on the component, on an ancestor, or
 on \`:root\` to retheme. The table is generated from \`tokens/component/toast.json\`,
 so it cannot fall out of step with the stylesheet.
 
-| Variable                           | Type           | Description         |
-|------------------------------------|----------------|---------------------|
-| \`--df-toast-region-gap\`          | css length     | Region gap          |
-| \`--df-toast-region-inset\`        | css length     | Region inset        |
-| \`--df-toast-min-width\`           | css length     | Min width           |
-| \`--df-toast-padding-block\`       | css length     | Padding block       |
-| \`--df-toast-padding-inline\`      | css length     | Padding inline      |
-| \`--df-toast-gap\`                 | css length     | Gap                 |
-| \`--df-toast-radius\`              | css length     | Radius              |
-| \`--df-toast-border-width\`        | css length     | Border width        |
-| \`--df-toast-font-size\`           | css length     | Font size           |
-| \`--df-toast-bg\`                  | css color      | Background          |
-| \`--df-toast-fg\`                  | css color      | Foreground          |
-| \`--df-toast-border-color\`        | css color      | Border color        |
-| \`--df-toast-shadow\`              | css box-shadow | Shadow              |
-| \`--df-toast-header-font-weight\`  | font weight    | Header font weight  |
-| \`--df-toast-header-border-color\` | css color      | Header border color |
+| Variable                          | Type           | Description                                             |
+|-----------------------------------|----------------|---------------------------------------------------------|
+| \`--df-toast-region-gap\`         | css length     | Region gap                                              |
+| \`--df-toast-region-inset\`       | css length     | Region inset                                            |
+| \`--df-toast-min-width\`          | css length     | Min width                                               |
+| \`--df-toast-padding-block\`      | css length     | Padding block                                           |
+| \`--df-toast-padding-inline\`     | css length     | Padding inline                                          |
+| \`--df-toast-gap\`                | css length     | Between items in a row: icon, title, timestamp, dismiss |
+| \`--df-toast-stack-gap\`          | css length     | Between the title row and the description below it      |
+| \`--df-toast-radius\`             | css length     | Radius                                                  |
+| \`--df-toast-border-width\`       | css length     | Border width                                            |
+| \`--df-toast-font-size\`          | css length     | Font size                                               |
+| \`--df-toast-bg\`                 | css color      | Background                                              |
+| \`--df-toast-fg\`                 | css color      | Foreground                                              |
+| \`--df-toast-border-color\`       | css color      | Border color                                            |
+| \`--df-toast-shadow\`             | css box-shadow | Shadow                                                  |
+| \`--df-toast-header-font-weight\` | font weight    | Header font weight                                      |
+| \`--df-toast-timestamp-color\`    | css color      | Timestamp color                                         |
 
         `,
       },

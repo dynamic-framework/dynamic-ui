@@ -2,12 +2,26 @@
  * Toast. Eight colour variants through the generated matrix, like alert.
  */
 @layer df.components {
+  /**
+   * The toast itself: a COLUMN of rows.
+   *
+   * It was a row, and `DToast.Header` and `DToast.Body` are siblings — so the
+   * title row and the description were laid out side by side, and a toast with
+   * a description came out as one long line: icon, title, timestamp, close
+   * button, and then the description off to the right.
+   *
+   * The stylesheet was written for a different markup than the one the
+   * components render: `.df-toast-content` had `flex-direction: column` and
+   * `flex: 1 1 auto`, which only makes sense if it WRAPS the header rather than
+   * sitting next to it. Both builds render them as siblings, so the column
+   * belongs here, on their parent.
+   */
   .df-toast {
     --df-toast-accent: var(--df-fg-muted);
 
     display: flex;
-    gap: var(--df-toast-gap);
-    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--df-toast-stack-gap);
     min-width: var(--df-toast-min-width);
     padding-block: var(--df-toast-padding-block);
     padding-inline: var(--df-toast-padding-inline);
@@ -26,11 +40,17 @@
     color: var(--df-toast-accent);
   }
 
+  /*
+   * The body, and a row rather than a column.
+   *
+   * In the compact toast — the one with no description — this is the ONLY row
+   * and it carries the icon, the title and the dismiss button. As a column
+   * those stacked on top of each other.
+   */
   .df-toast-content {
     display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    gap: var(--df-size-1);
+    gap: var(--df-toast-gap);
+    align-items: center;
     min-width: 0;
   }
 
@@ -47,7 +67,7 @@
   }
 
   .df-toast-timestamp {
-    color: var(--df-fg-muted);
+    color: var(--df-toast-timestamp-color);
   }
 
   /* `align-self: center` was an `align-self-center` utility in the markup; it

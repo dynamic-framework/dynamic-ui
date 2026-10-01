@@ -22,7 +22,6 @@ so it cannot fall out of step with the stylesheet.
 | \`--df-progress-radius\`          | css length | Radius          |
 | \`--df-progress-track-color\`     | css color  | Track color     |
 | \`--df-progress-font-size\`       | css length | Font size       |
-| \`--df-progress-fg\`              | css color  | Foreground      |
 | \`--df-progress-stripe-size\`     | css length | Stripe size     |
 | \`--df-progress-stripe-duration\` | css time   | Stripe duration |
 

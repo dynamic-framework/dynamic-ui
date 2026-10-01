@@ -32,7 +32,6 @@ so it cannot fall out of step with the stylesheet.
 | \`--df-choice-disabled-opacity\`      | number     | Disabled opacity      |
 | \`--df-choice-switch-width\`          | css length | Switch width          |
 | \`--df-choice-switch-height\`         | css length | Switch height         |
-| \`--df-choice-switch-thumb-inset\`    | css length | Switch thumb inset    |
 | \`--df-choice-switch-thumb-color\`    | css color  | Switch thumb color    |
 | \`--df-choice-switch-track-color\`    | css color  | Switch track color    |
 

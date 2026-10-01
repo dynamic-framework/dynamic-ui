@@ -23,9 +23,7 @@
     "page-active-size": {"$type": "dimension", "$value": "{size.5}"},
     "page-radius": {"$type": "dimension", "$value": "{shape.pill}"},
     "page-color": {"$type": "color", "$value": "{border.strong}"},
-    "page-active-color": {"$type": "color", "$value": "{role.primary.base}"},
+    "page-active-color": {"$type": "color", "$value": "{role.primary.base}"}
 
-    "duration": {"$type": "duration", "$value": "{duration.slow}"},
-    "easing": {"$type": "cubicBezier", "$value": "{easing.decelerate}"}
   }
 }

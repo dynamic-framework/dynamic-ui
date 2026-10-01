@@ -24,7 +24,6 @@
     "invalid-border-color": { "$type": "color", "$value": "{role.danger.base}" },
     "invalid-fg": { "$type": "color", "$value": "{role.danger.emphasis}" },
     "valid-border-color": { "$type": "color", "$value": "{role.success.base}" },
-    "valid-fg": { "$type": "color", "$value": "{role.success.emphasis}" },
 
     "disabled-bg": { "$type": "color", "$value": "{bg.disabled}" },
     "disabled-fg": { "$type": "color", "$value": "{fg.disabled}" },
