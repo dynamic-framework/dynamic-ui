@@ -1,0 +1,58 @@
+{
+  "$description": "Combobox: the searchable, optionally multi select. Separate from `select`, which styles the native element — two different controls that share a word.",
+  "combobox": {
+    "padding-block": {"$type": "dimension", "$value": "{size.1}"},
+    "padding-inline": {"$type": "dimension", "$value": "{size.3}"},
+    "min-height": {"$type": "dimension", "$value": "{size.10}"},
+    "gap": {"$type": "dimension", "$value": "{size.2}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control}"},
+    "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
+    "font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+
+    "bg": {"$type": "color", "$value": "{bg.surface}"},
+    "fg": {"$type": "color", "$value": "{fg.default}"},
+    "placeholder-fg": {"$type": "color", "$value": "{fg.subtle}"},
+    "border-color": {"$type": "color", "$value": "{border.default}"},
+    "hover-border-color": {"$type": "color", "$value": "{border.strong}"},
+    "focus-border-color": {"$type": "color", "$value": "{role.primary.base}"},
+    "invalid-border-color": {"$type": "color", "$value": "{role.danger.base}"},
+    "valid-border-color": {"$type": "color", "$value": "{role.success.base}"},
+    "disabled-bg": {"$type": "color", "$value": "{bg.disabled}"},
+    "disabled-fg": {"$type": "color", "$value": "{fg.disabled}"},
+    "indicator-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "indicator-size": {"$type": "dimension", "$value": "{size.5}"},
+    "clear-size": {"$type": "dimension", "$value": "{size.4}"},
+    "clear-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "clear-hover-fg": {"$type": "color", "$value": "{fg.default}"},
+
+    "tag-padding-block": {"$type": "dimension", "$value": "{size.0}"},
+    "tag-padding-inline": {"$type": "dimension", "$value": "{size.2}"},
+    "tag-gap": {"$type": "dimension", "$value": "{size.1}"},
+    "tag-radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "tag-font-size": {"$type": "dimension", "$value": "{font-size.200}"},
+    "tag-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "tag-fg": {"$type": "color", "$value": "{fg.default}"},
+    "tag-remove-fg": {"$type": "color", "$value": "{fg.muted}"},
+
+    "menu-padding": {"$type": "dimension", "$value": "{size.1}"},
+    "menu-radius": {"$type": "dimension", "$value": "{shape.surface}"},
+    "menu-bg": {"$type": "color", "$value": "{bg.raised}"},
+    "menu-border-color": {"$type": "color", "$value": "{border.default}"},
+    "menu-shadow": {"$type": "shadow", "$value": "{elevation.lg}"},
+
+    "option-padding-block": {"$type": "dimension", "$value": "{size.2}"},
+    "option-padding-inline": {"$type": "dimension", "$value": "{size.3}"},
+    "option-gap": {"$type": "dimension", "$value": "{size.2}"},
+    "option-radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
+    "option-fg": {"$type": "color", "$value": "{fg.default}"},
+    "option-description-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "option-active-bg": {"$type": "color", "$value": "{bg.muted}"},
+    "option-selected-bg": {"$type": "color", "$value": "{role.primary.subtle}"},
+    "option-selected-fg": {"$type": "color", "$value": "{role.primary.on-subtle}"},
+    "option-disabled-fg": {"$type": "color", "$value": "{fg.disabled}"},
+
+    "group-label-fg": {"$type": "color", "$value": "{fg.muted}"},
+    "group-label-font-size": {"$type": "dimension", "$value": "{font-size.100}"},
+    "empty-fg": {"$type": "color", "$value": "{fg.muted}"}
+  }
+}

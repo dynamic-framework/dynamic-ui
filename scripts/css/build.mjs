@@ -79,6 +79,7 @@ const COMPONENTS = [
   'components/avatar.css',
   'components/tabs.css',
   'components/collapse.css',
+  'components/combobox.css',
   'components/table.css',
   'components/timeline.css',
   'components/dropzone.css',
@@ -126,6 +127,12 @@ const COMPONENTS = [
 //                     collapse, timeline, toast and dropzone
 //   38 -> 46 -> 56     subtree theming, then the growing token layer: every
 //                     new component adds its own tokens, and core carries them
+//   350 -> 390  three components that used to be a third party's CSS and are
+//             now ours: the carousel, the paginator and the combobox. The
+//             combobox is the bulk of it — a control, a tag list, a portalled
+//             menu and its options — and it replaces ~40 KB of react-select's
+//             own JavaScript and inline styles, so the page is lighter even
+//             though this file is bigger.
 //   200 -> 350  the complete stylesheet now contains the responsive variants,
 //             which were opt-in and therefore silently missing wherever anyone
 //             forgot the second <link>. 190 KB + 147 KB, plus the usual ~10%.
@@ -150,9 +157,9 @@ const COMPONENTS = [
 //                     block in the token layer. That is the cost of being able
 //                     to put a dark panel on a light page.
 const BUDGETS = {
-  'dynamic.min.css': 350,
+  'dynamic.min.css': 390,
   'dynamic.core.min.css': 68,
-  'dynamic.components.min.css': 112,
+  'dynamic.components.min.css': 132,
   'dynamic.utilities.min.css': 61,
   'dynamic.utilities.responsive.min.css': 160,
 };

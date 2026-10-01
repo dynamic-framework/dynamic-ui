@@ -195,9 +195,8 @@ export default function DDatePickerHeaderSelector(
           {showHeaderSelectors ? (
             <DSelect
               options={years}
-              value={defaultYear}
-              defaultValue={defaultYear}
-              onChange={(year) => changeYear(Number(year?.value))}
+              value={getYear(monthDate)}
+              onChange={(year) => changeYear(Number(year))}
               searchable={false}
             />
           ) : (
@@ -224,9 +223,8 @@ export default function DDatePickerHeaderSelector(
         {showHeaderSelectors && (
           <DSelect
             options={years}
-            value={defaultYear}
-            defaultValue={defaultYear}
-            onChange={(year) => changeYear(Number(year?.value))}
+            value={getYear(monthDate)}
+            onChange={(year) => changeYear(Number(year))}
             searchable={false}
             className="custom-year-selector"
           />
@@ -255,9 +253,8 @@ export default function DDatePickerHeaderSelector(
         {showHeaderSelectors ? (
           <DSelect
             options={months}
-            value={defaultMonth}
-            defaultValue={defaultMonth}
-            onChange={(month) => changeMonth(month?.value || 0)}
+            value={getMonth(monthDate)}
+            onChange={(month) => changeMonth(Number(month) || 0)}
             searchable={false}
             className="custom-month-selector"
           />

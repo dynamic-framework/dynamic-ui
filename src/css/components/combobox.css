@@ -1,0 +1,360 @@
+/**
+ * Combobox.
+ *
+ * The searchable select, with tags when it takes more than one answer. Styled
+ * from scratch because 2.x did not: it wrapped `react-select`, whose markup and
+ * inline styles were the library's, and the wrapper spent most of its length
+ * overriding them back out again.
+ *
+ * `.df-combobox` and not `.df-select`, because `.df-select` is the native
+ * `<select>` that `DInputSelect` renders. Two different controls that share a
+ * word; naming this one for its ARIA pattern keeps them apart.
+ *
+ * The menu is rendered into a portal, so it is NOT a descendant of
+ * `.df-combobox` — the rules for it are top level, and nothing here may rely on
+ * being inside the control.
+ */
+@layer df.components {
+  .df-combobox {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-label-margin-block-end);
+  }
+
+  /**
+   * The box itself: tags, the search box and the indicators, wrapping onto new
+   * lines as tags accumulate.
+   *
+   * `min-height` rather than `height`, because a multi-select with six tags is
+   * taller than one with none and should not clip them.
+   */
+  .df-combobox-control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--df-combobox-gap);
+    align-items: center;
+    min-height: var(--df-combobox-min-height);
+    padding-block: var(--df-combobox-padding-block);
+    padding-inline: var(--df-combobox-padding-inline);
+    font-size: var(--df-combobox-font-size);
+    color: var(--df-combobox-fg);
+    cursor: text;
+    background-color: var(--df-combobox-bg);
+    border: var(--df-combobox-border-width) solid var(--df-combobox-border-color);
+    border-radius: var(--df-combobox-radius);
+  }
+
+  .df-combobox-control:where(:hover) {
+    border-color: var(--df-combobox-hover-border-color);
+  }
+
+  /**
+   * The ring is drawn on the CONTROL, not on the input inside it.
+   *
+   * The input is the focusable element, but it is one part of something that
+   * reads as a single box — a ring around the text box alone would sit inside
+   * the border and look like a mistake. `:focus-within` moves it out to the
+   * edge of the thing that actually looks focused.
+   */
+  .df-combobox-control:focus-within {
+    border-color: var(--df-combobox-focus-border-color);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /**
+   * The search box.
+   *
+   * `field-sizing: content` is a progressive enhancement: where it is supported
+   * the box shrinks to what has been typed, so the caret sits right after the
+   * last tag instead of at the end of a full-width field. Everywhere else the
+   * `min-width` below keeps it usable.
+   */
+  .df-combobox-input {
+    flex: 1 1 var(--df-measure-2xs);
+    min-width: var(--df-size-16);
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+
+    /* The focus ring is not being removed — it is being MOVED. `:focus-within`
+       above draws it around the whole control, which is the box a user sees as
+       focused; leaving the browser's ring on the input as well would draw a
+       second one inside the first. */
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+    field-sizing: content;
+  }
+
+  .df-combobox-input::placeholder {
+    color: var(--df-combobox-placeholder-fg);
+  }
+
+  /* A control with no search box still takes the keyboard, so it keeps the
+     caret off rather than pretending to be a text field. */
+  .df-combobox-input:read-only {
+    cursor: pointer;
+    caret-color: transparent;
+  }
+
+  /* --- indicators --------------------------------------------------------- */
+
+  .df-combobox-indicator,
+  .df-combobox-clear {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--df-combobox-indicator-fg);
+    background: none;
+    border: 0;
+  }
+
+  .df-combobox-indicator .df-icon {
+    --df-icon-inline-size: var(--df-combobox-indicator-size);
+  }
+
+  /**
+   * The clear button.
+   *
+   * Deliberately a size down from the chevron and quieter until hovered: the
+   * chevron is what the control does, and clearing is what you can also do.
+   * Two glyphs of equal weight side by side read as two equal choices.
+   */
+  .df-combobox-clear {
+    color: var(--df-combobox-clear-fg);
+    cursor: pointer;
+  }
+
+  .df-combobox-clear .df-icon {
+    --df-icon-inline-size: var(--df-combobox-clear-size);
+  }
+
+  .df-combobox-clear:where(:hover) {
+    color: var(--df-combobox-clear-hover-fg);
+  }
+
+  .df-combobox-clear:focus-visible {
+    border-radius: var(--df-shape-control-sm);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* The chevron points the way the menu will open. */
+  .df-combobox:has(.df-combobox-control:focus-within) .df-combobox-indicator {
+    rotate: 180deg;
+  }
+
+  /* --- tags --------------------------------------------------------------- */
+
+  .df-combobox-tag {
+    display: inline-flex;
+    flex: none;
+    gap: var(--df-combobox-tag-gap);
+    align-items: center;
+    max-inline-size: 100%;
+    padding-block: var(--df-combobox-tag-padding-block);
+    padding-inline: var(--df-combobox-tag-padding-inline);
+    overflow: hidden;
+    font-size: var(--df-combobox-tag-font-size);
+    color: var(--df-combobox-tag-fg);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--df-combobox-tag-bg);
+    border-radius: var(--df-combobox-tag-radius);
+  }
+
+  .df-combobox-tag-remove {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    padding: 0;
+    color: var(--df-combobox-tag-remove-fg);
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
+  .df-combobox-tag-remove:focus-visible {
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+
+  /* --- the menu ----------------------------------------------------------- */
+
+  /**
+   * In a portal, so it escapes any `overflow: hidden` between the control and
+   * the document — a select inside a scrolling panel or a modal would otherwise
+   * have its menu clipped by the panel.
+   *
+   * Width and height come from the `size` middleware at runtime; what is here
+   * is everything that does not depend on where it ended up.
+   */
+  .df-combobox-menu {
+    z-index: var(--df-z-dropdown);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: var(--df-combobox-menu-bg);
+    border: var(--df-combobox-border-width) solid var(--df-combobox-menu-border-color);
+    border-radius: var(--df-combobox-menu-radius);
+    box-shadow: var(--df-combobox-menu-shadow);
+  }
+
+  .df-combobox-list,
+  .df-combobox-group {
+    padding: var(--df-combobox-menu-padding);
+    margin: 0;
+    list-style: none;
+  }
+
+  .df-combobox-group {
+    padding-inline: 0;
+  }
+
+  .df-combobox-group-label {
+    display: block;
+    padding-block: var(--df-size-1);
+    padding-inline: var(--df-combobox-option-padding-inline);
+    font-size: var(--df-combobox-group-label-font-size);
+    font-weight: var(--df-font-weight-semibold);
+    color: var(--df-combobox-group-label-fg);
+    text-transform: uppercase;
+    letter-spacing: var(--df-letter-spacing-wide);
+  }
+
+  .df-combobox-option {
+    display: flex;
+    gap: var(--df-combobox-option-gap);
+    align-items: center;
+    padding-block: var(--df-combobox-option-padding-block);
+    padding-inline: var(--df-combobox-option-padding-inline);
+    color: var(--df-combobox-option-fg);
+    cursor: pointer;
+    border-radius: var(--df-combobox-option-radius);
+  }
+
+  /* An option's leading glyph, whichever kind it is. `flex: none` so a long
+     label never squeezes it, and the two share a rule because they occupy the
+     same slot. */
+  .df-combobox-option-icon,
+  .df-combobox-option-emoji {
+    flex: none;
+    line-height: 1;
+  }
+
+  .df-combobox-option-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .df-combobox-option-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .df-combobox-option-description {
+    font-size: var(--df-font-size-200);
+    color: var(--df-combobox-option-description-fg);
+  }
+
+  .df-combobox-option-check {
+    flex: none;
+    margin-inline-start: auto;
+  }
+
+  .df-combobox-empty {
+    padding-block: var(--df-combobox-option-padding-block);
+    padding-inline: var(--df-combobox-option-padding-inline);
+    color: var(--df-combobox-empty-fg);
+  }
+
+  /* --- states ------------------------------------------------------------- */
+
+  /**
+   * Highlighted by the keyboard cursor.
+   *
+   * Driven by `data-active` and not by `:hover`, because the cursor and the
+   * pointer are different things: arrowing down the list has to move the
+   * highlight even when the mouse is sitting still over option four. Pointer
+   * movement sets `data-active` too, so the two never both light up.
+   */
+  .df-combobox-option[data-active] {
+    background-color: var(--df-combobox-option-active-bg);
+  }
+
+  .df-combobox-option[aria-selected="true"] {
+    color: var(--df-combobox-option-selected-fg);
+    background-color: var(--df-combobox-option-selected-bg);
+  }
+
+  .df-combobox-option[aria-disabled="true"] {
+    color: var(--df-combobox-option-disabled-fg);
+    cursor: default;
+    background: none;
+  }
+
+  .df-combobox[data-invalid] .df-combobox-control {
+    border-color: var(--df-combobox-invalid-border-color);
+  }
+
+  .df-combobox[data-valid] .df-combobox-control {
+    border-color: var(--df-combobox-valid-border-color);
+  }
+
+  .df-combobox[data-disabled] .df-combobox-control {
+    color: var(--df-combobox-disabled-fg);
+    cursor: not-allowed;
+    background-color: var(--df-combobox-disabled-bg);
+  }
+
+  .df-combobox[data-size="sm"] .df-combobox-control {
+    min-height: var(--df-size-8);
+    font-size: var(--df-font-size-200);
+  }
+
+  .df-combobox[data-size="lg"] .df-combobox-control {
+    min-height: var(--df-size-12);
+    font-size: var(--df-font-size-400);
+  }
+
+  /* --- floating label ------------------------------------------------------ */
+
+  /**
+   * The same treatment `.df-input-floating` gets, driven from the control
+   * instead of from a wrapper class: there is only ever one label here, so the
+   * attribute on the root is enough to say which arrangement this is.
+   */
+  .df-combobox[data-floating-label] .df-combobox-control {
+    position: relative;
+    padding-block:
+      calc(var(--df-combobox-padding-block) + var(--df-size-3))
+      calc(var(--df-combobox-padding-block) - var(--df-size-1));
+  }
+
+  .df-combobox[data-floating-label] .df-label {
+    position: absolute;
+    inset-block-start: var(--df-combobox-padding-block);
+    inset-inline-start: var(--df-combobox-padding-inline);
+    color: var(--df-combobox-placeholder-fg);
+    pointer-events: none;
+    transform-origin: left top;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .df-combobox[data-floating-label] .df-label {
+      transition:
+        transform var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+        color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    }
+
+    .df-combobox-indicator {
+      transition: rotate var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    }
+  }
+}

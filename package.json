@@ -114,8 +114,7 @@
     "react-datepicker": "~8.3.0",
     "react-error-boundary": "^6.1.0",
     "react-international-phone": "~4.6.0",
-    "react-is": "^19.2.7",
-    "react-select": "~5.10.2"
+    "react-is": "^19.2.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
