@@ -323,32 +323,47 @@
     font-size: var(--df-font-size-400);
   }
 
-  /* --- floating label ------------------------------------------------------ */
-
-  /**
-   * The same treatment `.df-input-floating` gets, driven from the control
-   * instead of from a wrapper class: there is only ever one label here, so the
-   * attribute on the root is enough to say which arrangement this is.
+  /* --- floating label ------------------------------------------------------
+   *
+   * The same movement a text input's label makes, because it reads the same
+   * `label.floating-*` tokens. The two used to be written out separately —
+   * with the combobox on half the vertical padding and twice the corner radius
+   * — so a combobox and an input side by side in one form floated their labels
+   * to different heights at different sizes.
    */
+
   .df-combobox[data-floating-label] .df-combobox-control {
     position: relative;
     padding-block:
-      calc(var(--df-combobox-padding-block) + var(--df-size-3))
-      calc(var(--df-combobox-padding-block) - var(--df-size-1));
+      calc(var(--df-combobox-padding-block) + var(--df-label-floating-space))
+      calc(var(--df-combobox-padding-block) - var(--df-label-floating-crop));
   }
 
   .df-combobox[data-floating-label] .df-label {
     position: absolute;
     inset-block-start: var(--df-combobox-padding-block);
     inset-inline-start: var(--df-combobox-padding-inline);
-    color: var(--df-combobox-placeholder-fg);
+    color: var(--df-label-floating-color);
     pointer-events: none;
-    transform-origin: left top;
+  }
+
+  /* Floated when there is a value, or while the control has focus. The
+     combobox knows both without `:placeholder-shown`, which is what a text
+     input has to lean on. */
+  .df-combobox[data-floating-label][data-filled] .df-label,
+  .df-combobox[data-floating-label]:has(.df-combobox-control:focus-within) .df-label {
+    font-size: var(--df-label-floating-font-size);
+    transform: translateY(calc(var(--df-label-floating-shift) * -1));
+  }
+
+  .df-combobox[data-floating-label]:has(.df-combobox-control:focus-within) .df-label {
+    color: var(--df-label-floating-active-color);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .df-combobox[data-floating-label] .df-label {
       transition:
+        font-size var(--df-motion-duration-hover) var(--df-motion-easing-standard),
         transform var(--df-motion-duration-hover) var(--df-motion-easing-standard),
         color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
     }

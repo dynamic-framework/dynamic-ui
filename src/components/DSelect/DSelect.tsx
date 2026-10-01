@@ -295,6 +295,7 @@ export default function DSelect<Value extends string | number = string>(
       {...valid && { 'data-valid': '' }}
       {...disabled && { 'data-disabled': '' }}
       {...floatingLabel && { 'data-floating-label': '' }}
+      {...hasValue && { 'data-filled': '' }}
       {...dataAttributes}
     >
       {label && !floatingLabel && (

@@ -1,10 +1,17 @@
 {
-  "$description": "The label on a form control. ONE group, not one per control: a label is the same decision whether it sits above a text input, beside a checkbox or over a range, and the moment there were two groups they drifted — the checkbox label lost the weight the input label had while both still claimed the same colour.",
+  "$description": "The label on a form control, including how it moves when it floats — one definition, so a combobox and a text input float theirs identically. The label on a form control. ONE group, not one per control: a label is the same decision whether it sits above a text input, beside a checkbox or over a range, and the moment there were two groups they drifted — the checkbox label lost the weight the input label had while both still claimed the same colour.",
   "label": {
     "margin-block-end": {"$type": "dimension", "$value": "{size.1}"},
     "font-size": {"$type": "dimension", "$value": "{font-size.300}"},
     "font-weight": {"$type": "fontWeight", "$value": "{font-weight.normal}"},
     "color": {"$type": "color", "$value": "{fg.default}"},
-    "required-color": {"$type": "color", "$value": "{role.danger.emphasis}"}
+    "required-color": {"$type": "color", "$value": "{role.danger.emphasis}"},
+
+    "floating-font-size": {"$type": "dimension", "$value": "{font-size.100}"},
+    "floating-shift": {"$type": "dimension", "$value": "{size.2}"},
+    "floating-space": {"$type": "dimension", "$value": "{size.3}"},
+    "floating-crop": {"$type": "dimension", "$value": "{size.1}"},
+    "floating-color": {"$type": "color", "$value": "{fg.muted}"},
+    "floating-active-color": {"$type": "color", "$value": "{role.primary.base}"}
   }
 }

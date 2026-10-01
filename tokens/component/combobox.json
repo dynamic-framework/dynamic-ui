@@ -1,11 +1,11 @@
 {
-  "$description": "Combobox: the searchable, optionally multi select. Separate from `select`, which styles the native element — two different controls that share a word.",
+  "$description": "Combobox. The padding, radius, border and colours deliberately resolve to the same values `input` does — a combobox sits in the same form beside a text input and nothing about it should say it came from somewhere else. Combobox: the searchable, optionally multi select. Separate from `select`, which styles the native element — two different controls that share a word.",
   "combobox": {
-    "padding-block": {"$type": "dimension", "$value": "{size.1}"},
+    "padding-block": {"$type": "dimension", "$value": "{size.2}"},
     "padding-inline": {"$type": "dimension", "$value": "{size.3}"},
     "min-height": {"$type": "dimension", "$value": "{size.10}"},
     "gap": {"$type": "dimension", "$value": "{size.2}"},
-    "radius": {"$type": "dimension", "$value": "{shape.control}"},
+    "radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
     "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
     "font-size": {"$type": "dimension", "$value": "{font-size.300}"},
 

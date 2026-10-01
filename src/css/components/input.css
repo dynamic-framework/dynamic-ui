@@ -146,15 +146,37 @@
     border-radius: var(--df-input-radius);
   }
 
-  .df-input-group > .df-input {
+  /**
+   * A DESCENDANT, not a child.
+   *
+   * This was `>`, and the floating-label arrangement puts a wrapper between the
+   * group and the field — so inside a floating group the rule stopped matching
+   * and the field kept its own border and its own focus ring. The result was a
+   * box drawn twice, a ring drawn twice, and a band of dead space between the
+   * two borders where a click focused nothing, which reads as the field
+   * refusing to be typed in.
+   */
+  .df-input-group .df-input {
     background: none;
     border: 0;
     border-radius: 0;
   }
 
+  /**
+   * The whole group is the click target.
+   *
+   * The field is as tall as its text, and the group is as tall as its tallest
+   * child — usually an icon button. Stretching the field over the difference
+   * means clicking the empty strip above or below the text lands in the field,
+   * instead of on nothing.
+   */
+  .df-input-group > .df-input {
+    align-self: stretch;
+  }
+
   /* The group draws the border and the focus ring, so the inner field draws
      neither — otherwise the control renders two nested rings. */
-  .df-input-group > .df-input:is(:focus, :focus-visible) {
+  .df-input-group .df-input:is(:focus, :focus-visible) {
     /* stylelint-disable-next-line declaration-property-value-disallowed-list */
     outline: none;
   }
@@ -173,6 +195,13 @@
      so the field's own validity state wins over a stale group attribute. */
   .df-input-group:has(.df-input:is(:user-invalid, [aria-invalid="true"])) {
     border-color: var(--df-input-invalid-border-color);
+  }
+
+  /* The field no longer paints its own disabled ground, so the group takes it
+     — or a disabled floating field would look enabled. */
+  .df-input-group:has(.df-input:disabled) {
+    background-color: var(--df-input-disabled-bg);
+    border-color: var(--df-input-disabled-border-color);
   }
 
   .df-input-group-addon {
@@ -249,30 +278,59 @@
     min-width: 0;
   }
 
+  /* Room above the text for the label to move into, taken back off the bottom
+     so the control does not grow. Both come from `label.floating-*`, which is
+     also what the combobox reads — one definition of the movement, so the two
+     cannot drift apart. */
+
+  /* Stretched to the group's height, and the field stretched inside it, so the
+     strip above and below the text is still part of the field. */
+  .df-input-group > .df-input-floating {
+    align-self: stretch;
+  }
+
+  /* `:is(.df-input)` is a specificity bump, not a filter: it lifts this rule
+     above the group rules that strip the field's own box, so the floating
+     padding survives them. */
   .df-input-floating > .df-input:is(.df-input) {
+    flex: 1 1 auto;
     padding-block:
-      calc(var(--df-input-padding-block) + var(--df-size-3))
-      calc(var(--df-input-padding-block) - var(--df-size-1));
+      calc(var(--df-input-padding-block) + var(--df-label-floating-space))
+      calc(var(--df-input-padding-block) - var(--df-label-floating-crop));
   }
 
   .df-input-floating > .df-label {
     position: absolute;
     inset-block-start: var(--df-input-padding-block);
     inset-inline-start: var(--df-input-padding-inline);
-    color: var(--df-fg-muted);
+    color: var(--df-label-floating-color);
     pointer-events: none;
-    transition:
-      transform var(--df-motion-duration-hover) var(--df-motion-easing-standard),
-      color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
-    transform-origin: left top;
   }
 
+  /**
+   * Floated.
+   *
+   * The size change is a real `font-size` off the type scale rather than a
+   * `transform: scale()`. A scaled label is the same glyphs resampled — soft
+   * on the way up and never quite matching the caption text beside it — and it
+   * puts a number in the stylesheet that belongs to the scale.
+   */
   .df-input-floating > .df-input:not(:placeholder-shown) + .df-label,
   .df-input-floating > .df-input:focus + .df-label {
-    transform: translateY(calc(var(--df-size-2) * -1)) scale(0.8);
+    font-size: var(--df-label-floating-font-size);
+    transform: translateY(calc(var(--df-label-floating-shift) * -1));
   }
 
   .df-input-floating > .df-input:focus + .df-label {
-    color: var(--df-input-focus-border-color);
+    color: var(--df-label-floating-active-color);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .df-input-floating > .df-label {
+      transition:
+        font-size var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+        transform var(--df-motion-duration-hover) var(--df-motion-easing-standard),
+        color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
+    }
   }
 }

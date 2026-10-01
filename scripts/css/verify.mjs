@@ -245,6 +245,44 @@ checkComponent('.df-alert', [null], {
   fg: '--df-alert-fg',
 });
 
+/* --- form controls must agree with each other ------------------------- *
+ *
+ * A combobox and a text input sit side by side in the same form. Nothing about
+ * the box should say they came from different places — and because each owns
+ * its own token group, nothing stops them drifting apart either. They had:
+ * the combobox on half the vertical padding and twice the corner radius, so
+ * two controls in one row were different heights with different corners.
+ *
+ * Each pair below must resolve to the same value in BOTH modes. Deliberate
+ * divergence is fine — delete the pair and say why.
+ */
+
+const CONTROL_PARITY = [
+  ['padding-block', '--df-input-padding-block', '--df-combobox-padding-block'],
+  ['padding-inline', '--df-input-padding-inline', '--df-combobox-padding-inline'],
+  ['radius', '--df-input-radius', '--df-combobox-radius'],
+  ['border-width', '--df-input-border-width', '--df-combobox-border-width'],
+  ['background', '--df-input-bg', '--df-combobox-bg'],
+  ['border colour', '--df-input-border-color', '--df-combobox-border-color'],
+  ['focus border', '--df-input-focus-border-color', '--df-combobox-focus-border-color'],
+  ['invalid border', '--df-input-invalid-border-color', '--df-combobox-invalid-border-color'],
+  ['valid border', '--df-input-valid-border-color', '--df-combobox-valid-border-color'],
+];
+
+for (const [what, a, b] of CONTROL_PARITY) {
+  for (const [mode, scope] of [['light', LIGHT], ['dark', DARK]]) {
+    const left = resolveValue(`var(${a})`, scope);
+    const right = resolveValue(`var(${b})`, scope);
+    if (left !== right) {
+      errors.push(
+        `[parity] ${what} differs between the input and the combobox in ${mode}: `
+        + `${a} is ${left}, ${b} is ${right} — two controls in one form should not `
+        + 'be different shapes',
+      );
+    }
+  }
+}
+
 /* --- the dark block must actually change something -------------------- */
 
 const darkOnly = modeDecls('dark');
@@ -266,6 +304,7 @@ const worst = [...checked].sort((a, b) => a.ratio - b.ratio).slice(0, 3);
 
 process.stdout.write(`css-verify: resolved ${allRules.length} rules, ${LIGHT.size} root properties\n`);
 process.stdout.write(`css-verify: checked ${checked.length} opaque fill(s) for contrast\n`);
+process.stdout.write(`css-verify: ${CONTROL_PARITY.length} form-control properties agree across input and combobox\n`);
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {
