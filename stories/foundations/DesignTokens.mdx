@@ -112,7 +112,7 @@ Override the **triplets**, not the wrappers. The library declares every color tw
 - Links follow the role: `--bs-link-color-rgb` points to `--bs-primary-rgb` and `--bs-link-hover-color-rgb` to its 700 step, so they only need an override to use a different color.
 - `.text-bg-<role>` reads its text from `--bs-<role>-text-bg-color`, resolved for the default role. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`).
 - `.btn-<role>` keeps the white or dark text resolved for the default palette, so pick a base that contrasts with it (this example is 4.95:1 against white) or override the button text colors.
-- `npm run theme:expand` derives the ramp and `--bs-<role>-text-bg-color` from one color per role, and `npm run theme:validate` checks the result, contrast included.
+- `npm run theme:expand` takes one color per role and writes its base triplet, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp. `npm run theme:validate` checks the result, contrast included.
 
 #### Palette variables (25–900)
 Each role with a ramp (`primary`, `secondary`, `success`, `info`, `warning`, `danger`) exposes 11 triplets. Step 500 is `var(--bs-<role>-rgb)`, so a rebrand sets the base and the other 10:
