@@ -31,7 +31,7 @@ import { DAlert } from '../../src/components';
       /* ...other overrides... */
     }
     ```
-    Colors are overridden on the `-rgb` triplet (`--bs-primary-rgb`), which buttons, utilities and opacity read; `--bs-primary` is a wrapper computed from it. A role also has a 10-step ramp; `npm run theme:expand` generates it. See [Design Tokens](?path=/docs/design-system-foundations-design-tokens--docs).
+    Colors are overridden on the `-rgb` triplet (`--bs-primary-rgb`), which buttons, utilities and opacity read; `--bs-primary` is a wrapper computed from it. `primary`, `secondary`, `success`, `info`, `warning` and `danger` also have a 10-step ramp (`light` and `dark` don't); `npm run theme:expand` generates it. See [Design Tokens](?path=/docs/design-system-foundations-design-tokens--docs).
 3. **Safe upgrades:**
   All default variables are included in the main bundle, so new tokens are available automatically and removed ones do not break the theme.
 
