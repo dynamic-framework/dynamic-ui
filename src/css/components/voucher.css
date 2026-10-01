@@ -56,7 +56,7 @@
   .df-voucher-divider {
     width: 100%;
     height: var(--df-stroke-divider);
-    margin: 0;
+    margin: var(--df-voucher-divider-margin) 0;
     background-color: var(--df-voucher-divider-color);
     border: 0;
   }

@@ -174,3 +174,74 @@ describe('<DStepperDesktop />', () => {
     expect(stepIcons[2]).toHaveTextContent('3'); // Step 3 should show number
   });
 });
+
+/**
+ * A completed step keeps its number and ADDS a badge.
+ *
+ * It used to swap the number for the check icon and fill the marker solid
+ * green, which is a different component: a flow is "step 2 of 3", and a row of
+ * identical green discs cannot say which step you are on or how far back a
+ * given one was. The number is the thing the marker is for.
+ *
+ * This lives here rather than in `DStepper.spec.tsx`, which mocks both panes —
+ * a test written there would assert against a stand-in and pass whatever this
+ * component did.
+ */
+describe('<DStepperDesktop /> completed markers', () => {
+  it('should keep the number on a completed step and add a badge', () => {
+    const { container } = renderWithContext(
+      <DStepperDesktop options={mockSteps} currentStep={2} />,
+    );
+
+    const done = container.querySelector('.df-step[data-state="done"]')!;
+    expect(done.querySelector('.df-step-marker')).toHaveTextContent('1');
+    expect(done.querySelector('.df-step-check')).toBeInTheDocument();
+  });
+
+  it('should give an unfinished step its number and no badge', () => {
+    const { container } = renderWithContext(
+      <DStepperDesktop options={mockSteps} currentStep={2} />,
+    );
+
+    const todo = container.querySelector('.df-step[data-state="todo"]')!;
+    expect(todo.querySelector('.df-step-marker')).toHaveTextContent('3');
+    expect(todo.querySelector('.df-step-check')).toBeNull();
+  });
+
+  it('should badge every step when completed', () => {
+    const { container } = renderWithContext(
+      <DStepperDesktop options={mockSteps} currentStep={3} completed />,
+    );
+
+    expect(container.querySelectorAll('.df-step-check')).toHaveLength(3);
+    expect(container.querySelector('.df-step-marker')).toHaveTextContent('1');
+  });
+});
+
+/**
+ * Stacked, where the connector arithmetic lives.
+ *
+ * The CSS cannot be exercised in jsdom, so what is pinned here is the one
+ * thing the component owns: the attribute the stacked rules key on. The
+ * geometry itself is checked by `css:verify`, which resolves the tokens and
+ * fails if the shortest possible step would get a zero-height connector.
+ */
+describe('<DStepperDesktop /> stacked', () => {
+  it('should mark the orientation the stacked rules read', () => {
+    const { container } = renderWithContext(
+      <DStepperDesktop options={mockSteps} currentStep={2} vertical />,
+    );
+
+    expect(container.querySelector('.df-stepper-desktop'))
+      .toHaveAttribute('data-orientation', 'vertical');
+  });
+
+  it('should not mark it when laid out across', () => {
+    const { container } = renderWithContext(
+      <DStepperDesktop options={mockSteps} currentStep={2} />,
+    );
+
+    expect(container.querySelector('.df-stepper-desktop'))
+      .not.toHaveAttribute('data-orientation');
+  });
+});

@@ -333,6 +333,60 @@ const UA_DIALOG_PROPS = [
   }
 }
 
+/* --- the stacked stepper must still draw a line ----------------------- */
+
+/**
+ * A vertical connector runs from below one marker to above the next, so its
+ * height is the step's own height, plus the gap to the next step, minus the
+ * marker and minus the clearance at each end.
+ *
+ * The shortest possible step is exactly as tall as its marker — a label with
+ * no description. For THAT step the height collapses to
+ * `vertical-step-gap - line-gap-vertical * 2`, and if the clearances eat the
+ * gap the connector is zero pixels tall: the stepper silently stops drawing
+ * lines for exactly the content that needs them most, and the absence reads as
+ * a design that never had them.
+ *
+ * Checked here rather than left as a comment because the three values are
+ * tokens, which is to say they are meant to be retuned by someone who will not
+ * have this arithmetic in front of them.
+ */
+{
+  /*
+   * Compared in whatever unit they are authored in, rather than converted to
+   * px against an assumed root font size. Both come from the same `size`
+   * scale, so they always agree — and `16` written here would be a second
+   * place that has to change if the scale's base ever does.
+   */
+  const length = (name) => {
+    const raw = String(resolveValue(`var(${name})`, LIGHT)).trim();
+    const m = /^(-?[\d.]+)(px|rem|em)$/.exec(raw);
+    return m ? { value: Number(m[1]), unit: m[2] } : null;
+  };
+
+  const gap = length('--df-stepper-vertical-step-gap');
+  const clearance = length('--df-stepper-line-gap-vertical');
+
+  if (!gap || !clearance) {
+    errors.push(
+      '[stepper] --df-stepper-vertical-step-gap or --df-stepper-line-gap-vertical '
+      + 'does not resolve to a simple length, so the connector height cannot be checked',
+    );
+  } else if (gap.unit !== clearance.unit) {
+    errors.push(
+      `[stepper] vertical-step-gap is in ${gap.unit} and line-gap-vertical in `
+      + `${clearance.unit}; they subtract from each other, so they have to be comparable`,
+    );
+  } else if (gap.value - clearance.value * 2 <= 0) {
+    errors.push(
+      `[stepper] a stacked step with no description would get a `
+      + `${gap.value - clearance.value * 2}${gap.unit} connector: vertical-step-gap is `
+      + `${gap.value}${gap.unit} and line-gap-vertical is ${clearance.value}${clearance.unit} `
+      + 'at each end. Raise the gap or lower the clearance.',
+    );
+  }
+}
+
 /* --- which axes each placement fills ---------------------------------- */
 
 /**
@@ -449,6 +503,7 @@ process.stdout.write(`css-verify: checked ${checked.length} opaque fill(s) for c
 process.stdout.write(`css-verify: ${CONTROL_PARITY.length} form-control properties agree across input and combobox\n`);
 process.stdout.write(`css-verify: ${UA_DIALOG_PROPS.length} UA \`<dialog>\` properties answered by .df-overlay\n`);
 process.stdout.write(`css-verify: ${Object.keys(FILLS).length} overlay placements fill the axes they should\n`);
+process.stdout.write('css-verify: the stacked stepper draws a connector at its shortest step\n');
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

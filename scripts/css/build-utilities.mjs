@@ -637,6 +637,28 @@ const responsive = buildResponsive();
 
 export const css = base.css;
 export const responsiveCss = responsive.css;
+/**
+ * The same table, as data for the documentation.
+ *
+ * Emitted from here rather than written alongside it: a reference page listing
+ * 819 class names by hand is a page that is wrong within a week, and the
+ * failure is quiet — a utility that exists but is undocumented is invisible,
+ * and one documented but removed is a class a template author uses and gets
+ * nothing from. Both are the same bug as a dangling `var()`, one layer up.
+ */
+export const manifest = GROUPS.map((group) => ({
+  name: group.name,
+  responsive: Boolean(group.responsive),
+  hover: Boolean(group.hover),
+  dark: Boolean(group.dark),
+  rules: group.rules.map((rule) => ({
+    name: rule.name,
+    decls: rule.decls.map(([prop, value]) => [prop, value]),
+  })),
+}));
+
+export const breakpoints = BREAKPOINTS.map((b) => ({ name: b.name, min: b.px }));
+
 export const stats = {
   base: base.count,
   hover: base.hoverCount,

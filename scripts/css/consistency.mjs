@@ -264,6 +264,29 @@ for (const rel of cssFiles()) {
     if (exempt.has(line)) continue;
     const where = `${rel}:${line}`;
 
+    /**
+     * A declaration with no value.
+     *
+     * `content: ;` parses — it just is not a value, so the browser drops the
+     * declaration and keeps going. On `::after` that means the pseudo-element
+     * is never generated at all, and the stepper shipped with no connecting
+     * lines between its steps and no inner disc on its progress ring: a
+     * component whose entire job is showing a sequence, drawing nothing
+     * between the items.
+     *
+     * Nothing caught it. It is valid enough for postcss, stylelint has no rule
+     * for an empty value, and `css:validate` only follows `var()` references —
+     * there is no reference here to dangle. The symptom is an absence, which
+     * reads as a design that never had the thing.
+     */
+    if (!value) {
+      findings.push({
+        kind: 'empty-value',
+        where,
+        message: `${prop}: has no value — the declaration is dropped, so whatever it was for never happens`,
+      });
+    }
+
     if (SPACING_PROPS.has(prop)) {
       for (const part of valueParts(value)) {
         if (!part || ALLOWED.test(part)) continue;

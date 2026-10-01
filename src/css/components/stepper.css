@@ -52,8 +52,38 @@
     --df-icon-inline-size: var(--df-stepper-icon-size);
   }
 
+  /**
+   * A completed step keeps its NUMBER and gains a badge.
+   *
+   * It used to swap the number for a check and fill the marker solid green,
+   * which loses the one thing the marker is for: a flow is "step 2 of 3", and
+   * a row of identical green discs cannot say which step you are on or how far
+   * back a given one was. The badge is additive, so the sequence stays
+   * readable — the ring itself does not change at all.
+   *
+   * One rule at the marker's specificity rather than a bare `.df-step-check`
+   * plus an override: the glyph size has to beat `.df-step-marker .df-icon`
+   * above, and a lower-specificity rule declared later cannot.
+   */
+  .df-step-marker .df-step-check {
+    --df-icon-inline-size: var(--df-stepper-check-icon-size);
+
+    position: absolute;
+    inset-block-end: calc(var(--df-stepper-check-offset) * -1);
+    inset-inline-end: calc(var(--df-stepper-check-offset) * -1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--df-stepper-check-size);
+    height: var(--df-stepper-check-size);
+    color: var(--df-stepper-check-fg);
+    background-color: var(--df-stepper-check-bg);
+    border-radius: var(--df-shape-pill);
+  }
+
   .df-step-label {
     font-size: var(--df-stepper-label-font-size);
+    font-weight: var(--df-stepper-label-font-weight);
   }
 
   .df-step-description {
@@ -73,31 +103,45 @@
     text-align: center;
   }
 
-  /* The connector, drawn from this step's marker to the next one's. */
+  /**
+   * The connector, from this marker's edge to the next one's.
+   *
+   * `content: ""`, and the empty string matters: it was written `content: ;`,
+   * which is not a value. An invalid declaration is DROPPED, so the
+   * pseudo-element was never generated and the stepper had no connecting lines
+   * at all — in a component whose whole job is to show a sequence. Nothing
+   * reported it: it is valid enough to parse, stylelint has no rule for an
+   * empty value, and a missing line looks like a design that never had one.
+   * `css:consistency` has the rule now.
+   *
+   * It stops short of both markers rather than running under them. Running it
+   * through and covering the overlap with the marker's own background works
+   * until the marker is transparent or the page behind it is not the surface
+   * colour; a gap is the same look with nothing to go wrong.
+   */
   .df-step:not(:last-child)::after {
     position: absolute;
     inset-block-start: calc(var(--df-stepper-marker-size) / 2);
-    inset-inline-start: 50%;
-    width: 100%;
+    inset-inline-start: calc(
+      50% + var(--df-stepper-marker-size) / 2 + var(--df-stepper-line-gap)
+    );
+    width: calc(
+      100% - var(--df-stepper-marker-size) - var(--df-stepper-line-gap) * 2
+    );
     height: var(--df-stepper-line-size);
-    content: ;
+    content: "";
     background-color: var(--df-stepper-line-color);
     translate: 0 -50%;
-  }
-
-  .df-step[data-state="done"] .df-step-marker {
-    color: var(--df-stepper-done-fg);
-    background-color: var(--df-stepper-done-bg);
-    border-color: var(--df-stepper-done-border-color);
-  }
-
-  .df-step[data-state="done"]:not(:last-child)::after {
-    background-color: var(--df-stepper-line-done-color);
   }
 
   .df-step[data-state="current"] .df-step-marker {
     color: var(--df-stepper-current-fg);
     border-color: var(--df-stepper-current-border-color);
+  }
+
+  /* The ring colour alone does not carry far enough across a wide row. */
+  .df-step[data-state="current"] .df-step-label {
+    font-weight: var(--df-stepper-label-current-font-weight);
   }
 
   .df-step-text {
@@ -107,22 +151,50 @@
     padding-inline: var(--df-stepper-label-padding);
   }
 
-  /* Vertical layout: the line runs down instead of across. */
+  /**
+   * Stacked: the line runs down instead of across.
+   *
+   * The steps need a gap of their own here. Across a row they share the width
+   * with `flex: 1 1 0` and the spacing comes out of that; stacked, nothing
+   * separates them and the rows sat flush against each other.
+   */
   .df-stepper-desktop[data-orientation="vertical"] {
     flex-direction: column;
+    gap: var(--df-stepper-vertical-step-gap);
   }
 
+  /*
+   * `flex: none`, because `flex: 1 1 0` in a column stretches every step to
+   * the same height — so a step with one line of text got as much room as one
+   * with three, and the connector was sized against a height nothing filled.
+   */
   .df-stepper-desktop[data-orientation="vertical"] .df-step {
+    flex: none;
     flex-direction: row;
     align-items: flex-start;
     text-align: start;
   }
 
+  /*
+   * From below one marker to above the next, with clearance at both ends.
+   *
+   * It started exactly at the marker's edge and ran `height: 100%` — the full
+   * height of the step — so it touched the ring above it and overshot into the
+   * one below. `100%` is the step, and the line has to cross the gap BETWEEN
+   * steps as well, which is why the step gap is added back before the two
+   * clearances come off.
+   */
   .df-stepper-desktop[data-orientation="vertical"] .df-step:not(:last-child)::after {
-    inset-block-start: var(--df-stepper-marker-size);
+    inset-block-start: calc(
+      var(--df-stepper-marker-size) + var(--df-stepper-line-gap-vertical)
+    );
     inset-inline-start: calc(var(--df-stepper-marker-size) / 2);
     width: var(--df-stepper-line-size);
-    height: 100%;
+    height: calc(
+      100% + var(--df-stepper-vertical-step-gap)
+        - var(--df-stepper-marker-size)
+        - var(--df-stepper-line-gap-vertical) * 2
+    );
     translate: -50% 0;
   }
 
@@ -157,7 +229,7 @@
     height: calc(
       var(--df-stepper-progress-size) - var(--df-stepper-progress-thickness) * 2
     );
-    content: ;
+    content: "";
     background-color: var(--df-bg-surface);
     border-radius: var(--df-shape-pill);
   }

@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Utilities/Overview" />
+
+# Utilities
+
+A set of single-purpose classes for building interfaces out of HTML, without
+writing CSS and without a component for every arrangement. They are what makes
+a Liquid template in Modyo able to lay something out.
+
+```html
+<div class="df-flex df-gap-4 df-p-6 df-bg-surface df-rounded-control">
+  <span class="df-text-muted df-fs-body-sm">Available balance</span>
+  <strong class="df-ms-auto">$12,430.55</strong>
+</div>
+```
+
+## Where the pages come from
+
+The **Reference** page is generated. `scripts/css/build-utilities.mjs` writes
+`dist/css/utilities.manifest.json` from the same table it emits the stylesheet
+from, and the page renders that file — so it cannot list a class the build did
+not produce, or miss one it did.
+
+That matters more than it sounds. A hand-kept list of 819 class names is wrong
+within a week, and both ways of being wrong are quiet: an undocumented utility
+is invisible to whoever needed it, and a documented-but-removed one is a class
+a template author writes and gets nothing from. Neither throws.
+
+| page | what it is for |
+|---|---|
+| **Layout** | display, flex, grid, container — and the responsive examples |
+| **Spacing** | the 31-step scale, the side letters, gap |
+| **Typography** | size, weight, line-height, wrapping, truncation |
+| **Colors** | colour classes arranged by ROLE, which is how you reach for one |
+| **Borders & Effects** | width, radius, shadow, opacity, z-index |
+| **Variants** | `hover:`, `dark:`, breakpoints — and which families take each |
+| **All classes** | every class in one searchable list, when you do not know the family |
+
+## Three things to know before you write one
+
+**No `!important`, anywhere.** Utilities sit in the last Dynamic cascade layer,
+so they already beat component styles. And your own CSS is *unlayered*, which
+beats every layer regardless of specificity — so you can override a utility
+with a plain selector. That is what retired `$enable-important-utilities` from
+2.x.
+
+**Prefixes are part of the name.** `df-hover:bg-muted` is one class, and it sits
+alongside its base: `class="df-bg-surface df-hover:bg-muted"`.
+
+**Not every family takes every prefix**, and **prefixes do not stack.**
+
+- `background` has no breakpoint variant, so a `md:` colour class matches
+  nothing — not an error, just a class name with no rule behind it.
+- There is no `dark:` + `hover:` combination either: the build emits the two
+  as separate variants, not a matrix.
+
+Both are the same failure: a class that produces nothing and reports nothing.
+The **Variants** page lists what exists, read from the build — and
+`npm run css:usage` fails the build on an undefined `df-` class, which caught
+both of those mistakes in these very pages while they were being written.
+
+## Logical properties
+
+The side letters are logical, not physical: `s` and `e` are inline start and
+end, `t` and `b` are block start and end. A layout built with them works in a
+right-to-left language without a second stylesheet.
+
+## Loading them
+
+Utilities are in `dynamic.css`, which is the whole library:
+
+```html
+<link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/3/css/dynamic.min.css">
+```
+
+The responsive variants are in there too. They were a separate opt-in file for
+a while, and the result was 117 classes that silently did nothing on any page
+that had not loaded it — so they were folded in.
+
+If you want the utilities without the components, `dynamic.utilities.css` is
+that slice on its own.

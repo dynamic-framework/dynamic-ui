@@ -75,15 +75,25 @@ export default function DStepper(
           data-state={stateFor(value)}
           key={value}
         >
+          {/*
+            * The number stays, and a completed step ADDS a badge.
+            *
+            * It used to swap the number for the check, so a done step showed a
+            * solid green disc and nothing else. That loses what the marker is
+            * for: a flow is "step 2 of 3", and a row of identical discs cannot
+            * say which step you are on or how far back a given one was.
+            */}
           <div className="df-step-marker">
-            {((value < currentStep) || completed) ? (
+            {value}
+            {((value < currentStep) || completed) && (
               <DIcon
+                className="df-step-check"
                 icon={icon}
                 familyClass={iconSuccessFamilyClass}
                 familyPrefix={iconSuccessFamilyPrefix}
                 materialStyle={iconSuccessMaterialStyle}
               />
-            ) : value}
+            )}
           </div>
           <div className="df-step-text">
             <div className="df-step-label">{label}</div>

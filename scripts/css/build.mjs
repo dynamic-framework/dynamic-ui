@@ -38,7 +38,13 @@ import autoprefixer from 'autoprefixer';
 import browserslist from 'browserslist';
 
 import { css as variantsCss, stats as variantStats } from './build-variants.mjs';
-import { css as utilitiesCss, responsiveCss, stats as utilityStats } from './build-utilities.mjs';
+import {
+  css as utilitiesCss,
+  responsiveCss,
+  stats as utilityStats,
+  manifest as utilityManifest,
+  breakpoints as utilityBreakpoints,
+} from './build-utilities.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const SRC = resolve(ROOT, 'src/css');
@@ -319,6 +325,24 @@ process.stdout.write(
   + `(${utilityStats.hover} hover:, ${utilityStats.dark} dark:), `
   + `${utilityStats.responsive} responsive (opt-in)\n`,
 );
+/*
+ * The utility surface, as data, next to the stylesheet it describes.
+ *
+ * `stories/foundations/Utilities.stories.tsx` renders its reference from this
+ * file, so the page cannot list a class the build did not emit or miss one it
+ * did. Written into `dist/` rather than `stories/` because it is a build
+ * output: it is regenerated every run and never edited.
+ */
+writeFileSync(
+  resolve(OUT, 'utilities.manifest.json'),
+  `${JSON.stringify({ breakpoints: utilityBreakpoints, groups: utilityManifest }, null, 2)}\n`,
+  'utf8',
+);
+process.stdout.write(
+  `css: utilities.manifest.json — ${utilityManifest.length} families, `
+  + `${utilityManifest.reduce((n, g) => n + g.rules.length, 0)} rules\n`,
+);
+
 process.stdout.write(`css: spacing covers all ${utilityStats.spacingSteps} scale steps; breakpoints ${utilityStats.breakpoints.join(', ')}\n`);
 // The scope decisions, printed rather than discovered.
 process.stdout.write(`css: no hover: variant for ${utilityStats.noHover.join(', ')}\n`);

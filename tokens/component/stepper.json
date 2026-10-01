@@ -11,17 +11,24 @@
     "marker-border-color": {"$type": "color", "$value": "{border.default}"},
     "icon-size": {"$type": "dimension", "$value": "{size.6}"},
 
-    "done-bg": {"$type": "color", "$value": "{role.success.base}"},
-    "done-fg": {"$type": "color", "$value": "{role.success.on-base}"},
-    "done-border-color": {"$type": "color", "$value": "{role.success.base}"},
+    "check-size": {"$type": "dimension", "$value": "{size.5}", "$description": "The badge on a completed step. A badge rather than a filled marker: the step NUMBER stays readable, which is what tells you where you are in a flow."},
+    "check-icon-size": {"$type": "dimension", "$value": "{size.3}"},
+    "check-offset": {"$type": "dimension", "$value": "{size.1}", "$description": "How far the badge sits outside the marker's box, so it straddles the ring"},
+    "check-bg": {"$type": "color", "$value": "{role.success.base}"},
+    "check-fg": {"$type": "color", "$value": "{role.success.on-base}"},
+
     "current-fg": {"$type": "color", "$value": "{role.primary.emphasis}"},
     "current-border-color": {"$type": "color", "$value": "{role.primary.base}"},
 
     "line-size": {"$type": "dimension", "$value": "{border-width.2}"},
     "line-color": {"$type": "color", "$value": "{border.default}"},
-    "line-done-color": {"$type": "color", "$value": "{role.success.base}"},
+    "line-gap": {"$type": "dimension", "$value": "{size.5}", "$description": "Clearance between a marker and the connector in the horizontal layout, so the line stops short of the ring instead of running into it"},
+    "line-gap-vertical": {"$type": "dimension", "$value": "{size.2}", "$description": "The same clearance stacked. Smaller than the horizontal one on purpose: a vertical step is only as tall as its text, so the horizontal value would leave almost no line between two markers"},
+    "vertical-step-gap": {"$type": "dimension", "$value": "{size.6}", "$description": "Between steps when stacked. The horizontal layout needs none — its steps share the row with `flex: 1 1 0`. MUST exceed `line-gap-vertical` doubled, or a step whose content is no taller than its marker has no connector at all; `css:verify` checks it."},
 
     "label-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
+    "label-font-weight": {"$type": "fontWeight", "$value": "{font-weight.normal}"},
+    "label-current-font-weight": {"$type": "fontWeight", "$value": "{font-weight.medium}", "$description": "The step you are on reads heavier than the rest — the only thing in the row that says where you are now"},
     "label-padding": {"$type": "dimension", "$value": "{size.4}"},
     "description-font-size": {"$type": "dimension", "$value": "{font-size.200}"},
     "description-color": {"$type": "color", "$value": "{fg.muted}"},
