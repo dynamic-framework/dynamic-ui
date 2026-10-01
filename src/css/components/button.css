@@ -37,12 +37,28 @@
     --df-button-border-color-hover: var(--df-button-border-color);
     --df-button-decoration-hover: none;
 
+    /**
+     * A one-cell grid, with the label and the loading state stacked in it.
+     *
+     * Both were flex children, and the loading state was lifted out of flow
+     * with `position: absolute; inset: 0` so the button would not resize when
+     * it appeared. That works right up until the loading text is LONGER than
+     * the label — an absolutely positioned child cannot contribute any width,
+     * so the button stays the size of the label underneath and "Loading…"
+     * spills out of the box.
+     *
+     * Putting both in the same grid area makes the cell as wide as the wider
+     * of the two. The button never resizes between the states, because it was
+     * already sized for both, and nothing can overflow it.
+     */
+
+    /* Kept even though the loading state no longer needs it: a button is a
+       common anchor for something a consumer positions over it, a notification
+       dot being the usual one. */
     position: relative;
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--df-button-gap);
-    align-items: center;
-    justify-content: center;
+    display: inline-grid;
+    grid-template-areas: "content";
+    place-items: center;
     padding-block: var(--df-button-padding-block);
     padding-inline: var(--df-button-padding-inline);
     font-family: var(--df-button-font-family);
@@ -155,14 +171,36 @@
     cursor: progress;
   }
 
+  /**
+   * The label is the row.
+   *
+   * It used to be an unstyled `<span>`, which is an INLINE box — so its icon
+   * and its text laid out as text, and the icon sat on the baseline. A square
+   * glyph on a baseline has its bottom at the bottom of the lowercase letters
+   * and its top above the cap height, which is exactly the "icon floating too
+   * high" it looked like.
+   *
+   * The button's own `gap` never reached in here either: the button's flex
+   * children are the label and the spinner, not the icon and the text. So the
+   * only space between a label and its icon was whatever padding the glyph
+   * happened to have inside its own viewBox.
+   */
+  .df-button-label {
+    display: inline-flex;
+    grid-area: content;
+    gap: var(--df-button-gap);
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
   .df-button[data-loading] > .df-button-label {
     visibility: hidden;
   }
 
   .df-button-spinner {
-    position: absolute;
-    inset: 0;
     display: flex;
+    grid-area: content;
     gap: var(--df-button-gap);
     align-items: center;
     justify-content: center;
@@ -172,15 +210,20 @@
     display: none;
   }
 
+  /**
+   * Sized through the icon's OWN property.
+   *
+   * This was `.df-button-icon > svg { width: 1em }`, which has the same
+   * specificity as `.df-icon > svg` in `icon.css` and only won because
+   * `button.css` happens to be bundled after it. A reordering of the source
+   * list would have silently changed every button's icon size.
+   *
+   * `1em` ties the glyph to the button's text, so it follows `data-size` and a
+   * consumer's own font-size without another rule.
+   */
   .df-button-icon {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-  }
+    --df-icon-inline-size: 1em;
 
-  .df-button-icon > svg {
-    width: 1em;
-    height: 1em;
+    flex: none;
   }
 }

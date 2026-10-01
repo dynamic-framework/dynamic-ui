@@ -158,6 +158,30 @@ describe('<DButton />', () => {
     expect(getByRole('status')).toHaveTextContent('Loading...');
   });
 
+  /**
+   * Both states must stay IN FLOW, stacked in one grid cell.
+   *
+   * The loading state used to be lifted out with `position: absolute`, so that
+   * the button would not resize when it appeared. An out-of-flow child
+   * contributes no width, so the button stayed the size of the label
+   * underneath — and a `loadingText` longer than the label spilled out of the
+   * box. jsdom has no layout, but it can hold the structure the fix depends
+   * on: the label and the spinner are siblings, and neither is positioned.
+   */
+  it('Should keep the label and the loading state as in-flow siblings', () => {
+    const { container } = render(
+      <DButton text="Go" loading loadingText="Loading, please wait…" />,
+    );
+
+    const button = container.querySelector('.df-button')!;
+    const label = button.querySelector(':scope > .df-button-label');
+    const spinner = button.querySelector(':scope > .df-button-spinner');
+
+    expect(label).toBeInTheDocument();
+    expect(spinner).toBeInTheDocument();
+    expect(spinner).not.toHaveStyle({ position: 'absolute' });
+  });
+
   it('Should not render value if empty string', () => {
     const { getByRole } = render(
       <DButton

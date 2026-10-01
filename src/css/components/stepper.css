@@ -44,9 +44,12 @@
     border-radius: var(--df-stepper-marker-radius);
   }
 
-  .df-step-marker > svg {
-    width: var(--df-stepper-icon-size);
-    height: var(--df-stepper-icon-size);
+  /* Sized through the icon's own property rather than by a rule about `svg`:
+     `DIcon` is a styled `<i>` when the icon set is a font, and a rule at the
+     same specificity as `.df-icon > svg` would otherwise win or lose on bundle
+     order alone. */
+  .df-step-marker .df-icon {
+    --df-icon-inline-size: var(--df-stepper-icon-size);
   }
 
   .df-step-label {

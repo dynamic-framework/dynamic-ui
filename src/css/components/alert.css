@@ -23,6 +23,11 @@
   }
 
   .df-alert-icon {
+    /* Sized through the icon's own property, not by a rule about `svg`:
+       `DIcon` is a styled `<i>` when the icon set is a font, and a rule at the
+       same specificity as `.df-icon > svg` would win or lose on bundle order. */
+    --df-icon-inline-size: var(--df-alert-icon-size);
+
     display: inline-flex;
     flex: none;
     align-items: center;
@@ -30,11 +35,6 @@
     width: var(--df-alert-icon-size);
     height: var(--df-alert-icon-size);
     color: var(--df-alert-accent);
-  }
-
-  .df-alert-icon > svg {
-    width: 100%;
-    height: 100%;
   }
 
   .df-alert-content {

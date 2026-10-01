@@ -49,13 +49,15 @@
   }
 
   .df-badge-icon {
+    /* Sized through the icon's own property, not by a rule about `svg`:
+       `DIcon` is a styled `<i>` when the icon set is a font, and a rule at the
+       same specificity as `.df-icon > svg` would win or lose on bundle order. */
+    --df-icon-inline-size: 1em;
+
     display: inline-flex;
     flex: none;
     align-items: center;
   }
 
-  .df-badge-icon > svg {
-    width: 1em;
-    height: 1em;
-  }
+
 }

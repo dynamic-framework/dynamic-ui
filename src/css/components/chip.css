@@ -21,17 +21,17 @@
   }
 
   .df-chip-icon {
+    /* Sized through the icon's own property, not by a rule about `svg`:
+       `DIcon` is a styled `<i>` when the icon set is a font, and a rule at the
+       same specificity as `.df-icon > svg` would win or lose on bundle order. */
+    --df-icon-inline-size: var(--df-chip-icon-size);
+
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
     width: var(--df-chip-icon-size);
     height: var(--df-chip-icon-size);
-  }
-
-  .df-chip-icon > svg {
-    width: 100%;
-    height: 100%;
   }
 
   /* The dismiss control is a real button: focusable, and with a hit area that

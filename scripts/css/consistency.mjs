@@ -80,6 +80,25 @@ const RAW_PALETTE_RE = /^--df-color-(?!white$|black$|alpha-)[a-z]+-\d+$/;
  */
 const SELECTOR_TRAPS = [
   {
+    /*
+     * A component styling another component's internals by element.
+     *
+     * `.df-button-icon > svg { width: 1em }` reaches past `DIcon` into whatever
+     * it happens to render. It breaks the moment the icon set is a font rather
+     * than SVG, and it sits at the SAME specificity as `.df-icon > svg` in
+     * `icon.css` — so which one wins is decided by the order the files happen
+     * to be bundled in, not by anything a reader can see.
+     *
+     * `icon.css` itself is the one place this is correct, and it is excluded
+     * below by requiring the selector not to start there.
+     */
+    pattern: /\.df-[a-z-]+\s*>?\s*svg\b/,
+    requires: /^\.df-icon\b/,
+    message: 'styles another component\'s `svg` directly — set `--df-icon-inline-size` '
+      + 'on the wrapper instead, which works for an icon font too and does not '
+      + 'depend on bundle order',
+  },
+  {
     // `:indeterminate` also matches an `input[type="radio"]` whose radio group
     // has NOTHING selected. A rule meant for a checkbox's dash state therefore
     // styles every unselected radio on the page.
@@ -89,6 +108,33 @@ const SELECTOR_TRAPS = [
       + 'scope it with `[type="checkbox"]` or it styles every unselected radio',
   },
 ];
+
+/**
+ * Splits a selector list on its top-level commas.
+ *
+ * Not `selector.split(',')`: `:is(:checked, :indeterminate)` carries a comma of
+ * its own, and more importantly a LIST has to be checked one selector at a
+ * time. Checking the whole string meant a qualifier anywhere in the list —
+ * `[type="checkbox"]` on the second selector — exempted the first one too,
+ * which is precisely how the bug these traps exist for would come back.
+ */
+function splitSelectorList(selector) {
+  const parts = [];
+  let depth = 0;
+  let current = '';
+  for (const char of selector) {
+    if (char === '(' || char === '[') depth += 1;
+    if (char === ')' || char === ']') depth -= 1;
+    if (char === ',' && depth === 0) {
+      parts.push(current.trim());
+      current = '';
+      continue;
+    }
+    current += char;
+  }
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+}
 
 /* ------------------------------------------------------------------ */
 
@@ -173,18 +219,33 @@ for (const rel of cssFiles()) {
   const code = source.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
 
   // Selector traps, checked per selector list rather than per declaration.
-  const SELECTOR_RE = /(^|[}])\s*([^{}]+?)\s*\{/g;
-  let sel;
-  while ((sel = SELECTOR_RE.exec(code)) !== null) {
-    const selector = sel[2].replace(/\s+/g, ' ').trim();
+  /**
+   * Every selector in the file, found by scanning for `{` and reading back.
+   *
+   * A regex that CONSUMED the preceding brace could not work: after matching
+   * `@layer df.components {` its cursor sits past that brace, so the very next
+   * rule has no brace in front of it any more and is skipped. Since every
+   * stylesheet here opens with a layer block, that silently exempted the first
+   * rule of every file — usually the component's primary one — from the traps
+   * below.
+   */
+  for (let i = 0; i < code.length; i += 1) {
+    if (code[i] !== '{') continue;
+    let from = i - 1;
+    while (from >= 0 && code[from] !== '{' && code[from] !== '}') from -= 1;
+
+    const selector = code.slice(from + 1, i).replace(/\s+/g, ' ').trim();
     if (!selector || selector.startsWith('@')) continue;
-    for (const trap of SELECTOR_TRAPS) {
-      if (!trap.pattern.test(selector) || trap.requires.test(selector)) continue;
-      findings.push({
-        kind: 'selector-trap',
-        where: `${rel}:${code.slice(0, sel.index).split('\n').length}`,
-        message: `${selector} — ${trap.message}`,
-      });
+
+    for (const one of splitSelectorList(selector)) {
+      for (const trap of SELECTOR_TRAPS) {
+        if (!trap.pattern.test(one) || trap.requires.test(one)) continue;
+        findings.push({
+          kind: 'selector-trap',
+          where: `${rel}:${code.slice(0, i).split('\n').length}`,
+          message: `${one} — ${trap.message}`,
+        });
+      }
     }
   }
 
