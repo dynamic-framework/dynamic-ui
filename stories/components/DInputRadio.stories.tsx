@@ -27,17 +27,11 @@ so it cannot fall out of step with the stylesheet.
 | \`--df-choice-border-width\`          | css length | Border width          |
 | \`--df-choice-bg\`                    | css color  | Background            |
 | \`--df-choice-border-color\`          | css color  | Border color          |
-| \`--df-choice-checked-bg\`            | css color  | Checked background    |
-| \`--df-choice-checked-border-color\`  | css color  | Checked border color  |
-| \`--df-choice-checked-mark-color\`    | css color  | Checked mark color    |
-| \`--df-choice-hover-border-color\`    | css color  | Hover border color    |
-| \`--df-choice-invalid-border-color\`  | css color  | Invalid border color  |
-| \`--df-choice-valid-border-color\`    | css color  | Valid border color    |
-| \`--df-choice-disabled-bg\`           | css color  | Disabled background   |
+| \`--df-choice-accent\`                | css color  | Accent                |
+| \`--df-choice-accent-invalid\`        | css color  | Accent invalid        |
+| \`--df-choice-accent-valid\`          | css color  | Accent valid          |
 | \`--df-choice-disabled-border-color\` | css color  | Disabled border color |
 | \`--df-choice-disabled-opacity\`      | number     | Disabled opacity      |
-| \`--df-choice-label-color\`           | css color  | Label color           |
-| \`--df-choice-label-font-size\`       | css length | Label font size       |
 | \`--df-choice-switch-width\`          | css length | Switch width          |
 | \`--df-choice-switch-height\`         | css length | Switch height         |
 | \`--df-choice-switch-thumb-inset\`    | css length | Switch thumb inset    |
@@ -194,4 +188,53 @@ export const RadioCheckedDisabled: Story = {
     checked: true,
     disabled: true,
   },
+};
+
+/**
+ * Every validity state, checked and unchecked.
+ *
+ * The row that matters is the checked one. A checked control is mostly fill,
+ * so a validity state that only recolours the one-pixel border is invisible
+ * exactly when it is needed — which is what this story exists to keep honest.
+ *
+ * All of it comes from one custom property: `--df-choice-tone` is the colour
+ * in force, and validity replaces it. The fill, the border and the dot read it,
+ * so they cannot end up disagreeing about whether the control is wrong.
+ */
+export const ValidityStates: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Set `--df-choice-accent`, `--df-choice-accent-invalid` or `--df-choice-accent-valid` to retone all three at once.',
+      },
+    },
+  },
+  render: () => (
+    <div className="df-grid df-grid-cols-4 df-gap-4 df-items-center" style={{ maxWidth: 560 }}>
+      <span className="df-fs-label df-text-muted" />
+      <span className="df-fs-label df-fw-semibold">Default</span>
+      <span className="df-fs-label df-fw-semibold">Valid</span>
+      <span className="df-fs-label df-fw-semibold">Invalid</span>
+
+      <span className="df-fs-body-sm df-text-muted">Unchecked</span>
+      <DInputCheck id="vsRadio1" type="radio" name="vs1" ariaLabel="Default, unchecked" />
+      <DInputCheck id="vsRadio2" type="radio" name="vs2" ariaLabel="Valid, unchecked" valid />
+      <DInputCheck id="vsRadio3" type="radio" name="vs3" ariaLabel="Invalid, unchecked" invalid />
+
+      <span className="df-fs-body-sm df-text-muted">Checked</span>
+      <DInputCheck id="vsRadio4" type="radio" name="vs4" ariaLabel="Default, checked" checked />
+      <DInputCheck id="vsRadio5" type="radio" name="vs5" ariaLabel="Valid, checked" checked valid />
+      <DInputCheck id="vsRadio6" type="radio" name="vs6" ariaLabel="Invalid, checked" checked invalid />
+
+      <span className="df-fs-body-sm df-text-muted">Checkbox</span>
+      <DInputCheck id="vsCheck1" type="checkbox" ariaLabel="Default, checked" checked />
+      <DInputCheck id="vsCheck2" type="checkbox" ariaLabel="Valid, checked" checked valid />
+      <DInputCheck id="vsCheck3" type="checkbox" ariaLabel="Invalid, checked" checked invalid />
+
+      <span className="df-fs-body-sm df-text-muted">Indeterminate</span>
+      <DInputCheck id="vsInd1" type="checkbox" ariaLabel="Default, indeterminate" indeterminate />
+      <DInputCheck id="vsInd2" type="checkbox" ariaLabel="Valid, indeterminate" indeterminate valid />
+      <DInputCheck id="vsInd3" type="checkbox" ariaLabel="Invalid, indeterminate" indeterminate invalid />
+    </div>
+  ),
 };

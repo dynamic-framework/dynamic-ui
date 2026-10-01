@@ -8,13 +8,13 @@
   .df-field {
     display: flex;
     flex-direction: column;
-    gap: var(--df-input-label-margin-block-end);
+    gap: var(--df-label-margin-block-end);
   }
 
   .df-label {
-    font-size: var(--df-input-label-font-size);
-    font-weight: var(--df-input-label-font-weight);
-    color: var(--df-input-label-color);
+    font-size: var(--df-label-font-size);
+    font-weight: var(--df-label-font-weight);
+    color: var(--df-label-color);
   }
 
   /* A required marker belongs to the label, not to the input, so a screen
@@ -22,7 +22,7 @@
      control is what actually conveys it. */
   .df-label[data-required]::after {
     margin-inline-start: 0.25ch;
-    color: var(--df-role-danger-emphasis);
+    color: var(--df-label-required-color);
     content: "*";
   }
 

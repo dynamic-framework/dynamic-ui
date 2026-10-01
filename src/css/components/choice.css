@@ -12,12 +12,45 @@
  * so the mark could never follow a token — a client rebranding to a light
  * primary got a white tick on a pale ground. A mask takes its colour from
  * `background-color`, which is a token.
+ *
+ * ## The border does the work, not a fill
+ *
+ * The resting background is transparent, so a control shows the page through
+ * it and is marked out by its border alone.
+ *
+ * It used to be `bg.surface`, which is white on a light page and therefore
+ * invisible — and a dark grey DISC on a dark one, or on any panel that is not
+ * the surface colour. A control that paints its own ground has to guess what
+ * is behind it, and it guesses wrong every time it is not on a plain card.
+ *
+ * ## One accent, not four border colours
+ *
+ * Every coloured part of a chosen control — the fill, the border, the switch
+ * track — reads `--df-choice-tone`, and validity replaces that ONE property.
+ *
+ * The version this replaces had a colour per part: `checked-bg`,
+ * `checked-border-color`, `hover-border-color`, `invalid-border-color`,
+ * `valid-border-color`. Each rule then had to remember to set the right ones,
+ * and the invalid rule only set the border — so a radio that was both checked
+ * and invalid rendered as a primary-filled circle with a one-pixel red ring
+ * around it, which reads as "selected", not as "wrong".
+ *
+ * A custom property resolves where it is USED, not where it is set, so the
+ * checked rule below picks up the invalid tone without the two rules having to
+ * be ordered against each other.
  */
 @layer df.components {
   .df-choice {
     display: flex;
     gap: var(--df-choice-gap);
     align-items: center;
+  }
+
+  /* Declared on both because the mark is a SIBLING of the input, not a child,
+     so it cannot inherit the input's override. One mapping, two elements. */
+  .df-choice-input,
+  .df-choice-mark {
+    --df-choice-tone: var(--df-choice-accent);
   }
 
   .df-choice-input {
@@ -39,49 +72,118 @@
     border-radius: var(--df-shape-pill);
   }
 
+  /* Hover previews the tone, so an invalid control does not flash primary on
+     the way to being corrected. */
   .df-choice-input:hover:where(:not(:disabled)) {
-    border-color: var(--df-choice-hover-border-color);
+    border-color: var(--df-choice-tone);
   }
 
-  .df-choice-input:is(:checked, :indeterminate) {
-    background-color: var(--df-choice-checked-bg);
-    border-color: var(--df-choice-checked-border-color);
-  }
-
-  /* The mark. `mask-image` + `background-color` means the glyph is a token. */
-  .df-choice-input[type="checkbox"]:checked,
+  /**
+   * `:indeterminate` is scoped to checkboxes, and that is not a tidiness
+   * preference — it is the whole bug this rule used to have.
+   *
+   * `:indeterminate` does not only mean "a checkbox someone set the dash on".
+   * It ALSO matches an `input[type="radio"]` whose radio group has nothing
+   * selected. So `:is(:checked, :indeterminate)` filled every unselected radio
+   * with the accent colour: a lone radio, or a whole group before anyone picks
+   * one, rendered as a solid blue disc.
+   *
+   * It is invisible to the test suite as well — jsdom does not implement the
+   * radio-group half of `:indeterminate`, so nothing here could have caught it.
+   * `npm run css:consistency` now does.
+   */
+  .df-choice-input:checked,
   .df-choice-input[type="checkbox"]:indeterminate {
-    background-color: var(--df-choice-checked-mark-color);
+    border-color: var(--df-choice-tone);
+  }
+
+  /* --- the checkbox mark -------------------------------------------------
+   *
+   * An overlay the same size as the input, sitting on top of it and ignoring
+   * the pointer so the input still receives every click.
+   *
+   * The mark is masked and the INPUT is not, which is the whole point: a mask
+   * applies to an element's entire rendering, border included, so masking the
+   * input itself erased the box and left a tick with nothing around it.
+   */
+  .df-choice-control {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+  }
+
+  .df-choice-mark {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* Nothing to show until there is a mask to show it through. Without this
+       an unchecked box would paint a solid square of the tone. */
+    background-color: transparent;
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: 70%;
   }
 
-  .df-choice-input[type="checkbox"]:checked {
-    box-shadow: inset 0 0 0 var(--df-choice-size) var(--df-choice-checked-bg);
+  .df-choice-input[type="checkbox"]:is(:checked, :indeterminate) + .df-choice-mark {
+    background-color: var(--df-choice-tone);
+  }
+
+  .df-choice-input[type="checkbox"]:checked + .df-choice-mark {
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M3 8.5l3.5 3.5L13 4.5'/%3E%3C/svg%3E");
   }
 
-  .df-choice-input[type="checkbox"]:indeterminate {
-    box-shadow: inset 0 0 0 var(--df-choice-size) var(--df-choice-checked-bg);
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-width='2.5' d='M4 8h8'/%3E%3C/svg%3E");
+  .df-choice-input[type="checkbox"]:indeterminate + .df-choice-mark {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.5' d='M4 8h8'/%3E%3C/svg%3E");
   }
 
+  .df-choice-input[type="checkbox"]:disabled + .df-choice-mark {
+    opacity: var(--df-choice-disabled-opacity);
+  }
+
+  /**
+   * The dot.
+   *
+   * A radial gradient rather than the inset shadow this used to be. The shadow
+   * paints inward FROM THE EDGE, so drawing a dot with it meant filling the
+   * whole circle with the tone and covering the outside with a ring of some
+   * other colour — which only works if that colour happens to match whatever
+   * is behind the control. A gradient paints the dot itself and leaves the
+   * rest genuinely transparent.
+   *
+   * The hard stop is what makes it a disc and not a blur; `size / 5` gives an
+   * 8px dot on a 20px control.
+   */
   .df-choice-input[type="radio"]:checked {
-    box-shadow: inset 0 0 0 calc(var(--df-choice-size) / 4) var(--df-choice-checked-mark-color);
+    background-image: radial-gradient(
+      circle at center,
+      var(--df-choice-tone) 0 calc(var(--df-choice-size) / 5),
+      transparent calc(var(--df-choice-size) / 5)
+    );
   }
 
-  .df-choice-input:is([data-invalid], [aria-invalid="true"]) {
-    border-color: var(--df-choice-invalid-border-color);
+  /* Swapping the tone is the whole of it: the fill, the border, the switch
+     track and the tick all read it, so they cannot end up disagreeing about
+     whether the control is wrong. */
+  .df-choice-input:is([data-invalid], [aria-invalid="true"]),
+  .df-choice-input[type="checkbox"]:is([data-invalid], [aria-invalid="true"]) + .df-choice-mark {
+    --df-choice-tone: var(--df-choice-accent-invalid);
   }
 
-  .df-choice-input:is([data-valid]) {
-    border-color: var(--df-choice-valid-border-color);
+  .df-choice-input:is([data-valid]),
+  .df-choice-input[type="checkbox"]:is([data-valid]) + .df-choice-mark {
+    --df-choice-tone: var(--df-choice-accent-valid);
   }
 
+  .df-choice-input:is([data-invalid], [aria-invalid="true"], [data-valid]) {
+    border-color: var(--df-choice-tone);
+  }
+
+  /* No fill here either. A disabled control is said by its muted border and
+     its opacity; a grey disc would be the same guess about the page behind it
+     that the resting background used to make. */
   .df-choice-input:is(:disabled) {
     cursor: not-allowed;
-    background-color: var(--df-choice-disabled-bg);
     border-color: var(--df-choice-disabled-border-color);
     opacity: var(--df-choice-disabled-opacity);
   }
@@ -91,9 +193,13 @@
     outline-offset: var(--df-focus-ring-offset);
   }
 
+  /* The same tokens `.df-label` reads. A label beside a checkbox and a label
+     above a text input are one decision, and two token groups meant only that
+     they could disagree — which they did: this one had no weight. */
   .df-choice-label {
-    font-size: var(--df-choice-label-font-size);
-    color: var(--df-choice-label-color);
+    font-size: var(--df-label-font-size);
+    font-weight: var(--df-label-font-weight);
+    color: var(--df-label-color);
     cursor: pointer;
   }
 
@@ -128,7 +234,7 @@
   }
 
   .df-choice-input[role="switch"]:checked {
-    background-color: var(--df-choice-checked-bg);
+    background-color: var(--df-choice-tone);
     background-position: right center;
     border-color: transparent;
     box-shadow: none;

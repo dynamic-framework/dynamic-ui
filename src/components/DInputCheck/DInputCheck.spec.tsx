@@ -22,12 +22,20 @@ describe('<DInputCheck />', () => {
 
     expect(container).toMatchInlineSnapshot(`
 <div>
-  <input
-    class="df-choice-input"
-    id="checkTest"
-    type="checkbox"
-    value=""
-  />
+  <span
+    class="df-choice-control"
+  >
+    <input
+      class="df-choice-input"
+      id="checkTest"
+      type="checkbox"
+      value=""
+    />
+    <span
+      aria-hidden="true"
+      class="df-choice-mark"
+    />
+  </span>
 </div>
 `);
   });

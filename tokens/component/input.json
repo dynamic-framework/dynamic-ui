@@ -42,12 +42,6 @@
       "font-size": { "$type": "dimension", "$value": "{font-size.500}" }
     },
 
-    "label": {
-      "margin-block-end": { "$type": "dimension", "$value": "{size.1}" },
-      "font-size": { "$type": "dimension", "$value": "{font-size.300}" },
-      "font-weight": { "$type": "fontWeight", "$value": "{font-weight.normal}" },
-      "color": { "$type": "color", "$value": "{fg.default}" }
-    },
     "help": {
       "margin-block-start": { "$type": "dimension", "$value": "{size.1}" },
       "font-size": { "$type": "dimension", "$value": "{font-size.200}" },

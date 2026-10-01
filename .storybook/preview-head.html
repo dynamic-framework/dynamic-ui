@@ -19,9 +19,18 @@
     position: absolute;
     height: calc(100% - 25px);
   }
+  /*
+   * The canvas follows the design system's own tokens.
+   *
+   * It used to be `#FFF`. The components' colours flip with
+   * `prefers-color-scheme`, so the moment a viewer's OS went dark they were
+   * looking at dark-mode components on a white sheet — which reads as the
+   * components being broken rather than as the canvas not following them.
+   */
   .docs-story,
   .sb-show-main {
-    background: #FFF;
+    background: var(--df-bg-canvas);
+    color: var(--df-fg-default);
   }
 
   .sb-story div[id*='-modal--'] .modal {

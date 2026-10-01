@@ -351,7 +351,7 @@ function DCarousel(
 
           {pagination && pageCount > 1 && (
             <div className="df-carousel-pagination" role="tablist" aria-label={i18n.goToSlide}>
-              {[...Array(pageCount).keys()].map((page) => (
+              {Array.from({ length: pageCount }, (_, page) => (
                 <button
                   key={`page-${page}`}
                   type="button"

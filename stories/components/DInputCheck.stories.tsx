@@ -27,17 +27,11 @@ so it cannot fall out of step with the stylesheet.
 | \`--df-choice-border-width\`          | css length | Border width          |
 | \`--df-choice-bg\`                    | css color  | Background            |
 | \`--df-choice-border-color\`          | css color  | Border color          |
-| \`--df-choice-checked-bg\`            | css color  | Checked background    |
-| \`--df-choice-checked-border-color\`  | css color  | Checked border color  |
-| \`--df-choice-checked-mark-color\`    | css color  | Checked mark color    |
-| \`--df-choice-hover-border-color\`    | css color  | Hover border color    |
-| \`--df-choice-invalid-border-color\`  | css color  | Invalid border color  |
-| \`--df-choice-valid-border-color\`    | css color  | Valid border color    |
-| \`--df-choice-disabled-bg\`           | css color  | Disabled background   |
+| \`--df-choice-accent\`                | css color  | Accent                |
+| \`--df-choice-accent-invalid\`        | css color  | Accent invalid        |
+| \`--df-choice-accent-valid\`          | css color  | Accent valid          |
 | \`--df-choice-disabled-border-color\` | css color  | Disabled border color |
 | \`--df-choice-disabled-opacity\`      | number     | Disabled opacity      |
-| \`--df-choice-label-color\`           | css color  | Label color           |
-| \`--df-choice-label-font-size\`       | css length | Label font size       |
 | \`--df-choice-switch-width\`          | css length | Switch width          |
 | \`--df-choice-switch-height\`         | css length | Switch height         |
 | \`--df-choice-switch-thumb-inset\`    | css length | Switch thumb inset    |

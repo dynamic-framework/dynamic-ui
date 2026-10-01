@@ -69,6 +69,27 @@ const VAR_RE = /var\(\s*(--df-[a-z0-9-]+)/i;
  */
 const RAW_PALETTE_RE = /^--df-color-(?!white$|black$|alpha-)[a-z]+-\d+$/;
 
+/**
+ * Selectors that are a trap rather than a mistake.
+ *
+ * These match MORE than they read as, so a rule using one does the right thing
+ * in the state the author was thinking about and something surprising in a
+ * state they were not. A browser reports nothing, and — the reason this check
+ * exists rather than a test — jsdom does not implement them either, so the test
+ * suite cannot report anything either.
+ */
+const SELECTOR_TRAPS = [
+  {
+    // `:indeterminate` also matches an `input[type="radio"]` whose radio group
+    // has NOTHING selected. A rule meant for a checkbox's dash state therefore
+    // styles every unselected radio on the page.
+    pattern: /:indeterminate/,
+    requires: /\[type="checkbox"\]/,
+    message: '`:indeterminate` also matches a radio whose group has no selection — '
+      + 'scope it with `[type="checkbox"]` or it styles every unselected radio',
+  },
+];
+
 /* ------------------------------------------------------------------ */
 
 function cssFiles() {
@@ -150,6 +171,22 @@ for (const rel of cssFiles()) {
   // Comments hold example CSS and prose; neither is a declaration. Blanking
   // them rather than removing them keeps the line numbers honest.
   const code = source.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+
+  // Selector traps, checked per selector list rather than per declaration.
+  const SELECTOR_RE = /(^|[}])\s*([^{}]+?)\s*\{/g;
+  let sel;
+  while ((sel = SELECTOR_RE.exec(code)) !== null) {
+    const selector = sel[2].replace(/\s+/g, ' ').trim();
+    if (!selector || selector.startsWith('@')) continue;
+    for (const trap of SELECTOR_TRAPS) {
+      if (!trap.pattern.test(selector) || trap.requires.test(selector)) continue;
+      findings.push({
+        kind: 'selector-trap',
+        where: `${rel}:${code.slice(0, sel.index).split('\n').length}`,
+        message: `${selector} — ${trap.message}`,
+      });
+    }
+  }
 
   const DECL_RE = /(^|[;{])\s*([a-z-]+)\s*:\s*([^;}]+)/gi;
   let m;

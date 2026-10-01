@@ -42,7 +42,7 @@ export type PaginationRangeOptions = {
 /** Inclusive integer range. Returns empty when `end` is before `start`. */
 function span(start: number, end: number): number[] {
   const length = end - start + 1;
-  return length > 0 ? [...Array(length).keys()].map((i) => start + i) : [];
+  return length > 0 ? Array.from({ length }, (_, i) => start + i) : [];
 }
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);

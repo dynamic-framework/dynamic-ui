@@ -1,27 +1,21 @@
 {
-  "$description": "Checkbox, radio and switch. One token set because they are the same control with a different shape — 2.x split them across `form-check`, `form-switch` and `form-check-input`, which meant the sizes drifted apart.",
+  "$description": "Checkbox, radio and switch. One token set because they are the same control with a different shape — 2.x split them across `form-check`, `form-switch` and `form-check-input`, which meant the sizes drifted apart. One ACCENT per validity state rather than a separate border colour for checked, hover, valid and invalid: the four had to be kept in step by hand, and a checked-and-invalid control ended up filled with the checked colour and outlined in the invalid one.",
   "choice": {
     "size": {"$type": "dimension", "$value": "{size.5}"},
     "gap": {"$type": "dimension", "$value": "{size.2}"},
     "radius": {"$type": "dimension", "$value": "{shape.control-sm}"},
     "border-width": {"$type": "dimension", "$value": "{stroke.control}"},
 
-    "bg": {"$type": "color", "$value": "{bg.surface}"},
+    "bg": {"$type": "color", "$value": "{color.transparent}"},
     "border-color": {"$type": "color", "$value": "{border.strong}"},
-    "checked-bg": {"$type": "color", "$value": "{role.primary.base}"},
-    "checked-border-color": {"$type": "color", "$value": "{role.primary.base}"},
-    "checked-mark-color": {"$type": "color", "$value": "{role.primary.on-base}"},
 
-    "hover-border-color": {"$type": "color", "$value": "{role.primary.base}"},
-    "invalid-border-color": {"$type": "color", "$value": "{role.danger.base}"},
-    "valid-border-color": {"$type": "color", "$value": "{role.success.base}"},
+    "accent": {"$type": "color", "$value": "{role.primary.base}"},
+    "accent-invalid": {"$type": "color", "$value": "{role.danger.base}"},
+    "accent-valid": {"$type": "color", "$value": "{role.success.base}"},
 
-    "disabled-bg": {"$type": "color", "$value": "{bg.disabled}"},
     "disabled-border-color": {"$type": "color", "$value": "{border.disabled}"},
     "disabled-opacity": {"$type": "number", "$value": "{opacity.disabled}"},
 
-    "label-color": {"$type": "color", "$value": "{fg.default}"},
-    "label-font-size": {"$type": "dimension", "$value": "{font-size.300}"},
 
     "switch-width": {"$type": "dimension", "$value": "{size.9}"},
     "switch-height": {"$type": "dimension", "$value": "{size.5}"},
