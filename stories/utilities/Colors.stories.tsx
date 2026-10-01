@@ -35,7 +35,7 @@ function Swatch({ className, label }: { className: string; label: string }) {
         className={className}
         style={{ display: 'block', blockSize: '2.5rem', borderRadius: 'var(--df-shape-control)' }}
       />
-      <code className="df-fs-caption df-text-muted">{label}</code>
+      <code className="df-fs-body-xs df-text-muted">{label}</code>
     </div>
   );
 }
@@ -57,7 +57,7 @@ function Roles() {
 
       <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 1rem' }}>
         <thead>
-          <tr className="df-text-muted df-fs-caption" style={{ textAlign: 'start' }}>
+          <tr className="df-text-muted df-fs-body-xs" style={{ textAlign: 'start' }}>
             <th style={{ textAlign: 'start' }}>role</th>
             <th style={{ textAlign: 'start' }}>bg</th>
             <th style={{ textAlign: 'start' }}>bg -subtle</th>
@@ -84,7 +84,7 @@ function Roles() {
                   <>
                     <span className={`df-text-${role}`}>Almost before we knew it</span>
                     <br />
-                    <code className="df-fs-caption df-text-muted">{`df-text-${role}`}</code>
+                    <code className="df-fs-body-xs df-text-muted">{`df-text-${role}`}</code>
                   </>
                 )}
               </td>
@@ -120,7 +120,7 @@ function Roles() {
         {text.filter((name) => !ROLES.some((role) => name === `text-${role}`)).map((name) => (
           <div key={name} className="df-flex df-gap-3 df-items-baseline">
             <span className={`df-${name}`}>Almost before we knew it</span>
-            <code className="df-fs-caption df-text-muted">{`df-${name}`}</code>
+            <code className="df-fs-body-xs df-text-muted">{`df-${name}`}</code>
           </div>
         ))}
       </div>
@@ -247,7 +247,7 @@ export const Steps: Story = {
                     display: 'block', inlineSize: '4rem', blockSize: '2.5rem', borderRadius: 'var(--df-shape-control)',
                   }}
                 />
-                <code className="df-fs-caption df-text-muted">{step}</code>
+                <code className="df-fs-body-xs df-text-muted">{step}</code>
               </div>
             ))}
           </div>
@@ -303,7 +303,7 @@ export const Palette: Story = {
         <section key={hue} className="df-mb-5">
           <div className="df-flex df-gap-2 df-items-baseline df-mb-2">
             <h3 className="df-m-0">{hue}</h3>
-            <code className="df-fs-caption df-text-muted">{`df-bg-${hue}-500`}</code>
+            <code className="df-fs-body-xs df-text-muted">{`df-bg-${hue}-500`}</code>
           </div>
           <div className="df-flex df-flex-wrap df-gap-1">
             {STEPS.map((step) => (
@@ -314,7 +314,7 @@ export const Palette: Story = {
                     display: 'block', inlineSize: '3.5rem', blockSize: '2.25rem', borderRadius: 'var(--df-shape-control)',
                   }}
                 />
-                <code className="df-fs-caption df-text-subtle">{step}</code>
+                <code className="df-fs-body-xs df-text-subtle">{step}</code>
               </div>
             ))}
           </div>

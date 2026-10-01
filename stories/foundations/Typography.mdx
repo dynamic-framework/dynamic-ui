@@ -10,48 +10,45 @@ Dynamic Framework standardizes typography on top of Bootstrap 5 using the Jost t
 
 <br />
 
-### Type scale and display styles
+### Type scale
 
-- Headings: h1–h6 and heading utility classes `.h1` … `.h6`
-- Display styles: `.display-1` … `.display-6`
-- Size utilities: `.fs-1` … `.fs-6`, `.small`
-- Body size: `.fs-body`
+Three families, each named for what it is rather than numbered:
+
+| | |
+|---|---|
+| **Body** | `.df-fs-body` · `.df-fs-body-sm` · `.df-fs-body-xs` |
+| **Headings** | `.df-fs-heading-1` … `.df-fs-heading-6`, or the element itself |
+| **Display** | `.df-display-1` … `.df-display-6`, and `.df-fs-display-N` for the size alone |
+
+The heading classes `.df-h1` … `.df-h6` carry the whole treatment — family,
+weight, leading — so an element can LOOK like a heading without being one:
+`<p class="df-h3">` where the document already has its h3.
 
 <div className="df-flex df-flex-col df-gap-2 df-mt-2 df-mb-4">
   <div className="df-display-1">Display 1</div>
   <div className="df-display-4">Display 4</div>
   <h1>Heading H1</h1>
   <h3>Heading H3</h3>
-  <p className="df-h1 df-m-0">Heading utility (.h1)</p>
-  <p className="df-h4 df-m-0">Heading utility (.h4)</p>
-  <p className="df-fs-heading-4 df-m-0">Text with .fs-4</p>
-  <p className="fs-body df-m-0">Body default (.fs-body)</p>
-  <p className="df-fs-body-sm df-m-0 df-text-muted">Small text (.small)</p>
+  <p className="df-h1 df-m-0">Heading utility (.df-h1)</p>
+  <p className="df-h4 df-m-0">Heading utility (.df-h4)</p>
+  <p className="df-fs-body df-m-0">Body — 16px (.df-fs-body)</p>
+  <p className="df-fs-body-sm df-m-0 df-text-muted">Small — 14px (.df-fs-body-sm)</p>
+  <p className="df-fs-body-xs df-m-0 df-text-muted">Extra small — 12px (.df-fs-body-xs)</p>
 </div>
 
+**On `body-xs`.** It was called `caption` — a purpose, in a series otherwise
+made of sizes. The step below `sm` was therefore unfindable by anyone reaching
+for "extra small", which is how most people ask for it. Same 12px, same tighter
+leading; only the name changed. `df-fs-caption` no longer exists.
+
 ```css
-/* Display sizes come straight from the type set. 2.x routed them through a
-   second variable that every display class rewrote — a level of indirection
-   that only existed so one rule could serve six classes. */
-.df-display-1 { font-size: var(--df-text-display-1-font-size); }
-.df-display-2 { font-size: var(--df-text-display-2-font-size); }
-.df-display-3 { font-size: var(--df-text-display-3-font-size); }
-.df-display-4 { font-size: var(--df-text-display-4-font-size); }
-.df-display-5 { font-size: var(--df-text-display-5-font-size); }
-.df-display-6 { font-size: var(--df-text-display-6-font-size); }
-
-/* Size utilities */
-.fs-1 { font-size: var(--df-text-heading-1-font-size); }
-.fs-2 { font-size: var(--df-text-heading-2-font-size); }
-.fs-3 { font-size: var(--df-text-heading-3-font-size); }
-.fs-4 { font-size: var(--df-text-heading-4-font-size); }
-.fs-5 { font-size: var(--df-text-heading-5-font-size); }
-.fs-6 { font-size: var(--df-text-heading-6-font-size); }
-.small { font-size: var(--df-font-size-200); }
-
-/* Body size utility */
-.fs-body    { font-size: var(--df-font-size-300); }
+.df-fs-body     { font-size: var(--df-text-body-font-size); }      /* 16px */
+.df-fs-body-sm  { font-size: var(--df-text-body-sm-font-size); }   /* 14px */
+.df-fs-body-xs  { font-size: var(--df-text-body-xs-font-size); }   /* 12px */
 ```
+
+Every one resolves through a `text.*` role, so a client retunes the scale by
+overriding one role rather than every class that used it.
 
 <br />
 

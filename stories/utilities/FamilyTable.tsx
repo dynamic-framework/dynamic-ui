@@ -21,7 +21,7 @@ function Badges({ family }: { family: Family }) {
   ].filter(Boolean);
 
   if (!badges.length) {
-    return <span className="df-fs-caption df-text-subtle">no variants</span>;
+    return <span className="df-fs-body-xs df-text-subtle">no variants</span>;
   }
   return (
     <span className="df-flex df-gap-1">
@@ -51,7 +51,7 @@ function Section({ family, filter }: { family: Family; filter: string }) {
     <section className="df-mb-8">
       <div className="df-flex df-gap-3 df-items-center df-mb-3">
         <h3 className="df-m-0">{family.name}</h3>
-        <span className="df-text-muted df-fs-caption">{`${matching.length}`}</span>
+        <span className="df-text-muted df-fs-body-xs">{`${matching.length}`}</span>
         <Badges family={family} />
       </div>
 
@@ -67,7 +67,7 @@ function Section({ family, filter }: { family: Family; filter: string }) {
                   <Preview family={family} rule={rule} />
                 </td>
                 <td style={{ padding: '0.4rem 0', verticalAlign: 'middle' }}>
-                  <code className="df-fs-caption df-text-muted">
+                  <code className="df-fs-body-xs df-text-muted">
                     {rule.decls.map(([prop, value]) => `${prop}: ${value}`).join('; ')}
                   </code>
                 </td>

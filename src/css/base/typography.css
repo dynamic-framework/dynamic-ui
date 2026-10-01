@@ -73,12 +73,25 @@
     margin-inline-start: var(--df-size-6);
   }
 
+  /*
+   * No `color`. It is inherited, and that is the point.
+   *
+   * This set `color: var(--df-fg-default)`, which on a default page is the
+   * value a heading already inherits from `body` — so it did nothing there,
+   * and broke every context that paints its own foreground. A heading inside
+   * `.df-credit-card`, `.df-alert[data-variant="solid"]` or anything on
+   * `df-bg-inverse` was pinned to the body colour while the text beside it
+   * followed the container: dark type on a dark panel.
+   *
+   * The six classes exist so an element can LOOK like a heading without being
+   * one — `<p class="df-h3">` where the document already has its h3. They
+   * carry the same treatment and the same inheritance.
+   */
   h1, h2, h3, h4, h5, h6,
   .df-h1, .df-h2, .df-h3, .df-h4, .df-h5, .df-h6 {
     font-family: var(--df-text-heading-font-family);
     font-weight: var(--df-text-heading-font-weight);
     line-height: var(--df-text-heading-line-height);
-    color: var(--df-fg-default);
     text-wrap: balance;
   }
 

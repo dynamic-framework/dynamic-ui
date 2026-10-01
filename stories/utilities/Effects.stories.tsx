@@ -95,7 +95,7 @@ export const Examples: Story = {
           {['rounded-control', 'rounded-surface', 'rounded-t-surface-lg', 'rounded-pill'].map((name) => (
             <div key={name} className="df-flex df-flex-col df-gap-1">
               <span className={`df-${name} df-bg-muted`} style={{ display: 'block', inlineSize: '5rem', blockSize: '2.5rem' }} />
-              <code className="df-fs-caption df-text-muted">{`df-${name}`}</code>
+              <code className="df-fs-body-xs df-text-muted">{`df-${name}`}</code>
             </div>
           ))}
         </div>

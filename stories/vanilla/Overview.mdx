@@ -76,6 +76,12 @@ DF.enhance(myContainer);
 
 **Markup only — no script at all:** button, timeline, stepper.
 
+**Icons:** a sprite in a Modyo snippet — see **Vanilla › Icons**. React imports
+the icons it uses and the bundler drops the rest; plain HTML has no bundler, so
+it needs a convention instead. `npm run icons -- <names> --liquid` generates
+one from the same Lucide package React reads, so the two builds cannot land on
+different versions of a glyph.
+
 That second group is the larger one, and it is worth saying plainly: most of
 this library needs no JavaScript. A button is a `<button>`, a timeline is a
 list of things that already happened, a stepper is a status display. Their

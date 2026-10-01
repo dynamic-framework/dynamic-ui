@@ -37,7 +37,7 @@ function SpacingScale() {
       <div className="df-flex df-flex-col df-gap-1 df-mb-8">
         {STEPS.map((step) => (
           <div key={step} className="df-flex df-gap-3 df-items-center">
-            <code className="df-fs-caption df-text-muted" style={{ inlineSize: '3rem' }}>{step}</code>
+            <code className="df-fs-body-xs df-text-muted" style={{ inlineSize: '3rem' }}>{step}</code>
             <span
               className="df-bg-primary"
               style={{
@@ -47,7 +47,7 @@ function SpacingScale() {
                 borderRadius: '2px',
               }}
             />
-            <code className="df-fs-caption df-text-subtle">{`var(--df-size-${step})`}</code>
+            <code className="df-fs-body-xs df-text-subtle">{`var(--df-size-${step})`}</code>
           </div>
         ))}
       </div>
@@ -85,7 +85,7 @@ function SpacingScale() {
           <span key={n} className="df-bg-raised df-p-4 df-rounded-control">{n}</span>
         ))}
       </div>
-      <p className="df-fs-caption df-text-muted df-mt-2">
+      <p className="df-fs-body-xs df-text-muted df-mt-2">
         <code>df-flex df-gap-4</code>
       </p>
     </div>

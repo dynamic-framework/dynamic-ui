@@ -95,7 +95,8 @@
     "typecheck:stories": "node scripts/typecheck-stories.mjs",
     "tokens:orphans": "node scripts/tokens/orphans.mjs",
     "css:flow": "node scripts/css/flow.mjs",
-    "css:generated": "node scripts/css/generated.mjs"
+    "css:generated": "node scripts/css/generated.mjs",
+    "icons": "node scripts/icons/sprite.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

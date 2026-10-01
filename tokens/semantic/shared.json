@@ -25,7 +25,8 @@
       "font-size": { "$type": "dimension", "$value": "{font-size.200}" },
       "line-height": { "$type": "number", "$value": "{line-height.normal}" }
     },
-    "caption": {
+    "body-xs": {
+      "$description": "The rung below `body-sm`. Named for its SIZE, like the two above it, because that is how it is reached for — it was `caption`, which named a purpose and broke a series otherwise made of sizes, so a client looking for the step below small found a word about photo captions instead. Tighter leading than body, which is what 12px wants.",
       "font-size": { "$type": "dimension", "$value": "{font-size.100}" },
       "line-height": { "$type": "number", "$value": "{line-height.snug}" }
     },

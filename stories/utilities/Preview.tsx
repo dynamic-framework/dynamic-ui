@@ -87,6 +87,6 @@ export default function Preview({ family, rule }: { family: Family; rule: Rule }
       );
 
     default:
-      return <span className="df-text-subtle df-fs-caption">no visual result on its own</span>;
+      return <span className="df-text-subtle df-fs-body-xs">no visual result on its own</span>;
   }
 }

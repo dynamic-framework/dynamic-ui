@@ -44,7 +44,7 @@ function RuleRow({ family, rule }: { family: Family; rule: typeof family.rules[n
         <Preview family={family} rule={rule} />
       </td>
       <td style={{ padding: '0.5rem 0.75rem', verticalAlign: 'middle' }}>
-        <code className="df-fs-caption df-text-muted">
+        <code className="df-fs-body-xs df-text-muted">
           {rule.decls.map(([prop, value]) => `${prop}: ${value}`).join('; ')}
         </code>
       </td>
@@ -72,7 +72,7 @@ function FamilySection({ family, filter }: { family: Family; filter: string }) {
     <section className="df-mb-8">
       <div className="df-flex df-gap-3 df-items-center df-mb-2">
         <h3 className="df-m-0">{family.name}</h3>
-        <span className="df-text-muted df-fs-caption">{`${matching.length} classes`}</span>
+        <span className="df-text-muted df-fs-body-xs">{`${matching.length} classes`}</span>
         <Badges family={family} />
       </div>
 
