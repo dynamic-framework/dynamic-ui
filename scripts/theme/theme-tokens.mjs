@@ -552,6 +552,11 @@ export function bakedRolePairs(role) {
         // que declararla también; theme-expand lo hace.
         component: `.text-bg-${role}`,
         why: 'la clase lee --bs-<role>-text-bg-color, que por defecto conserva el color resuelto para el role de la librería',
+        // Un bloque sobre la propia clase puede redefinir las dos variables.
+        owners: [`.text-bg-${role}`],
+        // Declarada en :root, la variable se resuelve allí y se hereda ya
+        // calculada: una zona que sólo cambia el token al que apunta no la mueve.
+        fgResolvesWhereDeclared: true,
         fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg },
         // The class paints `--bs-<role>-rgb`, so that is what gets measured;
         // the step only applies when the theme doesn't declare the role.

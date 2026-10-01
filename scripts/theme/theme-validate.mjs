@@ -796,7 +796,13 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         for (const [name, entry] of block.decls) scope.set(name, entry);
       }
 
-      const fg = resolveSide(pair.fg, pair.role, scope);
+      // Una custom property que referencia otra se resuelve donde se declara y
+      // se hereda ya calculada. Si la variable de texto viene del raíz (del
+      // theme o de la librería), dentro de una zona vale lo que valía en el
+      // raíz, aunque la zona cambie el token al que apunta.
+      const fgFromRoot = ctx.zone && pair.fgResolvesWhereDeclared
+        && scope.get(pair.fg.variable) === root.get(pair.fg.variable);
+      const fg = resolveSide(pair.fg, pair.role, fgFromRoot ? root : scope);
       const bg = resolveSide(pair.bg, pair.role, scope);
       const where = `${pair.component}${inContext(ctx)}`;
 

@@ -1003,9 +1003,9 @@ describe('theme-validate — pares horneados', () => {
     expect(zona.stderr).toContain('.text-bg-info dentro de [data-bs-theme="oscura"]');
   });
 
-  it('mide .text-bg-<role> cuando una zona sólo cambia el token de su texto por defecto', () => {
-    // El texto por defecto de .text-bg-warning es var(--bs-gray-700): una zona
-    // que lo pone en blanco deja 1.79:1 sin declarar nada del role.
+  it('no culpa a una zona que sólo cambia el token del texto por defecto', () => {
+    // --bs-warning-text-bg-color: var(--bs-gray-700) se resuelve en :root y se
+    // hereda ya calculada: el navegador sigue pintando gray-700 en la zona.
     const result = validate(expandCss({
       ...SECTIONED_THEME,
       zones: {
@@ -1015,8 +1015,33 @@ describe('theme-validate — pares horneados', () => {
         },
       },
     }));
+    expect(result.stderr).not.toContain('.text-bg-warning');
+  });
+
+  it('mide .text-bg-<role> cuando el raíz cambia el token de su texto por defecto', () => {
+    // En :root el cambio sí llega: gray-700 en blanco deja 1.79:1 en warning.
+    const result = validate(expandCss({
+      ...MINIMAL_THEME,
+      root: { '--bs-gray-700-rgb': '255, 255, 255' },
+    }));
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('.text-bg-warning dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('".text-bg-warning"');
+  });
+
+  it('mide los bloques de componente sobre .text-bg-<role>', () => {
+    const roto = validate(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '.text-bg-info', vars: { '--bs-info-text-bg-color': 'var(--bs-black)' } }],
+    }));
+    expect(roto.status).toBe(1);
+    expect(roto.stderr).toContain('".text-bg-info"');
+
+    const arreglado = validate(expandCss({
+      ...MINIMAL_THEME,
+      root: { '--bs-info-text-bg-color': 'var(--bs-black)' },
+      components: [{ selector: '.text-bg-info', vars: { '--bs-info-text-bg-color': 'var(--bs-white)' } }],
+    }));
+    expect(arreglado.stderr).not.toContain('.text-bg-info');
   });
 
   it('mide .text-bg-<role> también dentro de cada zona', () => {
