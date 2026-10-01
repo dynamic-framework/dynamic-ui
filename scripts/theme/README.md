@@ -251,7 +251,8 @@ valor al que cae cuando nadie la toca.
 | `.list-group-item` | `--bs-list-group-color` (→ role `dark`) | `--bs-list-group-bg` (→ transparente: la superficie del contexto) |
 | `.list-group-item-action` | `--bs-list-group-action-color` (→ `gray-900`) | `--bs-list-group-bg` |
 | `.alert-<role>` | `--bs-<role>-text-emphasis` | `--bs-<role>-bg-subtle` |
-| `.text-bg-<role>` | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | el paso sólido del role |
+| `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
+| `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
 | `.btn-<role>` sin override | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
 
 Dos detalles que importan al leer un informe:
