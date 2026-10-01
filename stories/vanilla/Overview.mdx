@@ -72,7 +72,7 @@ DF.enhance(myContainer);
 
 ## What is here, and what is next
 
-**Behaviours this phase:** tabs, collapse, modal, toast.
+**Behaviours this phase:** tabs, collapse, modal, toast, carousel.
 
 **Markup only — no script at all:** button, timeline, stepper.
 
@@ -91,6 +91,11 @@ and they work with the bundle absent.
 `src/vanilla/parity.spec.tsx` holds every one of those pages to the DOM the
 React component renders, because a page of markup claiming to be the contract
 is worth exactly as much as the thing that checks the claim.
+
+The carousel is the clearest case for the premise: its viewport is
+`overflow: auto` with `scroll-snap-type`, so dragging, momentum, the snap and
+the keyboard are the browser's. The script adds arrows, dot state and
+autoplay — the smaller half of the component.
 
 Each one is small for a reason. The modal is a real `<dialog>`, so focus
 trapping, page inertness, Escape, the backdrop and the top layer are the

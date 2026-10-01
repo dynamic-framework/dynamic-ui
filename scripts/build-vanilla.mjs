@@ -46,9 +46,17 @@ const OUT = join(ROOT, 'dist/vanilla');
  *            the ESM build, 8.7 / 3.2 for the IIFE, which carries the global
  *            wrapper. 10 is that plus the usual headroom.
  */
+/*
+ *   10 -> 14  The carousel. Most of the component is CSS — the viewport is
+ *             `overflow: auto` with `scroll-snap-type`, so dragging, momentum,
+ *             the snap and the keyboard are the browser's. What this adds is
+ *             the chrome: arrows, dot state, autoplay, and reading the active
+ *             slide back out of scroll position. 11.1 KB min / 3.9 KB gzip for
+ *             the ESM build, 11.6 / 4.1 for the IIFE.
+ */
 const BUDGETS = {
-  'dynamic.min.js': 10,
-  'dynamic.iife.min.js': 10,
+  'dynamic.min.js': 14,
+  'dynamic.iife.min.js': 14,
 };
 
 const TARGET = ['chrome111', 'edge111', 'firefox113', 'safari16.4'];

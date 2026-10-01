@@ -6,6 +6,7 @@ import { join } from 'path';
 import { render } from '@testing-library/react';
 
 import DButton from '../components/DButton';
+import DCarousel from '../components/DCarousel';
 import DCollapse from '../components/DCollapse';
 import DModal from '../components/DModal';
 import DStepper from '../components/DStepper';
@@ -76,6 +77,11 @@ const ALLOWED_ABSENT: Record<string, string[]> = {
   collapse: [],
   tabs: [],
   button: [],
+  carousel: [
+    // The React build clones slides for `loop`; the vanilla one does not
+    // implement looping at all, which the story states outright.
+    'df-carousel-clone',
+  ],
   timeline: [],
   stepper: [],
 };
@@ -112,6 +118,13 @@ describe.each([
       <DButton text="Saving" loading />
     </>,
   ), () => storySource('Button.stories.tsx')],
+
+  ['carousel', () => reactClasses(
+    <DCarousel perPage={{ xs: 1, md: 3 }} pagination arrows>
+      <DCarousel.Slide><div>One</div></DCarousel.Slide>
+      <DCarousel.Slide><div>Two</div></DCarousel.Slide>
+    </DCarousel>,
+  ), () => storySource('Carousel.stories.tsx')],
 
   ['timeline', () => reactClasses(
     <DTimeline

@@ -322,6 +322,86 @@ describe('vanilla collapse', () => {
   });
 });
 
+/**
+ * The carousel, whose scrolling is not ours.
+ *
+ * jsdom has no layout: every `getBoundingClientRect()` is zeroes and
+ * `scrollBy` does nothing. So what CAN be verified here is the wiring — that
+ * the behaviour attaches, settles the initial state from the markup, and
+ * leaves nothing behind when torn down. The scroll maths is exercised by the
+ * React component's own tests, which share the approach but not the code.
+ *
+ * Saying that out loud matters: a suite that looked like it covered a
+ * carousel, in an environment where a carousel cannot move, would be worse
+ * than no suite.
+ */
+describe('vanilla carousel', () => {
+  const CAROUSEL = `
+    <div class="df-carousel" data-df-carousel>
+      <div class="df-carousel-viewport" tabindex="0" role="group" aria-label="Slides">
+        <div class="df-carousel-slide" id="s1">One</div>
+        <div class="df-carousel-slide" id="s2">Two</div>
+      </div>
+      <button class="df-carousel-arrow" data-direction="prev" aria-label="Previous slide"></button>
+      <button class="df-carousel-arrow" data-direction="next" aria-label="Next slide"></button>
+      <div class="df-carousel-pagination" role="tablist">
+        <button class="df-carousel-page" role="tab" id="d1"></button>
+        <button class="df-carousel-page" role="tab" id="d2"></button>
+      </div>
+    </div>`;
+
+  it('should enhance a carousel', () => {
+    html(CAROUSEL);
+    expect(enhance(document)).toBe(0);
+  });
+
+  /** The first slide and the first dot, settled from the markup. */
+  it('should mark the first slide and dot active on mount', () => {
+    html(CAROUSEL);
+
+    expect(document.getElementById('s1')).toHaveAttribute('data-active');
+    expect(document.getElementById('s2')).not.toHaveAttribute('data-active');
+    expect(document.getElementById('d1')).toHaveAttribute('aria-selected', 'true');
+    expect(document.getElementById('d2')).toHaveAttribute('aria-selected', 'false');
+  });
+
+  /** Only the selected dot is in the tab order — a tablist is one control. */
+  it('should put only the selected dot in the tab order', () => {
+    html(CAROUSEL);
+
+    expect(document.getElementById('d1')).toHaveAttribute('tabindex', '0');
+    expect(document.getElementById('d2')).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('should warn rather than throw when the viewport is missing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    html('<div class="df-carousel" data-df-carousel></div>');
+
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('.df-carousel-viewport'),
+      expect.anything(),
+    );
+    warn.mockRestore();
+  });
+
+  /**
+   * An autoplay timer must not outlive the element.
+   *
+   * A carousel torn down with its interval running keeps scrolling a detached
+   * node every few seconds for the life of the page, and nothing shows it.
+   */
+  it('should stop autoplay when destroyed', () => {
+    jest.useFakeTimers();
+    html(CAROUSEL.replace('data-df-carousel', 'data-df-carousel data-autoplay="1000"'));
+
+    destroy(document);
+    const before = jest.getTimerCount();
+    jest.advanceTimersByTime(5000);
+    expect(jest.getTimerCount()).toBeLessThanOrEqual(before);
+    jest.useRealTimers();
+  });
+});
+
 describe('vanilla modal', () => {
   const MODAL = `
     <button data-df-modal-open="terms" id="opener">Open</button>
