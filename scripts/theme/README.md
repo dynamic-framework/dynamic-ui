@@ -107,6 +107,7 @@ comprueba es la forma.
   `border-color`, `font-family` y `font-variant-numeric`. Cualquier otra
   propiedad es un error que la nombra. Los bloques se emiten después del raíz y
   antes de las zonas, que es el orden que la cascada necesita.
+
 - **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
   trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
   las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
@@ -164,6 +165,80 @@ navegador: deja la propiedad en su valor inicial, y el fallo es invisible.
 `node scripts/theme/build-known-tokens.mjs [ruta/al/dynamic-ui.css]` — `dist/`
 está gitignoreado, así que el JSON se versiona y el script se corre a mano tras
 un build o contra el CSS de un tarball publicado.
+
+### Qué no va en un theme
+
+`declarations` admite `padding`, `border-radius`, `border-color`, `font-family`
+y `font-variant-numeric` (`ALLOWED_DECLARATIONS` en `theme-tokens.mjs`). No es
+una lista incompleta: **las medidas tipográficas (`font-size`, `line-height`)
+se cambian en la variable `--bs-*` del componente, cuando la expone**, no con
+una declaración suelta. Si el componente no la expone (`.d-otp-contact` fija
+`font-size: .875em` en `_d-otp.scss`), la medida pertenece al CSS de la
+aplicación, que es a donde remite el error del validador. `font-family` se
+admite porque no es una medida: ningún componente deriva otras de ella.
+
+La regla es la misma para todos los componentes, aunque el riesgo que evita
+depende de cada uno. En algunos, otras medidas salen de la variable
+tipográfica, y una declaración directa las deja desacompasadas:
+
+- `.d-chip`: el icono toma su tamaño de `--bs-chip-font-size`, y el contenedor
+  del icono su ancho y alto de `--bs-chip-line-height` (`_d-chip.scss`).
+- `.btn`: el icono sigue a `--bs-btn-font-size` (`_buttons.scss`).
+
+En otros la variable sólo alimenta su propia propiedad (`--bs-btn-line-height`
+es sólo el `line-height` del botón) y la declaración daría el mismo resultado.
+La regla no distingue esos casos a propósito: con la variable, un theme cambia
+la tipografía siempre en el mismo lugar y no depende de cómo esté construido
+cada componente por dentro.
+
+`padding` es otra decisión: un theme sí puede ajustar la caja de un componente
+con una declaración. En un componente sin variantes de tamaño, como `.d-chip`,
+declararlo da el mismo resultado que `--bs-chip-padding-x/y`. En `.btn` no: los
+tamaños `.btn-sm` y `.btn-lg` escriben `--bs-btn-padding-x/y` con la misma
+especificidad que `.btn`, así que tanto la declaración como esa variable sobre
+`.btn`, cargadas después de Dynamic, aplanan los tres tamaños. Para cambiar un
+tamaño sin tocar los otros, se usa su variable propia:
+
+| En `.btn` | `sm` | por defecto | `lg` |
+| --- | --- | --- | --- |
+| nada | 12px | 16px | 20px |
+| `padding: .5rem 3rem` | 48px | 48px | 48px |
+| `--bs-btn-padding-x: 3rem` | 48px | 48px | 48px |
+| `--bs-btn-lg-padding-x: 3rem` | 12px | 16px | 48px |
+
+El efecto, medido en `.d-chip` con CSS aplicado a mano (`theme:expand` rechaza
+la fila de `font-size` antes de emitirla):
+
+| CSS aplicado | Texto | Icono |
+| --- | --- | --- |
+| nada | 14px | 10,7px |
+| `.d-chip { font-size: 1.25rem }` (lo que pediría `"declarations": { "font-size": … }`) | 20px | 15,3px |
+| `.d-chip { --bs-chip-font-size: 1.25rem }` (lo que emite `"vars"`) | 20px | 20px |
+
+Con la declaración el texto pasa a 20px y el icono se queda en 15,3px, sin
+llegar a la medida declarada; con la variable los dos quedan en 20px.
+
+Cuando el componente la expone, el reemplazo es su variable. `known-tokens.json`
+es el inventario de las que existen (`--bs-chip-font-size`,
+`--bs-chip-line-height`, `--bs-btn-font-size`, `--bs-btn-line-height`, …):
+
+```json
+{
+  "selector": ".d-chip",
+  "vars": {
+    "--bs-chip-font-size": ".875rem",
+    "--bs-chip-line-height": "1.05rem"
+  }
+}
+```
+
+`--bs-chip-line-height` va con unidad: además del interlineado, es el ancho y
+el alto del contenedor del icono (`_d-chip.scss`), donde un número sin unidad
+no es una longitud válida. `1.05rem` es el mismo `1.2` sobre `.875rem`.
+
+Para el texto general, `--bs-body-font-size` y `--bs-body-line-height` van en
+`root`; los tamaños de encabezado, sobre `--bs-rfs-fs-N` (ver *Reglas que la
+salida respeta*).
 
 ## Reglas que la salida respeta
 
