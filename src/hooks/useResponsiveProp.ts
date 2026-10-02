@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
+import { PREFIX_BS } from '../components/config';
 import {
+  useBreakpointValue,
   useMediaBreakpointUpLg,
   useMediaBreakpointUpMd,
   useMediaBreakpointUpSm,
@@ -7,6 +9,8 @@ import {
   useMediaBreakpointUpXs,
   useMediaBreakpointUpXxl,
 } from './useMediaBreakpointUp';
+
+let warnedMissingBreakpoints = false;
 
 /**
  * A mapping of breakpoint names to values for responsive properties.
@@ -49,7 +53,20 @@ export function useResponsiveProp(useListener: boolean = false) {
   const bpXlUp = useMediaBreakpointUpXl(useListener);
   const bpXxlUp = useMediaBreakpointUpXxl(useListener);
 
+  // `xs` is `0` and can't tell a missing variable apart, so `sm` is checked.
+  const hasBreakpoints = !!useBreakpointValue('sm');
+
   const responsivePropValue = useCallback((prop: ResponsiveProp) => {
+    if (process.env.NODE_ENV !== 'production' && !hasBreakpoints && !warnedMissingBreakpoints) {
+      warnedMissingBreakpoints = true;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[Dynamic UI] The --${PREFIX_BS}breakpoint-* CSS variables are not available, so a `
+        + 'responsive prop (an object by breakpoint) falls back to its default value. Load '
+        + 'dynamic-ui.css before rendering. It never appears in production builds.',
+      );
+    }
+
     // Pick the highest matched breakpoint value that is defined in prop
     if (prop.xxl !== undefined && bpXxlUp) return prop.xxl;
     if (prop.xl !== undefined && bpXlUp) return prop.xl;
@@ -60,7 +77,7 @@ export function useResponsiveProp(useListener: boolean = false) {
 
     // Fallback: return undefined if no breakpoint matches
     return undefined;
-  }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp]);
+  }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp, hasBreakpoints]);
 
   return { responsivePropValue };
 }
