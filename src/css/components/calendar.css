@@ -1,0 +1,177 @@
+/**
+ * Calendar grid.
+ *
+ * The grid is a real `<table role="grid">`, which is the ARIA pattern for a
+ * date picker and also the only markup where a screen reader can say "week 3,
+ * Tuesday" — a CSS grid of divs loses the row and column relationship that
+ * makes that sentence possible.
+ */
+@layer df.components {
+  .df-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-calendar-header-gap);
+    padding: var(--df-calendar-padding);
+    color: var(--df-calendar-fg);
+    background-color: var(--df-calendar-bg);
+    border-radius: var(--df-calendar-radius);
+  }
+
+  .df-calendar-header {
+    display: flex;
+    gap: var(--df-calendar-header-gap);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .df-calendar-title {
+    margin: 0;
+    font-size: var(--df-calendar-header-font-size);
+    font-weight: var(--df-calendar-header-font-weight);
+  }
+
+  /* Side by side, wrapping rather than overflowing on a narrow screen. */
+  .df-calendar-months {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--df-calendar-months-gap);
+  }
+
+  .df-calendar-caption {
+    font-size: var(--df-calendar-header-font-size);
+    font-weight: var(--df-calendar-header-font-weight);
+    caption-side: top;
+  }
+
+  .df-calendar-week-number {
+    font-size: var(--df-calendar-week-number-font-size);
+    font-weight: var(--df-calendar-weekday-font-weight);
+    color: var(--df-calendar-week-number-color);
+  }
+
+  .df-calendar-grid {
+    border-spacing: var(--df-calendar-gap);
+
+    /*
+     * `separate`, not the reset's `collapse`.
+     *
+     * `border-spacing` is what gives the day cells room, and it is ignored
+     * under `border-collapse: collapse` — which `reset.css` sets on every
+     * table. Without the gap, a focus ring on one day is drawn underneath its
+     * neighbours.
+     */
+    border-collapse: separate;
+  }
+
+  .df-calendar-weekday {
+    font-size: var(--df-calendar-weekday-font-size);
+    font-weight: var(--df-calendar-weekday-font-weight);
+    color: var(--df-calendar-weekday-color);
+  }
+
+  .df-calendar-day {
+    inline-size: var(--df-calendar-day-size);
+    block-size: var(--df-calendar-day-size);
+    padding: 0;
+    font-size: var(--df-calendar-day-font-size);
+    color: inherit;
+    text-align: center;
+    cursor: pointer;
+    background: none;
+    border: var(--df-stroke-control) solid transparent;
+    border-radius: var(--df-calendar-day-radius);
+  }
+
+  .df-calendar-day:where(:hover) {
+    background-color: var(--df-calendar-day-hover-bg);
+  }
+
+  /*
+   * A day from a neighbouring month: dimmed, never hidden.
+   *
+   * Arrow keys have to land somewhere when you step off the edge of the month,
+   * and a grid with holes in it cannot be navigated.
+   */
+  .df-calendar-day[data-outside] {
+    color: var(--df-calendar-day-outside-color);
+  }
+
+  /*
+   * A highlighted day: a dot, not a fill.
+   *
+   * Highlighted and selected are different states — a suggestion against a
+   * choice — and a reader has to be able to tell them apart, which a second
+   * background colour does not reliably do.
+   */
+  .df-calendar-day[data-highlighted]::after {
+    display: block;
+    inline-size: var(--df-size-1);
+    block-size: var(--df-size-1);
+    margin-inline: auto;
+    content: "";
+    background-color: var(--df-calendar-day-highlighted-color);
+    border-radius: var(--df-shape-pill);
+  }
+
+  .df-calendar-day[data-selected][data-highlighted]::after {
+    background-color: currentcolor;
+  }
+
+  .df-calendar-day[data-today] {
+    border-color: var(--df-calendar-day-today-border-color);
+  }
+
+  /*
+   * A chosen day.
+   *
+   * Before the range rules below, so an end of a range beats the plain
+   * selected fill — `no-descending-specificity` wants ascending order anyway,
+   * and here the order is also the meaning.
+   */
+  .df-calendar-day[data-selected] {
+    color: var(--df-calendar-day-selected-fg);
+    background-color: var(--df-calendar-day-selected-bg);
+  }
+
+  /*
+   * The inside of a range, quieter than its ends.
+   *
+   * A range painted one flat colour has no handles: the eye cannot find where
+   * it starts or stops, which is exactly what someone adjusting it is looking
+   * for.
+   */
+  .df-calendar-day[data-range="middle"] {
+    color: var(--df-calendar-range-fg);
+    background-color: var(--df-calendar-range-bg);
+    border-radius: 0;
+  }
+
+  /*
+   * The ends keep the solid fill and lose the rounding on the inner side, so
+   * the three cells read as one band rather than three chips.
+   */
+  .df-calendar-day[data-range="start"],
+  .df-calendar-day[data-range="end"] {
+    color: var(--df-calendar-day-selected-fg);
+    background-color: var(--df-calendar-day-selected-bg);
+  }
+
+  .df-calendar-day[data-range="start"]:not([data-drawing]) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .df-calendar-day[data-range="end"] {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  .df-calendar-day:disabled {
+    color: var(--df-calendar-day-disabled-color);
+    cursor: default;
+  }
+
+  .df-calendar-day:disabled:where(:hover) {
+    background: none;
+  }
+}

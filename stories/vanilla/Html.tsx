@@ -35,6 +35,48 @@ export default function Html({ markup, frame }: { markup: string; frame?: Frame 
   useEffect(() => {
     const host = ref.current;
     if (!host) return undefined;
+
+    /*
+     * A clean slate first, every run.
+     *
+     * The effect is not guaranteed to run once. React 19 double-invokes it
+     * under StrictMode, a docs page can mount a story more than once, and a
+     * markup change reruns it outright. The cleanup below calls `destroy`,
+     * which removes the vanilla behaviours and knows nothing about a script
+     * or the listeners it added — so a second run found the already
+     * re-created script still in the DOM, re-created it again, and one button
+     * fired two toasts.
+     *
+     * Rewriting the host from `markup` makes the run idempotent: the previous
+     * run's listeners go with the nodes they were attached to.
+     */
+    host.innerHTML = markup;
+
+    /*
+     * Inline `<script>` has to be re-created to run.
+     *
+     * A script inserted through `innerHTML` is parsed and then deliberately
+     * NOT executed — the HTML spec says so, to stop a string of markup from
+     * running code by accident. Cloning each one into a fresh element and
+     * swapping it in is the sanctioned way to opt back in.
+     *
+     * Without this, any vanilla example whose point is the JavaScript — a
+     * button that fires a toast, a handler on a custom event — could only be
+     * DESCRIBED, and the story had to render React buttons beside a code
+     * block that did not match them. The markup and the thing on screen are
+     * the same object now.
+     *
+     * The scripts here are authored in this repository, not supplied by a
+     * user, and they are scoped to elements inside the host — so when
+     * Storybook discards it, the listeners go with it.
+     */
+    host.querySelectorAll('script').forEach((old) => {
+      const script = document.createElement('script');
+      Array.from(old.attributes).forEach((a) => script.setAttribute(a.name, a.value));
+      script.textContent = old.textContent;
+      old.replaceWith(script);
+    });
+
     enhance(host);
     // Torn down on unmount: Storybook swaps stories in place, and a behaviour
     // left attached to a discarded node is a listener nobody can remove.

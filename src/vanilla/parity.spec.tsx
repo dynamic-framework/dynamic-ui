@@ -9,6 +9,7 @@ import DButton from '../components/DButton';
 import DAlert from '../components/DAlert';
 import DAvatar from '../components/DAvatar';
 import DBadge from '../components/DBadge';
+import DBoxFile from '../components/DBoxFile';
 import DCard from '../components/DCard';
 import DCarousel from '../components/DCarousel';
 import DChip from '../components/DChip';
@@ -90,6 +91,12 @@ const ALLOWED_ABSENT: Record<string, string[]> = {
   button: [],
   form: [],
   status: [],
+  dropzone: [
+    // The React list renders a `DInput` per file so a name can be edited and
+    // removed; the vanilla one writes a plain `<li>`, because a dropzone that
+    // shipped a whole text field per file would be a different component.
+    'df-field', 'df-input-group', 'df-input', 'df-input-group-addon',
+  ],
   surface: [],
   list: [],
   carousel: [
@@ -147,6 +154,10 @@ describe.each([
    * class is a control that looks wrong in a template while looking right in
    * Storybook's React pages.
    */
+  ['dropzone', () => reactClasses(
+    <DBoxFile accept={{ 'image/*': ['.png'] }} />,
+  ), () => storySource('Dropzone.stories.tsx')],
+
   ['status', () => reactClasses(
     <>
       <DBadge text="New" color="primary" />

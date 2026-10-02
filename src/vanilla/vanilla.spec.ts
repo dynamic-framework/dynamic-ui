@@ -402,6 +402,116 @@ describe('vanilla carousel', () => {
   });
 });
 
+/**
+ * The dropzone, whose file dialog is not ours to open.
+ *
+ * jsdom has no drag-and-drop and no file picker, so what is verified here is
+ * the wiring: that activating the box reaches the input, that the drag counter
+ * survives a pass over a child, and that the state attributes the stylesheet
+ * reads are the ones that move.
+ */
+describe('vanilla dropzone', () => {
+  const ZONE = `
+    <section class="df-dropzone-wrapper" data-df-dropzone>
+      <div class="df-dropzone" id="zone" role="button" tabindex="0" aria-label="Choose files">
+        <input type="file" id="picker" accept="image/*">
+        <div class="df-dropzone-prompt" id="prompt">Drop here</div>
+      </div>
+      <ul class="df-dropzone-files" id="list"></ul>
+    </section>`;
+
+  const drag = (type: string, kinds: string[] = ['file']) => {
+    const event = new Event(type, { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'dataTransfer', {
+      value: { items: kinds.map((kind) => ({ kind })), files: [] },
+    });
+    return event;
+  };
+
+  it('should open the picker when the box is activated', async () => {
+    const user = userEvent.setup();
+    html(ZONE);
+
+    const picker = document.getElementById('picker') as HTMLInputElement;
+    const click = jest.spyOn(picker, 'click').mockImplementation(() => {});
+
+    await user.click(document.getElementById('zone')!);
+    expect(click).toHaveBeenCalledTimes(1);
+    click.mockRestore();
+  });
+
+  it('should open it from the keyboard too', () => {
+    html(ZONE);
+    const picker = document.getElementById('picker') as HTMLInputElement;
+    const click = jest.spyOn(picker, 'click').mockImplementation(() => {});
+
+    document.getElementById('zone')!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
+    expect(click).toHaveBeenCalledTimes(1);
+    click.mockRestore();
+  });
+
+  it('should mark a drag that carries files', () => {
+    html(ZONE);
+    const zone = document.getElementById('zone')!;
+
+    zone.dispatchEvent(drag('dragenter'));
+    expect(zone).toHaveAttribute('data-valid');
+    expect(zone).not.toHaveAttribute('data-invalid');
+  });
+
+  it('should mark a drag that carries something else', () => {
+    html(ZONE);
+    const zone = document.getElementById('zone')!;
+
+    zone.dispatchEvent(drag('dragenter', ['string']));
+    expect(zone).toHaveAttribute('data-invalid');
+  });
+
+  /**
+   * `dragleave` fires whenever the pointer crosses into a CHILD, so a boolean
+   * flickers off as soon as the cursor passes over the prompt text. Counting
+   * enters and leaves is what stops the highlight strobing.
+   */
+  it('should stay highlighted while the pointer crosses a child', () => {
+    html(ZONE);
+    const zone = document.getElementById('zone')!;
+
+    zone.dispatchEvent(drag('dragenter'));
+    document.getElementById('prompt')!.dispatchEvent(drag('dragenter'));
+    document.getElementById('prompt')!.dispatchEvent(drag('dragleave'));
+
+    expect(zone).toHaveAttribute('data-valid');
+
+    zone.dispatchEvent(drag('dragleave'));
+    expect(zone).not.toHaveAttribute('data-valid');
+  });
+
+  it('should do nothing at all when disabled', async () => {
+    const user = userEvent.setup();
+    html(ZONE.replace('<input type="file"', '<input type="file" disabled'));
+
+    const picker = document.getElementById('picker') as HTMLInputElement;
+    const click = jest.spyOn(picker, 'click').mockImplementation(() => {});
+
+    await user.click(document.getElementById('zone')!);
+    expect(click).not.toHaveBeenCalled();
+    click.mockRestore();
+  });
+
+  it('should warn rather than throw when the input is missing', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    html('<section data-df-dropzone><div class="df-dropzone"></div></section>');
+
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('file input'),
+      expect.anything(),
+    );
+    warn.mockRestore();
+  });
+});
+
 describe('vanilla modal', () => {
   const MODAL = `
     <button data-df-modal-open="terms" id="opener">Open</button>

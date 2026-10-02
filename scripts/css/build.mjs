@@ -81,6 +81,7 @@ const COMPONENTS = [
   'components/alert.css',
   'components/toast.css',
   'components/card.css',
+  'components/calendar.css',
   'components/carousel.css',
   'components/box.css',
   'components/avatar.css',

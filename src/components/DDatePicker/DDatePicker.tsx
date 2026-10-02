@@ -11,6 +11,11 @@ import type {
 } from 'react-datepicker';
 
 import { Locale } from 'date-fns';
+import { DCalendar } from '../DCalendar';
+import {
+  calendarView, dayFilter, flattenHighlights, fromSelection, selectionMode,
+  toSelection,
+} from './selectionInterop';
 import DDatePickerTime from './components/DDatePickerTime';
 import DDatePickerInput from './components/DDatePickerInput';
 import DDatePickerHeaderSelector, { PickerType } from './components/DDatePickerHeaderSelector';
@@ -113,6 +118,27 @@ export default function DDatePicker(
     return DatePicker as unknown as ComponentType<DatePickerProps>;
   }, []);
 
+  /**
+   * The in-house grid, for the plain inline day calendar.
+   *
+   * This is the first piece of `react-datepicker` to go, and it is this piece
+   * first for two reasons: `inline` is the most-used prop in the whole surface
+   * — 21 of the uses across the stories and specs — and a day grid with no
+   * popover is the part `DCalendar` already covers completely.
+   *
+   * Everything else still goes to the library. Narrow on purpose: a date
+   * picker that half works is worse than one that works through a dependency,
+   * so each condition here comes off only once the replacement covers it.
+   *
+   *   next: the popover and the input, then time.
+   *
+   * Every inline story now renders through here. What is left is the whole
+   * path where the calendar hangs off a text field, and the time list.
+   */
+  const useOwnCalendar = Boolean(props.inline)
+    && !props.showTimeSelect
+    && !props.showTimeSelectOnly;
+
   const pickerType = useMemo(() => {
     if (props.showQuarterYearPicker) return PickerType.Quarter;
     if (props.showMonthYearPicker) return PickerType.Month;
@@ -159,6 +185,33 @@ export default function DDatePicker(
     () => (renderCustomHeaderProp || defaultRenderCustomHeader),
     [defaultRenderCustomHeader, renderCustomHeaderProp],
   );
+
+  if (useOwnCalendar) {
+    return (
+      <DCalendar
+        className={className}
+        style={style}
+        dataAttributes={dataAttributes}
+        locale={typeof props.locale === 'string' ? props.locale : undefined}
+        weekStartsOn={props.calendarStartDay}
+        mode={selectionMode(props)}
+        selected={toSelection(props)}
+        onSelect={(selection) => props.onChange?.(
+          fromSelection(selection, props) as never,
+          undefined,
+        )}
+        defaultMonth={props.openToDate ?? undefined}
+        minDate={props.minDate ?? undefined}
+        maxDate={props.maxDate ?? undefined}
+        numberOfMonths={props.monthsShown}
+        view={calendarView(props)}
+        showWeekNumbers={props.showWeekNumbers}
+        disabledDates={dayFilter(props)}
+        highlightedDates={flattenHighlights(props.highlightDates)}
+        ariaLabel={inputAriaLabel ?? inputLabel}
+      />
+    );
+  }
 
   return (
     <SafeDatePicker

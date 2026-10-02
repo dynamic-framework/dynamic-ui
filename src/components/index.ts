@@ -11,6 +11,7 @@ export {
   DCardBody,
   DCardFooter,
 } from './DCard';
+export { DCalendar } from './DCalendar';
 export {
   default as DCarousel,
   DCarouselSlide,

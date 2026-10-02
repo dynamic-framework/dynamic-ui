@@ -48,12 +48,13 @@ import { toast, toastBehaviour } from './toast';
 
 import { tabs } from './tabs';
 import { carousel } from './carousel';
+import { dropzone } from './dropzone';
 import { collapse, collapseToggle, toggle as toggleCollapse } from './collapse';
 
 export { define } from './registry';
 /* Re-exported so the modules that register them cannot be tree-shaken away. */
 export {
-  tabs, carousel, collapse, collapseToggle, modal, modalOpener, toastBehaviour,
+  tabs, carousel, collapse, collapseToggle, dropzone, modal, modalOpener, toastBehaviour,
 };
 export type { Behaviour, Teardown } from './registry';
 export type { ToastOptions, ToastPlacement } from './toast';
