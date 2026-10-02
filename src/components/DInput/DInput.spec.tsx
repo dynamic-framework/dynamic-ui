@@ -363,4 +363,16 @@ describe('', () => {
     expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
   });
+
+  describe('aria-invalid', () => {
+    it('exposes the invalid state to assistive technology', () => {
+      render(<DInput id="monto" label="Monto" invalid />);
+      expect(screen.getByRole('textbox', { name: 'Monto' })).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('omits aria-invalid when the input is not invalid', () => {
+      render(<DInput id="monto" label="Monto" valid />);
+      expect(screen.getByRole('textbox', { name: 'Monto' })).not.toHaveAttribute('aria-invalid');
+    });
+  });
 });
