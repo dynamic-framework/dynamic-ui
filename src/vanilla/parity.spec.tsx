@@ -6,7 +6,13 @@ import { join } from 'path';
 import { render } from '@testing-library/react';
 
 import DButton from '../components/DButton';
+import DAlert from '../components/DAlert';
+import DAvatar from '../components/DAvatar';
+import DBadge from '../components/DBadge';
+import DCard from '../components/DCard';
 import DCarousel from '../components/DCarousel';
+import DChip from '../components/DChip';
+import DPaginator from '../components/DPaginator';
 import DInput from '../components/DInput';
 import DInputCheck from '../components/DInputCheck';
 import DInputSelect from '../components/DInputSelect';
@@ -83,6 +89,8 @@ const ALLOWED_ABSENT: Record<string, string[]> = {
   tabs: [],
   button: [],
   form: [],
+  status: [],
+  surface: [],
   list: [],
   carousel: [
     // The React build clones slides for `loop`; the vanilla one does not
@@ -139,6 +147,26 @@ describe.each([
    * class is a control that looks wrong in a template while looking right in
    * Storybook's React pages.
    */
+  ['status', () => reactClasses(
+    <>
+      <DBadge text="New" color="primary" />
+      <DChip text="Filter" showClose onClose={() => {}} />
+      <DAlert color="warning" icon="TriangleAlert">Expiring</DAlert>
+    </>,
+  ), () => storySource('Status.stories.tsx')],
+
+  ['surface', () => reactClasses(
+    <>
+      <DCard>
+        <DCard.Header>H</DCard.Header>
+        <DCard.Body>B</DCard.Body>
+        <DCard.Footer>F</DCard.Footer>
+      </DCard>
+      <DAvatar name="Ana Pérez" />
+      <DPaginator total={10} current={3} onPageChange={() => {}} />
+    </>,
+  ), () => storySource('Surface.stories.tsx')],
+
   ['form', () => reactClasses(
     <>
       <DInput label="Amount" hint="h" invalid inputStart="$" inputEnd="USD" />
