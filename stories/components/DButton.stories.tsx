@@ -399,15 +399,6 @@ export const Sizes: Story = {
 };
 
 export const ResponsiveSizes: Story = {
-  // Responsive sizes resolve against the breakpoints DContextProvider reads
-  // from the CSS; without it no breakpoint matches.
-  decorators: [
-    (Story) => (
-      <DContextProvider>
-        <Story />
-      </DContextProvider>
-    ),
-  ],
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />

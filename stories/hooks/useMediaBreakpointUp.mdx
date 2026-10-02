@@ -12,13 +12,12 @@ Responsive utility
 
 ## Setup `App.tsx`
 
-It is necessary to use the hook inside a DContextProvider, because the hook takes the breakpoints configuration from that context
+The hooks read the breakpoints from the `--bs-breakpoint-*` CSS variables, so `dynamic-ui.css` has to be loaded before rendering. `DContextProvider` is optional: inside it, the hooks use the breakpoints it shares; outside it, they read the same variables directly, once per page. Pass `true` to listen to viewport changes.
 
 <Source
   code={
     `
 import {
-  DContextProvider,
   useMediaBreakpointUpXs,
   useMediaBreakpointUpSm,
   useMediaBreakpointUpLg,
