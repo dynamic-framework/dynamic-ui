@@ -146,6 +146,8 @@ describe('theme-expand', () => {
     ['un role oscuro', '#0b6b53', 'var(--bs-white)'],
     // Ni el blanco (4.24:1) ni gray-700 llegan a 4.5:1: gana el negro.
     ['un azul medio', '#0b74ff', 'var(--bs-black)'],
+    // El ejemplo de DesignTokens.mdx: más oscuro, el blanco ya llega a 4.5:1.
+    ['el azul del ejemplo de DesignTokens', '#0a6ae8', 'var(--bs-white)'],
   ])('resuelve el texto de .text-bg-<role> para %s', (_, color, expected) => {
     const css = expandCss({ ...MINIMAL_THEME, roles: { primary: color } });
     expect(css).toContain(`--bs-primary-text-bg-color: ${expected};`);
