@@ -258,6 +258,15 @@ regular \`className\`:
       type: 'number',
       table: { category: 'Behavior' },
     },
+    clamp: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'When `true`, a value outside `minValue`/`maxValue` is brought into range (on mount, when it changes and on blur) and `onChange` gets the clamped number. When `false`, the entered value is kept and the input is marked invalid while out of range.',
+      table: {
+        defaultValue: { summary: 'true' },
+        category: 'Behavior',
+      },
+    },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
@@ -351,6 +360,35 @@ export const WithRangeMinMax: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 10000,
+  },
+};
+
+export const ValidateWithoutClamp: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'With `clamp={false}` the bounds validate instead of rewriting the amount: an amount above the limit (for example, one preloaded from a QR code) is kept, the input is marked invalid and the consumer can explain why with `hint`.',
+      },
+    },
+  },
+  render: function Render(args) {
+    const [amount, setAmount] = useState<number | undefined>(5000000);
+    const overLimit = amount !== undefined && amount > 3000000;
+    return (
+      <DInputCurrency
+        {...args}
+        value={amount}
+        onChange={setAmount}
+        hint={overLimit ? 'The transfer limit is $3,000,000.00' : undefined}
+      />
+    );
+  },
+  args: {
+    id: 'transferAmount',
+    label: 'Amount to transfer',
+    minValue: 0,
+    maxValue: 3000000,
+    clamp: false,
   },
 };
 

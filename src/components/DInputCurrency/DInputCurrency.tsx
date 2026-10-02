@@ -16,6 +16,13 @@ type NonDInputProps = {
   value?: number;
   minValue?: number;
   maxValue?: number;
+  /**
+   * When `true` (default) a value outside `minValue`/`maxValue` is brought
+   * into range on mount, when it changes and on blur, and `onChange` receives
+   * the clamped number. When `false` the entered value is kept and the input
+   * is marked invalid while it is out of range, unless `invalid` is set.
+   */
+  clamp?: boolean;
   currencyCode?: string;
   onChange?: (value?: number) => void;
 };
@@ -27,10 +34,13 @@ function DInputCurrency(
     value,
     minValue,
     maxValue,
+    clamp = true,
     currencyCode,
     onFocus,
     onBlur,
     onChange,
+    invalid: invalidProp,
+    valid: validProp,
     ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -43,6 +53,8 @@ function DInputCurrency(
     inputRef,
     innerValue,
     innerType,
+    isOverMax,
+    isUnderMin,
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
@@ -55,7 +67,15 @@ function DInputCurrency(
     ref,
     minValue,
     maxValue,
+    clamp,
   );
+
+  const outOfRange = !clamp && (isOverMax || isUnderMin);
+
+  // One validation state: an explicit `invalid` wins; otherwise an
+  // out-of-range value is invalid and can't also be shown as valid.
+  const invalid = invalidProp ?? outOfRange;
+  const valid = invalid ? false : validProp;
 
   return (
     <DInput
@@ -67,6 +87,8 @@ function DInputCurrency(
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       onWheel={handleOnWheel}
+      invalid={invalid}
+      valid={valid}
       inputStart={(
         <span
           slot="input-start"

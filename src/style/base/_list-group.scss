@@ -4,3 +4,58 @@
   gap: var(--#{$prefix}list-group-item-gap);
   align-items: center;
 }
+
+// Interactive item inside a list: the <li> is the visual item (borders,
+// colors, active/disabled) and the link or button fills it, so the group keeps
+// `ul/ol > li` semantics and Bootstrap's sibling selectors still apply.
+.d-list-group-item-interactive {
+  padding: 0;
+
+  &:not(.active):focus-within {
+    z-index: 1;
+    color: var(--#{$prefix}list-group-action-hover-color);
+    background-color: var(--#{$prefix}list-group-action-hover-bg);
+  }
+}
+
+.d-list-group-item-link {
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--#{$prefix}list-group-item-gap);
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  padding: var(--#{$prefix}list-group-item-padding-y) var(--#{$prefix}list-group-item-padding-x);
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: inherit;
+
+  &:hover {
+    color: inherit;
+  }
+}
+
+// In a numbered list the counter goes inside the link or button, so the whole
+// row, number included, is clickable. The <li> drops its own counter.
+.list-group-numbered > .list-group-item.d-list-group-item-interactive::before {
+  content: none;
+  counter-increment: none;
+}
+
+.list-group-numbered > .d-list-group-item-interactive > .d-list-group-item-link::before {
+  content: counters(section, ".") ". ";
+  content: counters(section, ".") ". " / "";
+  counter-increment: section;
+}
+
+// The generated number is decoration: an <ol> already announces the position,
+// so screen readers skip it (the second declaration uses the alt-text syntax;
+// browsers without it keep the first).
+.list-group-numbered > .list-group-item::before {
+  content: counters(section, ".") ". ";
+  content: counters(section, ".") ". " / "";
+}
