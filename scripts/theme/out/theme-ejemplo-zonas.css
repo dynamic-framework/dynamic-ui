@@ -189,6 +189,7 @@
   --bs-body-color: rgb(var(--bs-white-rgb));
   --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
   --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-emphasis-color-rgb: var(--bs-white-rgb);
   --bs-emphasis-color: rgb(var(--bs-white-rgb));
   --bs-heading-color: rgb(var(--bs-white-rgb));
   --bs-link-color-rgb: var(--bs-primary-300-rgb);

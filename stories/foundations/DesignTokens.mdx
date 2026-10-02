@@ -275,6 +275,7 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
   --bs-body-color: rgb(var(--bs-white-rgb));
   --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
   --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-emphasis-color-rgb: var(--bs-white-rgb); /* .link-body-emphasis reads the triplet */
   --bs-emphasis-color: rgb(var(--bs-white-rgb));
   --bs-body-bg-rgb: 32, 44, 62;
   --bs-body-bg: rgb(32, 44, 62);
@@ -320,7 +321,7 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
 ## Bootstrapping a theme (copy-paste starter)
 There are two ways to start, and they don't mix: copying both would duplicate declarations.
 
-- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family, type scale and radius, which the theme file requires. Anything else (spacing, shadows, dark mode) goes in the file's `root` section, not in a separate stylesheet. See `scripts/theme/README.md`.
+- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family, type scale and radius, which the theme file requires. Global additions (spacing, shadows) go in the file's `root` section, which is emitted in the root block at every width. Automatic dark mode doesn't fit there: the theme file can't place declarations in `@media (prefers-color-scheme: dark)`, so it goes in a separate stylesheet as in [Dark mode patterns](#dark-mode-patterns). A dark subtree goes in `zones`. See `scripts/theme/README.md`.
 - **Hand-written:** the starter below. It has no role colors; copy each role's full block (as in [Color system](#color-system)) or take it from the `theme:expand` output.
 ```css
 /* Global theme */
