@@ -303,7 +303,7 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
 }
 ```
 
-`npm run theme:expand` writes these blocks from the `zones` section of a theme file, and `npm run theme:validate` measures each zone against its own background. The full reference is in `scripts/theme/README.md`.
+`npm run theme:expand` writes these blocks from the `zones` section of a theme file, and `npm run theme:validate` measures each zone against its own background. The validator assumes that background for everything inside the zone, so it doesn't catch a component with its own surface, such as the white text on a white `.form-control` above: check those blocks in the preview (`npm run theme:preview`). The full reference is in `scripts/theme/README.md`.
 
 <br />
 
@@ -318,7 +318,10 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
 <br />
 
 ## Bootstrapping a theme (copy-paste starter)
-Generate the color section with `npm run theme:expand` from one color per role. It writes the base triplet of each role, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp. Then add what the generator doesn't cover:
+There are two ways to start, and they don't mix: copying both would duplicate declarations.
+
+- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the 10 ramp steps of the roles that have a ramp (all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family, type scale and radius, which the theme file requires. Anything else (spacing, shadows, dark mode) goes in the file's `root` section, not in a separate stylesheet. See `scripts/theme/README.md`.
+- **Hand-written:** the starter below. It has no role colors; copy each role's full block (as in [Color system](#color-system)) or take it from the `theme:expand` output.
 ```css
 /* Global theme */
 :root {
@@ -331,7 +334,7 @@ Generate the color section with `npm run theme:expand` from one color per role. 
   /* Color tokens: triplets, not hex on the wrappers */
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-body-color-rgb: 46, 52, 56;
-  /* Role triplets, ramps and text-bg colors: from theme:expand */
+  /* Role colors: each role's full block, see the note above */
 
   /* Spacing */
   --bs-ref-spacer-4: 16px;
