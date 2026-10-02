@@ -433,18 +433,11 @@ export const IconSize: Story = {
 
 /**
  * `iconSize` also takes an object by breakpoint, and the glyph follows viewport
- * changes. Responsive values resolve against the breakpoints `DContextProvider`
- * reads from the CSS, so the tree needs the provider. Resize the viewport to
- * see the glyph go from 1rem to 2rem at the `lg` breakpoint.
+ * changes. Breakpoints are read from the `--bs-breakpoint-*` CSS variables, so
+ * `dynamic-ui.css` has to be loaded. Resize the viewport to see the glyph go
+ * from 1rem to 2rem at the `lg` breakpoint.
  */
 export const ResponsiveIconSize: Story = {
-  decorators: [
-    (Story) => (
-      <DContextProvider>
-        <Story />
-      </DContextProvider>
-    ),
-  ],
   render: (args) => (
     <DButtonIcon {...args} iconSize={{ xs: '1rem', lg: '2rem' }} aria-label="Download" />
   ),

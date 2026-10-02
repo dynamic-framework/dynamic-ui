@@ -171,6 +171,7 @@ function DInput(
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...invalid && { 'aria-invalid': true }}
       {...inputProps}
     />
   ), [
