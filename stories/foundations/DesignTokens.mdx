@@ -12,7 +12,7 @@ Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variable
 
 ## Principles
 - Scope overrides: use `:root` for global themes and a zone (`[data-bs-theme="<name>"]`) for a subtree with its own colors. A zone needs more than the global theme; see [Zones](#zones).
-- Colors travel as RGB triplets on `--bs-<name>-rgb`. The color variables without `-rgb` (`--bs-primary`, `--bs-body-bg`) are wrappers computed from the triplet; don't set them with a hex value.
+- Colors that have an RGB triplet (`--bs-<name>-rgb`) travel in it. Their variables without `-rgb` (`--bs-primary`, `--bs-body-bg`) are wrappers computed from the triplet: on `:root` set the triplet, not the wrapper; a zone sets both (see [Zones](#zones)). Colors without a triplet, such as `--bs-border-color`, take the value directly.
 - Change variables, not classes: utilities and components read from CSS variables; overriding variables updates the whole system consistently.
 - Validate contrast: ensure WCAG AA for text/background, borders, and focus rings.
 
@@ -83,7 +83,7 @@ Dynamic’s palettes expose base tokens and extended shades.
 - Text/background/border subtles: `--bs/{token}-text-emphasis`, `--bs/{token}-bg-subtle`, `--bs/{token}-border-subtle`
 - Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
 
-Override the **triplets**, not the wrappers. The library declares every color twice: the triplet that holds the value (`--bs-primary-rgb: 32, 104, 213`) and a wrapper computed from it (`--bs-primary: rgb(var(--bs-primary-rgb))`). Buttons, utilities such as `.bg-primary` and `.text-bg-primary`, and anything with opacity read the triplet; a hex value on `--bs-primary` changes only what reads the wrapper, so the brand shows up halfway.
+Override the **triplets**, not the wrappers. The library declares every role and body color twice: the triplet that holds the value (`--bs-primary-rgb: 32, 104, 213`) and a wrapper computed from it (`--bs-primary: rgb(var(--bs-primary-rgb))`). Buttons, utilities such as `.bg-primary` and `.text-bg-primary`, and anything with opacity read the triplet; a hex value on `--bs-primary` changes only what reads the wrapper, so the brand shows up halfway.
 
 ```css
 :root {
@@ -256,7 +256,7 @@ Many component styles are derived from the core variables, but some expose speci
 @media (prefers-color-scheme: dark) {
   :root {
     --bs-secondary-bg-rgb: 27, 33, 41;
-    --bs-secondary-color: rgba(230, 230, 230, .75);
+    --bs-secondary-color-rgb: 230, 230, 230; /* the wrapper applies the .75 alpha */
     --bs-danger-100-rgb: 71, 28, 28; /* dark tint variant */
   }
 }
