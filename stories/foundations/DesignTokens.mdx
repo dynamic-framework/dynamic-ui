@@ -111,7 +111,7 @@ Override the **triplets**, not the wrappers. The library declares every role and
 
 - The ramp steps are literal triplets, so changing only `--bs-primary-rgb` leaves `--bs-primary-100` and the rest of the ramp at the default brand.
 - Links follow the role: `--bs-link-color-rgb` points to `--bs-primary-rgb` and `--bs-link-hover-color-rgb` to its 700 step, so they only need an override to use a different color.
-- `.text-bg-<role>` reads its text from `--bs-<role>-text-bg-color`, resolved for the default role. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`).
+- `.text-bg-<role>` reads its text from `--bs-<role>-text-bg-color`, resolved for the default role, in every role but `secondary`. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`). `.text-bg-secondary` has no such variable: it paints `--bs-secondary-700` on `--bs-secondary-50`, so it follows the secondary ramp.
 - `.btn-<role>` keeps the white or dark text resolved for the default palette, so pick a base that contrasts with it (this example is 4.95:1 against white) or override the button text colors.
 - `npm run theme:expand` takes one color per role and writes its base triplet, the ramp of the roles that have one (25 to 900, with 500 as an alias of the base; all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp. `npm run theme:validate` checks the result, contrast included.
 
@@ -274,7 +274,9 @@ A zone is a subtree with its own palette, scoped with `[data-bs-theme="<name>"]`
 [data-bs-theme="dark-header"] {
   --bs-body-color-rgb: var(--bs-white-rgb);
   --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-color-rgb: var(--bs-white-rgb);
   --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-tertiary-color-rgb: var(--bs-white-rgb);
   --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
   --bs-emphasis-color-rgb: var(--bs-white-rgb); /* .link-body-emphasis reads the triplet */
   --bs-emphasis-color: rgb(var(--bs-white-rgb));

@@ -135,7 +135,9 @@ seguirá pintando el color del tema claro. Por eso una zona declara el triplete
 "vars": {
   "--bs-body-color-rgb": "var(--bs-white-rgb)",
   "--bs-body-color": "rgb(var(--bs-white-rgb))",
+  "--bs-secondary-color-rgb": "var(--bs-white-rgb)",
   "--bs-secondary-color": "rgba(var(--bs-white-rgb), .75)",
+  "--bs-tertiary-color-rgb": "var(--bs-white-rgb)",
   "--bs-tertiary-color": "rgba(var(--bs-white-rgb), .5)",
   "--bs-emphasis-color-rgb": "var(--bs-white-rgb)",
   "--bs-emphasis-color": "rgb(var(--bs-white-rgb))"
