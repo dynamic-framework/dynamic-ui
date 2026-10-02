@@ -8,6 +8,7 @@
 [data-bs-theme="dynamic"] {
   /* Role primary */
   --bs-primary-rgb: 59, 95, 138;
+  --bs-primary-text-bg-color: var(--bs-white);
   --bs-primary-25-rgb: 245, 247, 249;
   --bs-primary-50-rgb: 235, 239, 243;
   --bs-primary-100-rgb: 216, 223, 232;
@@ -36,6 +37,7 @@
 
   /* Role success */
   --bs-success-rgb: 61, 122, 93;
+  --bs-success-text-bg-color: var(--bs-white);
   --bs-success-25-rgb: 245, 248, 247;
   --bs-success-50-rgb: 236, 242, 239;
   --bs-success-100-rgb: 216, 228, 223;
@@ -50,6 +52,7 @@
 
   /* Role info */
   --bs-info-rgb: 55, 98, 127;
+  --bs-info-text-bg-color: var(--bs-white);
   --bs-info-25-rgb: 245, 247, 249;
   --bs-info-50-rgb: 235, 239, 242;
   --bs-info-100-rgb: 215, 224, 229;
@@ -64,6 +67,7 @@
 
   /* Role warning */
   --bs-warning-rgb: 224, 179, 65;
+  --bs-warning-text-bg-color: var(--bs-gray-700);
   --bs-warning-25-rgb: 253, 251, 246;
   --bs-warning-50-rgb: 252, 247, 236;
   --bs-warning-100-rgb: 249, 240, 217;
@@ -78,6 +82,7 @@
 
   /* Role danger */
   --bs-danger-rgb: 168, 68, 63;
+  --bs-danger-text-bg-color: var(--bs-white);
   --bs-danger-25-rgb: 251, 246, 245;
   --bs-danger-50-rgb: 246, 236, 236;
   --bs-danger-100-rgb: 238, 218, 217;
@@ -92,9 +97,11 @@
 
   /* Role light */
   --bs-light-rgb: 245, 247, 249;
+  --bs-light-text-bg-color: var(--bs-gray-700);
 
   /* Role dark */
   --bs-dark-rgb: 33, 41, 51;
+  --bs-dark-text-bg-color: var(--bs-white);
 
   /* Superficies */
   --bs-body-bg-rgb: 245, 247, 249;

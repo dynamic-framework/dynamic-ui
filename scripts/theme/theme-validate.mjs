@@ -725,9 +725,26 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // theme no declara: siguen igual después del rebrand, y por eso hay que
   // medirlos explícitamente. Se comprueban en el raíz y dentro de cada zona,
   // porque una zona que mueve la superficie los cambia sin tocar ninguno.
+  // Un role que sólo cambia dentro de una zona también arrastra sus pares: la
+  // zona mueve `--bs-<role>-rgb` y el texto horneado se queda como estaba. Y un
+  // theme que sólo redefine `--bs-<role>-text-bg-color`, en el raíz o en una
+  // zona, cambia el texto de `.text-bg-<role>` sin tocar el role: también se
+  // mide.
+  const textBgRoles = (decls) => ROLES.filter((role) => decls.has(`--bs-${role}-text-bg-color`));
+  const pairRoles = [...new Set([
+    ...touchedRoles,
+    ...textBgRoles(root),
+    ...zoneBlocks.flatMap((block) => [...touched(block.decls).roles, ...textBgRoles(block.decls)]),
+  ])];
+  // `.text-bg-<role>` se mide para todos los roles, toque el theme el role o
+  // no: su texto por defecto apunta a otros tokens (`--bs-white`,
+  // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
+  // de ellos lo mueve sin declarar nada del role.
+  const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
   const bakedPairs = [
     ...BAKED_PAIRS,
-    ...touchedRoles.flatMap((role) => bakedRolePairs(role)),
+    ...pairRoles.flatMap((role) => bakedRolePairs(role).filter((pair) => !isTextBg(pair))),
+    ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
   ];
 
   /** Token al que cae un lado del par cuando el theme no declara su variable. */
@@ -768,9 +785,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // apareciendo como roto.
       const owners = pair.owners ?? [];
       const scope = new Map(ctx.decls);
-      for (const block of blocks) {
-        if (block.isRoot) continue;
-        const split = splitZone(block.prelude);
+      // Los bloques de la zona (`[data-bs-theme] .x`) tienen más especificidad
+      // que los globales (`.x`) y ganan sin importar el orden del CSS: se
+      // aplican después.
+      const ownerBlocks = blocks
+        .filter((block) => !block.isRoot)
+        .map((block) => ({ block, split: splitZone(block.prelude) }))
+        .sort((a, b) => Number(Boolean(a.split.zone)) - Number(Boolean(b.split.zone)));
+      for (const { block, split } of ownerBlocks) {
         if (split.zone && split.zone !== ctx.zone) continue;
         const applies = split.bare
           .split(',')
@@ -779,8 +801,17 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         for (const [name, entry] of block.decls) scope.set(name, entry);
       }
 
-      const fg = resolveSide(pair.fg, pair.role, scope);
-      const bg = resolveSide(pair.bg, pair.role, scope);
+      // Una custom property que referencia otra se resuelve donde se declara y
+      // se hereda ya calculada. Si la variable de texto viene del raíz (del
+      // theme o de la librería), dentro de una zona vale lo que valía en el
+      // raíz, aunque la zona cambie el token al que apunta.
+      const sideScope = (side) => (
+        ctx.zone && side.resolvesWhereDeclared && scope.get(side.variable) === root.get(side.variable)
+          ? root
+          : scope
+      );
+      const fg = resolveSide(pair.fg, pair.role, sideScope(pair.fg));
+      const bg = resolveSide(pair.bg, pair.role, sideScope(pair.bg));
       const where = `${pair.component}${inContext(ctx)}`;
 
       if (!fg.rgb || !bg.rgb) {

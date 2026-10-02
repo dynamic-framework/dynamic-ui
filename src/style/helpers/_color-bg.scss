@@ -5,6 +5,11 @@
       color: var(--#{$prefix}secondary-700);
       background: var(--#{$prefix}secondary-50);
     }
+  } @else if map-has-key($theme-colors, $color) {
+    .text-bg-#{$color} {
+      color: var(--#{$prefix}#{$color}-text-bg-color) if($enable-important-utilities, !important, null);
+      background-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+    }
   } @else {
     .text-bg-#{$color} {
       color: color-contrast-var($value) if($enable-important-utilities, !important, null);

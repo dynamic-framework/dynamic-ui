@@ -81,10 +81,12 @@ export const SHADE_WEIGHTS = {
 export const GRAY_BACKED_ROLES = { secondary: 800, light: 25, dark: 900 };
 
 /**
- * Pares texto/fondo sólidos que Dynamic hornea en tiempo de compilación
+ * Pares texto/fondo sólidos que Dynamic resuelve en tiempo de compilación
  * (`.btn-<role>` y `.text-bg-<role>` en dist/css/dynamic-ui.css). `color-contrast()`
  * corre en Sass, así que estos pares NO se recalculan cuando un consumidor
  * cambia `--bs-<role>-rgb` en runtime: de ahí la necesidad de validarlos.
+ * `.text-bg-<role>` lee su texto de `--bs-<role>-text-bg-color`, que
+ * theme-expand vuelve a calcular; `.btn-<role>` sigue horneado.
  */
 export const SOLID_PAIRS = {
   primary: { fg: { kind: 'white' }, bg: { kind: 'role', step: 500 } },
@@ -211,6 +213,36 @@ export const toHex = ({ r, g, b }) => `#${[r, g, b].map((c) => c.toString(16).pa
 
 export const luminance = (rgb) => wcagLuminance(toHex(rgb));
 export const contrast = (a, b) => wcagContrast(toHex(a), toHex(b));
+
+const WHITE = { r: 255, g: 255, b: 255 };
+const BLACK = { r: 0, g: 0, b: 0 };
+
+/**
+ * Text color of `.text-bg-<role>` over a role base, with the rule Sass uses to
+ * compile the library default (Bootstrap's `color-contrast()` with
+ * `$color-contrast-light: $white` and `$color-contrast-dark: $gray-700`): the
+ * first foreground that reaches 4.5:1, in that order, or the one with the most
+ * contrast. Returned as the same `var()` reference the library emits.
+ */
+export function textBgColor(base, gray700) {
+  const foregrounds = [
+    ['var(--bs-white)', WHITE],
+    ['var(--bs-gray-700)', gray700],
+    ['var(--bs-white)', WHITE],
+    ['var(--bs-black)', BLACK],
+  ];
+  let best = foregrounds[0];
+  let bestRatio = 0;
+  for (const candidate of foregrounds) {
+    const ratio = contrast(base, candidate[1]);
+    if (ratio >= 4.5) return candidate[0];
+    if (ratio > bestRatio) {
+      bestRatio = ratio;
+      best = candidate;
+    }
+  }
+  return best[0];
+}
 
 /**
  * Deriva las 10 hojas de una rampa como lo hace Sass: mix con blanco/negro en
@@ -503,20 +535,35 @@ export function bakedRolePairs(role) {
   }
 
   if (solid) {
-    pairs.push({
-      // El color va escrito en la clase, no en una variable, y en casi todos
-      // los roles además con !important: no hay nada que un theme pueda
-      // declarar para moverlo. Por eso este par se reporta como advertencia y
-      // no como error — ver `noCorregible`. El fondo tampoco es siempre el
-      // base: `secondary` se pinta sobre su paso 50, y `light` y `dark` sobre
-      // grises.
-      component: `.text-bg-${role}`,
-      why: 'el color va horneado en la clase, fuera de toda variable',
-      fg: { fallback: solid.fg, important: role !== 'secondary' },
-      bg: { fallback: solid.bg },
-      role,
-      noCorregible: true,
-    });
+    pairs.push(role === 'secondary'
+      ? {
+        // `.text-bg-secondary` se pinta con los wrappers de su rampa
+        // (`--bs-secondary-700` sobre `--bs-secondary-50`), sin una variable de
+        // texto propia. Los wrappers se resuelven en :root y se heredan.
+        component: `.text-bg-${role}`,
+        why: 'el color sale de la rampa de secondary, no de una variable propia',
+        owners: [`.text-bg-${role}`],
+        fg: { variable: '--bs-secondary-700', fallback: solid.fg, resolvesWhereDeclared: true },
+        bg: { variable: '--bs-secondary-50', fallback: solid.bg, resolvesWhereDeclared: true },
+        role,
+        noCorregible: true,
+      }
+      : {
+        // El texto lee --bs-<role>-text-bg-color, que la librería resuelve en
+        // Sass contra el role por defecto. Un theme que cambia el role tiene
+        // que declararla también; theme-expand lo hace.
+        component: `.text-bg-${role}`,
+        why: 'la clase lee --bs-<role>-text-bg-color, que por defecto conserva el color resuelto para el role de la librería',
+        // Un bloque sobre la propia clase puede redefinir las dos variables.
+        owners: [`.text-bg-${role}`],
+        // Declarada en :root, la variable se resuelve allí y se hereda ya
+        // calculada: una zona que sólo cambia el token al que apunta no la mueve.
+        fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg, resolvesWhereDeclared: true },
+        // The class paints `--bs-<role>-rgb`, so that is what gets measured;
+        // the step only applies when the theme doesn't declare the role.
+        bg: { variable: `--bs-${role}-rgb`, fallback: solid.bg },
+        role,
+      });
     pairs.push({
       component: `.btn-${role}`,
       why: 'sin override, el botón conserva el color que color-contrast() calculó en Sass',
