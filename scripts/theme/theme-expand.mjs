@@ -38,6 +38,7 @@ import {
   RAMPED_ROLES,
   RAMP_STEPS,
   RFS_MEDIA_STEPS,
+  DEFAULT_GRAYS,
   ROLES,
   THEME_SELECTOR,
   ZONE_NAME_RE,
@@ -47,7 +48,9 @@ import {
   normalizeCssValue,
   parseColor,
   parseRem,
+  parseTriplet,
   rfsPair,
+  textBgColor,
   toCssRgb,
   toTriplet,
   varRefs,
@@ -404,6 +407,7 @@ function generatedTokens({ roles, gray, root }) {
   }
   for (const role of touched) {
     names.add(`--bs-${role}-rgb`);
+    if (role !== 'secondary') names.add(`--bs-${role}-text-bg-color`);
     if (!RAMPED_ROLES.includes(role)) continue;
     names.add(`--bs-${role}-500-rgb`);
     for (const step of RAMP_STEPS) names.add(`--bs-${role}-${step}-rgb`);
@@ -473,6 +477,14 @@ export function expandTheme(input) {
     } else {
       // Sólo llegamos aquí por un `gray` propio: conservamos la indirección.
       lines.push(decl(`${role}-rgb`, `var(--bs-gray-${grayStep}-rgb)`));
+    }
+
+    // El texto de `.text-bg-<role>` se resuelve contra el base nuevo con la
+    // misma regla que la librería usa en Sass. `secondary` lee su rampa.
+    if (role !== 'secondary') {
+      const grayOf = (step) => parseTriplet(grayTriplet(step) ?? DEFAULT_GRAYS[step]);
+      const base = explicit ?? grayOf(grayStep);
+      lines.push(decl(`${role}-text-bg-color`, textBgColor(base, grayOf(700))));
     }
 
     if (!hasRamp) continue;

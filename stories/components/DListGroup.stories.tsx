@@ -16,14 +16,21 @@ To understand in more detail the aspects covered by this component, review the f
 
 ## Container and item elements
 
-\`DListGroup\` renders a \`<ul>\` by default (\`<ol>\` with \`numbered\`), and those only accept \`<li>\` children. A \`DListGroup.Item\` with \`href\` renders an \`<a>\`, and one with \`action\` renders a \`<button>\`, so a group of links or buttons needs \`as="div"\` on the container:
+\`DListGroup\` renders a \`<ul>\` by default (\`<ol>\` with \`numbered\`). Plain items render an \`<li>\`. A \`DListGroup.Item\` with \`href\` or \`action\` renders an \`<li>\` that carries the item styles, with the \`<a>\` or \`<button>\` inside filling it, so screen readers announce the list, its item count and each position ("2 of 4"):
 
-| Items                              | Container                        |
-|------------------------------------|----------------------------------|
-| Plain items (\`<li>\`)               | default \`as="ul"\`, or \`numbered\` |
-| Links (\`href\`) or buttons (\`action\`) | \`as="div"\`                       |
+\`\`\`html
+<ul class="list-group">
+  <li class="list-group-item list-group-item-action d-list-group-item-interactive">
+    <a class="d-list-group-item-link" href="/accounts">Accounts</a>
+  </li>
+</ul>
+\`\`\`
 
-Any other combination is invalid markup: screen readers stop announcing the group as a list. In development, \`DListGroup.Item\` logs a warning when it detects one.
+\`className\` and \`style\` go to the \`<li>\` (the visual item) and \`dataAttributes\` to the link or button.
+
+\`as="div"\` keeps Bootstrap's flat structure (\`<div>\` with \`<a>\`/\`<button>\` items), which is not announced as a list; prefer the default list for links and buttons. A plain item inside \`as="div"\` is an \`<li>\` outside of a list, and \`DListGroup.Item\` warns about it in development.
+
+A disabled link leaves the tab order and can't be activated. An \`active\` item gets \`aria-current\`: pass \`ariaCurrent="page"\` in a navigation or \`ariaCurrent="step"\` in a flow.
 
 ## Accessible name
 
@@ -56,6 +63,15 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
       type: 'boolean',
       control: 'boolean',
       table: { category: 'Appearance' },
+    },
+    as: {
+      control: 'select',
+      options: ['ul', 'ol', 'div'],
+      description: 'Container element. Keep the default list for links and buttons too: they are wrapped in `<li>`. `div` keeps a flat structure that is not announced as a list.',
+      table: {
+        defaultValue: { summary: 'ul' },
+        category: 'Appearance',
+      },
     },
     ariaLabel: {
       control: 'text',
@@ -141,7 +157,6 @@ export const Links: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -160,7 +175,6 @@ export const Buttons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -265,7 +279,6 @@ export const ActionVariants: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -288,7 +301,6 @@ export const CustomContent: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -310,7 +322,6 @@ export const WithIcons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {
@@ -336,7 +347,6 @@ export const WithIconsEnd: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {
@@ -362,7 +372,6 @@ export const WithBothIcons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {
