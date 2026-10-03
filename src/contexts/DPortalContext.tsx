@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
+  lazy,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -13,11 +16,12 @@ import type {
   FC,
 } from 'react';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements';
+
+const DPortalStack = lazy(() => import('./portal/DPortalStack'));
 
 type PortalComponent<P = any> = FC<PortalProps<P>>;
 
@@ -108,6 +112,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 ) {
   const { created } = usePortal(portalName);
   const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
+  const [hasOpened, setHasOpened] = useState(false);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback(
@@ -130,6 +135,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
       push({ name, Component, payload } as unknown as InternalStackItem<T>);
+      setHasOpened(true);
       (document.activeElement as HTMLElement)?.blur();
     },
     [availablePortals, push],
@@ -205,36 +211,16 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   return (
     <DPortalContext.Provider value={value}>
       {children}
-      {created && createPortal(
+      {created && hasOpened && createPortal(
         // eslint-disable-next-line max-len
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           onClick={({ target }) => handleClose(target as Element)}
           onKeyDown={() => {}}
         >
-          <AnimatePresence>
-            {stack.flatMap((
-              {
-                Component,
-                name,
-                payload,
-              },
-            ) => [
-              <motion.div
-                key={`${name}-backdrop`}
-                className="backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0, transition: { delay: 0.3 } }}
-                transition={{ duration: 0.15, ease: 'linear' }}
-              />,
-              <Component
-                key={name}
-                name={name}
-                payload={payload}
-              />,
-            ])}
-          </AnimatePresence>
+          <Suspense fallback={null}>
+            <DPortalStack stack={stack} />
+          </Suspense>
         </div>,
         document.getElementById(portalName) as Element,
       )}
