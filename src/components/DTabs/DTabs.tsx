@@ -2,6 +2,7 @@ import {
   Children,
   useState,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useMemo,
@@ -10,8 +11,9 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import TabContext from './TabContext';
+import TabContext, { TabsStateContext } from './TabContext';
 import DTabContent from './components/DTabContent';
+import DTabsProvider from './components/DTabsProvider';
 
 import type { BaseProps } from '../interface';
 
@@ -32,7 +34,8 @@ type Props = BaseProps & PropsWithChildren<{
   classNameContent?: string;
   onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
-  defaultSelected: string;
+  /** Required unless `DTabs` is inside `DTabs.Provider`, which owns the selection. */
+  defaultSelected?: string;
   vertical?: boolean;
   variant?: TabVariant;
   ariaLabel?: string;
@@ -56,18 +59,21 @@ function DTabs(
     ariaLabelledBy,
   }: Props,
 ) {
-  const [selected, setSelected] = useState<string>(defaultSelected);
+  const shared = useContext(TabsStateContext);
+  const [ownSelected, setOwnSelected] = useState(defaultSelected);
+  const selected = shared ? shared.selected : ownSelected;
+  const setSelected = shared ? shared.setSelected : setOwnSelected;
 
   const onSelect = useCallback((option: DTabOption) => {
     if (option.tab) {
       setSelected(option.tab);
     }
     onChange?.(option);
-  }, [onChange]);
+  }, [onChange, setSelected]);
 
   useEffect(() => {
-    setSelected(defaultSelected);
-  }, [defaultSelected]);
+    if (defaultSelected !== undefined) setSelected(defaultSelected);
+  }, [defaultSelected, setSelected]);
 
   const generateClasses = useMemo(
     () => ({
@@ -89,7 +95,7 @@ function DTabs(
       const firstEnabled = options.find((opt) => !opt.disabled);
       if (firstEnabled) setSelected(firstEnabled.tab);
     }
-  }, [options, selected]);
+  }, [options, selected, setSelected]);
 
   // Focus only moves in response to the user: arrow keys and clicks call
   // this directly. Changes to `selected` that don't come from an interaction
@@ -127,7 +133,7 @@ function DTabs(
         }
       }
     }
-  }, [options, vertical, focusTab]);
+  }, [options, vertical, focusTab, setSelected]);
 
   let tablistProps = {};
   if (ariaLabelledBy) {
@@ -208,4 +214,5 @@ function DTabs(
 
 export default Object.assign(DTabs, {
   Tab: DTabContent,
+  Provider: DTabsProvider,
 });

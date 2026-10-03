@@ -71,6 +71,7 @@ export {
   default as DTabs,
   useTabContext,
   DTabContent,
+  DTabsProvider,
 } from './DTabs';
 export type { DTabOption } from './DTabs';
 export { default as DToast } from './DToast';
