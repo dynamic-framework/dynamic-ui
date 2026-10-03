@@ -87,6 +87,17 @@ describe('<DErrorBoundary />', () => {
     expect(capturedInfo.componentStack).toEqual(expect.any(String));
   });
 
+  it('renders the default fallback with custom messages', () => {
+    render(
+      <DErrorBoundary messages={{ error: 'Algo salió mal.', retry: 'Reintentar' }}>
+        <Bomb explode />
+      </DErrorBoundary>,
+    );
+
+    expect(screen.getByText('Algo salió mal.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reintentar' })).toBeInTheDocument();
+  });
+
   it('renders custom fallback if provided', () => {
     const fallback = () => <div>Custom Error Message</div>;
     function TestComponent() {
