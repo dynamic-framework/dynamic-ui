@@ -259,7 +259,8 @@ salida respeta*).
   `--bs-dark-rgb`. Sus `-text-emphasis` y `-bg-subtle` apuntan a pasos de gris.
 - La tipografía se overridea sobre `--bs-rfs-fs-N`, nunca sobre `--bs-fs-N`, que
   es sólo el alias. Cada paso 1..4 lleva además su valor en
-  `@media (min-width: 1200px)`, porque la librería redefine esos cuatro ahí.
+  `@media (min-width: 1200px)`: un valor fluido (con `vw`) necesita ahí su tope o
+  sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
 - Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y

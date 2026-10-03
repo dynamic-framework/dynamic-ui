@@ -354,6 +354,17 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('min-width: 1200px');
   });
 
+  it('un tamaño fijo sin bloque de 1200px no exige el breakpoint', () => {
+    const valid = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: 'Inter, sans-serif', scale: { 3: '1.25rem' } },
+    });
+    const fixed = valid.replace(/@media \(min-width: 1200px\) \{[\s\S]*?\n\}/, '');
+    expect(fixed).toContain('--bs-rfs-fs-3: 1.25rem;');
+    expect(fixed).not.toContain('min-width: 1200px');
+    expect(validate(fixed).stderr).not.toContain('[tipografia-breakpoint]');
+  });
+
   it('un role claro que no declara el texto de .text-bg-<role>', () => {
     const valid = expandCss({ ...MINIMAL_THEME, roles: { primary: '#ffe066' } });
     const broken = valid.replace(/\n\s*--bs-primary-text-bg-color: [^;]+;/, '');
@@ -1168,9 +1179,8 @@ describe('theme-validate — pares horneados', () => {
 
 describe('theme-expand — el breakpoint de RFS', () => {
   it('repite los pasos 1..4 en 1200px aunque el tamaño no sea fluido', () => {
-    // La librería redeclara --bs-rfs-fs-1..4 dentro de @media (min-width: 1200px)
-    // con 3rem/2.5rem/2rem/1.5rem. Un override menor que la base de RFS no genera
-    // valor fluido, pero sigue necesitando su bloque o en desktop gana el suyo.
+    // Un override menor que la base de RFS no genera valor fluido. El bloque es
+    // redundante (el theme gana por cascada), pero la salida lo mantiene.
     const css = expandCss({
       ...MINIMAL_THEME,
       typography: { fontFamily: 'Inter, sans-serif', scale: { 3: '1.25rem', 6: '.875rem' } },
