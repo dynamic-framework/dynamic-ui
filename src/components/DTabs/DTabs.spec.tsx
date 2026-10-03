@@ -337,4 +337,54 @@ describe('<DTabs />', () => {
 
     expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
   });
+
+  describe('DTabs.Provider', () => {
+    function Layout({ onChange }: { onChange?: (option: DTabOption) => void }) {
+      return (
+        <DTabs.Provider defaultSelected="tab1">
+          <header>
+            <DTabs options={options} onChange={onChange} />
+          </header>
+          <main>
+            <DTabs.Tab tab="tab1">Panel 1</DTabs.Tab>
+            <DTabs.Tab tab="tab2">Panel 2</DTabs.Tab>
+          </main>
+        </DTabs.Provider>
+      );
+    }
+
+    it('renders panels outside the DTabs tree', () => {
+      render(<Layout />);
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 1');
+      expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', 'tab1Tab');
+    });
+
+    it('switches the outside panel and calls onChange', () => {
+      const onChange = jest.fn();
+      render(<Layout onChange={onChange} />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Tab 2' }));
+      expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 2');
+      expect(onChange).toHaveBeenCalledWith(options[1]);
+    });
+
+    it('keeps the selection of a DTabs nested in a panel independent', () => {
+      const nested = [
+        { label: 'Inner A', tab: 'innerA' },
+        { label: 'Inner B', tab: 'innerB' },
+      ];
+      render(
+        <DTabs.Provider defaultSelected="tab1">
+          <DTabs options={options} />
+          <DTabs.Tab tab="tab1">
+            <DTabs options={nested} defaultSelected="innerA" />
+          </DTabs.Tab>
+        </DTabs.Provider>,
+      );
+      fireEvent.click(screen.getByRole('tab', { name: 'Inner B' }));
+      expect(screen.getByRole('tab', { name: 'Inner B' })).toHaveClass('active');
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+    });
+  });
 });

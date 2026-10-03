@@ -8,11 +8,18 @@ type TabContextState = {
 
 const TabContext = createContext<TabContextState | undefined>(undefined);
 
+type TabsState = {
+  selected: string;
+  setSelected: (tab: string) => void;
+};
+
+export const TabsStateContext = createContext<TabsState | undefined>(undefined);
+
 export function useTabContext() {
   const context = useContext(TabContext);
 
   if (context === undefined) {
-    throw new Error('useTabContext was used outside of MTab');
+    throw new Error('useTabContext was used outside of DTabs');
   }
 
   return context;
