@@ -66,11 +66,14 @@ export type PinInputType = 'number' | 'text' | 'tel';
  * Where a modal panel is anchored. `center` is a dialog, the four edges are
  * drawers and sheets, `fill` covers the viewport.
  *
- * Replaces `OverlayPlacement` plus the modal's `centered` and
- * `fullScreen`/`fullScreenFrom` — one question with one answer. Because the
- * prop is responsive, `{ xs: 'fill', md: 'center' }` is what
- * `fullScreenFrom="md"` was trying to say; that prop emitted its value into an
- * attribute no rule ever matched, so it went fullscreen at every width.
+ * One question with one answer, where 2.x had two components and four props:
+ * the offcanvas's `openFrom` and the modal's `centered`, `fullScreen` and
+ * `fullScreenFrom`. All four answer "where does the panel sit".
+ *
+ * Because the prop is responsive, `{ xs: 'fill', md: 'center' }` says what
+ * `fullScreen` + `fullScreenFrom="md"` said with two props, and
+ * `{ xs: 'bottom', md: 'center' }` — a sheet on a phone, a dialog on a desktop
+ * — is a single panel rather than two components swapped at a breakpoint.
  */
 export type OverlayPlacement = 'center' | 'start' | 'end' | 'top' | 'bottom' | 'fill';
 
@@ -78,7 +81,9 @@ export type OverlayPlacement = 'center' | 'start' | 'end' | 'top' | 'bottom' | '
  * One size scale for every placement: the width of a side drawer, the height
  * of a top/bottom sheet, the max-width of a centred dialog.
  *
- * `md` was missing from the old `OverlaySize` while the token and the CSS rule
- * for it both existed, so one of the four rungs was unreachable.
+ * 2.x had no such scale. `ModalSize` was `sm | lg | xl` — Bootstrap treats the
+ * middle rung as the implicit default, so there was no name for it — and the
+ * offcanvas had no size prop at all: its width came from the stylesheet, so the
+ * only way to change it was `style`.
  */
 export type OverlaySize = 'sm' | 'md' | 'lg' | 'xl';
