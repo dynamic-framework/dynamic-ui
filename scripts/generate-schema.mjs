@@ -80,6 +80,14 @@ const schema = {
             type: 'string',
             description: 'Relative path from the repo root to the source file.',
           },
+          parent: {
+            type: 'string',
+            description: 'Compound component this subcomponent is attached to (e.g. DListGroup).',
+          },
+          accessor: {
+            type: 'string',
+            description: 'How the subcomponent is used in JSX (e.g. DListGroup.Item).',
+          },
           props: {
             type: 'object',
             additionalProperties: propSchema,

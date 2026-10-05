@@ -24,6 +24,11 @@ export type DErrorBoundaryProps = PropsWithChildren<{
   resetKeys?: unknown[];
   onReset?: () => void;
   onError?: (error: unknown, info: ErrorInfo) => void;
+  /** Texts of the default fallback. Ignored when `fallback` is provided. */
+  messages?: {
+    error?: string;
+    retry?: string;
+  };
 }>;
 
 export default function DErrorBoundary(
@@ -33,6 +38,7 @@ export default function DErrorBoundary(
     resetKeys,
     onReset,
     onError,
+    messages,
     children,
   }: DErrorBoundaryProps,
 ) {
@@ -48,9 +54,11 @@ export default function DErrorBoundary(
     return (
       <DefaultErrorBoundary
         resetErrorBoundary={props.resetErrorBoundary}
+        message={messages?.error}
+        retryMessage={messages?.retry}
       />
     );
-  }, [fallback]);
+  }, [fallback, messages]);
 
   return (
     <ErrorBoundary

@@ -26,6 +26,11 @@ const meta = {
       description: 'Custom fallback renderer. If omitted, a default accessible alert is used.',
       table: { category: 'Content' },
     },
+    messages: {
+      control: 'object',
+      description: 'Texts of the default fallback: `error` and `retry`. Ignored when `fallback` is provided.',
+      table: { category: 'Content' },
+    },
     resetKeys: {
       control: false,
       description: 'Keys that, when changed, reset the boundary state.',
@@ -123,6 +128,58 @@ return (
   },
   args: {
     name: 'Default',
+  },
+};
+
+export const DefaultFallbackWithMessages: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Keeps the default fallback and only replaces its texts with messages.',
+      },
+      source: {
+        code: `
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary
+      messages={{ error: 'Something went wrong loading this section.', retry: 'Try again' }}
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+        `,
+      },
+    },
+  },
+  render: function Render(args) {
+    const [explode, setExplode] = useState(false);
+    return (
+      <div className="d-flex flex-column gap-2">
+        <DButton
+          className="me-auto"
+          onClick={() => setExplode(true)}
+        >
+          Trigger error
+        </DButton>
+        <DErrorBoundary
+          {...args}
+        >
+          <Bomb explode={explode} />
+        </DErrorBoundary>
+      </div>
+    );
+  },
+  args: {
+    name: 'Messages',
+    messages: { error: 'Something went wrong loading this section.', retry: 'Try again' },
   },
 };
 
