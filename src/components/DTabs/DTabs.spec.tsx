@@ -338,6 +338,17 @@ describe('<DTabs />', () => {
     expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
   });
 
+  it('selects the first enabled tab when defaultSelected is omitted', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1', disabled: true },
+      { label: 'Tab 2', tab: 'tab2' },
+    ];
+    render(<DTabs options={opts} />);
+    const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
+    expect(tab2).toHaveClass('active');
+    expect(tab2).toHaveAttribute('tabindex', '0');
+  });
+
   describe('DTabs.Provider', () => {
     function Layout({ onChange }: { onChange?: (option: DTabOption) => void }) {
       return (

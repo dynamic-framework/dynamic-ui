@@ -34,7 +34,10 @@ type Props = BaseProps & PropsWithChildren<{
   classNameContent?: string;
   onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
-  /** Required unless `DTabs` is inside `DTabs.Provider`, which owns the selection. */
+  /**
+   * Inside `DTabs.Provider` the provider owns the selection. Without it, the
+   * first enabled tab is selected when omitted.
+   */
   defaultSelected?: string;
   vertical?: boolean;
   variant?: TabVariant;
@@ -61,7 +64,9 @@ function DTabs(
 ) {
   const shared = useContext(TabsStateContext);
   const [ownSelected, setOwnSelected] = useState(defaultSelected);
-  const selected = shared ? shared.selected : ownSelected;
+  const selected = shared
+    ? shared.selected
+    : ownSelected ?? options.find((opt) => !opt.disabled)?.tab;
   const setSelected = shared ? shared.setSelected : setOwnSelected;
 
   const onSelect = useCallback((option: DTabOption) => {
