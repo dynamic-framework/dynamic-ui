@@ -5,6 +5,7 @@ type Props = Pick<ComponentProps<typeof DInput>,
 | 'id'
 | 'value'
 | 'onChange'
+| 'label'
 | 'aria-label'
 >;
 
@@ -15,7 +16,7 @@ export default function DDatePickerTime(
 ) {
   return (
     <DInput
-      className="d-datepicker-time"
+      className="df-datepicker-time"
       type="time"
       {...rest}
     />

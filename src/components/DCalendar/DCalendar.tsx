@@ -14,6 +14,9 @@ import type {
   CalendarView, DateRange, Selection, SelectionMode, WeekDay,
 } from './month';
 
+import DButtonIcon from '../DButtonIcon';
+import { useDContext } from '../../contexts';
+
 import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
@@ -54,6 +57,29 @@ type Props = BaseProps & {
   view?: CalendarView;
   /** Announced as the grid's name. A calendar with no name is "table". */
   ariaLabel?: string;
+
+  /**
+   * The two buttons that page the grid.
+   *
+   * On by default. A calendar reachable only by keyboard is not a calendar —
+   * PageUp and PageDown page it, and a reader using a pointer has no way to
+   * discover that.
+   */
+  showNavigation?: boolean;
+  /**
+   * Replaces the title with a month and a year control.
+   *
+   * Native `<select>`s: a calendar's year list is the one place a custom
+   * listbox is clearly worse — the platform one is searchable by typing, opens
+   * as a long scrollable list on every platform, and costs nothing to ship.
+   */
+  showSelectors?: boolean;
+  minYear?: number;
+  maxYear?: number;
+  iconPrev?: string;
+  iconNext?: string;
+  prevAriaLabel?: string;
+  nextAriaLabel?: string;
 
   /** One day, several, or a span. */
   mode?: SelectionMode;
@@ -108,6 +134,14 @@ export default function DCalendar(
     numberOfMonths = 1,
     view = 'day',
     ariaLabel = 'Calendar',
+    showNavigation = true,
+    showSelectors = false,
+    minYear,
+    maxYear,
+    iconPrev,
+    iconNext,
+    prevAriaLabel = 'previous',
+    nextAriaLabel = 'next',
     mode = 'single',
     selected: selectedProp,
     defaultSelected,
@@ -117,6 +151,8 @@ export default function DCalendar(
     dataAttributes,
   }: Props,
 ) {
+  const { iconMap: { chevronLeft, chevronRight } } = useDContext();
+
   const gridRef = useRef<HTMLTableElement>(null);
   /* Whether focus is already inside, so the effect below never steals it. */
   const hasFocus = useRef(false);
@@ -169,6 +205,43 @@ export default function DCalendar(
     if (!monthProp) setUncontrolledMonth(target);
     onMonthChange?.(target);
   }, [monthProp, onMonthChange]);
+
+  /**
+   * Paging by pointer, and whether either end has anywhere left to go.
+   *
+   * The bounds are read from the view's PERIOD, not from its cells: a day grid
+   * shows the last days of the previous month, so asking "is any visible cell
+   * in range" would keep Previous enabled on a month whose predecessor is
+   * entirely below `minDate`.
+   */
+  const paging = useMemo(() => {
+    const descriptor = viewDescriptor(view, month, { weekStartsOn, fixedWeeks });
+    const periodStart = descriptor.rangeStart(month);
+    const nextPeriodStart = descriptor.rangeStart(descriptor.page(month, 1));
+
+    return {
+      prev: () => descriptor.page(month, -1),
+      next: () => descriptor.page(month, 1),
+      /* Everything before this period is below the floor. */
+      prevDisabled: !!minDate && startOfDay(minDate) >= periodStart,
+      /* Everything from the next period on is above the ceiling. */
+      nextDisabled: !!maxDate && startOfDay(maxDate) < nextPeriodStart,
+    };
+  }, [fixedWeeks, maxDate, minDate, month, view, weekStartsOn]);
+
+  /**
+   * Paging with a pointer takes the focused day with it.
+   *
+   * Left behind, the roving tabindex still points at a day in a month that is
+   * no longer shown — so the next Tab into the grid lands nowhere visible, and
+   * the first arrow key jumps the reader back to the month they just left.
+   */
+  const page = useCallback((direction: -1 | 1) => {
+    const target = direction === -1 ? paging.prev() : paging.next();
+    goToMonth(target);
+    const descriptor = viewDescriptor(view, month, { weekStartsOn, fixedWeeks });
+    setFocused((current) => descriptor.page(current, direction));
+  }, [fixedWeeks, goToMonth, month, paging, view, weekStartsOn]);
 
   /**
    * Moves the focused day, pulling the month along if it left.
@@ -271,6 +344,27 @@ export default function DCalendar(
     moveTo(move());
   }, [fixedWeeks, focused, month, moveTo, view, weekStartsOn]);
 
+  /*
+   * The years the selector offers.
+   *
+   * Bounded by `minDate`/`maxDate` when they are given, because a year list
+   * running past a date the calendar will refuse is a list of dead ends. The
+   * fallback window is a decade either side of what is on show.
+   */
+  const years = useMemo(() => {
+    const current = month.getFullYear();
+    const first = minYear ?? minDate?.getFullYear() ?? current - 10;
+    const last = maxYear ?? maxDate?.getFullYear() ?? current + 10;
+    const from = Math.min(first, current);
+    const to = Math.max(last, current);
+    return Array.from({ length: to - from + 1 }, (_unused, i) => from + i);
+  }, [maxDate, maxYear, minDate, minYear, month]);
+
+  const monthNames = useMemo(() => Array.from(
+    { length: 12 },
+    (_unused, i) => monthName(new Date(month.getFullYear(), i, 1), locale),
+  ), [locale, month]);
+
   return (
     <div
       className={classNames('df-calendar', className)}
@@ -278,6 +372,16 @@ export default function DCalendar(
       {...dataAttributes}
     >
       <div className="df-calendar-header">
+        {showNavigation && (
+          <DButtonIcon
+            className="df-calendar-nav"
+            icon={iconPrev || chevronLeft}
+            aria-label={prevAriaLabel}
+            disabled={paging.prevDisabled}
+            onClick={() => page(-1)}
+          />
+        )}
+
         {/*
           * The month name is a live region.
           *
@@ -286,9 +390,55 @@ export default function DCalendar(
           * tells a reader the whole grid moved, and a heading that merely
           * changes is not announced.
           */}
-        <h2 className="df-calendar-title" aria-live="polite">
-          {viewLabel(view, month, locale)}
-        </h2>
+        {showSelectors ? (
+          <div className="df-calendar-selectors">
+            {/* The month control is meaningless in a view that counts in
+                months or larger — there, the year alone places the grid. */}
+            {view === 'day' && (
+              <select
+                className="df-calendar-select"
+                aria-label="Month"
+                value={month.getMonth()}
+                onChange={(event) => {
+                  goToMonth(new Date(month.getFullYear(), Number(event.target.value), 1));
+                }}
+              >
+                {monthNames.map((name, index) => (
+                  <option key={name} value={index}>{name}</option>
+                ))}
+              </select>
+            )}
+
+            {view !== 'year' && (
+              <select
+                className="df-calendar-select"
+                aria-label="Year"
+                value={month.getFullYear()}
+                onChange={(event) => {
+                  goToMonth(new Date(Number(event.target.value), month.getMonth(), 1));
+                }}
+              >
+                {years.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            )}
+          </div>
+        ) : (
+          <h2 className="df-calendar-title" aria-live="polite">
+            {viewLabel(view, month, locale)}
+          </h2>
+        )}
+
+        {showNavigation && (
+          <DButtonIcon
+            className="df-calendar-nav"
+            icon={iconNext || chevronRight}
+            aria-label={nextAriaLabel}
+            disabled={paging.nextDisabled}
+            onClick={() => page(1)}
+          />
+        )}
       </div>
 
       <div className="df-calendar-months">

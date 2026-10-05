@@ -3,79 +3,57 @@ import {
   Stories,
   Controls,
   Canvas,
-  Unstyled,
-  Markdown,
 } from '@storybook/addon-docs/blocks';
 
 import * as DDatePickerStories from './DDatePicker.stories';
-import { DAlert } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 
 <Meta of={DDatePickerStories} />
 
 # Date Picker
 
-![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+A field and a calendar, both built here. `react-datepicker` is gone, and with
+it the badge that used to sit at the top of this page saying the component was
+an abstraction that "does not cover all the features of the original library" —
+there is no original library any more, so there is nothing to not cover.
 
-Datepicker with month, year and time selector. This component is a abstraction which does
-not cover all the features of the original library.
+What the grid does is documented under
+**Design System › Components › Calendar**, which is the same `DCalendar` this
+component renders. Everything below is about the field.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
+## What changed in 3.0
 
-+ [React Datepicker](https://reactdatepicker.com/)
+The props were `Omit<DatePickerProps, …>` with twelve names subtracted: a
+public surface nobody chose, where every prop the library happened to have was
+part of this design system's API whether there was an answer for it or not.
+They are now written out, and these ones are gone:
 
-## CSS Variables
+| Prop | Why |
+|---|---|
+| `showTimeSelect`, `showTimeSelectOnly`, `minTime`, `maxTime` | Replaced by `showTimeInput`, which renders the platform's own `type="time"` — keyboard-accessible and localised, which a hand-rolled column of half-hour strings never was. |
+| `value` | Overrode the text in the field independently of the date: two sources of truth for one thing. The field renders `selected` through `dateFormat`. |
+| `showTwoColumnMonthYearPicker`, `showFullMonthYearPicker` | Layout of the month grid, which the calendar now settles from how much room it has. |
+| `showPopperArrow`, `showPreviousMonths`, `showDisabledMonthNavigation` | Implemented by the library, not by us — they were passed straight through. The replacements are: no arrow (the panel is anchored, not tethered), `monthsShown` for more than one month, and a disabled nav button rather than a hidden one. |
+| `selectsDisabledDaysInRange` | A range could be drawn across days the calendar refuses. It cannot now. |
+| `formatHeaderDate` | The header reads its names from `Intl` with the given `locale`. |
+| `holidays` | `highlightDates` already means "days worth pointing at". |
 
-<Markdown>
-  {`
-| Variable                                                        | Class                         | Type            | Description                                  |
-|-----------------------------------------------------------------|-------------------------------|-----------------|----------------------------------------------|
-| --${PREFIX_BS}datepicker-bg                                     | .react-datepicker             | css color       | Background color of the datepicker           |
-| --${PREFIX_BS}datepicker-border-color                           | .react-datepicker             | css color       | Border color                                 |
-| --${PREFIX_BS}datepicker-border                                 | .react-datepicker             | css value       | Border value                                 |
-| --${PREFIX_BS}datepicker-border-radius                          | .react-datepicker             | css length unit | Border radius                                |
-| --${PREFIX_BS}datepicker-header-bg                              | .react-datepicker             | css color       | Header background color                      |
-| --${PREFIX_BS}datepicker-header-border-bottom                   | .react-datepicker             | css value       | Header bottom border                         |
-| --${PREFIX_BS}datepicker-header-padding                         | .react-datepicker             | css value       | Header padding                               |
-| --${PREFIX_BS}datepicker-header-font-weight                     | .react-datepicker             | css value       | Header font weight                           |
-| --${PREFIX_BS}datepicker-day-names-color                        | .react-datepicker             | css color       | Color for day names                          |
-| --${PREFIX_BS}datepicker-day-names-font-size                    | .react-datepicker             | css length unit | Font size for day names                      |
-| --${PREFIX_BS}datepicker-body-margin                            | .react-datepicker             | css value       | Body margin                                  |
-| --${PREFIX_BS}datepicker-body-gap                               | .react-datepicker             | css value       | Body gap                                     |
-| --${PREFIX_BS}datepicker-highlighted-color                      | .react-datepicker             | css value       | Highlighted day text color                   |
-| --${PREFIX_BS}datepicker-highlighted-bg                         | .react-datepicker             | css value       | Highlighted day background                   |
-| --${PREFIX_BS}datepicker-highlighted-border-radius              | .react-datepicker             | css value       | Highlighted day border radius                |
-| --${PREFIX_BS}datepicker-holidays-color                         | .react-datepicker             | css value       | Holidays text color                          |
-| --${PREFIX_BS}datepicker-holidays-bg                            | .react-datepicker             | css value       | Holidays background color                    |
-| --${PREFIX_BS}datepicker-holidays-border-radius                 | .react-datepicker             | css value       | Holidays border radius                       |
-| --${PREFIX_BS}datepicker-day-border-radius                      | .react-datepicker             | css length unit | Day cell border radius                       |
-| --${PREFIX_BS}datepicker-day-outside-month-color                | .react-datepicker             | css color       | Color of days outside current month          |
-| --${PREFIX_BS}datepicker-day-bg                                 | .react-datepicker             | css color       | Background for normal day                    |
-| --${PREFIX_BS}datepicker-day-hover-bg                           | .react-datepicker             | css color       | Hover background for a day                   |
-| --${PREFIX_BS}datepicker-day-width                              | .react-datepicker             | css length unit | Width of a day cell                          |
-| --${PREFIX_BS}datepicker-day-selected-color                     | .react-datepicker             | css color       | Color of selected day                        |
-| --${PREFIX_BS}datepicker-day-selected-bg                        | .react-datepicker             | css color       | Background of selected day                   |
-| --${PREFIX_BS}datepicker-day-disabled-color                     | .react-datepicker             | css color       | Disabled day color                           |
-| --${PREFIX_BS}datepicker-week-number-color                      | .react-datepicker             | css color       | Week number color                            |
-| --${PREFIX_BS}datepicker-week-number-bg                         | .react-datepicker             | css color       | Week number background                       |
-| --${PREFIX_BS}datepicker-week-number-selected-color             | .react-datepicker             | css color       | Selected week number color                   |
-| --${PREFIX_BS}datepicker-week-number-selected-bg                | .react-datepicker             | css color       | Selected week number background              |
-| --${PREFIX_BS}datepicker-week-number-hover-bg                   | .react-datepicker             | css color       | Week number hover background                 |
-| --${PREFIX_BS}datepicker-week-number-hover-color                | .react-datepicker             | css color       | Week number hover color                      |
-| --${PREFIX_BS}datepicker-week-number-border-radius              | .react-datepicker             | css length unit | Week number border radius                    |
-| --${PREFIX_BS}datepicker-range-start-color                      | .react-datepicker             | css color       | Start range day color                        |
-| --${PREFIX_BS}datepicker-range-start-bg                         | .react-datepicker             | css color       | Start range background                       |
-| --${PREFIX_BS}datepicker-range-end-color                        | .react-datepicker             | css color       | End range day color                          |
-| --${PREFIX_BS}datepicker-range-end-bg                           | .react-datepicker             | css color       | End range background                         |
-| --${PREFIX_BS}datepicker-in-range-bg                            | .react-datepicker             | css color       | In-range background                          |
-| --${PREFIX_BS}datepicker-range-color                            | .react-datepicker             | css color       | In-range text color                          |
-| --${PREFIX_BS}datepicker-in-range-hover-bg                      | .react-datepicker             | css color       | Hover background in range                    |
-| --${PREFIX_BS}datepicker-in-range-disabled-color                | .react-datepicker             | css color       | Disabled in-range color                      |
-| --${PREFIX_BS}datepicker-in-range-disabled-bg                   | .react-datepicker             | css color       | Disabled in-range background                 |
-| --${PREFIX_BS}datepicker-time-list-item-width                   | .react-datepicker             | css length unit | Aside time item width                        |
-| --${PREFIX_BS}datepicker-time-list-item-padding                 | .react-datepicker             | css length unit | Aside time item padding                      |
-  `}
-</Markdown>
+`locale` is a BCP 47 string — `"es"`, `"pt-BR"` — not a `date-fns` locale
+object. Every name in the calendar comes from `Intl`, which is in the browser,
+so no locale data ships.
+
+## The field does not accept typing
+
+It is `readOnly`, as it has been since 2.x: the date is chosen in the grid.
+`dateFormat` decides what the field SHOWS, and it understands the usual
+tokens — `dd/MM/yyyy`, `MMMM`, `h:mm aa`. Text in single quotes is literal, so
+`d 'de' MMMM` works.
+
+## CSS variables
+
+The calendar's own tokens are listed under
+**Design System › Components › Calendar**. The panel is laid out with
+`--df-calendar-gap`, and the field is a `DInput` — its tokens are under
+**Input**.
 
 <Canvas of={DDatePickerStories.Default} />
 <Controls of={DDatePickerStories.Default} />

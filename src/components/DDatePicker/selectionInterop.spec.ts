@@ -1,5 +1,6 @@
 import {
-  calendarView, dayFilter, flattenHighlights, fromSelection, selectionMode, toSelection,
+  calendarView, dayFilter, flattenHighlights, fromSelection, initialMonth,
+  selectionMode, toSelection,
 } from './selectionInterop';
 
 /**
@@ -281,5 +282,40 @@ describe('selectionMode', () => {
   it('should let the narrower mode win when two are asked for', () => {
     expect(selectionMode({ showWeekPicker: true, selectsRange: true })).toBe('week');
     expect(selectionMode({ selectsRange: true, selectsMultiple: true })).toBe('range');
+  });
+});
+
+/**
+ * The month the calendar opens on.
+ *
+ * It opened on TODAY whatever was chosen: a field showing 08/03/2026 opened in
+ * September, so the reader either paged back six months to find their own date
+ * or picked a September one believing the grid had taken them to March.
+ */
+describe('initialMonth', () => {
+  const on = (y: number, m: number, day: number) => new Date(y, m - 1, day);
+
+  it('should open on the chosen date', () => {
+    expect(initialMonth(on(2026, 3, 8))).toEqual(on(2026, 3, 8));
+  });
+
+  it('should open on the start of a range', () => {
+    expect(initialMonth({ from: on(2026, 3, 10), to: on(2026, 4, 2) }))
+      .toEqual(on(2026, 3, 10));
+  });
+
+  it('should open on the first of several dates', () => {
+    expect(initialMonth([on(2026, 3, 10), on(2026, 5, 2)])).toEqual(on(2026, 3, 10));
+  });
+
+  /* The caller saying so outright beats what happens to be selected. */
+  it('should let openToDate win', () => {
+    expect(initialMonth(on(2026, 3, 8), on(2026, 9, 1))).toEqual(on(2026, 9, 1));
+  });
+
+  /* Undefined, not today: the calendar's own default is today, and deciding it
+     twice in two places is how the two drift apart. */
+  it('should leave it to the calendar when nothing is chosen', () => {
+    expect(initialMonth(undefined)).toBeUndefined();
   });
 });

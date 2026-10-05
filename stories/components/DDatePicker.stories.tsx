@@ -6,12 +6,7 @@ import {
   useState,
 } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
-import {
-  addDays,
-  setHours,
-  setMinutes,
-} from 'date-fns';
-import { es } from 'date-fns/locale';
+import { addDays } from 'date-fns';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
@@ -114,11 +109,6 @@ const config: Meta<typeof DDatePicker> = {
       type: 'string',
       table: { category: 'Content' },
     },
-    headerButtonColor: {
-      control: 'text',
-      type: 'string',
-      table: { category: 'Appearance' },
-    },
     inputId: {
       control: 'text',
       type: 'string',
@@ -128,18 +118,6 @@ const config: Meta<typeof DDatePicker> = {
       control: 'text',
       type: 'string',
       table: { category: 'HTML Attributes' },
-    },
-    autoFocus: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Autofocus input',
-      table: { category: 'Behavior' },
-    },
-    date: {
-      type: 'string',
-      control: 'date',
-      description: 'Date as string (DEFINE ISO)',
-      table: { category: 'Content' },
     },
     inline: {
       type: 'boolean',
@@ -178,31 +156,10 @@ const config: Meta<typeof DDatePicker> = {
         category: 'Content',
       },
     },
-    formatHeaderDate: {
-      type: 'string',
-      control: 'text',
-      description: 'Header date format (date-fns pattern)',
-      table: {
-        defaultValue: { summary: 'LLLL dd' },
-        category: 'Content',
-      },
-    },
     selectsRange: {
       type: 'boolean',
       control: 'boolean',
       description: 'Enable select range',
-      table: { category: 'Behavior' },
-    },
-    selectsStart: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Enable select start range (two calendar)',
-      table: { category: 'Behavior' },
-    },
-    selectsEnd: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Enable select end range (two calendar)',
       table: { category: 'Behavior' },
     },
     startDate: {
@@ -248,11 +205,6 @@ const config: Meta<typeof DDatePicker> = {
       action: 'onChange',
       table: { category: 'Events' },
     },
-    value: {
-      type: 'string',
-      control: 'date',
-      table: { category: 'Content' },
-    },
     monthsShown: {
       control: {
         type: 'select',
@@ -265,11 +217,6 @@ const config: Meta<typeof DDatePicker> = {
         category: 'Appearance',
       },
     },
-    showPopperArrow: {
-      control: 'boolean',
-      type: 'boolean',
-      table: { category: 'Appearance' },
-    },
     showWeekPicker: {
       control: 'boolean',
       type: 'boolean',
@@ -280,27 +227,7 @@ const config: Meta<typeof DDatePicker> = {
       type: 'boolean',
       table: { category: 'Behavior' },
     },
-    showFullMonthYearPicker: {
-      control: 'boolean',
-      type: 'boolean',
-      table: { category: 'Behavior' },
-    },
     showMonthYearPicker: {
-      control: 'boolean',
-      type: 'boolean',
-      table: { category: 'Behavior' },
-    },
-    showPreviousMonths: {
-      control: 'boolean',
-      type: 'boolean',
-      table: { category: 'Behavior' },
-    },
-    showDateSelect: {
-      control: 'boolean',
-      type: 'boolean',
-      table: { category: 'Behavior' },
-    },
-    showDisabledMonthNavigation: {
       control: 'boolean',
       type: 'boolean',
       table: { category: 'Behavior' },
@@ -320,30 +247,32 @@ const config: Meta<typeof DDatePicker> = {
 
 function ControlledDatePicker(props: ComponentProps<typeof DDatePicker>) {
   const {
-    value,
     onChange,
     selected,
     ...rest
   } = useMemo(() => props, [props]);
 
-  const [date, setDate] = useState<Date | null>(value ? new Date(value) : new Date());
+  /*
+   * `value` is gone. It was `react-datepicker`'s escape hatch for overriding
+   * the text in the field independently of the date — two sources of truth for
+   * one thing, and the field now renders `selected` through `dateFormat`.
+   */
+  const [date, setDate] = useState<Date | null>(selected ?? new Date());
 
   const handleDate = useCallback((newDate: Date | null) => {
     setDate(newDate);
   }, []);
 
   useEffect(() => {
-    if (value) {
-      handleDate(new Date(value));
-    }
-  }, [value, handleDate]);
+    if (selected) handleDate(selected);
+  }, [selected, handleDate]);
 
   return (
     <DDatePicker
       {...rest}
       key={JSON.stringify(props, null, 0)}
       selected={date}
-      onChange={(newDate: Date | null) => setDate(newDate)}
+      onChange={(newDate) => setDate(newDate as Date | null)}
       showHeaderSelectors
     />
   );
@@ -388,12 +317,7 @@ export const Default: Story = {
     style: {},
     showWeekPicker: false,
     showYearPicker: false,
-    showFullMonthYearPicker: false,
     showMonthYearPicker: false,
-    showPopperArrow: true,
-    showPreviousMonths: false,
-    showDateSelect: true,
-    showDisabledMonthNavigation: false,
     showQuarterYearPicker: false,
     className: '',
     dataAttributes: {},
@@ -436,8 +360,6 @@ export const MonthSelector: Story = {
     inputAriaLabel: 'Calendar',
     dateFormat: 'MM/yyyy',
     showMonthYearPicker: true,
-    showTwoColumnMonthYearPicker: true,
-    showFullMonthYearPicker: true,
   },
 };
 
@@ -516,7 +438,7 @@ export const WithLocale: Story = {
   render: ControlledDatePicker,
   args: {
     inline: true,
-    locale: es,
+    locale: 'es',
     dateFormat: 'dd/MM/yyyy',
   },
 };
@@ -526,8 +448,7 @@ export const HeaderDateFormat: Story = {
   args: {
     inline: true,
     dateFormat: 'dd/MM/yyyy',
-    formatHeaderDate: 'LLL yyyy',
-    locale: es,
+    locale: 'es',
   },
 };
 
@@ -542,14 +463,21 @@ export const WithTimeInput: Story = {
   },
 };
 
+/**
+ * A time FIELD, not a time list.
+ *
+ * `showTimeSelect` rendered a scrolling column of every half hour beside the
+ * grid. It is gone: the platform's own `type="time"` is keyboard-accessible,
+ * localised, and already knows what a time looks like in the reader's region,
+ * which a hand-rolled column of strings never did.
+ */
 export const WithTimeSelect: Story = {
   render: ControlledDatePicker,
   args: {
     inline: true,
-    showTimeSelect: true,
+    showTimeInput: true,
+    timeInputLabel: 'Time',
     dateFormat: 'dd/MM/yyyy h:mm aa',
-    minTime: setHours(setMinutes(new Date(), 0), 8),
-    maxTime: setHours(setMinutes(new Date(), 0), 17),
   },
 };
 
@@ -561,7 +489,6 @@ export const DateRange: Story = {
     excludeDates: [
       addDays(new Date(), 2),
     ],
-    selectsDisabledDaysInRange: true,
   },
 };
 
@@ -619,10 +546,6 @@ export const WithSpecialDates: Story = {
     highlightDates: [
       addDays(new Date(), 2),
       addDays(new Date(), 3),
-    ],
-    holidays: [
-      { date: addDays(new Date(), 4).toISOString(), holidayName: 'Holiday one' },
-      { date: addDays(new Date(), 5).toISOString(), holidayName: 'Holiday two' },
     ],
   },
 };

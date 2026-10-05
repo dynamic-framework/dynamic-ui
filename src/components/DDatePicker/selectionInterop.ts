@@ -182,3 +182,24 @@ export function calendarView(props: ViewFlags): CalendarView {
   if (props.showMonthYearPicker) return 'month';
   return 'day';
 }
+
+/**
+ * The month a calendar should open on.
+ *
+ * Without this the grid opened on TODAY whatever was chosen: a field showing
+ * 08/03/2026 opened in September, and the reader had to page back six months
+ * to see their own date — or, worse, picked a September date believing the
+ * calendar had taken them to March.
+ *
+ * `openToDate` still wins, because it is the caller saying so outright.
+ */
+export function initialMonth(
+  selection: Selection,
+  openToDate?: Date,
+): Date | undefined {
+  if (openToDate) return openToDate;
+  if (!selection) return undefined;
+  if (selection instanceof Date) return selection;
+  if (Array.isArray(selection)) return selection[0];
+  return selection.from;
+}

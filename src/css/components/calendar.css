@@ -30,6 +30,57 @@
     font-weight: var(--df-calendar-header-font-weight);
   }
 
+  /*
+   * The two paging buttons.
+   *
+   * `flex-shrink: 0` because the title between them is the flexible one: a
+   * long month name in a narrow calendar must not squash the controls into
+   * something unhittable.
+   */
+  .df-calendar-nav {
+    flex-shrink: 0;
+  }
+
+  /*
+   * The panel the field opens: the grid, and the time field under it.
+   *
+   * A column with a gap rather than margins on the children — the time field
+   * is conditional, and a margin on it would leave the gap behind when it is
+   * not rendered.
+   */
+  .df-datepicker-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--df-calendar-gap);
+  }
+
+  /*
+   * The time field under the grid.
+   *
+   * It was `d-datepicker-time` — a Bootstrap-era name no stylesheet ever
+   * defined, so the field had no width of its own and stretched to whatever
+   * the panel was. Found by `css:usage` the moment this component stopped
+   * being exempt from it.
+   */
+  .df-datepicker-time {
+    align-self: start;
+  }
+
+  .df-calendar-selectors {
+    display: flex;
+    flex: 1 1 auto;
+    gap: var(--df-calendar-header-gap);
+    justify-content: center;
+  }
+
+  .df-calendar-select {
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: var(--df-calendar-select-border-width) solid var(--df-calendar-select-border-color);
+    border-radius: var(--df-calendar-select-radius);
+  }
+
   /* Side by side, wrapping rather than overflowing on a narrow screen. */
   .df-calendar-months {
     display: flex;

@@ -598,3 +598,128 @@ describe('<DCalendar /> week selection honours the first day', () => {
     expect(day(8).closest('[role="gridcell"]')).not.toHaveAttribute('aria-selected');
   });
 });
+
+/**
+ * Paging with a pointer.
+ *
+ * The grid shipped with keyboard paging only — PageUp and PageDown — which is
+ * not a calendar anyone can use with a mouse, and is undiscoverable even for
+ * those who could. Every inline date picker in the library rendered without a
+ * way to reach another month.
+ */
+describe('<DCalendar /> navigation', () => {
+  const prev = () => screen.getByRole('button', { name: 'previous' });
+  const next = () => screen.getByRole('button', { name: 'next' });
+  const title = () => screen.getByRole('heading');
+
+  it('should page back a month', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" />);
+
+    await user.click(prev());
+    expect(title()).toHaveTextContent(/February 2026/i);
+  });
+
+  it('should page forward a month', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" />);
+
+    await user.click(next());
+    expect(title()).toHaveTextContent(/April 2026/i);
+  });
+
+  it('should cross the year boundary', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 0, 1)} locale="en-US" />);
+
+    await user.click(prev());
+    expect(title()).toHaveTextContent(/December 2025/i);
+  });
+
+  it('should report the move', async () => {
+    const user = userEvent.setup();
+    const onMonthChange = jest.fn();
+    render(
+      <DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" onMonthChange={onMonthChange} />,
+    );
+
+    await user.click(next());
+    expect(onMonthChange).toHaveBeenCalledWith(new Date(2026, 3, 1));
+  });
+
+  /*
+   * Left behind, the roving tabindex still points at a day in a month that is
+   * no longer shown: the next Tab into the grid lands nowhere visible, and the
+   * first arrow key jumps back to the month just left.
+   */
+  it('should take the focusable day with it', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 2, 10)} locale="en-US" />);
+
+    await user.click(next());
+
+    const focusable = document.querySelectorAll('.df-calendar-grid [tabindex="0"]');
+    expect(focusable).toHaveLength(1);
+    expect(focusable[0]).toHaveAccessibleName(expect.stringMatching(/April/i) as never);
+  });
+
+  describe('at the edges of the allowed range', () => {
+    /*
+     * Disabled, not hidden. A control that disappears at a boundary reads as a
+     * rendering fault, and gives a screen-reader user nothing to announce.
+     */
+    it('should disable Previous when nothing before this month is allowed', () => {
+      render(
+        <DCalendar
+          defaultMonth={new Date(2026, 2, 1)}
+          minDate={new Date(2026, 2, 5)}
+          locale="en-US"
+        />,
+      );
+      expect(prev()).toBeDisabled();
+      expect(next()).toBeEnabled();
+    });
+
+    it('should disable Next when nothing after this month is allowed', () => {
+      render(
+        <DCalendar
+          defaultMonth={new Date(2026, 2, 1)}
+          maxDate={new Date(2026, 2, 20)}
+          locale="en-US"
+        />,
+      );
+      expect(next()).toBeDisabled();
+      expect(prev()).toBeEnabled();
+    });
+
+    /*
+     * The bound is read from the PERIOD, not from the visible cells. A day
+     * grid shows the tail of the previous month, so asking "is any cell in
+     * range" leaves Previous enabled on a month whose predecessor is entirely
+     * below the floor.
+     */
+    it('should not be fooled by the previous month leaking into the grid', () => {
+      render(
+        <DCalendar
+          defaultMonth={new Date(2026, 2, 1)}
+          minDate={new Date(2026, 2, 1)}
+          locale="en-US"
+        />,
+      );
+      expect(prev()).toBeDisabled();
+    });
+  });
+
+  it('should page a year at a time in the month view', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} view="month" locale="en-US" />);
+
+    await user.click(next());
+    expect(title()).toHaveTextContent(/2027/);
+  });
+
+  it('should be possible to turn off', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" showNavigation={false} />);
+    expect(screen.queryByRole('button', { name: 'previous' })).not.toBeInTheDocument();
+  });
+});

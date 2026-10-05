@@ -62,7 +62,6 @@ const INTENTIONALLY_UNSTYLED = new Set([]);
 const ALLOWED_BARE = new Map([
   // The four components still wrapping a third party own these names.
   ['d-input-phone', 'DInputPhone keeps react-international-phone\'s class'],
-  ['rdp', 'react-day-picker'],
   ['splide', 'removed, kept for a template that still has the markup'],
   // Icon-font families, which a consumer chooses.
   ['bi', 'Bootstrap Icons font family'],
@@ -81,10 +80,12 @@ const ALLOWED_BARE_PREFIXES = [/^rdp-/, /^react-/, /^splide/, /^bi-/, /^lucide-/
  * check starts holding it to the rule, rather than leaving a list of names
  * nobody remembers the reason for.
  *
- * Both of these are the last of the 2.x wrappers; the audit counts them too.
+ * `DInputPhone` is the last one. `DDatePicker` came off this list when
+ * `react-datepicker` was removed, which is the point of exempting a COMPONENT
+ * rather than a list of class names: porting it deletes its line here and the
+ * check starts holding it to the rule.
  */
 const UNPORTED = [
-  /^src\/components\/DDatePicker\//,
   /^src\/components\/DInputPhone\//,
 ];
 

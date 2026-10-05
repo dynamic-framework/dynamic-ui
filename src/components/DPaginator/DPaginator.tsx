@@ -67,10 +67,11 @@ export type Props = BaseProps & {
 /**
  * Page navigation.
  *
- * 2.x wrapped `react-responsive-pagination`, which owned the markup and took
- * fourteen class-name props so a design system could dress it. That is a lot of
- * surface for a list of numbered buttons, and it decided how many to show by
- * measuring against a `maxWidth` in pixels the caller had to guess.
+ * 2.x wrapped `react-responsive-pagination`, which owned the markup — so the
+ * only way to dress it was to inject class names, and 10 of the 21 props we
+ * documented were exactly that. That is a lot of surface for a list of numbered
+ * buttons, and it decided how many to show by measuring against a `maxWidth` in
+ * pixels the caller had to guess.
  *
  * Here the count comes from `siblings` and `boundaries` — see
  * {@link paginationRange} for why that is the better question — and the markup

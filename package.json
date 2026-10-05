@@ -26,12 +26,12 @@
   },
   "contributors": [
     {
-      "name": "Abraham Jos\u00e9 Gonz\u00e1lez Barboza",
+      "name": "Abraham José González Barboza",
       "email": "agonzalez@modyo.com",
       "url": "https://github.com/abe-modyo"
     },
     {
-      "name": "Eduard Fabi\u00e1n Bar\u00f3n Guti\u00e9rrez",
+      "name": "Eduard Fabián Barón Gutiérrez",
       "email": "ebaron@modyo.com",
       "url": "https://github.com/efbarong"
     },
@@ -59,14 +59,14 @@
     "build:storybook": "storybook build --docs -o docs",
     "generate:registry": "node scripts/generate-api.mjs && node scripts/generate-schema.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
-    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build && npm run tokens:orphans",
+    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build",
     "tokens:primitives": "node scripts/tokens/build-primitives.mjs",
     "tokens:build": "node scripts/tokens/build.mjs",
     "tokens:validate": "node scripts/tokens/validate.mjs",
     "tokens:verify": "node scripts/tokens/verify.mjs",
     "tokens:figma:push": "node scripts/tokens/figma-push.mjs",
     "tokens:figma:pull": "node scripts/tokens/figma-pull.mjs",
-    "css": "npm run tokens && npm run css:build && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage && npm run css:attributes && npm run css:flow",
+    "css": "npm run tokens && npm run css:build && npm run tokens:orphans && npm run css:validate && npm run css:verify && npm run css:consistency && npm run css:usage && npm run css:attributes && npm run css:flow",
     "css:build": "node scripts/css/build.mjs",
     "css:validate": "node scripts/css/validate.mjs",
     "css:verify": "node scripts/css/verify.mjs",
@@ -120,7 +120,6 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
     "lucide-react": "^0.553.0",
-    "react-datepicker": "~8.3.0",
     "react-error-boundary": "^6.1.0",
     "react-international-phone": "~4.6.0",
     "react-is": "^19.2.7"
