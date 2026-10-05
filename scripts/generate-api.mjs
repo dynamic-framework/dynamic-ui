@@ -555,27 +555,57 @@ const propsParser = docgen.withCustomConfig(TSCONFIG_PATH, {
 const componentsSection = {};
 let componentsFailed = 0;
 
+function componentEntry(doc, filePath) {
+  return {
+    description: doc.description ?? '',
+    sourcePath: relative(ROOT, filePath),
+    props: Object.fromEntries(
+      Object.entries(doc.props).map(([name, prop]) => [
+        name,
+        {
+          type: prop.type?.name === 'enum' && Array.isArray(prop.type?.value)
+            ? prop.type.value.map((v) => v.value).join(' | ')
+            : prop.type?.name ?? 'unknown',
+          required: prop.required,
+          defaultValue: prop.defaultValue?.value ?? null,
+          description: prop.description ?? '',
+        },
+      ]),
+    ),
+  };
+}
+
+/**
+ * Subcomponents attached with `export default Object.assign(DX, { Key: Ident })`,
+ * resolved to the file of their default import.
+ */
+function subcomponentFiles(filePath) {
+  const source = readFileSync(filePath, 'utf8');
+  const assigned = source.match(/export default Object\.assign\(\s*\w+\s*,\s*\{([^}]*)\}/);
+  if (!assigned) return [];
+  return [...assigned[1].matchAll(/(\w+)\s*:\s*(\w+)/g)].map(([, key, ident]) => {
+    const from = source.match(new RegExp(`import\\s+${ident}\\s+from\\s+'([^']+)'`))?.[1];
+    return { key, ident, file: from && resolve(dirname(filePath), `${from}.tsx`) };
+  });
+}
+
 for (const filePath of componentFiles) {
   try {
     const docs = propsParser.parse(filePath);
+    const parent = basename(filePath, '.tsx');
     for (const doc of docs) {
       if (!doc.displayName) continue;
-      componentsSection[doc.displayName] = {
-        description: doc.description ?? '',
-        sourcePath: relative(ROOT, filePath),
-        props: Object.fromEntries(
-          Object.entries(doc.props).map(([name, prop]) => [
-            name,
-            {
-              type: prop.type?.name === 'enum' && Array.isArray(prop.type?.value)
-                ? prop.type.value.map((v) => v.value).join(' | ')
-                : prop.type?.name ?? 'unknown',
-              required: prop.required,
-              defaultValue: prop.defaultValue?.value ?? null,
-              description: prop.description ?? '',
-            },
-          ]),
-        ),
+      componentsSection[doc.displayName] = componentEntry(doc, filePath);
+    }
+    for (const { key, ident, file } of subcomponentFiles(filePath)) {
+      if (!file || !existsSync(file)) throw new Error(`cannot resolve ${parent}.${key} (${ident})`);
+      const subDocs = propsParser.parse(file);
+      const doc = subDocs.find((d) => d.displayName === ident) ?? subDocs[0];
+      if (!doc) throw new Error(`no component found for ${parent}.${key} in ${relative(ROOT, file)}`);
+      componentsSection[ident] = {
+        ...componentEntry(doc, file),
+        parent,
+        accessor: `${parent}.${key}`,
       };
     }
   } catch (err) {
@@ -597,7 +627,7 @@ const CDN_BASE_URL = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.
 
 const apiOutput = {
   $schema: `${CDN_BASE_URL}/schema/v1.json`,
-  schemaVersion: '1.0.0',
+  schemaVersion: '1.1.0',
   packageVersion,
   repository: repositoryUrl,
   generatedAt: process.env.RELEASE_PUBLISHED_AT ?? new Date().toISOString(),
