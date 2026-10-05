@@ -82,6 +82,43 @@ export function isSameMonth(a: Date, b: Date): boolean {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
 }
 
+/**
+ * The day the week starts on, for a locale.
+ *
+ * A calendar that shows Spanish month names with a Sunday-first week is wrong
+ * in Spain and in Chile, where the week starts on Monday — and it was wrong
+ * silently, because the names looked right. The first day is a property of the
+ * locale exactly like the month names are, so it comes from the same place.
+ *
+ * Two conversions worth naming, because both are easy to get backwards:
+ *
+ * - `getWeekInfo()` numbers days the ISO way, 1 = Monday through 7 = Sunday.
+ *   `Date.getDay()` numbers them 0 = Sunday through 6 = Saturday. So ISO 7
+ *   becomes 0 and everything else passes through.
+ * - The API is `getWeekInfo()` in current engines and was a `weekInfo` getter
+ *   in earlier ones. Both are read, and anything older falls back to Sunday —
+ *   which is what the calendar did for every locale before this existed.
+ */
+type WeekInfoCarrier = {
+  getWeekInfo?: () => { firstDay: number };
+  weekInfo?: { firstDay: number };
+};
+
+export function firstDayOfWeek(locale?: string): WeekDay {
+  try {
+    const tag = locale ?? new Intl.DateTimeFormat().resolvedOptions().locale;
+    const info = new Intl.Locale(tag) as unknown as WeekInfoCarrier;
+    const firstDay = (
+      typeof info.getWeekInfo === 'function' ? info.getWeekInfo() : info.weekInfo
+    )?.firstDay;
+
+    if (typeof firstDay !== 'number' || firstDay < 1 || firstDay > 7) return 0;
+    return (firstDay === 7 ? 0 : firstDay) as WeekDay;
+  } catch {
+    return 0;
+  }
+}
+
 export function startOfWeek(date: Date, weekStartsOn: WeekDay = 0): Date {
   const shift = (date.getDay() - weekStartsOn + 7) % 7;
   return addDays(startOfDay(date), -shift);

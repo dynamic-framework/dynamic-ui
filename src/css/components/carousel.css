@@ -1,11 +1,11 @@
 /**
  * Carousel.
  *
- * 2.x wrapped Splide: ~40 KB of JavaScript that measured the container on every
- * resize, computed each slide's width, and drove the track with a `transform`.
- * Drag, momentum, keyboard scrolling and the scrollbar were all reimplemented
- * because a transform-driven track is not a scroll container and gets none of
- * them for free.
+ * 2.x wrapped Splide, which measured the container on every resize, computed
+ * each slide's width, and drove the track with a `transform`. Drag, momentum,
+ * keyboard scrolling and the scrollbar were all reimplemented there, because a
+ * transform-driven track is not a scroll container and gets none of them for
+ * free.
  *
  * This is a scroll container. The browser does the scrolling, the snapping, the
  * touch momentum, the keyboard, and the RTL flip; the component supplies arrows,

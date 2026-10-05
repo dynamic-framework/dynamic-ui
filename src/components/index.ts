@@ -12,6 +12,18 @@ export {
   DCardFooter,
 } from './DCard';
 export { DCalendar } from './DCalendar';
+/*
+ * The calendar's vocabulary, so a consumer can name what `onSelect` hands
+ * them. Without this, `Selection` and `CalendarView` existed but had no
+ * importable name outside the library.
+ */
+export type {
+  CalendarView,
+  DateRange,
+  Selection,
+  SelectionMode,
+  WeekDay,
+} from './DCalendar/month';
 export {
   default as DCarousel,
   DCarouselSlide,

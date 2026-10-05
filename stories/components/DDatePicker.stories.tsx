@@ -25,6 +25,20 @@ const config: Meta<typeof DDatePicker> = {
       </div>
     ),
   ],
+  /*
+   * Every example pins a locale.
+   *
+   * Without it `Intl` falls back to whoever is LOOKING at the page, so the
+   * docs rendered in Spanish for the team here and in English for everyone
+   * else — and the story whose whole point was localisation looked identical
+   * to the default for exactly the readers most likely to open it.
+   *
+   * `en-US` is the pin because it is the one locale a reader can tell apart
+   * from their own at a glance, whatever their own is.
+   */
+  args: {
+    locale: 'en-US',
+  },
   argTypes: {
     className: {
       control: 'text',
@@ -216,6 +230,14 @@ const config: Meta<typeof DDatePicker> = {
         defaultValue: { summary: '1' },
         category: 'Appearance',
       },
+    },
+    locale: {
+      control: 'select',
+      options: ['en-US', 'en-GB', 'es', 'es-CL', 'pt-BR', 'fr-FR', 'de-DE', 'ja-JP', 'ar-EG'],
+      description:
+        'BCP 47. Every name in the calendar comes from `Intl`, and so does the '
+        + 'day the week starts on. Omitted, it follows the reader\'s own locale.',
+      table: { category: 'Content' },
     },
     showWeekPicker: {
       control: 'boolean',
@@ -434,22 +456,55 @@ export const TwoMonths: Story = {
   },
 };
 
+/**
+ * Four locales side by side, because one calendar in one language demonstrates
+ * nothing to a reader who already speaks it.
+ *
+ * Note the first column of each: the day the week starts on comes from the
+ * locale too, so `en-US` starts on Sunday, `es-CL` and `fr-FR` on Monday. A
+ * calendar with Spanish month names over a Sunday-first week is wrong in Chile,
+ * and wrong in the quiet way — the names look right, so nothing draws the eye
+ * to the column headers.
+ */
 export const WithLocale: Story = {
-  render: ControlledDatePicker,
-  args: {
-    inline: true,
-    locale: 'es',
-    dateFormat: 'dd/MM/yyyy',
-  },
+  render: () => (
+    <div className="df-flex df-flex-wrap df-gap-4">
+      {(['en-US', 'es-CL', 'fr-FR', 'ja-JP'] as const).map((locale) => (
+        <div key={locale}>
+          <p className="df-fs-body-sm df-text-muted df-mb-2">{locale}</p>
+          <DDatePicker inline locale={locale} selected={new Date(2026, 2, 8)} />
+        </div>
+      ))}
+    </div>
+  ),
 };
 
-export const HeaderDateFormat: Story = {
-  render: ControlledDatePicker,
-  args: {
-    inline: true,
-    dateFormat: 'dd/MM/yyyy',
-    locale: 'es',
-  },
+/**
+ * `dateFormat` decides what the FIELD shows; `locale` decides the names inside
+ * it. The two are separate: a Chilean user may well want `dd/MM/yyyy` with
+ * month names in English, or the other way round.
+ */
+export const DateFormats: Story = {
+  render: () => (
+    <div className="df-flex df-flex-col df-gap-3">
+      {([
+        'dd/MM/yyyy',
+        'MM/dd/yyyy',
+        'd MMMM yyyy',
+        "d 'de' MMMM 'de' yyyy",
+      ] as const).map((dateFormat) => (
+        <div key={dateFormat}>
+          <p className="df-fs-body-sm df-text-muted df-mb-1"><code>{dateFormat}</code></p>
+          <DDatePicker
+            locale="es-CL"
+            dateFormat={dateFormat}
+            selected={new Date(2026, 2, 8)}
+            inputAriaLabel="Fecha"
+          />
+        </div>
+      ))}
+    </div>
+  ),
 };
 
 export const WithTimeInput: Story = {

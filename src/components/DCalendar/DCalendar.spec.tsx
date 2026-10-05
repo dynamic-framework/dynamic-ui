@@ -723,3 +723,50 @@ describe('<DCalendar /> navigation', () => {
     expect(screen.queryByRole('button', { name: 'previous' })).not.toBeInTheDocument();
   });
 });
+
+/**
+ * The week starts where the locale says, not always on Sunday.
+ *
+ * Sunday was hard-coded for every locale, so a Spanish calendar rendered
+ * Spanish month names over a Sunday-first week. Wrong in Spain and in Chile,
+ * and wrong silently — the names looked right, so nothing pointed at the
+ * column headers.
+ */
+describe('<DCalendar /> first day of the week', () => {
+  const headers = () => Array.from(
+    document.querySelectorAll('.df-calendar-grid thead th'),
+  ).map((cell) => cell.textContent?.trim());
+
+  it('should start on Monday for Chilean Spanish', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="es-CL" />);
+    expect(headers()[0]).toMatch(/^l/i);
+  });
+
+  it('should start on Sunday for American English', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" />);
+    expect(headers()[0]).toMatch(/^s/i);
+  });
+
+  it('should start on Monday for British English', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-GB" />);
+    expect(headers()[0]).toMatch(/^m/i);
+  });
+
+  /* An explicit prop still wins: a consumer may have a reason the locale
+     cannot know about. */
+  it('should let an explicit weekStartsOn override the locale', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="es-CL" weekStartsOn={0} />);
+    expect(headers()[0]).toMatch(/^d/i);
+  });
+
+  /* The grid has to follow the header, or the dates land in the wrong columns. */
+  it('should place the first of March 2026 under Sunday in a Monday-first week', () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="es-CL" />);
+    /* 2026-03-01 is a Sunday; in a Monday-first week it is the LAST column. */
+    /* Anchored: "31 de marzo de 2026" contains "1 de marzo de 2026". */
+    const first = screen.getByRole('button', { name: /^domingo, 1 de marzo de 2026$/i });
+    const row = first.closest('tr')!;
+    const cells = Array.from(row.querySelectorAll('[role="gridcell"]'));
+    expect(cells.indexOf(first.closest('[role="gridcell"]')!)).toBe(6);
+  });
+});

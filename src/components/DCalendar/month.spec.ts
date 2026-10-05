@@ -1,8 +1,8 @@
 import {
-  addDays, addMonths, addYears, cellLabel, endOfMonth, isSameDay, isSameMonth,
-  isoDay, isoWeek, isSelected, startOfDay, monthMatrix, monthName, nextSelection, rangePosition,
-  startOfMonth, startOfWeek, startOfYearPage, viewDescriptor, viewLabel,
-  cellName, cellText, weekdayNames,
+  addDays, addMonths, addYears, cellLabel, cellName, cellText, endOfMonth, firstDayOfWeek,
+  isSameDay, isSameMonth, isSelected, isoDay, isoWeek, monthMatrix, monthName, nextSelection,
+  rangePosition, startOfDay, startOfMonth, startOfWeek, startOfYearPage, viewDescriptor,
+  viewLabel, weekdayNames,
 } from './month';
 
 /**
@@ -510,5 +510,44 @@ describe('week selection', () => {
     expect(isSelected(march(15), week)).toBe(false);
     expect(rangePosition(march(8), week as never)).toBe('start');
     expect(rangePosition(march(14), week as never)).toBe('end');
+  });
+});
+
+/**
+ * The first day of the week is a property of the LOCALE, like the month names.
+ *
+ * A calendar showing Spanish month names with a Sunday-first week is wrong in
+ * Spain and in Chile — and wrong silently, because the names look right.
+ */
+describe('firstDayOfWeek', () => {
+  it.each([
+    ['es-CL', 1],
+    ['es-ES', 1],
+    ['en-GB', 1],
+    ['fr-FR', 1],
+    ['en-US', 0],
+    ['pt-BR', 0],
+    ['ja', 0],
+  ])('should start the week correctly for %s', (locale, expected) => {
+    expect(firstDayOfWeek(locale)).toBe(expected);
+  });
+
+  /* ISO numbers Sunday 7; `Date.getDay()` numbers it 0. Getting this backwards
+     shifts every calendar in a Sunday-first locale by one day. */
+  it('should convert ISO Sunday to getDay Sunday', () => {
+    expect(firstDayOfWeek('en-US')).toBe(0);
+  });
+
+  /* Saturday-first locales exist, and are the case a boolean would have missed. */
+  it('should handle a Saturday-first locale', () => {
+    expect(firstDayOfWeek('ar-EG')).toBe(6);
+  });
+
+  it('should fall back to Sunday for nonsense rather than throwing', () => {
+    expect(firstDayOfWeek('not a locale')).toBe(0);
+  });
+
+  it('should answer for the runtime default when given nothing', () => {
+    expect([0, 1, 2, 3, 4, 5, 6]).toContain(firstDayOfWeek());
   });
 });

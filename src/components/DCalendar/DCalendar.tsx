@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 import {
   addDays, addMonths, addYears, cellName, cellText, endOfMonth, isSameMonth,
-  endOfWeek, isDateRange, isSelected as dayIsSelected, isoDay, isoWeek,
-  monthName, nextSelection,
+  endOfWeek, firstDayOfWeek, isDateRange, isSelected as dayIsSelected, isoDay,
+  isoWeek, monthName, nextSelection,
   rangePosition, startOfDay, startOfMonth, startOfWeek, viewDescriptor,
   viewLabel, weekdayNames,
 } from './month';
@@ -26,6 +26,10 @@ type Props = BaseProps & {
   onMonthChange?: (month: Date) => void;
   /** BCP 47. Every name in the grid comes from `Intl` with this. */
   locale?: string;
+  /**
+   * The day the week starts on. Derived from `locale` when omitted — the first
+   * day is a property of the locale exactly like the month names are.
+   */
   weekStartsOn?: WeekDay;
   /** Six rows always, so the grid does not change height as you page. */
   fixedWeeks?: boolean;
@@ -124,7 +128,7 @@ export default function DCalendar(
     defaultMonth,
     onMonthChange,
     locale,
-    weekStartsOn = 0,
+    weekStartsOn: weekStartsOnProp,
     fixedWeeks = true,
     minDate,
     maxDate,
@@ -152,6 +156,13 @@ export default function DCalendar(
   }: Props,
 ) {
   const { iconMap: { chevronLeft, chevronRight } } = useDContext();
+
+  /*
+   * Sunday was the default for every locale, so a Spanish calendar showed
+   * Spanish month names over a Sunday-first week — wrong in Spain and in
+   * Chile, and wrong silently, because the names looked right.
+   */
+  const weekStartsOn = weekStartsOnProp ?? firstDayOfWeek(locale);
 
   const gridRef = useRef<HTMLTableElement>(null);
   /* Whether focus is already inside, so the effect below never steals it. */
