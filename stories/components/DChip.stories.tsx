@@ -23,7 +23,8 @@ const meta = {
 | --${PREFIX_BS}chip-padding-y     | .d-chip | css length unit | Padding vertical                 |
 | --${PREFIX_BS}chip-font-size     | .d-chip | css length unit | Font size                        |
 | --${PREFIX_BS}chip-font-weight   | .d-chip | css font weight | Font weight                      |
-| --${PREFIX_BS}chip-line-height   | .d-chip | css length unit | Line height                      |
+| --${PREFIX_BS}chip-line-height   | .d-chip | number or length | Line height                      |
+| --${PREFIX_BS}chip-icon-container-size | .d-chip | css length unit | Width and height of the icon containers |
         `,
       },
     },

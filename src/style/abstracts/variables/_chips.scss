@@ -10,4 +10,6 @@ $chip-padding-y: $spacer-1 !default;
 $chip-font-size: $small-font-size !default;
 $chip-font-weight: $font-weight-bold !default;
 $chip-line-height: $line-height-base !default;
+$chip-icon-container-size: 1lh !default;
+$chip-icon-container-size-fallback: $line-height-base * 1em !default;
 // scss-docs-end chip-variables
