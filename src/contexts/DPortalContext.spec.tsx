@@ -1,4 +1,5 @@
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -38,9 +39,18 @@ describe('DPortalContextProvider', () => {
     document.body.innerHTML = '';
   });
 
-  it('does not mount the animated stack while no portal has been opened', () => {
-    renderWithPortals();
+  it('does not load the animated stack without availablePortals', async () => {
+    render(<DContextProvider><span>Content</span></DContextProvider>);
+    await act(async () => {});
     expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
+  });
+
+  it('cancels an open that is still waiting for the stack module', async () => {
+    renderWithPortals();
+    fireEvent.click(screen.getByText('Open'));
+    fireEvent.click(screen.getByText('Close'));
+    await waitFor(() => expect(document.getElementById('d-portal')).not.toBeEmptyDOMElement());
+    expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
   });
 
   it('renders the portal component once it is opened', async () => {

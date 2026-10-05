@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
-  lazy,
-  Suspense,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -20,8 +19,9 @@ import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements';
+import type DPortalStack from './portal/DPortalStack';
 
-const DPortalStack = lazy(() => import('./portal/DPortalStack'));
+const loadPortalStack = () => import('./portal/DPortalStack').then((module) => module.default);
 
 type PortalComponent<P = any> = FC<PortalProps<P>>;
 
@@ -112,8 +112,21 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 ) {
   const { created } = usePortal(portalName);
   const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
-  const [hasOpened, setHasOpened] = useState(false);
+  const [PortalStack, setPortalStack] = useState<typeof DPortalStack | null>(null);
+  const pending = useRef<InternalStackItem<T>[]>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
+
+  // Loads framer-motion off the critical path only when portals are configured,
+  // so the first openPortal does not wait for it.
+  const hasPortals = Boolean(availablePortals);
+  useEffect(() => {
+    if (!hasPortals) return;
+    loadPortalStack()
+      .then((Stack) => setPortalStack(() => Stack))
+      .catch(() => {
+        // openPortal retries the import and reports the failure.
+      });
+  }, [hasPortals]);
 
   const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
@@ -134,15 +147,32 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       }
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
-      push({ name, Component, payload } as unknown as InternalStackItem<T>);
-      setHasOpened(true);
+      const item = { name, Component, payload } as unknown as InternalStackItem<T>;
+      if (PortalStack) {
+        push(item);
+      } else {
+        // Not loaded yet: the portal enters the stack together with its renderer.
+        pending.current.push(item);
+        loadPortalStack().then((Stack) => {
+          setPortalStack(() => Stack);
+          pending.current.splice(0).forEach(push);
+        }).catch((error: unknown) => {
+          pending.current = [];
+          // eslint-disable-next-line no-console
+          console.error('[DPortalContext] Could not load the portal stack', error);
+        });
+      }
       (document.activeElement as HTMLElement)?.blur();
     },
-    [availablePortals, push],
+    [availablePortals, push, PortalStack],
   ) as PortalContextType<T>['openPortal'];
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {
+      if (pending.current.length > 0) {
+        pending.current.pop();
+        return;
+      }
       // pop() is safe on empty stacks, so close remains idempotent.
       pop();
     },
@@ -211,16 +241,14 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   return (
     <DPortalContext.Provider value={value}>
       {children}
-      {created && hasOpened && createPortal(
+      {created && PortalStack && createPortal(
         // eslint-disable-next-line max-len
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           onClick={({ target }) => handleClose(target as Element)}
           onKeyDown={() => {}}
         >
-          <Suspense fallback={null}>
-            <DPortalStack stack={stack} />
-          </Suspense>
+          <PortalStack stack={stack} />
         </div>,
         document.getElementById(portalName) as Element,
       )}
