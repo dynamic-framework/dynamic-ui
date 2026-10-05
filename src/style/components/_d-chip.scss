@@ -38,6 +38,10 @@
     border: 0;
   }
 
+  @supports not (width: 1lh) {
+    --#{$prefix}chip-icon-container-size: #{$chip-icon-container-size-fallback};
+  }
+
   @each $theme, $value in map-remove($theme-colors, "light", "dark", "warning") {
     $color: color-contrast($value);
     &.d-chip-#{$theme} {
