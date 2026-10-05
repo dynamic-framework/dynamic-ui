@@ -96,7 +96,8 @@
     "tokens:orphans": "node scripts/tokens/orphans.mjs",
     "css:flow": "node scripts/css/flow.mjs",
     "css:generated": "node scripts/css/generated.mjs",
-    "icons": "node scripts/icons/sprite.mjs"
+    "icons": "node scripts/icons/sprite.mjs",
+    "stories:snippets": "node scripts/stories/check-snippets.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

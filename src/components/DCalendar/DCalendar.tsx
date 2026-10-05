@@ -17,6 +17,7 @@ import type {
 import DButtonIcon from '../DButtonIcon';
 import { useDContext } from '../../contexts';
 
+import type { CalendarSlots } from './slots';
 import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
@@ -90,7 +91,7 @@ type Props = BaseProps & {
   selected?: Selection;
   defaultSelected?: Selection;
   onSelect?: (selection: Selection) => void;
-};
+} & CalendarSlots;
 
 /**
  * A month grid, navigable by keyboard.
@@ -146,6 +147,11 @@ export default function DCalendar(
     iconNext,
     prevAriaLabel = 'previous',
     nextAriaLabel = 'next',
+    formatters,
+    labels,
+    renderNav,
+    renderCaption,
+    renderDay,
     mode = 'single',
     selected: selectedProp,
     defaultSelected,
@@ -190,6 +196,19 @@ export default function DCalendar(
     () => weekdayNames(locale, weekStartsOn, 'short'),
     [locale, weekStartsOn],
   );
+  /*
+   * One real date per column, in column order.
+   *
+   * `weekdayNames` returns strings, which is all the default header needs —
+   * but a `weekday` formatter is handed a Date, because that is what lets a
+   * consumer ask `Intl` for a different width instead of slicing a string
+   * that may not be sliceable in their language.
+   */
+  const weekdayDates = useMemo(() => {
+    const first = startOfWeek(new Date(2026, 2, 1), weekStartsOn);
+    return Array.from({ length: 7 }, (_unused, i) => addDays(first, i));
+  }, [weekStartsOn]);
+
   const longWeekdays = useMemo(
     () => weekdayNames(locale, weekStartsOn, 'long'),
     [locale, weekStartsOn],
@@ -266,16 +285,34 @@ export default function DCalendar(
     setFocused(next);
 
     /*
-     * The grid follows when the focus leaves what it is SHOWING, which is a
-     * month in the day view and a year or a page of years in the others.
-     * Testing `isSameMonth` in a year view would re-anchor the grid on every
-     * arrow press.
+     * The grid follows when the focus leaves what it is SHOWING — all of it.
+     *
+     * "Showing" was read as the anchor month alone, which is right for one
+     * grid and wrong for several: with `numberOfMonths={2}` a click on a day
+     * in the SECOND month re-anchored the view on it, so March–April became
+     * April–May and the month holding the start of the range scrolled away
+     * mid-selection. Nothing was lost, but the reader had to page back to see
+     * what they had picked, which reads as the calendar resetting itself.
+     *
+     * So the test is against every period on show. A coarser view is always
+     * one grid, and `months` already accounts for that.
      */
     const descriptor = viewDescriptor(view, month, { weekStartsOn, fixedWeeks });
-    if (descriptor.rangeStart(next).getTime() !== descriptor.rangeStart(month).getTime()) {
-      goToMonth(next);
-    }
-  }, [fixedWeeks, goToMonth, month, outOfRange, view, weekStartsOn]);
+    const target = descriptor.rangeStart(next).getTime();
+    if (months.some((shown) => descriptor.rangeStart(shown).getTime() === target)) return;
+
+    /*
+     * Scroll the least that brings the target into view.
+     *
+     * `goToMonth(next)` anchors the FIRST grid on the target, which is the
+     * minimal move going backwards and a month too far going forwards: from
+     * March–April, arrowing off the end of April landed on May–June, skipping
+     * the April the reader was looking at. Anchoring the LAST grid instead
+     * gives April–May, the same single step the nav button takes.
+     */
+    const after = target > descriptor.rangeStart(months[months.length - 1]).getTime();
+    goToMonth(after ? addMonths(next, -(months.length - 1)) : next);
+  }, [fixedWeeks, goToMonth, month, months, outOfRange, view, weekStartsOn]);
 
   /*
    * The focused cell is the tab stop AND takes real focus — but only while the
@@ -362,6 +399,36 @@ export default function DCalendar(
    * running past a date the calendar will refuse is a list of dead ends. The
    * fallback window is a decade either side of what is on show.
    */
+  /*
+   * Text and accessible names, resolved once.
+   *
+   * A formatter that is not given falls through to the calendar's own, so a
+   * consumer overrides the one string they care about rather than supplying a
+   * complete set.
+   */
+  const text = useMemo(() => ({
+    caption: (date: Date) => (
+      formatters?.caption?.(date, view, locale) ?? viewLabel(view, date, locale)
+    ),
+    weekday: (date: Date, index: number) => (
+      formatters?.weekday?.(date, locale) ?? weekdays[index]
+    ),
+    day: (date: Date) => formatters?.day?.(date, view, locale) ?? cellText(view, date, locale),
+    monthOption: (date: Date) => (
+      formatters?.monthOption?.(date, locale) ?? monthName(date, locale, false)
+    ),
+    yearOption: (year: number) => formatters?.yearOption?.(year, locale) ?? String(year),
+  }), [formatters, locale, view, weekdays]);
+
+  const name = useMemo(() => ({
+    day: (date: Date) => labels?.day?.(date, view, locale) ?? cellName(view, date, locale),
+    previous: labels?.previous ?? prevAriaLabel,
+    next: labels?.next ?? nextAriaLabel,
+    monthSelect: labels?.monthSelect ?? 'Month',
+    yearSelect: labels?.yearSelect ?? 'Year',
+    weekNumber: labels?.weekNumber ?? ((week: number) => `Week ${week}`),
+  }), [labels, locale, nextAriaLabel, prevAriaLabel, view]);
+
   const years = useMemo(() => {
     const current = month.getFullYear();
     const first = minYear ?? minDate?.getFullYear() ?? current - 10;
@@ -376,6 +443,124 @@ export default function DCalendar(
     (_unused, i) => monthName(new Date(month.getFullYear(), i, 1), locale),
   ), [locale, month]);
 
+  /**
+   * The month/year options the built-in selectors show, and that the render
+   * prop is handed so a replacement does not have to recompute them.
+   *
+   * Months are empty outside the day view: in a grid that counts in months or
+   * larger, the year alone places it and a month control means nothing.
+   */
+  const monthOptions = view === 'day'
+    ? monthNames.map((_unused, index) => ({
+      value: index,
+      label: text.monthOption(new Date(month.getFullYear(), index, 1)),
+    }))
+    : [];
+
+  const yearOptions = view === 'year'
+    ? []
+    : years.map((year) => ({ value: year, label: text.yearOption(year) }));
+
+  /**
+   * The heading between the two paging buttons.
+   *
+   * `aria-live="polite"` on the title is load-bearing: paging with PageUp
+   * moves focus to a day in the new month and the cell announces its own full
+   * date, but what tells a reader the whole grid moved is the heading — and a
+   * heading that merely changes is not announced.
+   */
+  const caption = () => {
+    if (renderCaption) {
+      return renderCaption({
+        month,
+        view,
+        locale,
+        label: text.caption(month),
+        goToMonth,
+        months: monthOptions,
+        years: yearOptions,
+        labels: { monthSelect: name.monthSelect, yearSelect: name.yearSelect },
+      });
+    }
+
+    if (!showSelectors) {
+      return (
+        <h2 className="df-calendar-title" aria-live="polite">
+          {text.caption(month)}
+        </h2>
+      );
+    }
+
+    return (
+      <div className="df-calendar-selectors">
+        {monthOptions.length > 0 && (
+          <select
+            className="df-calendar-select"
+            aria-label={name.monthSelect}
+            value={month.getMonth()}
+            onChange={(event) => {
+              goToMonth(new Date(month.getFullYear(), Number(event.target.value), 1));
+            }}
+          >
+            {monthOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        )}
+
+        {yearOptions.length > 0 && (
+          <select
+            className="df-calendar-select"
+            aria-label={name.yearSelect}
+            value={month.getFullYear()}
+            onChange={(event) => {
+              goToMonth(new Date(Number(event.target.value), month.getMonth(), 1));
+            }}
+          >
+            {yearOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        )}
+      </div>
+    );
+  };
+
+  /**
+   * One paging button, through the render prop when there is one.
+   *
+   * `buttonProps` carries the handler, the disabled state and the accessible
+   * name together, so a consumer who spreads it keeps every guarantee and a
+   * consumer who does not has visibly chosen otherwise.
+   */
+  const nav = (direction: 'prev' | 'next') => {
+    const disabled = direction === 'prev' ? paging.prevDisabled : paging.nextDisabled;
+    const label = direction === 'prev' ? name.previous : name.next;
+    const icon = direction === 'prev' ? (iconPrev || chevronLeft) : (iconNext || chevronRight);
+    const onClick = () => page(direction === 'prev' ? -1 : 1);
+
+    if (renderNav) {
+      return renderNav({
+        direction,
+        disabled,
+        icon,
+        label,
+        target: direction === 'prev' ? paging.prev() : paging.next(),
+        buttonProps: { disabled, 'aria-label': label, onClick },
+      });
+    }
+
+    return (
+      <DButtonIcon
+        className="df-calendar-nav"
+        icon={icon}
+        aria-label={label}
+        disabled={disabled}
+        onClick={onClick}
+      />
+    );
+  };
+
   return (
     <div
       className={classNames('df-calendar', className)}
@@ -383,15 +568,7 @@ export default function DCalendar(
       {...dataAttributes}
     >
       <div className="df-calendar-header">
-        {showNavigation && (
-          <DButtonIcon
-            className="df-calendar-nav"
-            icon={iconPrev || chevronLeft}
-            aria-label={prevAriaLabel}
-            disabled={paging.prevDisabled}
-            onClick={() => page(-1)}
-          />
-        )}
+        {showNavigation && nav('prev')}
 
         {/*
           * The month name is a live region.
@@ -401,55 +578,9 @@ export default function DCalendar(
           * tells a reader the whole grid moved, and a heading that merely
           * changes is not announced.
           */}
-        {showSelectors ? (
-          <div className="df-calendar-selectors">
-            {/* The month control is meaningless in a view that counts in
-                months or larger — there, the year alone places the grid. */}
-            {view === 'day' && (
-              <select
-                className="df-calendar-select"
-                aria-label="Month"
-                value={month.getMonth()}
-                onChange={(event) => {
-                  goToMonth(new Date(month.getFullYear(), Number(event.target.value), 1));
-                }}
-              >
-                {monthNames.map((name, index) => (
-                  <option key={name} value={index}>{name}</option>
-                ))}
-              </select>
-            )}
+        {caption()}
 
-            {view !== 'year' && (
-              <select
-                className="df-calendar-select"
-                aria-label="Year"
-                value={month.getFullYear()}
-                onChange={(event) => {
-                  goToMonth(new Date(Number(event.target.value), month.getMonth(), 1));
-                }}
-              >
-                {years.map((year) => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-            )}
-          </div>
-        ) : (
-          <h2 className="df-calendar-title" aria-live="polite">
-            {viewLabel(view, month, locale)}
-          </h2>
-        )}
-
-        {showNavigation && (
-          <DButtonIcon
-            className="df-calendar-nav"
-            icon={iconNext || chevronRight}
-            aria-label={nextAriaLabel}
-            disabled={paging.nextDisabled}
-            onClick={() => page(1)}
-          />
-        )}
+        {showNavigation && nav('next')}
       </div>
 
       <div className="df-calendar-months">
@@ -483,16 +614,16 @@ export default function DCalendar(
                       <span aria-hidden="true">#</span>
                     </th>
                   )}
-                  {weekdays.map((label, i) => (
+                  {weekdayDates.map((date, i) => (
                     <th
-                      key={label}
+                      key={longWeekdays[i]}
                       scope="col"
                       className="df-calendar-weekday"
                       // The short name is shown; the long one is read, because
                       // "Mo" is not a word in any language.
                       abbr={longWeekdays[i]}
                     >
-                      {label}
+                      {text.weekday(date, i)}
                     </th>
                   ))}
                 </tr>
@@ -530,7 +661,7 @@ export default function DCalendar(
                           data-view={view}
                           tabIndex={isFocused && isSameMonth(shown, month) ? 0 : -1}
                           disabled={disabled}
-                          aria-label={cellName(view, cell, locale)}
+                          aria-label={name.day(cell)}
                           {...view === 'day' && !isSameMonth(cell, shown) && { 'data-outside': '' }}
                           {...descriptor.isSame(cell, today) && { 'data-today': '' }}
                           {...chosen && { 'data-selected': '' }}
@@ -540,7 +671,25 @@ export default function DCalendar(
                           onClick={() => { moveTo(cell); select(cell); }}
                           onMouseEnter={() => setPreview(cell)}
                         >
-                          <time dateTime={isoDay(cell)}>{cellText(view, cell, locale)}</time>
+                          {/*
+                            * The render prop replaces what is INSIDE the
+                            * button, never the button. The role, the roving
+                            * tabindex, `aria-selected` and the accessible
+                            * name are the difference between a grid and a
+                            * pile of buttons, so they are not up for grabs.
+                            */}
+                          {renderDay ? renderDay({
+                            date: cell,
+                            label: text.day(cell),
+                            selected: chosen,
+                            today: descriptor.isSame(cell, today),
+                            outside: view === 'day' && !isSameMonth(cell, shown),
+                            disabled: outOfRange(cell),
+                            highlighted: highlighted.has(isoDay(cell)),
+                            range: edge || undefined,
+                          }) : (
+                            <time dateTime={isoDay(cell)}>{text.day(cell)}</time>
+                          )}
                         </button>
                       </td>
                     );

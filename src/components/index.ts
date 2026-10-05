@@ -24,6 +24,15 @@ export type {
   SelectionMode,
   WeekDay,
 } from './DCalendar/month';
+/* The customisation seams, so a design system can type its own renderers. */
+export type {
+  CalendarFormatters,
+  CalendarLabels,
+  CalendarSlots,
+  CaptionRenderProps,
+  DayRenderProps,
+  NavRenderProps,
+} from './DCalendar/slots';
 export {
   default as DCarousel,
   DCarouselSlide,

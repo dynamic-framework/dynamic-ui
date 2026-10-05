@@ -770,3 +770,127 @@ describe('<DCalendar /> first day of the week', () => {
     expect(cells.indexOf(first.closest('[role="gridcell"]')!)).toBe(6);
   });
 });
+
+/**
+ * Several months on show at once.
+ *
+ * "What the grid is showing" was read as the anchor month alone, which is
+ * right for one grid and wrong for several. Picking a day in the SECOND month
+ * re-anchored the view on it — March–April became April–May — so the month
+ * holding the start of a range scrolled away mid-selection. Nothing was lost,
+ * but the reader had to page back to see what they had picked, which reads as
+ * the calendar resetting itself.
+ */
+describe('<DCalendar /> with several months on show', () => {
+  const captions = () => Array.from(
+    document.querySelectorAll('.df-calendar-grid caption'),
+  ).map((caption) => caption.textContent);
+
+  const twoMonths = (props = {}) => render(
+    <DCalendar
+      defaultMonth={new Date(2026, 2, 1)}
+      locale="en-US"
+      numberOfMonths={2}
+      {...props}
+    />,
+  );
+
+  it('should not move when a day in the second month is chosen', async () => {
+    const user = userEvent.setup();
+    twoMonths({ mode: 'range' });
+
+    expect(captions()).toEqual(['March', 'April']);
+    await user.click(screen.getByRole('button', { name: /^Wednesday, April 15, 2026$/ }));
+    expect(captions()).toEqual(['March', 'April']);
+  });
+
+  /* The whole point: both ends of a range stay visible while it is drawn. */
+  it('should keep both ends of a range in view', async () => {
+    const user = userEvent.setup();
+    twoMonths({ mode: 'range' });
+
+    await user.click(screen.getByRole('button', { name: /^Tuesday, March 10, 2026$/ }));
+    await user.click(screen.getByRole('button', { name: /^Wednesday, April 15, 2026$/ }));
+
+    expect(captions()).toEqual(['March', 'April']);
+    expect(screen.getByRole('button', { name: /^Tuesday, March 10, 2026$/ }))
+      .toHaveAttribute('data-range', 'start');
+    expect(screen.getByRole('button', { name: /^Wednesday, April 15, 2026$/ }))
+      .toHaveAttribute('data-range', 'end');
+  });
+
+  /*
+   * `getAllByRole`, not `getByRole`: with several months on show the last days
+   * of March are ALSO the leading days of the April grid, so the same date has
+   * two buttons. Only one carries `tabindex="0"` — the roving tab stop is
+   * across the whole calendar, not per grid — but both answer to the name.
+   */
+  it('should not move when a day in the second month is focused with the keyboard', async () => {
+    const user = userEvent.setup();
+    twoMonths();
+
+    const [inMarchGrid] = screen.getAllByRole('button', { name: /^Tuesday, March 31, 2026$/ });
+    await user.click(inMarchGrid);
+    await user.keyboard('{ArrowRight}');
+
+    expect(captions()).toEqual(['March', 'April']);
+    expect(document.activeElement).toHaveAttribute('aria-label', 'Wednesday, April 1, 2026');
+  });
+
+  /* One tab stop for the whole calendar, even when a date appears twice. */
+  it('should keep a single tab stop across the grids', async () => {
+    const user = userEvent.setup();
+    twoMonths();
+
+    const [inMarchGrid] = screen.getAllByRole('button', { name: /^Tuesday, March 31, 2026$/ });
+    expect(screen.getAllByRole('button', { name: /^Tuesday, March 31, 2026$/ })).toHaveLength(2);
+
+    await user.click(inMarchGrid);
+    expect(document.querySelectorAll('.df-calendar-day[tabindex="0"]')).toHaveLength(1);
+  });
+
+  /*
+   * Scrolling the least that brings the target into view. Anchoring the FIRST
+   * grid on the target is minimal going backwards and a month too far going
+   * forwards — it skipped the April the reader was looking at.
+   */
+  it('should scroll one month when moving past the end', async () => {
+    const user = userEvent.setup();
+    twoMonths();
+
+    await user.click(screen.getByRole('button', { name: /^Thursday, April 30, 2026$/ }));
+    await user.keyboard('{ArrowRight}');
+
+    expect(captions()).toEqual(['April', 'May']);
+  });
+
+  it('should scroll one month when moving before the start', async () => {
+    const user = userEvent.setup();
+    twoMonths();
+
+    await user.click(screen.getByRole('button', { name: /^Sunday, March 1, 2026$/ }));
+    await user.keyboard('{ArrowLeft}');
+
+    expect(captions()).toEqual(['February', 'March']);
+  });
+
+  /* The same single step the nav button takes, in both directions. */
+  it('should match what the nav buttons do', async () => {
+    const user = userEvent.setup();
+    twoMonths();
+
+    await user.click(screen.getByRole('button', { name: 'next' }));
+    expect(captions()).toEqual(['April', 'May']);
+  });
+
+  it('should hold for three months too', async () => {
+    const user = userEvent.setup();
+    render(
+      <DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" numberOfMonths={3} />,
+    );
+
+    expect(captions()).toEqual(['March', 'April', 'May']);
+    await user.click(screen.getByRole('button', { name: /^Wednesday, May 20, 2026$/ }));
+    expect(captions()).toEqual(['March', 'April', 'May']);
+  });
+});

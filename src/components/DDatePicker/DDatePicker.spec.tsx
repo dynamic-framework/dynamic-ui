@@ -206,3 +206,43 @@ describe('<DDatePicker /> time field', () => {
     expect(screen.queryByLabelText('Time')).not.toBeInTheDocument();
   });
 });
+
+/**
+ * The picker passes `monthsShown` straight through, so the multi-month fix in
+ * the calendar has to reach it — this is the shape a date range is actually
+ * picked in, and the bug was reported through this component rather than
+ * through `DCalendar` directly.
+ */
+describe('<DDatePicker /> range across two months', () => {
+  it('should keep both months in view while the range is drawn', async () => {
+    const user = userEvent.setup();
+
+    function Controlled() {
+      const [range, setRange] = useState<[Date | null, Date | null]>([null, null]);
+      return (
+        <DDatePicker
+          inline
+          selectsRange
+          monthsShown={2}
+          locale="en-US"
+          openToDate={new Date(2026, 2, 1)}
+          startDate={range[0]}
+          endDate={range[1]}
+          onChange={(value) => setRange(value as [Date | null, Date | null])}
+        />
+      );
+    }
+    render(<Controlled />);
+
+    const captions = () => Array.from(
+      document.querySelectorAll('.df-calendar-grid caption'),
+    ).map((caption) => caption.textContent);
+
+    expect(captions()).toEqual(['March', 'April']);
+
+    await user.click(screen.getByRole('button', { name: /^Tuesday, March 10, 2026$/ }));
+    await user.click(screen.getByRole('button', { name: /^Wednesday, April 15, 2026$/ }));
+
+    expect(captions()).toEqual(['March', 'April']);
+  });
+});

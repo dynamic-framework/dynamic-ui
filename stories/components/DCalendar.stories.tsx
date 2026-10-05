@@ -200,3 +200,346 @@ export const HighlightedDays: Story = {
     highlightedDates: [new Date(2026, 2, 10), new Date(2026, 2, 17), new Date(2026, 2, 24)],
   },
 };
+
+/* ------------------------------------------------------------------ *
+ * Customisation
+ * ------------------------------------------------------------------ */
+
+/**
+ * The caption, shortened.
+ *
+ * `formatters.caption` is the seam for "March 2026" → "March" → "Mar". It is a
+ * function rather than a format string because the shortening that works in
+ * English does not work everywhere: slicing three characters off a Japanese
+ * month name produces nonsense, while `Intl` knows what the short form is.
+ */
+export const ShortCaption: Story = {
+  render: () => (
+    <div className="df-flex df-flex-wrap df-gap-4">
+      {([
+        { name: 'default', options: undefined },
+        { name: 'month only', options: { month: 'long' } },
+        { name: 'abbreviated', options: { month: 'short' } },
+      ] as { name: string; options?: Intl.DateTimeFormatOptions }[]).map(({ name, options }) => (
+        <div key={name}>
+          <p className="df-fs-body-sm df-text-muted df-mb-2">{name}</p>
+          <DCalendar
+            locale="en-US"
+            defaultMonth={new Date(2026, 2, 1)}
+            formatters={options && {
+              caption: (date, _view, locale) => new Intl.DateTimeFormat(locale, options)
+                .format(date),
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * Paging buttons as text instead of icons.
+ *
+ * `renderNav` hands over `buttonProps`, which carries the click handler, the
+ * disabled state and the accessible name. Spreading it keeps all three; the
+ * only thing the renderer decides is what it looks like.
+ */
+export const TextNavigation: Story = {
+  render: () => (
+    <DCalendar
+      locale="en-US"
+      defaultMonth={new Date(2026, 2, 1)}
+      renderNav={({ direction, buttonProps }) => (
+        <button type="button" className="df-button" data-variant="link" {...buttonProps}>
+          {direction === 'prev' ? '← Anterior' : 'Siguiente →'}
+        </button>
+      )}
+    />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCalendar
+  renderNav={({ direction, buttonProps }) => (
+    <button type="button" className="df-button" data-variant="link" {...buttonProps}>
+      {direction === 'prev' ? '← Anterior' : 'Siguiente →'}
+    </button>
+  )}
+/>
+
+// \`buttonProps\` carries the three things the calendar computed:
+//   { disabled, 'aria-label', onClick }
+// Spreading it keeps the paging, the end-of-range disabled state and the
+// accessible name. \`type\` is NOT in there — write it yourself.`,
+      },
+    },
+  },
+};
+
+/**
+ * The same seam, naming the month it would move to.
+ *
+ * `target` is the month paging would land on, so a button can read "March"
+ * rather than "previous" without the renderer doing date arithmetic.
+ */
+export const NavigationNamingTheMonth: Story = {
+  render: () => (
+    <DCalendar
+      locale="en-US"
+      defaultMonth={new Date(2026, 2, 1)}
+      renderNav={({ target, buttonProps, direction }) => (
+        <button type="button" className="df-button" data-size="sm" {...buttonProps}>
+          {direction === 'prev' && '‹ '}
+          {new Intl.DateTimeFormat('en-US', { month: 'short' }).format(target)}
+          {direction === 'next' && ' ›'}
+        </button>
+      )}
+    />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCalendar
+  renderNav={({ target, buttonProps, direction }) => (
+    <button type="button" className="df-button" data-size="sm" {...buttonProps}>
+      {direction === 'prev' && '‹ '}
+      {new Intl.DateTimeFormat('en-US', { month: 'short' }).format(target)}
+      {direction === 'next' && ' ›'}
+    </button>
+  )}
+/>
+
+// \`target\` is the month paging would land on, so the button can read
+// "Feb" / "Apr" without the renderer doing date arithmetic — and without
+// guessing, since the step is a year in the month view and twelve in the
+// year view.`,
+      },
+    },
+  },
+};
+
+/**
+ * A cell with something in it besides the number.
+ *
+ * `renderDay` replaces what is INSIDE the cell's button, never the button:
+ * the role, the roving tabindex, `aria-selected` and the accessible name stay
+ * with the calendar, because they are the difference between a grid and a pile
+ * of buttons. A dot, a badge, a price — those are the point.
+ */
+export const CellsWithMarkers: Story = {
+  render: () => (
+    <DCalendar
+      locale="en-US"
+      defaultMonth={new Date(2026, 2, 1)}
+      highlightedDates={[new Date(2026, 2, 10), new Date(2026, 2, 17), new Date(2026, 2, 24)]}
+      renderDay={({ label, highlighted }) => (
+        <span className="df-flex df-flex-col df-items-center">
+          <span>{label}</span>
+          <span
+            aria-hidden="true"
+            style={{
+              width: 4,
+              height: 4,
+              borderRadius: 999,
+              marginTop: 2,
+              backgroundColor: highlighted ? 'var(--df-role-primary-base)' : 'transparent',
+            }}
+          />
+        </span>
+      )}
+    />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCalendar
+  highlightedDates={[new Date(2026, 2, 10), new Date(2026, 2, 17)]}
+  renderDay={({ label, highlighted }) => (
+    <span className="df-flex df-flex-col df-items-center">
+      <span>{label}</span>
+      <span
+        aria-hidden="true"
+        style={{
+          width: 4,
+          height: 4,
+          borderRadius: 999,
+          marginTop: 2,
+          backgroundColor: highlighted ? 'var(--df-role-primary-base)' : 'transparent',
+        }}
+      />
+    </span>
+  )}
+/>
+
+// The dot is \`aria-hidden\`: it repeats what the cell's accessible name
+// already says, and a screen reader announcing "bullet" after every date
+// is noise.
+//
+// This replaces what is INSIDE the button, never the button — the role,
+// the roving tabindex, \`aria-selected\` and the accessible name stay with
+// the calendar.
+//
+// Every flag: { date, label, selected, today, outside, disabled,
+//               highlighted, range }`,
+      },
+    },
+  },
+};
+
+/**
+ * The header replaced wholesale.
+ *
+ * `renderCaption` is handed the month and year options the built-in selectors
+ * would have shown, plus `goToMonth` to move the grid — so a replacement does
+ * not recompute anything, it only decides the markup.
+ *
+ * **Before reaching for `DSelect` or `DDropdown` here:** both render their menu
+ * in a portal on `document.body`, and a calendar inside a `DModal` sits in a
+ * `<dialog>` in the browser's TOP LAYER, which paints above everything in the
+ * normal layer regardless of `z-index`. The menu would open behind the modal.
+ * The built-in `<select>` has no such problem, because the platform renders its
+ * list in the top layer too. For an inline calendar, either is fine.
+ */
+export const CustomHeader: Story = {
+  render: () => (
+    <DCalendar
+      locale="en-US"
+      defaultMonth={new Date(2026, 2, 1)}
+      showSelectors
+      renderCaption={({
+        label, months, years, goToMonth, month, labels,
+      }) => (
+        <div className="df-flex df-gap-2 df-items-center">
+          <strong className="df-fs-body-sm">{label}</strong>
+          <select
+            className="df-select"
+            data-size="sm"
+            aria-label={labels.monthSelect}
+            value={month.getMonth()}
+            onChange={(event) => goToMonth(
+              new Date(month.getFullYear(), Number(event.target.value), 1),
+            )}
+          >
+            {months.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+          <select
+            className="df-select"
+            data-size="sm"
+            aria-label={labels.yearSelect}
+            value={month.getFullYear()}
+            onChange={(event) => goToMonth(
+              new Date(Number(event.target.value), month.getMonth(), 1),
+            )}
+          >
+            {years.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+      )}
+    />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCalendar
+  renderCaption={({ label, months, years, goToMonth, month, labels }) => (
+    <div className="df-flex df-gap-2 df-items-center">
+      <strong className="df-fs-body-sm">{label}</strong>
+
+      <select
+        className="df-select"
+        data-size="sm"
+        aria-label={labels.monthSelect}
+        value={month.getMonth()}
+        onChange={(e) => goToMonth(
+          new Date(month.getFullYear(), Number(e.target.value), 1),
+        )}
+      >
+        {months.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+
+      <select
+        className="df-select"
+        data-size="sm"
+        aria-label={labels.yearSelect}
+        value={month.getFullYear()}
+        onChange={(e) => goToMonth(
+          new Date(Number(e.target.value), month.getMonth(), 1),
+        )}
+      >
+        {years.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+    </div>
+  )}
+/>
+
+// You are handed the options the built-in selectors would have shown
+// (\`months\` is empty outside the day view) plus \`goToMonth\` to move the
+// grid, so a replacement decides markup only — it recomputes nothing.
+//
+// BEFORE REACHING FOR DSelect OR DDropdown HERE:
+// both render their menu in a portal on document.body, and a calendar
+// inside a DModal sits in a <dialog> in the browser's TOP LAYER, which
+// paints above everything in the normal layer regardless of z-index.
+// The menu would open BEHIND the modal. The native <select> has no such
+// problem — the platform renders its list in the top layer too.
+// For an inline calendar, either is fine.`,
+      },
+    },
+  },
+};
+
+/**
+ * Accessible names on their own axis.
+ *
+ * A cell SHOWS `8` and is ANNOUNCED as "Sunday, March 8, 2026". `formatters`
+ * change the first, `labels` the second — collapsing them would force a choice
+ * between a grid of long strings and a screen reader that says "eight".
+ */
+export const TranslatedLabels: Story = {
+  render: () => (
+    <DCalendar
+      locale="es-CL"
+      defaultMonth={new Date(2026, 2, 1)}
+      showSelectors
+      showWeekNumbers
+      labels={{
+        previous: 'Mes anterior',
+        next: 'Mes siguiente',
+        monthSelect: 'Mes',
+        yearSelect: 'Año',
+        weekNumber: (week) => `Semana ${week}`,
+      }}
+    />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCalendar
+  locale="es-CL"
+  showSelectors
+  showWeekNumbers
+  labels={{
+    previous: 'Mes anterior',
+    next: 'Mes siguiente',
+    monthSelect: 'Mes',
+    yearSelect: 'Año',
+    weekNumber: (week) => \`Semana \${week}\`,
+  }}
+/>
+
+// \`labels\` are what a screen reader ANNOUNCES. \`formatters\` are what the
+// calendar SHOWS. They are separate on purpose: a cell shows "8" and is
+// announced as "domingo, 8 de marzo de 2026" — collapsing the two would
+// force a choice between a grid of long strings and a reader that says
+// "ocho".
+//
+// The month and weekday names themselves need no translation: they come
+// from Intl with \`locale\`, so they are already in Spanish here.`,
+      },
+    },
+  },
+};
