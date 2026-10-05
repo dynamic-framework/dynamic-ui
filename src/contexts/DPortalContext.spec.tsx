@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   act,
   fireEvent,
@@ -58,6 +59,26 @@ describe('DPortalContextProvider', () => {
     fireEvent.click(screen.getByText('Close'));
     await waitFor(() => expect(document.getElementById('d-portal')).not.toBeEmptyDOMElement());
     expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
+  });
+
+  it('opens a portal only once when opened from an effect', async () => {
+    function EffectOpener() {
+      const { openPortal, stack } = useDPortalContext<Payloads>();
+      useEffect(() => {
+        openPortal('example', { title: 'Portal content' });
+      }, [openPortal]);
+      return <span>{`Open portals: ${stack.length}`}</span>;
+    }
+    render(
+      <DContextProvider availablePortals={{ example: ExamplePortal }}>
+        <EffectOpener />
+      </DContextProvider>,
+    );
+    await screen.findByText('Portal content');
+    await act(async () => {
+      await new Promise((resolve) => { setTimeout(resolve, 0); });
+    });
+    expect(screen.getByText('Open portals: 1')).toBeInTheDocument();
   });
 
   it('renders the portal component once it is opened', async () => {

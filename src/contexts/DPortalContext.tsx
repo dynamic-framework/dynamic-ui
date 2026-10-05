@@ -114,6 +114,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
   const [PortalStack, setPortalStack] = useState<typeof DPortalStack | null>(null);
   const pending = useRef<InternalStackItem<T>[]>([]);
+  const ready = useRef(false);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   // Loads framer-motion off the critical path only when portals are configured,
@@ -122,7 +123,10 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   useEffect(() => {
     if (!hasPortals) return;
     loadPortalStack()
-      .then((Stack) => setPortalStack(() => Stack))
+      .then((Stack) => {
+        ready.current = true;
+        setPortalStack(() => Stack);
+      })
       .catch(() => {
         // openPortal retries the import and reports the failure.
       });
@@ -148,12 +152,13 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
       const item = { name, Component, payload } as unknown as InternalStackItem<T>;
-      if (PortalStack) {
+      if (ready.current) {
         push(item);
       } else {
         // Not loaded yet: the portal enters the stack together with its renderer.
         pending.current.push(item);
         loadPortalStack().then((Stack) => {
+          ready.current = true;
           setPortalStack(() => Stack);
           pending.current.splice(0).forEach(push);
         }).catch((error: unknown) => {
@@ -164,7 +169,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       }
       (document.activeElement as HTMLElement)?.blur();
     },
-    [availablePortals, push, PortalStack],
+    [availablePortals, push],
   ) as PortalContextType<T>['openPortal'];
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
