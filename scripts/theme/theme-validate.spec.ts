@@ -354,6 +354,18 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('min-width: 1200px');
   });
 
+  it.each([['dvw', 'calc(1.4rem + 1.8dvw)'], ['mayúsculas', 'calc(1.4rem + 1.8VW)']])(
+    'una escala fluida con %s sin su bloque de 1200px',
+    (_, fluid) => {
+      const valid = expandCss(MINIMAL_THEME);
+      const broken = valid
+        .replace('--bs-rfs-fs-1: calc(1.4rem + 1.8vw);', `--bs-rfs-fs-1: ${fluid};`)
+        .replace(/@media \(min-width: 1200px\) \{[\s\S]*?\n\}/, '');
+      expect(broken).toContain(`--bs-rfs-fs-1: ${fluid};`);
+      expect(validate(broken).stderr).toContain('[tipografia-breakpoint]');
+    },
+  );
+
   it('un tamaño fijo sin bloque de 1200px no exige el breakpoint', () => {
     const valid = expandCss({
       ...MINIMAL_THEME,

@@ -409,7 +409,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   for (const step of RFS_MEDIA_STEPS) {
     if (!root.has(`--bs-rfs-fs-${step}`)) continue;
     if (wide.has(`--bs-rfs-fs-${step}`)) continue;
-    if (!/\d(?:vw|vh|vmin|vmax)\b/.test(root.get(`--bs-rfs-fs-${step}`).value)) continue;
+    if (!/\d[sdl]?v(?:w|h|i|b|min|max)\b/i.test(root.get(`--bs-rfs-fs-${step}`).value)) continue;
     fail(
       'tipografia-breakpoint',
       `--bs-rfs-fs-${step} es fluida (depende del viewport) y se declara sólo en el contexto `

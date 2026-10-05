@@ -596,8 +596,7 @@ export function expandTheme(input) {
 
   const root = `${THEME_SELECTOR} {${lines.join('\n')}\n}`;
 
-  // El @media va aparte: sin él, el `@media (min-width: 1200px)` de la
-  // librería vuelve a poner la escala por defecto en desktop.
+  // El @media va aparte: es el tope en desktop de los valores fluidos.
   const media = wide.length > 0
     ? [
       '',

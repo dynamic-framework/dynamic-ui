@@ -279,7 +279,7 @@ const fmtNum = (n) => String(Number(n.toFixed(6))).replace(/^(-?)0\./, '$1.');
 /**
  * Reproduce `font-size()` de RFS para un tamaño en rem.
  * Devuelve el valor base (fluido) y, si aplica, el valor del breakpoint 1200px.
- * Emitir sólo el base deja ganar el `@media (min-width: 1200px)` de la librería.
+ * Emitir sólo el base deja el valor fluido sin tope en desktop.
  */
 export function rfsPair(rem) {
   if (rem <= RFS_BASE_REM) {
@@ -295,9 +295,9 @@ export const FONT_SIZE_STEPS = ['1', '2', '3', '4', '5', '6'];
 
 /**
  * Pasos que la librería vuelve a declarar dentro de `@media (min-width: 1200px)`
- * (dist/css/dynamic-ui.css: 3rem, 2.5rem, 2rem y 1.5rem). Un override de estos
- * cuatro necesita su propio bloque en ese breakpoint aunque el valor no sea
- * fluido, o en desktop gana el de la librería.
+ * (dist/css/dynamic-ui.css: 3rem, 2.5rem, 2rem y 1.5rem). Un override fluido de
+ * estos cuatro necesita su bloque en ese breakpoint para tener tope en desktop;
+ * uno fijo ya gana por cascada.
  */
 export const RFS_MEDIA_STEPS = ['1', '2', '3', '4'];
 
