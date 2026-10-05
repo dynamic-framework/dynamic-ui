@@ -118,7 +118,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   // Loads framer-motion off the critical path only when portals are configured,
   // so the first openPortal does not wait for it.
-  const hasPortals = Boolean(availablePortals);
+  const hasPortals = Object.keys(availablePortals ?? {}).length > 0;
   useEffect(() => {
     if (!hasPortals) return;
     loadPortalStack()

@@ -39,8 +39,15 @@ describe('DPortalContextProvider', () => {
     document.body.innerHTML = '';
   });
 
-  it('does not load the animated stack without availablePortals', async () => {
-    render(<DContextProvider><span>Content</span></DContextProvider>);
+  it.each([
+    ['without availablePortals', undefined],
+    ['with an empty availablePortals', {}],
+  ])('does not load the animated stack %s', async (_, availablePortals) => {
+    render(
+      <DContextProvider availablePortals={availablePortals}>
+        <span>Content</span>
+      </DContextProvider>,
+    );
     await act(async () => {});
     expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
   });
