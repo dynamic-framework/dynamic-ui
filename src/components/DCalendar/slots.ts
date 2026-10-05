@@ -58,7 +58,16 @@ export type CalendarLabels = {
   next?: string;
   monthSelect?: string;
   yearSelect?: string;
+  /**
+   * Announced for a week-number row header. Defaults to `"Week 13"`.
+   *
+   * The cell SHOWS `13`, which is right in a narrow column and useless to a
+   * screen reader — "thirteen" in a row header says nothing about what the row
+   * is. The name is what carries the meaning.
+   */
   weekNumber?: (week: number) => string;
+  /** The week-number COLUMN header. Defaults to `"Week"`. */
+  weekNumberHeading?: string;
 };
 
 /** Props every nav render prop is handed. Spread `buttonProps`. */

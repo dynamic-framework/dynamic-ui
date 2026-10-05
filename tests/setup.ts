@@ -6,6 +6,18 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+/*
+ * `jest-axe` was a dependency with no caller.
+ *
+ * Registered here rather than in one spec so the matcher is available to every
+ * component: an accessibility check that only one component can run is a check
+ * the next component will not get.
+ */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
+
 // eslint-disable-next-line no-undef
 globalThis.ResizeObserver = class {
   observe() {

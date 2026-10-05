@@ -2,8 +2,8 @@
  * Dynamic Framework, without a framework.
  *
  * The behaviour layer for pages that are HTML and Liquid rather than React —
- * which at Modyo is most of them. It does not render anything: it finds the
- * markup the React components already produce and makes it work.
+ * which at Modyo is most of them. Mostly it finds the markup the React
+ * components already produce and makes it work.
  *
  * ```html
  * <link rel="stylesheet" href="https://cdn.dynamicframework.dev/assets/3/css/dynamic.min.css">
@@ -30,12 +30,40 @@
  * `aria-selected` and `hidden` on tabs, `data-expanded` on a collapse — and
  * invents no state of its own.
  *
- * ## It is an enhancement, not a requirement
+ * ## Mostly an enhancement, sometimes a renderer
  *
- * Every piece of markup here means something before the script runs. Tabs are
- * headings and their content; a collapse is a button and a paragraph; a modal
- * is a `<dialog>` the browser can open on its own. The script makes them
- * better, it does not make them appear.
+ * Tabs, collapse, carousel and modal ENHANCE: the markup means something
+ * before the script runs — headings and their content, a button and a
+ * paragraph, a `<dialog>` the browser can open on its own. The script makes
+ * them better, it does not make them appear.
+ *
+ * Toast, dropzone and calendar RENDER, because what they draw is generated
+ * rather than authored. A calendar is the clearest case: paging to April needs
+ * April's cells, and no server round trip is going to produce them, so the
+ * script has to be able to build a month either way. Enhancing a
+ * server-rendered one on top of that would be a second code path earning
+ * nothing but the risk that the two disagree.
+ *
+ * The rule across the layer, then, is not "always enhance". It is **enhance
+ * what the author wrote, render what is generated**.
+ *
+ * ## The calendar is opt-in, and deliberately not in here
+ *
+ * This bundle ships to every page of a bank's site, so what is in it has to
+ * earn its place on a page that does not use it. The calendar does not: it is
+ * 9 KB minified — most of the bundle again — for a control most pages do not
+ * have.
+ *
+ * It is its own file, which starts itself:
+ *
+ * ```html
+ * <script type="module" src="…/vanilla/dynamic.min.js"></script>
+ * <script type="module" src="…/vanilla/calendar.min.js"></script>
+ * ```
+ *
+ * Loading both means two registries and two observers, which is wasteful and
+ * correct — each enhances what it knows about. Loading only the calendar file
+ * works too.
  */
 
 import {

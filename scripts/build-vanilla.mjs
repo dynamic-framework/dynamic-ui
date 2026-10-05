@@ -74,9 +74,11 @@ const modules = readdirSync(SRC)
 
 mkdirSync(OUT, { recursive: true });
 
-async function bundle({ entry, outfile, format, globalName, minify }) {
+async function bundle({
+  entry, stdin, outfile, format, globalName, minify,
+}) {
   await build({
-    entryPoints: [entry],
+    ...(stdin ? { stdin } : { entryPoints: [entry] }),
     outfile: join(OUT, outfile),
     bundle: true,
     format,
@@ -112,7 +114,26 @@ for (const minify of [false, true]) {
 
   for (const name of modules) {
     results.push(await bundle({
-      entry: join(SRC, `${name}.ts`),
+      /*
+       * A per-component file has to START itself.
+       *
+       * These are advertised as "a page can take one on its own", and they
+       * could not: bundling the module alone carries a private copy of the
+       * registry, `define()` fills it, and nothing ever calls `start()` — so
+       * the behaviour was registered into a map no observer was watching and
+       * the page did nothing. Silently, which is the worst way for a CDN
+       * script to fail.
+       *
+       * Built from a generated entry rather than by appending text to the
+       * output, so the call goes through the bundler and survives minification
+       * with the rest.
+       */
+      stdin: {
+        contents: `import './${name}';\nimport { start } from './registry';\nstart();\n`,
+        resolveDir: SRC,
+        sourcefile: `${name}.entry.ts`,
+        loader: 'ts',
+      },
       outfile: `${name}${suffix}`,
       format: 'esm',
       minify,
@@ -173,15 +194,49 @@ const bundled = readFileSync(join(OUT, 'dynamic.min.js'), 'utf8');
  * value is that it notices a behaviour going missing: a list that has to be
  * updated alongside the thing it checks does not notice anything.
  */
+/**
+ * Behaviours deliberately kept OUT of the default bundle.
+ *
+ * Opt-in rather than missing, and listed here with the reason so the two can
+ * be told apart — the check's value is that it notices a behaviour vanishing,
+ * and it can only do that if "meant to be absent" is written down somewhere.
+ *
+ * Each still ships as its own self-starting file, so a page that wants one
+ * adds a second `<script>`.
+ */
+const OPT_IN = {
+  calendar: '9 KB min — most of the bundle again, for a control most pages do not have',
+};
+
 const declared = modules.flatMap((module) => {
   const source = readFileSync(join(SRC, `${module}.ts`), 'utf8');
   return Array.from(source.matchAll(/:\s*Behaviour\s*=\s*\{[\s\S]*?name:\s*'([^']+)'/g))
     .map((match) => match[1]);
 });
 
-const missing = declared.filter(
+const absent = declared.filter(
   (name) => !bundled.includes(`"${name}"`) && !bundled.includes(`'${name}'`),
 );
+const missing = absent.filter((name) => !(name in OPT_IN));
+
+/*
+ * The other half of the check: a behaviour listed as opt-in that turns up in
+ * the bundle anyway. Without this, an accidental import in `index.ts` would
+ * quietly put the weight back and the entry here would read as a lie.
+ */
+const leaked = Object.keys(OPT_IN).filter((name) => !absent.includes(name));
+
+if (leaked.length) {
+  process.stderr.write(
+    `\nvanilla: ${leaked.join(', ')} is listed as opt-in but IS in the default `
+    + 'bundle — remove the import from index.ts, or remove the OPT_IN entry\n',
+  );
+  process.exit(1);
+}
+
+Object.entries(OPT_IN).forEach(([name, why]) => {
+  process.stdout.write(`vanilla: ${name} is opt-in (${why})\n`);
+});
 
 if (missing.length) {
   process.stderr.write(

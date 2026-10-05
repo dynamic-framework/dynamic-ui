@@ -1,6 +1,14 @@
 import { useEffect, useRef } from 'react';
 
 import { destroy, enhance } from '../../src/vanilla';
+/*
+ * The calendar is opt-in — it is not in `dynamic.min.js`, because 9 KB for a
+ * control most pages do not have is not something to put on every page of a
+ * bank's site. Importing it here registers it so the Calendar stories work;
+ * the SETUP block below is what a template author copies, and the Calendar
+ * story documents its second `<script>` itself.
+ */
+import '../../src/vanilla/calendar';
 
 /**
  * The two lines that make any of this work.

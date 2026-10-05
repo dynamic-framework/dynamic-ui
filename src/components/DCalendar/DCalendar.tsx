@@ -138,7 +138,7 @@ export default function DCalendar(
     showWeekNumbers = false,
     numberOfMonths = 1,
     view = 'day',
-    ariaLabel = 'Calendar',
+    ariaLabel,
     showNavigation = true,
     showSelectors = false,
     minYear,
@@ -427,6 +427,7 @@ export default function DCalendar(
     monthSelect: labels?.monthSelect ?? 'Month',
     yearSelect: labels?.yearSelect ?? 'Year',
     weekNumber: labels?.weekNumber ?? ((week: number) => `Week ${week}`),
+    weekNumberHeading: labels?.weekNumberHeading ?? 'Week',
   }), [labels, locale, nextAriaLabel, prevAriaLabel, view]);
 
   const years = useMemo(() => {
@@ -469,6 +470,23 @@ export default function DCalendar(
    * date, but what tells a reader the whole grid moved is the heading — and a
    * heading that merely changes is not announced.
    */
+  /**
+   * The month, announced.
+   *
+   * This used to BE the heading, so turning the selectors on removed it —
+   * and a calendar with month and year pickers is the configuration most
+   * likely to page, so the one that most needed the announcement was the one
+   * that lost it. A render prop replacing the caption removed it too.
+   *
+   * Rendered separately and visually hidden, it is there whatever the header
+   * looks like.
+   */
+  const liveMonth = (
+    <span className="df-sr-only" aria-live="polite">
+      {viewLabel(view, month, locale)}
+    </span>
+  );
+
   const caption = () => {
     if (renderCaption) {
       return renderCaption({
@@ -484,11 +502,7 @@ export default function DCalendar(
     }
 
     if (!showSelectors) {
-      return (
-        <h2 className="df-calendar-title" aria-live="polite">
-          {text.caption(month)}
-        </h2>
-      );
+      return <h2 className="df-calendar-title">{text.caption(month)}</h2>;
     }
 
     return (
@@ -581,6 +595,7 @@ export default function DCalendar(
         {caption()}
 
         {showNavigation && nav('next')}
+        {liveMonth}
       </div>
 
       <div className="df-calendar-months">
@@ -593,7 +608,19 @@ export default function DCalendar(
             ref={isSameMonth(shown, month) ? gridRef : undefined}
             className="df-calendar-grid"
             role="grid"
-            aria-label={months.length > 1 ? monthName(shown, locale) : ariaLabel}
+            /* The grid pattern's way of saying a reader may pick more than one
+               cell. Absent for a single date, where it would be a lie. */
+            aria-multiselectable={mode === 'single' ? undefined : true}
+            /*
+             * The month, not the word "Calendar".
+             *
+             * The default was English in every language — the same fault as
+             * the hard-coded "Week" — and it was also less useful than the
+             * month: a grid announced as "Calendar" tells a reader nothing
+             * about WHICH month they are in, which is the one thing the name
+             * is there to carry. `ariaLabel` still overrides it.
+             */
+            aria-label={ariaLabel ?? monthName(shown, locale)}
             onKeyDown={onKeyDown}
             onFocus={() => { hasFocus.current = true; }}
             onBlur={(event) => {
@@ -607,10 +634,17 @@ export default function DCalendar(
             )}
             {view === 'day' && (
               <thead>
-                <tr>
+                <tr role="row">
                   {showWeekNumbers && (
-                    <th scope="col" className="df-calendar-weekday" abbr="Week number">
-                      <span className="df-sr-only">Week</span>
+                    <th
+                      scope="col"
+                      className="df-calendar-weekday"
+                      abbr={name.weekNumberHeading}
+                    >
+                      {/* `#` is what fits the column; the word is what a
+                          screen reader needs. Both were hard-coded English,
+                          so a Spanish calendar announced "Week". */}
+                      <span className="df-sr-only">{name.weekNumberHeading}</span>
                       <span aria-hidden="true">#</span>
                     </th>
                   )}
@@ -631,10 +665,19 @@ export default function DCalendar(
             )}
             <tbody onMouseLeave={() => setPreview(null)}>
               {viewDescriptor(view, shown, { weekStartsOn, fixedWeeks }).cells.map((row) => (
-                <tr key={isoDay(row[0])}>
+                /* Explicit all the way down: the same reasoning that made the
+                   cells `gridcell` applies to the rows between them. */
+                <tr key={isoDay(row[0])} role="row">
                   {view === 'day' && showWeekNumbers && (
                     <th scope="row" className="df-calendar-week-number">
-                      {isoWeek(row[0])}
+                      {/*
+                        * The cell shows `13`; the row header is ANNOUNCED as
+                        * "Week 13". `labels.weekNumber` existed, had a
+                        * default, and was wired to nothing — the number went
+                        * out bare and a reader heard "thirteen".
+                        */}
+                      <span className="df-sr-only">{name.weekNumber(isoWeek(row[0]))}</span>
+                      <span aria-hidden="true">{isoWeek(row[0])}</span>
                     </th>
                   )}
                   {row.map((cell) => {
@@ -660,15 +703,68 @@ export default function DCalendar(
                           className="df-calendar-day"
                           data-view={view}
                           tabIndex={isFocused && isSameMonth(shown, month) ? 0 : -1}
-                          disabled={disabled}
                           aria-label={name.day(cell)}
+                          /*
+                           * `aria-disabled`, not `disabled`.
+                           *
+                           * A `disabled` button is out of the tab order AND
+                           * cannot take focus, so the grid cursor could not
+                           * land on it: a screen reader user arrowing across
+                           * a month never learned the range existed, the days
+                           * simply were not there. Worse, the roving tab stop
+                           * could BE one — with a `minDate` past the 1st the
+                           * grid had no reachable entry at all and Tab skipped
+                           * the whole calendar.
+                           */
+                          aria-disabled={disabled || undefined}
+                          /*
+                           * Single mode only, and honestly so.
+                           *
+                           * `aria-selected` belongs on the gridcell, which is
+                           * what the grid role makes selectable — but focus is
+                           * on the button inside, and a reader announcing the
+                           * focused element does not reliably reach up to an
+                           * ancestor's state. In single mode the day really is
+                           * a toggle (clicking the chosen day clears it), so
+                           * `aria-pressed` is the button's own word for the
+                           * same thing rather than a second model layered on.
+                           *
+                           * For range and multiple it is left off: there the
+                           * cell is selected rather than the button pressed,
+                           * and `aria-multiselectable` on the grid is what
+                           * tells a reader to expect several.
+                           */
+                          aria-pressed={mode === 'single' ? chosen : undefined}
+                          {...descriptor.isSame(cell, today) && { 'aria-current': 'date' as const }}
                           {...view === 'day' && !isSameMonth(cell, shown) && { 'data-outside': '' }}
                           {...descriptor.isSame(cell, today) && { 'data-today': '' }}
                           {...chosen && { 'data-selected': '' }}
                           {...highlighted.has(isoDay(cell)) && { 'data-highlighted': '' }}
                           {...edge && { 'data-range': edge }}
                           {...drawn && !drawn.to && { 'data-drawing': '' }}
-                          onClick={() => { moveTo(cell); select(cell); }}
+                          onClick={() => {
+                            /*
+                             * The refusal moved here when the button stopped
+                             * being `disabled`: the element now takes focus
+                             * and a click, so saying no is this handler's job
+                             * rather than the platform's.
+                             */
+                            if (disabled) return;
+                            moveTo(cell);
+                            select(cell);
+                          }}
+                          /*
+                           * Focus is the source of truth for where the arrows
+                           * move FROM.
+                           *
+                           * Clicking goes through `moveTo`, which sets it —
+                           * but focus can also arrive without a click: a Tab
+                           * into the grid, a `.focus()` from somewhere else, a
+                           * browser restoring it. With only the click tracked,
+                           * focus could sit on the 8th while the next arrow
+                           * press moved from the 1st.
+                           */
+                          onFocus={() => setFocused(cell)}
                           onMouseEnter={() => setPreview(cell)}
                         >
                           {/*

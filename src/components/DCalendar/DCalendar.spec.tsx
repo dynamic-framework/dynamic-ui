@@ -1,6 +1,8 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import { render, screen, within } from '@testing-library/react';
+import {
+  render, screen, waitFor, within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DCalendar from './DCalendar';
@@ -215,9 +217,15 @@ describe('<DCalendar />', () => {
     it('should disable the days outside it', () => {
       setup({ minDate: new Date(2026, 2, 10), maxDate: new Date(2026, 2, 20) });
 
-      expect(day(9)).toBeDisabled();
-      expect(day(10)).toBeEnabled();
-      expect(day(21)).toBeDisabled();
+      /*
+       * `aria-disabled`, not `disabled`. A `disabled` button cannot take
+       * focus, so the grid cursor could not land on it and a screen reader
+       * user never learned the range existed — and the roving tab stop could
+       * BE one, which left the whole calendar unreachable by Tab.
+       */
+      expect(day(9)).toHaveAttribute('aria-disabled', 'true');
+      expect(day(10)).not.toHaveAttribute('aria-disabled');
+      expect(day(21)).toHaveAttribute('aria-disabled', 'true');
     });
 
     it('should refuse to move past the edge rather than clamp', async () => {
@@ -249,9 +257,14 @@ describe('<DCalendar />', () => {
      * its own date, but the grid having moved is what the heading carries, and
      * a heading that merely changes is not announced.
      */
+    /* The live region is its own visually hidden element, not the heading:
+       turning the selectors on replaced the heading, so the configuration most
+       likely to page was the one that announced nothing. */
     it('should announce the month politely', () => {
       setup();
-      expect(screen.getByRole('heading')).toHaveAttribute('aria-live', 'polite');
+      const live = document.querySelector('[aria-live="polite"]');
+      expect(live).toBeInTheDocument();
+      expect(live).toHaveTextContent('March 2026');
     });
   });
 
@@ -892,5 +905,40 @@ describe('<DCalendar /> with several months on show', () => {
     expect(captions()).toEqual(['March', 'April', 'May']);
     await user.click(screen.getByRole('button', { name: /^Wednesday, May 20, 2026$/ }));
     expect(captions()).toEqual(['March', 'April', 'May']);
+  });
+});
+
+/**
+ * Focus is the source of truth for where the arrows move FROM.
+ *
+ * Clicking goes through `moveTo`, which sets it. Focus can also arrive without
+ * a click — a Tab into the grid, a `.focus()` from elsewhere, a browser
+ * restoring it after a back navigation — and with only the click tracked, the
+ * cursor sat on the 8th while the next arrow press moved from the 1st.
+ */
+describe('<DCalendar /> focus arriving without a click', () => {
+  it('should move from where focus actually is', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" />);
+
+    screen.getByRole('button', { name: /^Sunday, March 8, 2026$/ }).focus();
+    await user.keyboard('{ArrowRight}');
+
+    expect(document.activeElement)
+      .toHaveAttribute('aria-label', 'Monday, March 9, 2026');
+  });
+
+  /* `waitFor`, because a bare `.focus()` is not wrapped in `act` — the state
+     update is real, it has just not flushed when the next line runs. */
+  it('should move the tab stop to where focus went', async () => {
+    render(<DCalendar defaultMonth={new Date(2026, 2, 1)} locale="en-US" />);
+
+    screen.getByRole('button', { name: /^Sunday, March 8, 2026$/ }).focus();
+
+    await waitFor(() => {
+      const stops = document.querySelectorAll('.df-calendar-day[tabindex="0"]');
+      expect(stops).toHaveLength(1);
+      expect(stops[0]).toHaveAttribute('aria-label', 'Sunday, March 8, 2026');
+    });
   });
 });

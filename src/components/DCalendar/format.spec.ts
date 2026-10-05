@@ -190,3 +190,59 @@ describe('fields the pattern does not name', () => {
     expect(parseDate('2026', 'yyyy', { reference })).toEqual(d(2026, 1, 1));
   });
 });
+
+/**
+ * Every token the formatter advertises, formatted at least once.
+ *
+ * Eight of them — `MMM`, `HH`, `H`, `hh`, `m`, `ss`, `s`, `yy` — were in the
+ * token table, in the type and in the docs, and no test ever formatted one.
+ * They are each a line of padding arithmetic, which is exactly the kind of
+ * line that is wrong by one and that nobody reads twice.
+ */
+describe('every advertised token', () => {
+  /* A time with no symmetric digits, so a swapped field is visible: the month
+     is 3, the day 8, the hour 9 (21:00), minute 7, second 5. */
+  const sample = new Date(2026, 2, 8, 21, 7, 5);
+
+  it.each([
+    ['yyyy', '2026'],
+    ['yy', '26'],
+    ['MM', '03'],
+    ['M', '3'],
+    ['dd', '08'],
+    ['d', '8'],
+    ['HH', '21'],
+    ['H', '21'],
+    ['hh', '09'],
+    ['h', '9'],
+    ['mm', '07'],
+    ['m', '7'],
+    ['ss', '05'],
+    ['s', '5'],
+    ['aa', 'pm'],
+    ['a', 'pm'],
+  ])('should format %s as %s', (token, expected) => {
+    expect(formatDate(sample, token)).toBe(expected);
+  });
+
+  it.each([
+    ['MMMM', /^March$/],
+    ['MMM', /^Mar$/],
+  ])('should format %s from Intl', (token, expected) => {
+    expect(formatDate(sample, token, { locale: 'en-US' })).toMatch(expected);
+  });
+
+  /* Single-digit tokens must NOT pad, padded ones must. Getting the pair the
+     wrong way round reads as a formatting glitch rather than as a bug. */
+  it('should pad only the double-width tokens', () => {
+    const single = new Date(2026, 0, 2, 3, 4, 5);
+    expect(formatDate(single, 'd/M/yy H:m:s')).toBe('2/1/26 3:4:5');
+    expect(formatDate(single, 'dd/MM/yyyy HH:mm:ss')).toBe('02/01/2026 03:04:05');
+  });
+
+  /* Every token must also parse back, or the pair is only half a contract. */
+  it('should round-trip a full pattern', () => {
+    const pattern = 'dd/MM/yyyy HH:mm:ss';
+    expect(parseDate(formatDate(sample, pattern), pattern)).toEqual(sample);
+  });
+});

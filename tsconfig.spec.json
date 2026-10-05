@@ -10,6 +10,8 @@
   },
   "include": [
     "src",
+    "@types",
+    "tests"
   ],
   "exclude": [
     "stories"

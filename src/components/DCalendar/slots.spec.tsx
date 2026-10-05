@@ -273,3 +273,91 @@ describe('renderDay', () => {
     expect(screen.getByRole('button', { name: /March 13, 2026/ })).toHaveTextContent('13end');
   });
 });
+
+/**
+ * The week-number column, which was announced in English whatever the locale.
+ *
+ * `labels.weekNumber` was in the type, had a default, and was wired to
+ * nothing — the number went out bare, so a screen reader read a row header as
+ * "thirteen". The column heading was a hard-coded "Week" besides. Both are the
+ * same class of fault as an unread prop: nothing fails, the promise is just
+ * not kept.
+ */
+describe('week numbers', () => {
+  const weekSetup = (props = {}) => render(
+    <DCalendar
+      defaultMonth={new Date(2026, 2, 1)}
+      locale="en-US"
+      showWeekNumbers
+      {...props}
+    />,
+  );
+
+  it('should announce a row header as a week, not as a bare number', () => {
+    weekSetup();
+    const header = document.querySelector('.df-calendar-week-number');
+    expect(header).toHaveTextContent(/Week \d+/);
+  });
+
+  it('should still SHOW only the number', () => {
+    weekSetup();
+    const shown = document.querySelector('.df-calendar-week-number [aria-hidden="true"]');
+    expect(shown?.textContent).toMatch(/^\d+$/);
+  });
+
+  it('should take the row header name from labels', () => {
+    weekSetup({ labels: { weekNumber: (week: number) => `Semana ${week}` } });
+    expect(document.querySelector('.df-calendar-week-number')).toHaveTextContent(/Semana \d+/);
+  });
+
+  it('should take the column heading from labels', () => {
+    weekSetup({ labels: { weekNumberHeading: 'Semana' } });
+    const heading = document.querySelector('thead th.df-calendar-weekday');
+    expect(heading).toHaveAttribute('abbr', 'Semana');
+    expect(heading?.querySelector('.df-sr-only')).toHaveTextContent('Semana');
+  });
+});
+
+/**
+ * The built-in selectors, whose change handlers were never exercised.
+ *
+ * Both are one line that builds a Date out of three parts, and both were
+ * uncovered — the kind of line where a swapped argument moves the reader to
+ * the wrong year and nothing says so.
+ */
+describe('the built-in selectors', () => {
+  it('should move the grid when the month is changed', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={march} locale="en-US" showSelectors />);
+
+    await user.selectOptions(screen.getByLabelText('Month'), '11');
+    expect(screen.getByLabelText('Month')).toHaveValue('11');
+    expect(screen.getByRole('button', { name: /December 25, 2026/ })).toBeInTheDocument();
+  });
+
+  it('should keep the year when the month is changed', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={march} locale="en-US" showSelectors />);
+
+    await user.selectOptions(screen.getByLabelText('Month'), '11');
+    expect(screen.getByLabelText('Year')).toHaveValue('2026');
+  });
+
+  it('should move the grid when the year is changed', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={march} locale="en-US" showSelectors />);
+
+    await user.selectOptions(screen.getByLabelText('Year'), '2030');
+    expect(screen.getByRole('button', { name: /March 15, 2030/ })).toBeInTheDocument();
+  });
+
+  /* The month must survive a year change, or picking a year silently moves
+     the reader to January. */
+  it('should keep the month when the year is changed', async () => {
+    const user = userEvent.setup();
+    render(<DCalendar defaultMonth={march} locale="en-US" showSelectors />);
+
+    await user.selectOptions(screen.getByLabelText('Year'), '2030');
+    expect(screen.getByLabelText('Month')).toHaveValue('2');
+  });
+});
