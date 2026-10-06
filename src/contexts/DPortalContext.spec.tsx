@@ -128,15 +128,35 @@ describe('DPortalContext', () => {
   });
 
   /*
-   * Present but off before anything opens — and inert.
+   * Not even in the document until something needs it.
    *
-   * A `position: fixed` element covering the viewport at `opacity: 0` is
-   * invisible and still catches every click, which is the classic way a page
-   * becomes mysteriously dead. The stylesheet pairs the fade with
-   * `pointer-events: none`; this checks the attribute that selects it.
+   * The scrim has to OUTLIVE its panel so the fade-out has a previous frame to
+   * leave from, and the first version read that as "always mounted" — a
+   * `position: fixed` element covering the viewport, per provider, whether or
+   * not it would ever be used. A Storybook docs page mounts one provider per
+   * story: seventeen full-viewport compositing layers over a document that
+   * needed none, which made the page unusable.
+   *
+   * jsdom composites nothing, so the cost is invisible here; the COUNT is not.
    */
-  it('should keep the scrim off until something opens', () => {
+  it('should not mount the scrim until something needs it', () => {
     setup();
+    expect(backdrop()).not.toBeInTheDocument();
+  });
+
+  /*
+   * And once mounted it stays, because an element that unmounts has no
+   * previous frame to animate from — which is the whole reason this is a
+   * persistent element rather than one rendered alongside the panel.
+   */
+  it('should keep the scrim after the panel has gone, so it can fade', async () => {
+    const user = userEvent.setup();
+    setup();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    await user.click(backdrop()!);
+    await waitFor(() => expect(panel()).not.toBeInTheDocument());
+
     expect(backdrop()).toBeInTheDocument();
     expect(scrimIsOn()).toBe(false);
   });
@@ -416,5 +436,355 @@ describe('a panel that declares nothing', () => {
     expect(() => render(
       <DModal name="standalone"><DModal.Body>x</DModal.Body></DModal>,
     )).not.toThrow();
+  });
+});
+
+/**
+ * Two panels open at once.
+ *
+ * The stories show a large modal opening a small one, and the claim they make
+ * is that closing the top one leaves the other alone. That is worth a test
+ * because `closePortal` pops the TOP of the stack — correct when the top is
+ * what closed, and wrong the moment it is not.
+ */
+describe('a stack of two', () => {
+  function Outer({ name }: { name: string }) {
+    const { openPortal } = useDPortalContext<{ inner: Record<string, never> }>();
+    return (
+      <DModal name={name}>
+        <DModal.Body>
+          <button type="button" onClick={() => openPortal('inner', {})}>Open inner</button>
+        </DModal.Body>
+      </DModal>
+    );
+  }
+
+  function Inner({ name }: { name: string }) {
+    return <DModal name={name}><DModal.Body>inner body</DModal.Body></DModal>;
+  }
+
+  function StackOpener() {
+    const { openPortal } = useDPortalContext<{ outer: Record<string, never> }>();
+    return <button type="button" onClick={() => openPortal('outer', {})}>Open outer</button>;
+  }
+
+  const renderStack = () => {
+    const mount = document.createElement('div');
+    mount.id = 'stack-portal';
+    document.body.appendChild(mount);
+
+    return render(
+      <DPortalContextProvider
+        portalName="stack-portal"
+        availablePortals={{ outer: Outer, inner: Inner }}
+      >
+        <StackOpener />
+      </DPortalContextProvider>,
+    );
+  };
+
+  const openBoth = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByRole('button', { name: 'Open outer' }));
+    await user.click(screen.getByRole('button', { name: 'Open inner' }));
+  };
+
+  it('should hold both at once', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    expect(document.querySelectorAll('dialog')).toHaveLength(2);
+  });
+
+  /* The one underneath stays. Popping the wrong entry would take it instead,
+     and the symptom — the panel you were reading vanishing — points nowhere
+     near the cause. */
+  it('should leave the one underneath when the top closes', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    const dialogs = document.querySelectorAll('dialog');
+    dialogs[dialogs.length - 1].close();
+
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(1));
+    expect(screen.getByRole('button', { name: 'Open inner' })).toBeInTheDocument();
+  });
+
+  it('should close the second one too', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    const close = () => {
+      const open = document.querySelectorAll('dialog');
+      open[open.length - 1].close();
+    };
+
+    close();
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(1));
+    close();
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(0));
+  });
+
+  /* Neither panel paints the portal's scrim, however many are open. */
+  it('should draw no scrim of its own for either', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    expect(document.querySelector('.df-backdrop')).not.toHaveAttribute('data-open');
+  });
+
+  /*
+   * The one that froze a browser.
+   *
+   * The report was a COUNT, and it started as a boolean — so closing the inner
+   * panel set it false while the outer was still open and still a `<dialog>`.
+   * The portal then switched its own machinery back on underneath a live
+   * dialog: its scrim over the panel, its click-outside handler closing an
+   * extra entry, and — the one that actually hung — its Tab trap calling
+   * `focus()` against the browser's own focus trap, two pieces of code moving
+   * focus at each other.
+   *
+   * jsdom stubs `<dialog>`, so it has no native focus trap to fight and cannot
+   * reproduce the freeze. What it CAN check is the state that caused it.
+   */
+  it('should stay hands-off while the outer panel is still open', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    const dialogs = document.querySelectorAll('dialog');
+    dialogs[dialogs.length - 1].close();
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(1));
+
+    /* Still one dialog open, so the portal must still be drawing nothing. */
+    expect(document.querySelector('.df-backdrop')).not.toHaveAttribute('data-open');
+  });
+
+  /* And hands ON again once the last one has gone. */
+  it('should take its machinery back when the stack empties', async () => {
+    const user = userEvent.setup();
+    renderStack();
+    await openBoth(user);
+
+    const close = () => {
+      const open = document.querySelectorAll('dialog');
+      open[open.length - 1].close();
+    };
+    close();
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(1));
+    close();
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(0));
+
+    expect(document.querySelector('.df-backdrop')).not.toHaveAttribute('data-open');
+  });
+});
+
+/**
+ * The portal keeping its hands off a `<dialog>`.
+ *
+ * This is the fix for the freeze, and it is not the scrim. A native dialog
+ * traps focus, handles Escape and makes the page inert; the portal has its own
+ * version of each, written for panels that are not dialogs. Run both and they
+ * do not add up — the Tab trap calls `focus()` against the browser's focus
+ * trap, which is two pieces of code moving focus at each other.
+ *
+ * It used to key off a static `Component.nativeDialog` flag that whoever
+ * REGISTERED the panel had to set, and the library's own stories did not set
+ * it. `DModal` reports it from the inside now, so a panel written the naive
+ * way gets it right.
+ *
+ * jsdom stubs `<dialog>` — no native focus trap, no self-closing on Escape —
+ * so the freeze itself is not reproducible here. What is checkable is that the
+ * portal does nothing, which is the whole of the fix.
+ */
+describe('hands off a native dialog', () => {
+  function Naive({ name }: { name: string }) {
+    return (
+      <DModal name={name}>
+        <DModal.Body><button type="button">inside</button></DModal.Body>
+      </DModal>
+    );
+  }
+
+  function NaiveOpen() {
+    const { openPortal } = useDPortalContext<{ panel: Record<string, never> }>();
+    return <button type="button" onClick={() => openPortal('panel', {})}>Open</button>;
+  }
+
+  const setupNaive = () => {
+    const mount = document.createElement('div');
+    mount.id = 'hands-off-portal';
+    document.body.appendChild(mount);
+
+    return render(
+      <DPortalContextProvider portalName="hands-off-portal" availablePortals={{ panel: Naive }}>
+        <NaiveOpen />
+      </DPortalContextProvider>,
+    );
+  };
+
+  /*
+   * The dialog closes itself for Escape. If the portal ALSO handles it, two
+   * entries come off the stack for one press — which with a stack of two
+   * closes both.
+   */
+  it('should not pop the stack itself on Escape', async () => {
+    const user = userEvent.setup();
+    setupNaive();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    expect(document.querySelector('dialog')).toBeInTheDocument();
+
+    /* jsdom's stub does not close on Escape, so anything that disappears here
+       was the portal doing work that is not its own. */
+    await user.keyboard('{Escape}');
+    await settled();
+    expect(document.querySelector('dialog')).toBeInTheDocument();
+  });
+
+  /* Same for a click that lands outside the panel. */
+  it('should not pop the stack itself on an outside click', async () => {
+    const user = userEvent.setup();
+    setupNaive();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    await user.click(document.body);
+    await settled();
+
+    expect(document.querySelector('dialog')).toBeInTheDocument();
+  });
+
+  /* And Tab must not be intercepted: the browser's own trap owns it. */
+  it('should not intercept Tab', async () => {
+    const user = userEvent.setup();
+    setupNaive();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+
+    const inside = screen.getByRole('button', { name: 'inside' });
+    inside.focus();
+
+    let defaultPrevented = false;
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Tab') defaultPrevented = event.defaultPrevented;
+    });
+
+    await user.tab();
+    expect(defaultPrevented).toBe(false);
+  });
+});
+
+/**
+ * A documentation page, which is where this went wrong.
+ *
+ * Storybook's autodocs mounts every story on one page, and every story that
+ * uses a portal mounts a provider. The modal page has seventeen. When the
+ * scrim was mounted unconditionally that was seventeen `position: fixed`
+ * elements covering the viewport, each with a transition — seventeen
+ * compositing layers over a document that needed none, and the page became
+ * unusable.
+ *
+ * jsdom composites nothing, so the COST is invisible here. The COUNT is not,
+ * and the count is what the regression looks like.
+ */
+describe('many providers on one page', () => {
+  it('should mount no scrim at all when nothing has opened', () => {
+    render(
+      <>
+        {Array.from({ length: 17 }, (_unused, index) => {
+          const id = `docs-portal-${index}`;
+          const node = document.createElement('div');
+          node.id = id;
+          document.body.appendChild(node);
+          return (
+            <DPortalContextProvider
+              key={id}
+              portalName={id}
+              availablePortals={{ panel: Panel }}
+            >
+              <Opener isStatic={false} />
+            </DPortalContextProvider>
+          );
+        })}
+      </>,
+    );
+
+    expect(document.querySelectorAll('.df-backdrop')).toHaveLength(0);
+  });
+});
+
+/**
+ * A `DModal` that is NOT the portal's panel.
+ *
+ * `useConfirmModal` renders one through its own container, and a consumer can
+ * render one inline with no portal involved at all. Both are `DModal`s inside
+ * a provider, and `DModal` closes the portal when it closes — so without a
+ * check, closing a confirmation popped the panel underneath it. One Escape,
+ * two panels gone, which is what a reader reported.
+ *
+ * The portal keys its stack by name and hands that name to the panel, so a
+ * match is the test: this dialog is the portal's entry, or it is somebody
+ * else's.
+ */
+describe('a DModal outside the stack', () => {
+  function StackPanel({ name }: { name: string }) {
+    return <DModal name={name}><DModal.Body>in the stack</DModal.Body></DModal>;
+  }
+
+  function Elsewhere() {
+    const { openPortal } = useDPortalContext<{ panel: Record<string, never> }>();
+    return (
+      <>
+        <button type="button" onClick={() => openPortal('panel', {})}>Open</button>
+        {/* A second dialog in the same provider, owned by nobody's stack. */}
+        <DModal name="not-in-the-stack"><DModal.Body>elsewhere</DModal.Body></DModal>
+      </>
+    );
+  }
+
+  it('should not pop the stack when a foreign modal closes', async () => {
+    const user = userEvent.setup();
+    const mount = document.createElement('div');
+    mount.id = 'foreign-portal';
+    document.body.appendChild(mount);
+
+    render(
+      <DPortalContextProvider portalName="foreign-portal" availablePortals={{ panel: StackPanel }}>
+        <Elsewhere />
+      </DPortalContextProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    expect(screen.getByText('in the stack')).toBeInTheDocument();
+
+    const foreign = screen.getByText('elsewhere').closest('dialog') as HTMLDialogElement;
+    foreign.close();
+    await settled();
+
+    /* The portal's own panel is untouched. */
+    expect(screen.getByText('in the stack')).toBeInTheDocument();
+  });
+
+  /* And the portal's own panel still closes itself, as before. */
+  it('should still pop the stack for its own panel', async () => {
+    const user = userEvent.setup();
+    const mount = document.createElement('div');
+    mount.id = 'own-portal';
+    document.body.appendChild(mount);
+
+    render(
+      <DPortalContextProvider portalName="own-portal" availablePortals={{ panel: StackPanel }}>
+        <Elsewhere />
+      </DPortalContextProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    const own = screen.getByText('in the stack').closest('dialog') as HTMLDialogElement;
+
+    own.close();
+    await waitFor(() => expect(screen.queryByText('in the stack')).not.toBeInTheDocument());
   });
 });

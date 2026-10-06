@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+
 import { createPortal } from 'react-dom';
+
+import useRenderLoopWarning from '../../hooks/useRenderLoopWarning';
 
 import {
   useConfirmModalStore,
@@ -27,6 +30,8 @@ type Props = {
  * </DContextProvider>
  */
 export default function DConfirmModalContainer({ nodeId }: Props) {
+  useRenderLoopWarning('DConfirmModalContainer');
+
   const store = useConfirmModalStore();
   const [entries, setEntries] = useState<ConfirmModalEntry[]>([]);
 

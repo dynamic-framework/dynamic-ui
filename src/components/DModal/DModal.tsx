@@ -8,6 +8,7 @@ import { DOverlayContext } from '../DOverlayContext';
 import { useOptionalPortalContext } from '../../contexts/DPortalContext';
 import useOverlayDialog from '../useOverlayDialog';
 import useExitTransition from '../../hooks/useExitTransition';
+import useRenderLoopWarning from '../../hooks/useRenderLoopWarning';
 import { useResponsiveProp, type ResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import DModalHeader from './components/DModalHeader';
@@ -83,15 +84,21 @@ function DModal(
     ref, overlay, onCancel, onClick,
   } = useOverlayDialog({ name, staticBackdrop });
 
+  useRenderLoopWarning(`DModal(${name})`);
+
   /*
    * Two things reported to the portal, both because forgetting them failed in
    * ways that did not look like the cause.
    *
-   * `panelPaintsScrim` says the browser draws `::backdrop` for this panel, so
-   * the portal must not draw one as well. It used to be a static
-   * `Component.nativeDialog` that whoever REGISTERED the panel had to set —
-   * and a panel that forgot it got two stacked 50% layers, with the portal's
-   * one outliving the dialog and swallowing the next click.
+   * `panelIsNative` says the browser is managing this panel: it draws
+   * `::backdrop`, traps focus, makes the page inert and handles Escape. The
+   * portal then does none of those, because each of its own versions FIGHTS
+   * the real one rather than adding to it.
+   *
+   * It used to be a static `Component.nativeDialog` that whoever REGISTERED
+   * the panel had to set, and a panel that forgot it got the portal's scrim
+   * stacked on the dialog's, its click handler closing a second entry, and
+   * its Tab trap calling `focus()` against the browser's focus trap.
    *
    * `closePortal` on close is the other half: `<dialog>` closes itself for
    * Escape and for a click outside, and if nothing pops the stack the entry
@@ -101,8 +108,8 @@ function DModal(
   const portal = useOptionalPortalContext();
 
   useEffect(() => {
-    portal?.panelPaintsScrim?.(true);
-    return () => portal?.panelPaintsScrim?.(false);
+    portal?.panelIsNative?.(true);
+    return () => portal?.panelIsNative?.(false);
   }, [portal]);
 
   const afterExit = useExitTransition();
@@ -120,11 +127,25 @@ function DModal(
    * `onClose` fires immediately regardless — a consumer waiting to know the
    * panel is closed should not wait on an animation.
    */
+  /**
+   * Whether THIS panel is the one the portal has on top.
+   *
+   * The portal keys its stack by name and passes that name to the panel, so a
+   * match means this dialog is the portal's current entry. A `DModal` that is
+   * not — the one `useConfirmModal` renders, or one a consumer put inline —
+   * must not touch the stack.
+   *
+   * Without this, closing a confirmation closed the panel underneath it as
+   * well: the confirm's dialog is a `DModal`, so it called `closePortal` and
+   * popped an entry that was never its own. One Escape, two panels gone.
+   */
+  const isPortalPanel = portal?.stack?.at(-1)?.name === name;
+
   const handleClose = useCallback(() => {
     onClose?.();
-    if (!portal?.closePortal) return;
+    if (!isPortalPanel || !portal?.closePortal) return;
     afterExit(ref.current, portal.closePortal);
-  }, [afterExit, onClose, portal, ref]);
+  }, [afterExit, isPortalPanel, onClose, portal, ref]);
 
   /*
    * Only subscribe to breakpoint changes when a responsive object is actually

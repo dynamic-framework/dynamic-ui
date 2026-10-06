@@ -16,6 +16,7 @@ import type {
 
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
+import useRenderLoopWarning from '../hooks/useRenderLoopWarning';
 import useStackState from '../hooks/useStackState';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements';
 
@@ -93,17 +94,23 @@ export type PortalContextType<T extends Record<string, unknown>> = {
   /** Pops the topmost portal off the stack, closing it. */
   closePortal: ClosePortalFunction;
   /**
-   * A panel reporting that it paints its own scrim.
+   * A panel reporting that the BROWSER is managing it.
    *
-   * `DModal` calls this on mount, because it is a `<dialog>` and the browser
-   * draws `::backdrop` for it. The portal then draws nothing, which is what
-   * keeps a modal from carrying two stacked 50% layers.
+   * `DModal` calls this on mount and again on unmount, because it is a real
+   * `<dialog>` opened with `showModal()`: the browser draws `::backdrop`,
+   * traps focus, makes the rest of the page inert and handles Escape. The
+   * portal must then do none of those — every one of its own versions fights
+   * the real thing rather than adding to it.
+   *
+   * `true` on mount, `false` on unmount; the provider counts rather than
+   * flags, so two stacked panels do not leave the portal thinking the last
+   * one to unmount took the whole stack with it.
    *
    * Not part of the documented surface — a consumer never calls it. It exists
    * so the thing that KNOWS can say so, instead of whoever registers the
-   * panel having to remember.
+   * panel having to remember a static flag.
    */
-  panelPaintsScrim: (paints: boolean) => void;
+  panelIsNative: (open: boolean) => void;
 };
 
 /**
@@ -136,6 +143,8 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }: PortalContextProps<T>,
 ) {
   const { created } = usePortal(portalName);
+  useRenderLoopWarning('DPortalContextProvider');
+
   const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
@@ -199,14 +208,28 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
    * The flag is still read, so a panel that is a `<dialog>` without using
    * `DModal` can declare itself. This is the belt.
    */
-  const [panelPaintsScrim, setPanelPaintsScrim] = useState(false);
+  const [nativePanels, setNativePanels] = useState(0);
+
+  /*
+   * A count, not a flag.
+   *
+   * With two panels stacked, a boolean goes false the moment the INNER one
+   * unmounts — while the outer is still open and still a `<dialog>`. The
+   * portal would then switch its own machinery back on underneath a live
+   * dialog: its scrim over the panel, its click-outside handler closing an
+   * extra entry, and its Tab trap calling `focus()` against the browser's own
+   * focus trap. A counter cannot get that wrong.
+   */
+  const panelIsNative = useCallback((open: boolean) => {
+    setNativePanels((count) => Math.max(0, count + (open ? 1 : -1)));
+  }, []);
 
   const value = useMemo(() => ({
     stack: publicStack,
     openPortal,
     closePortal,
-    panelPaintsScrim: setPanelPaintsScrim,
-  }), [publicStack, openPortal, closePortal]) as PortalContextType<any>;
+    panelIsNative,
+  }), [publicStack, openPortal, closePortal, panelIsNative]) as PortalContextType<any>;
 
   /**
    * Closes when the click landed outside the panel.
@@ -227,20 +250,54 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
    */
   /** True when the panel on top is a `<dialog>` the browser is managing. */
 
+  /**
+   * True when the browser is managing the panel on top.
+   *
+   * Either because a mounted panel said so — `DModal` reports it, which is
+   * how a naive panel gets this right without its author knowing the
+   * contract exists — or because whoever registered it set the static flag,
+   * for a `<dialog>` built without `DModal`.
+   *
+   * EVERYTHING the portal does keys off this, not just the scrim: the
+   * click-outside handler, Escape, and the Tab trap. Each has a native
+   * counterpart, and running both does not add up — it fights. The Tab trap
+   * is the worst of them, because `focus()` against the browser's own focus
+   * trap is two pieces of code moving focus at each other.
+   */
   const topIsNativeDialog = stack.length > 0
-    && Boolean(stack[stack.length - 1].Component.nativeDialog);
+    && (nativePanels > 0 || Boolean(stack[stack.length - 1].Component.nativeDialog));
 
   /*
    * Whether the stack needs OUR scrim: something is open, and the top panel is
    * not painting its own. Every panel the library ships is a dialog, so this
    * is for a custom panel a consumer registers with the portal.
    */
-  /*
-   * Our scrim is needed only when nothing else is painting one: the stack has
-   * something in it, the registered component did not declare itself a
-   * dialog, and no mounted panel has reported that it paints its own.
+  /* Our scrim is for a panel the browser is NOT managing — a dialog paints
+     its own through `::backdrop`. */
+  const needsScrim = stack.length > 0 && !topIsNativeDialog;
+
+  /**
+   * Whether the scrim element exists at all.
+   *
+   * It has to OUTLIVE the panel so its fade-out has a previous frame to leave
+   * from — that is the whole reason it is a persistent element rather than
+   * something mounted alongside the panel. But "persistent" was written as
+   * "always", and that is a `position: fixed` element covering the viewport
+   * for every provider on the page whether or not it will ever be used.
+   *
+   * A Storybook docs page mounts one provider per story: seventeen of them on
+   * the modal page, which is seventeen full-viewport compositing layers over
+   * a document that needed none. It made the page unusable, and nothing in a
+   * test environment notices — jsdom composites nothing.
+   *
+   * So it is latched: absent until something needs it, present from then on.
+   * A page where every panel is a `<dialog>` — which is every panel this
+   * library ships — never mounts one.
    */
-  const needsScrim = stack.length > 0 && !topIsNativeDialog && !panelPaintsScrim;
+  const [scrimMounted, setScrimMounted] = useState(false);
+  useEffect(() => {
+    if (needsScrim) setScrimMounted(true);
+  }, [needsScrim]);
 
   const handleClose = useCallback((target: Element) => {
     // A native dialog closes itself: Escape, and a click outside the panel.
@@ -334,10 +391,12 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
             * token, so this stays off for a native panel — two 50% scrims
             * stack into something much darker than the design says.
             */}
-          <div
-            className="df-backdrop"
-            {...needsScrim && { 'data-open': '' }}
-          />
+          {scrimMounted && (
+            <div
+              className="df-backdrop"
+              {...needsScrim && { 'data-open': '' }}
+            />
+          )}
 
           {stack.map(({ Component, name, payload }) => (
             <Component
@@ -397,6 +456,8 @@ export function useDPortalContext<T extends Record<string, unknown>>(): PortalCo
  * Separate function rather than a flag on the other, so neither has to explain
  * at the call site which behaviour it is asking for.
  */
-export function useOptionalPortalContext(): PortalContextType<never> | undefined {
-  return useContext(DPortalContext) as PortalContextType<never> | undefined;
+export function useOptionalPortalContext():
+PortalContextType<Record<string, unknown>> | undefined {
+  return useContext(DPortalContext) as
+    PortalContextType<Record<string, unknown>> | undefined;
 }

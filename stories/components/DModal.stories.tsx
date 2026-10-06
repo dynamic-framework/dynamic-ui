@@ -6,6 +6,8 @@ import type { PortalProps } from '../../src';
 import DButton from '../../src/components/DButton';
 import DInput from '../../src/components/DInput';
 import DModal from '../../src/components/DModal/DModal';
+import DConfirmModalContainer from '../../src/components/DConfirmModal/DConfirmModalContainer';
+import useConfirmModal from '../../src/hooks/useConfirmModal';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 import type { DSelectOption } from '../../src/components/DSelect/types';
@@ -26,6 +28,8 @@ import type { OverlayPlacement, OverlaySize } from '../../src/components/interfa
  */
 
 type Payloads = {
+  /** A second registered name, so two panels can be open at once. */
+  nested: { title?: string };
   panel: {
     placement?: OverlayPlacement | Partial<Record<string, OverlayPlacement>>;
     size?: OverlaySize;
@@ -46,8 +50,31 @@ type Payloads = {
      * element the transition is declared on.
      */
     style?: React.CSSProperties;
+    /**
+     * Renders the button that opens the second panel.
+     *
+     * A flag rather than the button itself in `body`. The payload crosses
+     * into the portal's state, and data survives that trip in a way a React
+     * element does not have to — an element in state is a tree held open for
+     * as long as the entry lives, serialised by the docs panel, and compared
+     * by identity on every render. The flag says what to draw; the panel
+     * draws it.
+     */
+    withNestedTrigger?: boolean;
   };
 };
+
+/** Opens the small panel from inside the big one. */
+function OpenNested() {
+  const { openPortal } = useDPortalContext<Payloads>();
+  return (
+    <DButton
+      text="Open a second modal"
+      variant="outline"
+      onClick={() => openPortal('nested', { title: 'The one on top' })}
+    />
+  );
+}
 
 /**
  * A panel written the naive way, on purpose.
@@ -72,6 +99,7 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
     actionPlacement,
     withHeader = true,
     withFooter = true,
+    withNestedTrigger = false,
     ...geometry
   } = payload;
 
@@ -82,7 +110,10 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
           <h5 className="df-fw-semibold df-m-0">{title}</h5>
         </DModal.Header>
       )}
-      <DModal.Body>{body}</DModal.Body>
+      <DModal.Body>
+        {body}
+        {withNestedTrigger && <OpenNested />}
+      </DModal.Body>
       {withFooter && (
         <DModal.Footer actionPlacement={actionPlacement}>
           <DButton text="Cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
@@ -99,11 +130,39 @@ function Trigger({ label, payload }: { label: string; payload: Payloads['panel']
   return <DButton text={label} onClick={() => openPortal('panel', payload)} />;
 }
 
+/**
+ * The panel the big one opens.
+ *
+ * A separate registration rather than the same one twice: the stack is keyed
+ * by name and React keys the rendered panels by it too, so opening `panel`
+ * from inside `panel` would collide with itself.
+ */
+function NestedPanel({ name, payload }: PortalProps<Payloads['nested']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DModal name={name} size="sm">
+      <DModal.Header onClose={closePortal} showCloseButton>
+        <h5 className="df-fw-semibold df-m-0">{payload.title ?? 'The one on top'}</h5>
+      </DModal.Header>
+      <DModal.Body>
+        <p className="df-m-0">
+          Both are open. Escape closes this one and leaves the one underneath —
+          the browser sends it to the topmost dialog in the top layer, and the
+          portal pops the entry that closed.
+        </p>
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton text="Close this one" onClick={() => closePortal()} />
+      </DModal.Footer>
+    </DModal>
+  );
+}
+
 /** Wraps a story in the provider the panel needs, the way an app does once. */
 function withPortal(children: React.ReactNode, material = false): React.JSX.Element {
   return (
     <DContextProvider<Payloads>
-      availablePortals={{ panel: Panel }}
+      availablePortals={{ panel: Panel, nested: NestedPanel }}
       {...material && CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <div className="df-flex df-flex-wrap df-gap-3 df-items-center df-p-4">
@@ -727,3 +786,130 @@ export const ReducedMotion: Story = {
     },
   },
 };
+
+/* --- stacking ---------------------------------------------------------- */
+
+/**
+ * Two at once, and the order they leave in.
+ *
+ * A big panel opens a small one from its own body. Both are real `<dialog>`s
+ * in the browser's top layer, which is what makes this work without any
+ * z-index: the top layer stacks in the order things were opened, so the second
+ * one is above the first and the first is still visible behind it.
+ *
+ * Press Escape, or click outside. The browser sends it to the TOPMOST dialog
+ * only, so the small one goes and the big one stays — and the portal pops the
+ * entry that actually closed rather than assuming. Press Escape again for the
+ * other.
+ *
+ * Worth noticing what is NOT here: no `z-index`, no manual focus management,
+ * no counting of open panels. Each `<dialog>` makes everything behind it
+ * inert, so the panel underneath is visible and not reachable, which is the
+ * behaviour a nested modal needs and the hardest part to write by hand.
+ */
+export const Stacked: Story = story(
+  () => withPortal(
+    <Trigger
+      label="Open a large modal"
+      payload={{
+        size: 'lg',
+        title: 'The one underneath',
+        body: (
+          <p className="df-m-0">
+            A large panel. The button below opens a small one on top of it.
+          </p>
+        ),
+        withNestedTrigger: true,
+      }}
+    />,
+  ),
+  'Two panels open at once. The second is `size="sm"` over a `size="lg"`, both in the '
+  + "browser's top layer — so the stacking order is the opening order and no `z-index` is "
+  + 'involved. Escape closes only the topmost, because that is what the browser does with a '
+  + 'stack of dialogs, and each one makes everything behind it inert.',
+);
+
+/* --- confirming from inside a modal ------------------------------------ */
+
+/**
+ * Asks before doing something, from inside an open panel.
+ *
+ * `useConfirmModal` renders through its own container rather than the portal
+ * stack, so it sits above whatever is open without being part of it.
+ */
+function ConfirmFromModal() {
+  const { closePortal } = useDPortalContext();
+  const [result, setResult] = useState<string>('');
+
+  const confirm = useConfirmModal({
+    title: 'Discard the changes?',
+    message: 'The form has unsaved edits. Closing now loses them.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: () => {
+      setResult('discarded');
+      closePortal();
+    },
+    onClose: () => setResult('kept'),
+  });
+
+  return (
+    <div className="df-flex df-flex-col df-gap-3">
+      <p className="df-m-0">
+        A panel with unsaved work. Closing it should ask first — which is a
+        confirm modal on top of this one.
+      </p>
+      <DInput label="Amount" defaultValue="1,250.00" />
+      <div className="df-flex df-gap-2">
+        <DButton text="Close with a confirmation" color="danger" onClick={confirm.open} />
+        <DButton text="Close directly" variant="outline" onClick={() => closePortal()} />
+      </div>
+      {result && (
+        <p className="df-m-0 df-text-muted df-fs-body-sm">
+          Last answer:
+          {' '}
+          {result}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A modal that confirms before closing.
+ *
+ * Three layers of top-layer dialog, and the thing to watch is that each one
+ * makes the one below inert: while the confirmation is up, the form behind it
+ * cannot be tabbed into or read by a screen reader's browse mode.
+ *
+ * `useConfirmModal` has its own container (`DConfirmModalContainer`) rather
+ * than going through the portal stack, which is why "confirm" can close the
+ * panel that opened it without the two fighting over whose turn it is to pop.
+ */
+export const ConfirmBeforeClosing: Story = story(
+  () => withPortal(
+    <>
+      {/*
+        * `d-portal` is the node `DContextProvider` creates — the default
+        * `portalName`. An id nothing creates makes `getElementById` return
+        * null and the container render nothing, so the confirmation never
+        * appears and the button looks dead. That is what a made-up id here
+        * did.
+        */}
+      <DConfirmModalContainer nodeId="d-portal" />
+      <Trigger
+        label="Open a form"
+        payload={{
+          size: 'md',
+          title: 'Edit the transfer',
+          withFooter: false,
+          body: <ConfirmFromModal />,
+        }}
+      />
+    </>,
+  ),
+  'The confirmation is a third dialog above the panel that asked for it. Each `<dialog>` '
+  + 'makes everything behind it inert, so the form cannot be tabbed into while the question '
+  + 'is up — which is the part that is hard to get right by hand.',
+);
