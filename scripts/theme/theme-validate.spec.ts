@@ -354,7 +354,11 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('min-width: 1200px');
   });
 
-  it.each([['dvw', 'calc(1.4rem + 1.8dvw)'], ['mayúsculas', 'calc(1.4rem + 1.8VW)']])(
+  it.each([
+    ['dvw', 'calc(1.4rem + 1.8dvw)'],
+    ['mayúsculas', 'calc(1.4rem + 1.8VW)'],
+    ['notación científica', 'calc(1.4rem + 1.8e0vw)'],
+  ])(
     'una escala fluida con %s sin su bloque de 1200px',
     (_, fluid) => {
       const valid = expandCss(MINIMAL_THEME);
