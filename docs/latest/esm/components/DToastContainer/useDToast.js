@@ -34,19 +34,19 @@ function useDToast() {
         if (typeof data === 'function') {
             return toast.custom(data, toastProps);
         }
-        const { title, description, icon, closeIcon, timestamp, color, } = data;
+        const { title, description, icon, closeIcon, timestamp, color, role, closeAriaLabel = 'Close', } = data;
         return toast.custom(({ id, visible }) => {
             if (!visible) {
                 return null;
             }
             if (!description) {
-                return (jsx(DToast, { className: classNames({
+                return (jsx(DToast, { role: role, className: classNames({
                         [`toast-${color}`]: !!color,
-                    }, 'show'), children: jsxs(DToast.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
+                    }, 'show'), children: jsxs(DToast.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": closeAriaLabel, onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
             }
-            return (jsxs(DToast, { className: classNames({
+            return (jsxs(DToast, { role: role, className: classNames({
                     [`toast-${color}`]: !!color,
-                }, 'show'), children: [jsxs(DToast.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast.Body, { children: jsx("span", { children: description }) })] }));
+                }, 'show'), children: [jsxs(DToast.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": closeAriaLabel, onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast.Body, { children: jsx("span", { children: description }) })] }));
         }, toastProps);
     }, [xLg]);
     return {

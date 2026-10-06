@@ -1,0 +1,1 @@
+import{r as e}from"./iframe-BOlGrI6L.js";function i(t,r,s){const[o,n]=e.useState(t===void 0?s:t);e.useEffect(()=>{t!==void 0&&n(t)},[t]);const a=e.useCallback(c=>{r||n(c)},[r]);return[r&&t!==void 0?t:o,a]}export{i as u};

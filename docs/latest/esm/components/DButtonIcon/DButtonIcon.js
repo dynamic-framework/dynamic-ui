@@ -7,7 +7,7 @@ import warnMissingAccessibleName from './warnMissingAccessibleName.js';
 import { useDContext } from '../../contexts/DContext.js';
 
 function DButtonIcon(_a) {
-    var { id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
+    var { id, icon, size, iconSize, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "iconSize", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
     const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const generateClasses = useMemo(() => {
         const variantClass = !variant || variant === 'solid'
@@ -15,6 +15,9 @@ function DButtonIcon(_a) {
             : `btn-${variant}-${color}`;
         return Object.assign(Object.assign(Object.assign({ 'btn d-button-icon': true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
     }, [variant, color, size, state, loading]);
+    // A responsive iconSize has to follow viewport changes, so DIcon only
+    // listens to breakpoints when it gets an object; a plain string needs none.
+    const useIconSizeListener = typeof iconSize === 'object';
     const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
     const clickHandler = useCallback((event) => {
         if (stopPropagationEnabled) {
@@ -41,11 +44,11 @@ function DButtonIcon(_a) {
     if (href) {
         return (jsx("a", Object.assign({ id: id, href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": ariaLabel, "aria-disabled": isDisabled }, dataAttributes, { children: loading
                 ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-                : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
+                : (jsx(DIcon, { icon: icon, size: iconSize, useListenerSize: useIconSizeListener, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
     }
     return (jsx("button", Object.assign({ className: classNames(generateClasses, className), style: style, disabled: state === 'disabled' || loading, onClick: clickHandler, "aria-label": ariaLabel }, dataAttributes, rest, { children: loading
             ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-            : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
+            : (jsx(DIcon, { icon: icon, size: iconSize, useListenerSize: useIconSizeListener, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
 }
 
 export { DButtonIcon as default };

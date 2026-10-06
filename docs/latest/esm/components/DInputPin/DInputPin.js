@@ -1,6 +1,8 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { useId, useMemo, useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
+import DFormLabel from '../internal/DFormLabel.js';
+import hasLabelContent from '../../utils/hasLabelContent.js';
 
 function DInputPin({ id: idProp, label = '', placeholder, type = 'text', disabled = false, loading = false, secret = false, characters = 4, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, dataAttributes, onChange, 'aria-label': ariaLabel = 'Pin character number', }) {
     const innerId = useId();
@@ -75,7 +77,7 @@ function DInputPin({ id: idProp, label = '', placeholder, type = 'text', disable
     const wheelInput = useCallback((event) => {
         event.currentTarget.blur();
     }, []);
-    return (jsxs("div", Object.assign({ className: classNames('d-input-pin', className), style: style }, dataAttributes, { children: [label && (jsx("label", { htmlFor: "pinIndex0", children: label })), jsxs("div", { className: "d-input-pin-group", id: id, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
+    return (jsxs("div", Object.assign({ className: classNames('d-input-pin', className), style: style }, dataAttributes, { children: [hasLabelContent(label) && (jsx(DFormLabel, { htmlFor: "pinIndex0", children: label })), jsxs("div", { className: "d-input-pin-group", id: id, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
                             'form-control': true,
                             'is-invalid': invalid,
                             'is-valid': valid,

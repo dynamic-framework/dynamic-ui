@@ -60,6 +60,7 @@ export { default as DStepperDesktop } from './components/DStepperDesktop/DSteppe
 export { default as DStepperMobile } from './components/DStepperMobile/DStepperMobile.js';
 export { default as DTabContent } from './components/DTabs/components/DTabContent.js';
 export { default as DTabs } from './components/DTabs/DTabs.js';
+export { default as DTabsProvider } from './components/DTabs/components/DTabsProvider.js';
 export { useTabContext } from './components/DTabs/TabContext.js';
 export { default as DTimeline } from './components/DTimeline/DTimeline.js';
 export { default as DToast } from './components/DToast/DToast.js';

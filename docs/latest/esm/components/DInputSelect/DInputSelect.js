@@ -2,8 +2,12 @@ import { jsx, jsxs } from 'react/jsx-runtime';
 import { useId, useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 import DIcon from '../DIcon/DIcon.js';
+import isTextLabel from '../../utils/isTextLabel.js';
+import DFormLabel from '../internal/DFormLabel.js';
+import hasLabelContent from '../../utils/hasLabelContent.js';
+import warnLabelUsage from '../../utils/warnLabelUsage.js';
 
-function DInputSelect({ id: idProp, name, label = '', className, style, options = [], disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, size, floatingLabel = false, invalid = false, valid = false, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id: idProp, name, label = '', ariaLabel, className, style, options = [], disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, size, floatingLabel = false, invalid = false, valid = false, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
     const internalValueExtractor = useCallback((option) => {
@@ -53,8 +57,9 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
             'floating-label': floatingLabel,
             'is-invalid': invalid,
             'is-valid': valid,
-        }), "aria-label": label, disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, value && { value }, { children: options.map((option) => (jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) }))), [
+        }), "aria-label": ariaLabel !== null && ariaLabel !== void 0 ? ariaLabel : (isTextLabel(label) ? String(label) : undefined), disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, value && { value }, { children: options.map((option) => (jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) }))), [
         ariaDescribedby,
+        ariaLabel,
         blurHandler,
         changeHandler,
         disabled,
@@ -71,7 +76,7 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
         valid,
         size,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -81,7 +86,16 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
         }
         return selectComponent;
     }, [floatingLabel, labelComponent, selectComponent]);
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && (labelComponent), jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputSelect',
+            label,
+            hasAccessibleName: !!ariaLabel,
+            accessibleNameProp: 'ariaLabel',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && (labelComponent), jsxs("div", { className: classNames({
                     'input-group': true,
                 }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsx("div", { className: "input-group-text form-control-icon loading", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }

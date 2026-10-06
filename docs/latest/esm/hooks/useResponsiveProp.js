@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
-import { useMediaBreakpointUpXs, useMediaBreakpointUpSm, useMediaBreakpointUpMd, useMediaBreakpointUpLg, useMediaBreakpointUpXl, useMediaBreakpointUpXxl } from './useMediaBreakpointUp.js';
+import { PREFIX_BS } from '../components/config.js';
+import { useMediaBreakpointUpXs, useMediaBreakpointUpSm, useMediaBreakpointUpMd, useMediaBreakpointUpLg, useMediaBreakpointUpXl, useMediaBreakpointUpXxl, useBreakpointValue } from './useMediaBreakpointUp.js';
 
+let warnedMissingBreakpoints = false;
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
  *
@@ -26,7 +28,16 @@ function useResponsiveProp(useListener = false) {
     const bpLgUp = useMediaBreakpointUpLg(useListener);
     const bpXlUp = useMediaBreakpointUpXl(useListener);
     const bpXxlUp = useMediaBreakpointUpXxl(useListener);
+    // `xs` is `0` and can't tell a missing variable apart, so `sm` is checked.
+    const hasBreakpoints = !!useBreakpointValue('sm');
     const responsivePropValue = useCallback((prop) => {
+        if (process.env.NODE_ENV !== 'production' && !hasBreakpoints && !warnedMissingBreakpoints) {
+            warnedMissingBreakpoints = true;
+            // eslint-disable-next-line no-console
+            console.warn(`[Dynamic UI] The --${PREFIX_BS}breakpoint-* CSS variables are not available, so a `
+                + 'responsive prop (an object by breakpoint) falls back to its default value. Load '
+                + 'dynamic-ui.css before rendering. It never appears in production builds.');
+        }
         // Pick the highest matched breakpoint value that is defined in prop
         if (prop.xxl !== undefined && bpXxlUp)
             return prop.xxl;
@@ -42,7 +53,7 @@ function useResponsiveProp(useListener = false) {
             return prop.xs;
         // Fallback: return undefined if no breakpoint matches
         return undefined;
-    }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp]);
+    }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp, hasBreakpoints]);
     return { responsivePropValue };
 }
 

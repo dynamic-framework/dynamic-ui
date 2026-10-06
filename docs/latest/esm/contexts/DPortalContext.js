@@ -1,17 +1,35 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
-import { createContext, useCallback, useMemo, useEffect, useContext } from 'react';
+import { createContext, useState, useRef, useEffect, useCallback, useMemo, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect.js';
 import usePortal from '../hooks/usePortal.js';
 import useStackState from '../hooks/useStackState.js';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements.js';
 
+const loadPortalStack = () => import('./portal/DPortalStack.js').then((module) => module.default);
 const DPortalContext = createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop }] = useStackState([]);
+    const [PortalStack, setPortalStack] = useState(null);
+    const pending = useRef([]);
+    const ready = useRef(false);
     useDisableBodyScrollEffect(Boolean(stack.length));
+    // Loads framer-motion off the critical path only when portals are configured,
+    // so the first openPortal does not wait for it.
+    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0;
+    useEffect(() => {
+        if (!hasPortals)
+            return;
+        loadPortalStack()
+            .then((Stack) => {
+            ready.current = true;
+            setPortalStack(() => Stack);
+        })
+            .catch(() => {
+            // openPortal retries the import and reports the failure.
+        });
+    }, [hasPortals]);
     const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
     function openPortalImpl(name, payload) {
@@ -27,10 +45,30 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         }
         // K is a specific member of keyof T & string so the object satisfies
         // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
-        push({ name, Component, payload });
+        const item = { name, Component, payload };
+        if (ready.current) {
+            push(item);
+        }
+        else {
+            // Not loaded yet: the portal enters the stack together with its renderer.
+            pending.current.push(item);
+            loadPortalStack().then((Stack) => {
+                ready.current = true;
+                setPortalStack(() => Stack);
+                pending.current.splice(0).forEach(push);
+            }).catch((error) => {
+                pending.current = [];
+                // eslint-disable-next-line no-console
+                console.error('[DPortalContext] Could not load the portal stack', error);
+            });
+        }
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = useCallback(() => {
+        if (pending.current.length > 0) {
+            pending.current.pop();
+            return;
+        }
         // pop() is safe on empty stacks, so close remains idempotent.
         pop();
     }, [pop]);
@@ -87,13 +125,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
             window.removeEventListener('keydown', keyEvent);
         };
     }, [handleClose, portalName, stack.length]);
-    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(
+    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && PortalStack && createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(AnimatePresence, { children: stack.flatMap(({ Component, name, payload, }) => [
-                        jsx(motion.div, { className: "backdrop", initial: { opacity: 0 }, animate: { opacity: 0.5 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' } }, `${name}-backdrop`),
-                        jsx(Component, { name: name, payload: payload }, name),
-                    ]) }) }), document.getElementById(portalName))] }));
+            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(PortalStack, { stack: stack }) }), document.getElementById(portalName))] }));
 }
 /**
  * Hook to open/close registered portals (modals, offcanvas, etc.).

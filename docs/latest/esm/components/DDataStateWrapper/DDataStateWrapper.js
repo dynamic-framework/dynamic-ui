@@ -8,6 +8,11 @@ function render(renderable) {
         return null;
     return typeof renderable === 'function' ? renderable() : renderable;
 }
+function isEmpty(data) {
+    if (Array.isArray(data))
+        return data.length === 0;
+    return data === null || data === undefined;
+}
 function DDataStateWrapper({ isLoading, isError, data, onRetry, messages, renderLoading, renderEmpty, renderError, children, }) {
     // 1. Loading
     if (isLoading) {
@@ -21,13 +26,15 @@ function DDataStateWrapper({ isLoading, isError, data, onRetry, messages, render
             return render(renderError);
         return (jsx(ErrorState, { onRetry: onRetry, message: messages === null || messages === void 0 ? void 0 : messages.error, retryMessage: messages === null || messages === void 0 ? void 0 : messages.retry }));
     }
-    // 3. Empty
-    if (!(data === null || data === void 0 ? void 0 : data.length)) {
+    // 3. Empty: no items for a collection, null/undefined for a single resource
+    if (isEmpty(data)) {
         if (renderEmpty)
             return render(renderEmpty);
         return (jsx(EmptyState, { message: messages === null || messages === void 0 ? void 0 : messages.empty }));
     }
-    // 4. Success
+    // 4. Success: the render prop gets the same shape it was given
+    // Both overloads pair `data` with its own `children` signature, so the
+    // value is handed back exactly as it was received.
     return jsx(Fragment, { children: children(data) });
 }
 

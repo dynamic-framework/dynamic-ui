@@ -1,13 +1,13 @@
 import { jsxs, jsx, Fragment } from 'react/jsx-runtime';
 import classNames from 'classnames';
-import React, { useEffect, useState, useCallback, useMemo, useContext, createContext, useLayoutEffect, useSyncExternalStore, createElement, forwardRef, useId, useRef, isValidElement, cloneElement, createRef } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useContext, useRef, createContext, useLayoutEffect, useSyncExternalStore, createElement, isValidElement, forwardRef, useId, cloneElement, Children } from 'react';
 import { __rest } from 'tslib';
 import * as LucideIcons from 'lucide-react';
 import { isValidElementType } from 'react-is';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 import { fromEvent } from 'file-selector';
 import { SplideSlide, Splide, SplideTrack } from '@splidejs/react-splide';
+import { motion, AnimatePresence } from 'framer-motion';
 import currency from 'currency.js';
 import DatePicker from 'react-datepicker';
 import { getYear, format, getMonth } from 'date-fns';
@@ -151,11 +151,30 @@ function getKeyboardFocusableElements(container) {
     ].filter((element) => !element.hasAttribute('disabled'));
 }
 
+const loadPortalStack = () => import('./DPortalStack-D1-GGU4C.js').then((module) => module.default);
 const DPortalContext = createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop }] = useStackState([]);
+    const [PortalStack, setPortalStack] = useState(null);
+    const pending = useRef([]);
+    const ready = useRef(false);
     useDisableBodyScrollEffect(Boolean(stack.length));
+    // Loads framer-motion off the critical path only when portals are configured,
+    // so the first openPortal does not wait for it.
+    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0;
+    useEffect(() => {
+        if (!hasPortals)
+            return;
+        loadPortalStack()
+            .then((Stack) => {
+            ready.current = true;
+            setPortalStack(() => Stack);
+        })
+            .catch(() => {
+            // openPortal retries the import and reports the failure.
+        });
+    }, [hasPortals]);
     const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
     function openPortalImpl(name, payload) {
@@ -171,10 +190,30 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         }
         // K is a specific member of keyof T & string so the object satisfies
         // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
-        push({ name, Component, payload });
+        const item = { name, Component, payload };
+        if (ready.current) {
+            push(item);
+        }
+        else {
+            // Not loaded yet: the portal enters the stack together with its renderer.
+            pending.current.push(item);
+            loadPortalStack().then((Stack) => {
+                ready.current = true;
+                setPortalStack(() => Stack);
+                pending.current.splice(0).forEach(push);
+            }).catch((error) => {
+                pending.current = [];
+                // eslint-disable-next-line no-console
+                console.error('[DPortalContext] Could not load the portal stack', error);
+            });
+        }
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = useCallback(() => {
+        if (pending.current.length > 0) {
+            pending.current.pop();
+            return;
+        }
         // pop() is safe on empty stacks, so close remains idempotent.
         pop();
     }, [pop]);
@@ -231,13 +270,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
             window.removeEventListener('keydown', keyEvent);
         };
     }, [handleClose, portalName, stack.length]);
-    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(
+    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && PortalStack && createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(AnimatePresence, { children: stack.flatMap(({ Component, name, payload, }) => [
-                        jsx(motion.div, { className: "backdrop", initial: { opacity: 0 }, animate: { opacity: 0.5 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' } }, `${name}-backdrop`),
-                        jsx(Component, { name: name, payload: payload }, name),
-                    ]) }) }), document.getElementById(portalName))] }));
+            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(PortalStack, { stack: stack }) }), document.getElementById(portalName))] }));
 }
 /**
  * Hook to open/close registered portals (modals, offcanvas, etc.).
@@ -512,9 +548,43 @@ function useMediaQuery(mediaQuery, useListener = false) {
     return useSyncExternalStore(useListener ? (cb) => subscribeToMediaQuery(mediaQuery, cb) : noop, () => (mediaQuery ? checkMediaQuery(mediaQuery) : true), () => false);
 }
 
-function useMediaBreakpointUp(breakpoint, useListener = false) {
+const BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+// Breakpoints read from the CSS on first use and shared by every component
+// that resolves responsive props: one computed-style read for the page,
+// instead of one per breakpoint per render. `dynamic-ui.css` has to be loaded
+// before rendering; if it isn't, the empty result is kept too, so a
+// misconfigured tree doesn't pay the read on every render (responsive props
+// then keep their default value and useResponsiveProp warns in development).
+let cssBreakpoints = null;
+function readCssBreakpoint(breakpoint) {
+    if (cssBreakpoints)
+        return cssBreakpoints[breakpoint];
+    if (typeof document === 'undefined')
+        return '';
+    const style = getComputedStyle(document.documentElement);
+    const read = Object.fromEntries(BREAKPOINTS.map((name) => [
+        name,
+        style.getPropertyValue(`--${PREFIX_BS}breakpoint-${name}`).trim(),
+    ]));
+    cssBreakpoints = read;
+    return read[breakpoint];
+}
+/**
+ * Pixel value of a breakpoint. `DContextProvider` reads them from the CSS and
+ * shares them through the context; outside of it (a tree without the
+ * provider, or its first render) they are read from the same CSS variables
+ * here, so responsive props resolve either way.
+ */
+function useBreakpointValue(breakpoint) {
     const { breakpoints } = useDContext();
-    const mediaQuery = useMemo(() => (`(min-width: ${breakpoints[breakpoint]})`), [breakpoint, breakpoints]);
+    const fromContext = breakpoints[breakpoint];
+    return useMemo(() => fromContext || readCssBreakpoint(breakpoint), [fromContext, breakpoint]);
+}
+function useMediaBreakpointUp(breakpoint, useListener = false) {
+    const value = useBreakpointValue(breakpoint);
+    // Without a breakpoint the query can't match; `not all` keeps it false
+    // instead of an invalid `(min-width: )`.
+    const mediaQuery = value ? `(min-width: ${value})` : 'not all';
     return useMediaQuery(mediaQuery, useListener);
 }
 function useMediaBreakpointUpXs(useListener = false) {
@@ -536,6 +606,7 @@ function useMediaBreakpointUpXxl(useListener = false) {
     return useMediaBreakpointUp('xxl', useListener);
 }
 
+let warnedMissingBreakpoints = false;
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
  *
@@ -561,7 +632,16 @@ function useResponsiveProp(useListener = false) {
     const bpLgUp = useMediaBreakpointUpLg(useListener);
     const bpXlUp = useMediaBreakpointUpXl(useListener);
     const bpXxlUp = useMediaBreakpointUpXxl(useListener);
+    // `xs` is `0` and can't tell a missing variable apart, so `sm` is checked.
+    const hasBreakpoints = !!useBreakpointValue('sm');
     const responsivePropValue = useCallback((prop) => {
+        if (process.env.NODE_ENV !== 'production' && !hasBreakpoints && !warnedMissingBreakpoints) {
+            warnedMissingBreakpoints = true;
+            // eslint-disable-next-line no-console
+            console.warn(`[Dynamic UI] The --${PREFIX_BS}breakpoint-* CSS variables are not available, so a `
+                + 'responsive prop (an object by breakpoint) falls back to its default value. Load '
+                + 'dynamic-ui.css before rendering. It never appears in production builds.');
+        }
         // Pick the highest matched breakpoint value that is defined in prop
         if (prop.xxl !== undefined && bpXxlUp)
             return prop.xxl;
@@ -577,7 +657,7 @@ function useResponsiveProp(useListener = false) {
             return prop.xs;
         // Fallback: return undefined if no breakpoint matches
         return undefined;
-    }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp]);
+    }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp, hasBreakpoints]);
     return { responsivePropValue };
 }
 
@@ -728,12 +808,12 @@ function DIcon(_a) {
     return (jsx(DIconBase, Object.assign({ icon: icon, familyClass: propFamilyClass !== null && propFamilyClass !== void 0 ? propFamilyClass : familyClass, familyPrefix: propFamilyPrefix !== null && propFamilyPrefix !== void 0 ? propFamilyPrefix : familyPrefix, materialStyle: propMaterialStyle !== null && propMaterialStyle !== void 0 ? propMaterialStyle : materialStyle }, props)));
 }
 
-function DAlert({ color = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }) {
+function DAlert({ color = 'success', role = 'alert', icon: iconProp, showIcon = true, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, closeAriaLabel = 'Close', onClose, children, id, className, style, dataAttributes, }) {
     const { icon: { materialStyle, familyClass, familyPrefix, }, iconMap: { alert, xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || alert[color], [alert, iconProp, color]);
     const iconClose = useMemo(() => (iconCloseProp || xLg), [iconCloseProp, xLg]);
     const generateClasses = useMemo(() => (Object.assign({ alert: true, [`alert-${color}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [color, showClose, className]);
-    return (jsxs("div", Object.assign({ className: classNames(generateClasses), style: style, role: "alert", id: id }, dataAttributes, { children: [icon && (jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })), jsx("div", { className: "alert-text", children: children }), showClose && (jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass !== null && iconCloseFamilyClass !== void 0 ? iconCloseFamilyClass : familyClass, familyPrefix: iconCloseFamilyPrefix !== null && iconCloseFamilyPrefix !== void 0 ? iconCloseFamilyPrefix : familyPrefix, materialStyle: iconCloseMaterialStyle !== null && iconCloseMaterialStyle !== void 0 ? iconCloseMaterialStyle : materialStyle }) }))] })));
+    return (jsxs("div", Object.assign({ className: classNames(generateClasses), style: style }, role !== 'none' && { role }, { id: id }, dataAttributes, { children: [showIcon && icon && (jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })), jsx("div", { className: "alert-text", children: children }), showClose && (jsx("button", { type: "button", className: "d-close", "aria-label": closeAriaLabel, onClick: onClose, children: jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass !== null && iconCloseFamilyClass !== void 0 ? iconCloseFamilyClass : familyClass, familyPrefix: iconCloseFamilyPrefix !== null && iconCloseFamilyPrefix !== void 0 ? iconCloseFamilyPrefix : familyPrefix, materialStyle: iconCloseMaterialStyle !== null && iconCloseMaterialStyle !== void 0 ? iconCloseMaterialStyle : materialStyle }) }))] })));
 }
 
 function DAvatar({ id, size, image, name: nameProp, useNameAsInitials = false, className, style, dataAttributes, }) {
@@ -799,6 +879,223 @@ function useProvidedRefOrCreate(providedRef) {
     return providedRef !== null && providedRef !== void 0 ? providedRef : createdRef;
 }
 
+/**
+ * Descendants the browser already exempts from a label's click forwarding.
+ *
+ * Per the HTML spec a label does nothing for events targeted at its interactive
+ * content descendants, so these need — and must get — no help from us: calling
+ * `preventDefault` on a click targeting a link, or on an image map area, would
+ * cancel the navigation it was meant to perform.
+ *
+ * The list mirrors the spec's interactive content, image maps included, since
+ * one of those carrying a `tabindex` would otherwise fall through to the
+ * pseudo-interactive branch below and be suppressed by mistake.
+ */
+const NATIVE_INTERACTIVE = 'a[href], area[href], button, input, select, textarea, details, summary, img[usemap], object[usemap], audio[controls], video[controls], embed, iframe';
+/**
+ * Descendants that act like controls without being interactive content.
+ *
+ * A tooltip or modal trigger built from a `span` with a role and a tabindex is
+ * the common case. Browsers do not exempt these, so a click on one activates
+ * the labelled control as well.
+ */
+const PSEUDO_INTERACTIVE = '[role="button"], [role="link"], [role="checkbox"], [role="switch"], [role="menuitem"], [tabindex]';
+/**
+ * Stops a click on a non-native trigger inside a `<label>` from also activating
+ * the labelled control.
+ *
+ * Verified against Chromium, which forwards the click for every one of the
+ * `PSEUDO_INTERACTIVE` selectors above while exempting the native ones. Note
+ * that jsdom does not reproduce this: its `isInteractiveContent` counts any
+ * element carrying a `tabindex` as interactive content, so a jsdom test passes
+ * whether or not this guard exists. That is why the guard is unit-tested
+ * directly rather than through a rendered component.
+ *
+ * Native interactive content returns early rather than falling through, since
+ * `preventDefault` on those clicks would cancel the link navigation or the
+ * image map the label is meant to let through.
+ *
+ * `DFormLabel` wires this in the capture phase so a trigger that stops
+ * propagation cannot skip it.
+ */
+function labelClickGuard(event) {
+    const label = event.currentTarget;
+    const target = event.target;
+    if (!(target === null || target === void 0 ? void 0 : target.closest))
+        return;
+    /**
+     * `closest` walks the whole ancestor chain, so a match may sit above the
+     * label — a card with a `role` or a `tabindex` wrapping the control and its
+     * label, say. Acting on one of those would suppress the plain label text's
+     * own click and leave the control unresponsive, so only matches inside the
+     * label count.
+     */
+    const inside = (match) => (!!match && match !== label && label.contains(match));
+    if (inside(target.closest(NATIVE_INTERACTIVE)))
+        return;
+    if (inside(target.closest(PSEUDO_INTERACTIVE))) {
+        event.preventDefault();
+    }
+}
+
+/**
+ * The `<label>` every form control renders, with the click guard already wired.
+ *
+ * Internal: it exists so the guard — and the lint exception it needs — lives in
+ * one place instead of being repeated across every input component.
+ *
+ * The guard runs in the capture phase, not on bubble: a tooltip or modal
+ * trigger that calls `stopPropagation()` in its own handler — a common pattern —
+ * would otherwise keep the guard from ever running, and the browser would go on
+ * to activate the labelled control. Confirmed in Chromium, where the same
+ * trigger toggles the control with a bubble-phase guard and does not with this
+ * one. Capturing changes nothing else: `preventDefault` applies to the default
+ * action, which is evaluated after propagation either way.
+ *
+ * The `jsx-a11y` rules below assume a click handler is being used to make a
+ * non-interactive element interactive, which then owes the keyboard an
+ * equivalent. This handler does the opposite: it suppresses a pointer-only
+ * behaviour, the click a label forwards to its control, and adds no way to
+ * activate anything. Keyboard support for a nested trigger is the consumer's:
+ * `<a href>` carries its own, while a `span` with a role and a tabindex is
+ * focusable but inert until they handle Enter and Space themselves.
+ */
+function DFormLabel({ htmlFor, className, children }) {
+    /**
+     * React 19 renders a bigint child; React 18 throws on one, and this package
+     * supports both (`react: >=18 <20`). The label helpers count bigint as text
+     * because that is what it draws as, so it is turned into its string form here
+     * — the one place every control's label passes through — rather than pushing
+     * a version check onto consumers.
+     *
+     * Only a bigint at the top level: one buried inside an array or a fragment is
+     * the consumer's own React child, and normalising it would mean walking and
+     * rebuilding the whole subtree.
+     */
+    const content = typeof children === 'bigint' ? String(children) : children;
+    return (
+    /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+       jsx-a11y/no-noninteractive-element-interactions */
+    jsx("label", { htmlFor: htmlFor, className: className, onClickCapture: labelClickGuard, children: content }));
+}
+
+/**
+ * Whether a `label` node has something to render.
+ *
+ * The render paths cannot test `label` for truthiness: since the prop widened
+ * to `ReactNode` it also accepts `0`, which React renders as the text "0" and
+ * which `isTextLabel` counts as a text label, yet which a truthiness check
+ * would drop — leaving the control visibly unlabelled.
+ *
+ * Absent (`undefined`, `null`), empty (`''`) and boolean labels render nothing,
+ * so they are the ones that stand for "no label". The empty string matters
+ * because it is the default several components fall back to.
+ *
+ * Arrays are inspected rather than taken at face value: `label={items.map(...)}`
+ * over an empty list yields `[]`, while a list of skipped entries yields
+ * `[false, null]`. Both render nothing, so treating them as content would leave
+ * an empty `<label>` on the page — and make the naming warning fire over a
+ * label that was never there.
+ *
+ * Only arrays, though, even though `ReactNode` admits any iterable. Reading a
+ * one-shot iterator — a generator — would exhaust it here, and the component
+ * goes on to render the same value, so the label would vanish precisely because
+ * we checked for it. An array can be walked as often as needed; anything else
+ * is taken on faith.
+ *
+ * Anything else — an element, a portal, a generator — counts as content: what
+ * it renders is only knowable by rendering it, and an element that draws
+ * nothing visible is the consumer's decision rather than an absent label.
+ */
+function hasLabelContent(label) {
+    if (label === undefined || label === null || typeof label === 'boolean') {
+        return false;
+    }
+    if (typeof label === 'string') {
+        return label !== '';
+    }
+    if (isValidElement(label)) {
+        return true;
+    }
+    if (Array.isArray(label)) {
+        return label.some(hasLabelContent);
+    }
+    return true;
+}
+
+/**
+ * Narrows a `label` node to the plain-text case.
+ *
+ * `label` accepts any `ReactNode` so patterns like a terms-and-conditions link
+ * or an info trigger can live next to the field name. Anything that is not text
+ * cannot be forwarded to a string-only attribute (`aria-label`, `placeholder`)
+ * nor laid out by Bootstrap's `form-floating`, so those paths check this first.
+ *
+ * Numbers and bigints count as text: React renders them as their string form
+ * and so does `String()`, which is what the string-only attributes end up
+ * receiving. `bigint` is part of `ReactNode` under these React types, so
+ * leaving it out made a label React draws as text get treated as a rich node.
+ * React 18 cannot render one, which `DFormLabel` handles by rendering its
+ * string form — the classification stays true for every supported React.
+ */
+function isTextLabel(label) {
+    return typeof label === 'string'
+        || typeof label === 'number'
+        || typeof label === 'bigint';
+}
+
+/**
+ * Components already reported, keyed by component and reason, so the same
+ * mistake only warns once per page load however often it re-renders or however
+ * many instances exist.
+ */
+const warnedLabels = new Set();
+function warnOnce(key, message) {
+    if (warnedLabels.has(key))
+        return;
+    warnedLabels.add(key);
+    // eslint-disable-next-line no-console
+    console.warn(`[Dynamic UI] ${message} It never appears in production builds.`);
+}
+/**
+ * Warns, only outside production builds, about the two ways a non-text `label`
+ * goes wrong.
+ *
+ * A text label doubles as the control's accessible name. A `ReactNode` one does
+ * not: the name becomes whatever the subtree happens to compute to, which for a
+ * label carrying a link or an icon trigger reads as the wrong thing or as
+ * nothing at all — so an explicit name is needed. Which prop carries it differs
+ * per component, hence `accessibleNameProp`: naming the wrong one would send
+ * the developer to a prop their component rejects.
+ *
+ * `form-floating` is the second case: it animates a single line of text between
+ * the placeholder and the label position, so a node with its own height or its
+ * own interactive children breaks the layout rather than the semantics.
+ *
+ * Labels the render paths drop are skipped through the same `hasLabelContent`
+ * they use, so `label={condition && <span />}` with a false condition warns
+ * about nothing: there is no label on the page to name.
+ *
+ * The `process.env.NODE_ENV` guard belongs at the call site — that is what
+ * bundlers constant-fold, dropping this module from a consumer's production
+ * bundle.
+ */
+function warnLabelUsage({ component, label, hasAccessibleName, accessibleNameProp, floatingLabel = false, }) {
+    if (!hasLabelContent(label) || isTextLabel(label))
+        return;
+    if (!hasAccessibleName) {
+        warnOnce(`${component}:name`, `${component}: a non-text "label" does not give the control a reliable accessible name. `
+            + `Pass ${accessibleNameProp} with the plain-text name of the field, since the label `
+            + 'subtree may include links, icons or markup that read as the wrong name or as none at all.');
+    }
+    if (floatingLabel) {
+        warnOnce(`${component}:floating`, `${component}: "floatingLabel" expects a text "label". `
+            + 'The floating layout animates a single line of text, so a node with its own height '
+            + 'or its own interactive children overflows the control. '
+            + 'Use the default label layout for rich labels.');
+    }
+}
+
 function DInput(_a, ref) {
     var { id: idProp, style, className, label = '', disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', dataAttributes, readonly, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = __rest(_a, ["id", "style", "className", "label", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "dataAttributes", "readonly", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
@@ -838,7 +1135,7 @@ function DInput(_a, ref) {
     const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
             'is-invalid': invalid,
             'is-valid': valid,
-        }), disabled: disabled || loading, readOnly: readonly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        }), disabled: disabled || loading, readOnly: readonly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, invalid && { 'aria-invalid': true }, inputProps))), [
         ariaDescribedby,
         disabled,
         handleOnChange,
@@ -853,7 +1150,7 @@ function DInput(_a, ref) {
         value,
         readonly,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -863,7 +1160,16 @@ function DInput(_a, ref) {
         }
         return inputComponent;
     }, [floatingLabel, inputComponent, labelComponent]);
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInput',
+            label,
+            hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+            accessibleNameProp: 'aria-label',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
@@ -1389,7 +1695,7 @@ function warnMissingAccessibleName(icon, kind) {
 }
 
 function DButtonIcon(_a) {
-    var { id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
+    var { id, icon, size, iconSize, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled = false, color = 'primary', loading = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp } = _a, rest = __rest(_a, ["id", "icon", "size", "iconSize", "className", "variant", "state", "loadingAriaLabel", "iconMaterialStyle", "disabled", "color", "loading", "href", "target", "rel", "stopPropagationEnabled", "style", "iconFamilyClass", "iconFamilyPrefix", "dataAttributes", "onClick", 'aria-label']);
     const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const generateClasses = useMemo(() => {
         const variantClass = !variant || variant === 'solid'
@@ -1397,6 +1703,9 @@ function DButtonIcon(_a) {
             : `btn-${variant}-${color}`;
         return Object.assign(Object.assign(Object.assign({ 'btn d-button-icon': true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
     }, [variant, color, size, state, loading]);
+    // A responsive iconSize has to follow viewport changes, so DIcon only
+    // listens to breakpoints when it gets an object; a plain string needs none.
+    const useIconSizeListener = typeof iconSize === 'object';
     const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
     const clickHandler = useCallback((event) => {
         if (stopPropagationEnabled) {
@@ -1423,11 +1732,11 @@ function DButtonIcon(_a) {
     if (href) {
         return (jsx("a", Object.assign({ id: id, href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": ariaLabel, "aria-disabled": isDisabled }, dataAttributes, { children: loading
                 ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-                : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
+                : (jsx(DIcon, { icon: icon, size: iconSize, useListenerSize: useIconSizeListener, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
     }
     return (jsx("button", Object.assign({ className: classNames(generateClasses, className), style: style, disabled: state === 'disabled' || loading, onClick: clickHandler, "aria-label": ariaLabel }, dataAttributes, rest, { children: loading
             ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
-            : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
+            : (jsx(DIcon, { icon: icon, size: iconSize, useListenerSize: useIconSizeListener, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyle })) })));
 }
 
 function DCardHeader({ className, style, children, }) {
@@ -1623,24 +1932,102 @@ function DSelectPlaceholder(_a) {
     return (jsx(components.Placeholder, Object.assign({ innerProps: innerProps, selectProps: selectProps }, props, { children: children })));
 }
 
+/**
+ * Name of the elements an `aria-labelledby` points at, joined as the accessible
+ * name computation does. Read when the message is built rather than when the
+ * select renders, since the referenced elements may render after it.
+ *
+ * Each element contributes its own `aria-label` when it has one, and its text
+ * otherwise. That covers the targets a select is labelled by in practice — a
+ * heading, a span, a labelled region — without shipping the full accessible
+ * name algorithm; names derived from descendants' `aria-label`, `alt` or
+ * hidden content are not resolved, so pass `ariaLiveMessages` for those.
+ */
+function resolveLabelledBy(labelledBy) {
+    if (typeof document === 'undefined')
+        return '';
+    return labelledBy
+        .split(/\s+/)
+        .map((ref) => {
+        var _a, _b;
+        const element = document.getElementById(ref);
+        return ((_a = element === null || element === void 0 ? void 0 : element.getAttribute('aria-label')) === null || _a === void 0 ? void 0 : _a.trim()) || ((_b = element === null || element === void 0 ? void 0 : element.textContent) === null || _b === void 0 ? void 0 : _b.trim());
+    })
+        .filter(Boolean)
+        .join(' ');
+}
+/**
+ * Builds react-select's `guidance` live message around the control's name.
+ *
+ * react-select announces "<aria-label> is focused" on the first focus of the
+ * input, falling back to "Select" when there is no `aria-label`. Neither a text
+ * `label` nor `aria-labelledby` reaches that message, so the announcement would
+ * disagree with the name assistive technology exposes.
+ *
+ * The name follows the accessible name precedence: `aria-labelledby`, then
+ * `aria-label`, then the `<label>`. react-select does not export its default
+ * messages, so this mirrors them for every context and only swaps the name.
+ */
+function createAriaGuidance({ labelledBy, label }) {
+    return ({ 'aria-label': ariaLabel, context, isSearchable, isMulti, tabSelectsValue, isInitialFocus, }) => {
+        switch (context) {
+            case 'menu':
+                return `Use Up and Down to choose options, press Enter to select the currently focused option, press Escape to exit the menu${tabSelectsValue ? ', press Tab to select the option and exit the menu' : ''}.`;
+            case 'input': {
+                if (!isInitialFocus)
+                    return '';
+                const name = (labelledBy && resolveLabelledBy(labelledBy)) || ariaLabel || label || 'Select';
+                return `${name} is focused ${isSearchable ? ',type to refine list' : ''}, press Down to open the menu, ${isMulti ? ' press left to focus selected values' : ''}`;
+            }
+            case 'value':
+                return 'Use left and right to toggle between focused values, press Backspace to remove the currently focused value';
+            default:
+                return '';
+        }
+    };
+}
+
 function DSelect(_a) {
-    var { id: idProp, className, style, label, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, floatingLabel = false, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes, ariaLabel = 'Search for an option' } = _a, props = __rest(_a, ["id", "className", "style", "label", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "floatingLabel", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes", "ariaLabel"]);
+    var { id: idProp, inputId: inputIdProp, className, style, label, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, floatingLabel = false, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes, ariaLabel, ariaLiveMessages } = _a, props = __rest(_a, ["id", "inputId", "className", "style", "label", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "floatingLabel", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes", "ariaLabel", "ariaLiveMessages"]);
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+    // The `<label>` must point at the element react-select renders the input
+    // with, so an explicit `inputId` wins over `id` for both.
+    const inputId = inputIdProp || id;
+    // A text label or `aria-labelledby` names the control without going through
+    // `aria-label`, which is all react-select's focus announcement reads, so it
+    // is handed those names explicitly. Messages passed by the consumer still
+    // take precedence.
+    const textLabel = hasLabelContent(label) && isTextLabel(label) ? String(label) : undefined;
+    const labelledBy = props['aria-labelledby'];
+    const liveMessages = useMemo(() => (textLabel || labelledBy
+        ? Object.assign({ guidance: createAriaGuidance({ labelledBy, label: textLabel }) }, ariaLiveMessages) : ariaLiveMessages), [textLabel, labelledBy, ariaLiveMessages]);
     const handleOnIconStartClick = useCallback(() => {
         onIconStartClick === null || onIconStartClick === void 0 ? void 0 : onIconStartClick(defaultValue);
     }, [onIconStartClick, defaultValue]);
     const handleOnIconEndClick = useCallback(() => {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(defaultValue);
     }, [onIconEndClick, defaultValue]);
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DSelect',
+            label,
+            // `{...props}` is spread after `ariaLabel`, so a native `aria-label` in it
+            // is the one that reaches the input, even when it is `undefined`.
+            hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+                || !!labelledBy,
+            accessibleNameProp: 'ariaLabel',
+            floatingLabel,
+        });
+    }
     return (jsxs("div", Object.assign({ className: classNames('d-select', className, {
             'd-select-floating': floatingLabel,
             disabled: disabled || loading,
-        }), style: style }, dataAttributes, { children: [label && (jsx("label", { htmlFor: id, children: label })), jsxs("div", { className: classNames({
+        }), style: style }, dataAttributes, { children: [hasLabelContent(label) && (jsx(DFormLabel, { htmlFor: inputId, children: label })), jsxs("div", { className: classNames({
                     'input-group': true,
                     'has-validation': invalid,
                     disabled: disabled || loading,
-                }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, "aria-label": iconStartAriaLabel, tabIndex: iconStartTabIndex, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix }) })), jsx(Select, Object.assign({ id: `${id}Container`, inputId: id, "aria-label": ariaLabel, styles: {
+                }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, "aria-label": iconStartAriaLabel, tabIndex: iconStartTabIndex, children: jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix }) })), jsx(Select, Object.assign({ id: `${id}Container`, inputId: inputId, "aria-label": ariaLabel !== null && ariaLabel !== void 0 ? ariaLabel : (hasLabelContent(label) || props['aria-labelledby'] ? undefined : 'Search for an option'), ariaLiveMessages: liveMessages, styles: {
                             control: (base) => (Object.assign(Object.assign({}, base), { minHeight: 'unset' })),
                             container: (base) => (Object.assign(Object.assign({}, base), { flex: 1 })),
                             menu: (base) => (Object.assign(Object.assign({}, base), { width: menuWithMaxContent ? 'max-context' : '100%', zIndex: 1000 })),
@@ -1835,10 +2222,40 @@ function formatValue(value, currencyOptions) {
     }
     return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
 }
-function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue) {
+/**
+ * State and handlers for a currency input: a formatted string while the field
+ * is idle and the raw number while it is being edited.
+ *
+ * `minValue`/`maxValue` bound the value. With `clamp` (default `true`) an
+ * out-of-range value is brought into range whenever it is not being typed:
+ * on mount, when `value` or the bounds change, and on blur. Every time the
+ * clamp changes the value, `onChange` receives the clamped number, so the
+ * input and the consumer's state never disagree. While the field is focused
+ * the typed number is reported as is, so a partial entry is not rewritten.
+ *
+ * With `clamp: false` the value is never changed: the bounds only feed
+ * `isOverMax` / `isUnderMin`, so the consumer can show its own message (e.g.
+ * "You exceeded the limit") and keep the entered amount.
+ *
+ * Controlled usage follows the same contract as a native controlled input:
+ * reflect `onChange` into `value` in the same event (`setState` in the
+ * handler). The hook keeps showing `value` whenever it isn't being edited, so
+ * a consumer can reject a change by keeping `value` as it was. Deferring the
+ * update (a timer, awaiting a request) makes the hook see a stale `value` in
+ * between: the field can flash the previous amount and a clamp can be
+ * reported again when the deferred value arrives.
+ */
+function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue, clamp = true) {
     const inputRef = useProvidedRefOrCreate(ref);
+    const onChangeRef = useRef(onChange);
+    onChangeRef.current = onChange;
+    // Last clamp reported through `onChange`, as the value it came from and the
+    // value it produced. StrictMode replays effects, and a consumer may reflect
+    // `onChange` asynchronously, both before `value` catches up: the same clamp
+    // must not be reported twice.
+    const lastReportedClampRef = useRef(null);
     const clampValue = useCallback((newValue) => {
-        if (newValue === undefined) {
+        if (newValue === undefined || !clamp) {
             return newValue;
         }
         let clampedValue = newValue;
@@ -1849,10 +2266,9 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
             clampedValue = Math.min(clampedValue, maxValue);
         }
         return clampedValue;
-    }, [minValue, maxValue]);
+    }, [minValue, maxValue, clamp]);
     const [innerType, setInnerType] = useState('text');
-    const [innerNumber, setInnerNumber] = useState(clampValue(value));
-    const [innerString, setInnerString] = useState(formatValue(clampValue(value), currencyOptions));
+    const [innerNumber, setInnerNumber] = useState(() => clampValue(value));
     const handleOnFocus = useCallback((event) => {
         event.stopPropagation();
         setInnerType('number');
@@ -1864,35 +2280,60 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
         const clampedNumber = clampValue(innerNumber);
         if (clampedNumber !== innerNumber) {
             setInnerNumber(clampedNumber);
-            setInnerString(formatValue(clampedNumber, currencyOptions));
+            // Recorded before notifying, so the sync effect that runs when editing
+            // ends doesn't report the same clamp again while `value` still holds the
+            // typed number.
+            lastReportedClampRef.current = { from: value, to: clampedNumber };
             onChange === null || onChange === void 0 ? void 0 : onChange(clampedNumber);
         }
         onBlur === null || onBlur === void 0 ? void 0 : onBlur(event);
-    }, [onBlur, innerNumber, clampValue, currencyOptions, onChange]);
+    }, [onBlur, innerNumber, clampValue, onChange, value]);
     const handleOnChange = useCallback((newValue) => {
         const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
         if (newNumber !== innerNumber) {
             setInnerNumber(newNumber);
-            setInnerString(formatValue(newNumber, currencyOptions));
             onChange === null || onChange === void 0 ? void 0 : onChange(newNumber);
         }
-    }, [currencyOptions, onChange, innerNumber]);
-    const isMountedRef = useRef(false);
+    }, [onChange, innerNumber]);
+    const isEditing = innerType === 'number';
+    // Keep the inner value in sync with `value` and the bounds. While the user
+    // is typing, the consumer echoes the typed number back through `value`, so
+    // it is taken as is; otherwise it is clamped, and a clamp that changes it is
+    // reported through `onChange`.
     useEffect(() => {
-        if (!isMountedRef.current) {
-            isMountedRef.current = true;
-            return;
+        var _a;
+        const nextNumber = isEditing ? value : clampValue(value);
+        if (nextNumber !== innerNumber) {
+            setInnerNumber(nextNumber);
         }
-        if (value !== innerNumber) {
-            setInnerNumber(value);
-            setInnerString(formatValue(value, currencyOptions));
+        if (nextNumber !== value) {
+            const last = lastReportedClampRef.current;
+            if (!last || last.from !== value || last.to !== nextNumber) {
+                lastReportedClampRef.current = { from: value, to: nextNumber };
+                (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, nextNumber);
+            }
         }
-    }, [value, currencyOptions, innerNumber]);
-    const innerValue = useMemo(() => { var _a; return (innerType === 'number' ? (_a = innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()) !== null && _a !== void 0 ? _a : '' : innerString !== null && innerString !== void 0 ? innerString : ''); }, [innerType, innerNumber, innerString]);
+        else {
+            lastReportedClampRef.current = null;
+        }
+        // `innerNumber` is read, not tracked: the effect reacts to the consumer's
+        // value and to the bounds, not to its own updates.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value, clampValue, isEditing]);
+    // Derived, not stored: the formatted text always matches the current number
+    // and options, even when both change in the same render. It depends on the
+    // options object itself, so a new custom `format` function is honored too;
+    // formatting is cheap and doesn't feed the synchronization effect.
+    const innerString = useMemo(() => formatValue(innerNumber, currencyOptions), [innerNumber, currencyOptions]);
+    const innerValue = useMemo(() => { var _a; return (innerType === 'number' ? (_a = innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()) !== null && _a !== void 0 ? _a : '' : innerString); }, [innerType, innerNumber, innerString]);
+    const isOverMax = maxValue !== undefined && innerNumber !== undefined && innerNumber > maxValue;
+    const isUnderMin = minValue !== undefined && innerNumber !== undefined && innerNumber < minValue;
     return {
         inputRef,
         innerValue,
         innerType,
+        isOverMax,
+        isUnderMin,
         handleOnFocus,
         handleOnChange,
         handleOnBlur,
@@ -2143,38 +2584,142 @@ function useOtp({ action, otpSize = 6, seconds = 15, }) {
     };
 }
 
-function DInputCounter(_a, ref) {
-    var { minValue, maxValue, value = minValue, invalid, iconStart: iconStartProp, iconEnd: iconEndProp, iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = __rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
-    const { handleOnWheel, } = useDisableInputWheel(ref);
-    const inputRef = useProvidedRefOrCreate(ref);
-    const [internalIsInvalid, setInternalIsInvalid] = useState(false);
-    const [internalValue, setInternalValue] = useState(value);
+/**
+ * Backs a value that the consumer may or may not drive, so a control works in
+ * both modes without a copy of the state drifting away from the props.
+ *
+ * A control counts as controlled only when the consumer passes the value *and*
+ * an `onChange` to push it back. The value on its own has always meant "start
+ * here" in this library — `<DInputCheck type="radio" checked />` inside a radio
+ * group, for one — so treating it as controlled would silently freeze those
+ * controls, and React emits no warning to say why: the components always attach
+ * their own `onChange` handler.
+ *
+ * @param value the value coming from props, or `undefined` when not passed.
+ * @param isControlled whether the consumer can drive the value back.
+ * @param initialValue what to start from when no value is passed.
+ * @returns the value to render, and a setter to call on every user change.
+ */
+function useControlledState(value, isControlled, initialValue) {
+    const [internalValue, setInternalValue] = useState(value === undefined ? initialValue : value);
+    // The internal copy follows `value` in both modes.
+    //
+    // Uncontrolled, `value` without an `onChange` still means "start here", and a
+    // later flip of it from outside must still land — but between flips the
+    // control has to keep moving on its own, which is why this depends on `value`
+    // alone and not on `internalValue`.
+    //
+    // Controlled, the copy is not what gets rendered, but it is what the control
+    // falls back to if the consumer later stops passing a value — `value={locked
+    // ? undefined : x}`, say. Keeping it current means that hand-off carries on
+    // from where the control is instead of snapping back to the mount-time seed.
     useEffect(() => {
+        if (value === undefined) {
+            return;
+        }
         setInternalValue(value);
     }, [value]);
+    const setValue = useCallback((next) => {
+        if (isControlled) {
+            return;
+        }
+        setInternalValue(next);
+    }, [isControlled]);
+    return [
+        isControlled && value !== undefined ? value : internalValue,
+        setValue,
+    ];
+}
+
+function DInputCounter(_a, ref) {
+    var { minValue, maxValue, value, defaultValue, invalid, iconStart: iconStartProp, iconEnd: iconEndProp, iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = __rest(_a, ["minValue", "maxValue", "value", "defaultValue", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
+    const { handleOnWheel, } = useDisableInputWheel(ref);
+    const inputRef = useProvidedRefOrCreate(ref);
+    // See `useControlledState` for why `onChange` takes part in this decision.
+    const isControlled = value !== undefined && onChange !== undefined;
+    const [currentValue, setCurrentValue] = useControlledState(value, isControlled, defaultValue !== null && defaultValue !== void 0 ? defaultValue : minValue);
+    // The step handlers move *from* the current value rather than replacing it,
+    // so they need the latest one even when several clicks land in the same React
+    // batch and no render has happened in between — the functional update this
+    // replaced handled that on its own. Written on every render so it follows the
+    // props, and by `commitValue` so a second step in the same batch starts from
+    // where the first left off instead of collapsing into it.
+    const currentValueRef = useRef(currentValue);
+    currentValueRef.current = currentValue;
+    // `onChange` used to be called from an effect watching the internal value,
+    // which made controlling the counter impossible: a controlled counter never
+    // moves that value, so the effect never fired. Reporting from the handlers
+    // instead works in both modes.
+    const commitValue = useCallback((newValue) => {
+        // Clicking at a bound, or typing the value that is already there, is not a
+        // change. The effect this replaced watched the value itself and so stayed
+        // quiet too; without this a batch of clicks against `minValue` would report
+        // the same number once per click.
+        if (newValue === currentValueRef.current) {
+            return;
+        }
+        // Only the uncontrolled path moves the ref ahead of a render. There the
+        // component owns the value, so a second step in the same batch has to build
+        // on the first. Controlled, the prop is the truth and every step proposes
+        // from it: a parent that rejects without re-rendering — `onChange={() => {}}`,
+        // or a setter returning the previous state — never re-runs the assignment
+        // above, so a speculative ref would climb away from the value on screen and
+        // each further click would report a number further from it.
+        if (!isControlled) {
+            currentValueRef.current = newValue;
+        }
+        setCurrentValue(newValue);
+        onChange === null || onChange === void 0 ? void 0 : onChange(newValue);
+    }, [isControlled, setCurrentValue, onChange]);
+    // Consumers have always been handed the starting value through `onChange` on
+    // mount, and some seed their state with it, so that one call stays. The ref
+    // keeps it to the first run: the old effect also re-fired on every render
+    // that passed a fresh inline `onChange`. Nothing is marked as reported until
+    // there is a handler to report to, so a counter mounted without `onChange`
+    // still hands over its starting value once one is attached.
+    const hasReportedInitialValue = useRef(false);
     useEffect(() => {
-        onChange === null || onChange === void 0 ? void 0 : onChange(Number(internalValue));
-    }, [onChange, internalValue]);
+        if (hasReportedInitialValue.current || !onChange) {
+            return;
+        }
+        hasReportedInitialValue.current = true;
+        onChange(currentValue);
+    }, [onChange, currentValue]);
+    // `value` used to default to `minValue`, so a counter left to its own devices
+    // re-seeded — and reported — whenever `minValue` moved. Consumers use it as a
+    // live bound, so that stays; an explicit `value` or `defaultValue` opts out,
+    // exactly as passing `value` did before. The ref keeps this to real changes,
+    // so mounting still reports once and a click is never undone.
+    const hasExplicitStartingValue = value !== undefined || defaultValue !== undefined;
+    const previousMinValue = useRef(minValue);
+    useEffect(() => {
+        if (previousMinValue.current === minValue) {
+            return;
+        }
+        previousMinValue.current = minValue;
+        if (hasExplicitStartingValue) {
+            return;
+        }
+        commitValue(minValue);
+    }, [hasExplicitStartingValue, minValue, commitValue]);
     const handleOnChange = useCallback((newValue) => {
-        setInternalValue(Number(newValue || '0'));
-    }, []);
+        commitValue(Number(newValue || '0'));
+    }, [commitValue]);
     const handleOnIconStartClick = useCallback(() => {
-        setInternalValue((prevInternalValue) => Math.max(prevInternalValue - 1, minValue));
-    }, [minValue]);
+        commitValue(Math.max(currentValueRef.current - 1, minValue));
+    }, [commitValue, minValue]);
     const handleOnIconEndClick = useCallback(() => {
-        setInternalValue((prevInternalValue) => Math.min(prevInternalValue + 1, maxValue));
-    }, [maxValue]);
+        commitValue(Math.min(currentValueRef.current + 1, maxValue));
+    }, [commitValue, maxValue]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}form-control-component-text-align`]: 'center' })), [style]);
-    const valueString = useMemo(() => (internalValue.toString()), [internalValue]);
-    useEffect(() => {
-        setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
-    }, [internalValue, minValue, maxValue]);
+    const valueString = useMemo(() => (currentValue.toString()), [currentValue]);
+    const internalIsInvalid = useMemo(() => (!(currentValue >= minValue && currentValue <= maxValue)), [currentValue, minValue, maxValue]);
     const { iconMap: { input } } = useDContext();
     const iconEnd = useMemo(() => iconEndProp || input.increase, [iconEndProp, input.increase]);
     const iconStart = useMemo(() => iconStartProp || input.decrease, [iconStartProp, input.decrease]);
-    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onWheel: handleOnWheel, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick, iconStartAriaLabel: iconStartAriaLabel, iconEndAriaLabel: iconEndAriaLabel }, internalValue === minValue && {
+    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onWheel: handleOnWheel, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick, iconStartAriaLabel: iconStartAriaLabel, iconEndAriaLabel: iconEndAriaLabel }, currentValue === minValue && {
         iconStartDisabled: true,
-    }, internalValue === maxValue && {
+    }, currentValue === maxValue && {
         iconEndDisabled: true,
     }, props)));
 }
@@ -2182,11 +2727,16 @@ const ForwardedDInputCounter = forwardRef(DInputCounter);
 ForwardedDInputCounter.displayName = 'DInputCounter';
 
 function DInputCurrency(_a, ref) {
-    var { value, minValue, maxValue, currencyCode, onFocus, onBlur, onChange } = _a, props = __rest(_a, ["value", "minValue", "maxValue", "currencyCode", "onFocus", "onBlur", "onChange"]);
+    var { value, minValue, maxValue, clamp = true, currencyCode, onFocus, onBlur, onChange, invalid: invalidProp, valid: validProp } = _a, props = __rest(_a, ["value", "minValue", "maxValue", "clamp", "currencyCode", "onFocus", "onBlur", "onChange", "invalid", "valid"]);
     const { currency: currencyOptions } = useDContext();
     const { handleOnWheel, } = useDisableInputWheel(ref);
-    const { inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue);
-    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsx("span", { slot: "input-start", className: "d-input-currency-symbol", children: currencyCode || currencyOptions.symbol })) }, props)));
+    const { inputRef, innerValue, innerType, isOverMax, isUnderMin, handleOnFocus, handleOnChange, handleOnBlur, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref, minValue, maxValue, clamp);
+    const outOfRange = !clamp && (isOverMax || isUnderMin);
+    // One validation state: an explicit `invalid` wins; otherwise an
+    // out-of-range value is invalid and can't also be shown as valid.
+    const invalid = invalidProp !== null && invalidProp !== void 0 ? invalidProp : outOfRange;
+    const valid = invalid ? false : validProp;
+    return (jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, invalid: invalid, valid: valid, inputStart: (jsx("span", { slot: "input-start", className: "d-input-currency-symbol", children: currencyCode || currencyOptions.symbol })) }, props)));
 }
 const ForwardedDInputCurrency = forwardRef(DInputCurrency);
 ForwardedDInputCurrency.displayName = 'DInputCurrency';
@@ -2273,7 +2823,7 @@ const DEFAULT_VALIDATION_MESSAGES = {
     notMatch: 'The password confirmation and the new password do not match.',
 };
 const DEFAULT_ENABLED_CHECKS = ['uppercase', 'lowercase', 'number', 'specialChar'];
-function DPasswordStrengthMeter({ id, label = 'Password', placeholder, value = '', name, disabled = false, invalid = false, validationMessages = DEFAULT_VALIDATION_MESSAGES, enabledChecks = DEFAULT_ENABLED_CHECKS, className, style, dataAttributes, onChange, readonly = false, }) {
+function DPasswordStrengthMeter({ id, label = 'Password', 'aria-label': ariaLabel, placeholder, value = '', name, disabled = false, invalid = false, validationMessages = DEFAULT_VALIDATION_MESSAGES, enabledChecks = DEFAULT_ENABLED_CHECKS, className, style, dataAttributes, onChange, readonly = false, }) {
     const [password, setPassword] = useState(value);
     useEffect(() => {
         setPassword(value);
@@ -2282,17 +2832,31 @@ function DPasswordStrengthMeter({ id, label = 'Password', placeholder, value = '
         setPassword(newValue);
         onChange === null || onChange === void 0 ? void 0 : onChange(newValue);
     };
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx(ForwardedDInputPassword, { id: id, label: label, placeholder: placeholder, value: password, name: name, disabled: disabled, invalid: invalid, onChange: handleChange, readonly: readonly }), jsx(PasswordChecksList, { password: password, validationMessages: validationMessages, enabledChecks: enabledChecks })] })));
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [jsx(ForwardedDInputPassword, { id: id, label: label, "aria-label": ariaLabel, placeholder: placeholder, value: password, name: name, disabled: disabled, invalid: invalid, onChange: handleChange, readonly: readonly }), jsx(PasswordChecksList, { password: password, validationMessages: validationMessages, enabledChecks: enabledChecks })] })));
 }
 
 function DInputCheck(_a) {
-    var { id: idProp, type, name, label, ariaLabel, checked = false, disabled = false, invalid = false, valid = false, indeterminate, inputClassName, value, hint, onChange, className, style, dataAttributes } = _a, props = __rest(_a, ["id", "type", "name", "label", "ariaLabel", "checked", "disabled", "invalid", "valid", "indeterminate", "inputClassName", "value", "hint", "onChange", "className", "style", "dataAttributes"]);
+    var { id: idProp, type, name, label, ariaLabel, checked, defaultChecked, disabled = false, invalid = false, valid = false, indeterminate, inputClassName, value, hint, onChange, className, style, dataAttributes } = _a, props = __rest(_a, ["id", "type", "name", "label", "ariaLabel", "checked", "defaultChecked", "disabled", "invalid", "valid", "indeterminate", "inputClassName", "value", "hint", "onChange", "className", "style", "dataAttributes"]);
     const innerRef = useRef(null);
+    // See `useControlledState` for why `onChange` takes part in this decision.
+    const isControlled = checked !== undefined && onChange !== undefined;
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleChange = useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
-    }, [onChange]);
+        // Controlled only. Activating a checkbox clears the DOM `indeterminate`
+        // flag, and it has no HTML attribute for React to restore the way it
+        // restores `checked` when the parent rejects the change, so the mixed state
+        // would be gone after the first click — the effect below only re-runs when
+        // the prop moves. Uncontrolled keeps the browser's behaviour, where the
+        // click owns the state and `indeterminate` was only the starting look.
+        // Reapplied after `onChange` so a handler reading
+        // `event.target.indeterminate` still sees what the browser left, and a
+        // parent that does move the prop wins through that effect.
+        if (isControlled && innerRef.current) {
+            innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
+        }
+    }, [onChange, isControlled, indeterminate, type]);
     const ariaDescribedby = useMemo(() => ([
         !!hint && `${id}Hint`,
     ]
@@ -2306,15 +2870,24 @@ function DInputCheck(_a) {
             innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
         }
     }, [indeterminate, type]);
+    // Legacy path only: a `checked` with no `onChange` behind it still lands on
+    // the element, but through the DOM, so the input stays uncontrolled and both
+    // clicking it and the native radio-group behaviour keep working.
     useEffect(() => {
-        if (innerRef.current) {
-            innerRef.current.checked = checked;
+        if (isControlled || checked === undefined || !innerRef.current) {
+            return;
         }
-    }, [checked]);
-    const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: innerRef, onChange: handleChange, className: classNames('form-check-input', {
+        innerRef.current.checked = checked;
+    }, [isControlled, checked]);
+    const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: innerRef }, isControlled
+        ? { checked }
+        : defaultChecked !== undefined && { defaultChecked }, { onChange: handleChange, className: classNames('form-check-input', {
             'is-invalid': invalid,
             'is-valid': valid,
         }, inputClassName), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, props))), [
+        isControlled,
+        checked,
+        defaultChecked,
         handleChange,
         invalid,
         valid,
@@ -2329,10 +2902,21 @@ function DInputCheck(_a) {
         ariaDescribedby,
         props,
     ]);
-    if (!label) {
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputCheck',
+            label,
+            // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+            // `aria-label` wins — including when it is explicitly undefined.
+            hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+                || !!props['aria-labelledby'],
+            accessibleNameProp: 'ariaLabel',
+        });
+    }
+    if (!hasLabelContent(label)) {
         return inputComponent;
     }
-    return (jsxs("div", Object.assign({ className: classNames('form-check', className) }, dataAttributes, { children: [inputComponent, jsx("label", { className: "form-check-label", htmlFor: id, children: label }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+    return (jsxs("div", Object.assign({ className: classNames('form-check', className) }, dataAttributes, { children: [inputComponent, jsx(DFormLabel, { className: "form-check-label", htmlFor: id, children: label }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
 function DInputPin({ id: idProp, label = '', placeholder, type = 'text', disabled = false, loading = false, secret = false, characters = 4, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, dataAttributes, onChange, 'aria-label': ariaLabel = 'Pin character number', }) {
@@ -2408,14 +2992,14 @@ function DInputPin({ id: idProp, label = '', placeholder, type = 'text', disable
     const wheelInput = useCallback((event) => {
         event.currentTarget.blur();
     }, []);
-    return (jsxs("div", Object.assign({ className: classNames('d-input-pin', className), style: style }, dataAttributes, { children: [label && (jsx("label", { htmlFor: "pinIndex0", children: label })), jsxs("div", { className: "d-input-pin-group", id: id, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
+    return (jsxs("div", Object.assign({ className: classNames('d-input-pin', className), style: style }, dataAttributes, { children: [hasLabelContent(label) && (jsx(DFormLabel, { htmlFor: "pinIndex0", children: label })), jsxs("div", { className: "d-input-pin-group", id: id, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
                             'form-control': true,
                             'is-invalid': invalid,
                             'is-valid': valid,
                         }), value: activeInput[index], type: secret ? 'password' : type, "aria-label": `${ariaLabel} ${index + 1} of ${characters}`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onInput: (event) => nextInput(event, index), onKeyDown: (event) => prevInput(event, index), onFocus: () => focusInput(index), onWheel: wheelInput, onClick: (event) => event.preventDefault(), onPaste: (event) => handlePaste(event), autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), loading && (jsx("div", { className: "input-group-text", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
-function DInputSelect({ id: idProp, name, label = '', className, style, options = [], disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, size, floatingLabel = false, invalid = false, valid = false, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id: idProp, name, label = '', ariaLabel, className, style, options = [], disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, size, floatingLabel = false, invalid = false, valid = false, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
     const internalValueExtractor = useCallback((option) => {
@@ -2465,8 +3049,9 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
             'floating-label': floatingLabel,
             'is-invalid': invalid,
             'is-valid': valid,
-        }), "aria-label": label, disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, value && { value }, { children: options.map((option) => (jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) }))), [
+        }), "aria-label": ariaLabel !== null && ariaLabel !== void 0 ? ariaLabel : (isTextLabel(label) ? String(label) : undefined), disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, value && { value }, { children: options.map((option) => (jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) }))), [
         ariaDescribedby,
+        ariaLabel,
         blurHandler,
         changeHandler,
         disabled,
@@ -2483,7 +3068,7 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
         valid,
         size,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -2493,15 +3078,26 @@ function DInputSelect({ id: idProp, name, label = '', className, style, options 
         }
         return selectComponent;
     }, [floatingLabel, labelComponent, selectComponent]);
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && (labelComponent), jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputSelect',
+            label,
+            hasAccessibleName: !!ariaLabel,
+            accessibleNameProp: 'ariaLabel',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && (labelComponent), jsxs("div", { className: classNames({
                     'input-group': true,
                 }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsx("div", { className: "input-group-text form-control-icon loading", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
-function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, invalid = false, valid = false, hint, readonly, className, style, dataAttributes, inputClassName, onChange, }) {
+function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, defaultChecked = false, disabled, invalid = false, valid = false, hint, readonly, className, style, dataAttributes, inputClassName, onChange, }) {
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
-    const [internalIsChecked, setInternalIsChecked] = useState(checked);
+    // See `useControlledState` for why `onChange` takes part in this decision.
+    const isControlled = checked !== undefined && onChange !== undefined;
+    const [isChecked, setIsChecked] = useControlledState(checked, isControlled, defaultChecked);
     const ariaDescribedby = useMemo(() => ([
         !!hint && `${id}Hint`,
     ]
@@ -2510,18 +3106,23 @@ function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, i
         id,
         hint,
     ]);
-    useEffect(() => {
-        setInternalIsChecked(checked);
-    }, [checked]);
     const changeHandler = useCallback((event) => {
         const value = event.currentTarget.checked;
-        setInternalIsChecked(value);
+        setIsChecked(value);
         onChange === null || onChange === void 0 ? void 0 : onChange(value);
-    }, [onChange]);
+    }, [setIsChecked, onChange]);
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputSwitch',
+            label,
+            hasAccessibleName: !!ariaLabel,
+            accessibleNameProp: 'ariaLabel',
+        });
+    }
     return (jsxs("div", Object.assign({ className: classNames('form-check form-switch', className) }, dataAttributes, { children: [jsx("input", Object.assign({ id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
                     'is-invalid': invalid,
                     'is-valid': valid,
-                }, inputClassName), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }, ariaDescribedby && { 'aria-describedby': ariaDescribedby })), label && (jsx("label", { className: "form-check-label", htmlFor: id, children: label })), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                }, inputClassName), style: style, type: "checkbox", role: "switch", checked: isChecked, disabled: disabled, "aria-label": ariaLabel }, ariaDescribedby && { 'aria-describedby': ariaDescribedby })), hasLabelContent(label) && (jsx(DFormLabel, { className: "form-check-label", htmlFor: id, children: label })), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
 function DInputRange(_a, ref) {
@@ -2553,15 +3154,61 @@ function DInputRange(_a, ref) {
         props,
         value,
     ]);
-    if (!label) {
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputRange',
+            label,
+            // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+            // `aria-label` wins — including when it is explicitly undefined.
+            hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+                || !!props['aria-labelledby'],
+            accessibleNameProp: 'ariaLabel',
+        });
+    }
+    if (!hasLabelContent(label)) {
         return inputComponent;
     }
-    return (jsxs(Fragment, { children: [jsx("label", { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
+    return (jsxs(Fragment, { children: [jsx(DFormLabel, { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
 }
 const ForwardedDInputRange = forwardRef(DInputRange);
 ForwardedDInputRange.displayName = 'DInputRange';
 
-function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href, onClick, color, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, children, className, style, dataAttributes, }) {
+/**
+ * Element the enclosing `DListGroup` renders, so each `DListGroupItem` can
+ * check that its own element is valid content for it. `undefined` outside a
+ * `DListGroup`.
+ */
+const ListGroupContext = createContext(undefined);
+
+/**
+ * Combinations already reported, keyed by container and item element, so the
+ * same mismatch only warns once per page load however many items share it.
+ */
+const warnedCombinations = new Set();
+/**
+ * Warns, once per combination and only outside production builds, that a
+ * `DListGroupItem` renders an element its `DListGroup` container can't hold.
+ *
+ * Links and buttons inside a <ul>/<ol> are wrapped in an <li>, so the only
+ * invalid pair left is a plain item (an <li>) inside `as="div"`: an <li>
+ * outside of any list. It doesn't fail visibly, which is why it's reported.
+ *
+ * The `process.env.NODE_ENV` guard at the call site is what bundlers
+ * constant-fold, so the whole call — and this module — drops out of a
+ * consumer's production bundle.
+ */
+function warnInvalidListMarkup(container, item) {
+    const key = `${container}>${item}`;
+    if (warnedCombinations.has(key))
+        return;
+    warnedCombinations.add(key);
+    // eslint-disable-next-line no-console
+    console.warn(`[Dynamic UI] DListGroupItem: a <${item}> inside a <${container}> is invalid markup. `
+        + 'Keep the container as a list (the default `as="ul"`, or `numbered`), or render the item '
+        + 'as a link or button. It never appears in production builds.');
+}
+
+function DListGroupItem({ as = 'li', action: actionProp, active, ariaCurrent = 'true', disabled, href, onClick, color, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, children, className, style, dataAttributes, }) {
     const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
     const Tag = useMemo(() => {
         if (href) {
@@ -2572,29 +3219,45 @@ function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href,
         }
         return as;
     }, [href, as, actionProp]);
-    const action = useMemo(() => {
-        if (Tag === 'a' || Tag === 'button') {
-            return true;
-        }
-        return actionProp;
-    }, [Tag, actionProp]);
+    const container = useContext(ListGroupContext);
+    const isInteractive = Tag === 'a' || Tag === 'button';
+    // Inside a <ul>/<ol>, a link or button is wrapped in the <li> that carries
+    // the item styles, so the group keeps list semantics (`list > listitem >
+    // link|button`) without breaking Bootstrap's sibling selectors.
+    const isWrapped = isInteractive && (container === 'ul' || container === 'ol');
+    if (process.env.NODE_ENV !== 'production' && container === 'div' && Tag === 'li') {
+        warnInvalidListMarkup(container, Tag);
+    }
     const generateClasses = useMemo(() => ({
         'list-group-item': true,
-        'list-group-item-action': action,
+        'list-group-item-action': isInteractive || actionProp,
+        'd-list-group-item-interactive': isWrapped,
         [`list-group-item-${color}`]: !!color,
         active,
         disabled,
-    }), [action, active, disabled, color]);
-    const ariaAttributes = useMemo(() => {
+    }), [isInteractive, actionProp, isWrapped, active, disabled, color]);
+    // A disabled link leaves the tab order and can't be activated: without
+    // `href` and `onClick`, Enter does nothing. Dropping `href` also drops the
+    // implicit link role, so it is set back explicitly. A button uses
+    // `disabled`.
+    const interactiveProps = useMemo(() => {
         if (Tag === 'button') {
-            return Object.assign(Object.assign({}, active && { 'aria-current': true }), disabled && { disabled: true });
+            return Object.assign(Object.assign(Object.assign({ type: 'button' }, onClick && { onClick }), active && { 'aria-current': ariaCurrent }), disabled && { disabled: true });
         }
-        return Object.assign(Object.assign({}, active && { 'aria-current': true }), disabled && { 'aria-disabled': true });
-    }, [Tag, active, disabled]);
-    return (jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle })), children, iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle, className: "ms-auto" }))] })));
+        if (Tag === 'a') {
+            return disabled
+                ? Object.assign({ role: 'link', 'aria-disabled': true, tabIndex: -1 }, active && { 'aria-current': ariaCurrent }) : Object.assign(Object.assign(Object.assign({}, href && { href }), onClick && { onClick }), active && { 'aria-current': ariaCurrent });
+        }
+        return Object.assign(Object.assign(Object.assign({}, onClick && { onClick }), active && { 'aria-current': ariaCurrent }), disabled && { 'aria-disabled': true });
+    }, [Tag, href, onClick, active, ariaCurrent, disabled]);
+    const content = (jsxs(Fragment, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass !== null && iconStartFamilyClass !== void 0 ? iconStartFamilyClass : familyClass, familyPrefix: iconStartFamilyPrefix !== null && iconStartFamilyPrefix !== void 0 ? iconStartFamilyPrefix : familyPrefix, materialStyle: iconStartMaterialStyle !== null && iconStartMaterialStyle !== void 0 ? iconStartMaterialStyle : materialStyle })), children, iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass !== null && iconEndFamilyClass !== void 0 ? iconEndFamilyClass : familyClass, familyPrefix: iconEndFamilyPrefix !== null && iconEndFamilyPrefix !== void 0 ? iconEndFamilyPrefix : familyPrefix, materialStyle: iconEndMaterialStyle !== null && iconEndMaterialStyle !== void 0 ? iconEndMaterialStyle : materialStyle, className: "ms-auto" }))] }));
+    if (isWrapped) {
+        return (jsx("li", { className: classNames(generateClasses, className), style: style, children: jsx(Tag, Object.assign({ className: "d-list-group-item-link" }, interactiveProps, dataAttributes, { children: content })) }));
+    }
+    return (jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, interactiveProps, dataAttributes, { children: content })));
 }
 
-function DListGroup({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
+function DListGroup({ as = 'ul', numbered, flush, horizontal, ariaLabel, ariaLabelledBy, children, className, style, dataAttributes, }) {
     const Tag = useMemo(() => {
         if (numbered) {
             return 'ol';
@@ -2612,7 +3275,14 @@ function DListGroup({ as = 'ul', numbered, flush, horizontal, children, classNam
             [listGroupHorizontalClass]: !!horizontal,
         };
     }, [flush, horizontal, numbered]);
-    return (jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: children })));
+    const labelProps = useMemo(() => {
+        if (!ariaLabelledBy && !ariaLabel)
+            return {};
+        return Object.assign(Object.assign({}, ariaLabelledBy
+            ? { 'aria-labelledby': ariaLabelledBy }
+            : { 'aria-label': ariaLabel }), Tag === 'div' && { role: 'group' });
+    }, [ariaLabel, ariaLabelledBy, Tag]);
+    return (jsx(ListGroupContext.Provider, { value: Tag, children: jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, labelProps, dataAttributes, { children: children })) }));
 }
 var DListGroup$1 = Object.assign(DListGroup, {
     Item: DListGroupItem,
@@ -2798,14 +3468,20 @@ function DPopover({ children, renderComponent, open, setOpen, adjustContentToRen
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] })));
 }
 
-function DProgress({ className, style, currentValue, minValue = 0, maxValue = 100, hideCurrentValue = false, enableStripedAnimation = false, height, dataAttributes, }) {
-    const percentage = useMemo(() => (Math.round((currentValue * 100) / maxValue)), [currentValue, maxValue]);
+function DProgress({ className, style, currentValue, minValue = 0, maxValue = 100, hideCurrentValue = false, enableStripedAnimation = false, height, ariaLabel, ariaLabelledBy, dataAttributes, }) {
+    const percentage = useMemo(() => {
+        const range = maxValue - minValue;
+        if (range <= 0) {
+            return 0;
+        }
+        return Math.round(((currentValue - minValue) * 100) / range);
+    }, [currentValue, minValue, maxValue]);
     const formatProgress = useMemo(() => `${percentage}%`, [percentage]);
     const generateClasses = useMemo(() => ({
         'progress-bar': true,
         'progress-bar-striped progress-bar-animated': enableStripedAnimation,
     }), [enableStripedAnimation]);
-    return (jsx("div", Object.assign({ className: classNames('progress', className), style: Object.assign({ height }, style) }, dataAttributes, { children: jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": "Progress bar", style: { width: formatProgress }, "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
+    return (jsx("div", Object.assign({ className: classNames('progress', className), style: Object.assign({ height }, style) }, dataAttributes, { children: jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": ariaLabelledBy ? undefined : (ariaLabel !== null && ariaLabel !== void 0 ? ariaLabel : 'Progress bar'), "aria-labelledby": ariaLabelledBy, style: { width: formatProgress }, "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
 }
 
 function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical = false, completed, alignStart = false, className, style, }) {
@@ -2913,10 +3589,11 @@ function DTimeline({ className, style, dataAttributes, items, }) {
 }
 
 const TabContext = createContext(undefined);
+const TabsStateContext = createContext(undefined);
 function useTabContext() {
     const context = useContext(TabContext);
     if (context === undefined) {
-        throw new Error('useTabContext was used outside of MTab');
+        throw new Error('useTabContext was used outside of DTabs');
     }
     return context;
 }
@@ -2926,33 +3603,44 @@ function DTabContent({ tab, children, className, style, }) {
     if (!isSelected(tab)) {
         return null;
     }
-    return (jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: children }));
+    return (jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: jsx(TabsStateContext.Provider, { value: undefined, children: children }) }));
 }
 
-function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant = 'underline', dataAttributes, ariaLabel, ariaLabelledBy, }) {
+/**
+ * Owns the selected tab so the tab bar (`DTabs`) and its panels (`DTabs.Tab`)
+ * can live anywhere inside it, e.g. the bar in a header and the panels in
+ * another column.
+ */
+function DTabsProvider({ defaultSelected, children, }) {
     const [selected, setSelected] = useState(defaultSelected);
+    useEffect(() => {
+        setSelected(defaultSelected);
+    }, [defaultSelected]);
+    const isSelected = useCallback((tab) => (selected === tab), [selected]);
+    const state = useMemo(() => ({ selected, setSelected }), [selected]);
+    const value = useMemo(() => ({ isSelected }), [isSelected]);
+    return (jsx(TabsStateContext.Provider, { value: state, children: jsx(TabContext.Provider, { value: value, children: children }) }));
+}
+
+function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, classNameContent, style, vertical, variant = 'underline', dataAttributes, ariaLabel, ariaLabelledBy, }) {
+    var _a;
+    const shared = useContext(TabsStateContext);
+    const [ownSelected, setOwnSelected] = useState(defaultSelected);
+    const selected = shared
+        ? shared.selected
+        : ownSelected !== null && ownSelected !== void 0 ? ownSelected : (_a = options.find((opt) => !opt.disabled)) === null || _a === void 0 ? void 0 : _a.tab;
+    const setSelected = shared ? shared.setSelected : setOwnSelected;
     const onSelect = useCallback((option) => {
         if (option.tab) {
             setSelected(option.tab);
         }
         onChange === null || onChange === void 0 ? void 0 : onChange(option);
-    }, [onChange]);
+    }, [onChange, setSelected]);
     useEffect(() => {
-        setSelected(defaultSelected);
+        setOwnSelected(defaultSelected);
     }, [defaultSelected]);
     const generateClasses = useMemo(() => (Object.assign({ nav: true, 'd-tabs-nav-vertical': vertical && variant !== 'tabs', [`nav-${variant}`]: true }, className && { [className]: true })), [vertical, variant, className]);
     const tabRefs = useRef([]);
-    // Always holds the latest `options` without needing to be a dependency:
-    // `options` is commonly passed as an inline array literal (e.g.
-    // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), so it's a new array
-    // reference on every parent render even when its content hasn't changed.
-    // Reading it from this ref (updated synchronously on every render) lets
-    // the focus effect below react only to `selected` changing.
-    const optionsRef = useRef(options);
-    optionsRef.current = options;
-    useEffect(() => {
-        tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef());
-    }, [options]);
     // Ensure selected is never disabled
     useEffect(() => {
         if (options.length === 0)
@@ -2963,29 +3651,16 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
             if (firstEnabled)
                 setSelected(firstEnabled.tab);
         }
-    }, [options, selected]);
-    // Declarative focus management. Wrapped in `useCallback` with an empty
-    // dependency array since it only reads from the `tabRefs` ref, so its
-    // identity stays stable across renders and it can safely be used as an
-    // effect dependency below.
+    }, [options, selected, setSelected]);
+    // Focus only moves in response to the user: arrow keys and clicks call
+    // this directly. Changes to `selected` that don't come from an interaction
+    // (mount, a new `defaultSelected`, the disabled-tab fallback above) leave
+    // focus where it is, so the page doesn't scroll to the tablist and no other
+    // element (a search field, an OTP input) loses focus.
     const focusTab = useCallback((idx) => {
         var _a;
-        if ((_a = tabRefs.current[idx]) === null || _a === void 0 ? void 0 : _a.current) {
-            tabRefs.current[idx].current.focus();
-        }
+        (_a = tabRefs.current[idx]) === null || _a === void 0 ? void 0 : _a.focus();
     }, []);
-    // Focus selected tab when selected changes.
-    // Reads `options` from `optionsRef` (see comment above) instead of
-    // depending on `options` directly, so a parent re-render that merely
-    // creates a new `options` reference with identical content doesn't call
-    // `focusTab` again and steal focus away from unrelated elements on the
-    // page (e.g. an OTP input).
-    useEffect(() => {
-        const idx = optionsRef.current.findIndex((opt) => opt.tab === selected && !opt.disabled);
-        if (idx !== -1) {
-            focusTab(idx);
-        }
-    }, [selected, focusTab]);
     const handleKeyDown = useCallback((idx, e) => {
         const count = options.length;
         if (count === 0)
@@ -3014,7 +3689,7 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
                 }
             }
         }
-    }, [options, vertical, focusTab]);
+    }, [options, vertical, focusTab, setSelected]);
     let tablistProps = {};
     if (ariaLabelledBy) {
         tablistProps = { 'aria-labelledby': ariaLabelledBy };
@@ -3031,11 +3706,17 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
                 'd-tabs-column': !vertical || variant === 'tabs',
             }), style: style }, dataAttributes, { children: [jsx("ul", Object.assign({ className: classNames(generateClasses), role: "tablist", "aria-orientation": vertical ? 'vertical' : undefined }, tablistProps, { children: options.map((option, idx) => {
                         const isTabSelected = !!option.tab && option.tab === selected;
-                        return (jsx("li", { role: "presentation", className: "nav-item", children: jsx("button", { ref: tabRefs.current[idx], id: `${option.tab}Tab`, className: classNames('nav-link', { active: isTabSelected }, classNameTab), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": isTabSelected, tabIndex: isTabSelected ? 0 : -1, disabled: option.disabled, onClick: () => onSelect(option), onKeyDown: (e) => handleKeyDown(idx, e), children: option.label }) }, option.tab));
-                    }) })), jsx("div", { className: "d-tabs-content tab-content", children: children })] })) }));
+                        return (jsx("li", { role: "presentation", className: "nav-item", children: jsx("button", { ref: (element) => {
+                                    tabRefs.current[idx] = element;
+                                }, id: `${option.tab}Tab`, className: classNames('nav-link', { active: isTabSelected }, classNameTab), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": isTabSelected, tabIndex: isTabSelected ? 0 : -1, disabled: option.disabled, onClick: () => {
+                                    focusTab(idx);
+                                    onSelect(option);
+                                }, onKeyDown: (e) => handleKeyDown(idx, e), children: option.label }) }, option.tab));
+                    }) })), Children.toArray(children).length > 0 && (jsx("div", { className: classNames('d-tabs-content tab-content', classNameContent), children: children }))] })) }));
 }
 var DTabs$1 = Object.assign(DTabs, {
     Tab: DTabContent,
+    Provider: DTabsProvider,
 });
 
 function DToastHeader({ children, className, style }) {
@@ -3046,8 +3727,13 @@ function DToastBody({ children, className, style }) {
     return (jsx("div", { className: classNames('toast-body', className), style: style, children: children }));
 }
 
-function DToast({ children, className, style, dataAttributes, }) {
-    return (jsx("div", Object.assign({ className: classNames('toast', className), role: "alert", "aria-live": "assertive", "aria-atomic": "true", style: style }, dataAttributes, { children: children })));
+const LIVE_REGION_ATTRIBUTES = {
+    alert: { role: 'alert', 'aria-live': 'assertive', 'aria-atomic': 'true' },
+    status: { role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' },
+    none: {},
+};
+function DToast({ children, role = 'alert', className, style, dataAttributes, }) {
+    return (jsx("div", Object.assign({ className: classNames('toast', className) }, LIVE_REGION_ATTRIBUTES[role], { style: style }, dataAttributes, { children: children })));
 }
 var DToast$1 = Object.assign(DToast, {
     Header: DToastHeader,
@@ -3086,19 +3772,19 @@ function useDToast() {
         if (typeof data === 'function') {
             return toast.custom(data, toastProps);
         }
-        const { title, description, icon, closeIcon, timestamp, color, } = data;
+        const { title, description, icon, closeIcon, timestamp, color, role, closeAriaLabel = 'Close', } = data;
         return toast.custom(({ id, visible }) => {
             if (!visible) {
                 return null;
             }
             if (!description) {
-                return (jsx(DToast$1, { className: classNames({
+                return (jsx(DToast$1, { role: role, className: classNames({
                         [`toast-${color}`]: !!color,
-                    }, 'show'), children: jsxs(DToast$1.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
+                    }, 'show'), children: jsxs(DToast$1.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": closeAriaLabel, onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
             }
-            return (jsxs(DToast$1, { className: classNames({
+            return (jsxs(DToast$1, { role: role, className: classNames({
                     [`toast-${color}`]: !!color,
-                }, 'show'), children: [jsxs(DToast$1.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { children: jsx("span", { children: description }) })] }));
+                }, 'show'), children: [jsxs(DToast$1.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": closeAriaLabel, onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { children: jsx("span", { children: description }) })] }));
         }, toastProps);
     }, [xLg]);
     return {
@@ -3334,7 +4020,7 @@ function DInputPhone(_a, ref) {
         placeholder,
         valid,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -3348,7 +4034,16 @@ function DInputPhone(_a, ref) {
         inputComponent,
         labelComponent,
     ]);
-    return (jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputPhone',
+            label,
+            hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+            accessibleNameProp: 'aria-label',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
@@ -3815,11 +4510,11 @@ function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, s
                                 }, loading: isLoading || isSubmitting }), jsx("p", { className: "d-otp-contact", children: texts.contact })] })] })] }));
 }
 
-function DefaultErrorBoundary({ resetErrorBoundary }) {
-    return (jsx(DAlert, { color: "danger", showClose: false, children: jsxs("div", { className: "d-error-boundary-content", children: [jsx("span", { children: "An unexpected error occurred." }), jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: "Retry" })] }) }));
+function DefaultErrorBoundary({ resetErrorBoundary, message = 'An unexpected error occurred.', retryMessage = 'Retry', }) {
+    return (jsx(DAlert, { color: "danger", showClose: false, children: jsxs("div", { className: "d-error-boundary-content", children: [jsx("span", { children: message }), jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: retryMessage })] }) }));
 }
 
-function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }) {
+function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, messages, children, }) {
     const handleError = useCallback((error, info) => {
         // eslint-disable-next-line no-console
         console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, getErrorMessage(error), info);
@@ -3828,8 +4523,8 @@ function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children,
     const FallbackRender = useCallback((props) => {
         if (fallback)
             return fallback(props);
-        return (jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary }));
-    }, [fallback]);
+        return (jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary, message: messages === null || messages === void 0 ? void 0 : messages.error, retryMessage: messages === null || messages === void 0 ? void 0 : messages.retry }));
+    }, [fallback, messages]);
     return (jsx(ErrorBoundary, { resetKeys: resetKeys, onReset: onReset, onError: handleError, fallbackRender: FallbackRender, children: children }));
 }
 
@@ -3850,6 +4545,11 @@ function render(renderable) {
         return null;
     return typeof renderable === 'function' ? renderable() : renderable;
 }
+function isEmpty(data) {
+    if (Array.isArray(data))
+        return data.length === 0;
+    return data === null || data === undefined;
+}
 function DDataStateWrapper({ isLoading, isError, data, onRetry, messages, renderLoading, renderEmpty, renderError, children, }) {
     // 1. Loading
     if (isLoading) {
@@ -3863,13 +4563,15 @@ function DDataStateWrapper({ isLoading, isError, data, onRetry, messages, render
             return render(renderError);
         return (jsx(ErrorState, { onRetry: onRetry, message: messages === null || messages === void 0 ? void 0 : messages.error, retryMessage: messages === null || messages === void 0 ? void 0 : messages.retry }));
     }
-    // 3. Empty
-    if (!(data === null || data === void 0 ? void 0 : data.length)) {
+    // 3. Empty: no items for a collection, null/undefined for a single resource
+    if (isEmpty(data)) {
         if (renderEmpty)
             return render(renderEmpty);
         return (jsx(EmptyState, { message: messages === null || messages === void 0 ? void 0 : messages.empty }));
     }
-    // 4. Success
+    // 4. Success: the render prop gets the same shape it was given
+    // Both overloads pair `data` with its own `children` signature, so the
+    // value is handed back exactly as it was received.
     return jsx(Fragment, { children: children(data) });
 }
 
@@ -4007,5 +4709,5 @@ const CORE_LUCIDE_ICONS = [
     'Trash',
 ];
 
-export { CORE_LUCIDE_ICONS, DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, buildUrl, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, sanitizeHref, subscribeToMediaQuery, useConfirmModal, useCountdown, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useOtp, useProvidedRefOrCreate, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useStackState, useTabContext, validatePhoneNumber };
+export { CORE_LUCIDE_ICONS, DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DConfirmModalContainer, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTabsProvider, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, EmptyState, ErrorState, LoadingState, buildUrl, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, sanitizeHref, subscribeToMediaQuery, useConfirmModal, useCountdown, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, useOtp, useProvidedRefOrCreate, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map

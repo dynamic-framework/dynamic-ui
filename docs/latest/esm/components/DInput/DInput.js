@@ -4,6 +4,9 @@ import { forwardRef, useId, useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 import DIcon from '../DIcon/DIcon.js';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate.js';
+import DFormLabel from '../internal/DFormLabel.js';
+import hasLabelContent from '../../utils/hasLabelContent.js';
+import warnLabelUsage from '../../utils/warnLabelUsage.js';
 import { useDContext } from '../../contexts/DContext.js';
 
 function DInput(_a, ref) {
@@ -45,7 +48,7 @@ function DInput(_a, ref) {
     const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
             'is-invalid': invalid,
             'is-valid': valid,
-        }), disabled: disabled || loading, readOnly: readonly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        }), disabled: disabled || loading, readOnly: readonly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, invalid && { 'aria-invalid': true }, inputProps))), [
         ariaDescribedby,
         disabled,
         handleOnChange,
@@ -60,7 +63,7 @@ function DInput(_a, ref) {
         value,
         readonly,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -70,7 +73,16 @@ function DInput(_a, ref) {
         }
         return inputComponent;
     }, [floatingLabel, inputComponent, labelComponent]);
-    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInput',
+            label,
+            hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+            accessibleNameProp: 'aria-label',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,

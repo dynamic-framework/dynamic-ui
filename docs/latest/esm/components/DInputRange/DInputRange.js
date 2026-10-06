@@ -3,6 +3,9 @@ import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { forwardRef, useId, useMemo } from 'react';
 import classNames from 'classnames';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate.js';
+import DFormLabel from '../internal/DFormLabel.js';
+import hasLabelContent from '../../utils/hasLabelContent.js';
+import warnLabelUsage from '../../utils/warnLabelUsage.js';
 import { PREFIX_BS } from '../config.js';
 
 function DInputRange(_a, ref) {
@@ -34,10 +37,21 @@ function DInputRange(_a, ref) {
         props,
         value,
     ]);
-    if (!label) {
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputRange',
+            label,
+            // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+            // `aria-label` wins — including when it is explicitly undefined.
+            hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+                || !!props['aria-labelledby'],
+            accessibleNameProp: 'ariaLabel',
+        });
+    }
+    if (!hasLabelContent(label)) {
         return inputComponent;
     }
-    return (jsxs(Fragment, { children: [jsx("label", { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
+    return (jsxs(Fragment, { children: [jsx(DFormLabel, { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
 }
 const ForwardedDInputRange = forwardRef(DInputRange);
 ForwardedDInputRange.displayName = 'DInputRange';

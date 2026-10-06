@@ -1,5 +1,5 @@
 import { Renderable, Toast, ToastPosition, ValueFunction } from 'react-hot-toast';
-import { ComponentStateColor } from '../interface';
+import { ComponentStateColor, LiveRegionRole } from '../interface';
 /**
  * Data used to render the default DToast component via `useDToast`.
  * When `description` is provided, the toast renders with a header and body layout.
@@ -19,6 +19,13 @@ export type ToastData = {
     closeIcon?: string;
     /** Applies the `toast-{color}` CSS modifier class. */
     color?: ComponentStateColor;
+    /**
+     * Live region role of the toast. Defaults to `alert`; use `status` for
+     * confirmations so the screen reader doesn't interrupt the user.
+     */
+    role?: LiveRegionRole;
+    /** Accessible name of the close button. Defaults to `"Close"`. */
+    closeAriaLabel?: string;
 };
 /** Options forwarded to react-hot-toast for a single toast instance. */
 export interface DToastOptions {

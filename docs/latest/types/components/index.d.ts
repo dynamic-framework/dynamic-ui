@@ -42,7 +42,7 @@ export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
 export { default as DTooltip } from './DTooltip';
 export { default as DTimeline } from './DTimeline';
-export { default as DTabs, useTabContext, DTabContent, } from './DTabs';
+export { default as DTabs, useTabContext, DTabContent, DTabsProvider, } from './DTabs';
 export type { DTabOption } from './DTabs';
 export { default as DToast } from './DToast';
 export { default as DToastContainer, useDToast, } from './DToastContainer';
@@ -54,6 +54,6 @@ export { default as DVoucher, useScreenshot, useScreenshotDownload, useScreensho
 export { default as DOtp } from './DOtp';
 export { default as DErrorBoundary, useErrorBoundary, type FallbackProps, getErrorMessage, } from './DErrorBoundary';
 export { default as DDataStateWrapper, EmptyState, ErrorState, LoadingState, } from './DDataStateWrapper';
-export type { DDataStateMessages } from './DDataStateWrapper';
+export type { DDataStateMessages, DDataStateWrapperListProps, DDataStateWrapperSingleProps, } from './DDataStateWrapper';
 export { default as DConfirmModalContainer } from './DConfirmModal/DConfirmModalContainer';
 export type { ConfirmModalEntry, ConfirmModalStore } from './DConfirmModal/types';

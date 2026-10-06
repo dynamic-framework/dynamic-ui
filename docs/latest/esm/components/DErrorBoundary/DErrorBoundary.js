@@ -4,7 +4,7 @@ import { getErrorMessage, ErrorBoundary } from 'react-error-boundary';
 export { getErrorMessage, useErrorBoundary } from 'react-error-boundary';
 import DefaultErrorBoundary from './components/DefaultErrorBoundary.js';
 
-function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }) {
+function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, messages, children, }) {
     const handleError = useCallback((error, info) => {
         // eslint-disable-next-line no-console
         console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, getErrorMessage(error), info);
@@ -13,8 +13,8 @@ function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children,
     const FallbackRender = useCallback((props) => {
         if (fallback)
             return fallback(props);
-        return (jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary }));
-    }, [fallback]);
+        return (jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary, message: messages === null || messages === void 0 ? void 0 : messages.error, retryMessage: messages === null || messages === void 0 ? void 0 : messages.retry }));
+    }, [fallback, messages]);
     return (jsx(ErrorBoundary, { resetKeys: resetKeys, onReset: onReset, onError: handleError, fallbackRender: FallbackRender, children: children }));
 }
 

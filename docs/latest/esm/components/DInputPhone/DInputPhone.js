@@ -4,6 +4,9 @@ import { forwardRef, useId, useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 import { defaultCountries, parseCountry, usePhoneInput, CountrySelector } from 'react-international-phone';
 import DIcon from '../DIcon/DIcon.js';
+import DFormLabel from '../internal/DFormLabel.js';
+import hasLabelContent from '../../utils/hasLabelContent.js';
+import warnLabelUsage from '../../utils/warnLabelUsage.js';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate.js';
 import { useDContext } from '../../contexts/DContext.js';
 import validatePhoneNumber from '../../utils/validatePhoneNumber.js';
@@ -69,7 +72,7 @@ function DInputPhone(_a, ref) {
         placeholder,
         valid,
     ]);
-    const labelComponent = useMemo(() => (jsx("label", { htmlFor: id, children: label })), [
+    const labelComponent = useMemo(() => (jsx(DFormLabel, { htmlFor: id, children: label })), [
         id,
         label,
     ]);
@@ -83,7 +86,16 @@ function DInputPhone(_a, ref) {
         inputComponent,
         labelComponent,
     ]);
-    return (jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
+    if (process.env.NODE_ENV !== 'production') {
+        warnLabelUsage({
+            component: 'DInputPhone',
+            label,
+            hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+            accessibleNameProp: 'aria-label',
+            floatingLabel,
+        });
+    }
+    return (jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [hasLabelContent(label) && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,

@@ -588,7 +588,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">10/496 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">11/513 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -1698,9 +1698,9 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DAlert</h2>
       <div class="badges">
-        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">7 prop types</label>
         <label for="c-1-design-system-components-alert-info" class="badge info as-toggle">1 info</label>
-        <label for="c-1-design-system-components-alert-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-1-design-system-components-alert-stories" class="badge ok as-toggle">11 stories</label>
         
         
       </div>
@@ -1734,15 +1734,21 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">7 prop types</span>
             </div>
             <pre><code>Component: src/components/DAlert/DAlert.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>className?: string
 
+closeAriaLabel?: any = &#39;Close&#39;
+
 color?: any = &#39;success&#39;
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+role?: any = &#39;alert&#39;
+
+showIcon?: any = true
 
 style?: CSSProperties</code></pre>
           </div>
@@ -1802,6 +1808,24 @@ style?: CSSProperties</code></pre>
               
               
               <pre><code>const Warning = () =&gt; &lt;DAlert color=&quot;warning&quot;&gt;This is a warning alert&lt;/DAlert&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Status Role</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const StatusRole = () =&gt; &lt;DAlert color=&quot;info&quot; role=&quot;status&quot;&gt;Your balance is updated every hour.&lt;/DAlert&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Without Icon</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithoutIcon = () =&gt; &lt;DAlert color=&quot;info&quot; showIcon={false}&gt;Movements from the last 90 days are available in the detail view.&lt;/DAlert&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -2174,9 +2198,9 @@ text?: string</code></pre>
     &lt;DBadge text=&quot;XS:sm MD:lg&quot; size={{ xs: &#39;sm&#39;, md: &#39;lg&#39; }} color=&quot;info&quot; /&gt;
     &lt;DBadge text=&quot;SM:sm LG:lg&quot; size={{ sm: &#39;sm&#39;, lg: &#39;lg&#39; }} color=&quot;success&quot; /&gt;
     &lt;DBadge text=&quot;XS:sm XL:lg&quot; size={{ xs: &#39;sm&#39;, xl: &#39;lg&#39; }} color=&quot;danger&quot; /&gt;
-    &lt;DBadge text=&quot;XS:sm SM:md LG:lg&quot; size={{ xs: &#39;sm&#39;, sm: &#39;md&#39;, lg: &#39;lg&#39; }} color=&quot;primary&quot; /&gt;
+    &lt;DBadge text=&quot;XS:lg LG:sm&quot; size={{ xs: &#39;lg&#39;, lg: &#39;sm&#39; }} color=&quot;primary&quot; /&gt;
+    &lt;DBadge text=&quot;MD:sm&quot; size={{ md: &#39;sm&#39; }} color=&quot;warning&quot; /&gt;
     &lt;DBadge text=&quot;Only LG&quot; size=&quot;lg&quot; color=&quot;secondary&quot; /&gt;
-    &lt;DBadge text=&quot;ResponsiveObj&quot; size={{ xs: &#39;sm&#39;, md: &#39;md&#39;, xl: &#39;lg&#39; }} color=&quot;warning&quot; /&gt;
   &lt;/div&gt;
 );</code></pre>
             </div>
@@ -3513,21 +3537,21 @@ text?: string</code></pre>
               &lt;tr&gt;
                 &lt;td&gt;Project Alpha&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Alpha progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;232&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Beta&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Beta progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Gamma&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Gamma progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
@@ -3695,21 +3719,21 @@ text?: string</code></pre>
               &lt;tr&gt;
                 &lt;td&gt;Project Alpha&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Alpha progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;232&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Beta&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Beta progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Gamma&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Gamma progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
@@ -3939,21 +3963,21 @@ text?: string</code></pre>
               &lt;tr&gt;
                 &lt;td&gt;Project Alpha&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Alpha progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;232&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Beta&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Beta progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
               &lt;tr&gt;
-                &lt;td&gt;Project Alpha&lt;/td&gt;
+                &lt;td&gt;Project Gamma&lt;/td&gt;
                 &lt;td className=&quot;align-middle&quot;&gt;
-                  &lt;DProgress currentValue={75} hideCurrentValue height={5} /&gt;
+                  &lt;DProgress currentValue={75} hideCurrentValue height={5} ariaLabel=&quot;Project Gamma progress&quot; /&gt;
                 &lt;/td&gt;
                 &lt;td&gt;222&lt;/td&gt;
               &lt;/tr&gt;
@@ -4553,7 +4577,7 @@ text?: string</code></pre>
         &lt;/legend&gt;
         &lt;div className=&quot;grid gap-3&quot;&gt;
           &lt;label className=&quot;radio-custom border p-4 rounded g-col-12 g-col-lg-6 align-items-start gap-2&quot;&gt;
-            &lt;DInputCheck type=&quot;radio&quot; name=&quot;location&quot; checked /&gt;
+            &lt;DInputCheck type=&quot;radio&quot; name=&quot;location&quot; defaultChecked /&gt;
             &lt;div className=&quot;form-check-label&quot;&gt;
               &lt;span className=&quot;fw-semibold&quot;&gt;Home&lt;/span&gt;
               &lt;small className=&quot;d-block mt-1 text-muted d-flex gap-2&quot;&gt;
@@ -5610,7 +5634,7 @@ text?: string</code></pre>
           &lt;/label&gt;
 
           &lt;label className=&quot;radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2&quot;&gt;
-            &lt;DInputCheck type=&quot;radio&quot; name=&quot;plan&quot; ariaLabel=&quot;Pro&quot; checked inputClassName=&quot;d-none&quot; /&gt;
+            &lt;DInputCheck type=&quot;radio&quot; name=&quot;plan&quot; ariaLabel=&quot;Pro&quot; defaultChecked inputClassName=&quot;d-none&quot; /&gt;
             &lt;div className=&quot;form-check-label&quot;&gt;
               &lt;span className=&quot;fw-semibold d-flex align-items-center gap-2&quot;&gt;
                 &lt;DIcon icon=&quot;Zap&quot; size=&quot;1rem&quot; color=&quot;primary&quot; /&gt;
@@ -5665,7 +5689,7 @@ text?: string</code></pre>
           &lt;span className=&quot;ms-auto&quot;&gt;Free&lt;/span&gt;
         &lt;/label&gt;
         &lt;label className=&quot;radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2&quot;&gt;
-          &lt;DInputCheck type=&quot;radio&quot; name=&quot;ship&quot; ariaLabel=&quot;Express&quot; checked inputClassName=&quot;d-none&quot; /&gt;
+          &lt;DInputCheck type=&quot;radio&quot; name=&quot;ship&quot; ariaLabel=&quot;Express&quot; defaultChecked inputClassName=&quot;d-none&quot; /&gt;
           &lt;div className=&quot;form-check-label&quot;&gt;
             &lt;span className=&quot;fw-semibold d-flex align-items-center gap-2&quot;&gt;
               &lt;DIcon icon=&quot;Lightning&quot; size=&quot;1rem&quot; className=&quot;text-primary&quot; /&gt;
@@ -5693,7 +5717,7 @@ text?: string</code></pre>
       &lt;legend className=&quot;fw-semibold&quot;&gt;Payment&lt;/legend&gt;
       &lt;div className=&quot;grid gap-3&quot;&gt;
         &lt;label className=&quot;radio-custom border rounded p-4 g-col-12 d-flex align-items-start gap-2&quot;&gt;
-          &lt;DInputCheck type=&quot;radio&quot; name=&quot;pay&quot; ariaLabel=&quot;Card&quot; checked inputClassName=&quot;d-none&quot; /&gt;
+          &lt;DInputCheck type=&quot;radio&quot; name=&quot;pay&quot; ariaLabel=&quot;Card&quot; defaultChecked inputClassName=&quot;d-none&quot; /&gt;
           &lt;div className=&quot;form-check-label&quot;&gt;
             &lt;span className=&quot;fw-semibold d-flex align-items-center gap-2&quot;&gt;
               &lt;DIcon icon=&quot;CreditCard&quot; size=&quot;1rem&quot; className=&quot;text-muted&quot; /&gt;
@@ -7079,9 +7103,9 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     &lt;DButton color=&quot;info&quot; size={{ xs: &#39;sm&#39;, md: &#39;lg&#39; }} text=&quot;XS=sm, MD=lg&quot; /&gt;
     &lt;DButton color=&quot;success&quot; size={{ sm: &#39;sm&#39;, lg: &#39;lg&#39; }} text=&quot;SM=sm, LG=lg&quot; /&gt;
     &lt;DButton color=&quot;danger&quot; size={{ xs: &#39;sm&#39;, xl: &#39;lg&#39; }} text=&quot;XS=sm, XL=lg&quot; /&gt;
-    &lt;DButton color=&quot;primary&quot; size={{ xs: &#39;sm&#39;, sm: &#39;md&#39;, lg: &#39;lg&#39; }} text=&quot;XS=sm, SM=md, LG=lg&quot; /&gt;
+    &lt;DButton color=&quot;primary&quot; size={{ xs: &#39;lg&#39;, lg: &#39;sm&#39; }} text=&quot;XS=lg, LG=sm&quot; /&gt;
+    &lt;DButton color=&quot;warning&quot; size={{ md: &#39;sm&#39; }} text=&quot;MD=sm&quot; /&gt;
     &lt;DButton color=&quot;secondary&quot; size=&quot;lg&quot; text=&quot;Only size fallback&quot; /&gt;
-    &lt;DButton color=&quot;warning&quot; size={{ xs: &#39;sm&#39;, md: &#39;md&#39;, xl: &#39;lg&#39; }} text=&quot;ResponsiveObj&quot; /&gt;
   &lt;/div&gt;
 );</code></pre>
             </div>
@@ -7188,9 +7212,9 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DButtonIcon</h2>
       <div class="badges">
-        <label for="c-21-design-system-components-button-icon-props" class="badge ok as-toggle">19 prop types</label>
+        <label for="c-21-design-system-components-button-icon-props" class="badge ok as-toggle">20 prop types</label>
         <label for="c-21-design-system-components-button-icon-info" class="badge info as-toggle">1 info</label>
-        <label for="c-21-design-system-components-button-icon-stories" class="badge ok as-toggle">7 stories</label>
+        <label for="c-21-design-system-components-button-icon-stories" class="badge ok as-toggle">9 stories</label>
         
         
       </div>
@@ -7224,7 +7248,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">19 prop types</span>
+              <span class="badge ok">20 prop types</span>
             </div>
             <pre><code>Component: src/components/DButtonIcon/DButtonIcon.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
@@ -7245,6 +7269,14 @@ iconFamilyClass?: string
 iconFamilyPrefix?: string
 
 iconMaterialStyle?: boolean
+
+/**
+ * Size of the icon glyph, forwarded to `DIcon` (e.g. `&quot;1.5rem&quot;`, or a
+ * responsive object such as `{ xs: &#39;1rem&#39;, lg: &#39;2rem&#39; }`, which follows
+ * viewport changes). Without it the glyph follows the button&#39;s font size,
+ * which changes with `size`.
+ */
+iconSize?: string | ResponsiveProp
 
 loading?: boolean = false
 
@@ -7453,6 +7485,39 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     target=&quot;_blank&quot;
     rel=&quot;noopener noreferrer&quot;
     aria-label=&quot;Open page in new tab&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Icon Size</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The glyph follows the button font size, so it grows with `size`. Use `iconSize` when a layout needs a different glyph size than the one `size` gives.</div>
+              <pre><code>const IconSize = () =&gt; &lt;div className=&quot;d-flex align-items-center gap-3&quot;&gt;
+    &lt;DButtonIcon color=&quot;primary&quot; icon=&quot;Download&quot; size=&quot;sm&quot; aria-label=&quot;Download (sm)&quot; /&gt;
+    &lt;DButtonIcon color=&quot;primary&quot; icon=&quot;Download&quot; aria-label=&quot;Download&quot; /&gt;
+    &lt;DButtonIcon color=&quot;primary&quot; icon=&quot;Download&quot; size=&quot;lg&quot; aria-label=&quot;Download (lg)&quot; /&gt;
+    &lt;DButtonIcon
+        color=&quot;primary&quot;
+        icon=&quot;Download&quot;
+        size=&quot;lg&quot;
+        iconSize=&quot;2rem&quot;
+        aria-label=&quot;Download (lg, 2rem glyph)&quot; /&gt;
+&lt;/div&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Responsive Icon Size</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">`iconSize` also takes an object by breakpoint, and the glyph follows viewport changes. Breakpoints are read from the `--bs-breakpoint-*` CSS variables, so `dynamic-ui.css` has to be loaded. Resize the viewport to see the glyph go from 1rem to 2rem at the `lg` breakpoint.</div>
+              <pre><code>const ResponsiveIconSize = () =&gt; &lt;DButtonIcon
+    color=&quot;primary&quot;
+    icon=&quot;Download&quot;
+    size=&quot;lg&quot;
+    iconSize={{ xs: &#39;1rem&#39;, lg: &#39;2rem&#39; }}
+    aria-label=&quot;Download&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -9781,9 +9846,9 @@ Component to format and display a currency value using a `DContextProvider` to g
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DDataStateWrapper</h2>
       <div class="badges">
-        <label for="c-31-design-system-components-data-state-wrapper-props" class="badge ok as-toggle">9 prop types</label>
         
-        <label for="c-31-design-system-components-data-state-wrapper-stories" class="badge ok as-toggle">7 stories</label>
+        
+        <label for="c-31-design-system-components-data-state-wrapper-stories" class="badge ok as-toggle">8 stories</label>
         
         
       </div>
@@ -9800,44 +9865,12 @@ Component to format and display a currency value using a `DContextProvider` to g
   <input id="c-31-design-system-components-data-state-wrapper-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-31-design-system-components-data-state-wrapper-props" class="tg tg-props" type="checkbox" hidden />
+  
 
   <div class="panels">
     
     
     
-        <div class="panel panel-props">
-          <div class="note ok">
-            <div class="row">
-              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">9 prop types</span>
-            </div>
-            <pre><code>Component: src/components/DDataStateWrapper/DDataStateWrapper.tsx::default</code></pre>
-            <pre><code>Props:</code></pre>
-            <pre><code>children: (data: T[]) =&gt; ReactNode
-
-data: T[] | undefined
-
-isError: boolean
-
-isLoading: boolean
-
-messages?: {
-  loading?: string;
-  empty?: string;
-  error?: string;
-  retry?: string;
-}
-
-onRetry?: () =&gt; void
-
-renderEmpty?: ReactNode | (() =&gt; ReactNode)
-
-renderError?: ReactNode | (() =&gt; ReactNode)
-
-renderLoading?: ReactNode | (() =&gt; ReactNode)</code></pre>
-          </div>
-        </div>
     
         <div class="panel panel-stories">
           
@@ -9884,6 +9917,53 @@ renderLoading?: ReactNode | (() =&gt; ReactNode)</code></pre>
       &#39;Beta&#39;,
       &#39;Gamma&#39;,
     ]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Single Resource</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">A single resource (an entity detail, a summary) instead of a collection. The render prop receives the object itself, and the empty state shows when it is `null` or `undefined`.</div>
+              <pre><code>const SingleResource = function Render() {
+  type AccountDetail = { alias: string; number: string; balance: string };
+  const [detail, setDetail] = useState&lt;AccountDetail | null&gt;(null);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-3&quot;&gt;
+      &lt;div className=&quot;d-flex gap-2&quot;&gt;
+        &lt;button
+          type=&quot;button&quot;
+          className=&quot;btn btn-sm btn-outline-primary&quot;
+          onClick={() =&gt; setDetail({ alias: &#39;Cuenta de ahorros&#39;, number: &#39;•••• 4821&#39;, balance: &#39;$ 12.450.000&#39; })}
+        &gt;
+          Load detail
+        &lt;/button&gt;
+        &lt;button
+          type=&quot;button&quot;
+          className=&quot;btn btn-sm btn-outline-secondary&quot;
+          onClick={() =&gt; setDetail(null)}
+        &gt;
+          Clear
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;DDataStateWrapper
+        isLoading={false}
+        isError={false}
+        data={detail}
+        messages={{ empty: &#39;Select an account to see its detail.&#39; }}
+      &gt;
+        {(account) =&gt; (
+          &lt;DBox&gt;
+            &lt;h3 className=&quot;h5 mb-1&quot;&gt;{account.alias}&lt;/h3&gt;
+            &lt;p className=&quot;mb-1&quot;&gt;{account.number}&lt;/p&gt;
+            &lt;p className=&quot;mb-0 fw-bold&quot;&gt;{account.balance}&lt;/p&gt;
+          &lt;/DBox&gt;
+        )}
+      &lt;/DDataStateWrapper&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -11282,7 +11362,7 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
       <div class="badges">
         
         <label for="c-34-design-system-components-error-boundary-info" class="badge info as-toggle">1 info</label>
-        <label for="c-34-design-system-components-error-boundary-stories" class="badge ok as-toggle">7 stories</label>
+        <label for="c-34-design-system-components-error-boundary-stories" class="badge ok as-toggle">8 stories</label>
         
         
       </div>
@@ -11340,6 +11420,29 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
             &lt;DButton className=&quot;me-auto&quot; onClick={() =&gt; setExplode(true)}&gt;Trigger error
                         &lt;/DButton&gt;
             &lt;DErrorBoundary name=&quot;Default&quot;&gt;
+                &lt;Bomb explode={explode} /&gt;
+            &lt;/DErrorBoundary&gt;
+        &lt;/div&gt;
+    );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default Fallback With Messages</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const DefaultFallbackWithMessages = () =&gt; {
+    const [explode, setExplode] = useState(false);
+
+    return (
+        &lt;div className=&quot;d-flex flex-column gap-2&quot;&gt;
+            &lt;DButton className=&quot;me-auto&quot; onClick={() =&gt; setExplode(true)}&gt;Trigger error
+                        &lt;/DButton&gt;
+            &lt;DErrorBoundary
+                name=&quot;Messages&quot;
+                messages={{ error: &#39;Something went wrong loading this section.&#39;, retry: &#39;Try again&#39; }}&gt;
                 &lt;Bomb explode={explode} /&gt;
             &lt;/DErrorBoundary&gt;
         &lt;/div&gt;
@@ -11808,12 +11911,12 @@ useListenerSize?: boolean</code></pre>
               <pre><code>const WithResponsiveSizes = () =&gt; &lt;DIcon
     icon=&quot;Settings&quot;
     size={{
-      xs: &#39;8&#39;,
-      sm: &#39;16&#39;,
-      md: &#39;32&#39;,
-      lg: &#39;64&#39;,
-      xl: &#39;128&#39;,
-      xxl: &#39;256&#39;,
+      xs: &#39;8px&#39;,
+      sm: &#39;16px&#39;,
+      md: &#39;32px&#39;,
+      lg: &#39;64px&#39;,
+      xl: &#39;128px&#39;,
+      xxl: &#39;256px&#39;,
     }}
     useListenerSize
     hasCircle={false}
@@ -12086,7 +12189,7 @@ useListenerSize?: boolean</code></pre>
       <div class="badges">
         <label for="c-36-design-system-components-input-props" class="badge ok as-toggle">7 prop types</label>
         <label for="c-36-design-system-components-input-info" class="badge info as-toggle">1 info</label>
-        <label for="c-36-design-system-components-input-stories" class="badge ok as-toggle">8 stories</label>
+        <label for="c-36-design-system-components-input-stories" class="badge ok as-toggle">9 stories</label>
         
         
       </div>
@@ -12289,6 +12392,25 @@ valid?: any = false</code></pre>
         iconStartAriaLabel=&quot;start action&quot; /&gt;
 &lt;/DContextProvider&gt;;</code></pre>
             </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Label With Action</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const LabelWithAction = () =&gt; &lt;DInput
+    id=&quot;componentIdLabelAction&quot;
+    aria-label=&quot;CVV&quot;
+    placeholder=&quot;123&quot;
+    type=&quot;text&quot;
+    label={(&lt;&gt;CVV
+              {&#39; &#39;}
+      &lt;a href=&quot;https://dynamicframework.dev&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;
+        What is this?
+      &lt;/a&gt;
+    &lt;/&gt;)} /&gt;;</code></pre>
+            </div>
         </div>
     
     
@@ -12306,9 +12428,9 @@ valid?: any = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputCheck</h2>
       <div class="badges">
-        <label for="c-37-design-system-components-input-check-props" class="badge ok as-toggle">17 prop types</label>
+        <label for="c-37-design-system-components-input-check-props" class="badge ok as-toggle">18 prop types</label>
         <label for="c-37-design-system-components-input-check-info" class="badge info as-toggle">1 info</label>
-        <label for="c-37-design-system-components-input-check-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-37-design-system-components-input-check-stories" class="badge ok as-toggle">12 stories</label>
         
         
       </div>
@@ -12342,17 +12464,37 @@ valid?: any = false</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">17 prop types</span>
+              <span class="badge ok">18 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputCheck/DInputCheck.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>ariaLabel?: string
+            <pre><code>/**
+ * Accessible name of the control, needed when `label` is not plain text.
+ * Without it the name becomes whatever the label subtree computes to, which
+ * for a label carrying a link or an icon reads as the wrong name or as none.
+ */
+ariaLabel?: string
 
-checked?: boolean = false
+/**
+ * Checked state of the control.
+ * 
+ * Passed together with `onChange` the control is fully controlled: when the
+ * parent rejects a change the DOM snaps back to this value.
+ * 
+ * Passed on its own it is taken as the starting value and the control keeps
+ * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+ * that, it says so out loud.
+ */
+checked?: boolean
 
 className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+/**
+ * Starting checked state for uncontrolled usage.
+ */
+defaultChecked?: boolean
 
 disabled?: boolean = false
 
@@ -12369,7 +12511,15 @@ inputClassName?: string
 
 invalid?: boolean = false
 
-label?: string
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `ariaLabel` alongside it; a development-only warning says so when it
+ * is missing.
+ */
+label?: ReactNode
 
 name?: string
 
@@ -12408,7 +12558,7 @@ value?: string</code></pre>
     id=&quot;componentId1&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     indeterminate={false}
     invalid={false}
@@ -12429,7 +12579,7 @@ value?: string</code></pre>
               <pre><code>const WithoutLabel = () =&gt; &lt;DInputCheck
     id=&quot;componentId2&quot;
     type=&quot;checkbox&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
             </div>
@@ -12445,7 +12595,7 @@ value?: string</code></pre>
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
     hint=&quot;Assistive text&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
@@ -12459,7 +12609,7 @@ value?: string</code></pre>
     id=&quot;componentId4&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     valid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -12475,7 +12625,7 @@ value?: string</code></pre>
     id=&quot;componentId5&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     invalid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -12487,7 +12637,12 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const Checked = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
+              <pre><code>const Checked = () =&gt; &lt;DInputCheck
+    id=&quot;componentId6&quot;
+    type=&quot;checkbox&quot;
+    label=&quot;Label&quot;
+    defaultChecked
+    disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12500,7 +12655,7 @@ value?: string</code></pre>
     id=&quot;componentId6b&quot;
     type=&quot;checkbox&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     indeterminate /&gt;;</code></pre>
             </div>
@@ -12511,7 +12666,12 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const Disabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+              <pre><code>const Disabled = () =&gt; &lt;DInputCheck
+    id=&quot;componentId7&quot;
+    type=&quot;checkbox&quot;
+    label=&quot;Label&quot;
+    defaultChecked={false}
+    disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12520,7 +12680,7 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;checkbox&quot; label=&quot;Label&quot; defaultChecked disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12533,8 +12693,61 @@ value?: string</code></pre>
     id=&quot;componentId9&quot;
     type=&quot;checkbox&quot;
     label=&quot;Custom styled input&quot;
-    checked={false}
+    defaultChecked={false}
     inputClassName=&quot;border-2 border-info-500&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Label With Link</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const LabelWithLink = () =&gt; &lt;DInputCheck
+    id=&quot;componentIdTerms&quot;
+    type=&quot;checkbox&quot;
+    defaultChecked={false}
+    ariaLabel=&quot;Accept the terms and conditions&quot;
+    label={(&lt;&gt;I accept the
+              {&#39; &#39;}
+      &lt;a href=&quot;https://dynamicframework.dev&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;
+        terms and conditions
+      &lt;/a&gt;
+    &lt;/&gt;)} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Controlled = function Render() {
+  const LIMIT = 2;
+  const [selected, setSelected] = useState&lt;Array&lt;string&gt;&gt;([]);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-2&quot;&gt;
+      {[&#39;Ana&#39;, &#39;Beto&#39;, &#39;Carla&#39;, &#39;Diego&#39;].map((approver) =&gt; (
+        &lt;DInputCheck
+          key={approver}
+          type=&quot;checkbox&quot;
+          label={approver}
+          checked={selected.includes(approver)}
+          onChange={(event) =&gt; setSelected((prev) =&gt; {
+            if (!event.target.checked) {
+              return prev.filter((name) =&gt; name !== approver);
+            }
+            return prev.length &lt; LIMIT ? [...prev, approver] : prev;
+          })}
+        /&gt;
+      ))}
+      &lt;p className=&quot;form-text&quot;&gt;
+        {`Up to ${LIMIT} approvers — selected: ${selected.join(&#39;, &#39;) || &#39;none&#39;}`}
+      &lt;/p&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
             </div>
         </div>
     
@@ -12553,9 +12766,9 @@ value?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputCheck</h2>
       <div class="badges">
-        <label for="c-38-design-system-components-input-radio-props" class="badge ok as-toggle">17 prop types</label>
+        <label for="c-38-design-system-components-input-radio-props" class="badge ok as-toggle">18 prop types</label>
         <label for="c-38-design-system-components-input-radio-info" class="badge info as-toggle">1 info</label>
-        <label for="c-38-design-system-components-input-radio-stories" class="badge ok as-toggle">8 stories</label>
+        <label for="c-38-design-system-components-input-radio-stories" class="badge ok as-toggle">9 stories</label>
         
         
       </div>
@@ -12589,17 +12802,37 @@ value?: string</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">17 prop types</span>
+              <span class="badge ok">18 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputCheck/DInputCheck.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>ariaLabel?: string
+            <pre><code>/**
+ * Accessible name of the control, needed when `label` is not plain text.
+ * Without it the name becomes whatever the label subtree computes to, which
+ * for a label carrying a link or an icon reads as the wrong name or as none.
+ */
+ariaLabel?: string
 
-checked?: boolean = false
+/**
+ * Checked state of the control.
+ * 
+ * Passed together with `onChange` the control is fully controlled: when the
+ * parent rejects a change the DOM snaps back to this value.
+ * 
+ * Passed on its own it is taken as the starting value and the control keeps
+ * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+ * that, it says so out loud.
+ */
+checked?: boolean
 
 className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+/**
+ * Starting checked state for uncontrolled usage.
+ */
+defaultChecked?: boolean
 
 disabled?: boolean = false
 
@@ -12616,7 +12849,15 @@ inputClassName?: string
 
 invalid?: boolean = false
 
-label?: string
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `ariaLabel` alongside it; a development-only warning says so when it
+ * is missing.
+ */
+label?: ReactNode
 
 name?: string
 
@@ -12655,7 +12896,7 @@ value?: string</code></pre>
     id=&quot;componentId1&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     hint=&quot;Assistive text&quot;
     valid={false}
@@ -12675,7 +12916,7 @@ value?: string</code></pre>
               <pre><code>const WithoutLabel = () =&gt; &lt;DInputCheck
     id=&quot;componentId2&quot;
     type=&quot;radio&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
             </div>
@@ -12691,7 +12932,7 @@ value?: string</code></pre>
     type=&quot;radio&quot;
     label=&quot;Label&quot;
     hint=&quot;Assistive text&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
@@ -12705,7 +12946,7 @@ value?: string</code></pre>
     id=&quot;componentId4&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     valid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -12721,7 +12962,7 @@ value?: string</code></pre>
     id=&quot;componentId5&quot;
     type=&quot;radio&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     invalid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -12733,7 +12974,12 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const Checked = () =&gt; &lt;DInputCheck id=&quot;componentId6&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
+              <pre><code>const Checked = () =&gt; &lt;DInputCheck
+    id=&quot;componentId6&quot;
+    type=&quot;radio&quot;
+    label=&quot;Label&quot;
+    defaultChecked
+    disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12742,7 +12988,12 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const Disabled = () =&gt; &lt;DInputCheck id=&quot;componentId7&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+              <pre><code>const Disabled = () =&gt; &lt;DInputCheck
+    id=&quot;componentId7&quot;
+    type=&quot;radio&quot;
+    label=&quot;Label&quot;
+    defaultChecked={false}
+    disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -12751,7 +13002,41 @@ value?: string</code></pre>
               </div>
               
               
-              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;radio&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputCheck id=&quot;componentId8&quot; type=&quot;radio&quot; label=&quot;Label&quot; defaultChecked disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Controlled = function Render() {
+  const PLANS = [&#39;basic&#39;, &#39;pro&#39;, &#39;enterprise&#39;];
+  const LABELS = { basic: &#39;Basic&#39;, pro: &#39;Pro&#39;, enterprise: &#39;Enterprise&#39; };
+  const [plan, setPlan] = useState(&#39;basic&#39;);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-2&quot;&gt;
+      {PLANS.map((id) =&gt; (
+        &lt;DInputCheck
+          key={id}
+          type=&quot;radio&quot;
+          name=&quot;controlledPlan&quot;
+          label={LABELS[id as keyof typeof LABELS]}
+          value={id}
+          checked={plan === id}
+          onChange={() =&gt; setPlan((prev) =&gt; (
+            PLANS.indexOf(id) &gt; PLANS.indexOf(prev) ? id : prev
+          ))}
+        /&gt;
+      ))}
+      &lt;p className=&quot;form-text&quot;&gt;
+        {`Downgrades are rejected — selected: ${LABELS[plan as keyof typeof LABELS]}`}
+      &lt;/p&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
             </div>
         </div>
     
@@ -12770,9 +13055,9 @@ value?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputCounter</h2>
       <div class="badges">
-        <label for="c-39-design-system-components-input-counter-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-39-design-system-components-input-counter-props" class="badge ok as-toggle">2 prop types</label>
         <label for="c-39-design-system-components-input-counter-info" class="badge info as-toggle">1 info</label>
-        <label for="c-39-design-system-components-input-counter-stories" class="badge ok as-toggle">6 stories</label>
+        <label for="c-39-design-system-components-input-counter-stories" class="badge ok as-toggle">7 stories</label>
         
         
       </div>
@@ -12806,15 +13091,13 @@ value?: string</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">3 prop types</span>
+              <span class="badge ok">2 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputCounter/DInputCounter.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>iconEndAriaLabel?: any = &#39;increase action&#39;
 
-iconStartAriaLabel?: any = &#39;decrease action&#39;
-
-value?: any = minValue</code></pre>
+iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
           </div>
         </div>
     
@@ -12854,7 +13137,7 @@ value?: any = minValue</code></pre>
               <pre><code>const Invalid = () =&gt; &lt;DInputCounter
     id=&quot;componentId2&quot;
     label=&quot;Label&quot;
-    value={21}
+    defaultValue={21}
     minValue={0}
     maxValue={20}
     invalid
@@ -12872,7 +13155,7 @@ value?: any = minValue</code></pre>
               <pre><code>const Valid = () =&gt; &lt;DInputCounter
     id=&quot;componentId3&quot;
     label=&quot;Label&quot;
-    value={2}
+    defaultValue={2}
     minValue={0}
     maxValue={20}
     valid
@@ -12890,7 +13173,7 @@ value?: any = minValue</code></pre>
               <pre><code>const Disabled = () =&gt; &lt;DInputCounter
     id=&quot;componentId4&quot;
     label=&quot;Label&quot;
-    value={3}
+    defaultValue={3}
     minValue={0}
     maxValue={20}
     disabled
@@ -12907,7 +13190,7 @@ value?: any = minValue</code></pre>
               <pre><code>const Floating = () =&gt; &lt;DInputCounter
     id=&quot;componentId5&quot;
     label=&quot;Label&quot;
-    value={3}
+    defaultValue={3}
     minValue={0}
     maxValue={20}
     floatingLabel
@@ -12925,12 +13208,36 @@ value?: any = minValue</code></pre>
     &lt;DInputCounter
         id=&quot;componentId6&quot;
         label=&quot;Label&quot;
-        value={3}
+        defaultValue={3}
         minValue={0}
         maxValue={20}
         iconStartAriaLabel=&quot;decrease action&quot;
         iconEndAriaLabel=&quot;increase action&quot; /&gt;
 &lt;/DContextProvider&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Controlled = function Render() {
+  const [quantity, setQuantity] = useState(0);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-2&quot;&gt;
+      &lt;DInputCounter
+        label=&quot;Quantity (even only)&quot;
+        minValue={0}
+        maxValue={20}
+        value={quantity}
+        onChange={(next) =&gt; setQuantity((prev) =&gt; ((next ?? 0) % 2 === 0 ? next ?? 0 : prev))}
+      /&gt;
+      &lt;p className=&quot;form-text&quot;&gt;{`Accepted value: ${quantity}`}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
             </div>
         </div>
     
@@ -12949,9 +13256,9 @@ value?: any = minValue</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DInputCurrency</h2>
       <div class="badges">
-        
+        <label for="c-40-design-system-components-input-currency-props" class="badge ok as-toggle">1 prop type</label>
         <label for="c-40-design-system-components-input-currency-info" class="badge info as-toggle">1 info</label>
-        <label for="c-40-design-system-components-input-currency-stories" class="badge err as-toggle">10/10 story errors</label>
+        <label for="c-40-design-system-components-input-currency-stories" class="badge err as-toggle">11/11 story errors</label>
         
         
       </div>
@@ -12968,7 +13275,7 @@ value?: any = minValue</code></pre>
   <input id="c-40-design-system-components-input-currency-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-40-design-system-components-input-currency-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -12981,6 +13288,17 @@ value?: any = minValue</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/DInputCurrency/DInputCurrency.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>clamp?: any = true</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -12993,13 +13311,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13010,13 +13328,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13027,13 +13345,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13044,13 +13362,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13061,13 +13379,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13078,13 +13396,30 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
+            </div>
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">Validate Without Clamp</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Expected render to be an arrow function or function expression
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
+      |           ^^^^^^^^^^^^^^^^^
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13095,13 +13430,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13112,13 +13447,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13129,13 +13464,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
             <div class="note err">
               <div class="row">
@@ -13146,13 +13481,13 @@ value?: any = minValue</code></pre>
               
               
               <pre><code>Expected render to be an arrow function or function expression
-  273 |   },
-  274 |   tags: [&#39;autodocs&#39;],
-&gt; 275 |   render: renderWithState(),
+  282 |   },
+  283 |   tags: [&#39;autodocs&#39;],
+&gt; 284 |   render: renderWithState(),
       |           ^^^^^^^^^^^^^^^^^
-  276 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
-  277 |
-  278 | export default meta;</code></pre>
+  285 | } satisfies Meta&lt;typeof DInputCurrency&gt;;
+  286 |
+  287 | export default meta;</code></pre>
             </div>
           
           
@@ -13872,7 +14207,12 @@ import { Form, Formik } from "formik";</code></pre>
             </div>
             <pre><code>Component: src/components/DInputPin/DInputPin.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>aria-label?: string = &#39;Pin character number&#39;
+            <pre><code>/**
+ * Accessible name given to every character input, suffixed with its position
+ * — &quot;Pin character number 2 of 4&quot;. Each input is named on its own, which is
+ * why `label` never acts as the accessible name here.
+ */
+aria-label?: string = &#39;Pin character number&#39;
 
 characters?: number = 4
 
@@ -13896,7 +14236,12 @@ innerInputMode?: &#39;numeric&#39; | &#39;text&#39; | &#39;tel&#39; = &#39;text&
 
 invalid?: boolean = false
 
-label?: string = &#39;&#39;
+/**
+ * Visible label of the group. Each character input carries its own
+ * `aria-label`, so this never acts as the accessible name and a non-text
+ * label does not warn here the way it does on the other inputs.
+ */
+label?: ReactNode = &#39;&#39;
 
 loading?: boolean = false
 
@@ -14398,7 +14743,7 @@ placeholder?: any = &#39;Search...&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputSelect</h2>
       <div class="badges">
-        <label for="c-47-design-system-components-input-select-props" class="badge ok as-toggle">38 prop types</label>
+        <label for="c-47-design-system-components-input-select-props" class="badge ok as-toggle">39 prop types</label>
         <label for="c-47-design-system-components-input-select-info" class="badge info as-toggle">1 info</label>
         <label for="c-47-design-system-components-input-select-stories" class="badge ok as-toggle">8 stories</label>
         
@@ -14434,11 +14779,18 @@ placeholder?: any = &#39;Search...&#39;</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">38 prop types</span>
+              <span class="badge ok">39 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputSelect/DInputSelect.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Accessible name of the control, needed when `label` is not plain text.
+ * Without it the name becomes whatever the label subtree computes to, which
+ * for a label carrying a link or an icon reads as the wrong name or as none.
+ */
+ariaLabel?: string
+
+className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
@@ -14486,7 +14838,16 @@ id?: string
 
 invalid?: boolean = false
 
-label?: string = &#39;&#39;
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `ariaLabel` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode = &#39;&#39;
 
 labelExtractor?: (item: T) =&gt; string
 
@@ -14683,9 +15044,9 @@ valueExtractor?: (item: T) =&gt; string | number</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputSwitch</h2>
       <div class="badges">
-        <label for="c-48-design-system-components-input-switch-props" class="badge ok as-toggle">15 prop types</label>
+        <label for="c-48-design-system-components-input-switch-props" class="badge ok as-toggle">16 prop types</label>
         <label for="c-48-design-system-components-input-switch-info" class="badge info as-toggle">1 info</label>
-        <label for="c-48-design-system-components-input-switch-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-48-design-system-components-input-switch-stories" class="badge ok as-toggle">11 stories</label>
         
         
       </div>
@@ -14719,17 +15080,37 @@ valueExtractor?: (item: T) =&gt; string | number</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">15 prop types</span>
+              <span class="badge ok">16 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputSwitch/DInputSwitch.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>ariaLabel?: string
+            <pre><code>/**
+ * Accessible name of the control, needed when `label` is not plain text.
+ * Without it the name becomes whatever the label subtree computes to, which
+ * for a label carrying a link or an icon reads as the wrong name or as none.
+ */
+ariaLabel?: string
 
+/**
+ * Checked state of the switch.
+ * 
+ * Passed together with `onChange` the switch is fully controlled: when the
+ * parent rejects a change the switch snaps back to this value.
+ * 
+ * Passed on its own it is taken as the starting value and the switch keeps
+ * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+ * that, it says so out loud.
+ */
 checked?: boolean
 
 className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+/**
+ * Starting checked state for uncontrolled usage.
+ */
+defaultChecked?: boolean = false
 
 disabled?: boolean
 
@@ -14741,7 +15122,15 @@ inputClassName?: string
 
 invalid?: boolean = false
 
-label?: string
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `ariaLabel` alongside it; a development-only warning says so when it
+ * is missing.
+ */
+label?: ReactNode
 
 name?: string
 
@@ -14774,7 +15163,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const WithoutLabel = () =&gt; &lt;DInputSwitch checked={false} disabled={false} ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
+              <pre><code>const WithoutLabel = () =&gt; &lt;DInputSwitch defaultChecked={false} disabled={false} ariaLabel=&quot;Label&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14783,7 +15172,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const Default = () =&gt; &lt;DInputSwitch id=&quot;componentId2&quot; label=&quot;Label&quot; checked={false} disabled={false} /&gt;;</code></pre>
+              <pre><code>const Default = () =&gt; &lt;DInputSwitch id=&quot;componentId2&quot; label=&quot;Label&quot; defaultChecked={false} disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14795,7 +15184,7 @@ valid?: boolean = false</code></pre>
               <pre><code>const Valid = () =&gt; &lt;DInputSwitch
     id=&quot;componentId3&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     valid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -14810,7 +15199,7 @@ valid?: boolean = false</code></pre>
               <pre><code>const Invalid = () =&gt; &lt;DInputSwitch
     id=&quot;componentId4&quot;
     label=&quot;Label&quot;
-    checked={false}
+    defaultChecked={false}
     disabled={false}
     invalid
     hint=&quot;Assistive text&quot; /&gt;;</code></pre>
@@ -14822,7 +15211,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const Checked = () =&gt; &lt;DInputSwitch id=&quot;componentId5&quot; label=&quot;Label&quot; checked disabled={false} /&gt;;</code></pre>
+              <pre><code>const Checked = () =&gt; &lt;DInputSwitch id=&quot;componentId5&quot; label=&quot;Label&quot; defaultChecked disabled={false} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14831,7 +15220,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const Readonly = () =&gt; &lt;DInputSwitch id=&quot;componentId6&quot; label=&quot;Label&quot; checked={false} readonly /&gt;;</code></pre>
+              <pre><code>const Readonly = () =&gt; &lt;DInputSwitch id=&quot;componentId6&quot; label=&quot;Label&quot; defaultChecked={false} readonly /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14840,7 +15229,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const Disabled = () =&gt; &lt;DInputSwitch id=&quot;componentId7&quot; label=&quot;Label&quot; checked={false} disabled /&gt;;</code></pre>
+              <pre><code>const Disabled = () =&gt; &lt;DInputSwitch id=&quot;componentId7&quot; label=&quot;Label&quot; defaultChecked={false} disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14849,7 +15238,7 @@ valid?: boolean = false</code></pre>
               </div>
               
               
-              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputSwitch id=&quot;componentId8&quot; label=&quot;Label&quot; checked disabled /&gt;;</code></pre>
+              <pre><code>const CheckedDisabled = () =&gt; &lt;DInputSwitch id=&quot;componentId8&quot; label=&quot;Label&quot; defaultChecked disabled /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -14861,7 +15250,7 @@ valid?: boolean = false</code></pre>
               <pre><code>const WithInputClassName = () =&gt; &lt;DInputSwitch
     id=&quot;componentId9&quot;
     label=&quot;Custom styled input&quot;
-    checked={false}
+    defaultChecked={false}
     inputClassName=&quot;border-2&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
@@ -14896,6 +15285,30 @@ valid?: boolean = false</code></pre>
     &lt;/div&gt;
   &lt;/div&gt;
 );</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Controlled = function Render() {
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-2&quot;&gt;
+      &lt;DInputSwitch
+        label=&quot;Notifications&quot;
+        checked={enabled}
+        onChange={() =&gt; setEnabled(false)}
+      /&gt;
+      &lt;p className=&quot;form-text&quot;&gt;
+        {`Rejected by the parent — state: ${enabled ? &#39;on&#39; : &#39;off&#39;}`}
+      &lt;/p&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
             </div>
         </div>
     
@@ -15365,9 +15778,9 @@ valid?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DListGroup</h2>
       <div class="badges">
-        <label for="c-50-design-system-components-list-group-props" class="badge ok as-toggle">18 prop types</label>
+        <label for="c-50-design-system-components-list-group-props" class="badge ok as-toggle">19 prop types</label>
         <label for="c-50-design-system-components-list-group-info" class="badge info as-toggle">1 info</label>
-        <label for="c-50-design-system-components-list-group-stories" class="badge ok as-toggle">14 stories</label>
+        <label for="c-50-design-system-components-list-group-stories" class="badge ok as-toggle">15 stories</label>
         
         
       </div>
@@ -15401,11 +15814,13 @@ valid?: boolean = false</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">18 prop types</span>
+              <span class="badge ok">19 prop types</span>
             </div>
             <pre><code>Component: src/components/DListGroup/components/DListGroupItem.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>as?: any = &#39;li&#39;
+            <pre><code>ariaCurrent?: any = &#39;true&#39;
+
+as?: any = &#39;li&#39;
 
 className?: string
 
@@ -15515,7 +15930,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const Links = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const Links = () =&gt; &lt;DListGroup&gt;
     {[1, 2, 3].map((item) =&gt; (
       &lt;DListGroup.Item
         key={item}
@@ -15534,7 +15949,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const Buttons = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const Buttons = () =&gt; &lt;DListGroup&gt;
     {[1, 2, 3].map((item) =&gt; (
       &lt;DListGroup.Item
         key={item}
@@ -15545,6 +15960,22 @@ style?: CSSProperties</code></pre>
       &lt;/DListGroup.Item&gt;
     ))}
 &lt;/DListGroup&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Accessible Name</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithAccessibleName = () =&gt; &lt;section&gt;
+    &lt;h3 id=&quot;recent-movements&quot; className=&quot;h6&quot;&gt;Recent movements&lt;/h3&gt;
+    &lt;DListGroup ariaLabelledBy=&quot;recent-movements&quot;&gt;
+        &lt;DListGroup.Item&gt;Transfer received&lt;/DListGroup.Item&gt;
+        &lt;DListGroup.Item&gt;Card payment&lt;/DListGroup.Item&gt;
+        &lt;DListGroup.Item&gt;Cash withdrawal&lt;/DListGroup.Item&gt;
+    &lt;/DListGroup&gt;
+&lt;/section&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -15622,7 +16053,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const ActionVariants = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const ActionVariants = () =&gt; &lt;DListGroup&gt;
     {[&#39;primary&#39;, &#39;secondary&#39;, &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39;].map((item) =&gt; (
       &lt;DListGroup.Item
         key={item}
@@ -15641,7 +16072,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const CustomContent = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const CustomContent = () =&gt; &lt;DListGroup&gt;
     {[1, 2, 3].map((item) =&gt; (
       &lt;DListGroup.Item
         key={item}
@@ -15664,7 +16095,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const WithIcons = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const WithIcons = () =&gt; &lt;DListGroup&gt;
     &lt;DListGroup.Item iconStart=&quot;Home&quot; href=&quot;#&quot;&gt;Home
               &lt;/DListGroup.Item&gt;
     &lt;DListGroup.Item iconStart=&quot;User&quot; href=&quot;#&quot;&gt;Profile
@@ -15682,7 +16113,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const WithIconsEnd = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const WithIconsEnd = () =&gt; &lt;DListGroup&gt;
     &lt;DListGroup.Item iconEnd=&quot;ChevronRight&quot; href=&quot;#&quot;&gt;Dashboard
               &lt;/DListGroup.Item&gt;
     &lt;DListGroup.Item iconEnd=&quot;ChevronRight&quot; href=&quot;#&quot;&gt;Analytics
@@ -15698,7 +16129,7 @@ style?: CSSProperties</code></pre>
               </div>
               
               
-              <pre><code>const WithBothIcons = () =&gt; &lt;DListGroup as=&quot;div&quot;&gt;
+              <pre><code>const WithBothIcons = () =&gt; &lt;DListGroup&gt;
     &lt;DListGroup.Item
         iconStart=&quot;CircleCheck&quot;
         iconEnd=&quot;ChevronRight&quot;
@@ -18162,7 +18593,7 @@ texts?: any = {
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DPasswordStrengthMeter</h2>
       <div class="badges">
-        <label for="c-56-design-system-components-password-strength-meter-props" class="badge ok as-toggle">14 prop types</label>
+        <label for="c-56-design-system-components-password-strength-meter-props" class="badge ok as-toggle">15 prop types</label>
         <label for="c-56-design-system-components-password-strength-meter-info" class="badge info as-toggle">1 info</label>
         <label for="c-56-design-system-components-password-strength-meter-stories" class="badge ok as-toggle">14 stories</label>
         
@@ -18198,11 +18629,19 @@ texts?: any = {
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">14 prop types</span>
+              <span class="badge ok">15 prop types</span>
             </div>
             <pre><code>Component: src/components/DPasswordStrengthMeter/DPasswordStrengthMeter.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Accessible name of the password field. Spelled as the native attribute
+ * because it is forwarded straight to the nested input, which is also the
+ * component the development-only naming warning comes from — so the advice it
+ * gives names a prop this component accepts.
+ */
+aria-label?: string
+
+className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
@@ -18214,7 +18653,15 @@ id?: string
 
 invalid?: boolean = false
 
-label?: string = &#39;Password&#39;
+/**
+ * The label of the password field. Any node is accepted, so it can carry a
+ * link or an info trigger.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing.
+ */
+label?: ReactNode = &#39;Password&#39;
 
 name?: string
 
@@ -18640,9 +19087,9 @@ To understand in more detail the aspects covered by this component, review the f
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DProgress</h2>
       <div class="badges">
-        <label for="c-58-design-system-components-progress-props" class="badge ok as-toggle">9 prop types</label>
+        <label for="c-58-design-system-components-progress-props" class="badge ok as-toggle">11 prop types</label>
         <label for="c-58-design-system-components-progress-info" class="badge info as-toggle">1 info</label>
-        <label for="c-58-design-system-components-progress-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-58-design-system-components-progress-stories" class="badge ok as-toggle">10 stories</label>
         
         
       </div>
@@ -18676,11 +19123,25 @@ To understand in more detail the aspects covered by this component, review the f
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">9 prop types</span>
+              <span class="badge ok">11 prop types</span>
             </div>
             <pre><code>Component: src/components/DProgress/DProgress.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Accessible name of the bar. Describe what progresses (e.g. &quot;Upload
+ * progress&quot;), not the role. Defaults to `&#39;Progress bar&#39;` when neither this
+ * nor `ariaLabelledBy` is set.
+ */
+ariaLabel?: string
+
+/**
+ * Id of a visible element that names the bar, for a title rendered next to
+ * it. When set, `aria-label` is not rendered, so `ariaLabel` and the default
+ * name are ignored.
+ */
+ariaLabelledBy?: string
+
+className?: string
 
 currentValue: number
 
@@ -18827,6 +19288,22 @@ style?: CSSProperties</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
+                <span class="ex-name">With Visible Label</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithVisibleLabel = () =&gt; &lt;&gt;
+    &lt;span id=&quot;storage-usage-label&quot; className=&quot;fw-semibold&quot;&gt;Storage used&lt;/span&gt;
+    &lt;DProgress
+        currentValue={60}
+        minValue={0}
+        maxValue={100}
+        ariaLabelledBy=&quot;storage-usage-label&quot; /&gt;
+&lt;/&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
                 <span class="ex-name">See More Examples</span>
                 <span class="badge ok">story ok</span>
               </div>
@@ -18871,7 +19348,7 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DProgress</h2>
       <div class="badges">
-        <label for="c-59-patterns-progress-props" class="badge ok as-toggle">9 prop types</label>
+        <label for="c-59-patterns-progress-props" class="badge ok as-toggle">11 prop types</label>
         <label for="c-59-patterns-progress-info" class="badge info as-toggle">1 info</label>
         <label for="c-59-patterns-progress-stories" class="badge ok as-toggle">4 stories</label>
         
@@ -18907,11 +19384,25 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">9 prop types</span>
+              <span class="badge ok">11 prop types</span>
             </div>
             <pre><code>Component: src/components/DProgress/DProgress.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>/**
+ * Accessible name of the bar. Describe what progresses (e.g. &quot;Upload
+ * progress&quot;), not the role. Defaults to `&#39;Progress bar&#39;` when neither this
+ * nor `ariaLabelledBy` is set.
+ */
+ariaLabel?: string
+
+/**
+ * Id of a visible element that names the bar, for a title rendered next to
+ * it. When set, `aria-label` is not rendered, so `ariaLabel` and the default
+ * name are ignored.
+ */
+ariaLabelledBy?: string
+
+className?: string
 
 currentValue: number
 
@@ -18983,7 +19474,7 @@ style?: CSSProperties</code></pre>
     &lt;DBox className=&quot;p-6&quot; style={{ width: &#39;620px&#39; }}&gt;
       &lt;div className=&quot;d-flex justify-content-between align-items-center mb-3&quot;&gt;
         &lt;div&gt;
-          &lt;h6 className=&quot;mb-1 fw-semibold&quot;&gt;Workspace onboarding&lt;/h6&gt;
+          &lt;h6 id=&quot;onboarding-progress-title&quot; className=&quot;mb-1 fw-semibold&quot;&gt;Workspace onboarding&lt;/h6&gt;
           &lt;small className=&quot;text-secondary&quot;&gt;{`Complete ${completed} of ${steps.length} tasks`}&lt;/small&gt;
         &lt;/div&gt;
         &lt;span className=&quot;badge bg-primary-subtle text-primary px-3 py-2 rounded-pill&quot;&gt;
@@ -18997,6 +19488,7 @@ style?: CSSProperties</code></pre>
         hideCurrentValue
         height={8}
         className=&quot;mb-4&quot;
+        ariaLabelledBy=&quot;onboarding-progress-title&quot;
         style={progressStyle}
       /&gt;
 
@@ -19078,7 +19570,7 @@ style?: CSSProperties</code></pre>
         {uploads.map((file) =&gt; (
           &lt;div key={file.id} className=&quot;p-3 border rounded bg-white&quot;&gt;
             &lt;div className=&quot;d-flex justify-content-between align-items-center mb-2&quot;&gt;
-              &lt;span className=&quot;fw-medium&quot;&gt;{file.name}&lt;/span&gt;
+              &lt;span id={`upload-${file.id}-name`} className=&quot;fw-medium&quot;&gt;{file.name}&lt;/span&gt;
               &lt;small className=&quot;text-secondary&quot;&gt;{`${file.size} - ${file.progress}%`}&lt;/small&gt;
             &lt;/div&gt;
             &lt;DProgress
@@ -19088,6 +19580,7 @@ style?: CSSProperties</code></pre>
               enableStripedAnimation={file.status === &#39;uploading&#39;}
               height={7}
               style={styleByStatus[file.status]}
+              ariaLabelledBy={`upload-${file.id}-name`}
             /&gt;
           &lt;/div&gt;
         ))}
@@ -19113,7 +19606,7 @@ style?: CSSProperties</code></pre>
       &lt;DBox className=&quot;p-6&quot;&gt;
         &lt;div className=&quot;d-flex justify-content-between align-items-center mb-3&quot;&gt;
           &lt;div&gt;
-            &lt;small className=&quot;text-secondary d-block&quot;&gt;Emergency fund&lt;/small&gt;
+            &lt;small id=&quot;savings-goal-title&quot; className=&quot;text-secondary d-block&quot;&gt;Emergency fund&lt;/small&gt;
             &lt;h5 className=&quot;mb-0 fw-semibold&quot;&gt;{`$${currentAmount.toLocaleString()} saved`}&lt;/h5&gt;
           &lt;/div&gt;
           &lt;span className=&quot;badge bg-info-subtle text-info px-3 py-2 rounded-pill&quot;&gt;
@@ -19127,6 +19620,7 @@ style?: CSSProperties</code></pre>
           hideCurrentValue
           height={10}
           className=&quot;mb-2&quot;
+          ariaLabelledBy=&quot;savings-goal-title&quot;
           style={{ &#39;--bs-progress-bar-bg&#39;: &#39;var(--bs-info)&#39; } as CSSProperties}
         /&gt;
 
@@ -19175,7 +19669,7 @@ style?: CSSProperties</code></pre>
           &lt;div className=&quot;d-flex justify-content-between align-items-center mb-3&quot;&gt;
             &lt;div&gt;
               &lt;small className=&quot;text-secondary d-block&quot;&gt;Q3 Growth Campaign&lt;/small&gt;
-              &lt;h6 className=&quot;mb-0 fw-semibold&quot;&gt;Lead generation progress&lt;/h6&gt;
+              &lt;h6 id=&quot;campaign-progress-title&quot; className=&quot;mb-0 fw-semibold&quot;&gt;Lead generation progress&lt;/h6&gt;
             &lt;/div&gt;
             &lt;span className=&quot;badge bg-primary-subtle text-primary px-3 py-2 rounded-pill&quot;&gt;
               {`${currentValue}%`}
@@ -19187,6 +19681,7 @@ style?: CSSProperties</code></pre>
             currentValue={currentValue}
             maxValue={maxValue}
             hideCurrentValue={false}
+            ariaLabelledBy=&quot;campaign-progress-title&quot;
           /&gt;
 
           &lt;div className=&quot;d-flex justify-content-between mt-2&quot;&gt;
@@ -20089,7 +20584,7 @@ style?: CSSProperties</code></pre>
       <div class="badges">
         <label for="c-64-design-system-components-tabs-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-64-design-system-components-tabs-info" class="badge info as-toggle">1 info</label>
-        <label for="c-64-design-system-components-tabs-stories" class="badge ok as-toggle">8 stories</label>
+        <label for="c-64-design-system-components-tabs-stories" class="badge ok as-toggle">10 stories</label>
         
         
       </div>
@@ -20219,6 +20714,47 @@ style?: CSSProperties</code></pre>
                     &lt;/p&gt;
     &lt;/DTabs.Tab&gt;
 &lt;/DTabs&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Navigation Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const NavigationOnly = () =&gt; &lt;DTabs
+    defaultSelected=&quot;overview&quot;
+    options={[
+      { label: &#39;Overview&#39;, tab: &#39;overview&#39; },
+      { label: &#39;Settings&#39;, tab: &#39;settings&#39; },
+    ]}
+    ariaLabel=&quot;Account sections&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Separate Panels</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SeparatePanels = () =&gt; &lt;DTabs.Provider defaultSelected=&quot;overview&quot;&gt;
+    &lt;div className=&quot;d-flex gap-6&quot;&gt;
+        &lt;aside&gt;
+            &lt;DTabs
+                options={[
+                  { label: &#39;Overview&#39;, tab: &#39;overview&#39; },
+                  { label: &#39;Settings&#39;, tab: &#39;settings&#39; },
+                ]}
+                vertical
+                variant=&quot;pills&quot;
+                ariaLabel=&quot;Account sections&quot; /&gt;
+        &lt;/aside&gt;
+        &lt;DBox className=&quot;flex-grow-1&quot;&gt;
+            &lt;DTabs.Tab tab=&quot;overview&quot;&gt;Account overview panel.&lt;/DTabs.Tab&gt;
+            &lt;DTabs.Tab tab=&quot;settings&quot;&gt;Account settings panel.&lt;/DTabs.Tab&gt;
+        &lt;/DBox&gt;
+    &lt;/div&gt;
+&lt;/DTabs.Provider&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -20962,7 +21498,7 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DToast</h2>
       <div class="badges">
-        
+        <label for="c-66-design-system-components-toast-props" class="badge ok as-toggle">1 prop type</label>
         <label for="c-66-design-system-components-toast-info" class="badge info as-toggle">1 info</label>
         <label for="c-66-design-system-components-toast-stories" class="badge ok as-toggle">8 stories</label>
         
@@ -20981,7 +21517,7 @@ style?: CSSProperties</code></pre>
   <input id="c-66-design-system-components-toast-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-66-design-system-components-toast-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -20994,6 +21530,17 @@ style?: CSSProperties</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/DToast/DToast.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>role?: any = &#39;alert&#39;</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -27961,6 +28508,8 @@ Fields used when dispatching a toast with the default `DToast` layout.
 | `icon` | `string` | — | Icon name from the active icon set in `DContextProvider`. Shown before the title. |
 | `closeIcon` | `string` | — | Overrides the default close icon from the context icon map. |
 | `color` | `ComponentStateColor` | — | Applies the `toast-{color}` CSS modifier class (e.g. `&quot;success&quot;`, `&quot;danger&quot;`, `&quot;warning&quot;`, `&quot;info&quot;`). |
+| `role` | `&#39;alert&#39; \| &#39;status&#39; \| &#39;none&#39;` | — | Live region of the toast. Defaults to `alert`, which interrupts the screen reader, for critical errors. Use `status` for confirmations such as &quot;Transfer sent&quot;, so it is announced without interrupting. Use `none` only when the toast is not the way the message reaches the user (for example, the same message is already announced elsewhere on the page), since it is then not announced at all. |
+| `closeAriaLabel` | `string` | — | Accessible name of the close button. Defaults to `&quot;Close&quot;`; pass the text in the app&#39;s language. |
 
 ## `DToastContainerProps`
 
@@ -29222,11 +29771,12 @@ import { DAlert } from &#39;../../src/components&#39;;
   Add your own stylesheet or snippet after the main CSS to override any design tokens or variables:
     ```css
     :root {
-      --bs-primary: #ff0055;
       --bs-body-font-family: &#39;Montserrat&#39;, sans-serif;
+      /* role colors: the full block of each role, as in the example below */
       /* ...other overrides... */
     }
     ```
+    Colors are overridden on the `-rgb` triplet (`--bs-primary-rgb`), which buttons, utilities and opacity read; `--bs-primary` is a wrapper computed from it. The base triplet alone is not a full rebrand: `primary`, `secondary`, `success`, `info`, `warning` and `danger` also have a ramp from 25 to 900 that alerts, subtle backgrounds and borders read (`light` and `dark` don&#39;t), and every role but `secondary` has `--bs-&lt;role&gt;-text-bg-color`. `npm run theme:expand` generates the full block from one color per role. See [Design Tokens](?path=/docs/design-system-foundations-design-tokens--docs).
 3. **Safe upgrades:**
   All default variables are included in the main bundle, so new tokens are available automatically and removed ones do not break the theme.
 
@@ -29237,9 +29787,23 @@ import { DAlert } from &#39;../../src/components&#39;;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/dynamic-ui.css&quot; /&gt;
 &lt;style&gt;
   :root {
-    --bs-primary: #ff0055;
+    /* primary, as generated by theme:expand from rgb(214, 0, 74) */
+    --bs-primary-rgb: 214, 0, 74;
+    --bs-primary-text-bg-color: var(--bs-white);
+    --bs-primary-25-rgb: 253, 242, 246;
+    --bs-primary-50-rgb: 251, 230, 237;
+    --bs-primary-100-rgb: 247, 204, 219;
+    --bs-primary-200-rgb: 239, 153, 183;
+    --bs-primary-300-rgb: 230, 102, 146;
+    --bs-primary-400-rgb: 222, 51, 110;
+    --bs-primary-500-rgb: var(--bs-primary-rgb);
+    --bs-primary-600-rgb: 171, 0, 59;
+    --bs-primary-700-rgb: 128, 0, 44;
+    --bs-primary-800-rgb: 86, 0, 30;
+    --bs-primary-900-rgb: 43, 0, 15;
+
     --bs-body-font-family: &#39;Montserrat&#39;, sans-serif;
-    --bs-body-bg: #f5f5f5;
+    --bs-body-bg-rgb: 245, 245, 245;
     --bs-border-radius: 0.75rem;
   }
 &lt;/style&gt;
@@ -29308,7 +29872,8 @@ Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variable
 &lt;br /&gt;
 
 ## Principles
-- Scope overrides: use `:root` for global themes, `[data-bs-theme=&quot;brand&quot;]` or `body.brand` for app-specific, and `.dark` or `prefers-color-scheme` for dark mode.
+- Scope overrides: use `:root` for global themes and a zone (`[data-bs-theme=&quot;&lt;name&gt;&quot;]`) for a subtree with its own colors. A zone needs more than the global theme; see [Zones](#zones).
+- Colors that have an RGB triplet (`--bs-&lt;name&gt;-rgb`) travel in it. Their variables without `-rgb` (`--bs-primary`, `--bs-body-bg`) are wrappers computed from the triplet: on `:root` set the triplet, not the wrapper; a zone sets both (see [Zones](#zones)). Colors without a triplet, such as `--bs-border-color`, take the value directly.
 - Change variables, not classes: utilities and components read from CSS variables; overriding variables updates the whole system consistently.
 - Validate contrast: ensure WCAG AA for text/background, borders, and focus rings.
 
@@ -29325,43 +29890,39 @@ Key CSS variables:
 - Small text: `--bs-fs-small`; line-heights: `--bs-lh-sm`, `--bs-lh-base`, `--bs-lh-lg`
 - Heading line-height: `--bs-heading-line-height`
 
-Example:
+`--bs-fs-N` is an alias of `--bs-rfs-fs-N`. Steps 1 to 4 are fluid: the library computes them with RFS as a value that grows with the viewport below 1200px and a fixed size from 1200px on. Steps 5 and 6 are a fixed size at every width and have no desktop cap. Override `--bs-rfs-fs-N`; a stylesheet loaded after Dynamic&#39;s already wins at every width. To keep the same behavior (fluid below 1200px, capped on desktop), set the fluid value on `:root` and the desktop size of steps 1 to 4 in the same media query:
+
 ```css
 :root {
   --bs-body-font-family: &quot;Jost&quot;, system-ui, sans-serif; /* or your brand font */
   --bs-body-font-size: 1rem; /* base body size */
-  --bs-fs-1: 3rem; /* h1 */
-  --bs-fs-2: 2.5rem;
-  --bs-fs-3: 2rem;
-  --bs-fs-4: 1.5rem;
-  --bs-fs-5: 1.25rem;
-  --bs-fs-6: 1rem;
-  --bs-fs-small: .875rem; /* small text */
+  --bs-rfs-fs-1: calc(1.425rem + 2.1vw); /* h1, fluid below 1200px */
+  --bs-rfs-fs-2: calc(1.375rem + 1.5vw);
+  --bs-rfs-fs-5: 1.25rem; /* steps 5 and 6 are not fluid */
+  --bs-rfs-fs-6: 1rem;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --bs-rfs-fs-1: 3rem; /* h1 on desktop */
+    --bs-rfs-fs-2: 2.5rem;
+  }
 }
 ```
+
+`npm run theme:expand` generates the fluid value and the 1200px block from a single size per step.
 
 #### Typography variables (headings and display)
-```css
-:root {
-  /* Headings and body sizes */
-  --bs-fs-1: 3rem;
-  --bs-fs-2: 2.5rem;
-  --bs-fs-3: 2rem;
-  --bs-fs-4: 1.5rem;
-  --bs-fs-5: 1.25rem;
-  --bs-fs-6: 1rem;
-  --bs-fs-small: .875rem;
-  --bs-heading-line-height: 1.2;
+Components read the `--bs-fs-*` aliases; the value lives in the RFS variable each one points to, which is the one to override:
 
-  /* Display sizes */
-  --bs-fs-display-1: 6rem;
-  --bs-fs-display-2: 5.5rem;
-  --bs-fs-display-3: 5rem;
-  --bs-fs-display-4: 4.5rem;
-  --bs-fs-display-5: 4rem;
-  --bs-fs-display-6: 3.5rem;
-}
-```
+| Components read | Override | Fluid below 1200px |
+|---|---|---|
+| `--bs-fs-1` … `--bs-fs-4` | `--bs-rfs-fs-1` … `--bs-rfs-fs-4` | yes; set the desktop cap in `@media (min-width: 1200px)` |
+| `--bs-fs-5`, `--bs-fs-6` | `--bs-rfs-fs-5`, `--bs-rfs-fs-6` | no |
+| `--bs-fs-display-1` … `--bs-fs-display-6` | `--bs-rfs-display-1` … `--bs-rfs-display-6` | yes, same media query |
+| `--bs-fs-small` | `--bs-rfs-fs-small` | no |
+
+`--bs-heading-line-height` has no alias and is overridden directly.
 
 #### Usage examples
 ```html
@@ -29383,82 +29944,62 @@ Dynamic’s palettes expose base tokens and extended shades.
 - Text/background/border subtles: `--bs/{token}-text-emphasis`, `--bs/{token}-bg-subtle`, `--bs/{token}-border-subtle`
 - Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
 
-Override with either RGB bases or direct colors:
+Override the **triplets**, not the wrappers. The library declares every role and body color twice: the triplet that holds the value (`--bs-primary-rgb: 32, 104, 213`) and a wrapper computed from it (`--bs-primary: rgb(var(--bs-primary-rgb))`). Buttons, utilities such as `.bg-primary` and `.text-bg-primary`, and anything with opacity read the triplet; a hex value on `--bs-primary` changes only what reads the wrapper, so the brand shows up halfway.
+
 ```css
 :root {
-  /* Brand primaries */
-  --bs-primary: #0b74ff;
-  --bs-primary-100: #e5f0ff; /* light tint */
-  --bs-success: #0c8a50;
-  --bs-warning: #d99100;
-  --bs-danger: #c83333;
-  --bs-info: #0aa0c8;
-  --bs-secondary: #5b6670;
+  /* Role: the base triplet and its ramp (500 is an alias of the base), as generated by theme:expand */
+  --bs-primary-rgb: 10, 106, 232;
+  --bs-primary-25-rgb: 243, 248, 254;
+  --bs-primary-50-rgb: 231, 240, 253;
+  --bs-primary-100-rgb: 206, 225, 250;
+  --bs-primary-200-rgb: 157, 195, 246;
+  --bs-primary-300-rgb: 108, 166, 241;
+  --bs-primary-400-rgb: 59, 136, 237;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 8, 85, 186;
+  --bs-primary-700-rgb: 6, 64, 139;
+  --bs-primary-800-rgb: 4, 42, 93;
+  --bs-primary-900-rgb: 2, 21, 46;
+  /* Text of .text-bg-primary: the one that contrasts with the new base */
+  --bs-primary-text-bg-color: var(--bs-white);
 
-  /* Body and links */
-  --bs-body-color: #2e3438;
-  --bs-body-bg: #ffffff;
-  --bs-link-color: #0b74ff;
-  --bs-link-hover-color: #095fd1;
+  /* Body */
+  --bs-body-color-rgb: 46, 52, 56;
+  --bs-body-bg-rgb: 255, 255, 255;
 }
 ```
+
+- The ramp steps are literal triplets, so changing only `--bs-primary-rgb` leaves `--bs-primary-100` and the rest of the ramp at the default brand.
+- Links follow the role: `--bs-link-color-rgb` points to `--bs-primary-rgb` and `--bs-link-hover-color-rgb` to its 700 step, so they only need an override to use a different color.
+- `.text-bg-&lt;role&gt;` reads its text from `--bs-&lt;role&gt;-text-bg-color`, resolved for the default role, in every role but `secondary`. A role redefined to a light tone needs a dark value there (`var(--bs-gray-700)`). `.text-bg-secondary` has no such variable: it paints `--bs-secondary-700` on `--bs-secondary-50`, so it follows the secondary ramp.
+- `.btn-&lt;role&gt;` keeps the white or dark text resolved for the default palette, so pick a base that contrasts with it (this example is 4.95:1 against white) or override the button text colors.
+- `npm run theme:expand` takes one color per role and writes its base triplet, the ramp of the roles that have one (25 to 900, with 500 as an alias of the base; all but `light` and `dark`) and `--bs-&lt;role&gt;-text-bg-color` for every role but `secondary`, which reads its ramp. `npm run theme:validate` checks the result, contrast included.
 
 #### Palette variables (25–900)
+Each role with a ramp (`primary`, `secondary`, `success`, `info`, `warning`, `danger`) exposes 11 triplets. Step 500 is `var(--bs-&lt;role&gt;-rgb)`, so a rebrand sets the base and the other 10:
 ```css
 :root {
-  /* Primary */
-  --bs-primary-25: /* override */; --bs-primary-50: /* override */; --bs-primary-100: /* override */;
-  --bs-primary-200: /* override */; --bs-primary-300: /* override */; --bs-primary-400: /* override */;
-  --bs-primary-500: /* override */; --bs-primary-600: /* override */; --bs-primary-700: /* override */;
-  --bs-primary-800: /* override */; --bs-primary-900: /* override */;
-
-  /* Success */
-  --bs-success-25: /* override */; --bs-success-50: /* override */; --bs-success-100: /* override */;
-  --bs-success-200: /* override */; --bs-success-300: /* override */; --bs-success-400: /* override */;
-  --bs-success-500: /* override */; --bs-success-600: /* override */; --bs-success-700: /* override */;
-  --bs-success-800: /* override */; --bs-success-900: /* override */;
-
-  /* Warning */
-  --bs-warning-25: /* override */; --bs-warning-50: /* override */; --bs-warning-100: /* override */;
-  --bs-warning-200: /* override */; --bs-warning-300: /* override */; --bs-warning-400: /* override */;
-  --bs-warning-500: /* override */; --bs-warning-600: /* override */; --bs-warning-700: /* override */;
-  --bs-warning-800: /* override */; --bs-warning-900: /* override */;
-
-  /* Danger */
-  --bs-danger-25: /* override */; --bs-danger-50: /* override */; --bs-danger-100: /* override */;
-  --bs-danger-200: /* override */; --bs-danger-300: /* override */; --bs-danger-400: /* override */;
-  --bs-danger-500: /* override */; --bs-danger-600: /* override */; --bs-danger-700: /* override */;
-  --bs-danger-800: /* override */; --bs-danger-900: /* override */;
-
-  /* Info */
-  --bs-info-25: /* override */; --bs-info-50: /* override */; --bs-info-100: /* override */;
-  --bs-info-200: /* override */; --bs-info-300: /* override */; --bs-info-400: /* override */;
-  --bs-info-500: /* override */; --bs-info-600: /* override */; --bs-info-700: /* override */;
-  --bs-info-800: /* override */; --bs-info-900: /* override */;
-
-  /* Secondary */
-  --bs-secondary-25: /* override */; --bs-secondary-50: /* override */; --bs-secondary-100: /* override */;
-  --bs-secondary-200: /* override */; --bs-secondary-300: /* override */; --bs-secondary-400: /* override */;
-  --bs-secondary-500: /* override */; --bs-secondary-600: /* override */; --bs-secondary-700: /* override */;
-  --bs-secondary-800: /* override */; --bs-secondary-900: /* override */;
+  --bs-primary-rgb: /* R, G, B */;
+  --bs-primary-25-rgb: /* R, G, B */; --bs-primary-50-rgb: /* R, G, B */; --bs-primary-100-rgb: /* R, G, B */;
+  --bs-primary-200-rgb: /* R, G, B */; --bs-primary-300-rgb: /* R, G, B */; --bs-primary-400-rgb: /* R, G, B */;
+  --bs-primary-600-rgb: /* R, G, B */; --bs-primary-700-rgb: /* R, G, B */; --bs-primary-800-rgb: /* R, G, B */;
+  --bs-primary-900-rgb: /* R, G, B */;
+  /* Same shape for success, info, warning, danger and secondary. */
 }
 ```
+`light` and `dark` have no ramp: only `--bs-light-rgb` and `--bs-dark-rgb`.
 
-Dark mode (automatic and forced):
+Dark mode (automatic and forced). Dynamic ships with Bootstrap&#39;s built-in dark mode turned off, so a dark palette is an override like any other. On `:root` the wrappers are recomputed from the new triplets; on a class that applies to a subtree, the rules of [Zones](#zones) apply:
 ```css
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-bg: #0e1116;
-    --bs-body-color: #e6e6e6;
-    --bs-heading-color: #ffffff;
-    --bs-link-color: #5ba8ff;
-    --bs-link-hover-color: #8fc2ff;
-    --bs-border-color: #2a2f36;
+    --bs-body-bg-rgb: 14, 17, 22;
+    --bs-body-color-rgb: 230, 230, 230;
+    --bs-link-color-rgb: 91, 168, 255;
+    --bs-link-hover-color-rgb: 143, 194, 255;
+    --bs-border-color: rgb(42, 47, 54);
   }
-}
-.dark {
-  --bs-body-bg: #0e1116;
-  --bs-body-color: #e6e6e6;
 }
 ```
 
@@ -29571,15 +30112,63 @@ Many component styles are derived from the core variables, but some expose speci
 
 ## Dark mode patterns
 - Use dark: utilities for class-based overrides and @media prefers-color-scheme for system dark.
-- Define token pairs for light/dark to ensure consistent tints and emphasis colors.
+- Define token pairs for light/dark to ensure consistent tints and emphasis colors, as triplets:
 
 ```css
-.dark {
-  --bs-secondary-bg: #1b2129;
-  --bs-secondary-color: rgba(230,230,230,.75);
-  --bs-danger-100: #471c1c; /* dark tint variant */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-secondary-bg-rgb: 27, 33, 41;
+    --bs-secondary-color-rgb: 230, 230, 230; /* the wrapper applies the .75 alpha */
+    --bs-danger-100-rgb: 71, 28, 28; /* dark tint variant */
+  }
 }
 ```
+
+&lt;br /&gt;
+
+## Zones
+A zone is a subtree with its own palette, scoped with `[data-bs-theme=&quot;&lt;name&gt;&quot;]` (for example, a dark header in a light app). It is not a separate theme: it inherits from `:root`, and three things don&#39;t follow on their own.
+
+**1. Declare the triplet and the wrapper.** The library computes each wrapper where it declares it: `--bs-body-color: rgb(var(--bs-body-color-rgb))` is resolved on `:root` and inherited already computed. A zone that only changes `--bs-body-color-rgb` doesn&#39;t move anything that reads `var(--bs-body-color)` (`.form-control`, `.modal`, `.text-body-secondary`). Set both, plus the derived text colors:
+
+```css
+[data-bs-theme=&quot;dark-header&quot;] {
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-color-rgb: var(--bs-white-rgb);
+  --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-tertiary-color-rgb: var(--bs-white-rgb);
+  --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-emphasis-color-rgb: var(--bs-white-rgb); /* .link-body-emphasis reads the triplet */
+  --bs-emphasis-color: rgb(var(--bs-white-rgb));
+  --bs-body-bg-rgb: 32, 44, 62;
+  --bs-body-bg: rgb(32, 44, 62);
+}
+```
+
+**2. Paint the zone.** The library applies `--bs-body-bg` and `--bs-body-color` on `body`; a subtree halfway down the page never goes through that rule, so the zone paints itself:
+
+```css
+[data-bs-theme=&quot;dark-header&quot;] {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+```
+
+**3. Give components with their own background a block.** Changing the inherited color reaches every component in the zone, including the ones that keep a light background: a `.form-control` inside a dark zone ends up with white text on white. Those components need their own block in the zone. The `.nav-pills` variables don&#39;t reach from `.nav`, so they go in their own block too:
+
+```css
+[data-bs-theme=&quot;dark-header&quot;] .form-control {
+  --bs-body-color: rgb(var(--bs-dark-rgb));
+}
+
+[data-bs-theme=&quot;dark-header&quot;] .nav-pills {
+  --bs-nav-pills-link-active-color: rgb(var(--bs-dark-rgb));
+  --bs-nav-pills-link-active-bg: rgb(var(--bs-white-rgb));
+}
+```
+
+`npm run theme:expand` writes these blocks from the `zones` section of a theme file, and `npm run theme:validate` measures each zone against its own background. The validator assumes that background for everything inside the zone, so it doesn&#39;t catch a component with its own surface, such as the white text on a white `.form-control` above: check those blocks in the preview (`npm run theme:preview`). The full reference is in `scripts/theme/README.md`.
 
 &lt;br /&gt;
 
@@ -29588,12 +30177,16 @@ Many component styles are derived from the core variables, but some expose speci
 2. Set typography: body family/size, heading/display scales, small text, line-heights.
 3. Tune spacing scale and component gaps using --bs-ref-spacer-*.
 4. Adjust radius, borders, shadows, focus tokens for personality and accessibility.
-5. Implement dark mode via prefers-color-scheme and .dark, validate contrast.
+5. Implement dark mode via prefers-color-scheme, and dark subtrees as [zones](#zones); validate contrast.
 6. Verify utilities (fs-*, display-*, text-*, bg-*, border-*) reflect your overrides.
 
 &lt;br /&gt;
 
 ## Bootstrapping a theme (copy-paste starter)
+There are two ways to start, and they don&#39;t mix: copying both would duplicate declarations.
+
+- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the ramp of the roles that have one (25 to 900, with 500 as an alias of the base; all but `light` and `dark`) and `--bs-&lt;role&gt;-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family and radius, which the theme file requires, and only the type scale steps the file lists (`typography.scale` is optional). Global additions (spacing, shadows) go in the file&#39;s `root` section, which is emitted in the root block at every width. Automatic dark mode doesn&#39;t fit there: the theme file can&#39;t place declarations in `@media (prefers-color-scheme: dark)`, so it goes in a separate stylesheet as in [Dark mode patterns](#dark-mode-patterns). A dark subtree goes in `zones`. See `scripts/theme/README.md`.
+- **Hand-written:** the starter below. It has no role colors; copy each role&#39;s full block (as in [Color system](#color-system)) or take it from the `theme:expand` output.
 ```css
 /* Global theme */
 :root {
@@ -29601,17 +30194,12 @@ Many component styles are derived from the core variables, but some expose speci
   --bs-body-font-family: &quot;Jost&quot;, system-ui, sans-serif;
   --bs-body-font-size: 1rem;
   --bs-heading-line-height: 1.2;
-  --bs-fs-small: .875rem;
+  --bs-rfs-fs-small: .875rem;
 
-  /* Color tokens */
-  --bs-body-bg: #ffffff;
-  --bs-body-color: #2e3438;
-  --bs-primary: #0b74ff;
-  --bs-success: #0c8a50;
-  --bs-warning: #d99100;
-  --bs-danger: #c83333;
-  --bs-info: #0aa0c8;
-  --bs-secondary: #5b6670;
+  /* Color tokens: triplets, not hex on the wrappers */
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-body-color-rgb: 46, 52, 56;
+  /* Role colors: each role&#39;s full block, see the note above */
 
   /* Spacing */
   --bs-ref-spacer-4: 16px;
@@ -29625,9 +30213,9 @@ Many component styles are derived from the core variables, but some expose speci
 /* System dark support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-bg: #0e1116;
-    --bs-body-color: #e6e6e6;
-    --bs-border-color: #2a2f36;
+    --bs-body-bg-rgb: 14, 17, 22;
+    --bs-body-color-rgb: 230, 230, 230;
+    --bs-border-color: rgb(42, 47, 54);
   }
 }
 ```
@@ -30905,13 +31493,12 @@ Responsive utility
 
 ## Setup `App.tsx`
 
-It is necessary to use the hook inside a DContextProvider, because the hook takes the breakpoints configuration from that context
+The hooks read the breakpoints from the `--bs-breakpoint-*` CSS variables, so `dynamic-ui.css` has to be loaded before rendering. `DContextProvider` is optional: inside it, the hooks use the breakpoints it shares; outside it, they read the same variables directly, once per page. Pass `true` to listen to viewport changes.
 
 &lt;Source
   code={
     `
 import {
-  DContextProvider,
   useMediaBreakpointUpXs,
   useMediaBreakpointUpSm,
   useMediaBreakpointUpLg,

@@ -7,9 +7,18 @@ type OnChangeType = {
     country: ParsedCountry;
     isValid: boolean;
 };
-declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "value" | "inputMode" | "onChange" | "onWheel" | "type">, "label" | "invalid" | "value" | "onChange" | "size" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "floatingLabel" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
+declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "inputMode" | "onChange" | "onWheel" | "value" | "type">, "label" | "onChange" | "invalid" | "value" | "size" | "floatingLabel" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
     value?: string | undefined;
-    label?: string | undefined;
+    /**
+     * The label of the control. Any node is accepted, so it can carry a link, an
+     * info trigger or other markup.
+     *
+     * Text doubles as the control's accessible name. A richer label does not, so
+     * pass `aria-label` alongside it; a development-only warning says so when it
+     * is missing. A rich label also does not fit `floatingLabel`, whose layout
+     * animates a single line of text.
+     */
+    label?: ReactNode;
     loading?: boolean | undefined;
     hint?: string | undefined;
     size?: ComponentSize | undefined;

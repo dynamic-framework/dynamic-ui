@@ -3,8 +3,13 @@ import classNames from 'classnames';
 import DToastHeader from './components/DToastHeader.js';
 import DToastBody from './components/DToastBody.js';
 
-function DToast({ children, className, style, dataAttributes, }) {
-    return (jsx("div", Object.assign({ className: classNames('toast', className), role: "alert", "aria-live": "assertive", "aria-atomic": "true", style: style }, dataAttributes, { children: children })));
+const LIVE_REGION_ATTRIBUTES = {
+    alert: { role: 'alert', 'aria-live': 'assertive', 'aria-atomic': 'true' },
+    status: { role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' },
+    none: {},
+};
+function DToast({ children, role = 'alert', className, style, dataAttributes, }) {
+    return (jsx("div", Object.assign({ className: classNames('toast', className) }, LIVE_REGION_ATTRIBUTES[role], { style: style }, dataAttributes, { children: children })));
 }
 var DToast$1 = Object.assign(DToast, {
     Header: DToastHeader,

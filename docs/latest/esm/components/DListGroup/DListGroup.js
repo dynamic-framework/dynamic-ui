@@ -2,8 +2,9 @@ import { jsx } from 'react/jsx-runtime';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import DListGroupItem from './components/DListGroupItem.js';
+import ListGroupContext from './ListGroupContext.js';
 
-function DListGroup({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
+function DListGroup({ as = 'ul', numbered, flush, horizontal, ariaLabel, ariaLabelledBy, children, className, style, dataAttributes, }) {
     const Tag = useMemo(() => {
         if (numbered) {
             return 'ol';
@@ -21,7 +22,14 @@ function DListGroup({ as = 'ul', numbered, flush, horizontal, children, classNam
             [listGroupHorizontalClass]: !!horizontal,
         };
     }, [flush, horizontal, numbered]);
-    return (jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: children })));
+    const labelProps = useMemo(() => {
+        if (!ariaLabelledBy && !ariaLabel)
+            return {};
+        return Object.assign(Object.assign({}, ariaLabelledBy
+            ? { 'aria-labelledby': ariaLabelledBy }
+            : { 'aria-label': ariaLabel }), Tag === 'div' && { role: 'group' });
+    }, [ariaLabel, ariaLabelledBy, Tag]);
+    return (jsx(ListGroupContext.Provider, { value: Tag, children: jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, labelProps, dataAttributes, { children: children })) }));
 }
 var DListGroup$1 = Object.assign(DListGroup, {
     Item: DListGroupItem,
