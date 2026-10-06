@@ -1,0 +1,1 @@
+import{r as o}from"./iframe-BOlGrI6L.js";import{u as a}from"./useProvidedRefOrCreate-DdHEaJGi.js";function p(t){const e=a(t);return{handleOnWheel:o.useCallback(n=>{var r;n.stopPropagation(),(r=e.current)==null||r.blur()},[e])}}export{p as u};

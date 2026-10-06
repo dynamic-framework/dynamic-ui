@@ -1,0 +1,31 @@
+/// <reference types="react" />
+import type { DatePickerProps } from 'react-datepicker';
+import { Locale } from 'date-fns';
+import type { BaseProps, ButtonVariant, ComponentColor, ComponentSize, FamilyIconProps } from '../interface';
+type Props = BaseProps & FamilyIconProps & Omit<DatePickerProps, 'showMonthDropdown' | 'showMonthYearDropdown' | 'showYearDropdown' | 'useShortMonthInDropdown' | 'yearDropdownItemNumber' | 'scrollableYearDropdown' | 'dropdownMode' | 'yearItemNumber' | 'portalId' | 'withPortal' | 'onPortalKeyDown' | 'portalHost' | 'locale'> & {
+    inputLabel?: string;
+    inputHint?: string;
+    inputAriaLabel?: string;
+    inputActionAriaLabel?: string;
+    iconInput?: string;
+    inputId?: string;
+    timeId?: string;
+    iconHeaderPrev?: string;
+    iconHeaderNext?: string;
+    iconHeaderSize?: ComponentSize;
+    headerPrevMonthAriaLabel?: string;
+    headerNextMonthAriaLabel?: string;
+    headerButtonVariant?: ButtonVariant;
+    headerButtonColor?: ComponentColor;
+    minYearSelect?: number;
+    maxYearSelect?: number;
+    invalid?: boolean;
+    valid?: boolean;
+    placeholder?: string;
+    showHeaderSelectors?: boolean;
+    formatHeaderDate?: string;
+    locale?: Locale;
+    ariaLabelInputTime?: string;
+};
+export default function DDatePicker({ inputLabel, inputHint, inputAriaLabel, ariaLabelInputTime, inputActionAriaLabel, inputId, timeId, timeInputLabel, minYearSelect, maxYearSelect, iconHeaderSize, iconMaterialStyle, iconInput, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, invalid, valid, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar, style, dataAttributes, placeholder, showHeaderSelectors, formatHeaderDate, ...props }: Props): import("react").JSX.Element;
+export {};
