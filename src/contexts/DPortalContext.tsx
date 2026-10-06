@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -91,6 +92,18 @@ export type PortalContextType<T extends Record<string, unknown>> = {
   openPortal: OpenPortalFunction<T>;
   /** Pops the topmost portal off the stack, closing it. */
   closePortal: ClosePortalFunction;
+  /**
+   * A panel reporting that it paints its own scrim.
+   *
+   * `DModal` calls this on mount, because it is a `<dialog>` and the browser
+   * draws `::backdrop` for it. The portal then draws nothing, which is what
+   * keeps a modal from carrying two stacked 50% layers.
+   *
+   * Not part of the documented surface — a consumer never calls it. It exists
+   * so the thing that KNOWS can say so, instead of whoever registers the
+   * panel having to remember.
+   */
+  panelPaintsScrim: (paints: boolean) => void;
 };
 
 /**
@@ -173,10 +186,26 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     [stack],
   );
 
+  /*
+   * What the panel on top paints for itself.
+   *
+   * Reported by `DModal` on mount rather than declared as a static
+   * `Component.nativeDialog` by whoever registers the panel. The static flag
+   * was a contract a consumer had to remember, and forgetting it failed in a
+   * way that looked like a different bug entirely: the portal rendered its own
+   * scrim ON TOP of the dialog's `::backdrop`, so a modal had two 50% layers
+   * and the extra one outlived the panel.
+   *
+   * The flag is still read, so a panel that is a `<dialog>` without using
+   * `DModal` can declare itself. This is the belt.
+   */
+  const [panelPaintsScrim, setPanelPaintsScrim] = useState(false);
+
   const value = useMemo(() => ({
     stack: publicStack,
     openPortal,
     closePortal,
+    panelPaintsScrim: setPanelPaintsScrim,
   }), [publicStack, openPortal, closePortal]) as PortalContextType<any>;
 
   /**
@@ -206,7 +235,12 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
    * not painting its own. Every panel the library ships is a dialog, so this
    * is for a custom panel a consumer registers with the portal.
    */
-  const needsScrim = stack.length > 0 && !topIsNativeDialog;
+  /*
+   * Our scrim is needed only when nothing else is painting one: the stack has
+   * something in it, the registered component did not declare itself a
+   * dialog, and no mounted panel has reported that it paints its own.
+   */
+  const needsScrim = stack.length > 0 && !topIsNativeDialog && !panelPaintsScrim;
 
   const handleClose = useCallback((target: Element) => {
     // A native dialog closes itself: Escape, and a click outside the panel.
@@ -349,4 +383,20 @@ export function useDPortalContext<T extends Record<string, unknown>>(): PortalCo
   }
 
   return context as PortalContextType<T>;
+}
+
+/**
+ * The portal context if there is one, `undefined` if not.
+ *
+ * `useDPortalContext` throws outside a provider, which is right for a consumer
+ * calling `openPortal` — that is a mistake with no sensible fallback. A PANEL
+ * is different: `DModal` is perfectly usable on its own, rendered inline
+ * without any portal, and it still needs to ask whether it is in one so it can
+ * report that it paints its own scrim.
+ *
+ * Separate function rather than a flag on the other, so neither has to explain
+ * at the call site which behaviour it is asking for.
+ */
+export function useOptionalPortalContext(): PortalContextType<never> | undefined {
+  return useContext(DPortalContext) as PortalContextType<never> | undefined;
 }

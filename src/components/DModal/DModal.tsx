@@ -1,9 +1,13 @@
-import { useMemo, type PropsWithChildren } from 'react';
+import {
+  useCallback, useEffect, useMemo, type PropsWithChildren,
+} from 'react';
 import classNames from 'classnames';
 
 import { PREFIX } from '../config';
 import { DOverlayContext } from '../DOverlayContext';
+import { useOptionalPortalContext } from '../../contexts/DPortalContext';
 import useOverlayDialog from '../useOverlayDialog';
+import useExitTransition from '../../hooks/useExitTransition';
 import { useResponsiveProp, type ResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import DModalHeader from './components/DModalHeader';
@@ -80,6 +84,49 @@ function DModal(
   } = useOverlayDialog({ name, staticBackdrop });
 
   /*
+   * Two things reported to the portal, both because forgetting them failed in
+   * ways that did not look like the cause.
+   *
+   * `panelPaintsScrim` says the browser draws `::backdrop` for this panel, so
+   * the portal must not draw one as well. It used to be a static
+   * `Component.nativeDialog` that whoever REGISTERED the panel had to set —
+   * and a panel that forgot it got two stacked 50% layers, with the portal's
+   * one outliving the dialog and swallowing the next click.
+   *
+   * `closePortal` on close is the other half: `<dialog>` closes itself for
+   * Escape and for a click outside, and if nothing pops the stack the entry
+   * stays, so the portal keeps rendering a closed panel and its scrim.
+   * Forwarding `onClose` by hand was a second thing to remember.
+   */
+  const portal = useOptionalPortalContext();
+
+  useEffect(() => {
+    portal?.panelPaintsScrim?.(true);
+    return () => portal?.panelPaintsScrim?.(false);
+  }, [portal]);
+
+  const afterExit = useExitTransition();
+
+  /**
+   * Closing, after the animation rather than during it.
+   *
+   * `closePortal()` pops the stack, which unmounts this component — and an
+   * element removed from the document stops transitioning. Called straight
+   * from the `close` event it won the race every time: the panel vanished on
+   * the frame it was told to leave, and `overlay.css`'s exit rules never
+   * rendered. (The enter still worked, which is why it looked like only half
+   * the animation existed.)
+   *
+   * `onClose` fires immediately regardless — a consumer waiting to know the
+   * panel is closed should not wait on an animation.
+   */
+  const handleClose = useCallback(() => {
+    onClose?.();
+    if (!portal?.closePortal) return;
+    afterExit(ref.current, portal.closePortal);
+  }, [afterExit, onClose, portal, ref]);
+
+  /*
    * Only subscribe to breakpoint changes when a responsive object is actually
    * given — the common case is a plain string and needs no `matchMedia`.
    */
@@ -154,7 +201,7 @@ function DModal(
         }}
         onCancel={onCancel}
         onClick={onClick}
-        onClose={onClose}
+        onClose={handleClose}
         {...dataProps}
         {...dataAttributes}
       >

@@ -316,3 +316,51 @@ describe('<DModal />', () => {
     });
   });
 });
+
+/**
+ * The animation is CSS, and configurable at three scopes.
+ *
+ * There is deliberately no `duration` prop. A prop would mean JavaScript
+ * owning a value CSS applies — the component would have to write an inline
+ * style, which is exactly what removing `framer-motion` got rid of. And a
+ * design system with a duration prop per component is a design system with
+ * twenty ways to be inconsistent.
+ *
+ * What there is instead, from narrowest to widest:
+ *
+ *   one panel     style={{ '--df-overlay-duration-enter': '400ms' }}
+ *   every panel   .my-app { --df-overlay-duration-enter: 400ms }
+ *   the system    tokens/primitives/motion.json → duration.normal
+ *
+ * jsdom applies no stylesheet, so what is checked here is that the handle
+ * reaches the element the rule is written against.
+ */
+describe('<DModal /> motion', () => {
+  it('should let one panel override its timing', () => {
+    render(
+      <DModal
+        name="m"
+        style={{ '--df-overlay-duration-exit': '800ms' } as React.CSSProperties}
+      >
+        <DModal.Body>x</DModal.Body>
+      </DModal>,
+    );
+
+    expect(document.querySelector('dialog'))
+      .toHaveStyle({ '--df-overlay-duration-exit': '800ms' });
+  });
+
+  /* The variable has to land on the `<dialog>` itself, because that is the
+     element the transition is declared on — set on a wrapper it would never
+     be read. */
+  it('should put the handle on the element the rule reads', () => {
+    render(
+      <DModal name="m" style={{ '--df-overlay-easing-exit': 'linear' } as React.CSSProperties}>
+        <DModal.Body>x</DModal.Body>
+      </DModal>,
+    );
+
+    const dialog = document.querySelector('dialog')!;
+    expect(dialog.getAttribute('style')).toContain('--df-overlay-easing-exit');
+  });
+});

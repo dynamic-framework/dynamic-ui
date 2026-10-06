@@ -47,7 +47,11 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .df-backdrop {
-      transition: opacity var(--df-overlay-duration) var(--df-overlay-easing);
+      transition: opacity var(--df-overlay-duration-exit) var(--df-overlay-easing-exit);
+    }
+
+    .df-backdrop[data-open] {
+      transition: opacity var(--df-overlay-duration-enter) var(--df-overlay-easing-enter);
     }
   }
 
@@ -160,20 +164,51 @@
    * no longer pulls an animation library onto the page.
    */
   @media (prefers-reduced-motion: no-preference) {
+    /*
+     * Leaving is faster than arriving, and eases the other way.
+     *
+     * This used one `--df-overlay-duration` and one `--df-overlay-easing`
+     * for both directions, so a modal left on `decelerate` — slowing down
+     * as it goes, which reads as the panel being reluctant to leave. The
+     * semantic layer already says what it should be: `motion.duration-exit`
+     * is 150ms against 200 for the enter, and `motion.easing-exit`
+     * accelerates. `toast.css` was following that split and the overlay was
+     * not.
+     *
+     * The exit values are declared on the CLOSED state, because a
+     * transition is driven by the properties of the state being
+     * transitioned TO — leaving means moving to `:not([open])`.
+     */
     dialog.df-overlay {
       transition:
-        opacity var(--df-overlay-duration) var(--df-overlay-easing),
-        translate var(--df-overlay-duration) var(--df-overlay-easing),
-        scale var(--df-overlay-duration) var(--df-overlay-easing),
-        display var(--df-overlay-duration) allow-discrete,
-        overlay var(--df-overlay-duration) allow-discrete;
+        opacity var(--df-overlay-duration-enter) var(--df-overlay-easing-enter),
+        translate var(--df-overlay-duration-enter) var(--df-overlay-easing-enter),
+        scale var(--df-overlay-duration-enter) var(--df-overlay-easing-enter),
+        display var(--df-overlay-duration-enter) allow-discrete,
+        overlay var(--df-overlay-duration-enter) allow-discrete;
+    }
+
+    dialog.df-overlay:not([open]) {
+      transition:
+        opacity var(--df-overlay-duration-exit) var(--df-overlay-easing-exit),
+        translate var(--df-overlay-duration-exit) var(--df-overlay-easing-exit),
+        scale var(--df-overlay-duration-exit) var(--df-overlay-easing-exit),
+        display var(--df-overlay-duration-exit) allow-discrete,
+        overlay var(--df-overlay-duration-exit) allow-discrete;
     }
 
     dialog.df-overlay::backdrop {
       transition:
-        opacity var(--df-overlay-duration) var(--df-overlay-easing),
-        display var(--df-overlay-duration) allow-discrete,
-        overlay var(--df-overlay-duration) allow-discrete;
+        opacity var(--df-overlay-duration-enter) var(--df-overlay-easing-enter),
+        display var(--df-overlay-duration-enter) allow-discrete,
+        overlay var(--df-overlay-duration-enter) allow-discrete;
+    }
+
+    dialog.df-overlay:not([open])::backdrop {
+      transition:
+        opacity var(--df-overlay-duration-exit) var(--df-overlay-easing-exit),
+        display var(--df-overlay-duration-exit) allow-discrete,
+        overlay var(--df-overlay-duration-exit) allow-discrete;
     }
 
     dialog.df-overlay:not([open]),

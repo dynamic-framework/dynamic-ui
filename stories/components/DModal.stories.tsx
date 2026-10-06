@@ -38,9 +38,31 @@ type Payloads = {
     actionPlacement?: 'start' | 'end' | 'center' | 'between' | 'fill';
     withHeader?: boolean;
     withFooter?: boolean;
+    /*
+     * Custom properties for the motion stories.
+     *
+     * The timing is CSS, so this is how a single panel overrides it — the
+     * same thing a consumer writes. It lands on the `<dialog>`, which is the
+     * element the transition is declared on.
+     */
+    style?: React.CSSProperties;
   };
 };
 
+/**
+ * A panel written the naive way, on purpose.
+ *
+ * It declares no `nativeDialog` flag and forwards no `onClose` to the
+ * `DModal`, because a consumer writing their first panel would not. Both used
+ * to be required and both failed in ways that pointed somewhere else: without
+ * the flag the portal drew its scrim on top of the dialog's `::backdrop`, and
+ * without `onClose` the dialog closed itself while the stack kept the entry —
+ * so the panel went, a sheet stayed, and the next click went into dismissing
+ * it instead of doing what it was aimed at.
+ *
+ * `DModal` reports both from the inside now, so this shape works. The story
+ * stays naive deliberately: it is the shape that has to keep working.
+ */
 function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
   const { closePortal } = useDPortalContext();
   const {
@@ -438,3 +460,270 @@ export const PlacementPlayground: Story = story(
   'The two props that describe the geometry, side by side. Everything else about the panel is the '
   + 'same whichever you pick.',
 );
+
+/* --- motion ------------------------------------------------------------ */
+
+/**
+ * The timing, at four speeds.
+ *
+ * Open each one and watch it LEAVE — the enter is the same `decelerate` in all
+ * of them, and the difference is easiest to see on the way out.
+ *
+ * There is no `duration` prop, deliberately. A prop would mean JavaScript
+ * owning a value CSS applies: the component would have to write an inline
+ * style, which is exactly what removing the animation library got rid of. And
+ * a design system with a duration prop per component is a design system with
+ * as many ways to be inconsistent as it has components.
+ */
+export const Durations: Story = {
+  render: () => withPortal(
+    ([
+      ['instant', '0ms', '0ms'],
+      ['fast', '150ms', '100ms'],
+      ['default', '200ms', '150ms'],
+      ['slow', '600ms', '400ms'],
+    ] as const).map(([label, enter, exit]) => (
+      <Trigger
+        key={label}
+        label={`${label} · ${enter} / ${exit}`}
+        payload={{
+          title: `enter ${enter}, exit ${exit}`,
+          body: (
+            <p className="df-m-0">
+              Press Escape or click outside, and watch how it leaves.
+            </p>
+          ),
+          style: {
+            '--df-overlay-duration-enter': enter,
+            '--df-overlay-duration-exit': exit,
+          } as React.CSSProperties,
+        }}
+      />
+    )),
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Four speeds on one component. The exit is shorter than the enter in each '
+          + 'pair, which is the system default: `motion.duration-exit` is 150ms against 200 '
+          + 'for the enter. Leaving should get out of the way.',
+      },
+      source: {
+        code: `<DModal
+  name="confirm"
+  style={{
+    '--df-overlay-duration-enter': '600ms',
+    '--df-overlay-duration-exit': '400ms',
+  }}
+>
+  …
+</DModal>
+
+// These land on the <dialog>, which is the element the transition is
+// declared on. For a panel that is NOT a dialog, the portal's scrim is a
+// SIBLING of the panel rather than an ancestor, so it does not inherit a
+// per-panel override — set those on the portal mount point or on :root.
+//
+// Four custom properties control the whole animation:
+//
+//   --df-overlay-duration-enter   how long it takes to arrive
+//   --df-overlay-duration-exit    how long it takes to leave
+//   --df-overlay-easing-enter     its curve on the way in
+//   --df-overlay-easing-exit      its curve on the way out
+//
+// They are separate because leaving is not arriving played backwards: the
+// system's default enter is 200ms on \`decelerate\` and its exit is 150ms on
+// \`accelerate\`. A panel that decelerates on the way out reads as reluctant.
+//
+// Set to 0ms the panel appears and vanishes with no transition, which is
+// also what everyone with \`prefers-reduced-motion: reduce\` already gets —
+// the whole animation sits inside that media query.`,
+      },
+    },
+  },
+};
+
+/**
+ * The curve, which matters more than the duration.
+ *
+ * `decelerate` arrives fast and settles; `accelerate` starts slow and leaves
+ * quickly; `linear` does neither and looks mechanical next to them. Open two
+ * in a row to feel the difference — it is not visible in a still frame.
+ */
+export const Easings: Story = {
+  render: () => withPortal(
+    ([
+      ['system default', 'var(--df-motion-easing-enter)', 'var(--df-motion-easing-exit)'],
+      ['linear', 'linear', 'linear'],
+      ['back out', 'cubic-bezier(0.34, 1.56, 0.64, 1)', 'ease-in'],
+    ] as const).map(([label, enter, exit]) => (
+      <Trigger
+        key={label}
+        label={label}
+        payload={{
+          title: label,
+          body: <p className="df-m-0">Open it a few times — a curve is a motion, not a frame.</p>,
+          /* Slowed down so the curve is actually perceptible; at 200ms every
+             easing looks much the same. */
+          style: {
+            '--df-overlay-duration-enter': '600ms',
+            '--df-overlay-duration-exit': '450ms',
+            '--df-overlay-easing-enter': enter,
+            '--df-overlay-easing-exit': exit,
+          } as React.CSSProperties,
+        }}
+      />
+    )),
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Slowed to 600ms so the curve is perceptible — at the default 200ms every '
+          + 'easing looks much the same. "Back out" overshoots slightly on the way in, which '
+          + 'suits a confirmation and is wrong for an error.',
+      },
+      source: {
+        code: `<DModal
+  name="confirm"
+  style={{
+    '--df-overlay-easing-enter': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    '--df-overlay-easing-exit': 'ease-in',
+  }}
+>
+  …
+</DModal>`,
+      },
+    },
+  },
+};
+
+/**
+ * Every panel at once, which is the usual case.
+ *
+ * One modal with its own timing is rare. A product deciding its overlays are
+ * slower than the default is not — and that is a stylesheet rule, not a prop
+ * repeated at every call site.
+ *
+ * The scope has to be `:root`, not a wrapper class, and that is worth knowing
+ * before you try the obvious thing: a panel opened through the portal is
+ * appended to `document.body`, so it is NOT a DOM descendant of the provider
+ * or of anything you wrapped around it. Custom properties inherit down the
+ * DOM, not down the React tree, so a class on an ancestor of the provider
+ * never reaches the panel.
+ */
+export const ScopedTiming: Story = {
+  render: () => (
+    <>
+      <style>
+        {`:root {
+            --df-overlay-duration-enter: 500ms;
+            --df-overlay-duration-exit: 350ms;
+          }`}
+      </style>
+      {withPortal(
+        <Trigger
+          label="Open — timed from :root"
+          payload={{
+            title: 'Timed by the document',
+            body: (
+              <p className="df-m-0">
+                Nothing on this panel sets a duration — the value comes from
+                the document root, which every panel inherits wherever the
+                portal puts it.
+              </p>
+            ),
+          }}
+        />,
+      )}
+    </>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'The panel sets nothing; `:root` does. A wrapper class would NOT work — '
+          + 'a portalled panel is appended to `document.body`, so it is not a DOM '
+          + 'descendant of whatever you wrapped around the provider.',
+      },
+      source: {
+        code: `/* app.css */
+:root {
+  --df-overlay-duration-enter: 500ms;
+  --df-overlay-duration-exit: 350ms;
+}
+
+/* Every DModal now uses that timing, and nothing at the call sites
+   changed.
+
+   :root rather than a wrapper class, because a panel opened through
+   the portal is appended to document.body — it is NOT a DOM
+   descendant of your provider, and custom properties inherit down
+   the DOM rather than down the React tree. A class on an ancestor
+   of the provider reaches the trigger and not the panel.
+
+   To scope it narrower than the whole document, put the variables
+   on the portal mount point — it IS an ancestor of the panel. Note
+   that the provider creates that element itself and removes any
+   existing one with the same id, so style it by id rather than by
+   rendering your own: */
+#portal {
+  --df-overlay-duration-enter: 500ms;
+}
+
+/* Wider instead — the whole system, including the toast and the
+   collapse — by moving the value the overlay points AT: */
+:root {
+  --df-duration-normal: 500ms;
+}`,
+      },
+    },
+  },
+};
+
+/**
+ * What `prefers-reduced-motion` does to all of it.
+ *
+ * The entire transition block sits inside
+ * `@media (prefers-reduced-motion: no-preference)`, so a reader who has asked
+ * for less motion gets no animation at all — not a faster one. Every duration
+ * above becomes irrelevant for them, which is the point.
+ */
+export const ReducedMotion: Story = {
+  render: () => withPortal(
+    <Trigger
+      label="Open"
+      payload={{
+        title: 'Motion is opt-out at the OS level',
+        body: (
+          <p className="df-m-0">
+            Turn on &ldquo;reduce motion&rdquo; in your system settings and reopen this:
+            it appears and disappears with no transition, whatever the duration says.
+          </p>
+        ),
+        style: {
+          '--df-overlay-duration-enter': '900ms',
+          '--df-overlay-duration-exit': '700ms',
+        } as React.CSSProperties,
+      }}
+    />,
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'This panel asks for 900ms. With "reduce motion" on it still appears '
+          + 'instantly — the transitions are declared inside the media query rather than '
+          + 'being shortened by it, so there is no duration a consumer can set that '
+          + 'overrides a reader\'s preference.',
+      },
+      source: {
+        code: `/* overlay.css — the whole animation is inside this query */
+@media (prefers-reduced-motion: no-preference) {
+  dialog.df-overlay { transition: … }
+}
+
+/* So a consumer CANNOT override a reader's preference by setting a
+   duration: there is no transition to time. That is deliberate —
+   shortening the animation instead would still move the panel. */`,
+      },
+    },
+  },
+};

@@ -6,6 +6,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { DPortalContextProvider, useDPortalContext } from './DPortalContext';
+import DModal from '../components/DModal';
 
 /**
  * The portal that puts a modal or an offcanvas on the page.
@@ -273,5 +274,147 @@ describe('DPortalContext', () => {
     await user.click(screen.getByRole('button', { name: 'Open' }));
     await user.click(screen.getByRole('button', { name: 'Inside' }));
     expect(panel()).toBeInTheDocument();
+  });
+});
+
+/**
+ * Where a portalled panel ends up, and what that means for theming.
+ *
+ * The panel is appended to `document.body`, so it is NOT a DOM descendant of
+ * the provider or of anything wrapped around it. Custom properties inherit
+ * down the DOM and not down the React tree, which means a scope class on an
+ * ancestor of the provider reaches the trigger and never the panel.
+ *
+ * This is here because a documentation example claimed the opposite. A
+ * `.my-app { --df-overlay-duration-enter: … }` wrapper looks exactly like it
+ * should work, and the failure is silent — the panel just keeps the default.
+ */
+describe('the portal mount point', () => {
+  it('should put the panel outside anything wrapped around the provider', async () => {
+    const user = userEvent.setup();
+    const mount = document.createElement('div');
+    mount.id = 'scope-portal';
+    document.body.appendChild(mount);
+
+    render(
+      <div className="theme-scope">
+        <DPortalContextProvider portalName="scope-portal" availablePortals={{ panel: Panel }}>
+          <Opener isStatic={false} />
+        </DPortalContextProvider>
+      </div>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(panel()).toBeInTheDocument();
+    expect(panel()!.closest('.theme-scope')).toBeNull();
+  });
+
+  /*
+   * The mount point IS an ancestor, so that is the narrow scope that works —
+   * and it is what the modal's theming story documents.
+   *
+   * Asserted on the id rather than on a node this test created: `usePortal`
+   * removes any existing element with that id and appends its own, so a
+   * pre-made div is not the element the panel ends up in. Worth knowing
+   * before you try to style a mount point you rendered yourself.
+   */
+  it('should put the panel inside its own mount point', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <DPortalContextProvider portalName="inside-portal" availablePortals={{ panel: Panel }}>
+        <Opener isStatic={false} />
+      </DPortalContextProvider>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+
+    const host = panel()!.closest('#inside-portal');
+    expect(host).toBeInTheDocument();
+    expect(host).toHaveClass('d-portal');
+    expect(host!.parentElement).toBe(document.body);
+  });
+});
+
+/**
+ * A panel that forgets the contract.
+ *
+ * Registering a panel used to carry two obligations nobody enforced: set
+ * `Component.nativeDialog = true` if it renders a `DModal`, and forward the
+ * `onClose` the portal passes down to that `DModal`. The library's own stories
+ * did neither, and the symptoms did not point at the cause:
+ *
+ * - without the flag, the portal drew its scrim ON TOP of the dialog's
+ *   `::backdrop` — two stacked 50% layers;
+ * - without `onClose`, the dialog closed itself for Escape and for an outside
+ *   click and nothing popped the stack, so the portal kept rendering the
+ *   closed panel and its scrim. The reader saw the modal go and a sheet stay,
+ *   and had to click a second time.
+ *
+ * `DModal` now reports both from the inside, so a panel written the naive way
+ * works.
+ */
+describe('a panel that declares nothing', () => {
+  /** Exactly the shape the stories had: no flag, no forwarded `onClose`. */
+  function NaivePanel({ name }: { name: string }) {
+    return (
+      <DModal name={name}>
+        <DModal.Body>body</DModal.Body>
+      </DModal>
+    );
+  }
+
+  function NaiveOpener() {
+    const { openPortal } = useDPortalContext<{ panel: Record<string, never> }>();
+    return (
+      <button type="button" onClick={() => openPortal('panel', {})}>Open</button>
+    );
+  }
+
+  const renderNaive = () => {
+    const mount = document.createElement('div');
+    mount.id = 'naive-portal';
+    document.body.appendChild(mount);
+
+    return render(
+      <DPortalContextProvider portalName="naive-portal" availablePortals={{ panel: NaivePanel }}>
+        <NaiveOpener />
+      </DPortalContextProvider>,
+    );
+  };
+
+  it('should draw no scrim of its own, flag or no flag', async () => {
+    const user = userEvent.setup();
+    renderNaive();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(document.querySelector('dialog')).toBeInTheDocument();
+    expect(document.querySelector('.df-backdrop')).not.toHaveAttribute('data-open');
+  });
+
+  /*
+   * The stack has to empty when the dialog closes itself. Left behind, the
+   * portal keeps the entry and the scrim decision keeps answering "something
+   * is open".
+   */
+  it('should pop the stack when the dialog closes itself', async () => {
+    const user = userEvent.setup();
+    renderNaive();
+
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    const dialog = document.querySelector('dialog') as HTMLDialogElement;
+
+    dialog.close();
+    await waitFor(() => expect(document.querySelector('dialog')).not.toBeInTheDocument());
+    expect(document.querySelector('.df-backdrop')).not.toHaveAttribute('data-open');
+  });
+
+  /* And a `DModal` on its own, with no portal anywhere, must still render. */
+  it('should work with no portal at all', () => {
+    expect(() => render(
+      <DModal name="standalone"><DModal.Body>x</DModal.Body></DModal>,
+    )).not.toThrow();
   });
 });
