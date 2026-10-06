@@ -126,6 +126,9 @@ function mount(root: HTMLElement): Teardown {
 
     Array.from(input.files ?? []).forEach((file) => {
       const item = document.createElement('li');
+      /* The same class the React build puts here, so one stylesheet dresses both
+         — and so `css:flow` can see the item's margin is decided. */
+      item.className = 'df-dropzone-file';
       const name = document.createElement('span');
       /* `textContent`: a file name is user input and may contain markup. */
       name.textContent = file.name;

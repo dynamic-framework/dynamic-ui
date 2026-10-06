@@ -246,3 +246,27 @@ describe('<DPaginator />', () => {
     });
   });
 });
+
+/**
+ * The item carries no document flow margin.
+ *
+ * `base/typography.css` gives every `li + li` a `margin-block-start`, which is
+ * right for a CMS body and wrong for a control that lays itself out with
+ * `gap`. The containers all reset their own margins and not one reset the
+ * ITEM, so every adjacent page button carried a stray block margin on top of
+ * the gap — in a horizontal flex, a margin that answers to nothing.
+ *
+ * Asserted on the class rather than on a computed style: jsdom applies no
+ * stylesheet, so what can be checked here is that the hook the reset is
+ * written against is actually on the element. `css:flow` checks the other
+ * half — that a rule decides it.
+ */
+describe('<DPaginator /> flow margins', () => {
+  it('should put the reset hook on every item', () => {
+    render(<DPaginator total={20} current={3} onPageChange={() => {}} />);
+
+    const items = document.querySelectorAll('.df-pagination > li');
+    expect(items.length).toBeGreaterThan(3);
+    items.forEach((item) => expect(item).toHaveClass('df-pagination-item'));
+  });
+});

@@ -67,6 +67,11 @@ const BASE = [
   'base/typography.css',
 ];
 const COMPONENTS = [
+  /*
+   * First in the layer, so any component that genuinely wants an item margin
+   * can set one after it. The order within a layer is this list's only job.
+   */
+  'components/list-reset.css',
   'components/icon.css',
   'components/skeleton.css',
   'components/spinner.css',

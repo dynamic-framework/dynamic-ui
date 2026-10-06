@@ -35,8 +35,30 @@ const BUNDLE = resolve(ROOT, 'dist/css/dynamic.css');
  * was removed deliberately, so there is nothing for a component to neutralise
  * and demanding a decision about it would be asking for a reset of a default
  * that does not exist.
+ *
+ * `li` WAS missing, and that is the gap this check was supposed to close and
+ * did not. `base/typography.css` gives every `li + li` a block margin, every
+ * component that renders a list lays it out with `gap`, and not one of them
+ * reset the item — so the containers were all audited and the items inside
+ * them were invisible to the audit.
  */
-const FLOW = /<(p|ul|ol|dl|blockquote|figure|pre|table)[\s>]/;
+/*
+ * `[\s>]` OR end of line.
+ *
+ * JSX breaks freely, and an element with several attributes is usually written
+ * with the tag alone on its line:
+ *
+ *     <li
+ *       role="presentation"
+ *       className="df-tab-item"
+ *     >
+ *
+ * The old pattern required a space or a `>` immediately after the tag name, so
+ * every element written that way was INVISIBLE to this check — not passing it,
+ * not reaching it. Seven of them across `src/components`, including the tab
+ * item that sent me looking.
+ */
+const FLOW = /<(p|ul|ol|dl|li|blockquote|figure|pre|table)(?=[\s>]|$)/;
 
 /**
  * Components still wrapping a third party, exempted whole.
@@ -73,13 +95,65 @@ const css = readFileSync(BUNDLE, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
  * the point is that the component made a DECISION about it, not that the
  * decision was zero.
  */
-const decided = new Set();
+/**
+ * Which block-margin ENDS each class has a decision for.
+ *
+ * Not a boolean. The first version recorded only THAT a margin was set, and
+ * that is how a reset of `margin-block-start` passed the check while the
+ * `<ul>`'s bottom margin from the same base rule sailed through — and how a
+ * `margin-block-end: -1px` on a tab item, set for the divider overlap, read
+ * as the item's start margin having been dealt with. It had not, and the
+ * stray band above the tab strip was exactly that.
+ */
+const SHORTHAND = /(^|[;{\s])margin\s*:/;
+const BLOCK_BOTH = /(^|[;{\s])margin-block\s*:/;
+const BLOCK_START = /(^|[;{\s])margin(-block-start|-top)\s*:/;
+const BLOCK_END = /(^|[;{\s])margin(-block-end|-bottom)\s*:/;
+
+/** class -> { start, end } */
+const decided = new Map();
+
 for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const [, selector, body] = rule;
-  if (!/(^|[;{\s])margin(-block(-start|-end)?|-top|-bottom)?\s*:/.test(body)) continue;
+  const covers = SHORTHAND.test(body) || BLOCK_BOTH.test(body);
+  const start = covers || BLOCK_START.test(body);
+  const end = covers || BLOCK_END.test(body);
+  if (!start && !end) continue;
+
   for (const name of selector.matchAll(/\.((?:df-)(?:\\.|[a-zA-Z0-9_-])+)/g)) {
-    decided.add(name[1].replace(/\\/g, ''));
+    const key = name[1].replace(/\\/g, '');
+    const seen = decided.get(key) ?? { start: false, end: false };
+    decided.set(key, { start: seen.start || start, end: seen.end || end });
   }
+}
+
+/**
+ * Which ends the BASE layer gives each element, so a decision can be checked
+ * against what there actually is to neutralise.
+ */
+const BASE_GIVES = {
+  /* `li + li` sets the start only. */
+  li: { start: true, end: false },
+  /* `p, ul, ol, …` set `margin-block: 0 <end>` — the end only. */
+  p: { start: false, end: true },
+  ul: { start: false, end: true },
+  ol: { start: false, end: true },
+  dl: { start: false, end: true },
+  blockquote: { start: false, end: true },
+  figure: { start: false, end: true },
+  pre: { start: false, end: true },
+  table: { start: false, end: true },
+};
+
+/** Whether `names` cover every end the base layer gives `tag`. */
+function covered(tag, names) {
+  const needs = BASE_GIVES[tag] ?? { start: true, end: true };
+  return names.some((name) => {
+    if (KEEPS_FLOW.has(name)) return true;
+    const has = decided.get(name);
+    if (!has) return false;
+    return (!needs.start || has.start) && (!needs.end || has.end);
+  });
 }
 
 function walk(dir, out = []) {
@@ -87,13 +161,51 @@ function walk(dir, out = []) {
     if (entry === 'node_modules' || entry.startsWith('.')) continue;
     const abs = join(dir, entry);
     if (statSync(abs).isDirectory()) walk(abs, out);
-    else if (/\.tsx$/.test(entry) && !/\.spec\.tsx$/.test(entry)) out.push(abs);
+    else if (/\.tsx?$/.test(entry) && !/\.spec\.tsx?$/.test(entry)) out.push(abs);
   }
   return out;
 }
 
+/**
+ * The vanilla build renders flow elements too, and in a different idiom.
+ *
+ * `createElement('li')` matches no JSX pattern, so the whole framework-free
+ * layer was outside this check — and it builds the same markup the React side
+ * does, so it inherits the same default and needs the same decision. Its
+ * dropzone was appending an unclassed `<li>`.
+ */
+const CREATED = /createElement\(\s*'(p|ul|ol|dl|li|blockquote|figure|pre|table)'\s*\)/;
+
 const findings = [];
 let checked = 0;
+
+for (const file of walk(resolve(ROOT, 'src/vanilla'))) {
+  const rel = relative(ROOT, file);
+  const source = readFileSync(file, 'utf8');
+
+  source.split('\n').forEach((line, index) => {
+    if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+    const tag = CREATED.exec(line);
+    if (!tag) return;
+    checked += 1;
+
+    /*
+     * The class is assigned on a following line, not in the same expression,
+     * so the window has to cover the few lines after the creation. Five is
+     * what the current code needs; a class set further away than that is far
+     * enough from its element to be worth flagging anyway.
+     */
+    const window = source.split('\n').slice(index, index + 6).join(' ');
+    const names = [...window.matchAll(/'(df-[a-z0-9-]+)'/g)].map((m) => m[1]);
+
+    if (!covered(tag[1], names)) {
+      findings.push({
+        where: `${rel}:${index + 1}`,
+        message: `createElement('${tag[1]}') — no rule decides its margin, so it inherits the document rhythm`,
+      });
+    }
+  });
+}
 
 for (const file of walk(resolve(ROOT, 'src/components'))) {
   const rel = relative(ROOT, file);
@@ -110,21 +222,44 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
     checked += 1;
 
     const where = `${rel}:${index + 1}`;
-    /* The className may be on this line or the next few; JSX wraps freely. */
-    const window = source.split('\n').slice(index, index + 3).join(' ');
-    const classes = /className="([^"{}]*)"/.exec(window);
+      /*
+       * The window runs to the end of the OPENING TAG, not a fixed number of
+       * lines.
+       *
+       * Three lines covered `<li role key className` by one line short, so the
+       * tab item read as having no class at all — and a guess that happens to
+       * fit today's formatting breaks on the next prop someone adds.
+       */
+      const rest = source.split('\n').slice(index);
+      const close = rest.findIndex((text) => text.includes('>'));
+      const window = rest.slice(0, close === -1 ? 1 : close + 1).join(' ');
+    /*
+     * A literal attribute, or the literals inside a `classNames()` call.
+     *
+     * `className={classNames('df-pagination', className)}` is how half the
+     * library writes it, and reading only the quoted form reported those
+     * elements as having no class AT ALL — a different and much more
+     * alarming message than the truth, which sent me looking in the wrong
+     * place.
+     */
+    const literal = /className="([^"{}]*)"/.exec(window);
+    const computed = /className=\{[^}]*\}/.exec(window);
+    const names = [
+      ...(literal ? literal[1].split(/\s+/) : []),
+      ...(computed ? [...computed[0].matchAll(/'([^']+)'/g)].map((m) => m[1]) : []),
+    ];
 
-    if (!classes) {
+    if (!names.length) {
       findings.push({ where, message: `<${tag[1]}> with no class — nothing can switch its flow margin off` });
       return;
     }
 
-    const own = classes[1].split(/\s+/).filter((name) => name.startsWith('df-'));
+    const own = names.filter((name) => name.startsWith('df-'));
     if (!own.length) {
       findings.push({ where, message: `<${tag[1]}> has no df- class — nothing can switch its flow margin off` });
       return;
     }
-    if (own.some((name) => decided.has(name) || KEEPS_FLOW.has(name))) return;
+    if (covered(tag[1], own)) return;
 
     findings.push({
       where,
@@ -133,7 +268,7 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
   });
 }
 
-process.stdout.write(`css-flow: ${checked} flow element(s) rendered by src/components\n`);
+process.stdout.write(`css-flow: ${checked} flow element(s) rendered by src/\n`);
 
 if (!findings.length) {
   process.stdout.write('css-flow: every one has its margin decided by a rule\n');

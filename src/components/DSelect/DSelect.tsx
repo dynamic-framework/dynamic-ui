@@ -419,7 +419,7 @@ export default function DSelect<Value extends string | number = string>(
                   const visible = group.options.filter((option) => matching.includes(option));
                   if (!visible.length) return null;
                   return (
-                    <li key={group.label} role="presentation">
+                    <li key={group.label} role="presentation" className="df-combobox-group-item">
                       <span className="df-combobox-group-label" role="presentation">
                         {group.label}
                       </span>

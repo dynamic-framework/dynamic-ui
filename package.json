@@ -59,7 +59,7 @@
     "build:storybook": "storybook build --docs -o docs",
     "generate:registry": "node scripts/generate-api.mjs && node scripts/generate-schema.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
-    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build",
+    "tokens": "npm run tokens:primitives && npm run tokens:verify && npm run tokens:validate && npm run tokens:build && npm run storybook:theme",
     "tokens:primitives": "node scripts/tokens/build-primitives.mjs",
     "tokens:build": "node scripts/tokens/build.mjs",
     "tokens:validate": "node scripts/tokens/validate.mjs",
@@ -97,7 +97,9 @@
     "css:flow": "node scripts/css/flow.mjs",
     "css:generated": "node scripts/css/generated.mjs",
     "icons": "node scripts/icons/sprite.mjs",
-    "stories:snippets": "node scripts/stories/check-snippets.mjs"
+    "stories:snippets": "node scripts/stories/check-snippets.mjs",
+    "storybook:theme": "node scripts/storybook/build-manager-theme.mjs",
+    "storybook:hooks": "node scripts/storybook/check-preview-hooks.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

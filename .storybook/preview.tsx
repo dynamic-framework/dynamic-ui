@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
+import { useGlobals } from 'storybook/preview-api';
 
 import type { Preview } from '@storybook/react-vite';
+
+import ThemeToggle from './ThemeToggle';
+
+import type { Choice } from './themeCycle';
 
 /**
  * Forces a theme on the preview, or follows the OS.
@@ -16,6 +21,15 @@ import type { Preview } from '@storybook/react-vite';
  * there.
  */
 function withTheme(Story, context) {
+  /*
+   * `useGlobals` HERE, not inside the toggle.
+   *
+   * Storybook's preview hooks read a store it sets up around the decorator's
+   * own call. A component the decorator returns is rendered by React
+   * afterwards, outside that store — so calling the hook there throws on every
+   * story, which is exactly what it did.
+   */
+  const [, updateGlobals] = useGlobals();
   const { theme } = context.globals;
 
   useEffect(() => {

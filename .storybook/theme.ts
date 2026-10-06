@@ -1,27 +1,34 @@
 import { create } from 'storybook/theming/create';
 
-export default create({
-  base: 'light',
-  fontBase: '"Jost", sans-serif',
+import { palette } from './palette';
+import resolveTheme from './resolveTheme';
 
+/**
+ * The Storybook chrome, in both themes.
+ *
+ * The colours come from `palette.ts`, which is generated from the same
+ * `tokens/` the stylesheet is built from. They used to be hand-written hexes
+ * here — six of the design system's colours, copied, with nothing holding them
+ * to it. The copy had already drifted: the accent was the light-mode blue,
+ * which on a dark chrome is the wrong blue, and nothing could have said so.
+ *
+ * The brand is not a token. A logo URL and a product name are not colours, so
+ * they stay written down.
+ */
+const brand = {
+  fontBase: '"Jost", sans-serif',
   brandTitle: 'Dynamic',
   brandUrl: 'https://react.dynamicframework.dev',
   brandImage: 'https://cdn.modyo.cloud/uploads/8c051a86-0d5b-4064-b5fd-76fb346e0fb0/original/dynamic_logo.svg',
   brandTarget: '_self',
-
-  colorPrimary: '#2068d5',
-  colorSecondary: '#2068d5',
-
-  appBg: '#fbfaff',
-  appContentBg: '#fbfaff',
-  appBorderColor: '#e6e6f3',
   appBorderRadius: 8,
+};
 
-  textColor: '#161723',
-  textInverseColor: '#ffffff',
-  textMutedColor: '#6d6d82',
+export const themes = {
+  light: create({ base: 'light', ...brand, ...palette.light }),
+  dark: create({ base: 'dark', ...brand, ...palette.dark }),
+} as const;
 
-  barTextColor: '#9E9E9E',
-  barSelectedColor: '#2068d5',
-  barBg: '#fbfaff',
-});
+export { resolveTheme };
+
+export default themes.light;

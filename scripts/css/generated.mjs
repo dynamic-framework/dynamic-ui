@@ -33,6 +33,9 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const TRACKED = [
   'tokens/primitives/color.json',
   'stories/utilities/utilities.manifest.json',
+  /* The Storybook chrome's colours, generated from the same tokens as the
+     stylesheet — they were hand-written hexes and had already drifted. */
+  '.storybook/palette.ts',
 ];
 
 const changed = execFileSync('git', ['status', '--porcelain', '--', ...TRACKED], {

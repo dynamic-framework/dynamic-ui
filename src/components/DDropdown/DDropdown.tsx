@@ -264,7 +264,7 @@ export default function DDropdown(
           return <hr key={index} className="df-menu-divider" />;
         }
         return (
-          <li key={index}>
+          <li key={index} className="df-menu-item">
             {action.href ? (
               <a
                 {...getItemProps(action)}

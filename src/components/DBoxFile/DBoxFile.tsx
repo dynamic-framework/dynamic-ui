@@ -167,7 +167,7 @@ export default function DBoxFile(
          */
         <ul className="df-dropzone-files" aria-label={filesLabel}>
           {files.map((file, index) => (
-            <li key={`${file.name} ${index}`}>
+            <li key={`${file.name} ${index}`} className="df-dropzone-file">
               <DInput
                 value={file.name}
                 iconStart="Paperclip"

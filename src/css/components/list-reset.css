@@ -1,0 +1,68 @@
+/**
+ * Component lists opt out of the flow rhythm.
+ *
+ * `base/typography.css` gives every `li + li` a `margin-block-start`, and that
+ * is right: the markup it has to serve is markup nobody can add a class to —
+ * a CMS body, a Liquid template, terms pasted into a modal. Its own comment
+ * says component chrome switches these off in the component layer.
+ *
+ * For `li` that never happened. Eight components render lists — pagination,
+ * tabs, the list group, both menus, the dropzone's file list, the password
+ * checks — and every one of them lays itself out with `display: flex` and
+ * `gap`. They each reset the `<ul>`'s margins and none of them reset the
+ * ITEM's, so every adjacent item carried a stray margin on top of its gap:
+ * doubled spacing in the vertical lists, and a block-axis margin in the
+ * horizontal ones that answers to nothing.
+ *
+ * ## Why a list of class names and not a clever selector
+ *
+ * `:not([class*="df-"]) > li + li` reads better and is a trap. The
+ * discriminator it relies on — a prose list has no class, a component list
+ * does — breaks the moment someone writes `<ul class="df-mb-4">` in the CMS
+ * body this rule exists to serve. They lose the item spacing, silently, and
+ * the cause is three layers away from the symptom.
+ *
+ * ## Why the ITEM's class and not the parent's
+ *
+ * `.df-pagination > li` would be shorter. But `css:flow` audits a rendered
+ * element against rules naming that element's OWN class, which is how it can
+ * tell a decision from an omission — a parent selector reads to it as the
+ * parent having been decided, and the item stays invisible. The same blind
+ * spot is why this was missing in the first place.
+ *
+ * It also forced two `<li>` that carried no class at all to get one, which the
+ * library should not have been rendering anyway.
+ *
+ * `npm run css:flow` now covers `li`, so a new list component fails the build
+ * until its item is named here.
+ *
+ * ## `margin-block`, not `margin-block-start`
+ *
+ * The first version of this reset set only `margin-block-start`, because that
+ * is the property `li + li` sets. It left `.df-tab-item` — and every other
+ * container — still carrying the `ul`'s own block margins from the same base
+ * rule, which is what was still showing as a band above the tab strip. Both
+ * ends, once, for every one of them.
+ */
+@layer df.components {
+  .df-pagination,
+  .df-tablist,
+  .df-tab-item,
+  .df-pagination-item,
+  .df-floating,
+  .df-menu-item,
+  .df-list,
+  .df-combobox-list,
+  .df-combobox-group,
+  .df-combobox-group-item,
+  .df-combobox-option,
+  .df-combobox-empty,
+  .df-combobox-group-label,
+  .df-dropzone-files,
+  .df-dropzone-file,
+  .df-password-checks,
+  .df-password-check,
+  .df-calendar-grid {
+    margin-block: 0;
+  }
+}

@@ -241,3 +241,34 @@ describe('<DTabs />', () => {
     expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveAttribute('aria-selected', 'true');
   });
 });
+
+/**
+ * The tab strip carries no document flow margin.
+ *
+ * `base/typography.css` gives `li + li` a block-start margin and `ul` a
+ * block-end one. The tab list is a flex row whose `gap` owns the spacing, so
+ * both were stray — the item margin showed as a band above the strip.
+ *
+ * Asserted on the class, because jsdom applies no stylesheet: what can be
+ * checked here is that the hook the reset is written against is on the
+ * element. `css:flow` checks the other half — that a rule covers every margin
+ * end the base layer actually sets.
+ */
+describe('<DTabs /> flow margins', () => {
+  it('should put the reset hook on the list and every item', () => {
+    render(
+      <DTabs
+        options={[{ tab: 'one', label: 'One' }, { tab: 'two', label: 'Two' }]}
+        defaultSelected="one"
+      >
+        <p>First</p>
+      </DTabs>,
+    );
+
+    expect(document.querySelector('ul')).toHaveClass('df-tablist');
+
+    const items = document.querySelectorAll('.df-tablist > li');
+    expect(items).toHaveLength(2);
+    items.forEach((item) => expect(item).toHaveClass('df-tab-item'));
+  });
+});
