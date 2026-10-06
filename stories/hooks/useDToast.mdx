@@ -15,14 +15,19 @@ import DAlert from "../../src/components/DAlert/DAlert";
 ![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
 
 The toast pattern combines two pieces: a **`DToastContainer`** component (the render target) and the **`useDToast`** hook (the dispatcher).
-Both are thin abstractions over [react-hot-toast](https://react-hot-toast.com/docs) that integrate with the Dynamic UI icon context and component system.
+Both are built here. 3.0 removed `react-hot-toast`: the wrapper spent its
+length undoing the library's choices — every toast went through
+`toast.custom()` because the built-in markup was not ours, its `visible` flag
+had to be translated into rendering `null`, and its container positioned itself
+with inline styles the stylesheet then fought. What was actually used of it was
+a list, six placements and a timer.
 
 <br />
 
 <Unstyled>
   <DAlert color="warning">
     <span>
-      Because react-hot-toast uses a global store, a toast dispatched in one
+      Because the toast store is a module singleton, a toast dispatched in one
       container may appear in all active containers. For predictable behavior,
       keep a single <code>DToastContainer</code> per page.
     </span>
@@ -53,7 +58,7 @@ export function App() {
   return (
     <DContextProvider>
       {/* your app content */}
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }
@@ -78,9 +83,11 @@ It returns a single `toast` function.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `data` | `ToastData \| ((t: Toast) => Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
-| `toastProps` | `DToastOptions` | — | Per-toast overrides forwarded to react-hot-toast. |
+| `options` | `DToastOptions` | — | `id`, `duration` and `placement` for this one toast. |
 
-**Returns** `string` — the toast ID, which can be passed to react-hot-toast's `toast.dismiss(id)` to programmatically close the toast.
+**Returns** `string` — the toast id. Pass it to the `dismiss` the hook also
+returns, or reuse it in a later `toast()` call to update that toast in place
+rather than stacking a second one.
 
 ## `ToastData`
 
@@ -140,7 +147,7 @@ export function App() {
         text="Show Toast"
         onClick={() => toast({ title: 'Example', icon: 'check' }, { duration: 40000 })}
       />
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }
@@ -182,7 +189,7 @@ export function App() {
           )
         }
       />
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }
@@ -231,7 +238,7 @@ export function App() {
           )
         }
       />
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }
@@ -279,7 +286,7 @@ export function App() {
           )
         }
       />
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }
@@ -290,8 +297,13 @@ export function App() {
 
 ### Custom render function
 
-Pass a render function as the first argument to `toast` for fully custom content.
-The function receives the react-hot-toast `Toast` object, which includes `id` and `visible`.
+Pass any `ReactNode` as the first argument for fully custom content.
+
+2.x took a render function here and handed it the library's own toast object —
+an `id` and a `visible` flag the component had to translate into rendering
+`null`. Both were bookkeeping leaking into a consumer's component: the
+container decides what is mounted, and a toast that wants to close itself uses
+`<DToastDismiss />`, which reads which toast it is in from context.
 
 <Unstyled>
   <div
@@ -306,22 +318,13 @@ The function receives the react-hot-toast `Toast` object, which includes `id` an
 
 <Source
   code={`
-import { DButton } from '@dynamic-framework/ui-react';
-import { toast as reactToast, Toast } from 'react-hot-toast';
+import { DToastDismiss } from '@dynamic-framework/ui-react';
 
-export function CustomToastExample({ id, visible }: Toast) {
-  if (!visible) return null;
-
+export function CustomToastExample() {
   return (
     <div className="df-bg-secondary-subtle df-rounded-control df-p-4 df-text-center">
       <p className="df-fw-semibold df-mt-0">Toast!</p>
-      <DButton
-        size="sm"
-        variant="outline"
-        color="secondary"
-        text="Close toast"
-        onClick={() => reactToast.dismiss(id)}
-      />
+      <DToastDismiss label="Close toast" />
     </div>
   );
 }
@@ -351,7 +354,7 @@ export function App() {
         text="Show Toast"
         onClick={() => toast(CustomToastExample, { duration: 3000 })}
       />
-      <DToastContainer position="top-right" />
+      <DToastContainer placement="top-end" />
     </DContextProvider>
   );
 }

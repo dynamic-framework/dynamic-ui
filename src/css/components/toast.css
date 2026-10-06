@@ -90,7 +90,7 @@
  * The region toasts stack in.
  *
  * Not used by the React build yet — that still stacks through
- * `react-hot-toast`, which positions its container with inline styles. This is
+ * `react-hot-toast`, which positioned its container with inline styles. That is
  * the class the vanilla build uses, and the one React will use when that
  * dependency goes; naming it now means the two do not end up with different
  * answers to "where do toasts live".
@@ -112,6 +112,80 @@
 
   .df-toast-region > * {
     pointer-events: auto;
+  }
+
+  /*
+   * One toast's slot: the state and the motion, so the toast itself stays pure
+   * markup a consumer can place anywhere.
+   *
+   * Both renderers produce this, which is the point — the React container and
+   * the vanilla build put the same wrapper around the same `.df-toast`, so one
+   * stylesheet dresses both and `data-leaving` means the same thing to each.
+   *
+   * An `animation` on entry rather than a `transition`: a transition needs a
+   * starting value the element was already at, and an element that has just
+   * been inserted has no previous state to transition FROM. `@starting-style`
+   * solves that and is newer than this build's targets.
+   */
+  .df-toast-slot {
+    transition:
+      opacity var(--df-motion-duration-exit) var(--df-motion-easing-exit),
+      translate var(--df-motion-duration-exit) var(--df-motion-easing-exit);
+    animation: df-toast-enter var(--df-motion-duration-enter)
+      var(--df-motion-easing-enter) both;
+  }
+
+  /*
+   * The exit.
+   *
+   * `data-leaving` was set by both renderers and styled by NOTHING, so a toast
+   * vanished between frames — and the vanilla build's `transitionend` listener
+   * could never fire, which left its fallback timer doing all the work.
+   */
+  .df-toast-slot[data-leaving] {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+
+  @keyframes df-toast-enter {
+    from {
+      opacity: 0;
+      translate: 0 -0.5rem;
+    }
+  }
+
+  /*
+   * A region at the bottom slides the other way, or the toast appears to come
+   * from inside the page rather than from the edge it sits on.
+   */
+  .df-toast-region[data-placement^="bottom"] .df-toast-slot[data-leaving] {
+    translate: 0 0.5rem;
+  }
+
+  .df-toast-region[data-placement^="bottom"] .df-toast-slot {
+    animation-name: df-toast-enter-up;
+  }
+
+  @keyframes df-toast-enter-up {
+    from {
+      opacity: 0;
+      translate: 0 0.5rem;
+    }
+  }
+
+  /*
+   * No movement, but still a transition.
+   *
+   * Zeroing the duration instead of removing the transition keeps
+   * `transitionend` firing, which is what both renderers use to know the exit
+   * is over. With no transition at all they fall back to a timer, and the
+   * toast lingers for the whole grace period.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    .df-toast-slot {
+      transition-duration: 1ms;
+      animation: none;
+    }
   }
 
   .df-toast-region[data-placement="top-start"] {

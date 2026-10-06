@@ -65,22 +65,51 @@ function regionFor(placement: ToastPlacement): HTMLElement {
   return region;
 }
 
-/** Removes a toast, letting its exit transition finish first. */
+/**
+ * Removes a toast, letting its exit transition finish first.
+ *
+ * The state goes on the SLOT, not the toast: that is where the stylesheet puts
+ * the motion, and it is the same place the React container puts it, so one
+ * rule serves both. A toast enhanced in place has no slot — it is wrapped on
+ * mount so there always is one.
+ */
 function remove(element: HTMLElement): void {
-  element.setAttribute('data-leaving', '');
-  const done = () => element.remove();
+  const slot = element.closest<HTMLElement>('.df-toast-slot') ?? element;
+  slot.setAttribute('data-leaving', '');
+  const done = () => slot.remove();
 
-  const { transitionDuration } = getComputedStyle(element);
+  const { transitionDuration } = getComputedStyle(slot);
   const animates = parseFloat(transitionDuration) > 0;
-  if (animates) element.addEventListener('transitionend', done, { once: true });
+  if (animates) slot.addEventListener('transitionend', done, { once: true });
   else done();
 
-  // A transition that never starts — because the element is already hidden, or
-  // because the user asked for reduced motion — would leave the node forever.
+  // A transition that never starts — a hidden tab, a browser that ignores the
+  // rule — would leave the node forever.
   window.setTimeout(done, 400);
 }
 
+/** The slot the stylesheet animates. Created if the toast has none. */
+function slotFor(element: HTMLElement): HTMLElement {
+  const existing = element.closest<HTMLElement>('.df-toast-slot');
+  if (existing) return existing;
+
+  const slot = document.createElement('div');
+  slot.className = 'df-toast-slot';
+  element.replaceWith(slot);
+  slot.appendChild(element);
+  return slot;
+}
+
 function wire(element: HTMLElement): Teardown {
+  /*
+   * A server-rendered toast is wrapped on mount.
+   *
+   * It arrives as a bare `.df-toast`, and the motion and the `data-leaving`
+   * state live on the slot — so without this, an enhanced toast would dismiss
+   * with no animation while a created one animated, from the same stylesheet.
+   */
+  slotFor(element);
+
   const timers: number[] = [];
 
   const onClick = (event: Event) => {
@@ -183,7 +212,10 @@ export function toast(options: ToastOptions): () => void {
     element.appendChild(body);
   }
 
-  regionFor(placement).appendChild(element);
+  const slot = document.createElement('div');
+  slot.className = 'df-toast-slot';
+  slot.appendChild(element);
+  regionFor(placement).appendChild(slot);
   // The registry's observer will also find it; mounting here means the timer
   // starts on the frame it appears rather than on the next microtask.
   const teardown = wire(element);

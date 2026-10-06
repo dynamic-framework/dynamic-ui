@@ -1,6 +1,4 @@
-import { toast as reactToast, Toast } from 'react-hot-toast';
-
-import { DContextProvider } from '../../src';
+import { DContextProvider, DToastDismiss } from '../../src';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
 import useDToast from '../../src/components/DToastContainer/useDToast';
@@ -53,7 +51,7 @@ export function ExampleSimpleToastRoot({ type = 'base' }: { type: string }) {
       {type === 'base' && <ExampleSimpleToastUsage />}
       {type === 'success' && <ExampleSimpleSuccessToastUsage />}
       <DToastContainer
-        position="top-right"
+        placement="top-end"
       />
     </DContextProvider>
   );
@@ -108,26 +106,25 @@ export function ExampleFullToastRoot({ type = 'base' }: { type: string }) {
       {type === 'base' && <ExampleFullToastUsage />}
       {type === 'success' && <ExampleFullSuccessToastUsage />}
       <DToastContainer
-        position="top-right"
+        placement="top-end"
       />
     </DContextProvider>
   );
 }
 
-export function CustomToastExample({ id, visible }: Toast) {
-  if (!visible) {
-    return null;
-  }
+/**
+ * A custom toast.
+ *
+ * It took `{ id, visible }` — `react-hot-toast`'s own toast object — and had
+ * to render `null` when not visible. Both were the library's bookkeeping in a
+ * consumer's component: the container decides what is mounted, and
+ * `DToastDismiss` reads which toast it is in from context.
+ */
+export function CustomToastExample() {
   return (
     <div className="df-bg-secondary-subtle df-rounded-control df-p-4 df-text-center">
       <p className="df-fw-semibold df-mt-0">Toast!</p>
-      <DButton
-        size="sm"
-        variant="outline"
-        color="secondary"
-        text="Close toast"
-        onClick={() => reactToast.dismiss(id)}
-      />
+      <DToastDismiss label="Close toast" />
     </div>
   );
 }
@@ -139,10 +136,8 @@ export function ExampleCustomToastUsage() {
       text="Show Toast"
       onClick={() => (
         toast(
-          CustomToastExample,
-          {
-            duration: 4000,
-          },
+          <CustomToastExample />,
+          { duration: 4000 },
         )
       )}
     />
@@ -154,7 +149,7 @@ export function ExampleCustomToastRoot() {
     <DContextProvider>
       <ExampleCustomToastUsage />
       <DToastContainer
-        position="top-right"
+        placement="top-end"
       />
     </DContextProvider>
   );
@@ -183,7 +178,7 @@ export function ExampleMaterialIconToastRoot() {
       <ExampleMaterialIconToastUsage />
       <DToastContainer
         key="material-icon-toast-container"
-        position="top-right"
+        placement="top-end"
       />
     </DContextProvider>
   );

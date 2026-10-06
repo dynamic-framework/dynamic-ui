@@ -174,7 +174,6 @@
     "react": "~19.2.1",
     "react-docgen-typescript": "^2.4.0",
     "react-dom": "~19.2.1",
-    "react-hot-toast": "~2.6.0",
     "react-i18next": "~16.2.4",
     "recharts": "~3.3.0",
     "remark-gfm": "~4.0.1",
@@ -196,7 +195,6 @@
     "i18next": ">=25 <26",
     "react": ">=18 <20",
     "react-dom": ">=18 <20",
-    "react-hot-toast": ">=2 <3",
     "react-i18next": ">=16 <17"
   }
 }
