@@ -525,9 +525,9 @@ export function expandTheme(input) {
     const rem = theme.typography.scale[step];
     const pair = rfsPair(rem);
     lines.push(decl(`rfs-fs-${step}`, pair.base));
-    // Los pasos 1..4 se repiten en el breakpoint aunque el valor no sea fluido:
-    // la librería los redeclara allí con su propio tamaño y, sin este bloque, en
-    // desktop gana el suyo. Sólo los pasos 5 y 6 se libran, porque no los toca.
+    // Los pasos 1..4 se repiten en el breakpoint aunque el valor no sea fluido.
+    // Sólo hace falta con un valor fluido, que sin este bloque no tiene tope en
+    // desktop; con uno fijo es redundante, porque el theme ya gana por cascada.
     if (pair.wide) {
       wide.push(decl(`rfs-fs-${step}`, pair.wide));
     } else if (RFS_MEDIA_STEPS.includes(step)) {
@@ -596,8 +596,7 @@ export function expandTheme(input) {
 
   const root = `${THEME_SELECTOR} {${lines.join('\n')}\n}`;
 
-  // El @media va aparte: sin él, el `@media (min-width: 1200px)` de la
-  // librería vuelve a poner la escala por defecto en desktop.
+  // El @media va aparte: es el tope en desktop de los valores fluidos.
   const media = wide.length > 0
     ? [
       '',

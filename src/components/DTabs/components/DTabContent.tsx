@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 
 import classNames from 'classnames';
-import { useTabContext } from '../TabContext';
+import { TabsStateContext, useTabContext } from '../TabContext';
 
 import type { BaseProps } from '../../interface';
 
@@ -32,7 +32,10 @@ export default function DTabContent(
       aria-labelledby={`${tab}Tab`}
       style={style}
     >
-      {children}
+      {/* A DTabs nested in a panel keeps its own selection. */}
+      <TabsStateContext.Provider value={undefined}>
+        {children}
+      </TabsStateContext.Provider>
     </div>
   );
 }

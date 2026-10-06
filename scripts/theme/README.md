@@ -184,8 +184,7 @@ La regla es la misma para todos los componentes, aunque el riesgo que evita
 depende de cada uno. En algunos, otras medidas salen de la variable
 tipográfica, y una declaración directa las deja desacompasadas:
 
-- `.d-chip`: el icono toma su tamaño de `--bs-chip-font-size`, y el contenedor
-  del icono su ancho y alto de `--bs-chip-line-height` (`_d-chip.scss`).
+- `.d-chip`: el icono toma su tamaño de `--bs-chip-font-size` (`_d-chip.scss`).
 - `.btn`: el icono sigue a `--bs-btn-font-size` (`_buttons.scss`).
 
 En otros la variable sólo alimenta su propia propiedad (`--bs-btn-line-height`
@@ -230,14 +229,10 @@ es el inventario de las que existen (`--bs-chip-font-size`,
   "selector": ".d-chip",
   "vars": {
     "--bs-chip-font-size": ".875rem",
-    "--bs-chip-line-height": "1.05rem"
+    "--bs-chip-line-height": "1.2"
   }
 }
 ```
-
-`--bs-chip-line-height` va con unidad: además del interlineado, es el ancho y
-el alto del contenedor del icono (`_d-chip.scss`), donde un número sin unidad
-no es una longitud válida. `1.05rem` es el mismo `1.2` sobre `.875rem`.
 
 Para el texto general, `--bs-body-font-size` y `--bs-body-line-height` van en
 `root`; los tamaños de encabezado, sobre `--bs-rfs-fs-N` (ver *Reglas que la
@@ -258,8 +253,9 @@ salida respeta*).
 - `light` y `dark` **no tienen rampa** en la librería: sólo `--bs-light-rgb` y
   `--bs-dark-rgb`. Sus `-text-emphasis` y `-bg-subtle` apuntan a pasos de gris.
 - La tipografía se overridea sobre `--bs-rfs-fs-N`, nunca sobre `--bs-fs-N`, que
-  es sólo el alias. Cada paso 1..4 lleva además su valor en
-  `@media (min-width: 1200px)`, porque la librería redefine esos cuatro ahí.
+  es sólo el alias. Cada paso fluido (con `vw`), y siempre los pasos 1..4, lleva
+  además su valor en `@media (min-width: 1200px)`: un valor fluido necesita ahí su
+  tope o sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
 - Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y

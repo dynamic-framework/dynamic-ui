@@ -1,6 +1,6 @@
 {
   "dynamicUi": "2.10.0",
-  "count": 1901,
+  "count": 1902,
   "tokens": [
     "--bs-accordion-active-bg",
     "--bs-accordion-active-color",
@@ -815,6 +815,7 @@
     "--bs-chip-font-size",
     "--bs-chip-font-weight",
     "--bs-chip-gap",
+    "--bs-chip-icon-container-size",
     "--bs-chip-line-height",
     "--bs-chip-padding-x",
     "--bs-chip-padding-y",
