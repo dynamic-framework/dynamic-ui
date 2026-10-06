@@ -380,6 +380,21 @@ describe('<DTabs />', () => {
       expect(onChange).toHaveBeenCalledWith(options[1]);
     });
 
+    it('ignores the defaultSelected of a DTabs inside the provider', () => {
+      function Bar({ show }: { show: boolean }) {
+        return (
+          <DTabs.Provider defaultSelected="tab1">
+            {show && <DTabs options={options} defaultSelected="tab2" />}
+            <DTabs.Tab tab="tab1">Panel 1</DTabs.Tab>
+          </DTabs.Provider>
+        );
+      }
+      const { rerender } = render(<Bar show={false} />);
+      rerender(<Bar show />);
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 1');
+    });
+
     it('keeps the selection of a DTabs nested in a panel independent', () => {
       const nested = [
         { label: 'Inner A', tab: 'innerA' },

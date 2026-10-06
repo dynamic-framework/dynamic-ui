@@ -35,7 +35,7 @@ type Props = BaseProps & PropsWithChildren<{
   onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
   /**
-   * Inside `DTabs.Provider` the provider owns the selection. Without it, the
+   * Ignored inside `DTabs.Provider`, which owns the selection. Without it, the
    * first enabled tab is selected when omitted.
    */
   defaultSelected?: string;
@@ -77,8 +77,8 @@ function DTabs(
   }, [onChange, setSelected]);
 
   useEffect(() => {
-    if (defaultSelected !== undefined) setSelected(defaultSelected);
-  }, [defaultSelected, setSelected]);
+    setOwnSelected(defaultSelected);
+  }, [defaultSelected]);
 
   const generateClasses = useMemo(
     () => ({
