@@ -378,6 +378,18 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('--bs-rfs-fs-5');
   });
 
+  it.each([
+    ['una variable con nombre de unidad', 'var(--font-size-1vw)'],
+    ['un fijo', '2.75rem'],
+  ])('no confunde %s con un valor fluido', (_, value) => {
+    const valid = expandCss(MINIMAL_THEME);
+    const fixed = valid
+      .replace('--bs-rfs-fs-1: calc(1.4rem + 1.8vw);', `--bs-rfs-fs-1: ${value};`)
+      .replace(/@media \(min-width: 1200px\) \{[\s\S]*?\n\}/, '');
+    expect(fixed).toContain(`--bs-rfs-fs-1: ${value};`);
+    expect(validate(fixed).stderr).not.toContain('[tipografia-breakpoint]');
+  });
+
   it('un tamaño fijo sin bloque de 1200px no exige el breakpoint', () => {
     const valid = expandCss({
       ...MINIMAL_THEME,
