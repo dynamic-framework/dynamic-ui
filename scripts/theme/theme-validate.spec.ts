@@ -366,6 +366,18 @@ describe('theme-validate rechaza los errores conocidos', () => {
     },
   );
 
+  it('un paso 5 fluido sin su bloque de 1200px', () => {
+    const valid = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: 'Inter, sans-serif', scale: { 5: '2rem' } },
+    });
+    const broken = valid.replace(/@media \(min-width: 1200px\) \{[\s\S]*?\n\}/, '');
+    expect(broken).toMatch(/--bs-rfs-fs-5: calc\([^)]*vw\);/);
+    const result = validate(broken);
+    expect(result.stderr).toContain('[tipografia-breakpoint]');
+    expect(result.stderr).toContain('--bs-rfs-fs-5');
+  });
+
   it('un tamaño fijo sin bloque de 1200px no exige el breakpoint', () => {
     const valid = expandCss({
       ...MINIMAL_THEME,

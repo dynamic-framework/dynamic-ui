@@ -26,7 +26,6 @@ import {
   GRAY_STEPS,
   RAMPED_ROLES,
   RAMP_STEPS,
-  RFS_MEDIA_STEPS,
   ROLES,
   bakedRolePairs,
   contrast,
@@ -406,7 +405,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       decl.line,
     );
   }
-  for (const step of RFS_MEDIA_STEPS) {
+  for (const step of FONT_SIZE_STEPS) {
     if (!root.has(`--bs-rfs-fs-${step}`)) continue;
     if (wide.has(`--bs-rfs-fs-${step}`)) continue;
     if (!/\d[sdl]?v(?:w|h|i|b|min|max)\b/i.test(root.get(`--bs-rfs-fs-${step}`).value)) continue;
