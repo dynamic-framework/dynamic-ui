@@ -52,7 +52,7 @@ field points to the repository root instead of the release tag and
 ```jsonc
 {
   "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
-  "schemaVersion": "1.0.0",   // version of this JSON structure (not the package)
+  "schemaVersion": "1.1.0",   // version of this JSON structure (not the package)
   "packageVersion": "2.4.0",  // npm package version
   "repository": "https://github.com/dynamic-framework/dynamic-ui/releases/tag/v2.4.0",
   "generatedAt": "2025-01-01T00:00:00.000Z",
@@ -95,6 +95,24 @@ Each component entry is an object with the following shape:
   }
 }
 ```
+
+Subcomponents of a compound component (attached with `Object.assign`, e.g.
+`DListGroup.Item`) are entries of `components` too, keyed by their own name and
+with two extra fields:
+
+```jsonc
+{
+  "DListGroupItem": {
+    "description": "",
+    "sourcePath": "src/components/DListGroup/components/DListGroupItem.tsx",
+    "parent": "DListGroup",          // compound component it belongs to
+    "accessor": "DListGroup.Item",   // how it is used in JSX
+    "props": { ... }
+  }
+}
+```
+
+`parent` and `accessor` are only present on subcomponents. Since 1.1.0.
 
 ### `hooks[name]`
 
@@ -251,6 +269,7 @@ story.
 |---|---|
 | New component, hook or context | Minor bump — non-breaking |
 | New root field added to `api.json` | Minor bump — non-breaking |
+| New optional field in an entry | Minor bump — non-breaking |
 | Field removed or renamed | Major `schemaVersion` bump |
 | `packageVersion` changed | Always reflected in `api.json` and manifest |
 

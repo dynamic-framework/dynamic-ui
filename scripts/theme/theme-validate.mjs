@@ -26,7 +26,6 @@ import {
   GRAY_STEPS,
   RAMPED_ROLES,
   RAMP_STEPS,
-  RFS_MEDIA_STEPS,
   ROLES,
   bakedRolePairs,
   contrast,
@@ -406,14 +405,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       decl.line,
     );
   }
-  for (const step of RFS_MEDIA_STEPS) {
+  for (const step of FONT_SIZE_STEPS) {
     if (!root.has(`--bs-rfs-fs-${step}`)) continue;
     if (wide.has(`--bs-rfs-fs-${step}`)) continue;
+    if (!/(?<![\w-])[+-]?(?:\d*\.)?\d+(?:e[+-]?\d+)?[sdl]?v(?:w|h|i|b|min|max)\b/i.test(root.get(`--bs-rfs-fs-${step}`).value)) continue;
     fail(
       'tipografia-breakpoint',
-      `--bs-rfs-fs-${step} se declara sólo en el contexto raíz. La librería la redefine `
-      + 'dentro de `@media (min-width: 1200px)`, que gana en desktop: el override necesita '
-      + 'su bloque equivalente en ese breakpoint o sólo se verá en móvil.',
+      `--bs-rfs-fs-${step} es fluida (depende del viewport) y se declara sólo en el contexto `
+      + 'raíz. Sin su valor fijo en `@media (min-width: 1200px)` no tiene tope y sigue '
+      + 'creciendo en desktop.',
       root.get(`--bs-rfs-fs-${step}`).line,
     );
   }
