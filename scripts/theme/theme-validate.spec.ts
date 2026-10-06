@@ -1261,7 +1261,13 @@ describe('el ejemplo con zonas que vive en el repo', () => {
 
   it('el CSS versionado está al día con su JSON', () => {
     // El CSS se commitea para que la preview funcione recién clonado el repo;
-    // si alguien toca el JSON y no regenera, esto lo dice.
+    // si alguien toca el JSON y no regenera, esto lo dice. La versión de la
+    // librería en la cabecera se ignora: release-please la sube en
+    // package.json sin regenerar el CSS.
+    const sinVersion = (css: string) => css.replace(
+      /^( \* Para @dynamic-framework\/ui-react ).+\.$/m,
+      '$1<version>.',
+    );
     const output = path.join(workdir, 'ejemplo-zonas-3.css');
     run(EXPAND, [themePath, '-o', output]);
     const recien = fs.readFileSync(output, 'utf8');
@@ -1269,7 +1275,7 @@ describe('el ejemplo con zonas que vive en el repo', () => {
       path.join(ROOT, 'scripts/theme/out/theme-ejemplo-zonas.css'),
       'utf8',
     );
-    expect(recien).toBe(versionado);
+    expect(sinVersion(recien)).toBe(sinVersion(versionado));
   });
 });
 
