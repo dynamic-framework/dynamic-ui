@@ -40,11 +40,15 @@ export default function useRenderLoopWarning(name: string): void {
   const warned = useRef(false);
 
   /*
-   * Stripped from a production build.
+   * Removed by the CONSUMER's production build, not by ours.
    *
-   * The check is on the literal so a bundler can remove the whole body, and
-   * the hook still runs — calling it conditionally would break the rules of
-   * hooks for the sake of a counter.
+   * A library bundle keeps the branch — `process.env.NODE_ENV` is left for
+   * whoever bundles the app to substitute, which is the convention every React
+   * library follows. So the string is in the published package and the code
+   * never runs in an app built for production.
+   *
+   * The check is inside the hook rather than around the call: calling a hook
+   * conditionally would break the rules of hooks for the sake of a counter.
    */
   if (process.env.NODE_ENV !== 'production') {
     const now = Date.now();
