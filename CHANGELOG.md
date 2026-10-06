@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.10.0...v2.11.0) (2026-10-06)
+
+
+### Features
+
+* **DAlert, DToast:** make the live region role configurable ([#1224](https://github.com/dynamic-framework/dynamic-ui/issues/1224)) ([7ac64ae](https://github.com/dynamic-framework/dynamic-ui/commit/7ac64ae30cf5e412ffd5347e80a11c5f2dd8114e))
+* **DAlert:** add showIcon to render an alert without icon ([#1222](https://github.com/dynamic-framework/dynamic-ui/issues/1222)) ([6e46d3a](https://github.com/dynamic-framework/dynamic-ui/commit/6e46d3a815976eefbbe5ab7c98a08338fd5ebf55))
+* **DDataStateWrapper:** accept a single resource besides a collection ([#1223](https://github.com/dynamic-framework/dynamic-ui/issues/1223)) ([74d2451](https://github.com/dynamic-framework/dynamic-ui/commit/74d245162076d3a27d088b62a7e120327c5021c8))
+* **DErrorBoundary:** customize the default fallback texts ([#1241](https://github.com/dynamic-framework/dynamic-ui/issues/1241)) ([b7b28b6](https://github.com/dynamic-framework/dynamic-ui/commit/b7b28b6f2a24e26d87433b6f26c9bebbf08f8054))
+* **DListGroup:** add ariaLabel and ariaLabelledBy ([#1225](https://github.com/dynamic-framework/dynamic-ui/issues/1225)) ([96e5887](https://github.com/dynamic-framework/dynamic-ui/commit/96e588710a7f0b1fb601922aee6d9db64345f954))
+* **DListGroup:** give link and button items real list semantics ([#1230](https://github.com/dynamic-framework/dynamic-ui/issues/1230)) ([06980eb](https://github.com/dynamic-framework/dynamic-ui/commit/06980eb61ab25c1c5f2086588f4f003b33f96476))
+* **DPortalContext:** load framer-motion only when a portal opens ([#1245](https://github.com/dynamic-framework/dynamic-ui/issues/1245)) ([bdc3326](https://github.com/dynamic-framework/dynamic-ui/commit/bdc33268d3b7b5c294574f003d94d0e27cd8144a))
+* **DSelect:** name the control with its visible label ([#1211](https://github.com/dynamic-framework/dynamic-ui/issues/1211)) ([68af8ef](https://github.com/dynamic-framework/dynamic-ui/commit/68af8ef7480988b75fe76e85351c75607f1d7088))
+* **DTabs:** add DTabs.Provider to render panels outside the tab bar ([#1244](https://github.com/dynamic-framework/dynamic-ui/issues/1244)) ([abc886e](https://github.com/dynamic-framework/dynamic-ui/commit/abc886efd414b5eee7a926412ef7c22f025b641f))
+* **inputs:** accept ReactNode in the label prop of form controls ([#1186](https://github.com/dynamic-framework/dynamic-ui/issues/1186)) ([c4bef77](https://github.com/dynamic-framework/dynamic-ui/commit/c4bef773410f84f69d03fb177f44225f24f7b567))
+* **inputs:** support controlled and uncontrolled usage in form controls ([#1209](https://github.com/dynamic-framework/dynamic-ui/issues/1209)) ([c194598](https://github.com/dynamic-framework/dynamic-ui/commit/c1945986e67a3b9e0bb56f7cc9c7c9d0684742ed))
+* **registry:** include compound subcomponents in api.json ([#1243](https://github.com/dynamic-framework/dynamic-ui/issues/1243)) ([344dbb8](https://github.com/dynamic-framework/dynamic-ui/commit/344dbb81be991686ba1f8a188f890d10cf32e25d))
+* **theme:** make the text color of .text-bg-&lt;role&gt; themeable ([#1232](https://github.com/dynamic-framework/dynamic-ui/issues/1232)) ([5e25cb7](https://github.com/dynamic-framework/dynamic-ui/commit/5e25cb711ef11dcc837712b95b1d4b99a94e695c))
+* **theme:** secciones root, components y zones en theme-expand, con ejemplo y preview ([#1183](https://github.com/dynamic-framework/dynamic-ui/issues/1183)) ([7c0dbcd](https://github.com/dynamic-framework/dynamic-ui/commit/7c0dbcd8b5eca49eb73a57ff29eeed886833c48c))
+
+
+### Bug Fixes
+
+* **DButtonIcon:** let button icons honor an explicit icon size ([#1226](https://github.com/dynamic-framework/dynamic-ui/issues/1226)) ([d783755](https://github.com/dynamic-framework/dynamic-ui/commit/d783755a78223ee627406e7038225c0f09169864))
+* **DChip:** size the icon container with its own length variable ([#1242](https://github.com/dynamic-framework/dynamic-ui/issues/1242)) ([ecd4651](https://github.com/dynamic-framework/dynamic-ui/commit/ecd4651608d719c51f946f7d1cb6c24353bb3aed))
+* **DListGroup:** warn in development about invalid container/item markup ([#1221](https://github.com/dynamic-framework/dynamic-ui/issues/1221)) ([f986529](https://github.com/dynamic-framework/dynamic-ui/commit/f9865293640e120db1b0ea35f8654969201743f6))
+* **DProgress:** add ariaLabel/ariaLabelledBy props and honor minValue in percentage ([#1210](https://github.com/dynamic-framework/dynamic-ui/issues/1210)) ([16ecdca](https://github.com/dynamic-framework/dynamic-ui/commit/16ecdcae59b0538ad4dd5f87771bd92abac9cf19))
+* **DTabs:** move focus only on user interaction ([#1214](https://github.com/dynamic-framework/dynamic-ui/issues/1214)) ([821b072](https://github.com/dynamic-framework/dynamic-ui/commit/821b0728e0747a72a7675ef0458efdeffcc161be))
+* **DTabs:** skip the empty panels container and expose its margin ([#1220](https://github.com/dynamic-framework/dynamic-ui/issues/1220)) ([c6953cc](https://github.com/dynamic-framework/dynamic-ui/commit/c6953cc3b02287ee1f5801df12e540de8c9aecf2))
+* **hooks:** resolve responsive props without DContextProvider ([#1231](https://github.com/dynamic-framework/dynamic-ui/issues/1231)) ([f8b778d](https://github.com/dynamic-framework/dynamic-ui/commit/f8b778d60e5b00b7fffae75a97a3582cebb295dc))
+* **theme:** body.borderColor conserva el alfa en --bs-border-color ([#1187](https://github.com/dynamic-framework/dynamic-ui/issues/1187)) ([6b1e573](https://github.com/dynamic-framework/dynamic-ui/commit/6b1e57359357f9401caf1062c8d94f80326a567d))
+* **theme:** convert parsed colors to sRGB before reading channels in parseColor ([#1216](https://github.com/dynamic-framework/dynamic-ui/issues/1216)) ([4623360](https://github.com/dynamic-framework/dynamic-ui/commit/4623360743ea1457c5a94f04f77ba65c3ecbee24))
+* **theme:** feed --bs-secondary-bg-rgb and --bs-tertiary-bg-rgb with triplets ([#1213](https://github.com/dynamic-framework/dynamic-ui/issues/1213)) ([31924e7](https://github.com/dynamic-framework/dynamic-ui/commit/31924e70f1f7c8bf814236f47e7499eff8a60101))
+* **theme:** ignore library version when checking the committed example CSS ([#1256](https://github.com/dynamic-framework/dynamic-ui/issues/1256)) ([d09462c](https://github.com/dynamic-framework/dynamic-ui/commit/d09462cff29a8b8360a53315a92d983c3f668dfe))
+* **theme:** make the dark subtle pair meet WCAG AA ([#1215](https://github.com/dynamic-framework/dynamic-ui/issues/1215)) ([95389f9](https://github.com/dynamic-framework/dynamic-ui/commit/95389f904a26b28fd12a178fcdbf60f686ae2862))
+* **theme:** require the 1200px block only for fluid font sizes ([#1240](https://github.com/dynamic-framework/dynamic-ui/issues/1240)) ([ebebd77](https://github.com/dynamic-framework/dynamic-ui/commit/ebebd771dfc78a34176ee9d3c4008c96554ca19a))
+* **useInputCurrency:** apply the range consistently and expose out-of-range flags ([#1229](https://github.com/dynamic-framework/dynamic-ui/issues/1229)) ([f1a2e2f](https://github.com/dynamic-framework/dynamic-ui/commit/f1a2e2f9e679f76c50f4fd376c65a73494db9e83))
+
 ## [2.10.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.9.0...v2.10.0) (2026-09-10)
 
 
