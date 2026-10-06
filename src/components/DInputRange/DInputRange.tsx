@@ -9,10 +9,14 @@ import type {
   CSSProperties,
   ForwardedRef,
   ComponentPropsWithoutRef,
+  ReactNode,
   RefObject,
 } from 'react';
 
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 import { PREFIX_BS } from '../config';
 
 import type { BaseProps, CustomStyles } from '../interface';
@@ -21,7 +25,20 @@ import type { Merge } from '../../types';
 type NonHTMLInputElementProps =
 & BaseProps
 & {
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel` alongside it; a development-only warning says so when it
+   * is missing.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control, needed when `label` is not plain text.
+   * Without it the name becomes whatever the label subtree computes to, which
+   * for a label carrying a link or an icon reads as the wrong name or as none.
+   */
   ariaLabel?: string;
   filledValue?: boolean;
 };
@@ -100,15 +117,27 @@ function DInputRange(
     value,
   ]);
 
-  if (!label) {
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputRange',
+      label,
+      // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+      // `aria-label` wins — including when it is explicitly undefined.
+      hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+        || !!props['aria-labelledby'],
+      accessibleNameProp: 'ariaLabel',
+    });
+  }
+
+  if (!hasLabelContent(label)) {
     return inputComponent;
   }
 
   return (
     <>
-      <label className="form-label" htmlFor={id}>
+      <DFormLabel className="form-label" htmlFor={id}>
         {label}
-      </label>
+      </DFormLabel>
       {inputComponent}
     </>
   );

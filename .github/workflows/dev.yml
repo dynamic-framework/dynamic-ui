@@ -40,6 +40,10 @@ jobs:
           echo "New dev version: $NEW_VERSION"
           npm version "$NEW_VERSION" --no-git-tag-version
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+      - name: Regenerate version-stamped artifacts
+        # icons-core.json and api.json read the version from package.json, so
+        # they have to be written again after the dev bump above.
+        run: npm run build:icons-core && npm run build:api
       - name: Publish to npm (dist-tag dev)
         run: npm publish --access public --tag dev
         env:

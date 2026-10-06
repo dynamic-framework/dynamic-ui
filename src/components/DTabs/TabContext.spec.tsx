@@ -28,7 +28,7 @@ describe('useTabContext', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(() => render(<TestComponent />)).toThrow(
-      'useTabContext was used outside of MTab',
+      'useTabContext was used outside of DTabs',
     );
 
     spy.mockRestore();

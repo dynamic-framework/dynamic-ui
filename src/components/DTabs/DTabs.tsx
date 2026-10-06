@@ -1,17 +1,19 @@
 import {
+  Children,
   useState,
   useCallback,
+  useContext,
   useEffect,
   useRef,
-  createRef,
   useMemo,
 } from 'react';
 import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import TabContext from './TabContext';
+import TabContext, { TabsStateContext } from './TabContext';
 import DTabContent from './components/DTabContent';
+import DTabsProvider from './components/DTabsProvider';
 
 import type { BaseProps } from '../interface';
 
@@ -25,9 +27,18 @@ export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;
+  /**
+   * Class for the panels container. It is only rendered when `DTabs` has
+   * children, so a tab bar used as pure navigation leaves no empty node.
+   */
+  classNameContent?: string;
   onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
-  defaultSelected: string;
+  /**
+   * Ignored inside `DTabs.Provider`, which owns the selection. Without it, the
+   * first enabled tab is selected when omitted.
+   */
+  defaultSelected?: string;
   vertical?: boolean;
   variant?: TabVariant;
   ariaLabel?: string;
@@ -42,6 +53,7 @@ function DTabs(
     options,
     className,
     classNameTab,
+    classNameContent,
     style,
     vertical,
     variant = 'underline',
@@ -50,17 +62,22 @@ function DTabs(
     ariaLabelledBy,
   }: Props,
 ) {
-  const [selected, setSelected] = useState<string>(defaultSelected);
+  const shared = useContext(TabsStateContext);
+  const [ownSelected, setOwnSelected] = useState(defaultSelected);
+  const selected = shared
+    ? shared.selected
+    : ownSelected ?? options.find((opt) => !opt.disabled)?.tab;
+  const setSelected = shared ? shared.setSelected : setOwnSelected;
 
   const onSelect = useCallback((option: DTabOption) => {
     if (option.tab) {
       setSelected(option.tab);
     }
     onChange?.(option);
-  }, [onChange]);
+  }, [onChange, setSelected]);
 
   useEffect(() => {
-    setSelected(defaultSelected);
+    setOwnSelected(defaultSelected);
   }, [defaultSelected]);
 
   const generateClasses = useMemo(
@@ -73,20 +90,7 @@ function DTabs(
     [vertical, variant, className],
   );
 
-  const tabRefs = useRef<Array<React.RefObject<HTMLButtonElement>>>([]);
-
-  // Always holds the latest `options` without needing to be a dependency:
-  // `options` is commonly passed as an inline array literal (e.g.
-  // `options={[{ label: 'SMS', tab: 'sms' }, ...]}`), so it's a new array
-  // reference on every parent render even when its content hasn't changed.
-  // Reading it from this ref (updated synchronously on every render) lets
-  // the focus effect below react only to `selected` changing.
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
-
-  useEffect(() => {
-    tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef<HTMLButtonElement>());
-  }, [options]);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   // Ensure selected is never disabled
   useEffect(() => {
@@ -96,30 +100,16 @@ function DTabs(
       const firstEnabled = options.find((opt) => !opt.disabled);
       if (firstEnabled) setSelected(firstEnabled.tab);
     }
-  }, [options, selected]);
+  }, [options, selected, setSelected]);
 
-  // Declarative focus management. Wrapped in `useCallback` with an empty
-  // dependency array since it only reads from the `tabRefs` ref, so its
-  // identity stays stable across renders and it can safely be used as an
-  // effect dependency below.
+  // Focus only moves in response to the user: arrow keys and clicks call
+  // this directly. Changes to `selected` that don't come from an interaction
+  // (mount, a new `defaultSelected`, the disabled-tab fallback above) leave
+  // focus where it is, so the page doesn't scroll to the tablist and no other
+  // element (a search field, an OTP input) loses focus.
   const focusTab = useCallback((idx: number) => {
-    if (tabRefs.current[idx]?.current) {
-      tabRefs.current[idx].current.focus();
-    }
+    tabRefs.current[idx]?.focus();
   }, []);
-
-  // Focus selected tab when selected changes.
-  // Reads `options` from `optionsRef` (see comment above) instead of
-  // depending on `options` directly, so a parent re-render that merely
-  // creates a new `options` reference with identical content doesn't call
-  // `focusTab` again and steal focus away from unrelated elements on the
-  // page (e.g. an OTP input).
-  useEffect(() => {
-    const idx = optionsRef.current.findIndex((opt) => opt.tab === selected && !opt.disabled);
-    if (idx !== -1) {
-      focusTab(idx);
-    }
-  }, [selected, focusTab]);
 
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
@@ -148,7 +138,7 @@ function DTabs(
         }
       }
     }
-  }, [options, vertical, focusTab]);
+  }, [options, vertical, focusTab, setSelected]);
 
   let tablistProps = {};
   if (ariaLabelledBy) {
@@ -190,7 +180,9 @@ function DTabs(
                 className="nav-item"
               >
                 <button
-                  ref={tabRefs.current[idx]}
+                  ref={(element) => {
+                    tabRefs.current[idx] = element;
+                  }}
                   id={`${option.tab}Tab`}
                   className={classNames(
                     'nav-link',
@@ -203,7 +195,10 @@ function DTabs(
                   aria-selected={isTabSelected}
                   tabIndex={isTabSelected ? 0 : -1}
                   disabled={option.disabled}
-                  onClick={() => onSelect(option)}
+                  onClick={() => {
+                    focusTab(idx);
+                    onSelect(option);
+                  }}
                   onKeyDown={(e) => handleKeyDown(idx, e)}
                 >
                   {option.label}
@@ -212,9 +207,11 @@ function DTabs(
             );
           })}
         </ul>
-        <div className="d-tabs-content tab-content">
-          {children}
-        </div>
+        {Children.toArray(children).length > 0 && (
+          <div className={classNames('d-tabs-content tab-content', classNameContent)}>
+            {children}
+          </div>
+        )}
       </div>
     </TabContext.Provider>
   );
@@ -222,4 +219,5 @@ function DTabs(
 
 export default Object.assign(DTabs, {
   Tab: DTabContent,
+  Provider: DTabsProvider,
 });

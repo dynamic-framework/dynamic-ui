@@ -43,8 +43,8 @@ const meta = {
     },
     label: {
       control: 'text',
-      description: 'Input label.',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     placeholder: {
       control: 'text',

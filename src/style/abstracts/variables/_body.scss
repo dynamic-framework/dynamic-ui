@@ -17,10 +17,10 @@ $body-color: map-get($all-colors, $body-color-mapping) !default;
 $body-bg: #f5f6fa !default;
 
 $body-secondary-color: var(--#{$prefix}body-color-rgb) !default;
-$body-secondary-bg: var(--#{$prefix}gray-200) !default;
+$body-secondary-bg: var(--#{$prefix}gray-200-rgb) !default;
 
 $body-tertiary-color: var(--#{$prefix}body-color-rgb) !default;
-$body-tertiary-bg: var(--#{$prefix}gray-100) !default;
+$body-tertiary-bg: var(--#{$prefix}gray-100-rgb) !default;
 
 $body-emphasis-color: var(--#{$prefix}black-rgb) !default;
 // end custom

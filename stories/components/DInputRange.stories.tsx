@@ -50,9 +50,8 @@ To understand in more detail the aspects covered by this component, review the f
     },
     label: {
       control: 'text',
-      type: 'string',
-      description: 'The label for the input',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit ariaLabel.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     ariaLabel: {
       control: 'text',

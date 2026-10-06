@@ -139,20 +139,15 @@ export const ResponsiveSizes: Story = {
       <DBadge text="XS:sm MD:lg" size={{ xs: 'sm', md: 'lg' }} color="info" />
       <DBadge text="SM:sm LG:lg" size={{ sm: 'sm', lg: 'lg' }} color="success" />
       <DBadge text="XS:sm XL:lg" size={{ xs: 'sm', xl: 'lg' }} color="danger" />
-      <DBadge text="XS:sm SM:md LG:lg" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} color="primary" />
+      <DBadge text="XS:lg LG:sm" size={{ xs: 'lg', lg: 'sm' }} color="primary" />
+      <DBadge text="MD:sm" size={{ md: 'sm' }} color="warning" />
       <DBadge text="Only LG" size="lg" color="secondary" />
-      <DBadge text="ResponsiveObj" size={{ xs: 'sm', md: 'md', xl: 'lg' }} color="warning" />
     </div>
-  ),
-  decorators: (Story) => (
-    <DContextProvider>
-      <Story />
-    </DContextProvider>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Responsive usage examples: now the size prop accepts a ResponsiveProp object. Try resizing the window.',
+        story: 'Responsive usage examples: the badge size changes according to the breakpoint. The value of the largest matching breakpoint wins, and a breakpoint without a value keeps the one below it, so below the first defined breakpoint the badge has its default size (e.g. `SM:sm LG:lg` is default under 576px). Values are `sm` and `lg`; there is no `md` size. Breakpoints are read from the `--bs-breakpoint-*` CSS variables. Try resizing the window.',
       },
     },
   },

@@ -71,6 +71,7 @@ export {
   default as DTabs,
   useTabContext,
   DTabContent,
+  DTabsProvider,
 } from './DTabs';
 export type { DTabOption } from './DTabs';
 export { default as DToast } from './DToast';
@@ -102,6 +103,10 @@ export {
   ErrorState,
   LoadingState,
 } from './DDataStateWrapper';
-export type { DDataStateMessages } from './DDataStateWrapper';
+export type {
+  DDataStateMessages,
+  DDataStateWrapperListProps,
+  DDataStateWrapperSingleProps,
+} from './DDataStateWrapper';
 export { default as DConfirmModalContainer } from './DConfirmModal/DConfirmModalContainer';
 export type { ConfirmModalEntry, ConfirmModalStore } from './DConfirmModal/types';

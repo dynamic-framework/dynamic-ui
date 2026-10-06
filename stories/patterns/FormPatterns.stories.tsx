@@ -406,7 +406,7 @@ export const CustomRadios: Story = {
           </legend>
           <div className="grid gap-3">
             <label className="radio-custom border p-4 rounded g-col-12 g-col-lg-6 align-items-start gap-2">
-              <DInputCheck type="radio" name="location" checked />
+              <DInputCheck type="radio" name="location" defaultChecked />
               <div className="form-check-label">
                 <span className="fw-semibold">Home</span>
                 <small className="d-block mt-1 text-muted d-flex gap-2">

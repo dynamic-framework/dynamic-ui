@@ -1,5 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 
+import { useState } from 'react';
 import {
   render,
   screen,
@@ -184,6 +185,94 @@ describe('<DInputSwitch />', () => {
 
       await user.click(switchControl);
       expect(handleChange2).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('controlled and uncontrolled modes', () => {
+    it('reverts to the prop when the parent rejects the change', async () => {
+      const user = userEvent.setup();
+      function Rejecting() {
+        const [checked] = useState(false);
+        return (
+          <DContextProvider>
+            <DInputSwitch label="Notifications" checked={checked} onChange={() => {}} />
+          </DContextProvider>
+        );
+      }
+
+      render(<Rejecting />);
+      const switchControl = screen.getByLabelText('Notifications');
+
+      await user.click(switchControl);
+
+      expect(switchControl).not.toBeChecked();
+    });
+
+    it('toggles on its own when no checked prop is passed', async () => {
+      const user = userEvent.setup();
+      render(
+        <DContextProvider>
+          <DInputSwitch label="Notifications" />
+        </DContextProvider>,
+      );
+      const switchControl = screen.getByLabelText('Notifications');
+
+      await user.click(switchControl);
+      expect(switchControl).toBeChecked();
+
+      await user.click(switchControl);
+      expect(switchControl).not.toBeChecked();
+    });
+
+    it('starts from defaultChecked and keeps toggling', async () => {
+      const user = userEvent.setup();
+      render(
+        <DContextProvider>
+          <DInputSwitch label="Notifications" defaultChecked />
+        </DContextProvider>,
+      );
+      const switchControl = screen.getByLabelText('Notifications');
+
+      expect(switchControl).toBeChecked();
+
+      await user.click(switchControl);
+      expect(switchControl).not.toBeChecked();
+    });
+
+    it('keeps a checked without onChange as a starting value, not a lock', async () => {
+      const user = userEvent.setup();
+      render(
+        <DContextProvider>
+          <DInputSwitch label="Notifications" checked />
+        </DContextProvider>,
+      );
+      const switchControl = screen.getByLabelText('Notifications');
+
+      expect(switchControl).toBeChecked();
+
+      await user.click(switchControl);
+      expect(switchControl).not.toBeChecked();
+    });
+
+    it('still applies a checked without onChange that is flipped from outside', async () => {
+      const user = userEvent.setup();
+      function External() {
+        const [checked, setChecked] = useState(false);
+        return (
+          <DContextProvider>
+            <button type="button" onClick={() => setChecked(true)}>turn on</button>
+            <DInputSwitch label="Notifications" checked={checked} />
+          </DContextProvider>
+        );
+      }
+
+      render(<External />);
+      const switchControl = screen.getByLabelText('Notifications');
+      expect(switchControl).not.toBeChecked();
+
+      await user.click(screen.getByText('turn on'));
+
+      expect(switchControl).toBeChecked();
     });
   });
 });

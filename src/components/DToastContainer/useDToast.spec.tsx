@@ -300,4 +300,42 @@ describe('useDToast', () => {
     expect(container.querySelector('.toast-danger')).toBeInTheDocument();
     expect(container.querySelector('.show')).toBeInTheDocument();
   });
+
+  describe.each([
+    ['without description', undefined],
+    ['with description', 'Detalle'],
+  ])('toast %s', (_, description) => {
+    const renderToast = (data: Omit<Parameters<ReturnType<typeof useDToast>['toast']>[0] & object, 'title'>) => {
+      const { result } = renderWithContext(() => useDToast());
+      act(() => {
+        result.current.toast({ title: 'Transferencia enviada', description, ...data });
+      });
+      const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
+      const { container, getByRole } = render(
+        <DContextProvider>
+          {renderFunction(createMockToast({ visible: true }))}
+        </DContextProvider>,
+      );
+      return { toast: container.querySelector('.toast'), getByRole };
+    };
+
+    it.each([
+      ['omitted (default)', undefined, { role: 'alert', 'aria-live': 'assertive' }],
+      ['alert', 'alert', { role: 'alert', 'aria-live': 'assertive' }],
+      ['status', 'status', { role: 'status', 'aria-live': 'polite' }],
+      ['none', 'none', { role: null, 'aria-live': null }],
+    ] as const)('renders the live region for role %s', (__, role, expected) => {
+      const { toast } = renderToast({ role });
+      expect(toast?.getAttribute('role')).toBe(expected.role);
+      expect(toast?.getAttribute('aria-live')).toBe(expected['aria-live']);
+      expect(toast?.getAttribute('aria-atomic')).toBe(role === 'none' ? null : 'true');
+    });
+
+    it('names the close button with closeAriaLabel, "Close" by default', () => {
+      expect(renderToast({ closeAriaLabel: 'Cerrar notificación' })
+        .getByRole('button', { name: 'Cerrar notificación' })).toBeInTheDocument();
+      mockCustom.mockClear();
+      expect(renderToast({}).getByRole('button', { name: 'Close' })).toBeInTheDocument();
+    });
+  });
 });

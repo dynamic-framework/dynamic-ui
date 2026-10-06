@@ -63,4 +63,48 @@ describe('<DListGroup /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it.each([
+    ['a named <ul>', <DListGroup ariaLabel="Movimientos"><DListGroup.Item>Uno</DListGroup.Item></DListGroup>],
+    ['a named as="div" group of links', (
+      <DListGroup as="div" ariaLabel="Accesos rápidos">
+        <DListGroup.Item href="/cuentas">Cuentas</DListGroup.Item>
+      </DListGroup>
+    )],
+  ])('should have no violations with %s', async (_, node) => {
+    const { container } = render(<DContextProvider>{node}</DContextProvider>);
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should have no violations with links and buttons in the default list', async () => {
+    const { container } = render(
+      <DContextProvider>
+        <DListGroup ariaLabel="Accesos">
+          <DListGroup.Item href="/cuentas" active ariaCurrent="page">Cuentas</DListGroup.Item>
+          <DListGroup.Item href="/tarjetas" disabled>Tarjetas</DListGroup.Item>
+          <DListGroup.Item action>Pagar</DListGroup.Item>
+          <DListGroup.Item action disabled color="primary">Transferir</DListGroup.Item>
+        </DListGroup>
+      </DContextProvider>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should have no violations with interactive items in a numbered list', async () => {
+    const { container } = render(
+      <DContextProvider>
+        <DListGroup numbered>
+          <DListGroup.Item action active ariaCurrent="step">Datos</DListGroup.Item>
+          <DListGroup.Item href="/confirmar">Confirmar</DListGroup.Item>
+        </DListGroup>
+      </DContextProvider>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });

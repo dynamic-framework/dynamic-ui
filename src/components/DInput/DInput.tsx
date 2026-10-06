@@ -16,6 +16,9 @@ import type {
 
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
@@ -34,7 +37,16 @@ type NonHTMLInputElementProps =
 & EndIconProps
 & {
   value?: string;
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup — the terms-and-conditions pattern.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `aria-label` alongside it; a development-only warning says so when it
+   * is missing. A rich label also does not fit `floatingLabel`, whose layout
+   * animates a single line of text.
+   */
+  label?: ReactNode;
   loading?: boolean;
   hint?: string;
   size?: ComponentSize;
@@ -159,6 +171,7 @@ function DInput(
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...invalid && { 'aria-invalid': true }}
       {...inputProps}
     />
   ), [
@@ -178,9 +191,9 @@ function DInput(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <DFormLabel htmlFor={id}>
       {label}
-    </label>
+    </DFormLabel>
   ), [
     id,
     label,
@@ -198,13 +211,23 @@ function DInput(
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
 
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInput',
+      label,
+      hasAccessibleName: !!inputProps['aria-label'] || !!inputProps['aria-labelledby'],
+      accessibleNameProp: 'aria-label',
+      floatingLabel,
+    });
+  }
+
   return (
     <div
       className={className}
       style={style}
       {...dataAttributes}
     >
-      {label && !floatingLabel && labelComponent}
+      {hasLabelContent(label) && !floatingLabel && labelComponent}
       <div
         className={classNames({
           [`input-group-${size}`]: !!size,

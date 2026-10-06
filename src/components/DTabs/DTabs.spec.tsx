@@ -1,3 +1,4 @@
+import { Fragment, StrictMode } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DTabs, { DTabOption } from './DTabs';
@@ -41,6 +42,74 @@ describe('<DTabs />', () => {
     expect(document.activeElement).toBe(tab3);
     fireEvent.keyDown(tab3, { key: 'ArrowLeft' });
     expect(document.activeElement).toBe(tab1);
+  });
+
+  it.each([
+    ['without StrictMode', false],
+    ['under StrictMode', true],
+  ])('does not move focus to the selected tab on mount %s', (_, strict) => {
+    const Wrapper = strict ? StrictMode : Fragment;
+    const { rerender } = render(<Wrapper><input aria-label="Search" /></Wrapper>);
+    const search = screen.getByRole('textbox', { name: 'Search' });
+    search.focus();
+    rerender(
+      <Wrapper>
+        <input aria-label="Search" />
+        <DTabs options={options} defaultSelected="tab1">
+          <div>Tab Content</div>
+        </DTabs>
+      </Wrapper>,
+    );
+    expect(search).toHaveFocus();
+  });
+
+  it('does not move focus on mount when falling back from a disabled defaultSelected', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1', disabled: true },
+      { label: 'Tab 2', tab: 'tab2' },
+    ];
+    render(
+      <DTabs options={opts} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(document.body).toHaveFocus();
+  });
+
+  it('does not move focus when defaultSelected changes programmatically', () => {
+    const { rerender } = render(
+      <>
+        <button type="button">Next step</button>
+        <DTabs options={options} defaultSelected="tab1">
+          <div>Tab Content</div>
+        </DTabs>
+      </>,
+    );
+    const next = screen.getByRole('button', { name: 'Next step' });
+    next.focus();
+    rerender(
+      <>
+        <button type="button">Next step</button>
+        <DTabs options={options} defaultSelected="tab2">
+          <div>Tab Content</div>
+        </DTabs>
+      </>,
+    );
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+    expect(next).toHaveFocus();
+  });
+
+  it('focuses the tab the user clicks', () => {
+    render(
+      <DTabs options={options} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
+    fireEvent.click(tab2);
+    expect(tab2).toHaveClass('active');
+    expect(tab2).toHaveFocus();
   });
 
   it('applies aria-label and aria-labelledby correctly', () => {
@@ -221,6 +290,30 @@ describe('<DTabs />', () => {
     expect(nav).toHaveClass('d-tabs-nav-vertical');
   });
 
+  it('does not render the panels container without children', () => {
+    const { container } = render(<DTabs options={options} defaultSelected="tab1" />);
+    expect(container.querySelector('.d-tabs-content')).toBeNull();
+  });
+
+  it('does not render the panels container when children render nothing', () => {
+    const { container } = render(
+      <DTabs options={options} defaultSelected="tab1">
+        {null}
+        {false}
+      </DTabs>,
+    );
+    expect(container.querySelector('.d-tabs-content')).toBeNull();
+  });
+
+  it('applies classNameContent to the panels container', () => {
+    const { container } = render(
+      <DTabs options={options} defaultSelected="tab1" classNameContent="mb-0 custom-content">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    expect(container.querySelector('.d-tabs-content')).toHaveClass('tab-content', 'mb-0', 'custom-content');
+  });
+
   it('reacts to changes in defaultSelected prop', () => {
     const { rerender } = render(
       <DTabs
@@ -243,5 +336,81 @@ describe('<DTabs />', () => {
     );
 
     expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+  });
+
+  it('selects the first enabled tab when defaultSelected is omitted', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1', disabled: true },
+      { label: 'Tab 2', tab: 'tab2' },
+    ];
+    render(<DTabs options={opts} />);
+    const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
+    expect(tab2).toHaveClass('active');
+    expect(tab2).toHaveAttribute('tabindex', '0');
+  });
+
+  describe('DTabs.Provider', () => {
+    function Layout({ onChange }: { onChange?: (option: DTabOption) => void }) {
+      return (
+        <DTabs.Provider defaultSelected="tab1">
+          <header>
+            <DTabs options={options} onChange={onChange} />
+          </header>
+          <main>
+            <DTabs.Tab tab="tab1">Panel 1</DTabs.Tab>
+            <DTabs.Tab tab="tab2">Panel 2</DTabs.Tab>
+          </main>
+        </DTabs.Provider>
+      );
+    }
+
+    it('renders panels outside the DTabs tree', () => {
+      render(<Layout />);
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 1');
+      expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', 'tab1Tab');
+    });
+
+    it('switches the outside panel and calls onChange', () => {
+      const onChange = jest.fn();
+      render(<Layout onChange={onChange} />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Tab 2' }));
+      expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 2');
+      expect(onChange).toHaveBeenCalledWith(options[1]);
+    });
+
+    it('ignores the defaultSelected of a DTabs inside the provider', () => {
+      function Bar({ show }: { show: boolean }) {
+        return (
+          <DTabs.Provider defaultSelected="tab1">
+            {show && <DTabs options={options} defaultSelected="tab2" />}
+            <DTabs.Tab tab="tab1">Panel 1</DTabs.Tab>
+          </DTabs.Provider>
+        );
+      }
+      const { rerender } = render(<Bar show={false} />);
+      rerender(<Bar show />);
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+      expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel 1');
+    });
+
+    it('keeps the selection of a DTabs nested in a panel independent', () => {
+      const nested = [
+        { label: 'Inner A', tab: 'innerA' },
+        { label: 'Inner B', tab: 'innerB' },
+      ];
+      render(
+        <DTabs.Provider defaultSelected="tab1">
+          <DTabs options={options} />
+          <DTabs.Tab tab="tab1">
+            <DTabs options={nested} defaultSelected="innerA" />
+          </DTabs.Tab>
+        </DTabs.Provider>,
+      );
+      fireEvent.click(screen.getByRole('tab', { name: 'Inner B' }));
+      expect(screen.getByRole('tab', { name: 'Inner B' })).toHaveClass('active');
+      expect(screen.getByRole('tab', { name: 'Tab 1' })).toHaveClass('active');
+    });
   });
 });

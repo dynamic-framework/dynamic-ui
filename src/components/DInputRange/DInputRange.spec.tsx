@@ -117,4 +117,25 @@ describe('<DInputRange />', () => {
       expect(slider).toHaveValue('75');
     });
   });
+
+  it('renders a numeric label instead of dropping it as falsy', () => {
+    const { container } = render(<DInputRange label={0} onChange={jest.fn()} />);
+
+    expect(container.querySelector('label')).toHaveTextContent('0');
+  });
+
+  it('does not warn for a node label named by the forwarded native aria-label', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <DInputRange
+        aria-label="Amount"
+        label={<span>Amount</span>}
+        onChange={jest.fn()}
+      />,
+    );
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });

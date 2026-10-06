@@ -6,18 +6,32 @@ import type { PropsWithChildren } from 'react';
 import DIcon from '../DIcon';
 
 import { useDContext } from '../../contexts';
-import type { BaseProps, ComponentStateColor } from '../interface';
+import type { BaseProps, ComponentStateColor, LiveRegionRole } from '../interface';
 
 type Props =
 & BaseProps
 & PropsWithChildren<{
   id?: string;
   color?: ComponentStateColor;
+  /**
+   * `alert` (default) interrupts the screen reader, for critical errors.
+   * `status` announces without interrupting, for dynamic non-critical
+   * messages. `none` renders no role, for static content already on screen.
+   */
+  role?: LiveRegionRole;
   icon?: string;
+  /**
+   * Renders the leading icon. Set to `false` for an alert without icon, such
+   * as an informative block inside a form where the icon competes with the
+   * content. When `true`, `icon` falls back to the one mapped to `color`.
+   */
+  showIcon?: boolean;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
   iconMaterialStyle?: boolean;
   showClose?: boolean;
+  /** Accessible name of the close button. */
+  closeAriaLabel?: string;
   iconClose?: string;
   iconCloseFamilyClass?: string;
   iconCloseFamilyPrefix?: string;
@@ -28,7 +42,9 @@ type Props =
 export default function DAlert(
   {
     color = 'success',
+    role = 'alert',
     icon: iconProp,
+    showIcon = true,
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle,
@@ -37,6 +53,7 @@ export default function DAlert(
     iconCloseFamilyPrefix,
     iconCloseMaterialStyle,
     showClose,
+    closeAriaLabel = 'Close',
     onClose,
     children,
     id,
@@ -73,11 +90,11 @@ export default function DAlert(
     <div
       className={classNames(generateClasses)}
       style={style}
-      role="alert"
+      {...role !== 'none' && { role }}
       id={id}
       {...dataAttributes}
     >
-      {icon && (
+      {showIcon && icon && (
         <DIcon
           className="alert-icon"
           icon={icon}
@@ -93,7 +110,7 @@ export default function DAlert(
         <button
           type="button"
           className="d-close"
-          aria-label="Close"
+          aria-label={closeAriaLabel}
           onClick={onClose}
         >
           <DIcon

@@ -14,6 +14,28 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
 
+## Container and item elements
+
+\`DListGroup\` renders a \`<ul>\` by default (\`<ol>\` with \`numbered\`). Plain items render an \`<li>\`. A \`DListGroup.Item\` with \`href\` or \`action\` renders an \`<li>\` that carries the item styles, with the \`<a>\` or \`<button>\` inside filling it, so screen readers announce the list, its item count and each position ("2 of 4"):
+
+\`\`\`html
+<ul class="list-group">
+  <li class="list-group-item list-group-item-action d-list-group-item-interactive">
+    <a class="d-list-group-item-link" href="/accounts">Accounts</a>
+  </li>
+</ul>
+\`\`\`
+
+\`className\` and \`style\` go to the \`<li>\` (the visual item) and \`dataAttributes\` to the link or button.
+
+\`as="div"\` keeps Bootstrap's flat structure (\`<div>\` with \`<a>\`/\`<button>\` items), which is not announced as a list; prefer the default list for links and buttons. A plain item inside \`as="div"\` is an \`<li>\` outside of a list, and \`DListGroup.Item\` warns about it in development.
+
+A disabled link leaves the tab order and can't be activated. An \`active\` item gets \`aria-current\`: pass \`ariaCurrent="page"\` in a navigation or \`ariaCurrent="step"\` in a flow.
+
+## Accessible name
+
+When a screen has more than one list, name each one with \`ariaLabel\` (or \`ariaLabelledBy\`, pointing to the heading above it) so screen readers announce what the list contains, not just "list, 3 items". A named \`as="div"\` container is exposed as \`role="group"\`, since a plain \`<div>\` can't carry a name.
+
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [List Group CSS Variables](https://getbootstrap.com/docs/5.3/components/list-group/#css)
@@ -41,6 +63,27 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
       type: 'boolean',
       control: 'boolean',
       table: { category: 'Appearance' },
+    },
+    as: {
+      control: 'select',
+      options: ['ul', 'ol', 'div'],
+      description: 'Container element. Keep the default list for links and buttons too: they are wrapped in `<li>`. `div` keeps a flat structure that is not announced as a list.',
+      table: {
+        defaultValue: { summary: 'ul' },
+        category: 'Appearance',
+      },
+    },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      description: 'Accessible name of the list. Ignored when `ariaLabelledBy` is set.',
+      table: { category: 'Accessibility' },
+    },
+    ariaLabelledBy: {
+      control: 'text',
+      type: 'string',
+      description: 'Id of a visible element that names the list.',
+      table: { category: 'Accessibility' },
     },
     horizontal: {
       control: 'select',
@@ -114,7 +157,6 @@ export const Links: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -133,8 +175,27 @@ export const Buttons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
+};
+
+export const WithAccessibleName: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Named with the heading above it through `ariaLabelledBy`, so a screen reader announces "Recent movements, list, 3 items".',
+      },
+    },
+  },
+  render: (args) => (
+    <section>
+      <h3 id="recent-movements" className="h6">Recent movements</h3>
+      <DListGroup {...args} ariaLabelledBy="recent-movements">
+        <DListGroup.Item>Transfer received</DListGroup.Item>
+        <DListGroup.Item>Card payment</DListGroup.Item>
+        <DListGroup.Item>Cash withdrawal</DListGroup.Item>
+      </DListGroup>
+    </section>
+  ),
 };
 
 export const Flush: Story = {
@@ -218,7 +279,6 @@ export const ActionVariants: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -241,7 +301,6 @@ export const CustomContent: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
 };
 
@@ -263,7 +322,6 @@ export const WithIcons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {
@@ -289,7 +347,6 @@ export const WithIconsEnd: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {
@@ -315,7 +372,6 @@ export const WithBothIcons: Story = {
     </DListGroup>
   ),
   args: {
-    as: 'div',
   },
   parameters: {
     docs: {

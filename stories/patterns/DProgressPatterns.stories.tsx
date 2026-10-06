@@ -72,7 +72,7 @@ export const OnboardingChecklist: Story = {
       <DBox className="p-6" style={{ width: '620px' }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
           <div>
-            <h6 className="mb-1 fw-semibold">Workspace onboarding</h6>
+            <h6 id="onboarding-progress-title" className="mb-1 fw-semibold">Workspace onboarding</h6>
             <small className="text-secondary">{`Complete ${completed} of ${steps.length} tasks`}</small>
           </div>
           <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
@@ -86,6 +86,7 @@ export const OnboardingChecklist: Story = {
           hideCurrentValue
           height={8}
           className="mb-4"
+          ariaLabelledBy="onboarding-progress-title"
           style={progressStyle}
         />
 
@@ -169,7 +170,7 @@ export const FileUploadQueue: Story = {
           {uploads.map((file) => (
             <div key={file.id} className="p-3 border rounded bg-white">
               <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="fw-medium">{file.name}</span>
+                <span id={`upload-${file.id}-name`} className="fw-medium">{file.name}</span>
                 <small className="text-secondary">{`${file.size} - ${file.progress}%`}</small>
               </div>
               <DProgress
@@ -179,6 +180,7 @@ export const FileUploadQueue: Story = {
                 enableStripedAnimation={file.status === 'uploading'}
                 height={7}
                 style={styleByStatus[file.status]}
+                ariaLabelledBy={`upload-${file.id}-name`}
               />
             </div>
           ))}
@@ -206,7 +208,7 @@ export const SavingsGoalTracker: Story = {
         <DBox className="p-6">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <small className="text-secondary d-block">Emergency fund</small>
+              <small id="savings-goal-title" className="text-secondary d-block">Emergency fund</small>
               <h5 className="mb-0 fw-semibold">{`$${currentAmount.toLocaleString()} saved`}</h5>
             </div>
             <span className="badge bg-info-subtle text-info px-3 py-2 rounded-pill">
@@ -220,6 +222,7 @@ export const SavingsGoalTracker: Story = {
             hideCurrentValue
             height={10}
             className="mb-2"
+            ariaLabelledBy="savings-goal-title"
             style={{ '--bs-progress-bar-bg': 'var(--bs-info)' } as CSSProperties}
           />
 
@@ -270,7 +273,7 @@ export const GradientCampaignProgress: Story = {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div>
                 <small className="text-secondary d-block">Q3 Growth Campaign</small>
-                <h6 className="mb-0 fw-semibold">Lead generation progress</h6>
+                <h6 id="campaign-progress-title" className="mb-0 fw-semibold">Lead generation progress</h6>
               </div>
               <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
                 {`${currentValue}%`}
@@ -282,6 +285,7 @@ export const GradientCampaignProgress: Story = {
               currentValue={currentValue}
               maxValue={maxValue}
               hideCurrentValue={false}
+              ariaLabelledBy="campaign-progress-title"
             />
 
             <div className="d-flex justify-content-between mt-2">

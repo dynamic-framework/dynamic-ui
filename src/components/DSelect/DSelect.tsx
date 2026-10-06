@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { useCallback, useId, useMemo } from 'react';
+import type { ReactNode } from 'react';
 import classNames from 'classnames';
 import type { Props as SelectProps, GroupBase } from 'react-select';
 import DIcon from '../DIcon';
@@ -14,6 +15,12 @@ import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 import DSelectPlaceholder from './components/DSelectPlaceholder';
+import createAriaGuidance from './createAriaGuidance';
+
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import isTextLabel from '../../utils/isTextLabel';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type {
   BaseProps,
@@ -36,7 +43,27 @@ SelectProps<Option, IsMulti, Group>,
 | 'isSearchable'
 | 'isMulti'
 > & {
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel`, or `aria-labelledby` pointing at a text element, alongside
+   * it; a development-only warning says so when both are missing. A rich label
+   * also does not fit `floatingLabel`, whose layout animates a single line of
+   * text.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control. It outranks the `label` in the accessible
+   * name computation, so use it to name a control with a non-text label or to
+   * replace the name a text label gives.
+   *
+   * Without a `label` or an `aria-labelledby` it falls back to a generic
+   * string, so an unlabelled select is never nameless. With either there is no
+   * fallback: a generic `aria-label` would override the label and make every
+   * select announce the same name.
+   */
   ariaLabel?: string;
   hint?: string;
   invalid?: boolean;
@@ -60,6 +87,7 @@ function DSelect<
 >(
   {
     id: idProp,
+    inputId: inputIdProp,
     className,
     style,
     label,
@@ -92,12 +120,28 @@ function DSelect<
     onIconStartClick,
     onIconEndClick,
     dataAttributes,
-    ariaLabel = 'Search for an option',
+    ariaLabel,
+    ariaLiveMessages,
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+  // The `<label>` must point at the element react-select renders the input
+  // with, so an explicit `inputId` wins over `id` for both.
+  const inputId = inputIdProp || id;
+
+  // A text label or `aria-labelledby` names the control without going through
+  // `aria-label`, which is all react-select's focus announcement reads, so it
+  // is handed those names explicitly. Messages passed by the consumer still
+  // take precedence.
+  const textLabel = hasLabelContent(label) && isTextLabel(label) ? String(label) : undefined;
+  const labelledBy = props['aria-labelledby'];
+  const liveMessages = useMemo(() => (
+    textLabel || labelledBy
+      ? { guidance: createAriaGuidance({ labelledBy, label: textLabel }), ...ariaLiveMessages }
+      : ariaLiveMessages
+  ), [textLabel, labelledBy, ariaLiveMessages]);
 
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
@@ -106,6 +150,19 @@ function DSelect<
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(defaultValue);
   }, [onIconEndClick, defaultValue]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DSelect',
+      label,
+      // `{...props}` is spread after `ariaLabel`, so a native `aria-label` in it
+      // is the one that reaches the input, even when it is `undefined`.
+      hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+        || !!labelledBy,
+      accessibleNameProp: 'ariaLabel',
+      floatingLabel,
+    });
+  }
 
   return (
     <div
@@ -120,10 +177,10 @@ function DSelect<
       style={style}
       {...dataAttributes}
     >
-      {label && (
-        <label htmlFor={id}>
+      {hasLabelContent(label) && (
+        <DFormLabel htmlFor={inputId}>
           {label}
-        </label>
+        </DFormLabel>
       )}
       <div
         className={classNames({
@@ -151,8 +208,11 @@ function DSelect<
         )}
         <Select<Option, IsMulti, Group>
           id={`${id}Container`}
-          inputId={id}
-          aria-label={ariaLabel}
+          inputId={inputId}
+          aria-label={ariaLabel ?? (
+            hasLabelContent(label) || props['aria-labelledby'] ? undefined : 'Search for an option'
+          )}
+          ariaLiveMessages={liveMessages}
           styles={{
             control: (base) => ({
               ...base,

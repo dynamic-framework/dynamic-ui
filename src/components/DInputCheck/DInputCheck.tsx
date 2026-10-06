@@ -7,7 +7,11 @@ import {
 } from 'react';
 import classNames from 'classnames';
 
-import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef, ReactNode } from 'react';
+
+import DFormLabel from '../internal/DFormLabel';
+import hasLabelContent from '../../utils/hasLabelContent';
+import warnLabelUsage from '../../utils/warnLabelUsage';
 
 import type { BaseProps, InputCheckType } from '../interface';
 
@@ -18,9 +22,34 @@ type Props =
   id?: string;
   type: InputCheckType;
   name?: string;
-  label?: string;
+  /**
+   * The label of the control. Any node is accepted, so it can carry a link, an
+   * info trigger or other markup — the terms-and-conditions pattern.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `ariaLabel` alongside it; a development-only warning says so when it
+   * is missing.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the control, needed when `label` is not plain text.
+   * Without it the name becomes whatever the label subtree computes to, which
+   * for a label carrying a link or an icon reads as the wrong name or as none.
+   */
   ariaLabel?: string;
+  /**
+   * Checked state of the control.
+   *
+   * Passed together with `onChange` the control is fully controlled: when the
+   * parent rejects a change the DOM snaps back to this value.
+   *
+   * Passed on its own it is taken as the starting value and the control keeps
+   * toggling by itself — the historical behaviour. Prefer `defaultChecked` for
+   * that, it says so out loud.
+   */
   checked?: boolean;
+  /** Starting checked state for uncontrolled usage. */
+  defaultChecked?: boolean;
   inputClassName?: string;
   disabled?: boolean;
   invalid?: boolean;
@@ -39,7 +68,8 @@ export default function DInputCheck(
     name,
     label,
     ariaLabel,
-    checked = false,
+    checked,
+    defaultChecked,
     disabled = false,
     invalid = false,
     valid = false,
@@ -55,12 +85,27 @@ export default function DInputCheck(
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
+  // See `useControlledState` for why `onChange` takes part in this decision.
+  const isControlled = checked !== undefined && onChange !== undefined;
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);
-  }, [onChange]);
+
+    // Controlled only. Activating a checkbox clears the DOM `indeterminate`
+    // flag, and it has no HTML attribute for React to restore the way it
+    // restores `checked` when the parent rejects the change, so the mixed state
+    // would be gone after the first click — the effect below only re-runs when
+    // the prop moves. Uncontrolled keeps the browser's behaviour, where the
+    // click owns the state and `indeterminate` was only the starting look.
+    // Reapplied after `onChange` so a handler reading
+    // `event.target.indeterminate` still sees what the browser left, and a
+    // parent that does move the prop wins through that effect.
+    if (isControlled && innerRef.current) {
+      innerRef.current.indeterminate = type === 'checkbox' && Boolean(indeterminate);
+    }
+  }, [onChange, isControlled, indeterminate, type]);
 
   const ariaDescribedby = useMemo(() => (
     [
@@ -79,15 +124,22 @@ export default function DInputCheck(
     }
   }, [indeterminate, type]);
 
+  // Legacy path only: a `checked` with no `onChange` behind it still lands on
+  // the element, but through the DOM, so the input stays uncontrolled and both
+  // clicking it and the native radio-group behaviour keep working.
   useEffect(() => {
-    if (innerRef.current) {
-      innerRef.current.checked = checked;
+    if (isControlled || checked === undefined || !innerRef.current) {
+      return;
     }
-  }, [checked]);
+    innerRef.current.checked = checked;
+  }, [isControlled, checked]);
 
   const inputComponent = useMemo(() => (
     <input
       ref={innerRef}
+      {...isControlled
+        ? { checked }
+        : defaultChecked !== undefined && { defaultChecked }}
       onChange={handleChange}
       className={classNames(
         'form-check-input',
@@ -108,6 +160,9 @@ export default function DInputCheck(
       {...props}
     />
   ), [
+    isControlled,
+    checked,
+    defaultChecked,
     handleChange,
     invalid,
     valid,
@@ -123,7 +178,19 @@ export default function DInputCheck(
     props,
   ]);
 
-  if (!label) {
+  if (process.env.NODE_ENV !== 'production') {
+    warnLabelUsage({
+      component: 'DInputCheck',
+      label,
+      // `{...props}` is spread after `aria-label={ariaLabel}`, so a native
+      // `aria-label` wins — including when it is explicitly undefined.
+      hasAccessibleName: !!('aria-label' in props ? props['aria-label'] : ariaLabel)
+        || !!props['aria-labelledby'],
+      accessibleNameProp: 'ariaLabel',
+    });
+  }
+
+  if (!hasLabelContent(label)) {
     return inputComponent;
   }
 
@@ -133,9 +200,9 @@ export default function DInputCheck(
       {...dataAttributes}
     >
       {inputComponent}
-      <label className="form-check-label" htmlFor={id}>
+      <DFormLabel className="form-check-label" htmlFor={id}>
         {label}
-      </label>
+      </DFormLabel>
       {hint && (
         <div
           className="form-text"

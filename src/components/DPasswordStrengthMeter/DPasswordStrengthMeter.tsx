@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 
+import type { ReactNode } from 'react';
+
 import DInputPassword from '../DInputPassword';
 import PasswordChecksList from './PasswordCheckList';
+
 import type { BaseProps } from '../interface';
 
 export type ValidationMessages = {
@@ -16,7 +19,22 @@ export type ValidationCheck = 'uppercase' | 'lowercase' | 'number' | 'specialCha
 
 type Props = BaseProps & {
   id?: string;
-  label?: string;
+  /**
+   * The label of the password field. Any node is accepted, so it can carry a
+   * link or an info trigger.
+   *
+   * Text doubles as the control's accessible name. A richer label does not, so
+   * pass `aria-label` alongside it; a development-only warning says so when it
+   * is missing.
+   */
+  label?: ReactNode;
+  /**
+   * Accessible name of the password field. Spelled as the native attribute
+   * because it is forwarded straight to the nested input, which is also the
+   * component the development-only naming warning comes from — so the advice it
+   * gives names a prop this component accepts.
+   */
+  'aria-label'?: string;
   placeholder?: string;
   value?: string;
   name?: string;
@@ -41,6 +59,7 @@ const DEFAULT_ENABLED_CHECKS: ValidationCheck[] = ['uppercase', 'lowercase', 'nu
 export default function DPasswordStrengthMeter({
   id,
   label = 'Password',
+  'aria-label': ariaLabel,
   placeholder,
   value = '',
   name,
@@ -70,6 +89,7 @@ export default function DPasswordStrengthMeter({
       <DInputPassword
         id={id}
         label={label}
+        aria-label={ariaLabel}
         placeholder={placeholder}
         value={password}
         name={name}

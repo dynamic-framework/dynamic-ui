@@ -10,6 +10,18 @@ type Props = BaseProps & {
   hideCurrentValue?: boolean;
   enableStripedAnimation?: boolean;
   height?: string | number;
+  /**
+   * Accessible name of the bar. Describe what progresses (e.g. "Upload
+   * progress"), not the role. Defaults to `'Progress bar'` when neither this
+   * nor `ariaLabelledBy` is set.
+   */
+  ariaLabel?: string;
+  /**
+   * Id of a visible element that names the bar, for a title rendered next to
+   * it. When set, `aria-label` is not rendered, so `ariaLabel` and the default
+   * name are ignored.
+   */
+  ariaLabelledBy?: string;
 };
 
 export default function DProgress(
@@ -22,12 +34,18 @@ export default function DProgress(
     hideCurrentValue = false,
     enableStripedAnimation = false,
     height,
+    ariaLabel,
+    ariaLabelledBy,
     dataAttributes,
   }: Props,
 ) {
-  const percentage = useMemo(() => (
-    Math.round((currentValue * 100) / maxValue)
-  ), [currentValue, maxValue]);
+  const percentage = useMemo(() => {
+    const range = maxValue - minValue;
+    if (range <= 0) {
+      return 0;
+    }
+    return Math.round(((currentValue - minValue) * 100) / range);
+  }, [currentValue, minValue, maxValue]);
 
   const formatProgress = useMemo(
     () => `${percentage}%`,
@@ -48,7 +66,8 @@ export default function DProgress(
       <div
         className={classNames(generateClasses)}
         role="progressbar"
-        aria-label="Progress bar"
+        aria-label={ariaLabelledBy ? undefined : (ariaLabel ?? 'Progress bar')}
+        aria-labelledby={ariaLabelledBy}
         style={{ width: formatProgress }}
         aria-valuenow={currentValue}
         aria-valuemin={minValue}

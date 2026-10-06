@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { DInputCheck } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
@@ -18,6 +19,49 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
 + [Bootstrap Checks](https://getbootstrap.com/docs/5.3/forms/checks-radios/#checks)
+
+## Controlled and uncontrolled
+
+The control works in both modes.
+
+**Controlled** — pass \`checked\` *and* \`onChange\`. The control then renders exactly what the prop
+says, so when the parent rejects a change — a selection cap, an async call that fails and reverts, a
+reducer that drops a duplicate — it snaps back on its own instead of drifting away from the state
+behind it.
+
+**Uncontrolled** — pass \`defaultChecked\` for a starting point, or nothing at all, and the control
+keeps toggling by itself.
+
+\`checked\` on its own, with no \`onChange\`, keeps its historical meaning: a starting value that a
+later change from outside still lands on, while the control goes on toggling by itself. That is what
+makes \`<DInputCheck type="radio" name="plan" checked />\` work, and nothing about it changed. Prefer \`defaultChecked\` in new code,
+it says so out loud.
+
+The examples on this page pass \`defaultChecked\` rather than \`checked\`: Storybook injects an action
+handler for every \`on*\` arg, so a fixed \`checked\` would put them in controlled mode and freeze
+them in the canvas. The \`Controlled\` story below drives the value from real state instead.
+
+## Labels
+
+\`label\` accepts any \`ReactNode\`, not only a string, so a field name can carry a link, a tooltip
+trigger or a button that opens a modal — the terms-and-conditions pattern.
+
+Passing a string keeps working exactly as before; the type was widened, not changed. Two things to
+watch for when moving to a richer label:
+
++ **Give the control an accessible name.** A text label doubles as the name; a node does not, since
+the name becomes whatever the subtree computes to. Pass \`aria-label\` with the plain-text name of
+the field. A development-only warning fires when this is missing.
++ **Reach for \`<a href>\` first.** A link is not a labelable element, so it is a valid descendant
+of a label, and browsers exempt it from the label's click forwarding. A \`<button>\` is labelable
+and therefore a forbidden descendant under the HTML content model — put it outside the label
+instead. A \`span\` with \`role\` and \`tabindex\` is valid but gets no exemption: the component
+suppresses the forwarded click for it, and handling Enter and Space is then on you.
+
+The only code that breaks on upgrade is code that reads the prop type back out of the component and
+treats it as a string — \`ComponentProps<typeof DInputCheck>['label']\` forwarded to \`placeholder\` or
+\`aria-label\`, or called with a string method. Type the wrapper's own \`label\` as \`string\`, or
+narrow with \`typeof label === 'string'\` at the point where it is forwarded.
 
 ## CSS Variables
 
@@ -74,8 +118,8 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     },
     label: {
       control: 'text',
-      type: 'string',
-      table: { category: 'Content' },
+      description: 'Accepts any ReactNode. A text label doubles as the accessible name; a richer one needs an explicit aria-label.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
     ariaLabel: {
       control: 'text',
@@ -86,6 +130,13 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     checked: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Checked state. With `onChange` the control is fully controlled; on its own it is the starting value.',
+      table: { category: 'Behavior' },
+    },
+    defaultChecked: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Starting checked state for uncontrolled usage.',
       table: { category: 'Behavior' },
     },
     disabled: {
@@ -129,7 +180,7 @@ export const Default: Story = {
     id: 'componentId1',
     type: 'checkbox',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     indeterminate: false,
     invalid: false,
@@ -146,7 +197,7 @@ export const WithoutLabel: Story = {
   args: {
     id: 'componentId2',
     type: 'checkbox',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     ariaLabel: 'Label',
   },
@@ -158,7 +209,7 @@ export const Hint: Story = {
     type: 'checkbox',
     label: 'Label',
     hint: 'Assistive text',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
   },
 };
@@ -168,7 +219,7 @@ export const Valid: Story = {
     id: 'componentId4',
     type: 'checkbox',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     valid: true,
     hint: 'Assistive text',
@@ -180,7 +231,7 @@ export const Invalid: Story = {
     id: 'componentId5',
     type: 'checkbox',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     invalid: true,
     hint: 'Assistive text',
@@ -192,7 +243,7 @@ export const Checked: Story = {
     id: 'componentId6',
     type: 'checkbox',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: false,
   },
 };
@@ -202,7 +253,7 @@ export const Indeterminate: Story = {
     id: 'componentId6b',
     type: 'checkbox',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: false,
     indeterminate: true,
   },
@@ -213,7 +264,7 @@ export const Disabled: Story = {
     id: 'componentId7',
     type: 'checkbox',
     label: 'Label',
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
 };
@@ -223,7 +274,7 @@ export const CheckedDisabled: Story = {
     id: 'componentId8',
     type: 'checkbox',
     label: 'Label',
-    checked: true,
+    defaultChecked: true,
     disabled: true,
   },
 };
@@ -233,7 +284,87 @@ export const WithInputClassName: Story = {
     id: 'componentId9',
     type: 'checkbox',
     label: 'Custom styled input',
-    checked: false,
+    defaultChecked: false,
     inputClassName: 'border-2 border-info-500',
+  },
+};
+
+export const LabelWithLink: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+\`label\` accepts any \`ReactNode\`, which covers the terms-and-conditions pattern: part of the
+label is a link to the full text, a tooltip trigger or a button that opens a modal.
+
+Two things to keep in mind:
+
++ Pass \`ariaLabel\` with the plain-text name of the field. The accessible name otherwise becomes
+whatever the label subtree computes to, which for a label carrying a link reads as the wrong name.
+A development-only warning fires when this is missing.
++ Clicking the nested link or button does **not** toggle the checkbox: the HTML spec skips a
+label's activation behavior for events targeted at interactive content descendants. Clicking the
+plain text still toggles it.
++ Triggers that are not native interactive content — a \`span\` with \`role=button\` and a
+\`tabindex\`, say — get no such exemption from the browser, so the component suppresses that
+forwarded click itself. Prefer a real \`<button>\` anyway: it is focusable and operable by keyboard
+without extra attributes.
+        `,
+      },
+    },
+  },
+  args: {
+    id: 'componentIdTerms',
+    type: 'checkbox',
+    defaultChecked: false,
+    ariaLabel: 'Accept the terms and conditions',
+    label: (
+      <>
+        I accept the
+        {' '}
+        <a href="https://dynamicframework.dev" target="_blank" rel="noreferrer">
+          terms and conditions
+        </a>
+      </>
+    ),
+  },
+};
+
+export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+A parent that caps the selection at two. The third click is rejected, and the checkbox snaps back
+instead of staying marked while the state says otherwise.
+        `,
+      },
+    },
+  },
+  render: function Render() {
+    const LIMIT = 2;
+    const [selected, setSelected] = useState<Array<string>>([]);
+
+    return (
+      <div className="d-flex flex-column gap-2">
+        {['Ana', 'Beto', 'Carla', 'Diego'].map((approver) => (
+          <DInputCheck
+            key={approver}
+            type="checkbox"
+            label={approver}
+            checked={selected.includes(approver)}
+            onChange={(event) => setSelected((prev) => {
+              if (!event.target.checked) {
+                return prev.filter((name) => name !== approver);
+              }
+              return prev.length < LIMIT ? [...prev, approver] : prev;
+            })}
+          />
+        ))}
+        <p className="form-text">
+          {`Up to ${LIMIT} approvers — selected: ${selected.join(', ') || 'none'}`}
+        </p>
+      </div>
+    );
   },
 };
