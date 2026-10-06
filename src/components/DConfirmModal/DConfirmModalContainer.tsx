@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   useConfirmModalStore,
@@ -38,54 +37,33 @@ export default function DConfirmModalContainer({ nodeId }: Props) {
     return unsubscribe;
   }, [store]);
 
-  // Capture Escape keydown to close the top confirm modal without affecting
-  // the underlying portal stack (which also handles Escape).
-  useEffect((): (() => void) => {
-    if (entries.length === 0) {
-      return () => {};
-    }
-
-    const handleEscapeCapture = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        // Close the top (last) confirm modal
-        entries[entries.length - 1].onCloseAction();
-        // Prevent the event from reaching other handlers (e.g., DPortalContextProvider)
-        event.stopPropagation();
-        event.preventDefault();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscapeCapture, true);
-    return () => {
-      document.removeEventListener('keydown', handleEscapeCapture, true);
-    };
-  }, [entries]);
-
   const portalNode = document.getElementById(nodeId);
 
   if (!portalNode || entries.length === 0) {
     return null;
   }
 
+  /*
+   * No wrapper, no second scrim, no animation library.
+   *
+   * This was an `<AnimatePresence>` of `motion.div`s fading a wrapper around
+   * `DConfirmModalUI` — which renders a `DModal`, a native `<dialog>` that
+   * already animates itself in `overlay.css` with `@starting-style` and
+   * `transition-behavior: allow-discrete`. The fade ran on top of the panel's
+   * own transition, and `framer-motion` was on the page for it.
+   *
+   * The `.df-backdrop` div went with it: a native dialog paints its scrim
+   * through `::backdrop`, so rendering a second one stacked two 50% layers and
+   * left an element over the page swallowing the next click. `DPortalContext`
+   * had already been fixed for exactly this and the fix never reached here.
+   *
+   * Escape went too: it was a capture-phase `keydown` listener here, and
+   * `<dialog>` fires `close` for Escape on its own. `DConfirmModalUI` passes
+   * the store's `onCloseAction` as the panel's `onClose`, which covers Escape
+   * and the outside click together.
+   */
   return createPortal(
-    <AnimatePresence>
-      {entries.map((entry) => (
-        <motion.div
-          key={entry.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.3 } }}
-          transition={{ duration: 0.15, ease: 'linear' }}
-        >
-          <div
-            className="df-backdrop"
-            onClick={entry.onCloseAction}
-            role="presentation"
-          />
-          <DConfirmModalUI entry={entry} />
-        </motion.div>
-      ))}
-    </AnimatePresence>,
+    entries.map((entry) => <DConfirmModalUI key={entry.id} entry={entry} />),
     portalNode,
   );
 }

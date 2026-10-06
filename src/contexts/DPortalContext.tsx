@@ -13,7 +13,6 @@ import type {
   FC,
 } from 'react';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
@@ -198,8 +197,16 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
    * names the stylesheet is written against.
    */
   /** True when the panel on top is a `<dialog>` the browser is managing. */
+
   const topIsNativeDialog = stack.length > 0
     && Boolean(stack[stack.length - 1].Component.nativeDialog);
+
+  /*
+   * Whether the stack needs OUR scrim: something is open, and the top panel is
+   * not painting its own. Every panel the library ships is a dialog, so this
+   * is for a custom panel a consumer registers with the portal.
+   */
+  const needsScrim = stack.length > 0 && !topIsNativeDialog;
 
   const handleClose = useCallback((target: Element) => {
     // A native dialog closes itself: Escape, and a click outside the panel.
@@ -275,53 +282,37 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
           onClick={({ target }) => handleClose(target as Element)}
           onKeyDown={() => {}}
         >
-          <AnimatePresence>
-            {stack.flatMap((
-              {
-                Component,
-                name,
-                payload,
-              },
-            ) => [
-              /*
-               * A `<dialog>` paints its own scrim through `::backdrop`, styled
-               * from the same token in `overlay.css`. Rendering this one as
-               * well would stack two 50% scrims into one much darker than the
-               * design says.
-               */
-              ...(Component.nativeDialog ? [] : [<motion.div
-                key={`${name}-backdrop`}
-                className="df-backdrop"
-                initial={{ opacity: 0 }}
-                /*
-                 * To 1, not to 0.5. The darkness is
-                 * `--df-overlay-backdrop-color`, which already carries 50%
-                 * alpha — animating opacity to 0.5 as well multiplied the two
-                 * and produced a 25% scrim, which is most of why this looked
-                 * like no backdrop even once the class name was right.
-                 */
-                animate={{ opacity: 1 }}
-                /*
-                 * No delay on the way out.
-                 *
-                 * The 300ms that used to be here existed to let the PANEL
-                 * animate away first, back when the panel was a `framer-motion`
-                 * element with a matching delay. The panel animates in CSS now,
-                 * so the delay only meant the scrim stayed mounted for 450ms
-                 * after the close — still covering the page, still swallowing
-                 * the next click, so dismissing appeared to need two presses.
-                 */
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15, ease: 'linear' }}
-              />]),
-              <Component
-                key={name}
-                name={name}
-                payload={payload}
-                onClose={closePortal}
-              />,
-            ])}
-          </AnimatePresence>
+          {/*
+            * The scrim, mounted whatever the stack holds.
+            *
+            * This was a `motion.div` inside `<AnimatePresence>`, and the only
+            * reason for the library was the EXIT: an element that unmounts has
+            * no previous frame to animate from, so something had to hold it
+            * there while it faded. 41.6 KB of `framer-motion` for one opacity
+            * fade.
+            *
+            * Kept in the document and switched with `data-open`, the exit is an
+            * ordinary CSS transition. It is `pointer-events: none` while
+            * closed, so an invisible sheet is not sitting over the page
+            * catching clicks.
+            *
+            * A `<dialog>` paints its own through `::backdrop` from the same
+            * token, so this stays off for a native panel — two 50% scrims
+            * stack into something much darker than the design says.
+            */}
+          <div
+            className="df-backdrop"
+            {...needsScrim && { 'data-open': '' }}
+          />
+
+          {stack.map(({ Component, name, payload }) => (
+            <Component
+              key={name}
+              name={name}
+              payload={payload}
+              onClose={closePortal}
+            />
+          ))}
         </div>,
         document.getElementById(portalName) as Element,
       )}

@@ -9,11 +9,46 @@
  * Neither takes its own backdrop element: `.df-backdrop` is one rule both use.
  */
 @layer df.components {
+  /**
+   * The scrim for a panel that is NOT a native `<dialog>` — a custom panel a
+   * consumer registers with the portal. Every panel the library ships is a
+   * dialog and uses `::backdrop` below.
+   *
+   * ## Mounted always, shown by an attribute
+   *
+   * It used to be mounted only while a panel was open, which is why it needed
+   * `framer-motion`: an element that unmounts has nothing to animate out, so
+   * `AnimatePresence` had to hold it there for the exit. 41.6 KB of library for
+   * one opacity fade.
+   *
+   * Kept in the document and toggled with `data-open` instead, the exit is an
+   * ordinary transition — there is a previous frame to leave from, because the
+   * element was already there. No `@starting-style`, no presence tracking, and
+   * it works at the whole browserslist floor rather than only where
+   * `@starting-style` is supported.
+   *
+   * `pointer-events: none` while closed matters: a `position: fixed` element
+   * covering the viewport at `opacity: 0` is invisible and still catches every
+   * click, which is the classic way a page becomes mysteriously dead.
+   */
   .df-backdrop {
     position: fixed;
     inset: 0;
     z-index: var(--df-overlay-z-backdrop);
+    pointer-events: none;
     background-color: var(--df-overlay-backdrop-color);
+    opacity: 0;
+  }
+
+  .df-backdrop[data-open] {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .df-backdrop {
+      transition: opacity var(--df-overlay-duration) var(--df-overlay-easing);
+    }
   }
 
   /**

@@ -103,7 +103,17 @@ function renderNative() {
   );
 }
 
+/**
+ * The scrim element, which is now always in the document.
+ *
+ * It used to be mounted only while a panel was open, and that is precisely why
+ * it needed `framer-motion`: an element that unmounts has no previous frame to
+ * animate from, so `AnimatePresence` had to hold it there for the exit. Kept in
+ * the document and switched with `data-open`, the exit is an ordinary CSS
+ * transition — so these assertions moved from "is it there" to "is it on".
+ */
 const backdrop = () => document.querySelector('.df-backdrop');
+const scrimIsOn = () => backdrop()?.hasAttribute('data-open') ?? false;
 const panel = () => document.querySelector('.df-overlay');
 
 describe('DPortalContext', () => {
@@ -113,6 +123,21 @@ describe('DPortalContext', () => {
 
     await user.click(screen.getByRole('button', { name: 'Open' }));
     expect(backdrop()).toBeInTheDocument();
+    expect(scrimIsOn()).toBe(true);
+  });
+
+  /*
+   * Present but off before anything opens — and inert.
+   *
+   * A `position: fixed` element covering the viewport at `opacity: 0` is
+   * invisible and still catches every click, which is the classic way a page
+   * becomes mysteriously dead. The stylesheet pairs the fade with
+   * `pointer-events: none`; this checks the attribute that selects it.
+   */
+  it('should keep the scrim off until something opens', () => {
+    setup();
+    expect(backdrop()).toBeInTheDocument();
+    expect(scrimIsOn()).toBe(false);
   });
 
   /**
@@ -189,7 +214,9 @@ describe('DPortalContext', () => {
 
     await user.click(screen.getByRole('button', { name: 'Open' }));
     expect(document.querySelector('.df-overlay')).toBeInTheDocument();
-    expect(document.querySelector('.df-backdrop')).not.toBeInTheDocument();
+    /* The element is there and OFF: no second 50% layer, nothing over the
+       page to swallow the next click. */
+    expect(scrimIsOn()).toBe(false);
   });
 
   /**
@@ -222,10 +249,20 @@ describe('DPortalContext', () => {
     setup();
 
     await user.click(screen.getByRole('button', { name: 'Open' }));
-    await user.click(backdrop()!);
+    expect(scrimIsOn()).toBe(true);
 
+    await user.click(backdrop()!);
     await waitFor(() => expect(panel()).not.toBeInTheDocument());
-    expect(backdrop()).not.toBeInTheDocument();
+
+    /*
+     * Off the moment the panel goes, not 450ms later.
+     *
+     * The scrim used to carry a 300ms exit delay left over from when the panel
+     * was a `framer-motion` element that had to animate away first — so it
+     * stayed over the page after the close and swallowed the next click, which
+     * read as the modal needing two presses to dismiss.
+     */
+    expect(scrimIsOn()).toBe(false);
   });
 
   /** A click inside the panel is not a click outside it. */
