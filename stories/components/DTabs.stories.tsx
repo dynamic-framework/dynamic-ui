@@ -196,6 +196,38 @@ export const NavigationOnly: Story = {
   },
 };
 
+export const SeparatePanels: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`DTabs.Provider` owns the selection, so the tab bar and its `DTabs.Tab` panels can live in different parts of the layout. `DTabs` inside the provider does not need `defaultSelected`.',
+      },
+    },
+  },
+  render: (args) => (
+    <DTabs.Provider defaultSelected="overview">
+      <div className="d-flex gap-6">
+        <aside>
+          <DTabs {...args} />
+        </aside>
+        <DBox className="flex-grow-1">
+          <DTabs.Tab tab="overview">Account overview panel.</DTabs.Tab>
+          <DTabs.Tab tab="settings">Account settings panel.</DTabs.Tab>
+        </DBox>
+      </div>
+    </DTabs.Provider>
+  ),
+  args: {
+    options: [
+      { label: 'Overview', tab: 'overview' },
+      { label: 'Settings', tab: 'settings' },
+    ],
+    vertical: true,
+    variant: 'pills',
+    ariaLabel: 'Account sections',
+  },
+};
+
 export const Vertical: Story = {
   decorators: [
     (Story) => (
