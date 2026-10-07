@@ -340,20 +340,53 @@
  *
  * ## Why the flag is text
  *
- * `react-international-phone` draws each flag as an `<img>` from a CDN, so
- * opening a list of 217 countries asks the network for 217 SVGs — the pause a
- * reader feels on focus, and a third-party request from a bank's page besides.
- * A flag emoji is two Unicode regional indicators: no bytes, no requests.
+ * `react-international-phone` draws each flag as an `<img>` from a CDN, and it
+ * mounts the whole list from the first render with `display: none` — which
+ * does not stop a download. 217 requests per field, before anyone opens
+ * anything, and a third-party request from a bank's page besides. A flag emoji
+ * is two Unicode regional indicators: no bytes, no requests.
  *
  * Windows ships no flag glyphs, so there it renders as the two letters of the
  * ISO code. That is why the dial code sits beside it rather than the flag
  * carrying the meaning on its own.
+ *
+ * ## Why the panel is not styled from `combobox.css`
+ *
+ * It looks like `DSelect`'s menu and is meant to, but the tokens are its own
+ * (`--df-input-phone-*`) pointing at the same semantic ones. A component token
+ * may only reference the semantic or primitive layer, so a shared look has to
+ * be a shared REFERENCE rather than a shared token — which also leaves the
+ * picker re-themeable without dragging every select along with it.
  */
 @layer df.components {
-  /* `relative` because the select below is absolutely positioned over it. */
   .df-phone-country {
-    position: relative;
     gap: var(--df-input-phone-gap);
+    padding-inline: 0;
+  }
+
+  /*
+   * The trigger carries the group's inline padding rather than the addon, so
+   * the whole padded area opens the panel. An addon with the padding and a
+   * button inside it leaves a dead inset strip that looks clickable.
+   */
+  .df-phone-trigger {
+    display: inline-flex;
+    gap: var(--df-input-phone-gap);
+    align-items: center;
+    align-self: stretch;
+    padding-inline: var(--df-input-padding-inline);
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-start-start-radius: var(--df-input-radius);
+    border-end-start-radius: var(--df-input-radius);
+  }
+
+  .df-phone-trigger:disabled {
+    color: var(--df-input-disabled-fg);
+    cursor: not-allowed;
   }
 
   /*
@@ -369,38 +402,149 @@
     line-height: 1;
   }
 
-  /*
-   * The select carries no width of its own: it is the invisible control over
-   * the flag and the dial code, which are what a reader sees. Sized to the
-   * flag so the whole area is clickable, and transparent so what shows through
-   * is the markup beside it.
-   */
-  .df-phone-select {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    font: inherit;
-    color: transparent;
-    appearance: none;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    opacity: 0;
-  }
-
   .df-phone-dial {
     color: var(--df-input-phone-dial-color);
     white-space: nowrap;
   }
 
+  .df-phone-chevron {
+    flex: none;
+    inline-size: var(--df-input-phone-chevron-size);
+    color: var(--df-input-phone-dial-color);
+  }
+
+  /* --- the panel --------------------------------------------------------- */
+
   /*
-   * The focus ring belongs to the select, which is invisible — so it is drawn
-   * on the wrapper instead. Without this, tabbing to the country picker shows
-   * nothing at all.
+   * `overflow: hidden` on the panel and the scroll on the list inside it, so
+   * the search field stays put while the countries move under it. Scrolling
+   * the panel instead would carry the search field off the top, which on a
+   * list of 217 is exactly when it is needed.
    */
-  .df-phone-country:has(.df-phone-select:focus-visible) {
-    border-radius: var(--df-input-radius);
+  .df-phone-menu {
+    z-index: var(--df-z-dropdown);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--df-input-phone-menu-bg);
+    border: var(--df-input-border-width) solid var(--df-input-phone-menu-border-color);
+    border-radius: var(--df-input-phone-menu-radius);
+    box-shadow: var(--df-input-phone-menu-shadow);
+  }
+
+  .df-phone-search {
+    display: flex;
+    flex: none;
+    gap: var(--df-input-phone-search-gap);
+    align-items: center;
+    padding: var(--df-input-phone-search-padding);
+    border-block-end: var(--df-input-border-width) solid
+      var(--df-input-phone-search-border-color);
+  }
+
+  .df-phone-search-icon {
+    flex: none;
+    color: var(--df-input-phone-search-icon-color);
+  }
+
+  /*
+   * The search field draws no box of its own: the panel is the box, and a
+   * bordered input inside a bordered panel reads as two controls.
+   */
+  .df-phone-search-input {
+    flex: 1;
+    min-inline-size: 0;
+    font: inherit;
+    color: var(--df-input-fg);
+    background: none;
+    border: 0;
+  }
+
+  .df-phone-search-input::placeholder {
+    color: var(--df-input-placeholder-color);
+  }
+
+  /* The focus ring is not being removed — it is being MOVED. The rule below
+     draws it around the whole search row, which is the box a reader sees as
+     focused; leaving the browser's ring on the bare input as well would draw a
+     second one inside the first. */
+  .df-phone-search-input:focus-visible {
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    outline: none;
+  }
+
+  /*
+   * The focus ring goes on the whole search row, not the bare input: the
+   * input has no border of its own, so a ring tight around the text would
+   * float inside the row with nothing to sit against.
+   */
+  .df-phone-search:has(.df-phone-search-input:focus-visible) {
     outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
-    outline-offset: var(--df-focus-ring-offset);
+    outline-offset: calc(var(--df-focus-ring-offset) * -1);
+  }
+
+  .df-phone-list {
+    flex: 1;
+    padding: var(--df-input-phone-menu-padding);
+    margin-block: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    list-style: none;
+  }
+
+  .df-phone-option {
+    display: flex;
+    gap: var(--df-input-phone-option-gap);
+    align-items: center;
+    padding-block: var(--df-input-phone-option-padding-block);
+    padding-inline: var(--df-input-phone-option-padding-inline);
+    color: var(--df-input-phone-option-color);
+    cursor: pointer;
+    border-radius: var(--df-input-phone-option-radius);
+  }
+
+  .df-phone-option-flag {
+    flex: none;
+    font-size: var(--df-input-phone-flag-size);
+    line-height: 1;
+  }
+
+  /* The name takes the slack so the dial code and the check stay right-aligned. */
+  .df-phone-option-name {
+    flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .df-phone-option-dial {
+    flex: none;
+    font-variant-numeric: tabular-nums;
+    color: var(--df-input-phone-option-dial-color);
+  }
+
+  .df-phone-option-check {
+    flex: none;
+    color: var(--df-input-phone-option-selected-color);
+  }
+
+  /*
+   * The cursor first, then the selection, so a selected row the cursor is on
+   * reads as the cursor — which is what the arrow keys are moving.
+   */
+  .df-phone-option[aria-selected="true"] {
+    color: var(--df-input-phone-option-selected-color);
+    background-color: var(--df-input-phone-option-selected-bg);
+  }
+
+  .df-phone-option[data-active] {
+    background-color: var(--df-input-phone-option-active-bg);
+  }
+
+  .df-phone-empty {
+    padding-block: var(--df-input-phone-option-padding-block);
+    padding-inline: var(--df-input-phone-option-padding-inline);
+    color: var(--df-input-phone-empty-color);
   }
 }

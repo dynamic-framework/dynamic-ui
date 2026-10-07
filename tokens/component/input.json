@@ -133,6 +133,88 @@
     "phone-dial-color": {
       "$type": "color",
       "$value": "{fg.muted}"
+    },
+    "phone-chevron-size": {
+      "$type": "dimension",
+      "$value": "{size.4}"
+    },
+    "phone-menu-padding": {
+      "$type": "dimension",
+      "$value": "{size.1}"
+    },
+    "phone-menu-radius": {
+      "$type": "dimension",
+      "$value": "{shape.surface}"
+    },
+    "phone-menu-bg": {
+      "$type": "color",
+      "$value": "{bg.raised}"
+    },
+    "phone-menu-border-color": {
+      "$type": "color",
+      "$value": "{border.default}"
+    },
+    "phone-menu-shadow": {
+      "$type": "shadow",
+      "$value": "{elevation.lg}"
+    },
+    "phone-search-padding": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "phone-search-gap": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "phone-search-border-color": {
+      "$type": "color",
+      "$value": "{border.default}",
+      "$description": "The search field is separated from the list by a rule, not by a gap: the list scrolls under it, and a gap would show the rows sliding through empty space."
+    },
+    "phone-search-icon-color": {
+      "$type": "color",
+      "$value": "{fg.muted}"
+    },
+    "phone-option-padding-block": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "phone-option-padding-inline": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "phone-option-gap": {
+      "$type": "dimension",
+      "$value": "{size.2}"
+    },
+    "phone-option-radius": {
+      "$type": "dimension",
+      "$value": "{shape.control-sm}"
+    },
+    "phone-option-color": {
+      "$type": "color",
+      "$value": "{fg.default}"
+    },
+    "phone-option-active-bg": {
+      "$type": "color",
+      "$value": "{bg.muted}",
+      "$description": "Where the keyboard cursor is. Distinct from the selection, because arrowing past a row is not choosing it."
+    },
+    "phone-option-selected-bg": {
+      "$type": "color",
+      "$value": "{role.primary.subtle}"
+    },
+    "phone-option-selected-color": {
+      "$type": "color",
+      "$value": "{role.primary.on-subtle}"
+    },
+    "phone-option-dial-color": {
+      "$type": "color",
+      "$value": "{fg.muted}"
+    },
+    "phone-empty-color": {
+      "$type": "color",
+      "$value": "{fg.muted}"
     }
   }
 }

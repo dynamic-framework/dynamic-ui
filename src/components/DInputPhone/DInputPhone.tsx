@@ -24,6 +24,8 @@ import {
 import DIcon from '../DIcon';
 import DCountrySelect from './DCountrySelect';
 
+import type { DCountrySelectI18n } from './DCountrySelect';
+
 import type {
   BaseProps,
   ComponentSize,
@@ -58,14 +60,14 @@ type NonHTMLInputElementProps =
   onChange?: (value: OnChangeType) => void;
   onIconEndClick?: (value?: string) => void;
   /**
-   * The country picker's accessible name, for a page not in English.
+   * The country picker's strings, for a page not in English.
    *
    * This was `countrySelectorProps`, an `Omit` of the library's own prop type
    * — so the picker's whole API was a third party's, and the one thing a
-   * consumer actually needed from it (a name in their language) was buried in
-   * it. The picker is ours now; this is what is left.
+   * consumer actually needed from it (its words in their language) was buried
+   * in it. The picker is ours now; these are the three strings it says.
    */
-  countryAriaLabel?: string;
+  countryI18n?: Partial<DCountrySelectI18n>;
   /** ISO codes pinned to the top of the country list, in the order given. */
   preferredCountries?: string[];
   /** The spinner's accessible name, for the same reason. */
@@ -108,7 +110,7 @@ function DInputPhone(
     dataAttributes,
     onChange,
     onIconEndClick,
-    countryAriaLabel = 'Country',
+    countryI18n,
     preferredCountries,
     loadingAriaLabel = 'Loading',
     filteredCountries,
@@ -273,7 +275,7 @@ function DInputPhone(
           selected={country.iso2}
           onSelect={setCountry}
           disabled={disabled || loading}
-          label={countryAriaLabel}
+          i18n={countryI18n}
           preferredCountries={preferredCountries}
         />
         {dynamicComponent}

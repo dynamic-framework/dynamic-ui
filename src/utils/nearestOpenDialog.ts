@@ -36,5 +36,5 @@ export default function nearestOpenDialog(
    * detached node from an environment without `closest`.
    */
   if (!element || typeof element.closest !== 'function') return undefined;
-  return (element.closest('dialog[open]')) ?? undefined;
+  return element.closest<HTMLDialogElement>('dialog[open]') ?? undefined;
 }

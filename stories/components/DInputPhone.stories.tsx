@@ -359,6 +359,50 @@ export const FloatingLabel: Story = {
   },
 };
 
+/**
+ * The picker is a searchable list, not a `<select>`.
+ *
+ * 217 countries is not a list anybody scrolls, and a `<select>` can show
+ * neither a search field nor the flags while choosing — its options are text.
+ * The search matches three ways, because they are three different ways a
+ * reader arrives at the field: the country name (accent-insensitively, so
+ * "mexico" finds "México"), the dial code with or without the `+` (what
+ * somebody checking a number already written down has in front of them), and
+ * the ISO code — `cl` finds Chile, which substring matching on the name never
+ * would.
+ */
+export const SearchableCountries: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Open the picker and type `56`, `+1`, `cl` or `mex`.',
+      },
+    },
+  },
+  args: {
+    id: 'componentIdSearch',
+    label: 'Phone',
+    hint: 'Open the country picker and search by name, dial code or ISO code',
+    defaultCountry: 'cl',
+  },
+};
+
+/** Every string the picker says, for a page that is not in English. */
+export const TranslatedCountryPicker: Story = {
+  args: {
+    id: 'componentIdI18n',
+    label: 'Teléfono',
+    hint: 'Abre el selector y busca por nombre, prefijo o código ISO',
+    defaultCountry: 'cl',
+    preferredCountries: ['cl', 'ar', 'pe'],
+    countryI18n: {
+      label: 'País',
+      search: 'Buscar un país',
+      empty: 'Sin resultados',
+    },
+  },
+};
+
 export const FilteredCountries: Story = {
   args: {
     id: 'componentId6',
@@ -370,6 +414,13 @@ export const FilteredCountries: Story = {
   },
 };
 
+/**
+ * Pinned to the top, in the order given.
+ *
+ * A list of 217 countries alphabetised is wrong for almost every product: a
+ * Chilean bank's readers pick Chile, and a handful of neighbours, almost every
+ * time. The order is the caller's decision, so it is not re-sorted.
+ */
 export const WithPreferredCountries: Story = {
   args: {
     id: 'componentId7',

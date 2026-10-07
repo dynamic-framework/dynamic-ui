@@ -42,7 +42,7 @@ describe('<DInputPhone />', () => {
       expect(container.querySelector('.df-phone')).toBeInTheDocument();
       expect(container.querySelector('.df-input-group')).toBeInTheDocument();
       expect(screen.getByRole('textbox')).toHaveClass('df-input');
-      expect(screen.getByRole('combobox', { name: 'Country' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^Country:/ })).toBeInTheDocument();
     });
 
     /* The names the 3.x stylesheet is written against, and no Bootstrap. */
@@ -89,9 +89,13 @@ describe('<DInputPhone />', () => {
       const input = screen.getByRole('textbox');
       expect(input).toHaveValue('+1 (555) 123-4567');
 
-      const countrySelector = screen.getByRole('combobox');
-      /* The picker is a native select; its value IS the country. */
-      expect(countrySelector).toHaveValue('us');
+      /*
+       * The trigger names the country rather than holding it as a value: it
+       * is a button that opens a panel, so what a reader hears on reaching it
+       * has to say which country is current.
+       */
+      expect(screen.getByRole('button', { name: 'Country: United States' }))
+        .toBeInTheDocument();
     });
 
     it('renders with a label', () => {
@@ -155,10 +159,10 @@ describe('<DInputPhone />', () => {
       );
 
       const input = screen.getByRole('textbox');
-      const countrySelector = screen.getByRole('combobox', { name: 'Country' });
+      const trigger = screen.getByRole('button', { name: /^Country:/ });
 
       expect(input).toBeDisabled();
-      expect(countrySelector).toBeDisabled();
+      expect(trigger).toBeDisabled();
     });
 
     it('shows invalid state', () => {
@@ -245,17 +249,24 @@ describe('<DInputPhone />', () => {
      * The picker is named, not configured with a third party's prop type.
      *
      * `countrySelectorProps` was an `Omit` of the library's own props — the
-     * whole API of the picker was somebody else's, and the one thing a
-     * consumer needed from it was a name in their language.
+     * whole API of the picker was somebody else's, and the words a consumer
+     * needed from it were buried in it.
      */
-    it('should let the country picker be named', () => {
+    it('should let the country picker be translated', async () => {
+      const user = userEvent.setup();
       render(
         <DContextProvider>
-          <DInputPhone countryAriaLabel="País" />
+          <DInputPhone
+            countryI18n={{ label: 'País', search: 'Buscar un país' }}
+            defaultCountry="cl"
+          />
         </DContextProvider>,
       );
 
-      expect(screen.getByRole('combobox', { name: 'País' })).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'País: Chile' }));
+
+      expect(screen.getByRole('dialog', { name: 'País' })).toBeInTheDocument();
+      expect(screen.getByRole('combobox', { name: 'Buscar un país' })).toBeInTheDocument();
     });
   });
 
@@ -309,15 +320,9 @@ describe('<DInputPhone />', () => {
         </DContextProvider>,
       );
 
-      /*
-       * Selected, not clicked through a menu.
-       *
-       * The picker is a native `<select>` now — opening a list and clicking a
-       * row was the library's custom dropdown, which is also what made the
-       * flags 217 network requests.
-       */
-      const countrySelector = screen.getByRole('combobox', { name: 'Country' });
-      await userEvent.selectOptions(countrySelector, 'us');
+      const user = userEvent.setup();
+      await user.click(screen.getByRole('button', { name: 'Country: Chile' }));
+      await user.click(screen.getByRole('option', { name: /United States/ }));
 
       const input = screen.getByRole('textbox');
       expect(input).toHaveValue('+1 ');
