@@ -15,8 +15,6 @@ import type {
 
 import {
   CountryIso2,
-  CountrySelector,
-  CountrySelectorProps,
   defaultCountries,
   parseCountry,
   ParsedCountry,
@@ -24,6 +22,7 @@ import {
 } from 'react-international-phone';
 
 import DIcon from '../DIcon';
+import DCountrySelect from './DCountrySelect';
 
 import type {
   BaseProps,
@@ -58,7 +57,19 @@ type NonHTMLInputElementProps =
   inputEnd?: ReactNode;
   onChange?: (value: OnChangeType) => void;
   onIconEndClick?: (value?: string) => void;
-  countrySelectorProps?: Omit<CountrySelectorProps, 'selectedCountry' | 'onSelect' | 'countries' | 'disabled'>;
+  /**
+   * The country picker's accessible name, for a page not in English.
+   *
+   * This was `countrySelectorProps`, an `Omit` of the library's own prop type
+   * — so the picker's whole API was a third party's, and the one thing a
+   * consumer actually needed from it (a name in their language) was buried in
+   * it. The picker is ours now; this is what is left.
+   */
+  countryAriaLabel?: string;
+  /** ISO codes pinned to the top of the country list, in the order given. */
+  preferredCountries?: string[];
+  /** The spinner's accessible name, for the same reason. */
+  loadingAriaLabel?: string;
   filteredCountries?: CountryIso2[];
   defaultCountry?: CountryIso2;
 };
@@ -97,7 +108,9 @@ function DInputPhone(
     dataAttributes,
     onChange,
     onIconEndClick,
-    countrySelectorProps,
+    countryAriaLabel = 'Country',
+    preferredCountries,
+    loadingAriaLabel = 'Loading',
     filteredCountries,
     defaultCountry = 'cl',
     ...inputProps
@@ -144,6 +157,16 @@ function DInputPhone(
     });
   }, [filteredCountries]);
 
+  /*
+   * Parsed once, not on every render.
+   *
+   * `countries.map(parseCountry)` allocated 217 objects per render and handed
+   * the picker a new array identity each time, which defeated any memoisation
+   * downstream of it — and this component re-renders on every keystroke,
+   * because `usePhoneInput` holds the value.
+   */
+  const parsedCountries = useMemo(() => countries.map(parseCountry), [countries]);
+
   const {
     inputValue,
     handlePhoneValueChange,
@@ -166,10 +189,17 @@ function DInputPhone(
     <input
       ref={inputRef}
       id={id}
-      className={classNames('form-control', {
-        'is-invalid': invalid,
-        'is-valid': valid,
-      })}
+      className="df-input"
+      /*
+       * `aria-invalid` as well as `data-invalid`, matching `DInput`.
+       *
+       * 2.x used Bootstrap's `is-invalid`, which is a styling hook and says
+       * nothing to assistive technology — a screen reader user heard the
+       * label, the value and the hint with no indication the field was
+       * wrong, and the one cue that it WAS is the colour.
+       */
+      {...invalid && { 'data-invalid': '', 'aria-invalid': true }}
+      {...valid && { 'data-valid': '' }}
       disabled={disabled || loading}
       value={inputValue}
       onChange={handlePhoneValueChange}
@@ -194,7 +224,7 @@ function DInputPhone(
   ]);
 
   const labelComponent = useMemo(() => (
-    <label htmlFor={id}>
+    <label className="df-label" htmlFor={id}>
       {label}
     </label>
   ), [
@@ -205,7 +235,7 @@ function DInputPhone(
   const dynamicComponent = useMemo(() => {
     if (floatingLabel) {
       return (
-        <div className="form-floating">
+        <div className="df-input-floating">
           {inputComponent}
           {labelComponent}
         </div>
@@ -220,34 +250,37 @@ function DInputPhone(
 
   return (
     <div
-      className={classNames('d-input-phone', className)}
+      className={classNames('df-phone', className)}
       style={style}
       {...dataAttributes}
     >
       {label && !floatingLabel && labelComponent}
       <div
-        className={classNames({
-          [`input-group-${size}`]: !!size,
-          'input-group': true,
-          'has-validation': invalid || valid,
-        })}
+        /*
+         * The v3 group, which this never had.
+         *
+         * It rendered Bootstrap's `input-group`, `input-group-text`,
+         * `form-text` and `spinner-border` — names the 3.x stylesheet does not
+         * define — so the control came out unstyled. `css:usage` exempts this
+         * component as "still wrapping a third party", which is why nothing
+         * said so.
+         */
+        className="df-input-group"
+        {...size && { 'data-size': size }}
       >
-        <CountrySelector
-          {...countrySelectorProps}
-          selectedCountry={country.iso2}
-          onSelect={({ iso2 }) => setCountry(iso2)}
-          countries={countries}
+        <DCountrySelect
+          countries={parsedCountries}
+          selected={country.iso2}
+          onSelect={setCountry}
           disabled={disabled || loading}
-          className={classNames(
-            'input-group-text',
-            countrySelectorProps?.className,
-          )}
+          label={countryAriaLabel}
+          preferredCountries={preferredCountries}
         />
         {dynamicComponent}
         {(iconEnd && !loading) && (
           <button
             type="button"
-            className="input-group-text"
+            className="df-input-group-addon"
             id={`${id}End`}
             onClick={handleOnIconEndClick}
             disabled={disabled || loading || iconEndDisabled}
@@ -263,25 +296,21 @@ function DInputPhone(
           </button>
         )}
         {loading && (
-          <div className="input-group-text" id={`${id}Loading`}>
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            >
-              <span className="visually-hidden">Loading...</span>
+          <div className="df-input-group-addon" id={`${id}Loading`}>
+            <span className="df-spinner" role="status" data-size="sm">
+              <span className="df-sr-only">{loadingAriaLabel}</span>
             </span>
           </div>
         )}
         {!!inputEnd && (
-          <div className="input-group-text" id={`${id}InputEnd`}>
+          <div className="df-input-group-addon" id={`${id}InputEnd`}>
             {inputEnd}
           </div>
         )}
       </div>
       {hint && (
         <div
-          className="form-text"
+          className="df-help"
           id={`${id}Hint`}
         >
           {hint}

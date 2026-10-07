@@ -6,6 +6,8 @@ import DInput from '../../src/components/DInput/DInput';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider, DIcon } from '../../src';
 
+import domEventAction from '../config/domEventAction';
+
 const config: Meta<typeof DInput> = {
   title: 'Design System/Components/Input',
   component: DInput,
@@ -57,6 +59,11 @@ so it cannot fall out of step with the stylesheet.
         `,
       },
     },
+  },
+  args: {
+    onFocus: domEventAction('onFocus'),
+    onBlur: domEventAction('onBlur'),
+    onWheel: domEventAction('onWheel'),
   },
   argTypes: {
     id: {
@@ -290,15 +297,12 @@ so it cannot fall out of step with the stylesheet.
       table: { category: 'Events' },
     },
     onBlur: {
-      action: 'onBlur',
       table: { category: 'Events' },
     },
     onFocus: {
-      action: 'onFocus',
       table: { category: 'Events' },
     },
     onWheel: {
-      action: 'onWheel',
       table: { category: 'Events' },
     },
   },

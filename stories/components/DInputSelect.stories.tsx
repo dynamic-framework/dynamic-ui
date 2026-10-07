@@ -5,6 +5,8 @@ import { ICONS } from '../config/constants';
 
 import type { DInputSelectProps } from '../../src/components/DInputSelect';
 
+import domEventAction from '../config/domEventAction';
+
 const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
   component: DInputSelect,
@@ -41,6 +43,9 @@ so it cannot fall out of step with the stylesheet.
         `,
       },
     },
+  },
+  args: {
+    onBlur: domEventAction('onBlur'),
   },
   argTypes: {
     id: {
@@ -224,7 +229,6 @@ so it cannot fall out of step with the stylesheet.
       table: { category: 'Events' },
     },
     onBlur: {
-      action: 'onBlur',
       table: { category: 'Events' },
     },
     floatingLabel: {

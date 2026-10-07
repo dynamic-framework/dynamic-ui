@@ -3,9 +3,16 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DInputMask from '../../src/components/DInputMask';
 import { ICONS } from '../config/constants';
 
+import domEventAction from '../config/domEventAction';
+
 const config: Meta<typeof DInputMask> = {
   title: 'Design System/Components/Input Mask',
   component: DInputMask,
+  args: {
+    onFocus: domEventAction('onFocus'),
+    onBlur: domEventAction('onBlur'),
+    onWheel: domEventAction('onWheel'),
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -194,15 +201,12 @@ const config: Meta<typeof DInputMask> = {
       table: { category: 'Events' },
     },
     onBlur: {
-      action: 'onBlur',
       table: { category: 'Events' },
     },
     onFocus: {
-      action: 'onFocus',
       table: { category: 'Events' },
     },
     onWheel: {
-      action: 'onWheel',
       table: { category: 'Events' },
     },
     modify: {

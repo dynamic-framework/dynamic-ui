@@ -25,6 +25,7 @@ import { useSelect } from './useSelect';
 import { DEFAULT_SELECT_I18N, flattenOptions, isGrouped } from './types';
 
 import { useDContext } from '../../contexts';
+import { nearestOpenDialog } from '../../utils';
 import type { BaseProps, ComponentSize } from '../interface';
 import type {
   DSelectI18n,
@@ -236,6 +237,19 @@ export default function DSelect<Value extends string | number = string>(
 
   /* --- rendering ---------------------------------------------------------- */
 
+  /*
+   * A menu on `document.body` renders BEHIND an open `DModal`: `showModal()`
+   * puts the dialog in the top layer, which paints above the whole document
+   * whatever `z-index` says. A select inside a modal is not an edge case — a
+   * filter panel is where most of them live.
+   *
+   * Resolved during the render that opens the menu, so it mounts in the right
+   * place the first time rather than moving after an effect.
+   */
+  const portalRoot = open
+    ? nearestOpenDialog(refs.reference.current as Element | null)
+    : undefined;
+
   const optionId = (index: number) => `${id}-option-${index}`;
 
   const defaultRenderOption = (option: DSelectOption<Value>): ReactNode => (
@@ -392,7 +406,7 @@ export default function DSelect<Value extends string | number = string>(
       </div>
 
       {open && (
-        <FloatingPortal>
+        <FloatingPortal root={portalRoot}>
           <div
             ref={refs.setFloating}
             className="df-combobox-menu"

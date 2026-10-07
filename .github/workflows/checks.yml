@@ -55,6 +55,17 @@ jobs:
             git --no-pager diff -- tokens/
             exit 1
           fi
+      # The stories are the documentation, and nothing here was checking
+      # them: a snippet that no longer compiles, a preview hook called where
+      # it throws, or a raw DOM event handed to the actions addon all shipped
+      # green. The last one is a performance bug rather than a broken build —
+      # see scripts/stories/check-event-actions.mjs.
+      - name: Check the stories
+        run: |
+          npm run typecheck:stories
+          npm run stories:snippets
+          npm run stories:actions
+          npm run storybook:hooks
       - name: Validate PR commits
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
       - name: Test packages

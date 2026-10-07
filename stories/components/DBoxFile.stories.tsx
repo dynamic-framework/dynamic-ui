@@ -6,6 +6,8 @@ import { ICONS } from '../config/constants';
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { DButton, DIcon } from '../../src';
 
+import domEventAction from '../config/domEventAction';
+
 const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
   component: DBoxFile,
@@ -59,6 +61,9 @@ so it cannot fall out of step with the stylesheet.
       </div>
     ),
   ],
+  args: {
+    onDrop: domEventAction('onDrop'),
+  },
   argTypes: {
     disabled: {
       control: 'boolean',
@@ -151,7 +156,6 @@ so it cannot fall out of step with the stylesheet.
       table: { category: 'Icon' },
     },
     onDrop: {
-      action: 'onDrop',
       table: { category: 'Events' },
     },
     onDragEnter: {

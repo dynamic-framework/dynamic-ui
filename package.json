@@ -98,6 +98,7 @@
     "css:generated": "node scripts/css/generated.mjs",
     "icons": "node scripts/icons/sprite.mjs",
     "stories:snippets": "node scripts/stories/check-snippets.mjs",
+    "stories:actions": "node scripts/stories/check-event-actions.mjs",
     "storybook:theme": "node scripts/storybook/build-manager-theme.mjs",
     "storybook:hooks": "node scripts/storybook/check-preview-hooks.mjs"
   },

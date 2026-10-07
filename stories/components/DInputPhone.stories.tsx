@@ -20,6 +20,8 @@ import {
 import DInputPhone from '../../src/components/DInputPhone';
 import { PREFIX_BS } from '../../src/components/config';
 
+import domEventAction from '../config/domEventAction';
+
 const config: Meta<typeof DInputPhone> = {
   title: 'Design System/Components/Input Phone',
   component: DInputPhone,
@@ -116,6 +118,10 @@ and all variables are scoped under the \`.d-input-phone\` class.
         `,
       },
     },
+  },
+  args: {
+    onFocus: domEventAction('onFocus'),
+    onBlur: domEventAction('onBlur'),
   },
   argTypes: {
     id: {
@@ -285,11 +291,9 @@ and all variables are scoped under the \`.d-input-phone\` class.
       table: { category: 'Events' },
     },
     onBlur: {
-      action: 'onBlur',
       table: { category: 'Events' },
     },
     onFocus: {
-      action: 'onFocus',
       table: { category: 'Events' },
     },
   },
@@ -373,9 +377,7 @@ export const WithPreferredCountries: Story = {
     placeholder: 'Placeholder',
     hint: 'Assistive text',
     defaultCountry: 'cl',
-    countrySelectorProps: {
-      preferredCountries: ['cl', 'co', 'us'],
-    },
+    preferredCountries: ['cl', 'co', 'us'],
   },
 };
 

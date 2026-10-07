@@ -5,6 +5,8 @@ import type { ComponentProps } from 'react';
 import DButtonIcon from '../../src/components/DButtonIcon/DButtonIcon';
 
 import { DContextProvider } from '../../src';
+
+import domEventAction from '../config/domEventAction';
 import {
   COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
@@ -99,6 +101,9 @@ so it cannot fall out of step with the stylesheet.
         `,
       },
     },
+  },
+  args: {
+    onClick: domEventAction('onClick'),
   },
   argTypes: {
     className: {
@@ -225,7 +230,6 @@ so it cannot fall out of step with the stylesheet.
       type: 'boolean',
     },
     onClick: {
-      action: 'onClick',
       table: { category: 'Events' },
     },
     variant: {

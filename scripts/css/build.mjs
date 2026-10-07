@@ -183,7 +183,16 @@ const BUDGETS = {
    *              cached immutably, is the cheaper side of that trade.
    */
   'dynamic.min.css': 440,
-  'dynamic.core.min.css': 68,
+  /*
+   *   68 -> 70  The phone field's country picker. `DInputPhone` rendered
+   *             Bootstrap class names the 3.x stylesheet does not define, so
+   *             the control had no styles at all — and the flags were `<img>`
+   *             tags fetching 217 SVGs from a CDN when the list opened. The
+   *             picker is ours now: a native `<select>` laid over a text flag
+   *             and the dial code. 68.1 KB measured, 70 with the usual
+   *             headroom.
+   */
+  'dynamic.core.min.css': 70,
   'dynamic.components.min.css': 132,
   /*
    *   61 -> 78   231 stepped colour classes: `bg-primary-100` and the text and

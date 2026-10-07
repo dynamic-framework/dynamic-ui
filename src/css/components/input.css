@@ -334,3 +334,73 @@
     }
   }
 }
+
+/**
+ * The phone field's country picker.
+ *
+ * ## Why the flag is text
+ *
+ * `react-international-phone` draws each flag as an `<img>` from a CDN, so
+ * opening a list of 217 countries asks the network for 217 SVGs — the pause a
+ * reader feels on focus, and a third-party request from a bank's page besides.
+ * A flag emoji is two Unicode regional indicators: no bytes, no requests.
+ *
+ * Windows ships no flag glyphs, so there it renders as the two letters of the
+ * ISO code. That is why the dial code sits beside it rather than the flag
+ * carrying the meaning on its own.
+ */
+@layer df.components {
+  /* `relative` because the select below is absolutely positioned over it. */
+  .df-phone-country {
+    position: relative;
+    gap: var(--df-input-phone-gap);
+  }
+
+  /*
+   * A fixed inline size, so the field does not jump as the country changes.
+   *
+   * Flag emoji are not all the same width — the fallback letter pairs on
+   * Windows are wider than the pictures elsewhere — and a picker that resizes
+   * on every selection moves the input under the caret.
+   */
+  .df-phone-flag {
+    flex: none;
+    font-size: var(--df-input-phone-flag-size);
+    line-height: 1;
+  }
+
+  /*
+   * The select carries no width of its own: it is the invisible control over
+   * the flag and the dial code, which are what a reader sees. Sized to the
+   * flag so the whole area is clickable, and transparent so what shows through
+   * is the markup beside it.
+   */
+  .df-phone-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    font: inherit;
+    color: transparent;
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    opacity: 0;
+  }
+
+  .df-phone-dial {
+    color: var(--df-input-phone-dial-color);
+    white-space: nowrap;
+  }
+
+  /*
+   * The focus ring belongs to the select, which is invisible — so it is drawn
+   * on the wrapper instead. Without this, tabbing to the country picker shows
+   * nothing at all.
+   */
+  .df-phone-country:has(.df-phone-select:focus-visible) {
+    border-radius: var(--df-input-radius);
+    outline: var(--df-focus-ring-width) solid var(--df-focus-ring);
+    outline-offset: var(--df-focus-ring-offset);
+  }
+}

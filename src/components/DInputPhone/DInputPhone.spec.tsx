@@ -8,6 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import DInputPhone from './DInputPhone';
 import { DContextProvider } from '../../contexts';
+import * as orderCountriesModule from './orderCountries';
 
 type PhoneDataObject = {
   phone: string;
@@ -18,6 +19,15 @@ type PhoneDataObject = {
 
 describe('<DInputPhone />', () => {
   describe('Rendering and Props', () => {
+    /*
+     * Structure, not a snapshot of someone else's DOM.
+     *
+     * This was an inline snapshot of `react-international-phone`'s markup —
+     * every `react-international-phone-country-selector-button__flag-emoji`
+     * of it. It pinned a third party's class names, so it broke the moment
+     * the chrome became ours, and while it passed it was asserting nothing
+     * about this library.
+     */
     it('should render an input phone with default settings', () => {
       const { container } = render(
         <DContextProvider>
@@ -29,150 +39,41 @@ describe('<DInputPhone />', () => {
         </DContextProvider>,
       );
 
-      expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            class="d-input-phone"
-          >
-            <div
-              class="input-group"
-            >
-              <div
-                class="react-international-phone-country-selector input-group-text"
-              >
-                <button
-                  aria-expanded="false"
-                  aria-haspopup="listbox"
-                  aria-label="Country selector"
-                  class="react-international-phone-country-selector-button"
-                  data-country="cl"
-                  role="combobox"
-                  title="Chile"
-                  type="button"
-                >
-                  <div
-                    class="react-international-phone-country-selector-button__button-content"
-                  >
-                    <img
-                      alt=""
-                      class="react-international-phone-flag-emoji react-international-phone-country-selector-button__flag-emoji"
-                      data-country="cl"
-                      draggable="false"
-                      loading="lazy"
-                      src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e8-1f1f1.svg"
-                      style="visibility: visible;"
-                    />
-                    <div
-                      class="react-international-phone-country-selector-button__dropdown-arrow"
-                    />
-                  </div>
-                </button>
-                <ul
-                  aria-activedescendant="react-international-phone__cl-option"
-                  class="react-international-phone-country-selector-dropdown"
-                  role="listbox"
-                  style="display: none;"
-                  tabindex="-1"
-                >
-                  <li
-                    aria-label="Chile +56"
-                    aria-selected="true"
-                    class="react-international-phone-country-selector-dropdown__list-item react-international-phone-country-selector-dropdown__list-item--selected react-international-phone-country-selector-dropdown__list-item--focused"
-                    data-country="cl"
-                    id="react-international-phone__cl-option"
-                    role="option"
-                    title="Chile"
-                  >
-                    <img
-                      alt=""
-                      class="react-international-phone-flag-emoji react-international-phone-country-selector-dropdown__list-item-flag-emoji"
-                      data-country="cl"
-                      draggable="false"
-                      loading="lazy"
-                      src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e8-1f1f1.svg"
-                    />
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-country-name"
-                    >
-                      Chile
-                    </span>
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-dial-code"
-                    >
-                      +
-                      56
-                    </span>
-                  </li>
-                  <li
-                    aria-label="Colombia +57"
-                    aria-selected="false"
-                    class="react-international-phone-country-selector-dropdown__list-item"
-                    data-country="co"
-                    id="react-international-phone__co-option"
-                    role="option"
-                    title="Colombia"
-                  >
-                    <img
-                      alt=""
-                      class="react-international-phone-flag-emoji react-international-phone-country-selector-dropdown__list-item-flag-emoji"
-                      data-country="co"
-                      draggable="false"
-                      loading="lazy"
-                      src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e8-1f1f4.svg"
-                    />
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-country-name"
-                    >
-                      Colombia
-                    </span>
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-dial-code"
-                    >
-                      +
-                      57
-                    </span>
-                  </li>
-                  <li
-                    aria-label="United States +1"
-                    aria-selected="false"
-                    class="react-international-phone-country-selector-dropdown__list-item"
-                    data-country="us"
-                    id="react-international-phone__us-option"
-                    role="option"
-                    title="United States"
-                  >
-                    <img
-                      alt=""
-                      class="react-international-phone-flag-emoji react-international-phone-country-selector-dropdown__list-item-flag-emoji"
-                      data-country="us"
-                      draggable="false"
-                      loading="lazy"
-                      src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1fa-1f1f8.svg"
-                    />
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-country-name"
-                    >
-                      United States
-                    </span>
-                    <span
-                      class="react-international-phone-country-selector-dropdown__list-item-dial-code"
-                    >
-                      +
-                      1
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <input
-                class="form-control"
-                id="ComponentId1"
-                inputmode="tel"
-                value="+56 "
-              />
-            </div>
-          </div>
-        </div>
-      `);
+      expect(container.querySelector('.df-phone')).toBeInTheDocument();
+      expect(container.querySelector('.df-input-group')).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toHaveClass('df-input');
+      expect(screen.getByRole('combobox', { name: 'Country' })).toBeInTheDocument();
+    });
+
+    /* The names the 3.x stylesheet is written against, and no Bootstrap. */
+    it('should render no Bootstrap class names', () => {
+      const { container } = render(
+        <DContextProvider>
+          <DInputPhone id="bs" defaultCountry="cl" hint="h" loading />
+        </DContextProvider>,
+      );
+
+      const markup = container.innerHTML;
+      ['input-group-text', 'form-control', 'form-text', 'spinner-border', 'visually-hidden']
+        .forEach((name) => expect(markup).not.toContain(`class="${name}`));
+    });
+
+    /*
+     * No flag is fetched.
+     *
+     * The library draws each one as an `<img>` from a CDN — 217 requests when
+     * the picker opens, which is the pause a reader feels on focus, and a
+     * third-party GET from a bank's page besides.
+     */
+    it('should draw the flag without asking the network', () => {
+      const { container } = render(
+        <DContextProvider>
+          <DInputPhone id="flag" defaultCountry="cl" />
+        </DContextProvider>,
+      );
+
+      expect(container.querySelectorAll('img')).toHaveLength(0);
+      expect(container.querySelector('.df-phone-flag')).toHaveTextContent('🇨🇱');
     });
 
     it('displays a controlled value', () => {
@@ -189,7 +90,8 @@ describe('<DInputPhone />', () => {
       expect(input).toHaveValue('+1 (555) 123-4567');
 
       const countrySelector = screen.getByRole('combobox');
-      expect(countrySelector).toHaveAttribute('data-country', 'us');
+      /* The picker is a native select; its value IS the country. */
+      expect(countrySelector).toHaveValue('us');
     });
 
     it('renders with a label', () => {
@@ -211,7 +113,7 @@ describe('<DInputPhone />', () => {
         </DContextProvider>,
       );
       const input = screen.getByLabelText('Phone');
-      expect(input.closest('.form-floating')).toBeInTheDocument();
+      expect(input.closest('.df-input-floating')).toBeInTheDocument();
     });
 
     it('renders with hint text', () => {
@@ -253,7 +155,7 @@ describe('<DInputPhone />', () => {
       );
 
       const input = screen.getByRole('textbox');
-      const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
+      const countrySelector = screen.getByRole('combobox', { name: 'Country' });
 
       expect(input).toBeDisabled();
       expect(countrySelector).toBeDisabled();
@@ -270,7 +172,10 @@ describe('<DInputPhone />', () => {
       );
 
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('is-invalid');
+      /* `data-invalid` styles it and `aria-invalid` announces it. Bootstrap's
+         `is-invalid` did only the first. */
+      expect(input).toHaveAttribute('data-invalid');
+      expect(input).toHaveAttribute('aria-invalid', 'true');
     });
 
     it('shows valid state', () => {
@@ -284,7 +189,7 @@ describe('<DInputPhone />', () => {
       );
 
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('is-valid');
+      expect(input).toHaveAttribute('data-valid');
     });
 
     it('renders with loading state', () => {
@@ -312,8 +217,9 @@ describe('<DInputPhone />', () => {
           <DInputPhone size="lg" />
         </DContextProvider>,
       );
-      const inputGroup = screen.getByRole('textbox').closest('.input-group');
-      expect(inputGroup).toHaveClass('input-group-lg');
+      const inputGroup = screen.getByRole('textbox').closest('.df-input-group');
+      /* The size is an attribute in 3.x, like every other variant axis. */
+      expect(inputGroup).toHaveAttribute('data-size', 'lg');
     });
 
     it('renders icon with default tabIndex of -1 when onIconEndClick is not provided', () => {
@@ -332,19 +238,24 @@ describe('<DInputPhone />', () => {
           <DInputPhone />
         </DContextProvider>,
       );
-      expect(container.querySelector('.react-international-phone-country-selector')).toBeInTheDocument();
+      expect(container.querySelector('.df-phone-country')).toBeInTheDocument();
     });
 
-    it('applies custom className to CountrySelector', () => {
+    /*
+     * The picker is named, not configured with a third party's prop type.
+     *
+     * `countrySelectorProps` was an `Omit` of the library's own props — the
+     * whole API of the picker was somebody else's, and the one thing a
+     * consumer needed from it was a name in their language.
+     */
+    it('should let the country picker be named', () => {
       render(
         <DContextProvider>
-          <DInputPhone
-            countrySelectorProps={{ className: 'my-custom-selector' }}
-          />
+          <DInputPhone countryAriaLabel="País" />
         </DContextProvider>,
       );
-      const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
-      expect(countrySelector.parentElement).toHaveClass('my-custom-selector');
+
+      expect(screen.getByRole('combobox', { name: 'País' })).toBeInTheDocument();
     });
   });
 
@@ -398,11 +309,15 @@ describe('<DInputPhone />', () => {
         </DContextProvider>,
       );
 
-      const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
-      fireEvent.click(countrySelector);
-
-      const usaOption = await screen.findByRole('option', { name: /United States \+1/i });
-      fireEvent.click(usaOption);
+      /*
+       * Selected, not clicked through a menu.
+       *
+       * The picker is a native `<select>` now — opening a list and clicking a
+       * row was the library's custom dropdown, which is also what made the
+       * flags 217 network requests.
+       */
+      const countrySelector = screen.getByRole('combobox', { name: 'Country' });
+      await userEvent.selectOptions(countrySelector, 'us');
 
       const input = screen.getByRole('textbox');
       expect(input).toHaveValue('+1 ');
@@ -466,5 +381,28 @@ describe('<DInputPhone />', () => {
       const iconButton = screen.getByRole('button', { name: /Search Icon/i });
       await expect(user.click(iconButton)).resolves.not.toThrow();
     });
+  });
+});
+
+describe('typing does not rebuild the country list', () => {
+  /*
+   * The other half of the memoisation, and the half a test on
+   * `DCountrySelect` alone cannot see: this component re-renders on every
+   * keystroke, because `usePhoneInput` holds the value. If the parsed country
+   * list is rebuilt per render, the picker receives a new array identity and
+   * rebuilds its 217 options however well it memoises them.
+   */
+  it('should order the countries once, however much is typed', async () => {
+    const spy = jest.spyOn(orderCountriesModule, 'default');
+    const user = userEvent.setup();
+
+    render(<DInputPhone label="Phone" preferredCountries={['cl', 'us']} />);
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockClear();
+
+    await user.type(screen.getByLabelText('Phone'), '912345678');
+
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
