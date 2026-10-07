@@ -48,7 +48,18 @@ type Props = {
  */
 const getItemProps = (action: DropdownAction) => ({
   className: 'df-menu-item',
-  ...(action.color ? { 'data-color': resolveRole(action.color) } : {}),
+  /*
+   * `default` means "no colour", so it emits no attribute.
+   *
+   * `resolveRole` passes an unknown value through unchanged, so this used to
+   * emit `data-color="default"` — an attribute the stylesheet has no rule for,
+   * on a prop value the type advertises. Nothing failed; the item just looked
+   * the same as it would have with no `color` at all, which is the right
+   * result reached by accident.
+   */
+  ...(action.color && action.color !== 'default'
+    ? { 'data-color': resolveRole(action.color) }
+    : {}),
   ...(action.disabled ? { 'aria-disabled': true as const } : {}),
 });
 

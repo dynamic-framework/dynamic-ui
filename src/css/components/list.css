@@ -9,6 +9,20 @@
  */
 @layer df.components {
   .df-list {
+    /*
+     * The radius the first and last items round to.
+     *
+     * The parent's radius MINUS its own border, so an item's background nests
+     * inside the border's curve instead of cutting across it. Using the full
+     * radius leaves a sliver of background outside the border on each corner,
+     * which reads as a hairline of the wrong colour.
+     *
+     * `max(0px, …)` because a negative `border-radius` is invalid and the
+     * whole declaration would be dropped, leaving square corners with no
+     * clue why.
+     */
+    --df-list-inner-radius: max(0px, calc(var(--df-list-radius) - var(--df-list-border-width)));
+
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -34,8 +48,37 @@
     border-block-start: var(--df-list-border-width) solid var(--df-list-border-color);
   }
 
+  /*
+   * The ends carry the corner the parent rounds.
+   *
+   * An item paints its own background, so without this a coloured first or
+   * last row squares off the corner the parent just rounded — visible on any
+   * item with `color`, and on the hover and active states of every item.
+   *
+   * `overflow: hidden` on the parent would also hide it, and was the first
+   * thing considered. It clips EVERYTHING, though: a focus ring that sits
+   * outside the item's box, an avatar or badge that overhangs the row, a
+   * sticky header inside a scrolling list. Clipping a focus indicator is an
+   * accessibility regression that looks fine until somebody tabs.
+   */
   .df-list-item:where(:first-child) {
     border-block-start: 0;
+    border-start-start-radius: var(--df-list-inner-radius);
+    border-start-end-radius: var(--df-list-inner-radius);
+  }
+
+  .df-list-item:where(:last-child) {
+    border-end-start-radius: var(--df-list-inner-radius);
+    border-end-end-radius: var(--df-list-inner-radius);
+  }
+
+  /*
+   * A single item is both ends, so it rounds all four corners — and it is
+   * last in source order so it wins over whichever axis the rules above and
+   * the horizontal ones below resolved to.
+   */
+  .df-list-item:where(:only-child) {
+    border-radius: var(--df-list-inner-radius);
   }
 
   /* An item that is a button or a link. `:where()` keeps the specificity flat
@@ -76,6 +119,9 @@
   /* --- Modifiers -------------------------------------------------------- */
 
   .df-list[data-flush] {
+    /* Flush sits flat against its container, so there is no corner to nest in. */
+    --df-list-inner-radius: 0;
+
     border-inline: 0;
     border-radius: 0;
   }
@@ -107,8 +153,21 @@
     border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
   }
 
+  /*
+   * Rounding moves to the inline axis: the first item is the START end of
+   * a row, not the top of a column, so the corner it owns is that side's
+   * pair — and the block-axis corner the vertical rules gave it goes back
+   * to square.
+   */
   .df-list[data-horizontal=""] > .df-list-item:where(:first-child) {
     border-inline-start: 0;
+    border-start-end-radius: 0;
+    border-end-start-radius: var(--df-list-inner-radius);
+  }
+
+  .df-list[data-horizontal=""] > .df-list-item:where(:last-child) {
+    border-start-end-radius: var(--df-list-inner-radius);
+    border-end-start-radius: 0;
   }
 }
 
@@ -125,8 +184,21 @@
       border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
     }
 
+    /*
+     * Rounding moves to the inline axis: the first item is the START end of
+     * a row, not the top of a column, so the corner it owns is that side's
+     * pair — and the block-axis corner the vertical rules gave it goes back
+     * to square.
+     */
     .df-list[data-horizontal="sm"] > .df-list-item:where(:first-child) {
       border-inline-start: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: var(--df-list-inner-radius);
+    }
+
+    .df-list[data-horizontal="sm"] > .df-list-item:where(:last-child) {
+      border-start-end-radius: var(--df-list-inner-radius);
+      border-end-start-radius: 0;
     }
   }
 
@@ -140,8 +212,21 @@
       border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
     }
 
+    /*
+     * Rounding moves to the inline axis: the first item is the START end of
+     * a row, not the top of a column, so the corner it owns is that side's
+     * pair — and the block-axis corner the vertical rules gave it goes back
+     * to square.
+     */
     .df-list[data-horizontal="md"] > .df-list-item:where(:first-child) {
       border-inline-start: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: var(--df-list-inner-radius);
+    }
+
+    .df-list[data-horizontal="md"] > .df-list-item:where(:last-child) {
+      border-start-end-radius: var(--df-list-inner-radius);
+      border-end-start-radius: 0;
     }
   }
 
@@ -155,8 +240,21 @@
       border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
     }
 
+    /*
+     * Rounding moves to the inline axis: the first item is the START end of
+     * a row, not the top of a column, so the corner it owns is that side's
+     * pair — and the block-axis corner the vertical rules gave it goes back
+     * to square.
+     */
     .df-list[data-horizontal="lg"] > .df-list-item:where(:first-child) {
       border-inline-start: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: var(--df-list-inner-radius);
+    }
+
+    .df-list[data-horizontal="lg"] > .df-list-item:where(:last-child) {
+      border-start-end-radius: var(--df-list-inner-radius);
+      border-end-start-radius: 0;
     }
   }
 
@@ -170,23 +268,49 @@
       border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
     }
 
+    /*
+     * Rounding moves to the inline axis: the first item is the START end of
+     * a row, not the top of a column, so the corner it owns is that side's
+     * pair — and the block-axis corner the vertical rules gave it goes back
+     * to square.
+     */
     .df-list[data-horizontal="xl"] > .df-list-item:where(:first-child) {
       border-inline-start: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: var(--df-list-inner-radius);
+    }
+
+    .df-list[data-horizontal="xl"] > .df-list-item:where(:last-child) {
+      border-start-end-radius: var(--df-list-inner-radius);
+      border-end-start-radius: 0;
     }
   }
 
   @media (min-width: 1400px) {
-    .df-list[data-horizontal="2xl"] {
+    .df-list[data-horizontal="xxl"] {
       flex-direction: row;
     }
 
-    .df-list[data-horizontal="2xl"] > .df-list-item {
+    .df-list[data-horizontal="xxl"] > .df-list-item {
       border-block-start: 0;
       border-inline-start: var(--df-list-border-width) solid var(--df-list-border-color);
     }
 
-    .df-list[data-horizontal="2xl"] > .df-list-item:where(:first-child) {
+    /*
+     * Rounding moves to the inline axis: the first item is the START end of
+     * a row, not the top of a column, so the corner it owns is that side's
+     * pair — and the block-axis corner the vertical rules gave it goes back
+     * to square.
+     */
+    .df-list[data-horizontal="xxl"] > .df-list-item:where(:first-child) {
       border-inline-start: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: var(--df-list-inner-radius);
+    }
+
+    .df-list[data-horizontal="xxl"] > .df-list-item:where(:last-child) {
+      border-start-end-radius: var(--df-list-inner-radius);
+      border-end-start-radius: 0;
     }
   }
 }

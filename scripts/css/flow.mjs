@@ -66,10 +66,7 @@ const FLOW = /<(p|ul|ol|dl|li|blockquote|figure|pre|table)(?=[\s>]|$)/;
  * The same list `css:usage` keeps, and for the same reason: the exemption is
  * "this component is not ours yet", not "these particular elements are fine".
  */
-const UNPORTED = [
-  /^src\/components\/DDatePicker\//,
-  /^src\/components\/DInputPhone\//,
-];
+const UNPORTED = [];
 
 /**
  * Flow elements that are meant to keep their margin.
@@ -176,6 +173,89 @@ function walk(dir, out = []) {
  */
 const CREATED = /createElement\(\s*'(p|ul|ol|dl|li|blockquote|figure|pre|table)'\s*\)/;
 
+/**
+ * Flow elements rendered through a VARIABLE tag, which `FLOW` cannot see.
+ *
+ * `DListGroupItem` takes `as?: 'li' | 'a' | 'button'`, resolves it to a
+ * `const Tag`, and renders `<Tag className="df-list-item">`. There is no
+ * `<li` anywhere in the file, so the element was never checked — and
+ * `.df-list-item` went without a margin decision until somebody saw the gap
+ * between two list rows. The container `.df-list` WAS in the reset, which is
+ * what made it look handled: `li + li` sets the margin on the ITEM, and the
+ * item was the half nothing could see.
+ *
+ * Resolved from two places, because a component states its tags in both:
+ * the prop's type union, and the destructured default.
+ */
+const TAG_UNION = /\bas\??:\s*((?:'[a-z0-9]+'\s*\|\s*)*'[a-z0-9]+')/;
+const TAG_DEFAULT = /\bas\s*=\s*'([a-z0-9]+)'/;
+const FLOW_TAGS = new Set(['p', 'ul', 'ol', 'dl', 'li', 'blockquote', 'figure', 'pre', 'table']);
+
+/**
+ * Every flow element a file's `as` prop can resolve to.
+ *
+ * The union and the default are merged rather than one preferred over the
+ * other: the default is what most call sites get, and the union is what the
+ * rest can ask for. A class has to be right for both.
+ */
+function flowTagsOf(source) {
+  const tags = new Set();
+
+  const union = TAG_UNION.exec(source);
+  if (union) {
+    for (const quoted of union[1].matchAll(/'([a-z0-9]+)'/g)) {
+      if (FLOW_TAGS.has(quoted[1])) tags.add(quoted[1]);
+    }
+  }
+
+  const fallback = TAG_DEFAULT.exec(source);
+  if (fallback && FLOW_TAGS.has(fallback[1])) tags.add(fallback[1]);
+
+  /*
+   * A tag resolver can also name a tag the union does not — `DListGroup`
+   * returns `'ol'` for `numbered` while its union says `'ul' | 'ol' | 'div'`.
+   * Reading the returns as well keeps the two from drifting.
+   */
+  for (const returned of source.matchAll(/return\s+'([a-z0-9]+)'\s*;/g)) {
+    if (FLOW_TAGS.has(returned[1])) tags.add(returned[1]);
+  }
+
+  return [...tags];
+}
+
+/** The capitalised JSX identifiers a file renders, e.g. `<Tag`. */
+const DYNAMIC_TAG = /<([A-Z][A-Za-z0-9_]*)(?=[\s>]|$)/;
+
+/**
+ * The capitalised identifiers that hold a TAG NAME rather than a component.
+ *
+ * `<DIcon>` and `<Tag>` are the same shape to a regex, and only one of them
+ * is an element this check has an opinion about. What separates them is the
+ * declaration: a tag variable is resolved from the `as` prop, so its
+ * initialiser mentions `as` or a quoted tag.
+ */
+function tagVariablesOf(source) {
+  const names = new Set();
+  const lines = source.split('\n');
+
+  lines.forEach((line, index) => {
+    const declared = /^\s*const\s+([A-Z][A-Za-z0-9_]*)\s*=/.exec(line);
+    if (!declared) return;
+
+    /*
+     * Fifteen lines, which is the whole of both resolvers in the library plus
+     * room to grow. A resolver longer than that is doing enough that the
+     * element is worth looking at by hand anyway.
+     */
+    const window = lines.slice(index, index + 15).join(' ');
+    if (/\bas\b/.test(window) || /'(?:p|ul|ol|dl|li|blockquote|figure|pre|table)'/.test(window)) {
+      names.add(declared[1]);
+    }
+  });
+
+  return names;
+}
+
 const findings = [];
 let checked = 0;
 
@@ -212,15 +292,31 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
   if (UNPORTED.some((pattern) => pattern.test(rel))) continue;
   const source = readFileSync(file, 'utf8');
 
+  /* What `<Tag>` can be in this file, and which identifiers are tags at all. */
+  const dynamicTags = flowTagsOf(source);
+  const tagVariables = dynamicTags.length ? tagVariablesOf(source) : new Set();
+
   source.split('\n').forEach((line, index) => {
     /* A comment naming an element is not an element. `DDropdown` has a
        `// Ref on the rendered <ul>` note, which is prose about the code. */
     if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
 
-    const tag = FLOW.exec(line);
-    if (!tag) return;
+    const literalTag = FLOW.exec(line);
+    const dynamic = DYNAMIC_TAG.exec(line);
+    const isDynamic = !literalTag
+      && dynamic !== null
+      && tagVariables.has(dynamic[1]);
+
+    if (!literalTag && !isDynamic) return;
     checked += 1;
 
+    /*
+     * `tags` is a LIST for the dynamic case: `as?: 'ul' | 'ol' | 'div'` can
+     * be either, and the base layer gives `ul` and `ol` different ends, so
+     * the class has to cover every end any of them could bring.
+     */
+    const tags = literalTag ? [literalTag[1]] : dynamicTags;
+    const shown = literalTag ? `<${literalTag[1]}` : `<${dynamic[1]} as ${tags.join('|')}`;
     const where = `${rel}:${index + 1}`;
       /*
        * The window runs to the end of the OPENING TAG, not a fixed number of
@@ -250,20 +346,20 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
     ];
 
     if (!names.length) {
-      findings.push({ where, message: `<${tag[1]}> with no class — nothing can switch its flow margin off` });
+      findings.push({ where, message: `${shown}> with no class — nothing can switch its flow margin off` });
       return;
     }
 
     const own = names.filter((name) => name.startsWith('df-'));
     if (!own.length) {
-      findings.push({ where, message: `<${tag[1]}> has no df- class — nothing can switch its flow margin off` });
+      findings.push({ where, message: `${shown}> has no df- class — nothing can switch its flow margin off` });
       return;
     }
-    if (covered(tag[1], own)) return;
+    if (tags.every((candidate) => covered(candidate, own))) return;
 
     findings.push({
       where,
-      message: `<${tag[1]} class="${own.join(' ')}"> — no rule decides its margin, so it inherits the document rhythm`,
+      message: `${shown} class="${own.join(' ')}"> — no rule decides its margin, so it inherits the document rhythm`,
     });
   });
 }

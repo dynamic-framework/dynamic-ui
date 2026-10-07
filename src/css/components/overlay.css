@@ -452,6 +452,7 @@
 
   .df-overlay-footer[data-align="start"] { justify-content: flex-start; }
   .df-overlay-footer[data-align="center"] { justify-content: center; }
+  .df-overlay-footer[data-align="end"] { justify-content: flex-end; }
   .df-overlay-footer[data-align="between"] { justify-content: space-between; }
 
   .df-overlay-footer[data-fill] > * {

@@ -81,6 +81,64 @@ function walk(dir, out = []) {
 const isBehavioural = (name) => BEHAVIOURAL.has(name)
   || BEHAVIOURAL_PREFIXES.some((p) => p.test(name));
 
+/**
+ * The string literals a prop's TYPE allows, so a runtime value can still be
+ * checked value-by-value.
+ *
+ * This is what closed the blind spot below. `DListGroup` emits
+ * `'data-horizontal': typeof horizontal === 'string' ? horizontal : ''`, which
+ * no amount of regex over the VALUE can resolve — but the prop is declared
+ * `horizontal?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'`, and that
+ * enumerates every value the attribute can ever carry. The stylesheet had
+ * `data-horizontal="2xl"` while the token and the prop both say `xxl`, so
+ * `horizontal="xxl"` emitted an attribute no rule matched and the list simply
+ * stayed vertical at 1400px. Nothing failed; it just did not work.
+ */
+const KEYWORDS = new Set([
+  'typeof', 'string', 'number', 'boolean', 'undefined', 'null', 'true',
+  'false', 'void', 'in', 'of', 'as', 'new', 'this',
+]);
+
+/**
+ * Values the prop's type allows but the component never actually emits,
+ * because something upstream routes them elsewhere. Each needs its reason.
+ */
+const ROUTED_AWAY = new Map([
+  [
+    'data-align=fill',
+    'DModalFooter sends `fill` to `data-fill` instead, so `data-align` never carries it',
+  ],
+]);
+
+function allowedValuesOf(source, expression) {
+  const values = new Set();
+
+  /*
+   * A value that passes through a FUNCTION is not the prop's type any more:
+   * `resolveRole(action.color)` can rename, fall back, or pass through, and
+   * which of those it does is not in the union. Reading the union here would
+   * report values the component cannot emit.
+   */
+  if (expression.includes('(')) return [];
+
+  for (const token of expression.matchAll(/\b([a-z][A-Za-z0-9]*)\b/g)) {
+    const prop = token[1];
+    if (KEYWORDS.has(prop)) continue;
+
+    /*
+     * The declaration, which may wrap over several lines for a long union.
+     * Stopping at `;` rather than at the newline is what makes
+     * `horizontal?: boolean | 'sm' | 'md'\n  | 'lg'` readable.
+     */
+    const declared = new RegExp(`\\b${prop}\\?:\\s*([^;}]+)`).exec(source);
+    if (!declared) continue;
+
+    for (const quoted of declared[1].matchAll(/'([^']+)'/g)) values.add(quoted[1]);
+  }
+
+  return [...values];
+}
+
 const findings = [];
 let emitted = 0;
 
@@ -94,8 +152,8 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
    * and not checked value-by-value — a real blind spot, and the reason this is
    * a floor rather than a proof.
    */
-  for (const m of source.matchAll(/'(data-[a-z-]+)':\s*(?:'([^']*)'|([A-Za-z_$][\w$]*))/g)) {
-    const [, name, literal] = m;
+  for (const m of source.matchAll(/'(data-[a-z-]+)':\s*(?:'([^']*)'|([^,\n}]+))/g)) {
+    const [, name, literal, expression] = m;
     if (isBehavioural(name)) continue;
     emitted += 1;
 
@@ -109,13 +167,32 @@ for (const file of walk(resolve(ROOT, 'src/components'))) {
       continue;
     }
 
+    const hasValueRules = matchedPairs.size
+      && [...matchedPairs].some((pair) => pair.startsWith(`${name}=`));
+
     // A literal value against a rule written without one: the value is dropped.
     if (literal !== undefined && literal !== ''
-      && matchedPairs.size && !matchedPairs.has(`${name}=${literal}`)
-      && [...matchedPairs].some((pair) => pair.startsWith(`${name}=`))) {
+      && hasValueRules && !matchedPairs.has(`${name}=${literal}`)) {
       findings.push({
         where: `${where}:${line}`,
         message: `emits \`${name}="${literal}"\` and no rule matches that value`,
+      });
+      continue;
+    }
+
+    /*
+     * A runtime value, checked through the prop's type. The empty string is
+     * skipped: `data-horizontal=""` means "at every width" and is matched by
+     * a rule written with an empty value, which the name check above covers.
+     */
+    if (expression === undefined || !hasValueRules) continue;
+
+    for (const value of allowedValuesOf(source, expression)) {
+      if (matchedPairs.has(`${name}=${value}`)) continue;
+      if (ROUTED_AWAY.has(`${name}=${value}`)) continue;
+      findings.push({
+        where: `${where}:${line}`,
+        message: `can emit \`${name}="${value}"\` — the prop's type allows it and no rule matches it`,
       });
     }
   }

@@ -85,9 +85,7 @@ const ALLOWED_BARE_PREFIXES = [/^rdp-/, /^react-/, /^splide/, /^bi-/, /^lucide-/
  * rather than a list of class names: porting it deletes its line here and the
  * check starts holding it to the rule.
  */
-const UNPORTED = [
-  /^src\/components\/DInputPhone\//,
-];
+const UNPORTED = [];
 
 /* ------------------------------------------------------------------ */
 
