@@ -1,0 +1,32 @@
+// Overlay motion
+//
+// Shared by `.modal` and `.offcanvas`, which are the same thing anchored
+// differently: a `<dialog>` the browser puts in the top layer, entering and
+// leaving on a CSS transition.
+//
+// These replaced the `framer-motion` `Transition` objects the two components
+// used to take as a prop. A panel cannot be animated by a JS library AND opened
+// with `showModal()` — the library owns when the element mounts and
+// `showModal()` has to be called on an element already in the document, so the
+// two fought over the same moment. CSS has no such problem, and the modal path
+// no longer pulls 41.6 KB of animation library onto the page.
+
+// scss-docs-start overlay-motion-variables
+
+// Leaving is faster than arriving, and eases the other way.
+//
+// One duration and one easing for both directions meant a panel left on
+// `ease-in-out` — slowing down as it goes, which reads as the panel being
+// reluctant to leave. The enter keeps the 300ms the `framer-motion` default
+// used; the exit is the 150ms the backdrop fade already used.
+$overlay-duration-enter: .3s !default;
+$overlay-duration-exit: .15s !default;
+
+// Decelerate on the way in, accelerate on the way out.
+$overlay-easing-enter: cubic-bezier(0, 0, 0, 1) !default;
+$overlay-easing-exit: cubic-bezier(.3, 0, 1, 1) !default;
+
+// What a centred modal grows from. Matches the `scale: 0.95` the removed
+// `framer-motion` variants used, so the enter looks the same as it did.
+$overlay-enter-scale: .95 !default;
+// scss-docs-end overlay-motion-variables

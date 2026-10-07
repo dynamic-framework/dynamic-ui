@@ -15,31 +15,89 @@ import { DAlert } from "../../src";
 
 # Offcanvas
 
-This section provides guidance specifically for using `DOffcanvas` in **inline** scenarios.
+`DOffcanvas` renders a native `<dialog>` and opens it with `showModal()`. The
+class names are unchanged — `.offcanvas` plus `.offcanvas-{start|end|top|bottom}`
+— and so are the props. The difference from `DModal` is structural: here the
+panel IS the dialog, where a modal's dialog is the full-viewport `.modal` box
+around it. Both report an outside click the same way, because a click on a
+dialog's `::backdrop` is reported as a click on the dialog.
 
 <Unstyled>
   <DAlert color="warning">
     <span>
-      To achieve the behavior of a offcanvas it is necessary to use the
-      **`DContextProvider`** and the **`useDPortalContext`** hook. For detailed
-      guidance on the **correct usage** of offcanvas, please refer to the
-      [Offcanvas Usage](/docs/design-system-components-offcanvas-usage--docs)
-      in our documentation.
+      Register the panel in **`DContextProvider.availablePortals`** and open it
+      with **`useDPortalContext().openPortal`**. Rendering `<DOffcanvas>` inline
+      as a conditional JSX element no longer works the way it used to: a panel
+      opened with `showModal()` enters the browser's top layer and covers the
+      whole page. See the [Offcanvas
+      Usage](/docs/design-system-components-offcanvas-usage--docs) page.
     </span>
   </DAlert>
 </Unstyled>
+
+## Accessibility
+
+The same list as the Modal page — focus trap, page inertness, a resolved
+accessible name, Escape through the dialog's `cancel` event, and focus restored
+to the trigger on close. See **Accessibility** there for what each of them
+replaced.
+
+## Closing it
+
+Four things can close a panel, and all four take the same route: the element is
+asked to `close()`, it runs its exit transition, and the portal drops the entry
+when the transition ends.
+
+| From | What happens |
+|---|---|
+| Escape | The dialog's own `cancel`/`close`. `staticBackdrop` vetoes it. |
+| A click outside the panel | The click lands on the dialog itself, which closes it. |
+| `closePortal()` | The provider closes the top entry's dialog. |
+| `dialogRef.current?.close()` | The escape hatch, for a panel outside the portal. |
+
+The rule behind the table: **ask the panel to close, never unmount it.** An
+element removed from the document stops transitioning, so dropping it from state
+makes it vanish on the frame it was told to leave — which is exactly what
+`closePortal()` used to do, and why Escape animated while a Cancel button did
+not.
+
+`onClose` fires when the element has actually closed, before the transition
+finishes. A consumer waiting to know the panel is closed should not wait on an
+animation.
+
+## Deprecated props
+
+- **`scrollable`** is a no-op and always was. It emitted `data-bs-scroll="true"`,
+  an instruction to Bootstrap's JS to leave the page scrollable behind the panel
+  — and that JS has never been on the page here, while
+  `useDisableBodyScrollEffect` locked the body regardless. `showModal()` now
+  makes the rest of the document `inert`, which is what a modal panel wants.
+- **`transition`** is removed. It took a `framer-motion` `Transition` object; the
+  animation is CSS now, and the four `--bs-overlay-*` custom properties
+  replace it. `framer-motion` is no longer a peer dependency.
 
 ## CSS Variables
 
 <Markdown>
   {`
-| Variable                           | Class      | Type            | Description                  |
-|------------------------------------|------------|-----------------|------------------------------|
-| --${PREFIX_BS}offcanvas-header-gap | .offcanvas | css length unit | Space between header items   |
-| --${PREFIX_BS}offcanvas-footer-gap | .offcanvas | css length unit | Space between footer actions |
+| Variable                                 | Class      | Type            | Description                          |
+|------------------------------------------|------------|-----------------|--------------------------------------|
+| --${PREFIX_BS}offcanvas-header-gap       | .offcanvas | css length unit | Space between header items           |
+| --${PREFIX_BS}offcanvas-footer-gap       | .offcanvas | css length unit | Space between footer actions         |
+| --${PREFIX_BS}offcanvas-width            | .offcanvas | css length unit | Size on the \`start\`/\`end\` edges    |
+| --${PREFIX_BS}offcanvas-height           | .offcanvas | css length unit | Size on the \`top\`/\`bottom\` edges   |
+| --${PREFIX_BS}backdrop-bg                | .offcanvas | css color unit  | Colour of the \`::backdrop\` scrim     |
+| --${PREFIX_BS}backdrop-opacity           | .offcanvas | number          | Opacity of the \`::backdrop\` scrim    |
+| --${PREFIX_BS}overlay-duration-enter     | :root      | css time unit   | How long the panel takes to arrive   |
+| --${PREFIX_BS}overlay-duration-exit      | :root      | css time unit   | How long it takes to leave           |
+| --${PREFIX_BS}overlay-easing-enter       | :root      | css easing      | Its curve on the way in              |
+| --${PREFIX_BS}overlay-easing-exit        | :root      | css easing      | Its curve on the way out             |
   `}
 </Markdown>
 
-<Canvas of={DOffcanvasStories.Default} />
-<Controls of={DOffcanvasStories.Default} />
+The motion variables are shared with `DModal`: both panels read the same four, so
+retiming one retimes the other.
+
+<Canvas of={DOffcanvasStories.RealUsageWithOpenPortal} />
+<Controls of={DOffcanvasStories.RealUsageWithOpenPortal} />
 <Stories />

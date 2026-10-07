@@ -16,6 +16,16 @@ export default function useStackState<T>(initialList: T[] = []): [
     length: number;
     peek: () => T | undefined;
     pop: () => void;
+    /**
+     * Pops the top item only if it still satisfies `predicate`.
+     *
+     * `pop` takes whatever is on top at the moment it runs, which is the wrong
+     * answer when two things race to close the same entry — the second one pops
+     * somebody else's. Checking inside the updater is the only place the check
+     * sees the current list rather than the one captured when the callback was
+     * created.
+     */
+    popIf: (predicate: (top: T) => boolean) => void;
     push: (item: T) => void;
   },
 ] {
@@ -34,6 +44,14 @@ export default function useStackState<T>(initialList: T[] = []): [
     ))
   ), []);
 
+  const popIf = useCallback((predicate: (top: T) => boolean) => (
+    setList((prevList) => (
+      prevList.length > 0 && predicate(prevList[prevList.length - 1])
+        ? prevList.slice(0, prevList.length - 1)
+        : prevList
+    ))
+  ), []);
+
   const peek = useCallback(() => list.at(-1), [list]);
 
   const clear = useCallback(() => setList([]), []);
@@ -46,6 +64,7 @@ export default function useStackState<T>(initialList: T[] = []): [
     length: list.length,
     peek,
     pop,
+    popIf,
     push,
   }), [
     clear,
@@ -53,6 +72,7 @@ export default function useStackState<T>(initialList: T[] = []): [
     list.length,
     peek,
     pop,
+    popIf,
     push,
   ]);
 

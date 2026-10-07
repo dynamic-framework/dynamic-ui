@@ -5,6 +5,12 @@
   --#{$prefix}modal-separator-height: #{$modal-separator-height};
   --#{$prefix}modal-separator-bg: #{$modal-separator-bg};
 
+  // Declared here so `::backdrop` inherits them on engines that inherit from
+  // the originating element. See the `::backdrop` rule below for what happens
+  // on the ones that do not.
+  --#{$prefix}backdrop-bg: #{$modal-backdrop-bg};
+  --#{$prefix}backdrop-opacity: #{$modal-backdrop-opacity};
+
   .modal-header {
     flex-direction: row;
     gap: var(--#{$prefix}modal-header-gap);
@@ -45,18 +51,168 @@
   .d-modal-action-end {
     justify-content: flex-end;
   }
-}
 
-.d-portal {
-  .modal {
-    display: block;
+  // `between` existed in neither footer and was the one alignment a two-button
+  // bar actually wants. Added to both at once, so `DModalFooter` and
+  // `DOffcanvasFooter` stop drifting apart one value at a time.
+  .d-modal-action-between {
+    justify-content: space-between;
   }
 }
 
+// --- native <dialog> ---------------------------------------------------------
+//
+// `DModal` renders `<dialog class="modal">` and opens it with `showModal()`, so
+// the UA's own dialog box shows through wherever Bootstrap does not already
+// answer it. The UA stylesheet sets a lot:
+//
+//   dialog        { width: fit-content; height: fit-content; margin: auto;
+//                   border: solid; padding: 1em; inset-inline: 0;
+//                   background: canvas; color: canvastext }
+//   dialog:modal  { position: fixed; inset-block: 0; overflow: auto;
+//                   max-width: calc(100% - 6px - 2em);
+//                   max-height: calc(100% - 6px - 2em) }
+//
+// An author rule beats a UA rule whatever its specificity — but only for the
+// properties it actually declares, and Bootstrap's `.modal` declares six of
+// those. The rest are inherited as-is. Two of them break the layout outright:
+// `max-width`/`max-height` cap the full-viewport wrapper about 2em short of the
+// viewport, and `background: canvas` paints that wrapper WHITE over the entire
+// screen.
+//
+// Answered as a block rather than one symptom at a time, because the next
+// property to leak would have looked like a fourth unrelated bug.
+// stylelint-disable selector-no-qualifying-type -- The `dialog` qualifier is the
+// rule, not decoration. Everything below answers a UA `<dialog>` default or
+// keys off the `open` attribute, and neither applies to the plain `.modal` /
+// `.offcanvas` `<div>` a consumer can still render as a custom portal panel.
+// Unqualified, `:not([open])` would hide every one of those: a `<div>` has no
+// `open` attribute to match.
+dialog.modal {
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+
+  // `[open]` is the state now, not `.show`.
+  //
+  // Both halves have to be stated: the UA hides a closed dialog with
+  // `dialog:not([open]) { display: none }`, and ANY author `display` overrides
+  // it regardless of specificity — so declaring only the open case would leave
+  // the panel sitting on the page before anything opened it.
+  &[open] {
+    display: block;
+  }
+
+  &:not([open]) {
+    display: none;
+  }
+
+  // The scrim, painted by the browser rather than by a sibling `<div>`.
+  //
+  // `::backdrop` does not inherit from its originating element on Safari
+  // 15.4–17.x, so `var(--bs-backdrop-bg)` resolves to nothing there and the
+  // literal fallback is what those versions use. Newer engines inherit the
+  // custom property and the token wins — which is the point: one answer to "how
+  // dark is a modal backdrop", wherever it is painted.
+  &::backdrop {
+    background-color: var(--#{$prefix}backdrop-bg, #{$black});
+    opacity: 0;
+  }
+
+  &[open]::backdrop {
+    opacity: var(--#{$prefix}backdrop-opacity, #{$modal-backdrop-opacity});
+  }
+}
+
+// The open and close animation, in CSS rather than in JavaScript.
+//
+// A top-layer `<dialog>` cannot be animated the obvious way: `display` and
+// `overlay` are discrete properties, so the browser jumps straight to the end of
+// each. `transition-behavior: allow-discrete` tells it to hold both at their old
+// value until the rest of the transition finishes, and `@starting-style`
+// supplies the "before" frame for an element that was `display: none` a moment
+// ago and therefore has no previous style to interpolate from.
+//
+// Both land in Chrome 117, Safari 17.4/17.5 and Firefox 129 — above this
+// package's floor, which `<dialog>` itself sets at Safari 15.4. In between, the
+// panel is fully functional and simply appears and disappears without a
+// transition. `useExitTransition` checks for `allow-discrete` so a close does
+// not sit waiting for a `transitionend` that is never coming.
+@media (prefers-reduced-motion: no-preference) {
+  dialog.modal {
+    @include overlay-transition((opacity, scale), enter);
+  }
+
+  dialog.modal::backdrop {
+    @include overlay-transition((opacity), enter);
+  }
+
+  // The exit values live on the CLOSED state, because a transition is driven by
+  // the properties of the state being transitioned TO — leaving means moving to
+  // `:not([open])`.
+  dialog.modal:not([open]) {
+    opacity: 0;
+    scale: var(--#{$prefix}overlay-enter-scale);
+    @include overlay-transition((opacity, scale), exit);
+  }
+
+  dialog.modal:not([open])::backdrop {
+    opacity: 0;
+    @include overlay-transition((opacity), exit);
+  }
+
+  // The frame before it opened. An element that was `display: none` has no
+  // previous computed style to interpolate from, so without this it simply
+  // appears at its final position.
+  @starting-style {
+    dialog.modal[open] {
+      opacity: 0;
+      scale: var(--#{$prefix}overlay-enter-scale);
+    }
+
+    dialog.modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+// `.confirm-modal` no longer needs to outrank anything.
+//
+// It used `--bs-modal-zindex: #{$zindex-modal + 10}` to climb over the portal
+// stack, which was the only way to stack two panels that were both ordinary
+// positioned `<div>`s. `showModal()` puts each one in the top layer in the order
+// it was opened, so the confirm modal is above whatever opened it by
+// construction — and no consumer `z-index` can get between them.
 .confirm-modal {
-  --#{$prefix}modal-zindex: #{$zindex-modal + 10};
   --#{$prefix}shadow-confirm-modal: var(--#{$prefix}box-shadow-sm), 0 0 100px 30px rgba(0, 0, 0, .3);
+
   .modal-content {
     --#{$prefix}modal-box-shadow: var(--#{$prefix}shadow-confirm-modal);
   }
+
+  // The blur the old `.backdrop-confirm-modal` element carried, moved onto the
+  // backdrop the browser paints. That element was a second scrim stacked on the
+  // dialog's own and it outlived the panel, swallowing the next click.
+  //
+  // Transparent, as that element was: a confirmation is usually raised over a
+  // modal that is already dimming the page, and a second coat of 30% black on
+  // top of the first reads as a different, much darker surface.
+  //
+  // Stated on the `::backdrop` as well as inherited into it: the custom
+  // property only reaches the pseudo-element on engines that inherit from the
+  // originating element, and `dialog.modal::backdrop` is one class MORE
+  // specific than `.confirm-modal::backdrop` — so the selector has to carry the
+  // `dialog` qualifier too, or it loses the argument it looks like it is
+  // winning.
+  --#{$prefix}backdrop-bg: transparent;
 }
+
+dialog.confirm-modal::backdrop {
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+}
+// stylelint-enable selector-no-qualifying-type

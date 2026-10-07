@@ -15,34 +15,100 @@ import { DAlert } from "../../src";
 
 # Modal
 
-This section provides guidance specifically for using `DModal` in **inline** scenarios.
+`DModal` renders a native `<dialog>` and opens it with `showModal()`. The markup
+inside is unchanged — `.modal > .modal-dialog > .modal-content`, the same
+modifier classes, the same props — but the browser now owns the backdrop, the
+focus trap, page inertness, Escape and the top layer.
 
 <Unstyled>
   <DAlert color="warning">
     <span>
-      To achieve the behavior of a modal it is necessary to use the
-      **`DContextProvider`** and the **`useDPortalContext`** hook. For detailed
-      guidance on the **correct usage** of modals, please refer to the [Modal
-      Usage](/docs/design-system-components-modal-usage--docs) page in our
-      documentation.
+      Register the panel in **`DContextProvider.availablePortals`** and open it
+      with **`useDPortalContext().openPortal`**. Rendering `<DModal>` inline as a
+      conditional JSX element no longer works the way it used to: a panel opened
+      with `showModal()` enters the browser's top layer and covers the whole
+      page, including this one. See the [Modal
+      Usage](/docs/design-system-components-modal-usage--docs) page.
     </span>
   </DAlert>
 </Unstyled>
+
+## Accessibility
+
+What the `<dialog>` element supplies, and what it replaced:
+
+| Behaviour | Before | Now |
+|---|---|---|
+| Focus trap | A `keydown` handler cycling the first and last focusable element — and `openPortal` blurred the trigger, so focus started on `<body>` and the trap never engaged | The browser's, which cannot be started from outside the panel |
+| Rest of the page | Reachable by a screen reader's virtual cursor; a Tab trap does nothing for browse mode | `inert`, so it cannot be read or reached at all |
+| Accessible name | `aria-labelledby` pointing at a `<name>Label` id nothing carried — a dangling reference is ignored, so the panel had **no accessible name** | `DModal.Header` writes that id onto the title through `DOverlayContext` |
+| Escape | A global `keydown` listener on `window` | The dialog's own `cancel` event, which `staticBackdrop` can veto |
+| Focus on close | Lost to the top of the page | Restored to whatever opened the panel |
+| Stacking | `--bs-modal-zindex` arithmetic (`$zindex-modal + 10` for the confirm modal) | The top layer, in opening order |
+
+`role="dialog"`, `aria-modal` and `aria-hidden` are deliberately **not** set:
+the element carries the role, `showModal()` conveys modality, and the APG is
+explicit that `aria-modal` must not be added to a native dialog — it has caused
+the content to be announced as empty.
+
+## Closing it
+
+Four things can close a panel, and all four take the same route: the element is
+asked to `close()`, it runs its exit transition, and the portal drops the entry
+when the transition ends.
+
+| From | What happens |
+|---|---|
+| Escape | The dialog's own `cancel`/`close`. `staticBackdrop` vetoes it. |
+| A click outside the panel | The click lands on the dialog itself, which closes it. |
+| `closePortal()` | The provider closes the top entry's dialog. |
+| `dialogRef.current?.close()` | The escape hatch, for a panel outside the portal. |
+
+The rule behind the table: **ask the panel to close, never unmount it.** An
+element removed from the document stops transitioning, so dropping it from state
+makes it vanish on the frame it was told to leave — which is exactly what
+`closePortal()` used to do, and why Escape animated while a Cancel button did
+not.
+
+`onClose` fires when the element has actually closed, before the transition
+finishes. A consumer waiting to know the panel is closed should not wait on an
+animation.
+
+## Browser support
+
+`showModal()` needs Safari 15.4, Firefox 98 or Chrome 37, which is what sets this
+package's floor. The animation needs `@starting-style` and
+`transition-behavior: allow-discrete` (Chrome 117, Safari 17.4–17.5, Firefox
+129); below those the panel is fully functional and simply appears and
+disappears with no transition.
 
 ## CSS Variables
 
 <Markdown>
   {`
-| Variable                               | Class  | Type            | Description                  |
-|----------------------------------------|--------|-----------------|------------------------------|
-| --${PREFIX_BS}modal-header-gap         | .modal | css length unit | Space between header items   |
-| --${PREFIX_BS}modal-footer-padding     | .modal | css length unit | Footer padding               |
-| --${PREFIX_BS}modal-separator-margin-x | .modal | css length unit | Separator horizontal padding |
-| --${PREFIX_BS}modal-separator-height   | .modal | css length unit | Separator height (size)      |
-| --${PREFIX_BS}modal-separator-bg       | .modal | css color unit  | Separator background (color) |
+| Variable                                 | Class  | Type            | Description                          |
+|------------------------------------------|--------|-----------------|--------------------------------------|
+| --${PREFIX_BS}modal-header-gap           | .modal | css length unit | Space between header items           |
+| --${PREFIX_BS}modal-footer-padding       | .modal | css length unit | Footer padding                       |
+| --${PREFIX_BS}modal-separator-margin-x   | .modal | css length unit | Separator horizontal padding         |
+| --${PREFIX_BS}modal-separator-height     | .modal | css length unit | Separator height (size)              |
+| --${PREFIX_BS}modal-separator-bg         | .modal | css color unit  | Separator background (color)         |
+| --${PREFIX_BS}backdrop-bg                | .modal | css color unit  | Colour of the \`::backdrop\` scrim     |
+| --${PREFIX_BS}backdrop-opacity           | .modal | number          | Opacity of the \`::backdrop\` scrim    |
+| --${PREFIX_BS}overlay-duration-enter     | :root  | css time unit   | How long the panel takes to arrive   |
+| --${PREFIX_BS}overlay-duration-exit      | :root  | css time unit   | How long it takes to leave           |
+| --${PREFIX_BS}overlay-easing-enter       | :root  | css easing      | Its curve on the way in              |
+| --${PREFIX_BS}overlay-easing-exit        | :root  | css easing      | Its curve on the way out             |
+| --${PREFIX_BS}overlay-enter-scale        | :root  | number          | What a modal grows from              |
   `}
 </Markdown>
 
-<Canvas of={DModalStories.Default} />
-<Controls of={DModalStories.Default} />
+The four motion variables are declared on `:root` rather than on `.modal`, which
+is what lets a product retime every panel at once. A panel opened through the
+portal is appended to `document.body`, so a class on an ancestor of your provider
+never reaches it — custom properties inherit down the DOM, not down the React
+tree. See the **Scoped timing** story.
+
+<Canvas of={DModalStories.RealUsageWithOpenPortal} />
+<Controls of={DModalStories.RealUsageWithOpenPortal} />
 <Stories />

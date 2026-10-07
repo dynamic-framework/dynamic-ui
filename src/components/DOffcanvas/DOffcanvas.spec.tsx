@@ -81,41 +81,41 @@ describe('<DOffcanvas />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            aria-hidden="false"
-            aria-labelledby="myOffcanvasLabel"
-            class="offcanvas portal show offcanvas-end"
-            id="myOffcanvas"
-            style="transition: none; transform: translateX(100%);"
-            tabindex="-1"
-          >
-            <div
-              class="offcanvas-header"
-            >
-              <div>
-                Test Header
-              </div>
-            </div>
-            <div
-              class="d-offcanvas-separator"
-            />
-            <div
-              class="offcanvas-body"
-            >
-              Test Body
-            </div>
-            <div
-              class="d-offcanvas-separator"
-            />
-            <div
-              class="d-offcanvas-footer"
-            >
-              Test Footer
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <dialog
+    aria-labelledby="myOffcanvasLabel"
+    class="offcanvas portal show offcanvas-end"
+    id="myOffcanvas"
+    open=""
+  >
+    <div
+      class="offcanvas-header"
+    >
+      <div
+        id="myOffcanvasLabel"
+      >
+        Test Header
+      </div>
+    </div>
+    <div
+      class="d-offcanvas-separator"
+    />
+    <div
+      class="offcanvas-body"
+    >
+      Test Body
+    </div>
+    <div
+      class="d-offcanvas-separator"
+    />
+    <div
+      class="d-offcanvas-footer"
+    >
+      Test Footer
+    </div>
+  </dialog>
+</div>
+`);
     });
 
     it.each([
@@ -127,9 +127,11 @@ describe('<DOffcanvas />', () => {
       expect(container.firstChild).toHaveClass(expectedClass);
     });
 
+    // See the matching case in `DModal.spec.tsx` for why this is no longer
+    // `data-bs-backdrop="static"`.
     it('should render with a static backdrop', () => {
       const { container } = render(<DOffcanvas name="test" staticBackdrop />);
-      expect(container.firstChild).toHaveAttribute('data-bs-backdrop', 'static');
+      expect(container.firstChild).toHaveAttribute('data-static-backdrop');
     });
 
     it('should resolve responsive openFrom based on the current breakpoint', () => {
@@ -183,9 +185,18 @@ describe('<DOffcanvas />', () => {
       expect(container.firstChild).not.toHaveStyle({ '--bs-offcanvas-width': '400px' });
     });
 
-    it('should render a scrollable offcanvas', () => {
+    /*
+     * `scrollable` emits nothing, and never did anything.
+     *
+     * It wrote `data-bs-scroll="true"`, an instruction to Bootstrap's JS to
+     * leave the page scrollable behind the panel — and that JS is not on the
+     * page, while `useDisableBodyScrollEffect` locked the body regardless. The
+     * prop is kept and deprecated rather than removed, so the 12 call sites
+     * passing it keep compiling.
+     */
+    it('does not emit a scroll attribute for the deprecated scrollable prop', () => {
       const { container } = render(<DOffcanvas name="test" scrollable />);
-      expect(container.firstChild).toHaveAttribute('data-bs-scroll', 'true');
+      expect(container.firstChild).not.toHaveAttribute('data-bs-scroll');
     });
   });
 

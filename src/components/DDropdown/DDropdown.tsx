@@ -6,7 +6,9 @@ import {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
+
 import classNames from 'classnames';
+import nearestOpenDialog from '../../utils/nearestOpenDialog';
 import DButtonIcon from '../DButtonIcon';
 import DIcon from '../DIcon';
 
@@ -447,7 +449,23 @@ export default function DDropdown(
       className={classNames(`dropdown drop-${resolvedSide} d-inline-block`, className)}
     >
       {ToggleElement}
-      {open && (asPortal ? createPortal(menuItems, document.body) : menuItems)}
+      {/*
+        * In portal mode the menu goes to the nearest open `<dialog>` when there
+        * is one, and to `document.body` otherwise.
+        *
+        * `showModal()` puts a `DModal`/`DOffcanvas` in the browser's top layer,
+        * which paints above the whole document whatever `z-index` says — so a
+        * menu on the body renders BEHIND the panel holding the toggle that
+        * opened it. Portalling into the dialog puts the menu in the top layer
+        * too.
+        *
+        * The dialog does not establish a containing block (it carries no
+        * transform while open), so the menu's `position: fixed` coordinates
+        * still resolve against the viewport and the maths above is unchanged.
+        */}
+      {open && (asPortal
+        ? createPortal(menuItems, nearestOpenDialog(toggleRef.current) ?? document.body)
+        : menuItems)}
     </div>
   );
 }

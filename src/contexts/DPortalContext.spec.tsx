@@ -40,25 +40,33 @@ describe('DPortalContextProvider', () => {
     document.body.innerHTML = '';
   });
 
+  /*
+   * The scrim is LATCHED: absent until a panel needs one, present from then on.
+   *
+   * It has to outlive the panel so its fade-out has a previous frame to leave
+   * from — but "persistent" must not mean "always", because that is a
+   * `position: fixed` element covering the viewport for every provider on the
+   * page. A Storybook docs page mounts one provider per story.
+   */
   it.each([
     ['without availablePortals', undefined],
     ['with an empty availablePortals', {}],
-  ])('does not load the animated stack %s', async (_, availablePortals) => {
+  ])('mounts no scrim %s', async (_, availablePortals) => {
     render(
       <DContextProvider availablePortals={availablePortals}>
         <span>Content</span>
       </DContextProvider>,
     );
     await act(async () => {});
-    expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
+    expect(document.querySelector('#d-portal .backdrop')).not.toBeInTheDocument();
   });
 
-  it('cancels an open that is still waiting for the stack module', async () => {
+  it('opens and closes without leaving a panel behind', async () => {
     renderWithPortals();
     fireEvent.click(screen.getByText('Open'));
+    await screen.findByText('Portal content');
     fireEvent.click(screen.getByText('Close'));
-    await waitFor(() => expect(document.getElementById('d-portal')).not.toBeEmptyDOMElement());
-    expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
+    await waitFor(() => expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument());
   });
 
   it('opens a portal only once when opened from an effect', async () => {
@@ -81,11 +89,23 @@ describe('DPortalContextProvider', () => {
     expect(screen.getByText('Open portals: 1')).toBeInTheDocument();
   });
 
-  it('renders the portal component once it is opened', async () => {
+  /*
+   * The scrim arrives a tick after the panel.
+   *
+   * A panel reports whether the browser is managing it from its own mount
+   * effect, so on the first frame the provider cannot yet tell a `<dialog>` from
+   * this plain `<div>`. It waits rather than guessing — which is what keeps a
+   * stack of dialogs from mounting a scrim they will never use.
+   */
+  it('renders the portal component once it is opened, and then the scrim', async () => {
     renderWithPortals();
     fireEvent.click(screen.getByText('Open'));
     expect(await screen.findByText('Portal content')).toBeInTheDocument();
-    expect(document.querySelector('#d-portal .backdrop')).toBeInTheDocument();
+
+    await waitFor(() => (
+      expect(document.querySelector('#d-portal .backdrop')).toBeInTheDocument()
+    ));
+    expect(document.querySelector('#d-portal .backdrop')).toHaveAttribute('data-open');
   });
 
   // The exit animation keeps the closed portal mounted for ~450ms.

@@ -1,11 +1,30 @@
 # https://github.com/browserslist/browserslist#readme
+#
+# Dynamic UI 2.x targets.
+#
+# The floor is set by ONE feature: `<dialog>.showModal()`. `DModal`,
+# `DOffcanvas` and the confirm modal are native dialogs, and `showModal()` is
+# what supplies the focus trap, the page inertness a screen reader needs, Escape
+# and the top layer. A browser without it does not get a degraded modal — it
+# gets an element it does not recognise.
+#
+#   dialog.showModal()   Chrome 37, Edge 79, Firefox 98, Safari 15.4
+#
+# Two further features the panels use degrade cleanly and so do NOT set the
+# floor — without them a panel simply appears and disappears with no transition:
+#
+#   transition-behavior: allow-discrete   Chrome 117, Firefox 129, Safari 17.4
+#   @starting-style                       Chrome 117, Firefox 129, Safari 17.5
+#
+# Raising the floor from the previous list (Chrome 60 / Firefox 60 / Safari 12,
+# 2017–2018) is a deliberate, announced change — see the CHANGELOG. Those
+# versions predate `<dialog>` entirely.
 
->= 0.5%
-last 2 major versions
+Chrome >= 100
+Edge >= 100
+Firefox >= 98
+Safari >= 15.4
+iOS >= 15.4
+Samsung >= 16
+Opera >= 86
 not dead
-Chrome >= 60
-Firefox >= 60
-Firefox ESR
-iOS >= 12
-Safari >= 12
-not Explorer <= 11

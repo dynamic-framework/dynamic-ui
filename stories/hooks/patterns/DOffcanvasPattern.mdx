@@ -4,12 +4,13 @@ import { ExampleOffcanvasRoot } from "./DOffcanvasPatternExamples";
 
 # Offcanvas
 
-To achieve the behavior of an offcanvas it is necessary to use the `DContextProvider` and the `useDPortalContext` hook,
-however, it is possible to create an inline offcanvas simply using `DOffcanvas`
+To achieve the behavior of an offcanvas it is necessary to use the `DContextProvider` and the `useDPortalContext` hook.
 
-This part of the documentation talks about `DOffcanvas` and directly covers its behavior.
-
-> To achieve inline use of an offcanvas, review the offcanvas topic in components.
+`DOffcanvas` is a native `<dialog>` opened with `showModal()`, which puts it in
+the browser's top layer — above the entire document, whatever any `z-index` says.
+So rendering one "inline" does not scope it to where it sits in the JSX: it still
+covers the page. Register it and open it through the portal, which is what the
+rest of this page shows.
 
 <Meta title="Design System/Components/Offcanvas/Usage" />
 
@@ -52,7 +53,6 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
     <DOffcanvas
       name="example"
       staticBackdrop={false}
-      scrollable={false}
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>

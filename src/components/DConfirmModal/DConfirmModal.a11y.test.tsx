@@ -22,6 +22,7 @@ const buildEntry = (overrides: Partial<ConfirmModalEntry> = {}): ConfirmModalEnt
   onConfirm: jest.fn(),
   onConfirmAction: jest.fn().mockResolvedValue(undefined),
   onCloseAction: jest.fn(),
+  onRemoveAction: jest.fn(),
   ...overrides,
 });
 

@@ -4,12 +4,13 @@ import { ExampleModalRoot } from "./DModalPatternExamples";
 
 # Modal
 
-To achieve the behavior of a modal it is necessary to use the `DContextProvider` and the `useDPortalContext` hook,
-however, it is possible to create an inline modal simply using `DModal`
+To achieve the behavior of a modal it is necessary to use the `DContextProvider` and the `useDPortalContext` hook.
 
-This part of the documentation talks about `DModal` and directly covers its behavior.
-
-> To achieve inline use of a modal, review the modal topic in components.
+`DModal` is a native `<dialog>` opened with `showModal()`, which puts it in the
+browser's top layer — above the entire document, whatever any `z-index` says. So
+rendering one "inline" does not scope it to where it sits in the JSX: it still
+covers the page. Register it and open it through the portal, which is what the
+rest of this page shows.
 
 <Meta title="Design System/Components/Modal/Usage" />
 

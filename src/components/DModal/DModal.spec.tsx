@@ -34,49 +34,49 @@ describe('<DModal />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
+<div>
+  <dialog
+    aria-labelledby="myModalLabel"
+    class="modal portal show"
+    id="myModal"
+    open=""
+  >
+    <div
+      class="modal-dialog"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
           <div
-            aria-hidden="false"
-            aria-labelledby="myModalLabel"
-            class="modal portal show"
-            id="myModal"
-            style="opacity: 0; transform: scale(0.95);"
-            tabindex="-1"
+            id="myModalLabel"
           >
-            <div
-              class="modal-dialog"
-            >
-              <div
-                class="modal-content"
-              >
-                <div
-                  class="modal-header"
-                >
-                  <div>
-                    Test Header
-                  </div>
-                </div>
-                <div
-                  class="d-modal-separator"
-                />
-                <div
-                  class="modal-body"
-                >
-                  Test Body
-                </div>
-                <div
-                  class="d-modal-separator"
-                />
-                <div
-                  class="modal-footer"
-                >
-                  Test Footer
-                </div>
-              </div>
-            </div>
+            Test Header
           </div>
         </div>
-      `);
+        <div
+          class="d-modal-separator"
+        />
+        <div
+          class="modal-body"
+        >
+          Test Body
+        </div>
+        <div
+          class="d-modal-separator"
+        />
+        <div
+          class="modal-footer"
+        >
+          Test Footer
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
+`);
     });
 
     it('should render a centered and large modal', () => {
@@ -87,11 +87,21 @@ describe('<DModal />', () => {
       expect(dialog).toHaveClass('modal-lg');
     });
 
+    /*
+     * `data-static-backdrop`, not `data-bs-backdrop="static"`.
+     *
+     * The Bootstrap attribute is read by Bootstrap's JS, which has never been on
+     * the page here — so it was a marker nothing acted on. What enforces a
+     * static backdrop now is `useOverlayDialog`: it refuses the dialog's
+     * `cancel` event (Escape) and ignores a click on the backdrop. The attribute
+     * is left for styling and for `DPortalContext` to read on a non-dialog
+     * panel.
+     */
     it('should render with a static backdrop', () => {
       const { container } = render(<DModal name="test" staticBackdrop />);
 
       const modal = container.querySelector('.modal');
-      expect(modal).toHaveAttribute('data-bs-backdrop', 'static');
+      expect(modal).toHaveAttribute('data-static-backdrop');
     });
 
     it('should render a fullscreen modal', () => {

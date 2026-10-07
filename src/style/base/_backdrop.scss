@@ -1,3 +1,22 @@
+// The scrim for a panel that is NOT a native `<dialog>` — a custom panel a
+// consumer registers with `availablePortals`. Every panel this library ships is
+// a dialog and paints its own through `::backdrop`; see `_d-modal.scss`.
+//
+// ## Mounted always, shown by an attribute
+//
+// It used to be mounted only while a panel was open, which is why it needed
+// `framer-motion`: an element that unmounts has nothing to animate out, so
+// `AnimatePresence` had to hold it there for the exit. 41.6 KB of library for
+// one opacity fade.
+//
+// Kept in the document and toggled with `data-open` instead, the exit is an
+// ordinary transition — there is a previous frame to leave from, because the
+// element was already there. No `@starting-style` and no presence tracking, so
+// it works at the whole browserslist floor.
+//
+// `pointer-events: none` while closed matters: a `position: fixed` element
+// covering the viewport at `opacity: 0` is invisible and still catches every
+// click, which is the classic way a page becomes mysteriously dead.
 .backdrop {
   // scss-docs-start modal-backdrop-css-vars
   --#{$prefix}backdrop-zindex: #{$zindex-modal};
@@ -5,12 +24,28 @@
   --#{$prefix}backdrop-opacity: #{$modal-backdrop-opacity};
   // scss-docs-end modal-backdrop-css-vars
 
-  @include overlay-backdrop(var(--#{$prefix}backdrop-zindex), var(--#{$prefix}backdrop-bg), var(--#{$prefix}backdrop-opacity));
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--#{$prefix}backdrop-zindex);
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background-color: var(--#{$prefix}backdrop-bg);
+  opacity: 0;
+
+  &[data-open] {
+    pointer-events: auto;
+    opacity: var(--#{$prefix}backdrop-opacity);
+  }
 }
 
-.backdrop-confirm-modal {
-  --#{$prefix}backdrop-zindex: #{$zindex-modal + 9};
-  --#{$prefix}backdrop-filter: 5px;
-  --#{$prefix}backdrop-bg: transparent;
-  backdrop-filter: blur(var(--#{$prefix}backdrop-filter));
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop {
+    transition: opacity var(--#{$prefix}overlay-duration-exit) var(--#{$prefix}overlay-easing-exit);
+
+    &[data-open] {
+      transition: opacity var(--#{$prefix}overlay-duration-enter) var(--#{$prefix}overlay-easing-enter);
+    }
+  }
 }

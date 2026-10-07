@@ -19,7 +19,6 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
     <DOffcanvas
       name="example"
       staticBackdrop={false}
-      scrollable={false}
       openFrom="end"
     >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>

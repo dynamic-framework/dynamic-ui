@@ -6,4 +6,5 @@ export { default as getCssVariable } from './getCssVariable';
 export { default as validatePhoneNumber } from './validatePhoneNumber';
 export { default as sanitizeHref } from './sanitizeHref';
 export { default as buildUrl } from './buildUrl';
+export { default as nearestOpenDialog } from './nearestOpenDialog';
 export * from './mediaQuery';

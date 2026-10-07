@@ -19,6 +19,7 @@ import classNames from 'classnames';
 
 import type { ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
+import nearestOpenDialog from '../../utils/nearestOpenDialog';
 
 import type { BaseProps, ComponentSize } from '../interface';
 
@@ -147,7 +148,20 @@ export default function DTooltip(
       >
         {Component}
       </div>
-      <FloatingPortal>
+      {/*
+        * A tooltip on `document.body` renders BEHIND an open `DModal` or
+        * `DOffcanvas`: `showModal()` puts the dialog in the browser's top
+        * layer, which paints above the whole document whatever `z-index` says.
+        * A tooltip on a control inside a panel is not an edge case.
+        *
+        * Resolved during the render that opens it, so it mounts in the right
+        * place the first time rather than moving after an effect.
+        */}
+      <FloatingPortal
+        root={isOpen
+          ? nearestOpenDialog(refs.reference.current as Element | null)
+          : undefined}
+      >
         {isOpen && (
           <div
             className={classNames(generateClasses)}

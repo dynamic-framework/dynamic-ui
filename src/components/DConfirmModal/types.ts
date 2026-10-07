@@ -25,8 +25,25 @@ export interface UseConfirmModalConfig {
  */
 export type ConfirmModalEntry = UseConfirmModalConfig & {
   id: string;
+  /**
+   * Runs the consumer's `onConfirm`. Rejects if it threw, which keeps the modal
+   * open.
+   *
+   * It does NOT drop the entry. Dropping it unmounts the `<dialog>`, and an
+   * element removed from the document stops transitioning — so the modal
+   * vanished on the frame the action succeeded instead of animating out. The UI
+   * closes the element and calls `onRemoveAction` once the exit is over.
+   */
   onConfirmAction: () => Promise<void>;
+  /**
+   * Reports that the user dismissed it, firing the consumer's `onClose`.
+   *
+   * Also does not drop the entry — same reason. "Dismissed" and "gone" are two
+   * moments with an animation between them.
+   */
   onCloseAction: () => void;
+  /** Drops the entry. Called by the UI once the dialog has finished leaving. */
+  onRemoveAction: () => void;
 };
 
 /**

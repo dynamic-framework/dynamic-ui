@@ -24,3 +24,5 @@ export {
 export { default as useCountdown } from './useCountdown';
 export { default as useOtp } from './useOtp';
 export type { UseOtpConfig, UseOtpReturn } from './useOtp';
+export { default as useExitTransition } from './useExitTransition';
+export { default as useRenderLoopWarning } from './useRenderLoopWarning';
