@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -159,15 +160,18 @@ export type PortalProps<P = unknown> = {
  * contract the stack is already keyed by: `DModal` and `DOffcanvas` both set it,
  * and `isPortalPanel` inside them already assumes it.
  *
- * Scoped to the portal node instead of `document.getElementById`, so an element
- * elsewhere on the page that happens to share the id cannot be closed by
- * mistake. Matched by tag and id rather than with a selector, because an id is
+ * Searched inside THIS provider's wrapper rather than the whole document, or
+ * even the whole portal node. Two providers can share a `portalName`, and two
+ * of them registering a panel under the same key — which a Storybook docs page
+ * does on every story — would otherwise let one provider close the other's
+ * panel, since both panels carry the same id.
+ *
+ * Matched by tag and id rather than with a selector, because an id is
  * author-supplied and `CSS.escape` is not available everywhere.
  */
-function panelDialog(portalName: string, name: string): HTMLDialogElement | undefined {
-  const root = document.getElementById(portalName);
-  if (!root) return undefined;
-  return Array.from(root.getElementsByTagName('dialog')).find((el) => el.id === name);
+function panelDialog(wrapper: HTMLElement | null, name: string): HTMLDialogElement | undefined {
+  if (!wrapper) return undefined;
+  return Array.from(wrapper.getElementsByTagName('dialog')).find((el) => el.id === name);
 }
 
 export const DPortalContext = createContext<PortalContextType<any> | undefined>(undefined);
@@ -181,6 +185,20 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 ) {
   const { created } = usePortal(portalName);
   useRenderLoopWarning('DPortalContextProvider');
+
+  /**
+   * This provider's own slice of the portal node.
+   *
+   * Everything that has to find "the panel on top" goes through here. The
+   * handlers used to reach for `#${portalName} > div > *:last-child`, which
+   * assumes this provider is the only one rendering into that node — and two
+   * providers on one `portalName` each append their own wrapper, so that
+   * selector took the FIRST wrapper's last child. One provider's Escape could
+   * reach another's panel.
+   *
+   * A ref cannot be ambiguous about which wrapper is this one.
+   */
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [stack, { push, pop, popIf }] = useStackState<InternalStackItem<T>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
@@ -242,7 +260,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
        * finished.
        */
       const top = stack[stack.length - 1];
-      const dialog = top && panelDialog(portalName, top.name);
+      const dialog = top && panelDialog(wrapperRef.current, top.name);
 
       if (dialog) {
         /*
@@ -259,7 +277,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       // directly. pop() is safe on empty stacks, so close remains idempotent.
       pop();
     },
-    [pop, portalName, stack],
+    [pop, stack],
   );
 
   const closePanel = useCallback<PortalContextType<T>['closePanel']>(
@@ -409,7 +427,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
-      const lastPortal = document.querySelector(`#${portalName} > div > *:last-child`);
+      const lastPortal = wrapperRef.current?.lastElementChild ?? null;
       if (event.key === 'Escape') {
         if (lastPortal) {
           handleClose(lastPortal as HTMLElement);
@@ -445,7 +463,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     return () => {
       window.removeEventListener('keydown', keyEvent);
     };
-  }, [handleClose, portalName, stack.length, topIsNativeDialog]);
+  }, [handleClose, stack.length, topIsNativeDialog]);
 
   return (
     <DPortalContext.Provider value={value}>
@@ -454,6 +472,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
         // eslint-disable-next-line max-len
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
+          ref={wrapperRef}
           onClick={({ target }) => handleClose(target as Element)}
           onKeyDown={() => {}}
         >

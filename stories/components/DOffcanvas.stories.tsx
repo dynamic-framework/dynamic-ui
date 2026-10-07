@@ -31,7 +31,13 @@ type Payloads = {
     height?: string | ResponsiveProp;
     staticBackdrop?: boolean;
     title?: string;
-    body?: React.ReactNode;
+    /**
+     * Body copy, as a STRING — never a `ReactNode`. See the matching note on
+     * the Modal page's payload: an element here is walked by the docs page's
+     * dynamic source serialiser, and a big enough one takes the renderer out of
+     * memory.
+     */
+    body?: string;
     showCloseButton?: boolean;
     closeIcon?: string;
     actionPlacement?: 'start' | 'end' | 'center' | 'between' | 'fill';
@@ -52,7 +58,7 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
   const { closePortal } = useDPortalContext();
   const {
     title = 'Advanced filters',
-    body = <p className="m-0">Offcanvas body. Press Escape or click outside to close.</p>,
+    body = 'Offcanvas body. Press Escape or click outside to close.',
     showCloseButton = true,
     closeIcon,
     actionPlacement,
@@ -72,7 +78,7 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
           <h5 className="fw-bold m-0">{title}</h5>
         </DOffcanvas.Header>
       )}
-      <DOffcanvas.Body>{body}</DOffcanvas.Body>
+      <DOffcanvas.Body>{body && <p className="m-0">{body}</p>}</DOffcanvas.Body>
       {withFooter && (
         <DOffcanvas.Footer actionPlacement={actionPlacement}>
           <DButton text="Cancel" color="secondary" variant="outline" onClick={() => closePortal()} />
@@ -224,7 +230,7 @@ function App() {
   render: () => withPortal(
     <Trigger
       label="Open Offcanvas"
-      payload={{ body: <p className="m-0">Payload passed via openPortal.</p> }}
+      payload={{ body: 'Payload passed via openPortal.' }}
     />,
   ),
 };
@@ -254,12 +260,8 @@ export const ResponsivePlacement: Story = story(
           xs: 'bottom', sm: 'start', md: 'end', lg: 'top',
         },
         title: 'One panel, four placements',
-        body: (
-          <p className="m-0">
-            Resize the window (or the Storybook viewport) and reopen it: the
-            placement follows the real breakpoint.
-          </p>
-        ),
+        body: 'Resize the window (or the Storybook viewport) and reopen it: '
+          + 'the placement follows the real breakpoint.',
       }}
     />,
   ),
@@ -345,7 +347,7 @@ export const StaticBackdrop: Story = story(
       payload={{
         staticBackdrop: true,
         title: 'Dismissed deliberately only',
-        body: <p className="m-0">Escape and a click outside do nothing.</p>,
+        body: 'Escape and a click outside do nothing.',
       }}
     />,
   ),
@@ -378,7 +380,7 @@ export const Durations: Story = {
         payload={{
           openFrom: 'end',
           title: `enter ${enter}, exit ${exit}`,
-          body: <p className="m-0">Press Escape or click outside, and watch how it leaves.</p>,
+          body: 'Press Escape or click outside, and watch how it leaves.',
           style: {
             '--bs-overlay-duration-enter': enter,
             '--bs-overlay-duration-exit': exit,
@@ -423,12 +425,8 @@ export const ReducedMotion: Story = {
       payload={{
         openFrom: 'end',
         title: 'Motion is opt-out at the OS level',
-        body: (
-          <p className="m-0">
-            Turn on &ldquo;reduce motion&rdquo; in your system settings and reopen this: it
-            appears with no slide, whatever the duration says.
-          </p>
-        ),
+        body: 'Turn on \u201creduce motion\u201d in your system settings and reopen this: '
+          + 'it appears with no slide, whatever the duration says.',
         style: {
           '--bs-overlay-duration-enter': '900ms',
           '--bs-overlay-duration-exit': '700ms',

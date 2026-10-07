@@ -15,7 +15,29 @@ describe('usePortal', () => {
     expect(result.current.created).toBe(true);
   });
 
-  it('should remove previous portal with the same name', () => {
+  /**
+   * Two providers on one `portalName` share the node; they must not fight over
+   * it.
+   *
+   * This used to replace the node, which detached whatever the first provider
+   * had rendered into it. `createPortal` keeps its own children inside the
+   * container, so sharing one is fine — destroying it was not.
+   */
+  it('should reuse an existing portal node rather than replacing it', () => {
+    const first = renderHook(() => usePortal('shared-portal'));
+    const node = document.getElementById('shared-portal');
+    expect(node).not.toBeNull();
+
+    const second = renderHook(() => usePortal('shared-portal'));
+
+    expect(document.getElementById('shared-portal')).toBe(node);
+    expect(node?.isConnected).toBe(true);
+    expect(first.result.current.created).toBe(true);
+    expect(second.result.current.created).toBe(true);
+    expect(document.querySelectorAll('#shared-portal')).toHaveLength(1);
+  });
+
+  it('should adopt a node the consumer put in the document themselves', () => {
     const div = document.createElement('div');
     div.id = 'old-portal';
     document.body.appendChild(div);

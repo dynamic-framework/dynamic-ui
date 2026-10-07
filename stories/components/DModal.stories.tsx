@@ -37,7 +37,26 @@ type Payloads = {
     fullScreenFrom?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
     staticBackdrop?: boolean;
     title?: string;
-    body?: React.ReactNode;
+    /**
+     * Body copy, as a STRING.
+     *
+     * Not a `ReactNode`, and that is the whole point. The payload crosses into
+     * the portal's state and into the props of the element the docs page
+     * serialises — and data survives both trips in a way a React element does
+     * not. `docs.source.type` is `dynamic`, so Storybook stringifies the
+     * rendered story tree, which means walking every element reachable from a
+     * prop.
+     *
+     * One paragraph in a payload is survivable. The `Scrollable` story put
+     * TWENTY-FOUR in, and the serialiser took the whole docs page from 53 MB to
+     * 1.3 GB — until Chromium ran the renderer out of memory and killed the tab.
+     * It reads as the browser hanging, and nothing points at a story.
+     *
+     * So the payload says WHAT to draw and the panel draws it.
+     */
+    body?: string;
+    /** Filler paragraphs, for showing a body that scrolls. */
+    paragraphs?: number;
     showCloseButton?: boolean;
     closeIcon?: string;
     actionPlacement?: 'start' | 'end' | 'center' | 'between' | 'fill';
@@ -60,6 +79,8 @@ type Payloads = {
      * does not have to.
      */
     withNestedTrigger?: boolean;
+    /** Renders the form that asks for a confirmation before closing. */
+    withConfirmDemo?: boolean;
   };
 };
 
@@ -72,6 +93,51 @@ function OpenNested() {
       variant="outline"
       onClick={() => openPortal('nested', { title: 'The one on top' })}
     />
+  );
+}
+
+/**
+ * Asks before doing something, from inside an open panel.
+ *
+ * `useConfirmModal` renders through its own container rather than the portal
+ * stack, so it sits above whatever is open without being part of it.
+ */
+function ConfirmFromModal() {
+  const { closePortal } = useDPortalContext();
+  const [result, setResult] = useState<string>('');
+
+  const confirm = useConfirmModal({
+    title: 'Discard the changes?',
+    message: 'The form has unsaved edits. Closing now loses them.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: () => {
+      setResult('discarded');
+      closePortal();
+    },
+    onClose: () => setResult('kept'),
+  });
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <p className="m-0">
+        A panel with unsaved work. Closing it should ask first — which is a
+        confirm modal on top of this one.
+      </p>
+      <DInput label="Amount" defaultValue="1,250.00" />
+      <div className="d-flex gap-2">
+        <DButton text="Close with a confirmation" color="danger" onClick={confirm.open} />
+        <DButton text="Close directly" variant="outline" onClick={() => closePortal()} />
+      </div>
+      {result && (
+        <p className="m-0 text-muted small">
+          Last answer:
+          {' '}
+          {result}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -93,13 +159,15 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
   const { closePortal } = useDPortalContext();
   const {
     title = 'Do you want to reject the offer?',
-    body = <p className="m-0">Modal body. Press Escape or click outside to close.</p>,
+    body = 'Modal body. Press Escape or click outside to close.',
+    paragraphs = 0,
     showCloseButton = true,
     closeIcon,
     actionPlacement,
     withHeader = true,
     withFooter = true,
     withNestedTrigger = false,
+    withConfirmDemo = false,
     ...modalProps
   } = payload;
 
@@ -111,8 +179,15 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
         </DModal.Header>
       )}
       <DModal.Body>
-        {body}
+        {body && <p className="m-0">{body}</p>}
+        {Array.from({ length: paragraphs }, (_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <p key={index}>
+            {`Paragraph ${index + 1} — the header and the footer stay put while this scrolls.`}
+          </p>
+        ))}
         {withNestedTrigger && <OpenNested />}
+        {withConfirmDemo && <ConfirmFromModal />}
       </DModal.Body>
       {withFooter && (
         <DModal.Footer actionPlacement={actionPlacement}>
@@ -287,7 +362,7 @@ function App() {
   render: () => withPortal(
     <Trigger
       label="Open Modal"
-      payload={{ body: <p className="m-0">Payload passed via openPortal.</p> }}
+      payload={{ body: 'Payload passed via openPortal.' }}
     />,
   ),
 };
@@ -330,20 +405,8 @@ export const Scrollable: Story = story(
       payload={{
         scrollable: true,
         title: 'A body that scrolls',
-        body: (
-          <>
-            {Array.from({ length: 24 }, (_, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <p key={index}>
-                Paragraph
-                {' '}
-                {index + 1}
-                {' '}
-                — the header and the footer stay put while this scrolls.
-              </p>
-            ))}
-          </>
-        ),
+        body: '',
+        paragraphs: 24,
       }}
     />,
   ),
@@ -362,7 +425,7 @@ export const FullScreen: Story = story(
           fullScreen: true,
           fullScreenFrom: 'md',
           title: 'modal-fullscreen-md-down',
-          body: <p className="m-0">Narrow the viewport below 768px and reopen it.</p>,
+          body: 'Narrow the viewport below 768px and reopen it.',
         }}
       />
     </>,
@@ -398,7 +461,7 @@ export const Composition: Story = story(
       />
       <Trigger
         label="Close button only"
-        payload={{ title: '', body: <p className="m-0">An empty header pushes the close button to the end.</p> }}
+        payload={{ title: '', body: 'An empty header pushes the close button to the end.' }}
       />
     </>,
   ),
@@ -430,11 +493,7 @@ export const StaticBackdrop: Story = story(
       payload={{
         staticBackdrop: true,
         title: 'Dismissed deliberately only',
-        body: (
-          <p className="m-0">
-            Escape and a click outside do nothing. Use the close button or Cancel.
-          </p>
-        ),
+        body: 'Escape and a click outside do nothing. Use the close button or Cancel.',
       }}
     />,
   ),
@@ -470,7 +529,7 @@ export const Durations: Story = {
         label={`${label} · ${enter} / ${exit}`}
         payload={{
           title: `enter ${enter}, exit ${exit}`,
-          body: <p className="m-0">Press Escape or click outside, and watch how it leaves.</p>,
+          body: 'Press Escape or click outside, and watch how it leaves.',
           style: {
             '--bs-overlay-duration-enter': enter,
             '--bs-overlay-duration-exit': exit,
@@ -539,7 +598,7 @@ export const Easings: Story = {
         label={label}
         payload={{
           title: label,
-          body: <p className="m-0">Open it a few times — a curve is a motion, not a frame.</p>,
+          body: 'Open it a few times — a curve is a motion, not a frame.',
           /* Slowed down so the curve is actually perceptible; at 300ms every
              easing looks much the same. */
           style: {
@@ -601,13 +660,8 @@ export const ScopedTiming: Story = {
           label="Open — timed from :root"
           payload={{
             title: 'Timed by the document',
-            body: (
-              <p className="m-0">
-                Nothing on this panel sets a duration — the value comes from the
-                document root, which every panel inherits wherever the portal
-                puts it.
-              </p>
-            ),
+            body: 'Nothing on this panel sets a duration — the value comes from the '
+              + 'document root, which every panel inherits wherever the portal puts it.',
           }}
         />,
       )}
@@ -662,12 +716,8 @@ export const ReducedMotion: Story = {
       label="Open"
       payload={{
         title: 'Motion is opt-out at the OS level',
-        body: (
-          <p className="m-0">
-            Turn on &ldquo;reduce motion&rdquo; in your system settings and reopen this: it
-            appears and disappears with no transition, whatever the duration says.
-          </p>
-        ),
+        body: 'Turn on \u201creduce motion\u201d in your system settings and reopen this: '
+          + 'it appears and disappears with no transition, whatever the duration says.',
         style: {
           '--bs-overlay-duration-enter': '900ms',
           '--bs-overlay-duration-exit': '700ms',
@@ -721,7 +771,7 @@ export const Stacked: Story = story(
       payload={{
         size: 'lg',
         title: 'The one underneath',
-        body: <p className="m-0">A large panel. The button below opens a small one on top of it.</p>,
+        body: 'A large panel. The button below opens a small one on top of it.',
         withNestedTrigger: true,
       }}
     />,
@@ -732,51 +782,6 @@ export const Stacked: Story = story(
 );
 
 /* --- confirming from inside a modal -------------------------------------- */
-
-/**
- * Asks before doing something, from inside an open panel.
- *
- * `useConfirmModal` renders through its own container rather than the portal
- * stack, so it sits above whatever is open without being part of it.
- */
-function ConfirmFromModal() {
-  const { closePortal } = useDPortalContext();
-  const [result, setResult] = useState<string>('');
-
-  const confirm = useConfirmModal({
-    title: 'Discard the changes?',
-    message: 'The form has unsaved edits. Closing now loses them.',
-    confirmLabel: 'Discard',
-    cancelLabel: 'Keep editing',
-    confirmColor: 'danger',
-    onConfirm: () => {
-      setResult('discarded');
-      closePortal();
-    },
-    onClose: () => setResult('kept'),
-  });
-
-  return (
-    <div className="d-flex flex-column gap-3">
-      <p className="m-0">
-        A panel with unsaved work. Closing it should ask first — which is a
-        confirm modal on top of this one.
-      </p>
-      <DInput label="Amount" defaultValue="1,250.00" />
-      <div className="d-flex gap-2">
-        <DButton text="Close with a confirmation" color="danger" onClick={confirm.open} />
-        <DButton text="Close directly" variant="outline" onClick={() => closePortal()} />
-      </div>
-      {result && (
-        <p className="m-0 text-muted small">
-          Last answer:
-          {' '}
-          {result}
-        </p>
-      )}
-    </div>
-  );
-}
 
 export const ConfirmBeforeClosing: Story = story(
   () => withPortal(
@@ -793,7 +798,8 @@ export const ConfirmBeforeClosing: Story = story(
         payload={{
           title: 'Edit the transfer',
           withFooter: false,
-          body: <ConfirmFromModal />,
+          body: '',
+          withConfirmDemo: true,
         }}
       />
     </>,

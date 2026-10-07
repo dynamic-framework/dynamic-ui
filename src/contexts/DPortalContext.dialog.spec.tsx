@@ -62,6 +62,24 @@ function PanelWithCancel({ name, payload }: PortalProps<Payloads['first']>) {
   );
 }
 
+function StoryOpener({ label }: { label: string }) {
+  const { openPortal } = useDPortalContext<Payloads>();
+  return (
+    <button type="button" onClick={() => openPortal('first', { title: `panel ${label}` })}>
+      {`open ${label}`}
+    </button>
+  );
+}
+
+/** One story's worth: a provider on the default `portalName`, as an app writes it. */
+function Story({ label }: { label: string }) {
+  return (
+    <DContextProvider availablePortals={{ first: PlainPanel }}>
+      <StoryOpener label={label} />
+    </DContextProvider>
+  );
+}
+
 function Opener() {
   const { openPortal, stack } = useDPortalContext<Payloads>();
   return (
@@ -149,5 +167,41 @@ describe('DPortalContextProvider with native dialog panels', () => {
 
     expect(onCloseSpy).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId('depth')).toHaveTextContent('0');
+  });
+
+  /**
+   * A Storybook docs page mounts one provider per story — a dozen of them on the
+   * modal page, all on the default `portalName`.
+   *
+   * `usePortal` used to destroy any existing node and put a fresh one in its
+   * place, so each story that mounted detached the node the previous one was
+   * still rendering into. An open panel went with it: present in the React tree,
+   * absent from the document.
+   *
+   * That was survivable while the panels were `<div>`s. A `<dialog>` detached
+   * while `showModal()` has it in the top layer leaves the page `inert` behind a
+   * modal that is no longer in the document — the page paints and then ignores
+   * every click.
+   */
+  it('keeps an open panel when a second provider mounts on the same portal node', () => {
+    const { rerender } = render(<Story label="a" />);
+
+    act(() => { screen.getByText('open a').click(); });
+    expect(screen.getByText('panel a')).toBeInTheDocument();
+    const node = document.getElementById('d-portal');
+
+    rerender(
+      <>
+        <Story label="a" />
+        <Story label="b" />
+      </>,
+    );
+
+    expect(document.getElementById('d-portal')).toBe(node);
+    expect(document.querySelectorAll('#d-portal')).toHaveLength(1);
+    const panel = document.getElementById('first');
+    expect(panel).toBeInTheDocument();
+    expect(panel?.isConnected).toBe(true);
+    expect(panel).toHaveAttribute('open');
   });
 });
