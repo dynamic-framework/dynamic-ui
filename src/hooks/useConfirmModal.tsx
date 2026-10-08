@@ -47,21 +47,34 @@ export default function useConfirmModal(
   const store = useConfirmModalStore();
   const idRef = useRef<string>(`confirm-modal-${Math.random().toString(36).slice(2)}`);
 
+  /*
+   * Reporting the dismissal is not the same moment as dropping the entry.
+   *
+   * These used to be one step, and dropping the entry unmounts the `<dialog>` —
+   * which stops its exit transition dead, because an element removed from the
+   * document stops transitioning. `framer-motion` used to paper over it by
+   * holding the element through an `AnimatePresence` exit; with the animation in
+   * CSS, the element itself has to be allowed to finish.
+   *
+   * So the modal is told to close, and `DConfirmModalUI` calls `remove` once the
+   * element reports it is done. `onClose` still fires immediately — a consumer
+   * waiting to know the user said no should not wait on an animation.
+   */
   const close = useCallback(() => {
-    store.remove(idRef.current);
     queueMicrotask(() => {
       config.onClose?.();
     });
-  }, [store, config]);
+  }, [config]);
+
+  const remove = useCallback(() => {
+    store.remove(idRef.current);
+  }, [store]);
 
   const open = useCallback(() => {
     const handleConfirmAction = async () => {
-      try {
-        await config.onConfirm();
-        store.remove(idRef.current);
-      } catch {
-        // Keep modal open on error
-      }
+      // Rejecting keeps the modal open; `DConfirmModalUI` swallows it and
+      // restores the button. Resolving starts the exit there.
+      await config.onConfirm();
     };
 
     // Remove any existing entry with this id to prevent duplicates on re-entrancy
@@ -72,8 +85,9 @@ export default function useConfirmModal(
       id: idRef.current,
       onConfirmAction: handleConfirmAction,
       onCloseAction: close,
+      onRemoveAction: remove,
     });
-  }, [store, config, close]);
+  }, [store, config, close, remove]);
 
   return { open };
 }

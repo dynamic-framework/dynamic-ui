@@ -389,6 +389,20 @@
   --#{$prefix}default-accordion-padding-y: var(--#{$prefix}ref-spacer-6);
   --#{$prefix}default-accordion-color: var(--#{$prefix}gray-700);
   --#{$prefix}default-accordion-bg: var(--#{$prefix}white);
+  // custom
+  // Overlay motion
+  //
+  // On `:root` rather than on `.modal`/`.offcanvas`, which is what lets a
+  // consumer retime one screen's panels by setting these on any ancestor. A
+  // value declared on the component itself would always beat the scope above
+  // it, so the obvious place is the wrong one.
+  --#{$prefix}overlay-duration-enter: #{$overlay-duration-enter};
+  --#{$prefix}overlay-duration-exit: #{$overlay-duration-exit};
+  --#{$prefix}overlay-easing-enter: #{$overlay-easing-enter};
+  --#{$prefix}overlay-easing-exit: #{$overlay-easing-exit};
+  --#{$prefix}overlay-enter-scale: #{$overlay-enter-scale};
+  // end custom
+
   --#{$prefix}default-accordion-transition: #{$btn-transition}, border-radius .15s ease;
   --#{$prefix}default-accordion-border-color: var(--#{$prefix}border-color);
   --#{$prefix}default-accordion-border-width: var(--#{$prefix}border-width);

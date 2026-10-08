@@ -5,6 +5,10 @@
   --#{$prefix}offcanvas-separator-height: #{$offcanvas-separator-height};
   --#{$prefix}offcanvas-separator-bg: #{$offcanvas-separator-bg};
 
+  // Inherited by `::backdrop` where the engine supports it; see `_d-modal.scss`.
+  --#{$prefix}backdrop-bg: #{$modal-backdrop-bg};
+  --#{$prefix}backdrop-opacity: #{$modal-backdrop-opacity};
+
   .offcanvas-header {
     flex-direction: row;
     gap: var(--#{$prefix}offcanvas-header-gap);
@@ -40,8 +44,144 @@
     justify-content: flex-start;
   }
 
+  // `center` and `between` were on the modal footer and not on this one, for one
+  // element and one stylesheet. Nobody decided that; it drifted, the way two
+  // copies of anything drift.
+  .d-offcanvas-action-center {
+    justify-content: center;
+  }
+
+  .d-offcanvas-action-between {
+    justify-content: space-between;
+  }
+
   .d-offcanvas-action-end {
     justify-content: flex-end;
   }
 }
 
+// --- native <dialog> ---------------------------------------------------------
+//
+// Unlike `.modal`, the offcanvas panel IS the dialog — there is no full-viewport
+// wrapper around it — so every UA default lands directly on the thing being
+// positioned, and the damage is worse.
+//
+// The UA pins BOTH insets of BOTH axes (`inset-inline: 0` on `dialog`,
+// `inset-block: 0` on `dialog:modal`), sizes the box `fit-content` on both axes,
+// and sets `margin: auto`. Bootstrap pins three edges per placement and sizes
+// one axis. The result is an over-constrained box with `auto` margins, and the
+// cascade resolves that by CENTRING it: every offcanvas came out content-sized
+// and centred, which is to say it rendered as a modal that happened to slide in
+// from the side.
+//
+// So each placement states all four insets and both axes. Leaving an axis out
+// does not fall back to filling — it falls back to the UA's answer.
+// stylelint-disable selector-no-qualifying-type -- The `dialog` qualifier is the
+// rule, not decoration. Everything below answers a UA `<dialog>` default or
+// keys off the `open` attribute, and neither applies to the plain `.modal` /
+// `.offcanvas` `<div>` a consumer can still render as a custom portal panel.
+// Unqualified, `:not([open])` would hide every one of those: a `<div>` has no
+// `open` attribute to match.
+dialog.offcanvas {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  // The panel's own body scrolls; `dialog:modal`'s `overflow: auto` would add a
+  // second scrollbar around the header and footer as well.
+  overflow: hidden;
+  // `border-width`, not `border`. The UA sets `border: solid` on all four sides
+  // and Bootstrap sets a real border on the one inner edge of each placement —
+  // wiping the shorthand would take Bootstrap's with it, so only the widths are
+  // reset and the one that matters is restored per placement below.
+  border-width: 0;
+
+  &[open] {
+    display: flex;
+  }
+
+  &:not([open]) {
+    display: none;
+  }
+
+  &.offcanvas-start {
+    inset: 0 auto 0 0;
+    width: var(--#{$prefix}offcanvas-width);
+    height: auto;
+    border-right-width: var(--#{$prefix}offcanvas-border-width);
+  }
+
+  &.offcanvas-end {
+    inset: 0 0 0 auto;
+    width: var(--#{$prefix}offcanvas-width);
+    height: auto;
+    border-left-width: var(--#{$prefix}offcanvas-border-width);
+  }
+
+  &.offcanvas-top {
+    inset: 0 0 auto;
+    width: auto;
+    height: var(--#{$prefix}offcanvas-height);
+    border-bottom-width: var(--#{$prefix}offcanvas-border-width);
+  }
+
+  &.offcanvas-bottom {
+    inset: auto 0 0;
+    width: auto;
+    height: var(--#{$prefix}offcanvas-height);
+    border-top-width: var(--#{$prefix}offcanvas-border-width);
+  }
+
+  &::backdrop {
+    background-color: var(--#{$prefix}backdrop-bg, #{$black});
+    opacity: 0;
+  }
+
+  &[open]::backdrop {
+    opacity: var(--#{$prefix}backdrop-opacity, #{$modal-backdrop-opacity});
+  }
+}
+
+// The slide, in CSS. See `_d-modal.scss` for what `allow-discrete` and
+// `@starting-style` are doing and where their support floor sits.
+//
+// `translate` rather than `transform`: Bootstrap already writes
+// `transform: translateX(…)` on each placement and `transform: none` on `.show`,
+// and the panel always carries `.show`. Animating the separate `translate`
+// property leaves that alone instead of racing it.
+@media (prefers-reduced-motion: no-preference) {
+  dialog.offcanvas {
+    @include overlay-transition((translate), enter);
+  }
+
+  dialog.offcanvas::backdrop {
+    @include overlay-transition((opacity), enter);
+  }
+
+  dialog.offcanvas:not([open]) {
+    @include overlay-transition((translate), exit);
+  }
+
+  dialog.offcanvas:not([open])::backdrop {
+    opacity: 0;
+    @include overlay-transition((opacity), exit);
+  }
+
+  // One `translate` per edge — the same four edges the placements anchor to.
+  dialog.offcanvas:not([open]).offcanvas-start { translate: -100% 0; }
+  dialog.offcanvas:not([open]).offcanvas-end { translate: 100% 0; }
+  dialog.offcanvas:not([open]).offcanvas-top { translate: 0 -100%; }
+  dialog.offcanvas:not([open]).offcanvas-bottom { translate: 0 100%; }
+
+  @starting-style {
+    dialog.offcanvas[open].offcanvas-start { translate: -100% 0; }
+    dialog.offcanvas[open].offcanvas-end { translate: 100% 0; }
+    dialog.offcanvas[open].offcanvas-top { translate: 0 -100%; }
+    dialog.offcanvas[open].offcanvas-bottom { translate: 0 100%; }
+
+    dialog.offcanvas[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+// stylelint-enable selector-no-qualifying-type

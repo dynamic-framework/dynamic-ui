@@ -5,6 +5,7 @@ const config: Preview = {
     actions: { argTypesRegex: '^on.*' },
     layout: 'centered',
     docs: {
+      codePanel: true,
       source: {
         excludeDecorators: true,
         type: 'dynamic',

@@ -236,3 +236,32 @@
   }
 }
 // scss-docs-end df-table-variant
+
+// scss-docs-start overlay-transition-mixin
+/// The enter or exit transition for a `<dialog>` panel.
+///
+/// `display` and `overlay` are discrete properties, so a top-layer dialog would
+/// jump straight to the end of each without `transition-behavior:
+/// allow-discrete` — the panel would vanish on the frame it is told to close
+/// rather than animating out. Every panel needs both, every time, which is why
+/// they are appended here instead of being retyped at each call site.
+///
+/// @param {List} $properties - The properties that actually move (`opacity`,
+///   `scale`, `translate`).
+/// @param {String} $direction - `enter` or `exit`. Picks the duration/easing
+///   pair; leaving is faster and eases the other way.
+@mixin overlay-transition($properties, $direction) {
+  $duration: var(--#{$prefix}overlay-duration-#{$direction});
+  $easing: var(--#{$prefix}overlay-easing-#{$direction});
+  $parts: ();
+
+  @each $property in $properties {
+    $parts: append($parts, #{$property} #{$duration} #{$easing}, comma);
+  }
+
+  $parts: append($parts, display #{$duration} allow-discrete, comma);
+  $parts: append($parts, overlay #{$duration} allow-discrete, comma);
+
+  transition: $parts;
+}
+// scss-docs-end overlay-transition-mixin
