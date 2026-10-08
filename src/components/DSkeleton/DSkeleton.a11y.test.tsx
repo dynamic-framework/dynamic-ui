@@ -41,12 +41,9 @@ describe('<DSkeleton /> a11y', () => {
 
   it('has no violations as an iterator of a custom item component', async () => {
     const { container } = render(
-      <DSkeleton
-        component={TransactionSkeleton}
-        items={4}
-        ariaLabel="Cargando movimientos"
-        animation="wave"
-      />,
+      <DSkeleton items={4} ariaLabel="Cargando movimientos" animation="wave">
+        <TransactionSkeleton />
+      </DSkeleton>,
     );
 
     const results = await axe(container);

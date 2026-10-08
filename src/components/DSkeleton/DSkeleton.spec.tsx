@@ -1,11 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DSkeleton from './DSkeleton';
-import type { SkeletonItemProps } from './DSkeleton';
-
-function TransactionSkeleton({ index }: SkeletonItemProps) {
-  return <DSkeleton.Block dataAttributes={{ 'data-testid': `row-${index}` }} />;
-}
 
 function RowSkeleton() {
   return (
@@ -125,18 +120,6 @@ describe('<DSkeleton /> as iterator', () => {
     expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
   });
 
-  it('repeats the component once per item', () => {
-    const { container } = render(<DSkeleton component={TransactionSkeleton} items={3} />);
-    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(3);
-    expect(container.querySelectorAll('.d-skeleton-block')).toHaveLength(3);
-  });
-
-  it('passes the index to the item component', () => {
-    render(<DSkeleton component={TransactionSkeleton} items={2} />);
-    expect(screen.getByTestId('row-0')).toBeInTheDocument();
-    expect(screen.getByTestId('row-1')).toBeInTheDocument();
-  });
-
   it('repeats the children template once per item', () => {
     const { container } = render(
       <DSkeleton items={4}>
@@ -145,6 +128,16 @@ describe('<DSkeleton /> as iterator', () => {
     );
     expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(4);
     expect(container.querySelectorAll('.d-skeleton-circle')).toHaveLength(4);
+  });
+
+  it('repeats an item component of its own once per item', () => {
+    const { container } = render(
+      <DSkeleton items={3}>
+        <RowSkeleton />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(3);
+    expect(container.querySelectorAll('.d-skeleton-circle')).toHaveLength(3);
   });
 
   it('calls a function child with the index', () => {
@@ -159,23 +152,21 @@ describe('<DSkeleton /> as iterator', () => {
     ).toEqual(['10px', '20px', '30px']);
   });
 
-  it('gives component precedence over children', () => {
+  it('renders a single item for a function child without items', () => {
     const { container } = render(
-      <DSkeleton component={TransactionSkeleton} items={2}>
-        <DSkeleton.Circle />
+      <DSkeleton>
+        {() => <DSkeleton.Block />}
       </DSkeleton>,
     );
-    expect(container.querySelectorAll('.d-skeleton-block')).toHaveLength(2);
-    expect(container.querySelector('.d-skeleton-circle')).not.toBeInTheDocument();
-  });
-
-  it('renders a single item by default', () => {
-    const { container } = render(<DSkeleton component={TransactionSkeleton} />);
     expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(1);
   });
 
   it.each([0, -3])('renders nothing with items=%s', (items) => {
-    const { container } = render(<DSkeleton component={TransactionSkeleton} items={items} />);
+    const { container } = render(
+      <DSkeleton items={items}>
+        <DSkeleton.Block />
+      </DSkeleton>,
+    );
     expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
   });
 
@@ -202,13 +193,21 @@ describe('<DSkeleton /> as iterator', () => {
 
 describe('<DSkeleton /> nested', () => {
   it('keeps a single status region', () => {
-    render(<DSkeleton component={RowSkeleton} items={3} ariaLabel="Loading transactions" />);
+    render(
+      <DSkeleton items={3} ariaLabel="Loading transactions">
+        <RowSkeleton />
+      </DSkeleton>,
+    );
     expect(screen.getAllByRole('status')).toHaveLength(1);
     expect(screen.getByRole('status')).toHaveTextContent('Loading transactions');
   });
 
   it('does not repeat the visually hidden label', () => {
-    const { container } = render(<DSkeleton component={RowSkeleton} items={3} />);
+    const { container } = render(
+      <DSkeleton items={3}>
+        <RowSkeleton />
+      </DSkeleton>,
+    );
     expect(container.querySelectorAll('.visually-hidden')).toHaveLength(1);
   });
 

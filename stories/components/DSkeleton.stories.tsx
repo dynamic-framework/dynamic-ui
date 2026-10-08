@@ -38,9 +38,7 @@ The primitives are also exported as \`DSkeletonText\`, \`DSkeletonBlock\` and \`
 
 ## Iterating
 
-\`DSkeleton\` repeats its item \`items\` times, so a list does not need a loop in your code. The item
-comes from \`component\` (a component of your own) or from \`children\`, and it is laid out along
-\`direction\` with \`gap\` between items:
+\`items\` repeats the children, so a list does not need a loop in your code:
 
 \`\`\`tsx
 const TransactionSkeleton = () => (
@@ -51,15 +49,20 @@ const TransactionSkeleton = () => (
   </DSkeleton>
 );
 
-<DSkeleton component={TransactionSkeleton} items={4} ariaLabel="Loading transactions" />
+<DSkeleton items={4} ariaLabel="Loading transactions">
+  <TransactionSkeleton />
+</DSkeleton>
 \`\`\`
 
-Your item component can be built with \`DSkeleton\` itself: nested skeletons only lay out their
-shapes, the outermost one owns the live region and the label. To vary each item, read the \`index\`
-that \`component\` receives, or pass a function as children: \`{(index) => ...}\`.
+The item is any node: shapes, your own component, or a function receiving the index
+(\`{(index) => ...}\`) when each item has to be different. Your item component can be built with
+\`DSkeleton\` itself: nested skeletons only lay out their shapes, the outermost one owns the live
+region and the label.
 
-Each repetition is wrapped in a \`.d-skeleton-slot\` div, so \`gap\` separates items and not shapes.
-Without \`items\`, \`component\` or a function child, children render as-is and no wrapper is added.
+Each repetition is wrapped in a \`.d-skeleton-slot\`, so \`gap\` applies between items **and**
+between the shapes of each item, which stack. For an item laid out on a row, nest a
+\`DSkeleton direction="horizontal"\` as the item. Without \`items\` and without a function child,
+children render as-is and no wrapper is added.
 
 ## Accessibility
 
@@ -119,11 +122,6 @@ under \`prefers-reduced-motion: reduce\`.
       control: { type: 'number', min: 0 },
       description: 'Number of times the item is repeated',
       table: { category: 'Content', defaultValue: { summary: '1' } },
-    },
-    component: {
-      control: false,
-      description: 'Component rendered for each item. Takes precedence over `children`',
-      table: { category: 'Content' },
     },
     ariaLabel: {
       control: 'text',
@@ -297,12 +295,9 @@ export const ListSkeleton: Story = {
     },
   },
   render: () => (
-    <DSkeleton
-      component={TransactionSkeleton}
-      items={4}
-      ariaLabel="Loading transactions"
-      animation="wave"
-    />
+    <DSkeleton items={4} ariaLabel="Loading transactions" animation="wave">
+      <TransactionSkeleton />
+    </DSkeleton>
   ),
 };
 
@@ -332,18 +327,12 @@ export const Direction: Story = {
     maxWidth: '40rem',
     docs: {
       description: {
-        story: '`direction` lays the items out on a column (default) or a row. `itemClassName` styles the wrapper of every item, e.g. to make them share the width.',
+        story: '`direction` lays the items out on a column (default) or a row. On a row the items share the width; `itemClassName="flex-grow-0"` makes them size to their content instead.',
       },
     },
   },
   render: () => (
-    <DSkeleton
-      direction="horizontal"
-      items={3}
-      gap={16}
-      itemClassName="flex-grow-1"
-      ariaLabel="Loading cards"
-    >
+    <DSkeleton direction="horizontal" items={3} gap={16} ariaLabel="Loading cards">
       <DSkeleton.Block height={96} rounded={3} />
       <DSkeleton.Text lines={2} size="sm" />
     </DSkeleton>
@@ -396,10 +385,8 @@ export const FormSkeleton: Story = {
   render: () => (
     <DSkeleton ariaLabel="Loading form" gap={20}>
       <DSkeleton items={3} gap={20}>
-        <div className="d-flex flex-column gap-2">
-          <DSkeleton.Block width="30%" height={14} />
-          <DSkeleton.Block height={44} />
-        </div>
+        <DSkeleton.Block width="30%" height={14} />
+        <DSkeleton.Block height={44} />
       </DSkeleton>
       <DSkeleton.Block width="100%" height={44} rounded="pill" />
     </DSkeleton>

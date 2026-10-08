@@ -68,11 +68,7 @@ export {
   DSkeletonBlock,
   DSkeletonCircle,
 } from './DSkeleton';
-export type {
-  SkeletonAnimation,
-  SkeletonDirection,
-  SkeletonItemProps,
-} from './DSkeleton';
+export type { SkeletonAnimation, SkeletonDirection } from './DSkeleton';
 export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';

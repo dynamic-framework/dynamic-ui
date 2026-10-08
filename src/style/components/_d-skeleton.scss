@@ -15,11 +15,24 @@
 
 .d-skeleton-content-horizontal {
   flex-direction: row;
+
+  // Items and nested skeletons have no intrinsic width on a row: their shapes
+  // are sized in percentages, so they would collapse to zero. Share the row
+  // instead, and let `flex-grow-0` opt out of it.
+  > .d-skeleton-slot,
+  > .d-skeleton-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 }
 
-// Wrapper of each repetition when the skeleton iterates (`items`, `component`
-// or a function child), so the gap applies per item and not per shape.
+// Wrapper of each repetition when the skeleton iterates (`items` or a function
+// child), so the gap separates items and not shapes. Its own shapes stack with
+// the same gap: nest a `DSkeleton` for an item laid out on a row.
 .d-skeleton-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-gap);
   min-width: 0;
 }
 
