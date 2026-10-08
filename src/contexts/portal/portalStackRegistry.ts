@@ -5,10 +5,10 @@ import type { PortalStackRenderer } from './types';
 /**
  * Renderer used by `DPortalContextProvider` to paint the portal stack.
  *
- * Starts as `DPortalStackStatic` (no `framer-motion`). The overlay components
- * (`DModal`, `DOffcanvas`, `DConfirmModalContainer`) register the animated
- * `DPortalStack` when their module is evaluated, so `framer-motion` only ends up
- * in a bundle that imports one of them.
+ * Starts as `DPortalStackStatic` (no `framer-motion`). `DModal` and `DOffcanvas`
+ * register the animated `DPortalStack` when their module is evaluated, so
+ * `framer-motion` only ends up in a bundle that imports one of them (the
+ * confirm modal does, through `DModal`).
  */
 let renderer: PortalStackRenderer = DPortalStackStatic;
 const listeners = new Set<() => void>();
