@@ -17,6 +17,18 @@ Requires `DContextProvider` (which includes `DPortalContext`) wrapping your appl
 
 ---
 
+## Import
+
+Import it from the `overlay` subpath. It is the only entry point that depends on
+`framer-motion`, so a widget that does not use it does not bundle the library.
+The root import still works but is deprecated and will be removed in 3.0.
+
+<Source
+  code={`import { useConfirmModal, DConfirmModalContainer } from '@dynamic-framework/ui-react/overlay';`}
+  language="tsx"
+  dark
+/>
+
 ## ⚠️ IMPORTANT: Requires DContextProvider + DConfirmModalContainer
 
 **This hook MUST be used within a `<DContextProvider>`**. Additionally, you must mount **`<DConfirmModalContainer>`** somewhere inside that provider — it is the component that physically renders the modal. Without it, calling `open()` will have no visible effect.
@@ -75,7 +87,8 @@ Wrap your application with `DContextProvider` and place `DConfirmModalContainer`
 This follows the same pattern as `DToastContainer` — the container must be mounted once per provider to render confirmation modals into the portal.
 
 <Source
-  code={`import { DContextProvider, DConfirmModalContainer } from '@dynamic-framework/ui-react';
+  code={`import { DContextProvider } from '@dynamic-framework/ui-react';
+import { DConfirmModalContainer } from '@dynamic-framework/ui-react/overlay';
 import ExampleOfUse from './ExampleOfUse';
 
 export function App() {
@@ -98,7 +111,8 @@ export function App() {
 Only `onConfirm` is required. Everything else has sensible defaults.
 
 <Source
-  code={`import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
+  code={`import { DButton } from '@dynamic-framework/ui-react';
+import { useConfirmModal } from '@dynamic-framework/ui-react/overlay';
 
 export function ExampleOfUse() {
   const confirm = useConfirmModal({
@@ -125,7 +139,8 @@ When a destructive action is irreversible, use `critical` to force the user to t
 
 <Source
   code={`import { useState } from 'react';
-import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
+import { DButton } from '@dynamic-framework/ui-react';
+import { useConfirmModal } from '@dynamic-framework/ui-react/overlay';
 
 export function DeleteAccountButton() {
   const [result, setResult] = useState('');
