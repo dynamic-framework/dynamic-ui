@@ -5,7 +5,6 @@ import {
   Controls,
   Canvas,
   Unstyled,
-  Source,
 } from "@storybook/addon-docs/blocks";
 
 import * as DOffcanvasStories from "./DOffcanvas.stories";
@@ -29,18 +28,6 @@ This section provides guidance specifically for using `DOffcanvas` in **inline**
     </span>
   </DAlert>
 </Unstyled>
-
-## Import
-
-Import it from the `overlay` subpath. It is the only entry point that depends on
-`framer-motion`, so a widget that does not use it does not bundle the library.
-The root import still works but is deprecated and will be removed in 3.0.
-
-<Source
-  code={`import { DOffcanvas } from '@dynamic-framework/ui-react/overlay';`}
-  language="tsx"
-  dark
-/>
 
 ## CSS Variables
 
