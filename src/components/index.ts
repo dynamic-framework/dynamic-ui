@@ -48,15 +48,23 @@ export {
   DListGroupItem,
 } from './DListGroup';
 export {
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   default as DModal,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DModalHeader,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DModalBody,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DModalFooter,
 } from './DModal';
 export {
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   default as DOffcanvas,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DOffcanvasHeader,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DOffcanvasBody,
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
   DOffcanvasFooter,
 } from './DOffcanvas';
 export { default as DPaginator } from './DPaginator';
@@ -108,5 +116,8 @@ export type {
   DDataStateWrapperListProps,
   DDataStateWrapperSingleProps,
 } from './DDataStateWrapper';
-export { default as DConfirmModalContainer } from './DConfirmModal/DConfirmModalContainer';
+export {
+  /** @deprecated Import from '@dynamic-framework/ui-react/overlay'. */
+  default as DConfirmModalContainer,
+} from './DConfirmModal/DConfirmModalContainer';
 export type { ConfirmModalEntry, ConfirmModalStore } from './DConfirmModal/types';
