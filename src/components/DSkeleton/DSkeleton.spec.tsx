@@ -1,6 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DSkeleton from './DSkeleton';
+import type { SkeletonItemProps } from './DSkeleton';
+
+function TransactionSkeleton({ index }: SkeletonItemProps) {
+  return <DSkeleton.Block dataAttributes={{ 'data-testid': `row-${index}` }} />;
+}
+
+function RowSkeleton() {
+  return (
+    <DSkeleton direction="horizontal" gap={8}>
+      <DSkeleton.Circle size={40} />
+      <DSkeleton.Block />
+    </DSkeleton>
+  );
+}
 
 describe('<DSkeleton />', () => {
   it('should render my component', () => {
@@ -98,6 +112,146 @@ describe('<DSkeleton />', () => {
     const skeleton = screen.getByTestId('skeleton');
     expect(skeleton).toHaveClass('d-skeleton', 'custom');
     expect(skeleton).toHaveStyle({ maxWidth: '20rem' });
+  });
+});
+
+describe('<DSkeleton /> as iterator', () => {
+  it('renders children as-is when it does not iterate', () => {
+    const { container } = render(
+      <DSkeleton>
+        <DSkeleton.Block />
+      </DSkeleton>,
+    );
+    expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
+  });
+
+  it('repeats the component once per item', () => {
+    const { container } = render(<DSkeleton component={TransactionSkeleton} items={3} />);
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(3);
+    expect(container.querySelectorAll('.d-skeleton-block')).toHaveLength(3);
+  });
+
+  it('passes the index to the item component', () => {
+    render(<DSkeleton component={TransactionSkeleton} items={2} />);
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+    expect(screen.getByTestId('row-1')).toBeInTheDocument();
+  });
+
+  it('repeats the children template once per item', () => {
+    const { container } = render(
+      <DSkeleton items={4}>
+        <DSkeleton.Circle size={40} />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(4);
+    expect(container.querySelectorAll('.d-skeleton-circle')).toHaveLength(4);
+  });
+
+  it('calls a function child with the index', () => {
+    const { container } = render(
+      <DSkeleton items={3}>
+        {(index) => <DSkeleton.Block width={(index + 1) * 10} />}
+      </DSkeleton>,
+    );
+    expect(
+      Array.from(container.querySelectorAll<HTMLElement>('.d-skeleton-block'))
+        .map((block) => block.style.width),
+    ).toEqual(['10px', '20px', '30px']);
+  });
+
+  it('gives component precedence over children', () => {
+    const { container } = render(
+      <DSkeleton component={TransactionSkeleton} items={2}>
+        <DSkeleton.Circle />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton-block')).toHaveLength(2);
+    expect(container.querySelector('.d-skeleton-circle')).not.toBeInTheDocument();
+  });
+
+  it('renders a single item by default', () => {
+    const { container } = render(<DSkeleton component={TransactionSkeleton} />);
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(1);
+  });
+
+  it.each([0, -3])('renders nothing with items=%s', (items) => {
+    const { container } = render(<DSkeleton component={TransactionSkeleton} items={items} />);
+    expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
+  });
+
+  it('forwards itemClassName to every slot', () => {
+    const { container } = render(
+      <DSkeleton items={2} itemClassName="flex-grow-1">
+        <DSkeleton.Block />
+      </DSkeleton>,
+    );
+    container.querySelectorAll('.d-skeleton-slot').forEach((slot) => {
+      expect(slot).toHaveClass('flex-grow-1');
+    });
+  });
+
+  it.each([
+    ['vertical', false],
+    ['horizontal', true],
+  ] as const)('lays the items out in %s', (direction, isHorizontal) => {
+    const { container } = render(<DSkeleton direction={direction} items={2} />);
+    const content = container.querySelector('.d-skeleton-content');
+    expect(content?.classList.contains('d-skeleton-content-horizontal')).toBe(isHorizontal);
+  });
+});
+
+describe('<DSkeleton /> nested', () => {
+  it('keeps a single status region', () => {
+    render(<DSkeleton component={RowSkeleton} items={3} ariaLabel="Loading transactions" />);
+    expect(screen.getAllByRole('status')).toHaveLength(1);
+    expect(screen.getByRole('status')).toHaveTextContent('Loading transactions');
+  });
+
+  it('does not repeat the visually hidden label', () => {
+    const { container } = render(<DSkeleton component={RowSkeleton} items={3} />);
+    expect(container.querySelectorAll('.visually-hidden')).toHaveLength(1);
+  });
+
+  it('lays out the nested skeleton without the root class', () => {
+    const { container } = render(
+      <DSkeleton>
+        <RowSkeleton />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton')).toHaveLength(1);
+    expect(container.querySelectorAll('.d-skeleton-content-horizontal')).toHaveLength(1);
+  });
+
+  it('inherits the animation of the outermost skeleton', () => {
+    const { container } = render(
+      <DSkeleton animation="wave">
+        <RowSkeleton />
+      </DSkeleton>,
+    );
+    expect(container.querySelector('.placeholder-glow')).not.toBeInTheDocument();
+    expect(container.querySelectorAll('.placeholder-wave')).toHaveLength(1);
+  });
+
+  it('allows the nested skeleton to set its own animation', () => {
+    const { container } = render(
+      <DSkeleton animation="none">
+        <DSkeleton animation="wave">
+          <DSkeleton.Block />
+        </DSkeleton>
+      </DSkeleton>,
+    );
+    expect(container.querySelector('.d-skeleton-content.placeholder-wave')).toBeInTheDocument();
+  });
+
+  it('applies gap and color of the nested skeleton only', () => {
+    const { container } = render(
+      <DSkeleton gap={32}>
+        <RowSkeleton />
+      </DSkeleton>,
+    );
+    const nested = container.querySelector<HTMLElement>('.d-skeleton-content-horizontal');
+    expect(nested?.style.getPropertyValue('--bs-skeleton-gap')).toBe('8px');
+    expect(screen.getByRole('status').style.getPropertyValue('--bs-skeleton-gap')).toBe('32px');
   });
 });
 

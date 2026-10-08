@@ -36,6 +36,31 @@ content while data loads and handles the loading semantics for you.
 
 The primitives are also exported as \`DSkeletonText\`, \`DSkeletonBlock\` and \`DSkeletonCircle\`.
 
+## Iterating
+
+\`DSkeleton\` repeats its item \`items\` times, so a list does not need a loop in your code. The item
+comes from \`component\` (a component of your own) or from \`children\`, and it is laid out along
+\`direction\` with \`gap\` between items:
+
+\`\`\`tsx
+const TransactionSkeleton = () => (
+  <DSkeleton direction="horizontal" gap={16} className="align-items-center">
+    <DSkeleton.Circle size={40} />
+    <DSkeleton.Text lines={2} size="sm" widths={['70%', '40%']} className="flex-grow-1" />
+    <DSkeleton.Block width={64} height={16} />
+  </DSkeleton>
+);
+
+<DSkeleton component={TransactionSkeleton} items={4} ariaLabel="Loading transactions" />
+\`\`\`
+
+Your item component can be built with \`DSkeleton\` itself: nested skeletons only lay out their
+shapes, the outermost one owns the live region and the label. To vary each item, read the \`index\`
+that \`component\` receives, or pass a function as children: \`{(index) => ...}\`.
+
+Each repetition is wrapped in a \`.d-skeleton-slot\` div, so \`gap\` separates items and not shapes.
+Without \`items\`, \`component\` or a function child, children render as-is and no wrapper is added.
+
 ## Accessibility
 
 \`DSkeleton\` renders a \`role="status"\` region with \`aria-busy="true"\` and \`aria-live="polite"\`.
@@ -76,8 +101,29 @@ under \`prefers-reduced-motion: reduce\`.
     },
     gap: {
       control: 'text',
-      description: 'Space between direct children. Numbers are pixels',
+      description: 'Space between items. Numbers are pixels',
       table: { category: 'Appearance' },
+    },
+    direction: {
+      control: 'radio',
+      options: ['vertical', 'horizontal'],
+      description: 'Axis the items are laid out on',
+      table: { category: 'Appearance', defaultValue: { summary: 'vertical' } },
+    },
+    itemClassName: {
+      control: 'text',
+      description: 'Class applied to the wrapper of every item',
+      table: { category: 'Appearance' },
+    },
+    items: {
+      control: { type: 'number', min: 0 },
+      description: 'Number of times the item is repeated',
+      table: { category: 'Content', defaultValue: { summary: '1' } },
+    },
+    component: {
+      control: false,
+      description: 'Component rendered for each item. Takes precedence over `children`',
+      table: { category: 'Content' },
     },
     ariaLabel: {
       control: 'text',
@@ -231,24 +277,75 @@ export const CardSkeleton: Story = {
   ),
 };
 
+function TransactionSkeleton() {
+  return (
+    <DSkeleton direction="horizontal" gap={16} className="align-items-center">
+      <DSkeleton.Circle size={40} />
+      <DSkeleton.Text lines={2} size="sm" widths={['70%', '40%']} className="flex-grow-1" />
+      <DSkeleton.Block width={64} height={16} />
+    </DSkeleton>
+  );
+}
+
 export const ListSkeleton: Story = {
   name: 'List Skeleton',
   parameters: {
     docs: {
       description: {
-        story: 'List of transactions: avatar, two lines of text and an amount.',
+        story: 'List of transactions. The row is a component of your own, repeated by `items`.',
       },
     },
   },
   render: () => (
-    <DSkeleton ariaLabel="Loading transactions" animation="wave">
-      {Array.from({ length: 4 }, (_, index) => (
-        <div key={index} className="d-flex gap-3 align-items-center">
-          <DSkeleton.Circle size={40} />
-          <DSkeleton.Text lines={2} size="sm" widths={['70%', '40%']} className="flex-grow-1" />
-          <DSkeleton.Block width={64} height={16} />
-        </div>
-      ))}
+    <DSkeleton
+      component={TransactionSkeleton}
+      items={4}
+      ariaLabel="Loading transactions"
+      animation="wave"
+    />
+  ),
+};
+
+export const IteratingChildren: Story = {
+  name: 'Iterating Children',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Without a component of your own, `items` repeats the children. A function child receives the `index` of each item.',
+      },
+    },
+  },
+  render: () => (
+    <div className="d-flex flex-column gap-4">
+      <DSkeleton items={3} ariaLabel="Loading paragraphs">
+        <DSkeleton.Text lines={2} size="sm" />
+      </DSkeleton>
+      <DSkeleton items={4} gap={8} ariaLabel="Loading menu">
+        {(index) => <DSkeleton.Block height={14} width={`${100 - (index * 15)}%`} />}
+      </DSkeleton>
+    </div>
+  ),
+};
+
+export const Direction: Story = {
+  parameters: {
+    maxWidth: '40rem',
+    docs: {
+      description: {
+        story: '`direction` lays the items out on a column (default) or a row. `itemClassName` styles the wrapper of every item, e.g. to make them share the width.',
+      },
+    },
+  },
+  render: () => (
+    <DSkeleton
+      direction="horizontal"
+      items={3}
+      gap={16}
+      itemClassName="flex-grow-1"
+      ariaLabel="Loading cards"
+    >
+      <DSkeleton.Block height={96} rounded={3} />
+      <DSkeleton.Text lines={2} size="sm" />
     </DSkeleton>
   ),
 };
@@ -298,12 +395,12 @@ export const FormSkeleton: Story = {
   },
   render: () => (
     <DSkeleton ariaLabel="Loading form" gap={20}>
-      {Array.from({ length: 3 }, (_, index) => (
-        <div key={index} className="d-flex flex-column gap-2">
+      <DSkeleton items={3} gap={20}>
+        <div className="d-flex flex-column gap-2">
           <DSkeleton.Block width="30%" height={14} />
           <DSkeleton.Block height={44} />
         </div>
-      ))}
+      </DSkeleton>
       <DSkeleton.Block width="100%" height={44} rounded="pill" />
     </DSkeleton>
   ),
@@ -312,13 +409,11 @@ export const FormSkeleton: Story = {
 type Account = { alias: string; number: string; balance: string };
 
 const accountsSkeleton = (
-  <DSkeleton ariaLabel="Loading accounts">
-    {Array.from({ length: 3 }, (_, index) => (
-      <div key={index} className="d-flex justify-content-between align-items-center gap-3">
-        <DSkeleton.Text lines={2} size="sm" widths={['60%', '30%']} />
-        <DSkeleton.Block width={96} height={16} />
-      </div>
-    ))}
+  <DSkeleton items={3} ariaLabel="Loading accounts">
+    <DSkeleton direction="horizontal" gap={16} className="justify-content-between align-items-center">
+      <DSkeleton.Text lines={2} size="sm" widths={['60%', '30%']} />
+      <DSkeleton.Block width={96} height={16} />
+    </DSkeleton>
   </DSkeleton>
 );
 

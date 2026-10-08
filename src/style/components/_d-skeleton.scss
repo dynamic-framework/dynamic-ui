@@ -13,6 +13,16 @@
   gap: var(--#{$prefix}skeleton-gap);
 }
 
+.d-skeleton-content-horizontal {
+  flex-direction: row;
+}
+
+// Wrapper of each repetition when the skeleton iterates (`items`, `component`
+// or a function child), so the gap applies per item and not per shape.
+.d-skeleton-slot {
+  min-width: 0;
+}
+
 .d-skeleton-item {
   background-color: var(--#{$prefix}skeleton-bg, var(--#{$prefix}default-placeholder-bg));
   border-radius: var(--#{$prefix}skeleton-border-radius, #{$skeleton-border-radius});
