@@ -43,7 +43,7 @@ describe('DPortalContextProvider', () => {
   it.each([
     ['without availablePortals', undefined],
     ['with an empty availablePortals', {}],
-  ])('does not load the animated stack %s', async (_, availablePortals) => {
+  ])('does not render the portal stack %s', async (_, availablePortals) => {
     render(
       <DContextProvider availablePortals={availablePortals}>
         <span>Content</span>
@@ -53,11 +53,11 @@ describe('DPortalContextProvider', () => {
     expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
   });
 
-  it('cancels an open that is still waiting for the stack module', async () => {
+  it('opens and closes synchronously in the same tick', () => {
     renderWithPortals();
     fireEvent.click(screen.getByText('Open'));
+    expect(screen.getByText('Portal content')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Close'));
-    await waitFor(() => expect(document.getElementById('d-portal')).not.toBeEmptyDOMElement());
     expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
   });
 
