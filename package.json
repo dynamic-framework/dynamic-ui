@@ -97,6 +97,7 @@
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
+    "overlay/",
     "src/style",
     "jest/"
   ],

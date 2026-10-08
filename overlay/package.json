@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/overlay.js",
+  "module": "../dist/esm/overlay/index.js",
+  "types": "../dist/types/overlay/index.d.ts"
+}

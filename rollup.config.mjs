@@ -1,4 +1,4 @@
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, readFileSync } from 'node:fs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
 const external = (id) => !/^(\.|\/)/.test(id);
@@ -37,6 +37,34 @@ function entriesFrom(dir, { indexInFolder }) {
   return out;
 }
 
+/**
+ * CommonJS entry of the `overlay` subpath (`overlay/package.json` → `main`).
+ *
+ * It re-exports from `./index.js` instead of bundling the overlay modules
+ * again: a second copy would duplicate `DPortalContext` and the confirm modal
+ * store context, and the overlay components would stop seeing the provider.
+ * The names are read from the transpiled barrel so both entries stay in sync.
+ */
+function overlayCommonJs() {
+  return {
+    name: 'overlay-commonjs',
+    generateBundle(options) {
+      if (options.format !== 'cjs') return;
+      const barrel = readFileSync(`${ROOT}/overlay/index.js`, 'utf8');
+      const names = [...barrel.matchAll(/export\s*\{([^}]*)\}/g)]
+        .flatMap(([, list]) => list.split(','))
+        .map((part) => part.trim().split(/\s+as\s+/).pop())
+        .filter(Boolean);
+      const lines = names.map((name) => `exports.${name} = index.${name};`);
+      this.emitFile({
+        type: 'asset',
+        fileName: 'overlay.js',
+        source: `'use strict';\n\nconst index = require('./index.js');\n\n${lines.join('\n')}\n`,
+      });
+    },
+  };
+}
+
 const subpathInputs = {
   ...entriesFrom('components', { indexInFolder: true }),
   ...entriesFrom('contexts', { indexInFolder: false }),
@@ -71,6 +99,7 @@ export default [
     ],
     plugins: [
       nodeResolve(),
+      overlayCommonJs(),
     ],
     external,
   },
@@ -82,6 +111,7 @@ export default [
   {
     input: {
       index: `${ROOT}/index.js`,
+      'overlay/index': `${ROOT}/overlay/index.js`,
       ...subpathInputs,
     },
     output: {
