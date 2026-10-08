@@ -4,6 +4,7 @@ import {
   forwardRef,
   isValidElement,
   useEffect,
+  useId,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -19,12 +20,18 @@ import type {
 
 import DIcon from '../DIcon';
 import DCarouselSlide from './components/DCarouselSlide';
+import DCarouselNext from './components/DCarouselNext';
+import DCarouselPagination from './components/DCarouselPagination';
+import DCarouselPrev from './components/DCarouselPrev';
 import { useCarousel } from './useCarousel';
 
 import { useDContext } from '../../contexts';
 import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
 import type { BaseProps } from '../interface';
 import type { CarouselAlign, CarouselLoop, CarouselPerMove } from './useCarousel';
+import type { DCarouselControllerStore } from './controller';
+import { DEFAULT_CAROUSEL_I18N } from './i18n';
+import type { DCarouselI18n } from './i18n';
 import type { Props as SlideProps } from './components/DCarouselSlide';
 
 /** A step on the 4px spacing scale, matching `DLayout`'s `gap`. */
@@ -33,24 +40,6 @@ export type DCarouselSpacing =
   | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
 
 type Responsive<T> = T | ResponsiveProp<T>;
-
-export type DCarouselI18n = {
-  prev: string;
-  next: string;
-  slides: string;
-  goToSlide: string;
-  play: string;
-  pause: string;
-};
-
-const DEFAULT_I18N: DCarouselI18n = {
-  prev: 'Previous slide',
-  next: 'Next slide',
-  slides: 'Slides',
-  goToSlide: 'Go to slide',
-  play: 'Start automatic slide show',
-  pause: 'Pause automatic slide show',
-};
 
 export type Props = BaseProps & PropsWithChildren<{
   /**
@@ -91,6 +80,19 @@ export type Props = BaseProps & PropsWithChildren<{
    */
   iconArrowLeft?: Partial<ComponentProps<typeof DIcon>>;
   iconArrowRight?: Partial<ComponentProps<typeof DIcon>>;
+  /**
+   * A controller from `useDCarouselController`, for controls that live
+   * somewhere else in the tree.
+   *
+   * The carousel publishes its state into it and attaches its actions, so
+   * external arrows can disable themselves at the ends and external dots can
+   * mark the current page — neither of which the `ref` could do, because a ref
+   * carries no state and never re-renders whoever holds it.
+   *
+   * Usually paired with `arrows={false} pagination={false}`, though the
+   * built-in controls keep working alongside it if both are wanted.
+   */
+  controller?: DCarouselControllerStore;
   /** Fires with the index of the slide that came to rest at the alignment point. */
   onSlideChange?: (index: number) => void;
   /** Overrides for the control labels. */
@@ -159,6 +161,7 @@ function DCarousel(
     height,
     iconArrowLeft,
     iconArrowRight,
+    controller,
     onSlideChange,
     i18n: i18nProp,
   }: Props,
@@ -167,7 +170,7 @@ function DCarousel(
   const rootRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  const i18n = useMemo(() => ({ ...DEFAULT_I18N, ...i18nProp }), [i18nProp]);
+  const i18n = useMemo(() => ({ ...DEFAULT_CAROUSEL_I18N, ...i18nProp }), [i18nProp]);
 
   // From the context's icon map, like every other default icon in the library.
   // An inline SVG would be a glyph a consumer could not reach: swapping the
@@ -188,12 +191,21 @@ function DCarousel(
     ? Math.min(slideCount, Math.max(1, Math.ceil(peakValue(perPage, 1))))
     : 0;
 
+  /*
+   * The scrollport is given an id so a control somewhere else can point at it
+   * with `aria-controls`. The built-in arrows carry none — they sit inside the
+   * carousel and proximity does the work — but a button on the other side of
+   * the page has no relationship to the strip it drives unless it says so.
+   */
+  const viewportId = useId();
+
   const {
     activeIndex,
     pageCount,
     activePage,
     canPrev,
     canNext,
+    playing,
     paused,
     togglePlay,
     goToPage,
@@ -222,6 +234,53 @@ function DCarousel(
   useEffect(() => {
     onSlideChange?.(activeIndex);
   }, [activeIndex, onSlideChange]);
+
+  /* --- the controller, for controls elsewhere in the tree ----------------- */
+
+  /*
+   * `connect` and `publish` are destructured rather than used through
+   * `controller`, because the hook returns a NEW object whenever the state
+   * changes — that is what re-renders the controls. Depending on the object
+   * would reconnect on every scroll; these two never change identity.
+   */
+  const connect = controller?.connect;
+  const publish = controller?.publish;
+
+  /*
+   * The actions go through a ref, so the connection depends on NOTHING that
+   * changes per render.
+   *
+   * Connecting is not idempotent: the effect's cleanup reports "no carousel
+   * attached", so an effect that re-runs connects, disconnects and connects
+   * again — and each of those is a state change the controls re-render on. A
+   * single action that forgot its `useCallback` was enough to turn that into
+   * an infinite loop, and it did. Holding the actions in a ref means the only
+   * things that can re-connect are a new controller and a new viewport id,
+   * neither of which happens while the carousel is simply scrolling.
+   */
+  const actionsRef = useRef({ move, goToPage, togglePlay });
+  actionsRef.current = { move, goToPage, togglePlay };
+
+  useEffect(() => {
+    if (!connect) return undefined;
+    return connect({
+      viewportId,
+      actions: {
+        next: () => actionsRef.current.move(1),
+        prev: () => actionsRef.current.move(-1),
+        goToPage: (page) => actionsRef.current.goToPage(page),
+        togglePlay: () => actionsRef.current.togglePlay(),
+      },
+    });
+  }, [connect, viewportId]);
+
+  useEffect(() => {
+    publish?.({
+      activeIndex, pageCount, activePage, canPrev, canNext, playing, paused,
+    });
+  }, [
+    activeIndex, activePage, canNext, canPrev, pageCount, paused, playing, publish,
+  ]);
 
   const cssVars = useMemo<CSSProperties>(() => ({
     ...tierVars('per-page', perPage, (value) => String(value)),
@@ -270,6 +329,7 @@ function DCarousel(
     >
       <div
         ref={viewportRef}
+        id={viewportId}
         className="df-carousel-viewport"
         /*
          * Focusable because it SCROLLS. A region a keyboard cannot
@@ -376,4 +436,12 @@ ForwardedDCarousel.displayName = 'DCarousel';
 
 export default Object.assign(ForwardedDCarousel, {
   Slide: DCarouselSlide,
+  /*
+   * The three controls, for a layout that puts them outside the carousel.
+   * They take a controller rather than reading a context, so they work at any
+   * distance — see `controller.ts` on why that is an object and not an id.
+   */
+  Prev: DCarouselPrev,
+  Next: DCarouselNext,
+  Pagination: DCarouselPagination,
 });

@@ -61,10 +61,21 @@ for (const file of walk(STORIES)) {
   const source = readFileSync(file, 'utf8');
   snippetsIn(source).forEach((snippet, index) => {
     const jsx = jsxOf(snippet);
-    /* Only JSX is checked. A snippet that documents a whole component or a
-       hook is prose with syntax highlighting, not something this can wrap. */
-    if (jsx.trimStart().startsWith('<')) {
-      found.push({ file: relative(ROOT, file), index, jsx });
+    /*
+     * Two shapes compile, and anything else is prose with syntax highlighting.
+     *
+     * `expression` is bare JSX, which wraps as a `return`. `body` is a
+     * function body — the shape every hook snippet takes, since the point of
+     * one is the `const x = useThing()` line above the markup. Leaving those
+     * unchecked meant the snippets that most need pinning, because Storybook
+     * serialises a function arg to `() => {}`, were exactly the ones nothing
+     * compiled.
+     */
+    const text = jsx.trimStart();
+    if (text.startsWith('<')) {
+      found.push({ file: relative(ROOT, file), index, jsx, shape: 'expression' });
+    } else if (/\breturn\b/.test(text)) {
+      found.push({ file: relative(ROOT, file), index, jsx, shape: 'body' });
     }
   });
 }
@@ -83,17 +94,27 @@ const dir = mkdtempSync(join(STORIES, '.snippetcheck-'));
 let failed = false;
 
 try {
-  found.forEach(({ jsx }, i) => {
-    const imports = ['DCalendar', 'DDatePicker', 'DModal', 'DCarousel', 'DSelect']
-      .filter((name) => new RegExp(`\\b${name}\\b`).test(jsx));
+  found.forEach(({ jsx, shape }, i) => {
+    /*
+     * Hooks as well as components: a snippet whose point is
+     * `useDCarouselController()` needs the hook in scope, and naming them here
+     * rather than importing the whole barrel keeps an unused-import error from
+     * drowning the real one.
+     */
+    const imports = [
+      'DCalendar', 'DDatePicker', 'DModal', 'DCarousel', 'DSelect',
+      'useDCarouselController', 'useConfirmModal',
+    ].filter((name) => new RegExp(`\\b${name}\\b`).test(jsx));
+
+    const body = shape === 'body'
+      ? [jsx]
+      : ['  return (', jsx, '  );'];
 
     writeFileSync(join(dir, `snippet${i}.tsx`), [
       imports.length ? `import { ${imports.join(', ')} } from '../../src';` : '',
       '',
       `export default function Snippet${i}() {`,
-      '  return (',
-      jsx,
-      '  );',
+      ...body,
       '}',
       '',
     ].join('\n'));

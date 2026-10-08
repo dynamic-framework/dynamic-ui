@@ -15,6 +15,27 @@ import type { Behaviour, Teardown } from './registry';
  * </div>
  * ```
  *
+ * ## Controls somewhere else
+ *
+ * Name the carousel and name a container after it. Anything inside that
+ * container with `.df-carousel-arrow` or `.df-carousel-page` drives it, with
+ * the same disabling and the same dot tracking as if it sat inside:
+ *
+ * ```html
+ * <div class="df-carousel" data-df-carousel="hero">
+ *   <div class="df-carousel-viewport" id="hero-strip" tabindex="0" role="group">…</div>
+ * </div>
+ *
+ * <div data-df-carousel-controls="hero">
+ *   <button class="df-carousel-arrow" data-direction="prev" aria-controls="hero-strip">…</button>
+ *   <button class="df-carousel-arrow" data-direction="next" aria-controls="hero-strip">…</button>
+ * </div>
+ * ```
+ *
+ * `aria-controls` is the author's job here, and it matters more than it does
+ * inside the carousel: a button on the other side of the page has no
+ * relationship to the strip it drives unless it says so.
+ *
  * ## Most of it is not here
  *
  * The viewport is `overflow: auto` with `scroll-snap-type: inline mandatory`,
@@ -43,6 +64,68 @@ import type { Behaviour, Teardown } from './registry';
 /** Longer than a snap takes to settle; `scrollend` is not in every browser. */
 const SCROLL_IDLE_MS = 120;
 
+/** Names already reported, so a page of ten carousels warns once per name. */
+const warnedNames = new Set<string>();
+
+/**
+ * Control containers whose name matches no carousel at all.
+ *
+ * This is the failure an id brings and an object does not, and it is already
+ * on record elsewhere in this library: a typo produces buttons that look live
+ * and do nothing, with no error anywhere. Checked from the CONTROLS' side
+ * rather than the carousel's, because a carousel with no external controls is
+ * the normal case and would otherwise warn on every page.
+ */
+function warnOrphanedControls(): void {
+  const named = new Set(
+    Array.from(document.querySelectorAll<HTMLElement>('[data-df-carousel]'))
+      .map((element) => element.dataset.dfCarousel)
+      .filter((value): value is string => Boolean(value)),
+  );
+
+  document.querySelectorAll<HTMLElement>('[data-df-carousel-controls]').forEach((host) => {
+    const wanted = host.dataset.dfCarouselControls;
+    if (!wanted || named.has(wanted) || warnedNames.has(wanted)) return;
+    warnedNames.add(wanted);
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[dynamic] data-df-carousel-controls="${wanted}" matches no `
+      + `[data-df-carousel="${wanted}"], so these controls are wired to nothing.`,
+      host,
+    );
+  });
+}
+
+/**
+ * The control containers that name this carousel.
+ *
+ * The React side connects external controls with an object from
+ * `useDCarouselController`, because passing one is what a component tree makes
+ * easy and a string id there fails silently on a typo. Here there is no
+ * closure to pass and the DOM IS the registry, so an id is the right answer
+ * rather than the lazy one — with both of its failure modes answered rather
+ * than left to be discovered.
+ */
+function collectExternal(root: HTMLElement, name: string | undefined): HTMLElement[] {
+  warnOrphanedControls();
+  if (!name) return [];
+
+  const duplicates = document.querySelectorAll(`[data-df-carousel="${name}"]`);
+  if (duplicates.length > 1 && !warnedNames.has(`dup:${name}`)) {
+    warnedNames.add(`dup:${name}`);
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[dynamic] ${duplicates.length} carousels share data-df-carousel="${name}". `
+      + 'Controls naming it will drive all of them — give each one its own name.',
+      root,
+    );
+  }
+
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(`[data-df-carousel-controls="${name}"]`),
+  );
+}
+
 function mount(root: HTMLElement): Teardown {
   const viewport = root.querySelector<HTMLElement>('.df-carousel-viewport');
   if (!viewport) {
@@ -56,8 +139,41 @@ function mount(root: HTMLElement): Teardown {
      `!`. */
   const view: HTMLElement = viewport;
 
-  const arrows = Array.from(root.querySelectorAll<HTMLButtonElement>('.df-carousel-arrow'));
-  const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('.df-carousel-page'));
+  /*
+   * Controls inside the carousel, plus any marked as belonging to it.
+   *
+   * The React side connects external controls with an object from
+   * `useDCarouselController`, because passing one is what a component tree
+   * makes easy and a string id there fails silently on a typo. Here there is
+   * no closure to pass and the DOM IS the registry, so an id is the right
+   * answer rather than the lazy one:
+   *
+   * ```html
+   * <div class="df-carousel" data-df-carousel="hero">…</div>
+   *
+   * <div data-df-carousel-controls="hero">
+   *   <button class="df-carousel-arrow" data-direction="prev">…</button>
+   * </div>
+   * ```
+   *
+   * The failure modes an id brings are answered below rather than left to be
+   * discovered: a name nothing claims, and a name two carousels claim.
+   */
+  const name = root.dataset.dfCarousel;
+  const external = collectExternal(root, name);
+
+  const arrows = [
+    ...Array.from(root.querySelectorAll<HTMLButtonElement>('.df-carousel-arrow')),
+    ...external.flatMap((host) => (
+      Array.from(host.querySelectorAll<HTMLButtonElement>('.df-carousel-arrow'))
+    )),
+  ];
+  const dots = [
+    ...Array.from(root.querySelectorAll<HTMLButtonElement>('.df-carousel-page')),
+    ...external.flatMap((host) => (
+      Array.from(host.querySelectorAll<HTMLButtonElement>('.df-carousel-page'))
+    )),
+  ];
   const slides = () => Array.from(view.querySelectorAll<HTMLElement>('.df-carousel-slide'));
 
   /**

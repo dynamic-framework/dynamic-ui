@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { DCarousel } from '../../src';
+
+import type { CSSProperties } from 'react';
+import { DCarousel, useDCarouselController } from '../../src';
 
 const config: Meta<typeof DCarousel> = {
   title: 'Design System/Components/Carousel',
@@ -501,4 +503,206 @@ export const NoControls: Story = {
     pagination: false,
     gap: 3,
   },
+};
+
+const PANEL: CSSProperties = {
+  display: 'grid',
+  placeItems: 'center',
+  height: '8rem',
+  background: 'var(--df-bg-muted)',
+  borderRadius: 'var(--df-shape-surface)',
+};
+
+/**
+ * A named component, because a hook cannot be called in a story's `render`
+ * arrow: `render` is not a component, so React has no instance to hang the
+ * state on and the rules-of-hooks lint is right to refuse it.
+ */
+function ElsewhereExample() {
+  const hero = useDCarouselController();
+
+  return (
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      {/* A sibling of the carousel, not an ancestor: nothing but the object connects them. */}
+      <header style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <strong style={{ marginInlineEnd: 'auto' }}>Featured</strong>
+        <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+          {`${hero.activePage + 1} / ${hero.pageCount}`}
+        </span>
+        <DCarousel.Pagination controller={hero} />
+        <DCarousel.Prev controller={hero} />
+        <DCarousel.Next controller={hero} />
+      </header>
+
+      <DCarousel
+        label="Featured"
+        controller={hero}
+        arrows={false}
+        pagination={false}
+        perPage={{ xs: 1, md: 3 }}
+        gap={3}
+      >
+        {Array.from({ length: 8 }, (_, index) => (
+          <DCarousel.Slide key={`slide-${index}`}>
+            <div style={PANEL}>{`Slide ${index + 1}`}</div>
+          </DCarousel.Slide>
+        ))}
+      </DCarousel>
+    </div>
+  );
+}
+
+function OwnMarkupExample() {
+  const hero = useDCarouselController();
+
+  return (
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <button
+          type="button"
+          className="df-button"
+          data-variant="outline"
+          disabled={!hero.canPrev}
+          onClick={hero.prev}
+          {...hero.viewportId && { 'aria-controls': hero.viewportId }}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          className="df-button"
+          data-variant="outline"
+          disabled={!hero.canNext}
+          onClick={hero.next}
+          {...hero.viewportId && { 'aria-controls': hero.viewportId }}
+        >
+          Forward
+        </button>
+        <button
+          type="button"
+          className="df-button"
+          data-variant="link"
+          onClick={hero.togglePlay}
+        >
+          {hero.playing ? 'Pause' : 'Play'}
+        </button>
+        <span style={{ marginInlineStart: 'auto', fontVariantNumeric: 'tabular-nums' }}>
+          {hero.connected
+            ? `page ${hero.activePage + 1} of ${hero.pageCount}`
+            : 'no carousel connected'}
+        </span>
+      </div>
+
+      <DCarousel
+        label="Offers"
+        controller={hero}
+        autoplay
+        interval={2500}
+        arrows={false}
+        pagination={false}
+        perPage={{ xs: 1, md: 2 }}
+        gap={3}
+      >
+        {Array.from({ length: 6 }, (_, index) => (
+          <DCarousel.Slide key={`offer-${index}`}>
+            <div style={PANEL}>{`Offer ${index + 1}`}</div>
+          </DCarousel.Slide>
+        ))}
+      </DCarousel>
+    </div>
+  );
+}
+
+/**
+ * Controls somewhere else entirely.
+ *
+ * `useDCarouselController()` returns one object that is both the live state
+ * and the actions. Pass it to `controller` and render the controls wherever
+ * they belong — a page header, a sidebar, a toolbar in another component.
+ * There is no context between them here: the header and the strip are
+ * siblings, and nothing but the object connects them.
+ *
+ * The `ref` could already call `next()`. What it could not do is carry state —
+ * a ref never re-renders whoever holds it — so external arrows could be wired
+ * but never disabled at the ends, and external dots could never mark the
+ * current page. That is the whole reason this exists.
+ *
+ * It is an object and not an id on purpose. A registry keyed by a string fails
+ * silently on a typo, lets two carousels fight over one name, and still needs
+ * the same store underneath: more machinery for less type safety.
+ */
+export const ControlledFromElsewhere: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `const hero = useDCarouselController();
+
+return (
+  <>
+    <header>
+      <span>{hero.activePage + 1} / {hero.pageCount}</span>
+
+      <DCarousel.Pagination controller={hero} />
+      <DCarousel.Prev controller={hero} />
+      <DCarousel.Next controller={hero} />
+    </header>
+
+    <DCarousel
+      label="Featured"
+      controller={hero}
+      arrows={false}
+      pagination={false}
+      perPage={{ xs: 1, md: 3 }}
+      gap={3}
+    >
+      <DCarousel.Slide>…</DCarousel.Slide>
+    </DCarousel>
+  </>
+);`,
+      },
+    },
+  },
+  render: () => <ElsewhereExample />,
+};
+
+/**
+ * Your own markup, driven by the same controller.
+ *
+ * `DCarousel.Prev`, `.Next` and `.Pagination` exist so that moving the
+ * controls costs no styling and no accessibility: they carry `aria-controls`
+ * pointing at the scrollport, which the built-in pair does not need because
+ * proximity does the work there.
+ *
+ * Build your own and those two are yours to remember. `viewportId` is on the
+ * controller for exactly that, and `connected` says whether a carousel is
+ * attached at all — so a control rendered before one mounts can disable itself
+ * rather than look live and do nothing.
+ */
+export const ControllerWithOwnMarkup: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `const hero = useDCarouselController();
+
+return (
+  <>
+    <button disabled={!hero.canPrev} onClick={hero.prev} aria-controls={hero.viewportId}>
+      Back
+    </button>
+    <button disabled={!hero.canNext} onClick={hero.next} aria-controls={hero.viewportId}>
+      Forward
+    </button>
+    <button onClick={hero.togglePlay}>
+      {hero.playing ? 'Pause' : 'Play'}
+    </button>
+
+    <DCarousel label="Offers" controller={hero} autoplay arrows={false} pagination={false}>
+      <DCarousel.Slide>…</DCarousel.Slide>
+    </DCarousel>
+  </>
+);`,
+      },
+    },
+  },
+  render: () => <OwnMarkupExample />,
 };

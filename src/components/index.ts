@@ -36,6 +36,18 @@ export type {
 export {
   default as DCarousel,
   DCarouselSlide,
+  DCarouselPrev,
+  DCarouselNext,
+  DCarouselPagination,
+  useDCarouselController,
+  createCarouselController,
+} from './DCarousel';
+export type {
+  DCarouselActions,
+  DCarouselController,
+  DCarouselControllerState,
+  DCarouselControllerStore,
+  DCarouselI18n,
 } from './DCarousel';
 export { default as DChip } from './DChip';
 export { default as DCollapse } from './DCollapse';

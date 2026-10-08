@@ -178,3 +178,48 @@ ${[1, 2, 3, 4].map((n) => slide(n, 4)).join('')}
   </div>
 ${arrows()}
 </div>`.trim(), { frame: FRAME });
+
+/**
+ * Controls somewhere else, connected by name.
+ *
+ * Give the carousel a name with `data-df-carousel="hero"` and name a container
+ * after it with `data-df-carousel-controls="hero"`. Anything inside that
+ * container with `.df-carousel-arrow` or `.df-carousel-page` drives it, with
+ * the same disabling and the same dot tracking as if it sat inside.
+ *
+ * The React side connects external controls with an object from
+ * `useDCarouselController` instead, because passing one is what a component
+ * tree makes easy and a name there fails silently on a typo. Here there is no
+ * closure to pass and **the DOM is the registry**, so a name is the right
+ * answer rather than the lazy one — and both of its failure modes warn in the
+ * console: a container naming no carousel, and two carousels claiming one
+ * name.
+ *
+ * `aria-controls` is the author's job here, and it matters more than it does
+ * inside the carousel: a button on the other side of the page has no
+ * relationship to the strip it drives unless it says so.
+ */
+export const ControlsElsewhere: Story = htmlStory(`
+<header class="df-flex df-items-center df-gap-3 df-mb-4">
+  <strong class="df-me-auto">Featured</strong>
+  <div data-df-carousel-controls="hero" class="df-flex df-items-center df-gap-2">
+    <div class="df-carousel-pagination" role="tablist" aria-label="Go to slide">
+${Array.from({ length: 5 }, (unused, i) => `      <button type="button" role="tab" class="df-carousel-page" aria-label="Go to slide ${i + 1}" aria-controls="hero-strip"></button>`).join('\n')}
+    </div>
+    <button type="button" class="df-carousel-arrow" data-direction="prev"
+            aria-label="Previous slide" aria-controls="hero-strip">
+      <span class="df-icon">${PREV}</span>
+    </button>
+    <button type="button" class="df-carousel-arrow" data-direction="next"
+            aria-label="Next slide" aria-controls="hero-strip">
+      <span class="df-icon">${NEXT}</span>
+    </button>
+  </div>
+</header>
+
+<div class="df-carousel" data-df-carousel="hero" data-draggable
+     style="--df-carousel-per-page-xs: 1; --df-carousel-per-page-md: 3">
+  <div class="df-carousel-viewport" id="hero-strip" tabindex="0" role="group" aria-label="Featured">
+${[1, 2, 3, 4, 5].map((n) => slide(n, 5)).join('')}
+  </div>
+</div>`.trim(), { frame: FRAME });

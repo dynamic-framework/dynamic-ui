@@ -373,6 +373,100 @@ describe('vanilla carousel', () => {
     expect(document.getElementById('d2')).toHaveAttribute('tabindex', '-1');
   });
 
+  /*
+   * Controls outside the carousel, connected by name.
+   *
+   * The React side passes an object, because a component tree makes that easy
+   * and a string id there fails silently on a typo. Here there is no closure
+   * to pass and the DOM is the registry, so a name is the right answer — and
+   * both of its failure modes are answered rather than left to be discovered.
+   */
+  describe('controls connected by name', () => {
+    const NAMED = `
+      <div class="df-carousel" data-df-carousel="hero">
+        <div class="df-carousel-viewport" id="hero-strip" tabindex="0" role="group">
+          <div class="df-carousel-slide" id="n1">One</div>
+          <div class="df-carousel-slide" id="n2">Two</div>
+        </div>
+      </div>
+      <div data-df-carousel-controls="hero">
+        <button class="df-carousel-arrow" data-direction="prev" id="out-prev"></button>
+        <button class="df-carousel-arrow" data-direction="next" id="out-next"></button>
+        <div class="df-carousel-pagination" role="tablist">
+          <button class="df-carousel-page" role="tab" id="out-d1"></button>
+          <button class="df-carousel-page" role="tab" id="out-d2"></button>
+        </div>
+      </div>`;
+
+    it('should settle a dot that lives outside the carousel', () => {
+      html(NAMED);
+
+      expect(document.getElementById('out-d1')).toHaveAttribute('aria-selected', 'true');
+      expect(document.getElementById('out-d2')).toHaveAttribute('aria-selected', 'false');
+    });
+
+    /* With nowhere to scroll, the back arrow is at an end wherever it sits. */
+    it('should disable an outside arrow at an end', () => {
+      html(NAMED);
+
+      expect(document.getElementById('out-prev')).toBeDisabled();
+    });
+
+    it('should leave controls alone when the carousel is unnamed', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      html(`
+        <div class="df-carousel" data-df-carousel>
+          <div class="df-carousel-viewport"><div class="df-carousel-slide">One</div></div>
+        </div>
+        <div data-df-carousel-controls="hero">
+          <button class="df-carousel-arrow" data-direction="prev" id="orphan"></button>
+        </div>`);
+
+      expect(document.getElementById('orphan')).not.toBeDisabled();
+      warn.mockRestore();
+    });
+
+    /*
+     * The one real cost of a name, and the complaint already on record about
+     * id-based wiring elsewhere in this library: a typo gives you buttons that
+     * look live and do nothing, with no error anywhere.
+     */
+    it('should warn when a control container names no carousel', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      html(`
+        <div class="df-carousel" data-df-carousel="hero">
+          <div class="df-carousel-viewport"><div class="df-carousel-slide">One</div></div>
+        </div>
+        <div data-df-carousel-controls="heroo">
+          <button class="df-carousel-arrow" data-direction="prev"></button>
+        </div>`);
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('data-df-carousel-controls="heroo" matches no'),
+        expect.anything(),
+      );
+      warn.mockRestore();
+    });
+
+    it('should warn when two carousels claim one name', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      html(`
+        <div class="df-carousel" data-df-carousel="twin">
+          <div class="df-carousel-viewport"><div class="df-carousel-slide">One</div></div>
+        </div>
+        <div class="df-carousel" data-df-carousel="twin">
+          <div class="df-carousel-viewport"><div class="df-carousel-slide">Two</div></div>
+        </div>
+        <div data-df-carousel-controls="twin"></div>`);
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('carousels share data-df-carousel="twin"'),
+        expect.anything(),
+      );
+      warn.mockRestore();
+    });
+  });
+
   it('should warn rather than throw when the viewport is missing', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     html('<div class="df-carousel" data-df-carousel></div>');

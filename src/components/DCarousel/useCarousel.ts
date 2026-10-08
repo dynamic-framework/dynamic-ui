@@ -418,6 +418,18 @@ export function useCarousel(
     return Math.round((range.scroll / range.max) * (pageCount - 1));
   }, [activeIndex, infinite, pageCount, perMove, perPage, range.max, range.scroll]);
 
+  /*
+   * Memoised, like `move` and `goToPage`.
+   *
+   * It used to be an inline arrow in the returned object, so it changed
+   * identity on every render — which re-ran any effect that depended on it.
+   * The carousel controller connects in such an effect, and its cleanup
+   * reports "no carousel attached": a new `togglePlay` per render meant
+   * connect, disconnect, connect, forever, which React stopped at its nested
+   * update limit.
+   */
+  const togglePlay = useCallback(() => setPaused((was) => !was), []);
+
   const goToPage = useCallback((page: number) => {
     const viewport = viewportRef.current;
     if (!viewport || pageCount <= 1) return;
@@ -601,7 +613,7 @@ export function useCarousel(
     canNext: Boolean(loop) || range.scroll < range.max - EPSILON,
     playing,
     paused,
-    togglePlay: () => setPaused((was) => !was),
+    togglePlay,
     goToPage,
     move,
   };

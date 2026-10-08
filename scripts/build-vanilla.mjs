@@ -54,9 +54,33 @@ const OUT = join(ROOT, 'dist/vanilla');
  *             slide back out of scroll position. 11.1 KB min / 3.9 KB gzip for
  *             the ESM build, 11.6 / 4.1 for the IIFE.
  */
+/*
+ *   14 -> 16  Controls connected by name: `data-df-carousel="hero"` on the
+ *             strip and `data-df-carousel-controls="hero"` on a container
+ *             anywhere else, so arrows and dots can live outside the carousel
+ *             they drive. The React side does this with an object from
+ *             `useDCarouselController`, because a component tree makes passing
+ *             one easy and a string there fails silently on a typo; here there
+ *             is no closure to pass and the DOM is the registry, so a name is
+ *             the right answer.
+ *
+ *             Measured at exactly 1.0 KB min / 0.3 KB gzip, and roughly half
+ *             of that is the two console warnings — a container naming no
+ *             carousel, and two carousels claiming one name. They are the
+ *             reason a name is safe to offer at all: the one complaint already
+ *             on record about id-based wiring in this library is that a typo
+ *             produces controls that look live and do nothing, with no error
+ *             anywhere. Unlike the React build these cannot be stripped by a
+ *             consumer's bundler, because the IIFE IS the shipped artifact —
+ *             so the bytes are the price of the diagnostics, paid on purpose.
+ *
+ *             13.1 KB min / 4.4 KB gzip for the ESM build before, 14.1 / 4.7
+ *             after; 13.6 / 4.6 before for the IIFE, 14.6 / 4.9 after. 16 is
+ *             that plus the usual headroom.
+ */
 const BUDGETS = {
-  'dynamic.min.js': 14,
-  'dynamic.iife.min.js': 14,
+  'dynamic.min.js': 16,
+  'dynamic.iife.min.js': 16,
 };
 
 const TARGET = ['chrome111', 'edge111', 'firefox113', 'safari16.4'];
