@@ -4,7 +4,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DContextProvider, useDPortalContext } from '../../src';
 import type { PortalProps } from '../../src';
 import DButton from '../../src/components/DButton';
+import DDropdown from '../../src/components/DDropdown';
+import type { DropdownAction } from '../../src/components/DDropdown/DDropdown';
 import DInput from '../../src/components/DInput';
+import DTooltip from '../../src/components/DTooltip';
 import DModal from '../../src/components/DModal/DModal';
 import DConfirmModalContainer from '../../src/components/DConfirmModal/DConfirmModalContainer';
 import useConfirmModal from '../../src/hooks/useConfirmModal';
@@ -81,6 +84,8 @@ type Payloads = {
     withNestedTrigger?: boolean;
     /** Renders the form that asks for a confirmation before closing. */
     withConfirmDemo?: boolean;
+    /** Renders floating controls, which is where the top layer gets interesting. */
+    withFloatingDemo?: boolean;
   };
 };
 
@@ -142,6 +147,53 @@ function ConfirmFromModal() {
 }
 
 /**
+ * Controls that float, inside a panel that is in the top layer.
+ *
+ * `showModal()` puts the dialog in the browser's TOP LAYER, which paints above
+ * the entire document whatever `z-index` says. Anything portalled to
+ * `document.body` — which is what `<FloatingPortal>` and `createPortal` do by
+ * default — therefore renders BEHIND the panel holding the control that opened
+ * it. No value of `--bs-dropdown-zindex` fixes it: the two are not in
+ * comparable stacking contexts.
+ *
+ * `nearestOpenDialog` resolves the `<dialog open>` above the control and uses it
+ * as the portal root, which puts the floating element in the top layer too.
+ */
+const FLOATING_ACTIONS: DropdownAction[] = [
+  { label: 'Edit', onClick: () => {} },
+  { label: 'Duplicate', onClick: () => {} },
+  { label: 'Delete', color: 'danger', onClick: () => {} },
+];
+
+/** Hoisted, so React does not see a new component type on every render. */
+function FloatingDropdownToggle({ toggle }: { toggle: () => void }) {
+  return <DButton text="Open a dropdown" variant="outline" color="secondary" onClick={toggle} />;
+}
+
+function FloatingDemo() {
+  return (
+    <div className="d-flex flex-column gap-3">
+      <p className="m-0">
+        Both of these portal out of their own subtree. Inside a panel they have
+        to portal into the dialog, or the top layer paints over them.
+      </p>
+      <div className="d-flex gap-3 align-items-center">
+        <DTooltip
+          Component={<DButton text="Hover for a tooltip" variant="outline" color="secondary" />}
+        >
+          Portalled into the dialog, not onto the body.
+        </DTooltip>
+        <DDropdown
+          asPortal
+          actions={FLOATING_ACTIONS}
+          dropdownToggle={FloatingDropdownToggle}
+        />
+      </div>
+    </div>
+  );
+}
+
+/**
  * A panel written the naive way, on purpose.
  *
  * It declares no `nativeDialog` flag and forwards no `onClose` to the `DModal`,
@@ -168,6 +220,7 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
     withFooter = true,
     withNestedTrigger = false,
     withConfirmDemo = false,
+    withFloatingDemo = false,
     ...modalProps
   } = payload;
 
@@ -188,6 +241,7 @@ function Panel({ name, payload }: PortalProps<Payloads['panel']>) {
         ))}
         {withNestedTrigger && <OpenNested />}
         {withConfirmDemo && <ConfirmFromModal />}
+        {withFloatingDemo && <FloatingDemo />}
       </DModal.Body>
       {withFooter && (
         <DModal.Footer actionPlacement={actionPlacement}>
@@ -779,6 +833,35 @@ export const Stacked: Story = story(
   'Two panels open at once, both in the browser\'s top layer — so the stacking order is the '
   + 'opening order and no `z-index` is involved. This is what replaced `--bs-modal-zindex: '
   + '$zindex-modal + 10` on the confirm modal.',
+);
+
+/**
+ * A tooltip and a dropdown inside a panel in the top layer.
+ *
+ * The thing to check is that they are VISIBLE. Before `nearestOpenDialog`, both
+ * mounted on `document.body` and the dialog painted straight over them — the
+ * tooltip was in the DOM, had the right coordinates, and could not be seen.
+ *
+ * Open the panel and inspect: the tooltip's element is a child of the
+ * `<dialog>`, not of `<body>`.
+ */
+export const FloatingInsideAPanel: Story = story(
+  () => withPortal(
+    <Trigger
+      label="Open a panel with floating controls"
+      payload={{
+        size: 'lg',
+        title: 'Tooltip and dropdown in the top layer',
+        body: '',
+        withFloatingDemo: true,
+        withFooter: false,
+      }}
+    />,
+  ),
+  'A `DTooltip` and a portalled `DDropdown` inside a `DModal`. Both portal into the `<dialog>` '
+  + 'rather than onto `document.body`, because `showModal()` puts the panel in the top layer and '
+  + 'the top layer paints above the whole document — a floating element left on the body is '
+  + 'rendered, positioned and completely invisible.',
 );
 
 /* --- confirming from inside a modal -------------------------------------- */
