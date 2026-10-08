@@ -1,0 +1,43 @@
+.d-skeleton {
+  --#{$prefix}skeleton-bg: #{$skeleton-bg};
+  --#{$prefix}skeleton-gap: #{$skeleton-gap};
+  --#{$prefix}skeleton-line-gap: #{$skeleton-line-gap};
+  --#{$prefix}skeleton-border-radius: #{$skeleton-border-radius};
+
+  width: 100%;
+}
+
+.d-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-gap);
+}
+
+.d-skeleton-item {
+  background-color: var(--#{$prefix}skeleton-bg, var(--#{$prefix}default-placeholder-bg));
+  border-radius: var(--#{$prefix}skeleton-border-radius, #{$skeleton-border-radius});
+}
+
+.d-skeleton-block,
+.d-skeleton-line {
+  display: block;
+  max-width: 100%;
+}
+
+.d-skeleton-circle {
+  flex-shrink: 0;
+}
+
+.d-skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-line-gap, #{$skeleton-line-gap});
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d-skeleton .placeholder,
+  .d-skeleton .placeholder-wave {
+    animation: none;
+  }
+}
