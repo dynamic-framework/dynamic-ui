@@ -4,6 +4,8 @@ import { motion, type Transition, type Variants } from 'framer-motion';
 import { useMemo, type PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
+import DPortalStack from '../../contexts/portal/DPortalStack';
+import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
@@ -63,6 +65,10 @@ const defaultTransition: Transition = {
   ease: 'easeInOut',
   duration: 0.3,
 };
+
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 
 function DOffcanvas(
   {
