@@ -16,6 +16,25 @@ Quickly create feature-rich financial applications through a robust micro fronte
 
 - Node.js `>= 22.0.0`
 
+### Browser Support
+
+`.browserslistrc` declares the minimum supported browsers for both the JavaScript and the CSS of the library:
+
+| Browser | Minimum |
+| --- | --- |
+| Chrome / Edge | 105 |
+| Firefox | 121 (and the current ESR) |
+| Safari / iOS Safari | 15.4 |
+
+The floor comes from features the library already relies on: `:has()` in form validation and input group styles (Chrome 105, Firefox 121), and `Array.prototype.at()` and `:focus-visible` (Safari 15.4).
+
+- The library ships modern JavaScript as is: `tsc` targets ES2017 syntax, but there is no API transpilation or polyfills (`core-js`). Dependencies such as React or framer-motion have their own minimums.
+- `npm run eslint` checks `src` with `eslint-plugin-compat` against `.browserslistrc`. It detects global APIs (`queueMicrotask`, `Object.fromEntries`, …) but not instance methods (`.at()`, `.flatMap()`, `MediaQueryList.addEventListener`), so review those by hand.
+- `npm run stylelint:compat` checks the compiled `dist/css/dynamic-ui.min.css` (run `npm run build` first). It ignores features no version of a target browser supports, such as `cursor` on iOS or `scrollbar-width` styling, because they only degrade the experience.
+- `autoprefixer` reads the same file when building the CSS.
+
+Supporting older browsers requires refactoring that code and adding polyfills; open an issue first.
+
 ### Installation
 
 ```bash

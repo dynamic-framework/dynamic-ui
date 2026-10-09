@@ -1,11 +1,13 @@
 # https://github.com/browserslist/browserslist#readme
+#
+# Minimum supported browsers for the JavaScript and the CSS of the library,
+# measured with `npm run eslint` (eslint-plugin-compat) and
+# `npm run stylelint:compat`. See "Browser Support" in README.md.
 
->= 0.5%
-last 2 major versions
-not dead
-Chrome >= 60
-Firefox >= 60
+Chrome >= 105
+Edge >= 105
+Firefox >= 121
 Firefox ESR
-iOS >= 12
-Safari >= 12
-not Explorer <= 11
+Safari >= 15.4
+iOS >= 15.4
+not dead

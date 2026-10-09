@@ -78,6 +78,22 @@
     },
     {
       "files": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+      ],
+      "excludedFiles": [
+        "**/*.spec.tsx",
+        "**/*.a11y.test.tsx"
+      ],
+      "plugins": [
+        "compat"
+      ],
+      "extends": [
+        "plugin:compat/recommended"
+      ]
+    },
+    {
+      "files": [
         "stories/**/*.ts",
         "stories/**/*.tsx"
       ],
