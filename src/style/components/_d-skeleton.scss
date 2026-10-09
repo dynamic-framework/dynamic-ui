@@ -36,9 +36,31 @@
   min-width: 0;
 }
 
+// The animation travels as custom properties instead of Bootstrap's
+// `.placeholder-glow` / `.placeholder-wave` containers: those reach every
+// descendant and a nested skeleton cannot undo them. Custom properties inherit,
+// so the closest skeleton that sets an animation wins.
+.d-skeleton-animation-glow {
+  --#{$prefix}skeleton-animation: placeholder-glow 2s ease-in-out infinite;
+  --#{$prefix}skeleton-mask-image: none;
+}
+
+.d-skeleton-animation-wave {
+  --#{$prefix}skeleton-animation: placeholder-wave 2s linear infinite;
+  --#{$prefix}skeleton-mask-image: linear-gradient(130deg, #{$black} 55%, #{rgba($black, 1 - $placeholder-opacity-min)} 75%, #{$black} 95%);
+}
+
+.d-skeleton-animation-none {
+  --#{$prefix}skeleton-animation: none;
+  --#{$prefix}skeleton-mask-image: none;
+}
+
 .d-skeleton-item {
   background-color: var(--#{$prefix}skeleton-bg, var(--#{$prefix}default-placeholder-bg));
   border-radius: var(--#{$prefix}skeleton-border-radius, #{$skeleton-border-radius});
+  mask-image: var(--#{$prefix}skeleton-mask-image, none);
+  mask-size: 200% 100%;
+  animation: var(--#{$prefix}skeleton-animation, none);
 }
 
 .d-skeleton-block,
@@ -59,8 +81,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .d-skeleton .placeholder,
-  .d-skeleton .placeholder-wave {
+  .d-skeleton-item {
+    mask-image: none;
     animation: none;
   }
 }

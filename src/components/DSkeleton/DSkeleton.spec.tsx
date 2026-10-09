@@ -23,7 +23,7 @@ describe('<DSkeleton />', () => {
   <div
     aria-busy="true"
     aria-live="polite"
-    class="d-skeleton placeholder-glow"
+    class="d-skeleton d-skeleton-animation-glow"
     role="status"
   >
     <span
@@ -76,16 +76,24 @@ describe('<DSkeleton />', () => {
     expect(container.querySelector('.d-skeleton-content')).toHaveAttribute('aria-hidden', 'true');
   });
 
-  it.each([
-    ['glow', '.d-skeleton.placeholder-glow'],
-    ['wave', '.d-skeleton-content.placeholder-wave'],
-  ] as const)('applies the %s animation', (animation, selector) => {
-    const { container } = render(<DSkeleton animation={animation} />);
-    expect(container.querySelector(selector)).toBeInTheDocument();
+  it('applies the glow animation by default', () => {
+    render(<DSkeleton />);
+    expect(screen.getByRole('status')).toHaveClass('d-skeleton-animation-glow');
   });
 
-  it('applies no animation class with animation="none"', () => {
-    const { container } = render(<DSkeleton animation="none" />);
+  it.each(['glow', 'wave', 'none'] as const)('applies the %s animation', (animation) => {
+    render(<DSkeleton animation={animation} />);
+    expect(screen.getByRole('status')).toHaveClass(`d-skeleton-animation-${animation}`);
+  });
+
+  it('does not use the Bootstrap placeholder animation containers', () => {
+    const { container } = render(
+      <DSkeleton animation="wave">
+        <DSkeleton animation="glow">
+          <DSkeleton.Block />
+        </DSkeleton>
+      </DSkeleton>,
+    );
     expect(container.querySelector('.placeholder-glow, .placeholder-wave')).not.toBeInTheDocument();
   });
 
@@ -221,25 +229,51 @@ describe('<DSkeleton /> nested', () => {
     expect(container.querySelectorAll('.d-skeleton-content-horizontal')).toHaveLength(1);
   });
 
+  // The animation is a custom property set by `.d-skeleton-animation-*` and
+  // inherited by the items, so the closest ancestor with that class wins.
+  const animationOf = (item: Element | null) => item
+    ?.closest('[class*="d-skeleton-animation-"]')
+    ?.className.match(/d-skeleton-animation-(\w+)/)?.[1];
+
   it('inherits the animation of the outermost skeleton', () => {
     const { container } = render(
       <DSkeleton animation="wave">
         <RowSkeleton />
       </DSkeleton>,
     );
-    expect(container.querySelector('.placeholder-glow')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.placeholder-wave')).toHaveLength(1);
+    expect(container.querySelectorAll('[class*="d-skeleton-animation-"]')).toHaveLength(1);
+    expect(animationOf(container.querySelector('.d-skeleton-circle'))).toBe('wave');
   });
 
-  it('allows the nested skeleton to set its own animation', () => {
+  it.each([
+    ['none', 'wave'],
+    ['glow', 'none'],
+    ['wave', 'glow'],
+    ['glow', 'wave'],
+  ] as const)('lets a nested skeleton inside %s set %s', (outer, inner) => {
     const { container } = render(
-      <DSkeleton animation="none">
-        <DSkeleton animation="wave">
+      <DSkeleton animation={outer}>
+        <DSkeleton.Circle />
+        <DSkeleton animation={inner}>
           <DSkeleton.Block />
         </DSkeleton>
       </DSkeleton>,
     );
-    expect(container.querySelector('.d-skeleton-content.placeholder-wave')).toBeInTheDocument();
+    expect(animationOf(container.querySelector('.d-skeleton-circle'))).toBe(outer);
+    expect(animationOf(container.querySelector('.d-skeleton-block'))).toBe(inner);
+  });
+
+  it('resolves the closest animation across several levels', () => {
+    const { container } = render(
+      <DSkeleton animation="glow">
+        <DSkeleton animation="none">
+          <DSkeleton>
+            <DSkeleton.Block />
+          </DSkeleton>
+        </DSkeleton>
+      </DSkeleton>,
+    );
+    expect(animationOf(container.querySelector('.d-skeleton-block'))).toBe('none');
   });
 
   it('applies gap and color of the nested skeleton only', () => {

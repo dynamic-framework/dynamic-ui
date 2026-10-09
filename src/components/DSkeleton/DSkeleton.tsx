@@ -19,7 +19,8 @@ export type SkeletonDirection = 'vertical' | 'horizontal';
 type Props = BaseProps & {
   /**
    * Animation applied to every skeleton item inside. Nested skeletons inherit
-   * the animation of the outermost one unless they set their own.
+   * the animation of the closest skeleton that sets one, so a nested skeleton
+   * can replace it or turn it off with `none`.
    */
   animation?: SkeletonAnimation;
   /**
@@ -94,15 +95,15 @@ function DSkeleton(
   const contentClassName = classNames(
     'd-skeleton-content',
     direction === 'horizontal' && 'd-skeleton-content-horizontal',
-    resolvedAnimation === 'wave' && 'placeholder-wave',
   );
+  const animationClassName = resolvedAnimation && `d-skeleton-animation-${resolvedAnimation}`;
 
   if (isNested) {
     return (
       <div
         className={classNames(
           contentClassName,
-          resolvedAnimation === 'glow' && 'placeholder-glow',
+          animationClassName,
           className,
         )}
         style={skeletonStyle}
@@ -118,7 +119,7 @@ function DSkeleton(
       <div
         className={classNames(
           'd-skeleton',
-          resolvedAnimation === 'glow' && 'placeholder-glow',
+          animationClassName,
           className,
         )}
         style={skeletonStyle}

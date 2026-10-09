@@ -78,6 +78,8 @@ under \`prefers-reduced-motion: reduce\`.
 | --${PREFIX_BS}skeleton-gap                | .d-skeleton  | css length unit  | Space between direct children       |
 | --${PREFIX_BS}skeleton-line-gap           | .d-skeleton  | css length unit  | Space between lines of \`Text\`       |
 | --${PREFIX_BS}skeleton-border-radius      | .d-skeleton  | css length unit  | Default radius of every item        |
+| --${PREFIX_BS}skeleton-animation          | .d-skeleton-animation-* | css animation | Animation of every item, set by \`animation\` |
+| --${PREFIX_BS}skeleton-mask-image         | .d-skeleton-animation-* | css image     | Mask used by the \`wave\` animation   |
         `,
       },
     },
@@ -93,8 +95,8 @@ under \`prefers-reduced-motion: reduce\`.
     animation: {
       control: 'radio',
       options: ['glow', 'wave', 'none'],
-      description: 'Animation applied to every skeleton item',
-      table: { category: 'Appearance', defaultValue: { summary: 'glow' } },
+      description: 'Animation applied to every skeleton item. A nested skeleton inherits the closest one and can replace it or turn it off with `none`',
+      table: { category: 'Appearance', defaultValue: { summary: 'glow (inherited when nested)' } },
     },
     color: {
       control: 'select',
@@ -120,8 +122,8 @@ under \`prefers-reduced-motion: reduce\`.
     },
     items: {
       control: { type: 'number', min: 0 },
-      description: 'Number of times the item is repeated',
-      table: { category: 'Content', defaultValue: { summary: '1' } },
+      description: 'Number of times the item is repeated. When omitted, children render as-is, without `.d-skeleton-slot` wrappers (a function child renders once)',
+      table: { category: 'Content', defaultValue: { summary: 'undefined' } },
     },
     ariaLabel: {
       control: 'text',
@@ -183,6 +185,31 @@ export const Animations: Story = {
         </div>
       ))}
     </div>
+  ),
+};
+
+export const NestedAnimation: Story = {
+  name: 'Nested Animation',
+  parameters: {
+    docs: {
+      description: {
+        story: 'A nested skeleton inherits the animation of the closest skeleton that sets one. Setting `animation` on it replaces the inherited one, including `none` to keep a region static.',
+      },
+    },
+  },
+  render: () => (
+    <DSkeleton animation="wave" ariaLabel="Loading profile">
+      <DSkeleton direction="horizontal" gap={16} className="align-items-center">
+        <DSkeleton.Circle size={48} />
+        <DSkeleton.Text lines={2} widths={['60%', '35%']} />
+      </DSkeleton>
+      <DSkeleton animation="none">
+        <DSkeleton.Block height={96} />
+      </DSkeleton>
+      <DSkeleton animation="glow">
+        <DSkeleton.Text lines={2} size="sm" />
+      </DSkeleton>
+    </DSkeleton>
   ),
 };
 
