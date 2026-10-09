@@ -26,6 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { pathToFileURL } from 'node:url';
 
 import {
   ALLOWED_DECLARATIONS,
@@ -738,7 +739,8 @@ function main(argv) {
   return 0;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// realpath: installed as a package `bin`, argv[1] is the symlink in node_modules/.bin.
+if (process.argv[1] && import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href) {
   process.exit(main(process.argv));
 }
 

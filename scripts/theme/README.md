@@ -3,6 +3,33 @@
 Herramienta mínima para rebrandear Dynamic UI desde un theme reducido, y un
 validador de los errores conocidos al hacerlo a mano.
 
+## Uso desde el paquete instalado
+
+`@dynamic-framework/ui-react` publica las dos herramientas como binarios. El
+`known-tokens.json` incluido corresponde al CSS de la versión instalada.
+
+```bash
+npm i -D @dynamic-framework/ui-react
+npx dynamic-theme-expand theme.json -o theme.css
+npx dynamic-theme-validate theme.css --strict
+```
+
+Sin instalar el paquete en el proyecto:
+
+```bash
+npx -p @dynamic-framework/ui-react@<versión> dynamic-theme-expand theme.json -o theme.css
+npx -p @dynamic-framework/ui-react@<versión> dynamic-theme-validate theme.css
+```
+
+En CI, `dynamic-theme-validate` sale con `1` si hay errores:
+
+```yaml
+- run: npx dynamic-theme-expand theme/theme.json -o theme/theme.css
+- run: npx dynamic-theme-validate theme/theme.css --strict
+```
+
+## Uso dentro del repositorio
+
 ```bash
 node scripts/theme/theme-expand.mjs examples/themes/theme-ejemplo.json
 node scripts/theme/theme-validate.mjs examples/themes/theme-ejemplo.css
