@@ -1,5 +1,7 @@
 import remarkGfm from 'remark-gfm';
 
+import { enrichComponentsManifest, propFilter } from './manifest-docgen.ts';
+
 export default {
   stories: [
     '../stories/**/*.mdx', 
@@ -31,7 +33,7 @@ export default {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop: any) => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+      propFilter,
     },
   },
 
@@ -42,6 +44,9 @@ export default {
   features: {
     componentsManifest: true,
   },
+  experimental_manifests: async (existing: Parameters<typeof enrichComponentsManifest>[0]) => (
+    enrichComponentsManifest(existing)
+  ),
 
   staticDirs: [
     './public',
