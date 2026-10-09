@@ -55,6 +55,10 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         run: npm run build
 
+      - name: Regenerate known tokens for the published theme CLI
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run build:known-tokens
+
       - name: Publish to NPM
         if: ${{ steps.release.outputs.release_created }}
         run: npm publish --access public

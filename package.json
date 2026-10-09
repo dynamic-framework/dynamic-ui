@@ -50,6 +50,7 @@
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:scss": "node scripts/build-scss.js",
     "build:icons-core": "npx tsx scripts/build-icons-core.ts",
+    "build:known-tokens": "node scripts/theme/build-known-tokens.mjs",
     "build:api": "node scripts/generate-api.mjs && mkdir -p dist && cp registry/api.json dist/api.json",
     "build:scss:watch": "npx nodemon --watch src --ext scss --exec 'npm run build:scss'",
     "dev:ts": "tsc -p tsconfig.build.json",
@@ -95,10 +96,19 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "bin": {
+    "dynamic-theme-expand": "scripts/theme/theme-expand.mjs",
+    "dynamic-theme-validate": "scripts/theme/theme-validate.mjs"
+  },
   "files": [
     "dist/",
     "src/style",
-    "jest/"
+    "jest/",
+    "scripts/theme/theme-expand.mjs",
+    "scripts/theme/theme-validate.mjs",
+    "scripts/theme/theme-tokens.mjs",
+    "scripts/theme/known-tokens.json",
+    "scripts/theme/README.md"
   ],
   "dependencies": {
     "@floating-ui/react": "~0.27.16",
@@ -107,6 +117,7 @@
     "@splidejs/splide": "~4.1.4",
     "bootstrap": "~5.3.8",
     "classnames": "~2.5.1",
+    "culori": "^4.0.2",
     "currency.js": "~2.0.4",
     "date-fns": "~4.1.0",
     "file-selector": "~2.1.2",
@@ -149,7 +160,6 @@
     "autoprefixer": "~10.4.16",
     "axe-playwright": "~1.2.3",
     "conventional-changelog-conventionalcommits": "~6.1.0",
-    "culori": "^4.0.2",
     "eslint": "~8.52.0",
     "eslint-config-airbnb": "~19.0.4",
     "eslint-config-airbnb-typescript": "~17.1.0",

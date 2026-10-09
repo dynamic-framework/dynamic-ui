@@ -8,7 +8,9 @@
 //
 // dist/ es build output y está gitignoreado, así que este script se corre a
 // mano después de `npm run build:scss` (o contra el CSS de un tarball
-// publicado) y el JSON resultante sí se versiona.
+// publicado) y el JSON resultante sí se versiona. El workflow de release lo
+// corre después del build (`npm run build:known-tokens`) para que el JSON
+// publicado con los binarios coincida con el CSS de esa versión.
 
 import fs from 'node:fs';
 import path from 'node:path';
