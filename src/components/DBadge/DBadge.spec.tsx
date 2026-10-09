@@ -30,6 +30,14 @@ describe('<DBadge />', () => {
     expect(badge).toHaveClass('badge-sm');
   });
 
+  it('Only accepts sm and lg as size', () => {
+    // @ts-expect-error `md` is not a badge size
+    render(<DBadge text="Invalid size" size="md" />);
+    // @ts-expect-error `md` is not a badge size
+    render(<DBadge text="Invalid responsive size" size={{ md: 'md' }} />);
+    expect(screen.getByText('Invalid size')).toBeInTheDocument();
+  });
+
   it('Renders with responsive size object', () => {
     render(<DBadge text="Badge content" size={{ xs: 'sm', md: 'lg' }} />);
     const badge = screen.getByText('Badge content').parentElement!;

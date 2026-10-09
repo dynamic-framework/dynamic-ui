@@ -225,6 +225,14 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveClass('btn-lg');
   });
 
+  it('Should only accept sm and lg as size', () => {
+    // @ts-expect-error `md` is not a button size
+    const { getByText } = render(<DButton text="Invalid size" size="md" />);
+    // @ts-expect-error `md` is not a button size
+    render(<DButton text="Invalid responsive size" size={{ md: 'md' }} />);
+    expect(getByText('Invalid size')).toBeInTheDocument();
+  });
+
   it('Should apply responsive size class (sm)', () => {
     // Simula mobile viewport
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 400 });
