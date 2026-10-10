@@ -1,0 +1,88 @@
+.d-skeleton {
+  --#{$prefix}skeleton-bg: #{$skeleton-bg};
+  --#{$prefix}skeleton-gap: #{$skeleton-gap};
+  --#{$prefix}skeleton-line-gap: #{$skeleton-line-gap};
+  --#{$prefix}skeleton-border-radius: #{$skeleton-border-radius};
+
+  width: 100%;
+}
+
+.d-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-gap);
+}
+
+.d-skeleton-content-horizontal {
+  flex-direction: row;
+
+  // Items and nested skeletons have no intrinsic width on a row: their shapes
+  // are sized in percentages, so they would collapse to zero. Share the row
+  // instead, and let `flex-grow-0` opt out of it.
+  > .d-skeleton-slot,
+  > .d-skeleton-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+// Wrapper of each repetition when the skeleton iterates (`items` or a function
+// child), so the gap separates items and not shapes. Its own shapes stack with
+// the same gap: nest a `DSkeleton` for an item laid out on a row.
+.d-skeleton-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-gap);
+  min-width: 0;
+}
+
+// The animation travels as custom properties instead of Bootstrap's
+// `.placeholder-glow` / `.placeholder-wave` containers: those reach every
+// descendant and a nested skeleton cannot undo them. Custom properties inherit,
+// so the closest skeleton that sets an animation wins.
+.d-skeleton-animation-glow {
+  --#{$prefix}skeleton-animation: placeholder-glow 2s ease-in-out infinite;
+  --#{$prefix}skeleton-mask-image: none;
+}
+
+.d-skeleton-animation-wave {
+  --#{$prefix}skeleton-animation: placeholder-wave 2s linear infinite;
+  --#{$prefix}skeleton-mask-image: linear-gradient(130deg, #{$black} 55%, #{rgba($black, 1 - $placeholder-opacity-min)} 75%, #{$black} 95%);
+}
+
+.d-skeleton-animation-none {
+  --#{$prefix}skeleton-animation: none;
+  --#{$prefix}skeleton-mask-image: none;
+}
+
+.d-skeleton-item {
+  background-color: var(--#{$prefix}skeleton-bg, var(--#{$prefix}default-placeholder-bg));
+  border-radius: var(--#{$prefix}skeleton-border-radius, #{$skeleton-border-radius});
+  mask-image: var(--#{$prefix}skeleton-mask-image, none);
+  mask-size: 200% 100%;
+  animation: var(--#{$prefix}skeleton-animation, none);
+}
+
+.d-skeleton-block,
+.d-skeleton-line {
+  display: block;
+  max-width: 100%;
+}
+
+.d-skeleton-circle {
+  flex-shrink: 0;
+}
+
+.d-skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}skeleton-line-gap, #{$skeleton-line-gap});
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d-skeleton-item {
+    mask-image: none;
+    animation: none;
+  }
+}
