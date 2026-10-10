@@ -170,7 +170,7 @@ export const Animations: Story = {
   parameters: {
     docs: {
       description: {
-        story: '`glow` pulses the opacity of each item, `wave` sweeps a highlight across the whole skeleton and `none` renders it static.',
+        story: '`glow` pulses the opacity of each item, `wave` sweeps a highlight across each item on its own (all in sync, not one continuous wave over the whole layout) and `none` renders it static.',
       },
     },
   },
