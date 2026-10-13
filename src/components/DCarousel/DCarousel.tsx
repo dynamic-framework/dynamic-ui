@@ -26,6 +26,7 @@ import DCarouselNext from './components/DCarouselNext';
 import DCarouselPagination from './components/DCarouselPagination';
 import DCarouselPrev from './components/DCarouselPrev';
 import { useCarousel } from './useCarousel';
+import usePaginationKeys from './usePaginationKeys';
 
 import { useDContext } from '../../contexts';
 import { useResponsiveProp } from '../../hooks/useResponsiveProp';
@@ -310,9 +311,21 @@ function DCarousel(
     element: rootRef.current,
   }), [goToPage, goToSlide, move]);
 
+  /*
+   * The callback through a ref, so the effect depends on the INDEX alone.
+   *
+   * With the callback in the dependency array, a consumer who writes
+   * `onSlideChange={(i) => setX(i)}` inline gets a new function identity on
+   * every parent render — and the effect re-ran and fired again, reporting a
+   * slide change that had not happened. A handler that sets state then re-runs
+   * itself for as long as the parent keeps rendering.
+   */
+  const onSlideChangeRef = useRef(onSlideChange);
+  onSlideChangeRef.current = onSlideChange;
+
   useEffect(() => {
-    onSlideChange?.(activeIndex);
-  }, [activeIndex, onSlideChange]);
+    onSlideChangeRef.current?.(activeIndex);
+  }, [activeIndex]);
 
   /**
    * Loads the deferred media of every slide now in the window.
@@ -327,7 +340,9 @@ function DCarousel(
     const viewport = viewportRef.current;
     if (!viewport) return;
     viewport
-      .querySelectorAll('.d-carousel-slide[data-visible]')
+      /* `:scope >` for the same reason as `allSlides`: a nested carousel's
+         slides are in this subtree and are not this carousel's to load. */
+      .querySelectorAll(':scope > .d-carousel-slide[data-visible]')
       .forEach((slide) => loadDeferredMedia(slide));
   }, [visible]);
 
@@ -383,6 +398,9 @@ function DCarousel(
     activeIndex, activePage, canAutoplay, canNext, canPrev, pageCount, paused, playing, publish,
   ]);
 
+  /* The arrow keys the roving `tabIndex` on the dots promises. */
+  const paginationKeys = usePaginationKeys(pageCount, goToPage);
+
   const cssVars = useMemo<CSSProperties>(() => ({
     ...tierVars('per-page', perPage, (value) => String(value)),
     ...tierVars('gap', gap, (step) => `var(--bs-ref-spacer-${step})`),
@@ -403,9 +421,27 @@ function DCarousel(
    * element when it does not — and neither produces a slide inside a slide.
    */
   const renderSlide = (slide: ReactNode, index: number, clone?: 'head' | 'tail') => {
-    // A clone is the same content at a different point in the strip, so the key
-    // has to say which copy it is or React will reuse one for the other.
-    const key = `${clone ?? 'slide'}-${index}`;
+    /*
+     * The consumer's own key, kept.
+     *
+     * This used to key every slide by its POSITION, which throws away the
+     * identity React needs: insert a slide at the front and every key shifts by
+     * one, so React matches each element against the content that used to sit
+     * there. Stateful children — an input mid-edit, a playing video, an
+     * uncontrolled accordion — are remounted, or worse, keep the state of the
+     * slide that previously occupied the position.
+     *
+     * The position is still the fallback for a child with no key of its own,
+     * which is the only case where there is nothing better to use.
+     *
+     * The clone prefix stays either way: a clone is the same content at a
+     * different point in the strip, so the key has to say which copy it is or
+     * React will reuse one for the other.
+     */
+    const identity = (isValidElement(slide) && slide.key != null)
+      ? slide.key
+      : `index-${index}`;
+    const key = `${clone ?? 'slide'}-${identity}`;
     const injected = {
       index,
       total: slideCount,
@@ -527,6 +563,7 @@ function DCarousel(
               {Array.from({ length: pageCount }, (_, page) => (
                 <button
                   key={`page-${page}`}
+                  ref={paginationKeys.setRef(page)}
                   type="button"
                   role="tab"
                   className="d-carousel-page"
@@ -534,6 +571,7 @@ function DCarousel(
                   aria-selected={page === activePage}
                   tabIndex={page === activePage ? 0 : -1}
                   onClick={() => goToPage(page)}
+                  onKeyDown={paginationKeys.onKeyDown(page)}
                 />
               ))}
             </div>

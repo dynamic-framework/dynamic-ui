@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 
+import usePaginationKeys from '../usePaginationKeys';
+
 import { DEFAULT_CAROUSEL_I18N } from '../i18n';
 import type { BaseProps } from '../../interface';
 import type { DCarouselControllerState, DCarouselControllerStore } from '../controller';
@@ -30,6 +32,10 @@ export default function DCarouselPagination(
   const text = { ...DEFAULT_CAROUSEL_I18N, ...i18n };
   const { pageCount, activePage, viewportId } = controller;
 
+  /* The arrow keys the roving `tabIndex` promises. See `usePaginationKeys`.
+     Before the early return, because a hook cannot be conditional. */
+  const keys = usePaginationKeys(pageCount, controller.goToPage);
+
   if (pageCount <= 1) return null;
 
   return (
@@ -44,6 +50,7 @@ export default function DCarouselPagination(
       {Array.from({ length: pageCount }, (_, page) => (
         <button
           key={`page-${page}`}
+          ref={keys.setRef(page)}
           type="button"
           role="tab"
           className="d-carousel-page"
@@ -51,6 +58,7 @@ export default function DCarouselPagination(
           aria-selected={page === activePage}
           tabIndex={page === activePage ? 0 : -1}
           onClick={() => controller.goToPage(page)}
+          onKeyDown={keys.onKeyDown(page)}
         />
       ))}
     </div>

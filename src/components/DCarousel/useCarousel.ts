@@ -159,9 +159,27 @@ function alignDelta(metrics: Metrics, slide: HTMLElement, align: CarouselAlign):
     : rect.left - metrics.contentStart;
 }
 
-/** Every slide in DOM order, clones included. */
+/**
+ * Every slide in DOM order, clones included — and nothing belonging to a
+ * carousel nested inside one of them.
+ *
+ * `:scope >` rather than a descendant query. A `DCarousel` inside a slide puts
+ * its own `.d-carousel-slide` elements in this subtree, and a plain descendant
+ * query swept them up: the outer engine then measured and navigated the inner
+ * strip as if it were its own. `activeIndex` counted the wrong list — an outer
+ * carousel with a three-slide carousel in its first slide reported index 4
+ * where it meant 1 — and with it went `onBeforeSlideChange`, `onSlideChange`,
+ * the per-slide `data-visible` window, and the clone guard in `reconcileLoop`,
+ * which compares this length against `slideCount + cloneCount * 2` and bails
+ * when it does not match. That last one turns a nested carousel into a loop
+ * that silently stops reconciling.
+ *
+ * Every slide is a direct child of the viewport — the viewport is the flex
+ * container, and the clones are rendered alongside the real slides — so
+ * scoping costs nothing.
+ */
 function allSlides(viewport: HTMLElement): HTMLElement[] {
-  return Array.from(viewport.querySelectorAll<HTMLElement>('.d-carousel-slide'));
+  return Array.from(viewport.querySelectorAll<HTMLElement>(':scope > .d-carousel-slide'));
 }
 
 export function useCarousel(
@@ -388,8 +406,28 @@ export function useCarousel(
       ? (((i - cloneCount) % slideCount) + slideCount) % slideCount
       : i);
 
-    const first = Math.max(0, toReal(firstOnScreen) - lookahead);
-    const last = Math.min(slideCount - 1, toReal(lastOnScreen) + lookahead);
+    /*
+     * The window, which can WRAP under a loop.
+     *
+     * `toReal` maps the rendered strip back onto the real slides, and the
+     * visible run crosses the seam whenever a clone is on screen: real slides
+     * 5, 0, 1 come back as first=5, last=1. The range below is then empty —
+     * `index >= 5 && index <= 1` is true of nothing — so no slide carried
+     * `data-visible`, and the deferred media of the slides actually being
+     * looked at never loaded. It failed exactly where a loop is supposed to be
+     * seamless.
+     *
+     * A wrapped run opens the whole real range instead. That marks more slides
+     * than are strictly on screen, which is the same trade `lookahead` already
+     * makes deliberately — and the alternative, a two-interval window, would
+     * put that arithmetic in every consumer of `visible`.
+     */
+    const firstReal = toReal(firstOnScreen);
+    const lastReal = toReal(lastOnScreen);
+    const wrapped = infinite && firstReal > lastReal;
+
+    const first = wrapped ? 0 : Math.max(0, firstReal - lookahead);
+    const last = wrapped ? slideCount - 1 : Math.min(slideCount - 1, lastReal + lookahead);
 
     setVisible((current) => (
       current.first === first && current.last === last ? current : { first, last }
@@ -525,6 +563,69 @@ export function useCarousel(
     };
   }, [measure, settle, viewportRef]);
 
+  /* --- starting position ------------------------------------------------- */
+
+  /**
+   * Whether the starting position has actually been applied.
+   *
+   * Not "has the effect run" — it ran and did nothing in the case that matters.
+   * A carousel mounted with no layout (inside a closed accordion, a hidden tab,
+   * a `display: none` panel) measures every rect as zero, so the delta is zero
+   * and the scroll is a no-op. The effect was mount-only, so nothing ever tried
+   * again: opening the accordion revealed a carousel sitting on slide 0 with
+   * `initialSlide={5}`.
+   *
+   * A ref rather than state: nothing renders from it, and flipping it must not
+   * schedule a render of its own.
+   */
+  const startApplied = useRef(false);
+
+  const applyInitialPosition = useCallback(() => {
+    if (startApplied.current) return;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const start = Math.min(slideCount - 1, Math.max(0, Math.round(initialSlide)));
+    if (!infinite && start === 0) {
+      startApplied.current = true;
+      return;
+    }
+
+    const slides = allSlides(viewport);
+    const target = slides[infinite ? cloneCount + start : start];
+    if (!target) return;
+
+    /*
+     * The attempt is unconditional; only the "done" is earned.
+     *
+     * With no layout the delta is zero and the scroll is a harmless no-op — so
+     * there is nothing to gain by skipping it, and skipping it would change the
+     * mount behaviour of every carousel that DOES have layout. What must not
+     * happen is marking the job finished on the strength of a measurement that
+     * was all zeros, because then nothing ever tries again.
+     *
+     * `clientWidth` is the signal: zero means the scrollport has not been laid
+     * out, and a zero delta with a real width means the target was already
+     * aligned and there was genuinely nothing to do.
+     */
+    if (viewport.clientWidth > 0) startApplied.current = true;
+
+    /*
+     * Through `beginSeek`, like every other scroll this hook performs.
+     *
+     * `initialSlide={3}` crosses three snap points, and `scroll-snap-stop:
+     * always` clamps a programmatic scroll at the first one it meets — so the
+     * retry landed on slide 1 instead of 3. It did not bite at mount, where
+     * there is nothing laid out to snap to, which is exactly why it only
+     * appeared once the position was retried after layout.
+     */
+    beginSeek();
+    viewport.scrollBy({
+      left: alignDelta(readMetrics(viewport), target, align),
+      behavior: 'instant',
+    });
+  }, [align, beginSeek, cloneCount, infinite, initialSlide, slideCount, viewportRef]);
+
   /* --- reacting to layout, not to props ---------------------------------- */
 
   useEffect(() => {
@@ -533,6 +634,7 @@ export function useCarousel(
 
     measurePerPage();
     measure();
+    applyInitialPosition();
 
     // A ResizeObserver rather than a window resize listener, because the thing
     // that changes `perPage` is the CAROUSEL's width. It can change with the
@@ -542,10 +644,30 @@ export function useCarousel(
     const observer = new ResizeObserver(() => {
       measurePerPage();
       measure();
+      /* Layout may have just arrived — see `applyInitialPosition`. */
+      applyInitialPosition();
     });
     observer.observe(viewport);
+
+    /*
+     * A SLIDE as well as the scrollport, because the scrollport is not always
+     * the thing that changes.
+     *
+     * `perPage`, `gap` and `peek` are resolved by media queries against the
+     * VIEWPORT, not against this element. A carousel with a fixed width — in a
+     * sidebar, a modal, a fixed-width column — crosses `md` or `xl` without its
+     * own box moving a pixel: CSS re-divides the strip and the engine never
+     * hears about it, so `perPage`, the page count and the distance an arrow
+     * travels all stay at the previous breakpoint's values.
+     *
+     * A slide's width is derived from `--bs-carousel-per-page`, so it DOES
+     * change, and observing one catches exactly the case the scrollport misses.
+     */
+    const [firstSlide] = allSlides(viewport);
+    if (firstSlide) observer.observe(firstSlide);
+
     return () => observer.disconnect();
-  }, [measure, measurePerPage, viewportRef]);
+  }, [applyInitialPosition, measure, measurePerPage, viewportRef]);
 
   /* --- starting position ------------------------------------------------- */
 
@@ -563,22 +685,11 @@ export function useCarousel(
    * WOULD be animated.
    */
   useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
-
-    const start = Math.min(slideCount - 1, Math.max(0, Math.round(initialSlide)));
-    if (!infinite && start === 0) return;
-
-    const slides = allSlides(viewport);
-    const target = slides[infinite ? cloneCount + start : start];
-    if (!target) return;
-
-    viewport.scrollBy({
-      left: alignDelta(readMetrics(viewport), target, align),
-      behavior: 'instant',
-    });
-    // Mount only: re-running would drag a reader back to the start whenever
-    // one of these changed, which is what `goToSlide` is for.
+    applyInitialPosition();
+    // Mount only: re-running would drag a reader back to the start whenever one
+    // of these changed, which is what `goToSlide` is for. The retry happens
+    // from the ResizeObserver above, which is the thing that knows when layout
+    // finally arrived.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -610,7 +721,18 @@ export function useCarousel(
     // further to go, so it goes back to the other end instead.
     if (atEnd && loop === 'rewind') {
       beginSeek();
-      viewport.scrollTo({ left: direction === 1 ? 0 : viewport.scrollWidth });
+      /*
+       * The far end, in the direction the document runs.
+       *
+       * RTL models the range as `0..-max`, which the rest of this hook is
+       * consistent about — and this branch was not: it rewound to a POSITIVE
+       * `scrollWidth`, which in RTL is past `0` and clamps straight back to it.
+       * Pressing Previous at the start of an RTL carousel went nowhere instead
+       * of jumping to the last slide.
+       */
+      const { rtl } = readMetrics(viewport);
+      const far = rtl ? -viewport.scrollWidth : viewport.scrollWidth;
+      viewport.scrollTo({ left: direction === 1 ? 0 : far });
       return;
     }
 
@@ -745,6 +867,16 @@ export function useCarousel(
 
     const onVisibility = () => hold('hidden', document.hidden);
     document.addEventListener('visibilitychange', onVisibility);
+    /*
+     * Seeded, not just subscribed.
+     *
+     * `visibilitychange` only reports a TRANSITION. A carousel mounted into a
+     * tab that is already in the background — a route prefetched, a lazy
+     * component hydrated, a widget booted on a restored session — never saw
+     * one, so autoplay ran unwatched for the whole time the tab stayed hidden
+     * and the reader came back to a strip several laps from where they left it.
+     */
+    onVisibility();
 
     let observer: IntersectionObserver | undefined;
     if (root && typeof IntersectionObserver !== 'undefined') {

@@ -1,6 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import { createRef } from 'react';
+import { createRef, useState } from 'react';
 
 import type { ComponentProps } from 'react';
 import {
@@ -756,6 +756,138 @@ describe('<DCarousel />', () => {
 
       fireEvent.scroll(viewport);
       expect(root).not.toHaveAttribute('data-seeking');
+    });
+  });
+
+  /**
+   * A carousel inside a slide is still a carousel, and its slides are not the
+   * outer one's.
+   *
+   * `allSlides` used a plain descendant query, so the outer engine swept up the
+   * inner strip and measured it as part of its own: an outer carousel with a
+   * three-slide carousel in its first slide reported `activeIndex` 4 where it
+   * meant 1. Verified in Chromium before the fix — `onSlideChange` fired with 4
+   * and 5 for the second and third outer slides.
+   *
+   * jsdom has no layout, so the index itself cannot be reproduced here. What
+   * this pins is the collection the index is derived from: the outer viewport's
+   * own children, and nothing from the nested one.
+   */
+  describe('nested carousels', () => {
+    const nested = (
+      <DCarousel>
+        <DCarousel.Slide>
+          <DCarousel>
+            <DCarousel.Slide>inner A</DCarousel.Slide>
+            <DCarousel.Slide>inner B</DCarousel.Slide>
+            <DCarousel.Slide>inner C</DCarousel.Slide>
+          </DCarousel>
+        </DCarousel.Slide>
+        <DCarousel.Slide>outer 2</DCarousel.Slide>
+        <DCarousel.Slide>outer 3</DCarousel.Slide>
+      </DCarousel>
+    );
+
+    it('keeps the inner slides out of the outer strip', () => {
+      const { container } = render(nested);
+      const outerViewport = container.querySelector('.d-carousel-viewport') as HTMLElement;
+
+      // The subtree really does hold both strips...
+      expect(outerViewport.querySelectorAll('.d-carousel-slide')).toHaveLength(6);
+      // ...and the outer engine must only ever see its own three.
+      expect(outerViewport.querySelectorAll(':scope > .d-carousel-slide')).toHaveLength(3);
+    });
+
+    it('gives each carousel its own controls', () => {
+      const { container } = render(nested);
+      const carousels = container.querySelectorAll('.d-carousel');
+
+      expect(carousels).toHaveLength(2);
+      carousels.forEach((carousel) => {
+        expect(carousel.querySelectorAll(':scope > .d-carousel-arrow')).toHaveLength(2);
+      });
+    });
+  });
+
+  /** Findings from review, each pinned where jsdom can see it. */
+  describe('review regressions', () => {
+    /**
+     * An inline `onSlideChange` used to be in the effect's dependency array, so
+     * a new function identity on every parent render re-fired it — reporting a
+     * slide change that had not happened.
+     */
+    it('reports a slide change only when the index changes', () => {
+      const onSlideChange = jest.fn();
+      function Parent() {
+        const [, force] = useState(0);
+        return (
+          <>
+            <button type="button" onClick={() => force((n) => n + 1)}>rerender</button>
+            <DCarousel onSlideChange={(i) => { onSlideChange(i); }}>{slides(4)}</DCarousel>
+          </>
+        );
+      }
+      render(<Parent />);
+      expect(onSlideChange).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(screen.getByText('rerender'));
+      fireEvent.click(screen.getByText('rerender'));
+
+      expect(onSlideChange).toHaveBeenCalledTimes(1);
+    });
+
+    /**
+     * Keying every slide by position threw away React's identity: inserting at
+     * the front shifted every key, so stateful children were matched against
+     * the content that used to sit in their place.
+     */
+    it("keeps the consumer's key so a slide is not remounted on insert", () => {
+      const { container, rerender } = render(
+        <DCarousel>
+          <DCarousel.Slide key="b">B</DCarousel.Slide>
+          <DCarousel.Slide key="c">C</DCarousel.Slide>
+        </DCarousel>,
+      );
+      const before = container.querySelectorAll(':scope .d-carousel-slide')[0];
+
+      rerender(
+        <DCarousel>
+          <DCarousel.Slide key="a">A</DCarousel.Slide>
+          <DCarousel.Slide key="b">B</DCarousel.Slide>
+          <DCarousel.Slide key="c">C</DCarousel.Slide>
+        </DCarousel>,
+      );
+      const slidesNow = [...container.querySelectorAll('.d-carousel-slide')];
+
+      expect(slidesNow[0]).toHaveTextContent('A');
+      // "B" moved along the strip but is the SAME element, not a remount.
+      expect(slidesNow[1]).toBe(before);
+    });
+
+    /** Roving tabindex without arrow keys is a trap; the group must answer them. */
+    it('moves the pagination with the arrow keys, Home and End', () => {
+      const { container } = render(<DCarousel perPage={1}>{slides(5)}</DCarousel>);
+      const dots = Array.from(container.querySelectorAll<HTMLElement>('[role="tab"]'));
+
+      expect(dots).toHaveLength(5);
+      dots.forEach((dot) => {
+        expect(dot).toHaveAttribute('tabindex');
+      });
+
+      // Every dot answers the keys, which is what the roving index promises.
+      dots[0].focus();
+      fireEvent.keyDown(dots[0], { key: 'ArrowRight' });
+      expect(document.activeElement).toBe(dots[1]);
+
+      fireEvent.keyDown(dots[1], { key: 'End' });
+      expect(document.activeElement).toBe(dots[4]);
+
+      fireEvent.keyDown(dots[4], { key: 'Home' });
+      expect(document.activeElement).toBe(dots[0]);
+
+      // Wraps, rather than dead-ending.
+      fireEvent.keyDown(dots[0], { key: 'ArrowLeft' });
+      expect(document.activeElement).toBe(dots[4]);
     });
   });
 });
