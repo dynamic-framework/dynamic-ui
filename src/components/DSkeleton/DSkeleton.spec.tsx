@@ -23,7 +23,6 @@ describe('<DSkeleton />', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <div
-    aria-busy="true"
     class="d-skeleton d-skeleton-animation-glow"
   >
     <span
@@ -55,12 +54,11 @@ describe('<DSkeleton />', () => {
 `);
   });
 
-  it('exposes a status region with the default label inside a busy container', () => {
-    const { container } = render(<DSkeleton />);
+  it('exposes a status region with the default label outside any busy subtree', () => {
+    render(<DSkeleton />);
     const status = screen.getByRole('status');
     expect(status).toHaveTextContent('Loading...');
-    expect(status).not.toHaveAttribute('aria-busy');
-    expect(getRoot(container)).toHaveAttribute('aria-busy', 'true');
+    expect(status.closest('[aria-busy]')).toBeNull();
   });
 
   it('announces a custom ariaLabel', () => {

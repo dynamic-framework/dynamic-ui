@@ -66,8 +66,11 @@ children render as-is and no wrapper is added.
 
 ## Accessibility
 
-\`DSkeleton\` renders a \`role="status"\` region with \`aria-busy="true"\` and \`aria-live="polite"\`.
-Screen readers announce only \`ariaLabel\`; every shape is \`aria-hidden\`. Animations are disabled
+\`DSkeleton\` renders a visually hidden \`role="status"\` region (implicit \`aria-live="polite"\`)
+with \`ariaLabel\`; every shape is \`aria-hidden\`. It does not set \`aria-busy\`: a live region
+inside a busy subtree may not be announced, and the skeleton unmounts before the busy state
+would clear. Set \`aria-busy\` on your own region if it stays mounted and gets updated when
+loading ends. Animations are disabled
 under \`prefers-reduced-motion: reduce\`.
 
 ## CSS Variables

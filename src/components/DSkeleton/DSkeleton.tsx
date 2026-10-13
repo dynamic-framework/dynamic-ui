@@ -123,11 +123,11 @@ function DSkeleton(
           className,
         )}
         style={skeletonStyle}
-        aria-busy="true"
         {...dataAttributes}
       >
-        {/* The live region stays outside `aria-busy`, which would defer it until
-            loading ends: the skeleton unmounts instead of clearing it. */}
+        {/* No `aria-busy` here: assistive technology may defer a live region
+            anywhere in a busy subtree until it clears, and the skeleton
+            unmounts while still busy. The consumer's region can set it. */}
         <span className="visually-hidden" role="status">{ariaLabel}</span>
         <div
           className={contentClassName}
