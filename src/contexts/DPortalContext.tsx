@@ -118,7 +118,10 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     getPortalStack,
     getPortalStack,
   );
-  const hasPortals = Object.keys(availablePortals ?? {}).length > 0;
+  // Open portals keep rendering even if `availablePortals` is emptied meanwhile:
+  // otherwise the entry stays in the stack, invisible, with the body scroll
+  // locked and no backdrop or Escape to close it.
+  const hasPortals = Object.keys(availablePortals ?? {}).length > 0 || stack.length > 0;
 
   const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback

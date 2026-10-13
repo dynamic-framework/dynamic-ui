@@ -61,6 +61,23 @@ describe('DPortalContextProvider', () => {
     expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
   });
 
+  it('keeps an open portal closable when availablePortals is emptied', () => {
+    const { rerender } = renderWithPortals();
+    fireEvent.click(screen.getByText('Open'));
+
+    rerender(
+      <DContextProvider availablePortals={{}}>
+        <Opener />
+      </DContextProvider>,
+    );
+    expect(screen.getByText('Portal content')).toBeInTheDocument();
+    expect(document.querySelector('#d-portal .backdrop')).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
+    expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
+  });
+
   it('opens a portal only once when opened from an effect', async () => {
     function EffectOpener() {
       const { openPortal, stack } = useDPortalContext<Payloads>();
