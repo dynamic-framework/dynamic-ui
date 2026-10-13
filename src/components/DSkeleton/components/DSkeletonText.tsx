@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import type { BaseProps } from '../../interface';
 import type { SkeletonDimension, SkeletonRounded } from '../utils';
-import { roundedClass, toCssSize } from '../utils';
+import { roundedClass, toCount, toCssSize } from '../utils';
 
 export type SkeletonTextSize = 'xs' | 'sm' | 'lg';
 
@@ -35,14 +35,14 @@ export default function DSkeletonText(
     dataAttributes,
   }: Props,
 ) {
-  const lineWidths = useMemo(
-    () => Array.from({ length: Math.max(lines, 0) }, (_, index) => {
+  const lineWidths = useMemo(() => {
+    const count = toCount(lines);
+    return Array.from({ length: count }, (_, index) => {
       if (widths?.length) return toCssSize(widths[index % widths.length]);
-      if (lines > 1 && index === lines - 1) return toCssSize(lastLineWidth);
+      if (count > 1 && index === count - 1) return toCssSize(lastLineWidth);
       return '100%';
-    }),
-    [lines, widths, lastLineWidth],
-  );
+    });
+  }, [lines, widths, lastLineWidth]);
 
   return (
     <span

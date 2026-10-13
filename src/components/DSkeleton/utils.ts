@@ -9,6 +9,14 @@ export function toCssSize(value?: SkeletonDimension): string | undefined {
 }
 
 /**
+ * Normalizes a repetition count to a finite, non-negative integer so it can
+ * size an array. Non-finite values (`NaN`, `Infinity`) render nothing.
+ */
+export function toCount(value: number): number {
+  return Number.isFinite(value) ? Math.max(Math.floor(value), 0) : 0;
+}
+
+/**
  * Maps `rounded` to Bootstrap's `rounded-*` utilities. `undefined` keeps the
  * radius from `--bs-skeleton-border-radius`.
  */

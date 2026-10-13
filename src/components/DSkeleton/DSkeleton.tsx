@@ -11,7 +11,7 @@ import SkeletonContext from './SkeletonContext';
 import { PREFIX_BS } from '../config';
 import type { BaseProps, ComponentColor } from '../interface';
 import type { SkeletonDimension } from './utils';
-import { toCssSize } from './utils';
+import { toCount, toCssSize } from './utils';
 
 export type SkeletonAnimation = 'glow' | 'wave' | 'none';
 export type SkeletonDirection = 'vertical' | 'horizontal';
@@ -81,7 +81,7 @@ function DSkeleton(
     const isIterated = items !== undefined || typeof children === 'function';
     if (!isIterated) return children as ReactNode;
 
-    return Array.from({ length: Math.max(items ?? 1, 0) }, (_, index) => (
+    return Array.from({ length: toCount(items ?? 1) }, (_, index) => (
       <div
         // eslint-disable-next-line react/no-array-index-key
         key={index}
@@ -123,12 +123,12 @@ function DSkeleton(
           className,
         )}
         style={skeletonStyle}
-        role="status"
         aria-busy="true"
-        aria-live="polite"
         {...dataAttributes}
       >
-        <span className="visually-hidden">{ariaLabel}</span>
+        {/* The live region stays outside `aria-busy`, which would defer it until
+            loading ends: the skeleton unmounts instead of clearing it. */}
+        <span className="visually-hidden" role="status">{ariaLabel}</span>
         <div
           className={contentClassName}
           aria-hidden="true"

@@ -11,6 +11,8 @@ function RowSkeleton() {
   );
 }
 
+const getRoot = (container: HTMLElement) => container.querySelector<HTMLElement>('.d-skeleton');
+
 describe('<DSkeleton />', () => {
   it('should render my component', () => {
     const { container } = render(
@@ -22,12 +24,11 @@ describe('<DSkeleton />', () => {
 <div>
   <div
     aria-busy="true"
-    aria-live="polite"
     class="d-skeleton d-skeleton-animation-glow"
-    role="status"
   >
     <span
       class="visually-hidden"
+      role="status"
     >
       Loading...
     </span>
@@ -54,12 +55,12 @@ describe('<DSkeleton />', () => {
 `);
   });
 
-  it('exposes a busy status region with the default label', () => {
-    render(<DSkeleton />);
+  it('exposes a status region with the default label inside a busy container', () => {
+    const { container } = render(<DSkeleton />);
     const status = screen.getByRole('status');
-    expect(status).toHaveAttribute('aria-busy', 'true');
-    expect(status).toHaveAttribute('aria-live', 'polite');
     expect(status).toHaveTextContent('Loading...');
+    expect(status).not.toHaveAttribute('aria-busy');
+    expect(getRoot(container)).toHaveAttribute('aria-busy', 'true');
   });
 
   it('announces a custom ariaLabel', () => {
@@ -77,13 +78,13 @@ describe('<DSkeleton />', () => {
   });
 
   it('applies the glow animation by default', () => {
-    render(<DSkeleton />);
-    expect(screen.getByRole('status')).toHaveClass('d-skeleton-animation-glow');
+    const { container } = render(<DSkeleton />);
+    expect(getRoot(container)).toHaveClass('d-skeleton-animation-glow');
   });
 
   it.each(['glow', 'wave', 'none'] as const)('applies the %s animation', (animation) => {
-    render(<DSkeleton animation={animation} />);
-    expect(screen.getByRole('status')).toHaveClass(`d-skeleton-animation-${animation}`);
+    const { container } = render(<DSkeleton animation={animation} />);
+    expect(getRoot(container)).toHaveClass(`d-skeleton-animation-${animation}`);
   });
 
   it('does not use the Bootstrap placeholder animation containers', () => {
@@ -98,10 +99,10 @@ describe('<DSkeleton />', () => {
   });
 
   it('sets color and gap as CSS variables', () => {
-    render(<DSkeleton color="primary" gap={24} />);
-    const status = screen.getByRole('status');
-    expect(status.style.getPropertyValue('--bs-skeleton-bg')).toBe('var(--bs-primary)');
-    expect(status.style.getPropertyValue('--bs-skeleton-gap')).toBe('24px');
+    const { container } = render(<DSkeleton color="primary" gap={24} />);
+    const root = getRoot(container);
+    expect(root?.style.getPropertyValue('--bs-skeleton-bg')).toBe('var(--bs-primary)');
+    expect(root?.style.getPropertyValue('--bs-skeleton-gap')).toBe('24px');
   });
 
   it('forwards className, style and dataAttributes', () => {
@@ -169,13 +170,22 @@ describe('<DSkeleton /> as iterator', () => {
     expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(1);
   });
 
-  it.each([0, -3])('renders nothing with items=%s', (items) => {
+  it.each([0, -3, NaN, Infinity])('renders nothing with items=%s', (items) => {
     const { container } = render(
       <DSkeleton items={items}>
         <DSkeleton.Block />
       </DSkeleton>,
     );
     expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
+  });
+
+  it('rounds a fractional items count down', () => {
+    const { container } = render(
+      <DSkeleton items={2.7}>
+        <DSkeleton.Block />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(2);
   });
 
   it('forwards itemClassName to every slot', () => {
@@ -284,7 +294,7 @@ describe('<DSkeleton /> nested', () => {
     );
     const nested = container.querySelector<HTMLElement>('.d-skeleton-content-horizontal');
     expect(nested?.style.getPropertyValue('--bs-skeleton-gap')).toBe('8px');
-    expect(screen.getByRole('status').style.getPropertyValue('--bs-skeleton-gap')).toBe('32px');
+    expect(getRoot(container)?.style.getPropertyValue('--bs-skeleton-gap')).toBe('32px');
   });
 });
 
@@ -304,6 +314,16 @@ describe('<DSkeleton.Text />', () => {
   it('cycles widths and converts numbers to pixels', () => {
     const { container } = render(<DSkeleton.Text lines={3} widths={['80%', 120]} />);
     expect(getLines(container).map((line) => line.style.width)).toEqual(['80%', '120px', '80%']);
+  });
+
+  it.each([NaN, Infinity, -1])('renders no lines with lines=%s', (lines) => {
+    const { container } = render(<DSkeleton.Text lines={lines} />);
+    expect(getLines(container)).toHaveLength(0);
+  });
+
+  it('applies lastLineWidth to the last line of a fractional count', () => {
+    const { container } = render(<DSkeleton.Text lines={2.5} />);
+    expect(getLines(container).map((line) => line.style.width)).toEqual(['100%', '60%']);
   });
 
   it('applies size and rounded classes to each line', () => {
