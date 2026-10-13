@@ -107,15 +107,11 @@ function MobileWelcomeCarouselPatternExample() {
         <div className="bg-white rounded-3 h-100 d-flex flex-column shadow-sm">
           <div className="flex-grow-1 px-2 pt-3 pb-2">
             <DCarousel
-              options={{
-                perPage: 1,
-                perMove: 1,
-                rewind: true,
-                arrows: false,
-                pagination: true,
-                drag: true,
-                gap: '0.75rem',
-              }}
+              perPage={1}
+              perMove={1}
+              loop="rewind"
+              arrows={false}
+              gap={3}
             >
               {ONBOARDING_SLIDES.map((slide) => (
                 <DCarousel.Slide key={slide.id}>
@@ -181,22 +177,18 @@ function WelcomeOnboardingSplitActionsExample() {
   return (
     <div className="border position-relative overflow-hidden rounded-2" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #0f2f35 0%, #164952 44%, #1a5d67 100%)' }}>
       <style>
-        {'.welcome-photo-carousel .splide__pagination { bottom: 156px; z-index: 4; } .welcome-photo-carousel .splide__track { height: 100%; }'}
+        {'.welcome-photo-carousel .d-carousel-controls { position: absolute; inset-inline: 0; bottom: 156px; z-index: 4; margin: 0; } .welcome-photo-carousel .d-carousel-viewport { height: 100%; }'}
       </style>
       <div className="h-100 position-relative">
         <div className="position-absolute top-0 start-0 bottom-0 end-0">
           <DCarousel
             className="h-100 welcome-photo-carousel"
-            options={{
-              perPage: 1,
-              perMove: 1,
-              rewind: true,
-              arrows: false,
-              pagination: true,
-              drag: true,
-              gap: '0',
-              height: '100%',
-            }}
+            perPage={1}
+            perMove={1}
+            loop="rewind"
+            arrows={false}
+            gap={0}
+            height="100%"
           >
             {ONBOARDING_PHOTO_SLIDES.map((slide) => (
               <DCarousel.Slide className="w-100" key={slide.id}>
@@ -287,15 +279,11 @@ export const WelcomeOnboardingCarousel: Story = {
         <div className="bg-white rounded-3 h-100 d-flex flex-column shadow-sm">
           <div className="flex-grow-1 px-2 pt-3 pb-2">
             <DCarousel
-              options={{
-                perPage: 1,
-                perMove: 1,
-                rewind: true,
-                arrows: false,
-                pagination: true,
-                drag: true,
-                gap: '0.75rem',
-              }}
+              perPage={1}
+              perMove={1}
+              loop="rewind"
+              arrows={false}
+              gap={3}
             >
               {ONBOARDING_SLIDES.map((slide) => (
                 <DCarousel.Slide key={slide.id}>
@@ -373,11 +361,17 @@ export const WelcomeOnboardingSplitActions: Story = {
     >
       <style>
         {`
-          .welcome-photo-carousel .splide__pagination {
+          /* Splide positioned its pagination absolutely by default, so this
+             only had to nudge it. The controls row is now an ordinary flow
+             element under the strip, so overlaying it has to be stated. */
+          .welcome-photo-carousel .d-carousel-controls {
+            position: absolute;
+            inset-inline: 0;
             bottom: 156px;
             z-index: 4;
+            margin: 0;
           }
-          .welcome-photo-carousel .splide__track {
+          .welcome-photo-carousel .d-carousel-viewport {
             height: 100%;
           }
         `}
@@ -386,16 +380,12 @@ export const WelcomeOnboardingSplitActions: Story = {
         <div className="position-absolute top-0 start-0 bottom-0 end-0">
           <DCarousel
             className="h-100 welcome-photo-carousel"
-            options={{
-              perPage: 1,
-              perMove: 1,
-              rewind: true,
-              arrows: false,
-              pagination: true,
-              drag: true,
-              gap: '0',
-              height: '100%',
-            }}
+            perPage={1}
+            perMove={1}
+            loop="rewind"
+            arrows={false}
+            gap={0}
+            height="100%"
           >
             {ONBOARDING_PHOTO_SLIDES.map((slide) => (
               <DCarousel.Slide className="w-100" key={slide.id}>

@@ -25,7 +25,8 @@ let warnedMissingBreakpoints = false;
  * const prop: ResponsiveProp = { xs: "small", md: "medium", xl: "large" };
  * ```
  */
-export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
+export type ResponsiveProp<T = string> =
+  Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', T>>;
 
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
@@ -56,7 +57,15 @@ export function useResponsiveProp(useListener: boolean = false) {
   // `xs` is `0` and can't tell a missing variable apart, so `sm` is checked.
   const hasBreakpoints = !!useBreakpointValue('sm');
 
-  const responsivePropValue = useCallback((prop: ResponsiveProp) => {
+  /*
+   * Generic, with `string` as the default.
+   *
+   * Every existing `ResponsiveProp` keeps meaning what it did — the default
+   * type parameter sees to that — but a prop whose tiers are not strings can
+   * now say so. `DCarousel` resolves `interval` as a number, and without this
+   * the hook handed it back a `string | number` that the timer could not take.
+   */
+  const responsivePropValue = useCallback(<T>(prop: ResponsiveProp<T>) => {
     if (process.env.NODE_ENV !== 'production' && !hasBreakpoints && !warnedMissingBreakpoints) {
       warnedMissingBreakpoints = true;
       // eslint-disable-next-line no-console

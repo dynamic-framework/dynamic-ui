@@ -68,6 +68,10 @@ export type IconMapProps = {
   chevronLeft: string;
   /** Class suffix for the chevron-right icon. */
   chevronRight: string;
+  /** Icon name for the play control, used by the carousel's autoplay button. */
+  play: string;
+  /** Icon name for the pause control, used by the carousel's autoplay button. */
+  pause: string;
   /** Per-state alert icon map (one icon per `ComponentStateColor` value). */
   alert: AlertThemeIconMap;
   /** Class suffix for the upload/attach icon. */
@@ -146,6 +150,8 @@ const DEFAULT_STATE = {
     chevronDown: 'ChevronDown',
     chevronLeft: 'ChevronLeft',
     chevronRight: 'ChevronRight',
+    play: 'Play',
+    pause: 'Pause',
     upload: 'Upload',
     calendar: 'Calendar',
     check: 'Check',

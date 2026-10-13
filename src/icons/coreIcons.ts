@@ -34,6 +34,8 @@ export const CORE_LUCIDE_ICONS = [
   'EyeOff',
   'Info',
   'Minus',
+  'Pause',
+  'Play',
   'Plus',
   'Search',
   'Upload',

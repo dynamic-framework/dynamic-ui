@@ -22,3 +22,49 @@ $carousel-caption-color: var(--#{$prefix}white) !default;
 $carousel-dark-indicator-active-bg: var(--#{$prefix}black) !default;
 $carousel-dark-caption-color: var(--#{$prefix}black) !default;
 // scss-docs-end carousel-dark-variables
+
+// DCarousel
+//
+// `DCarousel` is a scroll container, not Bootstrap's `.carousel`. The two share
+// the palette above on purpose — a product has one idea of what a carousel dot
+// looks like — but the geometry is its own, because the controls are real
+// buttons with focus rings rather than Bootstrap's overlay strips.
+//
+// scss-docs-start d-carousel-variables
+
+// The layout inputs. All three are responsive per breakpoint; these are the
+// values a tier falls back to when a consumer sets none.
+$d-carousel-gap: $spacer-4 !default;          // 16px between slides
+$d-carousel-peek: 0 !default;                 // inset at both ends
+
+// Arrows.
+//
+// The fill and the radius come from `$carousel-control-*` above, so `DCarousel`
+// and Bootstrap's own carousel agree. The SIZE does not: 24px is the box
+// Splide drew around a bare glyph, and this arrow is a real button that also
+// has to carry a focus ring. 40px is the comfortable target.
+$d-carousel-arrow-size: $spacer-10 !default;
+$d-carousel-arrow-icon-size: $spacer-6 !default;
+$d-carousel-arrow-offset: $spacer-2 !default;
+$d-carousel-arrow-bg: $carousel-control-bg !default;
+$d-carousel-arrow-fg: $carousel-control-color !default;
+$d-carousel-arrow-hover-bg: var(--#{$prefix}primary-600) !default;
+$d-carousel-arrow-border-width: 0 !default;
+$d-carousel-arrow-border-color: transparent !default;
+$d-carousel-arrow-radius: $carousel-control-radius !default;
+$d-carousel-arrow-shadow: none !default;
+$d-carousel-arrow-disabled-opacity: .4 !default;
+
+// Pagination, straight from the indicator palette above.
+$d-carousel-page-size: $carousel-indicator-width !default;
+$d-carousel-page-active-size: $carousel-indicator-active-width !default;
+$d-carousel-page-color: $carousel-indicator-bg !default;
+$d-carousel-page-active-color: $carousel-indicator-active-bg !default;
+$d-carousel-page-radius: $carousel-indicator-radius !default;
+$d-carousel-pagination-gap: $spacer-2 !default;
+$d-carousel-pagination-offset: $spacer-3 !default;
+
+// How long a dot takes to stretch and an arrow to fill on hover.
+$d-carousel-transition-duration: .15s !default;
+$d-carousel-transition-easing: cubic-bezier(.2, 0, 0, 1) !default;
+// scss-docs-end d-carousel-variables

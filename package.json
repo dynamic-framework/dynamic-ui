@@ -103,8 +103,6 @@
   "dependencies": {
     "@floating-ui/react": "~0.27.16",
     "@react-input/mask": "~2.0.4",
-    "@splidejs/react-splide": "~0.7.12",
-    "@splidejs/splide": "~4.1.4",
     "bootstrap": "~5.3.8",
     "classnames": "~2.5.1",
     "currency.js": "~2.0.4",
