@@ -60,6 +60,12 @@ type Options = {
   draggable: boolean;
   /** Slides to mark visible on each side of the ones actually on screen. */
   lookahead: number;
+  /** Where the strip starts, by real index. */
+  initialSlide: number;
+  /** Slides take their content's width rather than a share of the strip. */
+  variableWidth: boolean;
+  /** Fires with the outgoing and incoming index, before the state changes. */
+  onBeforeSlideChange?: (from: number, to: number) => void;
 };
 
 export type CarouselState = {
@@ -161,6 +167,9 @@ export function useCarousel(
     pauseOnHover,
     draggable,
     lookahead,
+    initialSlide,
+    variableWidth,
+    onBeforeSlideChange,
   }: Options,
 ): CarouselState & {
     goToPage: (page: number) => void;
@@ -172,6 +181,26 @@ export function useCarousel(
   const infinite = loop === true;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  /*
+   * Mirrors of the index and the callback, so `measure` depends on neither.
+   * `measure` is wired into a scroll listener and a ResizeObserver; taking
+   * `activeIndex` as a dependency would re-attach both on every slide, and
+   * taking the callback would do it on every render of a consumer who wrote
+   * the handler inline.
+   */
+  const activeIndexRef = useRef(0);
+  /*
+   * The first measurement settles the index without announcing it.
+   *
+   * Seeding the ref from `initialSlide` was the obvious fix and the wrong one:
+   * it assumes the starting scroll landed. Where it cannot — a carousel
+   * mounted inside a closed accordion, or anywhere with no layout — the seed
+   * and the measurement disagree and the mount reports a change that never
+   * happened. Whatever the first measurement finds IS the starting point.
+   */
+  const measured = useRef(false);
+  const beforeChangeRef = useRef(onBeforeSlideChange);
+  beforeChangeRef.current = onBeforeSlideChange;
   const [perPage, setPerPage] = useState(1);
   const [range, setRange] = useState({ scroll: 0, max: 0 });
   /*
@@ -228,11 +257,23 @@ export function useCarousel(
   const measurePerPage = useCallback(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    /*
+     * With variable widths there is no "per page": a slide takes its
+     * content's width, so how many fit is whatever fits. Pinning it to one
+     * makes every page math downstream — the stop count, the dots, a move —
+     * count in slides, which is the only unit left that means anything.
+     */
+    if (variableWidth) {
+      setPerPage(1);
+      return;
+    }
+
     const resolved = parseFloat(
       getComputedStyle(root).getPropertyValue('--df-carousel-per-page'),
     );
     setPerPage(Number.isFinite(resolved) && resolved >= 1 ? Math.round(resolved) : 1);
-  }, [rootRef]);
+  }, [rootRef, variableWidth]);
 
   const measure = useCallback(() => {
     const viewport = viewportRef.current;
@@ -279,6 +320,25 @@ export function useCarousel(
     const realIndex = infinite
       ? (((nearest - cloneCount) % slideCount) + slideCount) % slideCount
       : nearest;
+
+    /*
+     * Announced BEFORE the state moves, which is the whole point: the outgoing
+     * slide is still the active one, so a handler can pause its video or send
+     * the analytics event while it still knows what it is looking at.
+     *
+     * "Before" is as early as a scroll container allows — the slide is already
+     * moving by the time the browser can tell us — so this fires on the frame
+     * the active slide changes, not before the gesture. `onSlideChange` fires
+     * after the commit, as it always has.
+     */
+    if (!measured.current) {
+      measured.current = true;
+      activeIndexRef.current = realIndex;
+    } else if (realIndex !== activeIndexRef.current) {
+      beforeChangeRef.current?.(activeIndexRef.current, realIndex);
+      activeIndexRef.current = realIndex;
+    }
+
     setActiveIndex(realIndex);
 
     if (firstOnScreen === -1) return;
@@ -408,16 +468,38 @@ export function useCarousel(
 
   /* --- starting position ------------------------------------------------- */
 
+  /**
+   * Where the strip starts, once, before anyone has scrolled.
+   *
+   * Two jobs in one effect because they are the same move. Under a loop the
+   * strip has to begin on the first REAL slide, so there is a lap of clones
+   * available in both directions and the very first `prev` already has
+   * somewhere to go. And `initialSlide` offsets from there — a deep link, a
+   * "resume where you were", a date strip opened on today.
+   *
+   * `instant`, not smooth: a carousel that scrolls itself on arrival reads as
+   * a bug, and with `scroll-behavior: smooth` on the element the default
+   * WOULD be animated.
+   */
   useEffect(() => {
     const viewport = viewportRef.current;
-    if (!viewport || !infinite) return;
+    if (!viewport) return;
+
+    const start = Math.min(slideCount - 1, Math.max(0, Math.round(initialSlide)));
+    if (!infinite && start === 0) return;
+
     const slides = allSlides(viewport);
-    const first = slides[cloneCount];
-    if (!first) return;
-    // Start on the first REAL slide, so there is a lap of clones available in
-    // both directions and the very first `prev` already has somewhere to go.
-    viewport.scrollBy({ left: alignDelta(readMetrics(viewport), first, align), behavior: 'instant' });
-  }, [align, cloneCount, infinite, viewportRef]);
+    const target = slides[infinite ? cloneCount + start : start];
+    if (!target) return;
+
+    viewport.scrollBy({
+      left: alignDelta(readMetrics(viewport), target, align),
+      behavior: 'instant',
+    });
+    // Mount only: re-running would drag a reader back to the start whenever
+    // one of these changed, which is what `goToSlide` is for.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* --- navigation -------------------------------------------------------- */
 

@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { useState } from 'react';
+
 import type { CSSProperties } from 'react';
 import { DCarousel, useDCarouselController } from '../../src';
 
@@ -1008,4 +1010,130 @@ export const ResponsiveInterval: Story = {
     interval: { xs: 6000, md: 3000 },
     gap: 3,
   },
+};
+
+/**
+ * Starting somewhere other than the first slide.
+ *
+ * A deep link, a "resume where you were", a date strip opened on today.
+ * Applied once and without animation — a carousel that scrolls itself on
+ * arrival reads as a bug — and it is not reported as a change, because a
+ * mount is not one.
+ *
+ * To move it later, that is `goToSlide` on a controller.
+ */
+export const StartingSlide: Story = {
+  render,
+  args: {
+    label: 'Starting part-way in',
+    perPage: { xs: 1, md: 3 },
+    initialSlide: 4,
+    gap: 3,
+  },
+};
+
+/**
+ * Slides as wide as their content.
+ *
+ * For a row of logos, chips or cards that are not all the same size, where
+ * dividing the strip into equal shares is the wrong model. `perPage` stops
+ * meaning anything — how many fit is whatever fits — so the pagination falls
+ * back to one stop per slide.
+ */
+export const VariableWidth: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCarousel label="Brands" variableWidth gap={3}>
+  <DCarousel.Slide>
+    <span className="df-chip">A short one</span>
+  </DCarousel.Slide>
+  <DCarousel.Slide>
+    <span className="df-chip">A considerably longer one</span>
+  </DCarousel.Slide>
+</DCarousel>`,
+      },
+    },
+  },
+  render: () => (
+    <DCarousel label="Brands" variableWidth gap={3}>
+      {[
+        'Short',
+        'A medium label',
+        'A considerably longer label than the others',
+        'Mid',
+        'Another fairly long one here',
+        'Tiny',
+      ].map((text) => (
+        <DCarousel.Slide key={text}>
+          <div
+            className="df-flex df-items-center df-justify-center df-bg-primary-subtle df-rounded-surface df-px-5"
+            style={{ minHeight: 96, whiteSpace: 'nowrap' }}
+          >
+            {text}
+          </div>
+        </DCarousel.Slide>
+      ))}
+    </DCarousel>
+  ),
+};
+
+function BeforeChangeExample() {
+  const [log, setLog] = useState<string[]>([]);
+
+  return (
+    <div style={{ display: 'grid', gap: '0.75rem' }}>
+      <DCarousel
+        label="Tracked"
+        perPage={1}
+        gap={3}
+        onBeforeSlideChange={(from, to) => {
+          setLog((entries) => [`leaving ${from + 1} for ${to + 1}`, ...entries].slice(0, 5));
+        }}
+      >
+        {Array.from({ length: 6 }, (_, index) => (
+          <DCarousel.Slide key={`tracked-${index}`}>
+            <div style={PANEL}>{`Slide ${index + 1}`}</div>
+          </DCarousel.Slide>
+        ))}
+      </DCarousel>
+
+      <ul className="df-fs-body-sm df-text-muted" style={{ margin: 0, paddingInlineStart: '1rem' }}>
+        {log.map((entry) => <li key={entry}>{entry}</li>)}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * Knowing which slide is LEAVING.
+ *
+ * `onSlideChange` fires once the new slide has settled, which is too late to
+ * pause the video on the old one or to send an analytics event while the
+ * outgoing slide is still the current one. `onBeforeSlideChange` gets both
+ * indices, in that order.
+ *
+ * "Before" is as early as a scroll container allows: the strip is already
+ * moving by the time the browser reports anything, so this fires on the frame
+ * the active slide changes rather than before the gesture. In the
+ * framework-free build the same moment is a `df:carousel:beforechange` event,
+ * with `{ from, to }` in its detail.
+ */
+export const BeforeSlideChange: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCarousel
+  label="Tracked"
+  onBeforeSlideChange={(from, to) => {
+    videos[from]?.pause();
+    track('carousel_slide', { from, to });
+  }}
+>
+  <DCarousel.Slide>…</DCarousel.Slide>
+</DCarousel>`,
+      },
+    },
+  },
+  render: () => <BeforeChangeExample />,
 };

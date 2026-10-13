@@ -145,6 +145,22 @@
   }
 
   /**
+   * Each slide as wide as its content.
+   *
+   * For a row of logos, chips or cards that are not all the same size, where
+   * dividing the strip into equal shares is the wrong model. `max-inline-size`
+   * keeps one very wide slide from growing past the scrollport, which would
+   * leave a snap point nobody can reach.
+   *
+   * It makes `--df-carousel-per-page` meaningless, so the component pins the
+   * page maths to one slide per stop — there is no other unit left.
+   */
+  .df-carousel[data-variable-width] .df-carousel-slide {
+    inline-size: auto;
+    max-inline-size: 100%;
+  }
+
+  /**
    * Loop clones.
    *
    * They are real DOM so the browser can scroll onto them seamlessly, and they

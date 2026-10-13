@@ -11,6 +11,17 @@ import {
  * there on what a stub can and cannot stand in for.
  */
 
+/*
+ * jsdom implements neither, and the carousel calls `scrollBy` at mount for
+ * `data-initial-slide`. Without these the behaviour throws before it attaches
+ * and every carousel assertion below fails for a reason that has nothing to do
+ * with what it is testing — the React spec stubs the same pair.
+ */
+beforeAll(() => {
+  Element.prototype.scrollBy = jest.fn();
+  Element.prototype.scrollTo = jest.fn();
+});
+
 afterEach(() => {
   stop();
   document.body.innerHTML = '';
@@ -529,6 +540,54 @@ describe('vanilla carousel', () => {
         </div>`);
 
       expect(sources()).toEqual(['a.jpg']);
+    });
+  });
+
+  /*
+   * The three options that came out of comparing the API against
+   * react-slick's. Both builds take them, by the same names in each idiom:
+   * a prop in React, an attribute here.
+   */
+  describe('starting slide, variable width and the change event', () => {
+    const CAROUSEL_OF = (attrs: string, count = 4) => `
+      <div class="df-carousel" data-df-carousel ${attrs}>
+        <div class="df-carousel-viewport" tabindex="0" role="group">
+${Array.from({ length: count }, (_, i) => `          <div class="df-carousel-slide" id="v${i}">Slide ${i + 1}</div>`).join('\n')}
+        </div>
+      </div>`;
+
+    it('should mark the strip when slides size themselves', () => {
+      html(CAROUSEL_OF('data-variable-width'));
+
+      expect(document.querySelector('.df-carousel')).toHaveAttribute('data-variable-width');
+    });
+
+    /* A mount is not a change, however far in it starts. */
+    it('should announce no change on arrival', () => {
+      const seen: unknown[] = [];
+      document.addEventListener('df:carousel:beforechange', (event) => {
+        seen.push((event as CustomEvent).detail);
+      });
+
+      html(CAROUSEL_OF('data-initial-slide="2"'));
+
+      expect(seen).toEqual([]);
+    });
+
+    /*
+     * The guard that matters: this runs at MOUNT, so a throw here would take
+     * the whole behaviour down — no arrows, no dots, no autoplay, no deferred
+     * media — for an option that only decides where the strip starts.
+     */
+    it('should still enhance where there is no layout to scroll', () => {
+      html(CAROUSEL_OF('data-initial-slide="2"'));
+
+      expect(document.getElementById('v0')).toHaveAttribute('data-active');
+    });
+
+    it('should ignore a starting slide past the end', () => {
+      expect(() => html(CAROUSEL_OF('data-initial-slide="99"'))).not.toThrow();
+      expect(document.getElementById('v0')).toHaveAttribute('data-active');
     });
   });
 

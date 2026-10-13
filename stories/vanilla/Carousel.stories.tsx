@@ -254,3 +254,36 @@ ${Array.from({ length: 8 }, (unused, i) => `    <div class="df-carousel-slide" r
   </div>
 ${arrows()}
 </div>`.trim(), { frame: FRAME });
+
+/**
+ * Starting slide, variable width, and knowing which slide is leaving.
+ *
+ * The same three options as the React build, in this layer's idiom:
+ * attributes instead of props, an event instead of a callback.
+ *
+ * - `data-initial-slide="3"` starts the strip part-way in, instantly.
+ * - `data-variable-width` lets each slide take its content's width. `perPage`
+ *   stops meaning anything, so the page maths counts in slides.
+ * - `df:carousel:beforechange` fires with `{ from, to }` before the change is
+ *   applied, which is when the outgoing slide is still the current one —
+ *   the moment to pause its video. `df:carousel:change` still fires after.
+ *
+ * ```js
+ * document.addEventListener('df:carousel:beforechange', (event) => {
+ *   const { from, to } = event.detail;
+ * });
+ * ```
+ */
+export const StartingSlideAndVariableWidth: Story = htmlStory(`
+<div class="df-carousel" data-df-carousel data-draggable
+     data-initial-slide="3" data-variable-width
+     style="--df-carousel-gap-xs: var(--df-size-3)">
+  <div class="df-carousel-viewport" tabindex="0" role="group" aria-label="Brands">
+${['Short', 'A medium label', 'A considerably longer label than the others', 'Mid', 'Another fairly long one', 'Tiny']
+    .map((text, i, all) => `    <div class="df-carousel-slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${all.length}">
+      <div class="df-flex df-items-center df-justify-center df-bg-primary-subtle df-rounded-surface df-px-5"
+           style="min-height: 96px; white-space: nowrap">${text}</div>
+    </div>`).join('\n')}
+  </div>
+${arrows()}
+</div>`.trim(), { frame: FRAME });

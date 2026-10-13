@@ -192,12 +192,23 @@ function mount(root: HTMLElement): Teardown {
    * that could disagree with the first.
    */
   const perPage = () => {
+    /*
+     * With variable widths there is no "per page": a slide takes its content's
+     * width, so how many fit is whatever fits. Pinned to one so every page
+     * count downstream means slides, which is the only unit left — the same
+     * rule the React build applies.
+     */
+    if (root.hasAttribute('data-variable-width')) return 1;
+
     const raw = getComputedStyle(root).getPropertyValue('--df-carousel-per-page');
     const n = parseInt(raw, 10);
     return Number.isFinite(n) && n > 0 ? n : 1;
   };
 
   const rtl = () => getComputedStyle(view).direction === 'rtl';
+
+  /** The index the last `sync` settled on, so a change can be announced once. */
+  let lastIndex = 0;
 
   /** Everything below is derived from this, never from a counter. */
   function activeIndex(): number {
@@ -278,6 +289,23 @@ function mount(root: HTMLElement): Teardown {
       dot.setAttribute('aria-selected', String(selected));
       dot.setAttribute('tabindex', selected ? '0' : '-1');
     });
+
+    /*
+     * Announced BEFORE the change is applied, which is the point: the outgoing
+     * slide is still the current one, so a listener can pause its video or
+     * send the analytics event while it still knows what it is looking at.
+     *
+     * The React build calls `onBeforeSlideChange(from, to)` at the same
+     * moment; here it is an event, because a DOM contract is what this layer
+     * has instead of props.
+     */
+    if (index !== lastIndex) {
+      root.dispatchEvent(new CustomEvent('df:carousel:beforechange', {
+        bubbles: true,
+        detail: { from: lastIndex, to: index },
+      }));
+      lastIndex = index;
+    }
 
     root.dispatchEvent(new CustomEvent('df:carousel:change', {
       bubbles: true,
@@ -365,6 +393,41 @@ function mount(root: HTMLElement): Teardown {
   }
 
   /* Settle the initial state from the markup, the way tabs and collapse do. */
+  /*
+   * `data-initial-slide` on the root: a deep link, a "resume where you were",
+   * a date strip opened on today. Instant rather than smooth, because a
+   * carousel that scrolls itself on arrival reads as a bug — and `.df-carousel
+   * -viewport` carries `scroll-behavior: smooth`, so the default WOULD animate.
+   *
+   * Before the first `sync`, so the settled state it computes is the one the
+   * reader is actually looking at.
+   */
+  const initial = Math.max(0, Number(root.dataset.initialSlide ?? 0) || 0);
+  /*
+   * Guarded, because this runs at MOUNT. Everything else that scrolls does so
+   * from a click, where a failure costs that click; here a throw would take
+   * the whole behaviour down with it — no arrows, no dots, no autoplay, no
+   * deferred media — for the sake of an option that only decides where the
+   * strip starts.
+   */
+  if (initial > 0 && typeof view.scrollBy === 'function') {
+    const all = slides();
+    const target = all[Math.min(initial, all.length - 1)];
+    if (target) {
+      const box = view.getBoundingClientRect();
+      const rect = target.getBoundingClientRect();
+      view.scrollBy({
+        left: rtl() ? rect.right - box.right : rect.left - box.left,
+        behavior: 'instant',
+      });
+    }
+  }
+
+  /*
+   * Seeded before the first `sync`, or arriving on `data-initial-slide="2"`
+   * would announce a change from zero to two. A mount is not a change.
+   */
+  lastIndex = activeIndex();
   sync();
 
   return () => {

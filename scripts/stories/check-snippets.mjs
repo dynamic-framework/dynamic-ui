@@ -121,6 +121,13 @@ const LIBRARY_EXPORTS = new Set([...LIBRARY_VALUES, ...LIBRARY_TYPES]);
 const GLOBALS = new Set([
   'if', 'for', 'while', 'switch', 'catch', 'return', 'typeof', 'function',
   'await', 'new', 'do', 'else', 'in', 'of', 'instanceof', 'delete', 'void',
+  /*
+   * Declaration keywords too, now that a name followed by `[` counts: a
+   * destructuring `const [a, b] = …` reads as an identifier called `const`,
+   * and `declare const const: any` is a syntax error rather than a fix.
+   */
+  'const', 'let', 'var', 'export', 'import', 'default', 'case', 'throw',
+  'yield', 'async', 'class', 'extends', 'super', 'this', 'try', 'finally',
   'console', 'parseInt', 'parseFloat', 'isNaN', 'setTimeout', 'clearTimeout',
   'setInterval', 'clearInterval', 'fetch', 'alert', 'confirm', 'require',
   'encodeURIComponent', 'decodeURIComponent', 'structuredClone', 'queueMicrotask',
@@ -224,7 +231,7 @@ function identifiersIn(source) {
    * `declare const` the parameter then shadows, which is harmless — the cost
    * of missing one is a snippet that cannot compile, which is not.
    */
-  for (const match of snippet.matchAll(/\b([a-z][A-Za-z0-9_]*)\s*\./g)) {
+  for (const match of snippet.matchAll(/\b([a-z][A-Za-z0-9_]*)\s*[.[]/g)) {
     const name = match[1];
     if (!declared.has(name) && !GLOBALS.has(name)) names.add(name);
   }

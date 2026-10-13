@@ -86,6 +86,22 @@ export type Props = BaseProps & PropsWithChildren<{
   /** A fixed height for the strip. Slides stretch to it. */
   height?: string | number;
   /**
+   * Which slide the strip starts on, by real index.
+   *
+   * A deep link, a "resume where you were", a date strip opened on today.
+   * Applied once, without animation: a carousel that scrolls itself on arrival
+   * reads as a bug.
+   */
+  initialSlide?: number;
+  /**
+   * Let each slide take its content's width instead of a share of the strip.
+   *
+   * For a row of logos, chips or cards that are not all the same size. It
+   * makes `perPage` meaningless — the number of slides on screen is whatever
+   * fits — so the pagination falls back to one stop per slide.
+   */
+  variableWidth?: boolean;
+  /**
    * How many slides either side of the visible ones to mark ready.
    *
    * A slide carries `data-visible` while it is on screen or within this many
@@ -117,6 +133,18 @@ export type Props = BaseProps & PropsWithChildren<{
   controller?: DCarouselControllerStore;
   /** Fires with the index of the slide that came to rest at the alignment point. */
   onSlideChange?: (index: number) => void;
+  /**
+   * Fires with the outgoing and incoming index, before the change is applied.
+   *
+   * The case `onSlideChange` cannot serve: pausing the video on the slide that
+   * is LEAVING, or sending an analytics event while the outgoing slide is
+   * still the current one.
+   *
+   * "Before" is as early as a scroll container allows — the strip is already
+   * moving by the time the browser reports anything — so this fires on the
+   * frame the active slide changes rather than before the gesture.
+   */
+  onBeforeSlideChange?: (from: number, to: number) => void;
   /** Overrides for the control labels. */
   i18n?: Partial<DCarouselI18n>;
 }>;
@@ -187,11 +215,14 @@ function DCarousel(
     pagination = true,
     draggable = true,
     lookahead = 1,
+    initialSlide = 0,
+    variableWidth = false,
     height,
     iconArrowLeft,
     iconArrowRight,
     controller,
     onSlideChange,
+    onBeforeSlideChange,
     i18n: i18nProp,
   }: Props,
   ref: React.ForwardedRef<DCarouselHandle>,
@@ -265,6 +296,9 @@ function DCarousel(
     pauseOnHover,
     draggable,
     lookahead,
+    initialSlide,
+    variableWidth,
+    onBeforeSlideChange,
   });
 
   useImperativeHandle(ref, () => ({
@@ -402,6 +436,7 @@ function DCarousel(
         role: 'group',
       }}
       {...draggable && { 'data-draggable': '' }}
+      {...variableWidth && { 'data-variable-width': '' }}
       {...dataAttributes}
     >
       <div

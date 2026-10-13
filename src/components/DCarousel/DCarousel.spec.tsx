@@ -469,4 +469,132 @@ describe('<DCarousel />', () => {
       expect(scrollBy).toHaveBeenCalled();
     });
   });
+
+  /*
+   * Three options that came out of comparing the API against react-slick's.
+   * jsdom has no layout, so what is asserted is the contract either side of
+   * the measurement — the attribute the stylesheet reads, and the call that is
+   * or is not made.
+   */
+  describe('initialSlide', () => {
+    it('should scroll to the starting slide on mount, without animating', () => {
+      scrollBy.mockClear();
+      render(<DCarousel label="Offers" initialSlide={3}>{slides(6)}</DCarousel>);
+
+      expect(scrollBy).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: 'instant' }),
+      );
+    });
+
+    /* Nothing to do: the strip already starts at the first slide. */
+    it('should not scroll when it starts at zero', () => {
+      scrollBy.mockClear();
+      render(<DCarousel label="Offers">{slides(6)}</DCarousel>);
+
+      expect(scrollBy).not.toHaveBeenCalled();
+    });
+
+    /* A mount is not a change, however far in it starts. */
+    it('should not announce a change for the slide it started on', () => {
+      const onBefore = jest.fn();
+      render(
+        <DCarousel label="Offers" initialSlide={3} onBeforeSlideChange={onBefore}>
+          {slides(6)}
+        </DCarousel>,
+      );
+
+      expect(onBefore).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('variableWidth', () => {
+    it('should mark the strip so the stylesheet lets slides size themselves', () => {
+      const { container } = render(
+        <DCarousel label="Logos" variableWidth>{slides(4)}</DCarousel>,
+      );
+
+      expect(container.querySelector('.df-carousel')).toHaveAttribute('data-variable-width');
+    });
+
+    it('should leave the attribute off by default', () => {
+      const { container } = render(<DCarousel label="Logos">{slides(4)}</DCarousel>);
+
+      expect(container.querySelector('.df-carousel')).not.toHaveAttribute('data-variable-width');
+    });
+
+    /*
+     * With variable widths there is no "per page", so the page maths counts in
+     * slides — one stop each, which is the only unit left that means anything.
+     */
+    it('should give one pagination stop per slide', () => {
+      render(<DCarousel label="Logos" variableWidth>{slides(4)}</DCarousel>);
+
+      expect(screen.getAllByRole('tab')).toHaveLength(4);
+    });
+  });
+
+  describe('onBeforeSlideChange', () => {
+    /**
+     * Places the strip so the FIRST measurement lands on slide 2.
+     *
+     * jsdom reports every rect as zeroes, so without this every measurement
+     * finds slide 0 and the guard being tested — that a mount never announces
+     * a change — can never be exercised: nothing differs from the starting
+     * index, so both the guarded and the unguarded version stay quiet.
+     */
+    const placeAt = (index: number) => {
+      jest.spyOn(Element.prototype, 'getBoundingClientRect')
+        .mockImplementation(function rect(this: Element) {
+          if (!this.classList.contains('df-carousel-slide')) {
+            return {
+              left: 0, right: 0, width: 0, top: 0, bottom: 0, height: 0, x: 0, y: 0, toJSON() {},
+            } as DOMRect;
+          }
+          const siblings = Array.from(this.parentElement?.children ?? []);
+          const offset = (siblings.indexOf(this) - index) * 100;
+          return {
+            left: offset,
+            right: offset + 100,
+            width: 100,
+            top: 0,
+            bottom: 0,
+            height: 0,
+            x: offset,
+            y: 0,
+            toJSON() {},
+          } as DOMRect;
+        });
+    };
+
+    afterEach(() => jest.restoreAllMocks());
+
+    /*
+     * A mount is not a change, wherever the strip happens to be sitting when
+     * it is first measured — which is not always slide zero: a carousel can be
+     * restored mid-scroll, or mounted inside something already scrolled.
+     */
+    it('should not announce the slide the first measurement finds', () => {
+      placeAt(2);
+      const onBefore = jest.fn();
+
+      render(
+        <DCarousel label="Offers" onBeforeSlideChange={onBefore}>{slides(6)}</DCarousel>,
+      );
+
+      expect(onBefore).not.toHaveBeenCalled();
+    });
+
+    it('should not fire while nothing has moved', () => {
+      const onBefore = jest.fn();
+      render(
+        <DCarousel label="Offers" onBeforeSlideChange={onBefore}>{slides(4)}</DCarousel>,
+      );
+
+      expect(onBefore).not.toHaveBeenCalled();
+    });
+
+    it('should be optional', () => {
+      expect(() => render(<DCarousel label="Offers">{slides(4)}</DCarousel>)).not.toThrow();
+    });
+  });
 });
