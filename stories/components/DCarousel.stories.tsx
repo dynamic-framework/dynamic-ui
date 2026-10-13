@@ -293,4 +293,65 @@ function ExternalControls() {
 export const ExternalController: Story = {
   args: { label: 'Externally controlled carousel' },
   render: () => <ExternalControls />,
+  parameters: {
+    docs: {
+      source: {
+        // Spelled out rather than letting Storybook print `<ExternalControls />`,
+        // which says nothing about the thing being demonstrated.
+        code: `import { useState } from 'react';
+import {
+  DButton,
+  DCarousel,
+  useDCarouselController,
+} from '@dynamic-framework/ui-react';
+
+function Gallery() {
+  const controller = useDCarouselController();
+  const [index, setIndex] = useState(0);
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      {/* The controls can live anywhere — a page header, a sidebar,
+          another route's layout. They are not children of the carousel. */}
+      <div className="d-flex align-items-center gap-2">
+        <DButton
+          text="Previous"
+          variant="outline"
+          color="secondary"
+          disabled={!controller.canPrev}
+          onClick={controller.prev}
+        />
+        <DButton
+          text="Next"
+          variant="outline"
+          color="secondary"
+          disabled={!controller.canNext}
+          onClick={controller.next}
+        />
+        <span className="text-muted small ms-2">
+          {\`Slide \${index + 1} · page \${controller.activePage + 1} of \${controller.pageCount}\`}
+        </span>
+      </div>
+
+      <DCarousel
+        label="Externally controlled carousel"
+        controller={controller}
+        perPage={{ xs: 1, md: 2 }}
+        gap={4}
+        arrows={false}
+        pagination={false}
+        onSlideChange={setIndex}
+      >
+        <DCarousel.Slide>Slide 1</DCarousel.Slide>
+        <DCarousel.Slide>Slide 2</DCarousel.Slide>
+        <DCarousel.Slide>Slide 3</DCarousel.Slide>
+      </DCarousel>
+    </div>
+  );
+}`,
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
 };
