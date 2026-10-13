@@ -296,6 +296,7 @@ function FileSizeLimitExample() {
   return (
     <>
       <DBoxFile
+        accept={{ 'image/*': ['.png', '.jpg'] }}
         onDrop={(acceptedFiles, rejectedFiles) => {
           setAccepted((prev) => [...prev, ...acceptedFiles]);
           setRejected((prev) => [...prev, ...rejectedFiles]);
@@ -383,6 +384,7 @@ function InitialFileExample() {
   return (
     <>
       <DBoxFile
+        accept={{ 'image/*': ['.png', '.jpg'] }}
         value={['https://placehold.co/600x400/EEE/333?text=Initial']}
         onLoad={(files) => setLoadedFiles(files)}
       />
@@ -530,7 +532,7 @@ export const CustomContent: Story = {
       source: {
         language: 'tsx',
         code: `
-<DBoxFile icon={false}>
+<DBoxFile accept={{ 'image/*': ['.png', '.jpg'] }} icon={false}>
   <div className="df-text-center df-p-4">
     <DIcon icon="CloudUpload" strokeWidth={1} color="success" size="5rem" />
     <p className="df-mt-2 df-mb-0">Click or drag file to this area to upload.</p>
@@ -578,7 +580,7 @@ export const ChildrenAsFunction: Story = {
       source: {
         language: 'tsx',
         code: `
-<DBoxFile noClick icon={false}>
+<DBoxFile accept={{ 'image/*': ['.png', '.jpg'] }} noClick icon={false}>
   {(openFileDialog) => (
     <div className="df-text-center df-p-4 df-border-1 df-border-2 df-border-dashed df-rounded-control">
       <p className="df-mb-2">This dropzone is not clickable.</p>

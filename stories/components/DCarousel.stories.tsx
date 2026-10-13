@@ -146,6 +146,14 @@ type Story = StoryObj<typeof DCarousel>;
 
 const SLIDES = [1, 2, 3, 4, 5, 6, 7, 8];
 
+/** The paces compared in `AutoplayIntervals`, with what each one is good for. */
+const INTERVALS = [
+  { ms: 1500, note: 'too fast to read — see AutoplayFast' },
+  { ms: 3000, note: 'a strip of thumbnails or logos' },
+  { ms: 5000, note: 'the default, and the WCAG 2.2.2 boundary' },
+  { ms: 8000, note: 'a hero with a headline to read' },
+];
+
 /**
  * A plain numbered box.
  *
@@ -705,4 +713,299 @@ return (
     },
   },
   render: () => <OwnMarkupExample />,
+};
+
+/**
+ * How fast is `interval`, side by side.
+ *
+ * Four strips, identical but for the milliseconds between moves. Reading them
+ * one at a time in separate stories is no way to judge a pace, so they are
+ * stacked: start the page and watch which one you can actually follow.
+ *
+ * `interval` is the wait BETWEEN moves, not the length of the move itself —
+ * the scroll is the browser's smooth-scroll and takes as long as it takes.
+ * So 1500 is not "a 1.5s animation", it is 1.5s of stillness and then a jump.
+ */
+export const AutoplayIntervals: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<>
+  <DCarousel label="Offers" autoplay interval={1500} loop>…</DCarousel>
+  <DCarousel label="Offers" autoplay interval={3000} loop>…</DCarousel>
+  {/* no interval: 5000, the default */}
+  <DCarousel label="Offers" autoplay loop>…</DCarousel>
+  <DCarousel label="Offers" autoplay interval={8000} loop>…</DCarousel>
+</>`,
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'grid', gap: '2rem' }}>
+      {INTERVALS.map(({ ms, note }) => (
+        <section key={ms} style={{ display: 'grid', gap: '0.5rem' }}>
+          <h4 className="df-fs-heading-5 df-m-0">
+            {`${ms} ms`}
+            <span className="df-text-muted df-fs-body-sm df-fw-normal">{` — ${note}`}</span>
+          </h4>
+          <DCarousel
+            label={`Autoplay every ${ms} milliseconds`}
+            autoplay
+            interval={ms}
+            loop
+            perPage={{ xs: 1, md: 3 }}
+            gap={3}
+          >
+            {SLIDES.map((n) => (
+              <DCarousel.Slide key={n}>
+                <DemoSlide n={n} />
+              </DCarousel.Slide>
+            ))}
+          </DCarousel>
+        </section>
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * The default, which is 5000 ms.
+ *
+ * Omitting `interval` gives this. Five seconds is the boundary WCAG 2.2.2
+ * draws, and it is the default for that reason: it is the slowest pace that
+ * still reads as a carousel rather than as a static block.
+ *
+ * It does not make the pause button optional. 2.2.2 applies to motion that
+ * lasts more than five seconds, and an autoplaying carousel runs
+ * indefinitely — so the control renders whenever `autoplay` is set, at every
+ * interval.
+ */
+export const AutoplayDefaultInterval: Story = {
+  render,
+  args: {
+    label: 'Autoplay at the default pace',
+    perPage: { xs: 1, md: 3 },
+    autoplay: true,
+    loop: true,
+    gap: 3,
+  },
+};
+
+/**
+ * A slow pace, for a hero.
+ *
+ * Eight seconds is long enough to read a headline and a line of copy, which is
+ * what a marketing slide usually is. The slower the pace, the more the arrows
+ * and dots matter: nobody waits eight seconds to see slide two, they reach for
+ * a control — which is why `arrows` and `pagination` stay on here.
+ */
+export const AutoplaySlow: Story = {
+  render,
+  args: {
+    label: 'Slow autoplay',
+    perPage: 1,
+    autoplay: true,
+    interval: 8000,
+    loop: true,
+    gap: 3,
+  },
+};
+
+/**
+ * A fast pace, and why it is a bad default.
+ *
+ * 1500 ms is here to be judged, not copied. It is below the time it takes to
+ * read a short label, so the strip reads as motion rather than as content, and
+ * anything a reader was part-way through is gone. For somebody using a screen
+ * magnifier it is worse: the slide they were looking at leaves the viewport
+ * before they have panned across it.
+ *
+ * If a pace this quick is what a design calls for, the honest version of it is
+ * usually not a carousel — it is a static strip that scrolls, which is what
+ * `NoControls` shows.
+ */
+export const AutoplayFast: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Deliberately uncomfortable. Compare it against the others in **Autoplay Intervals** before picking a number.',
+      },
+    },
+  },
+  render,
+  args: {
+    label: 'Fast autoplay',
+    perPage: { xs: 1, md: 3 },
+    autoplay: true,
+    interval: 1500,
+    loop: true,
+    gap: 3,
+  },
+};
+
+function SyncedExample() {
+  const main = useDCarouselController();
+
+  return (
+    <div style={{ display: 'grid', gap: '0.75rem' }}>
+      <DCarousel
+        label="Gallery"
+        controller={main}
+        perPage={1}
+        pagination={false}
+        onSlideChange={() => {}}
+      >
+        {Array.from({ length: 8 }, (_, index) => (
+          <DCarousel.Slide key={`main-${index}`}>
+            <div style={PANEL}>{`Slide ${index + 1}`}</div>
+          </DCarousel.Slide>
+        ))}
+      </DCarousel>
+
+      {/*
+        * The thumbnails are a plain strip, not a second controller: they only
+        * need to CALL `goToSlide` and to know which one is current, both of
+        * which the main carousel's controller already publishes.
+        */}
+      <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto' }}>
+        {Array.from({ length: 8 }, (_, index) => (
+          <button
+            key={`thumb-${index}`}
+            type="button"
+            className="df-button"
+            data-variant={index === main.activeIndex ? 'solid' : 'outline'}
+            data-size="sm"
+            aria-current={index === main.activeIndex}
+            {...main.viewportId && { 'aria-controls': main.viewportId }}
+            onClick={() => main.goToSlide(index)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * A thumbnail strip driving the carousel, which is what `goToSlide` unlocks.
+ *
+ * Navigation used to be by PAGE only — and a page is a different unit from a
+ * slide the moment more than one is on screen, so a thumbnail could not point
+ * at its own slide. The v3 issue listed Splide's `sync()` under "no
+ * replacement"; this is that feature, in two calls: `activeIndex` to light the
+ * current thumbnail, `goToSlide` to move.
+ *
+ * Nothing here is carousel-specific. The thumbnails are ordinary buttons, so
+ * the same two calls drive a list, a map, a table row — anything that knows
+ * which index it is.
+ */
+export const SyncedThumbnails: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `const main = useDCarouselController();
+
+return (
+  <>
+    <DCarousel label="Gallery" controller={main} perPage={1}>
+      <DCarousel.Slide>…</DCarousel.Slide>
+    </DCarousel>
+
+    {items.map((item, index) => (
+      <button
+        key={item.id}
+        type="button"
+        aria-current={index === main.activeIndex}
+        aria-controls={main.viewportId}
+        onClick={() => main.goToSlide(index)}
+      >
+        {index + 1}
+      </button>
+    ))}
+  </>
+);`,
+      },
+    },
+  },
+  render: () => <SyncedExample />,
+};
+
+/**
+ * Images that arrive as the strip is approached.
+ *
+ * `loading="lazy"` is the right default and needs nothing from us: a slide
+ * scrolled off to the side does not intersect the viewport, so the browser
+ * already defers it — in both builds, and **without JavaScript**, which the
+ * framework-free layer promises.
+ *
+ * What native does badly here is the look-ahead. Its threshold is tuned for a
+ * page scrolling vertically, so the next slide tends to arrive blank. Swapping
+ * `src` for `data-src` hands that decision to the carousel: a slide carries
+ * `data-visible` while it is on screen or within `lookahead` of it, and the
+ * deferred attributes are moved across the moment it is.
+ *
+ * The trade, stated plainly: with `data-src` the image does not load at all
+ * without JavaScript. Use `loading="lazy"` unless the look-ahead — or the
+ * non-image cases, an `<iframe>` map or a `<video>` poster — is what you need.
+ *
+ * Give every deferred image `width` and `height` (or an `aspect-ratio`), or
+ * the slide jumps when the bytes land. It warns in development if you forget.
+ */
+export const DeferredImages: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<DCarousel label="Gallery" perPage={{ xs: 1, md: 3 }} lookahead={1}>
+  <DCarousel.Slide>
+    <img
+      data-src="photo-1.jpg"
+      data-srcset="photo-1@2x.jpg 2x"
+      width={800}
+      height={450}
+      alt="…"
+    />
+  </DCarousel.Slide>
+</DCarousel>`,
+      },
+    },
+  },
+  render: () => (
+    <DCarousel label="Deferred images" perPage={{ xs: 1, md: 3 }} gap={3} lookahead={1}>
+      {Array.from({ length: 10 }, (_, index) => (
+        <DCarousel.Slide key={`deferred-${index}`}>
+          <img
+            data-src={`https://placehold.co/400x225/EEE/333?text=Photo+${index + 1}`}
+            width={400}
+            height={225}
+            alt=""
+            style={{ inlineSize: '100%', blockSize: 'auto', borderRadius: 'var(--df-shape-surface)' }}
+          />
+        </DCarousel.Slide>
+      ))}
+    </DCarousel>
+  ),
+};
+
+/**
+ * A pace that follows the breakpoint.
+ *
+ * `interval` takes the same shape as `perPage`, `gap` and `peek`, because the
+ * right pace depends on how much is on screen: one slide at a time on a phone
+ * wants longer than three side by side on a desktop. Resize the viewport and
+ * the cadence changes with it.
+ *
+ * It is the one responsive prop resolved in JavaScript rather than by a media
+ * query — a timer is the part of this component CSS cannot own.
+ */
+export const ResponsiveInterval: Story = {
+  render,
+  args: {
+    label: 'Responsive pace',
+    perPage: { xs: 1, md: 3 },
+    autoplay: true,
+    loop: true,
+    interval: { xs: 6000, md: 3000 },
+    gap: 3,
+  },
 };

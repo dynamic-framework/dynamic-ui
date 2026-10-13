@@ -2198,13 +2198,20 @@ export const BulkActions: Story = {
     layout: 'fullscreen',
     docs: {
       source: {
-        code: `function BulkActionsExample() {
+        code: `type Transaction = {
+  id: number;
+  amount: number;
+};
+
+function BulkActionsExample() {
+  // The hook is generic over YOUR row: without the argument it falls back to
+  // an id-only shape and row.amount does not exist.
   const {
     selectedItems,
     setSelectedItems,
     toggleSelectedItem,
     isSelectedItem,
-  } = useItemSelection();
+  } = useItemSelection<Transaction>();
 
   const [lastAction, setLastAction] = useState('');
 

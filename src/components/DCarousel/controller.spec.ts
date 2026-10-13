@@ -17,6 +17,7 @@ const actions = (): jest.Mocked<DCarouselActions> => ({
   next: jest.fn(),
   prev: jest.fn(),
   goToPage: jest.fn(),
+  goToSlide: jest.fn(),
   togglePlay: jest.fn(),
 });
 
@@ -70,11 +71,13 @@ describe('createCarouselController', () => {
       controller.next();
       controller.prev();
       controller.goToPage(2);
+      controller.goToSlide(5);
       controller.togglePlay();
 
       expect(link.next).toHaveBeenCalledTimes(1);
       expect(link.prev).toHaveBeenCalledTimes(1);
       expect(link.goToPage).toHaveBeenCalledWith(2);
+      expect(link.goToSlide).toHaveBeenCalledWith(5);
       expect(link.togglePlay).toHaveBeenCalledTimes(1);
       expect(warn).not.toHaveBeenCalled();
     });
@@ -207,6 +210,7 @@ describe('createCarouselController', () => {
         next: controller.next,
         prev: controller.prev,
         goToPage: controller.goToPage,
+        goToSlide: controller.goToSlide,
         togglePlay: controller.togglePlay,
         connect: controller.connect,
         publish: controller.publish,
@@ -219,6 +223,7 @@ describe('createCarouselController', () => {
       expect(controller.next).toBe(before.next);
       expect(controller.prev).toBe(before.prev);
       expect(controller.goToPage).toBe(before.goToPage);
+      expect(controller.goToSlide).toBe(before.goToSlide);
       expect(controller.togglePlay).toBe(before.togglePlay);
       expect(controller.connect).toBe(before.connect);
       expect(controller.publish).toBe(before.publish);

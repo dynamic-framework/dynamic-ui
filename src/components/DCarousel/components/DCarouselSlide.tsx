@@ -17,6 +17,14 @@ export type Props = BaseProps & PropsWithChildren<{
   clone?: 'head' | 'tail';
   /** Overrides the generated "N of M" label. */
   ariaLabel?: string;
+  /**
+   * On screen, or within the carousel's look-ahead of it.
+   *
+   * Marked on the clone as well as on the real slide: a clone is what a reader
+   * is actually looking at for part of a loop, so its deferred media has to
+   * load too. The URL is the same, so the second request is a cache hit.
+   */
+  visible?: boolean;
 }>;
 
 /**
@@ -40,6 +48,7 @@ export default function DCarouselSlide(
     index,
     total,
     active = false,
+    visible = false,
     clone,
     ariaLabel,
   }: Props,
@@ -51,6 +60,7 @@ export default function DCarouselSlide(
     <div
       className={classNames('df-carousel-slide', className)}
       style={style}
+      {...visible && { 'data-visible': '' }}
       {...clone
         // React 19 types `inert` as a boolean and renders the bare attribute.
         ? { inert: true, 'data-clone': clone, 'aria-hidden': true }

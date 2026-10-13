@@ -266,4 +266,235 @@ describe('useDCarouselController', () => {
       connect.mockRestore();
     });
   });
+
+  /*
+   * Slide-level navigation, which nothing had: the handle and the controller
+   * both offered only `goToPage`, and a page is a different unit whenever more
+   * than one slide is on screen. It is the half a thumbnail strip was missing
+   * — `onSlideChange` on one carousel, `goToSlide` on the other.
+   */
+  describe('goToSlide', () => {
+    it('should scroll the carousel from a control elsewhere', async () => {
+      const user = userEvent.setup();
+
+      function Harness() {
+        const hero = useDCarouselController();
+        return (
+          <div>
+            <button type="button" onClick={() => hero.goToSlide(3)}>Fourth</button>
+            <DCarousel label="Offers" controller={hero}>{slides(6)}</DCarousel>
+          </div>
+        );
+      }
+
+      render(<Harness />);
+      await user.click(screen.getByRole('button', { name: 'Fourth' }));
+
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    /*
+     * Clamped rather than ignored: an index out of range is almost always an
+     * off-by-one, and the useful answer is the nearest end.
+     */
+    it('should clamp an index past the end instead of doing nothing', async () => {
+      const user = userEvent.setup();
+
+      function Harness() {
+        const hero = useDCarouselController();
+        return (
+          <div>
+            <button type="button" onClick={() => hero.goToSlide(99)}>Too far</button>
+            <DCarousel label="Offers" controller={hero}>{slides(3)}</DCarousel>
+          </div>
+        );
+      }
+
+      render(<Harness />);
+      await user.click(screen.getByRole('button', { name: 'Too far' }));
+
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    it('should warn rather than throw with no carousel connected', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      function Alone() {
+        const hero = useDCarouselController();
+        return <button type="button" onClick={() => hero.goToSlide(1)}>Go</button>;
+      }
+
+      render(<Alone />);
+      expect(() => screen.getByRole('button').click()).not.toThrow();
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('goToSlide()'));
+      warn.mockRestore();
+    });
+  });
+
+  /*
+   * The window that makes deferring a slide's content possible.
+   *
+   * jsdom has no layout, so the MEASURED window cannot be asserted — every
+   * rect is zeroes and no slide ever overlaps the scrollport. What is
+   * assertable is the resting window, which is where a carousel starts and
+   * what decides whether the first screen of images is deferred or not.
+   */
+  describe('the visible window', () => {
+    /*
+     * At rest the carousel is at the start, so the first slide and the
+     * look-ahead carry the attribute from the first paint. Deferring the slide
+     * somebody is already looking at would be worse than not deferring at all.
+     */
+    it('should mark the first slide and its look-ahead at rest', () => {
+      const { container } = render(<DCarousel label="Offers">{slides(6)}</DCarousel>);
+
+      const marked = [...container.querySelectorAll('.df-carousel-slide')]
+        .map((slide) => slide.hasAttribute('data-visible'));
+
+      expect(marked.slice(0, 2)).toEqual([true, true]);
+      expect(marked.slice(2)).toEqual([false, false, false, false]);
+    });
+
+    it('should widen the resting window with a bigger look-ahead', () => {
+      const { container } = render(
+        <DCarousel label="Offers" lookahead={3}>{slides(6)}</DCarousel>,
+      );
+
+      const marked = [...container.querySelectorAll('.df-carousel-slide')]
+        .map((slide) => slide.hasAttribute('data-visible'));
+
+      expect(marked).toEqual([true, true, true, true, false, false]);
+    });
+
+    it('should defer nothing at all with a look-ahead of zero beyond the first', () => {
+      const { container } = render(
+        <DCarousel label="Offers" lookahead={0}>{slides(6)}</DCarousel>,
+      );
+
+      expect(container.querySelectorAll('.df-carousel-slide[data-visible]')).toHaveLength(1);
+    });
+  });
+
+  describe('deferred media', () => {
+    const withImages = (lookahead?: number) => render(
+      <DCarousel label="Offers" {...lookahead !== undefined && { lookahead }}>
+        <DCarousel.Slide>
+          <img data-src="first.jpg" width="8" height="4" alt="" />
+        </DCarousel.Slide>
+        <DCarousel.Slide>
+          <img data-src="second.jpg" width="8" height="4" alt="" />
+        </DCarousel.Slide>
+        <DCarousel.Slide>
+          <img data-src="third.jpg" width="8" height="4" alt="" />
+        </DCarousel.Slide>
+        <DCarousel.Slide>
+          <img data-src="fourth.jpg" width="8" height="4" alt="" />
+        </DCarousel.Slide>
+      </DCarousel>,
+    );
+
+    it('should load the media of the slides in the window', () => {
+      const { container } = withImages();
+      const images = [...container.querySelectorAll('img')];
+
+      expect(images[0]).toHaveAttribute('src', 'first.jpg');
+      expect(images[1]).toHaveAttribute('src', 'second.jpg');
+    });
+
+    /* The whole point: the rest cost nothing until they are approached. */
+    it('should leave the media outside the window deferred', () => {
+      const { container } = withImages();
+      const images = [...container.querySelectorAll('img')];
+
+      expect(images[2]).not.toHaveAttribute('src');
+      expect(images[2]).toHaveAttribute('data-src', 'third.jpg');
+      expect(images[3]).not.toHaveAttribute('src');
+    });
+
+    it('should load further ahead when asked to', () => {
+      const { container } = withImages(2);
+      const images = [...container.querySelectorAll('img')];
+
+      expect(images[2]).toHaveAttribute('src', 'third.jpg');
+      expect(images[3]).not.toHaveAttribute('src');
+    });
+
+    /* An ordinary `src` is nobody's business but the browser's. */
+    it('should leave an image with a plain src alone', () => {
+      const { container } = render(
+        <DCarousel label="Offers">
+          <DCarousel.Slide>
+            <img src="a.jpg" loading="lazy" alt="" />
+          </DCarousel.Slide>
+        </DCarousel>,
+      );
+
+      expect(container.querySelector('img')).toHaveAttribute('src', 'a.jpg');
+    });
+  });
+
+  /*
+   * The part that was missing from the set. `Prev`, `Next` and `Pagination`
+   * shipped with the controller and this did not, so moving the autoplay
+   * control meant hand-rolling the markup, the icon swap and the
+   * `aria-pressed` — while moving the other three cost nothing.
+   */
+  describe('the autoplay button', () => {
+    function WithAutoplay({ autoplay = true }: { autoplay?: boolean }) {
+      const hero = useDCarouselController();
+      return (
+        <div>
+          <header data-testid="header"><DCarousel.Autoplay controller={hero} /></header>
+          <DCarousel label="Offers" controller={hero} autoplay={autoplay} loop>
+            {slides(4)}
+          </DCarousel>
+        </div>
+      );
+    }
+
+    it('should render nothing while no carousel is connected', () => {
+      function Alone() {
+        const hero = useDCarouselController();
+        return <DCarousel.Autoplay controller={hero} />;
+      }
+
+      render(<Alone />);
+      expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    /* A pause button for a strip that never moves controls nothing. */
+    it('should render nothing when the carousel has no autoplay', () => {
+      render(<WithAutoplay autoplay={false} />);
+      expect(within(screen.getByTestId('header')).queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    it('should offer to pause while the carousel is playing', () => {
+      render(<WithAutoplay />);
+
+      const button = within(screen.getByTestId('header'))
+        .getByRole('button', { name: 'Pause automatic slide show' });
+      expect(button).toHaveAttribute('aria-pressed', 'false');
+    });
+
+    it('should toggle the carousel from outside it', async () => {
+      const user = userEvent.setup();
+      render(<WithAutoplay />);
+
+      const header = within(screen.getByTestId('header'));
+      await user.click(header.getByRole('button', { name: 'Pause automatic slide show' }));
+
+      const button = header.getByRole('button', { name: 'Start automatic slide show' });
+      expect(button).toHaveAttribute('aria-pressed', 'true');
+    });
+
+    it('should point at the scrolling region it drives', () => {
+      const { container } = render(<WithAutoplay />);
+
+      const viewport = container.querySelector('.df-carousel-viewport');
+      const target = within(screen.getByTestId('header'))
+        .getByRole('button').getAttribute('aria-controls');
+
+      expect(viewport).toHaveAttribute('id', target);
+    });
+  });
 });

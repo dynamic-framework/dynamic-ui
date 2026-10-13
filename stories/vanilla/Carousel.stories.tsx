@@ -223,3 +223,34 @@ ${Array.from({ length: 5 }, (unused, i) => `      <button type="button" role="ta
 ${[1, 2, 3, 4, 5].map((n) => slide(n, 5)).join('')}
   </div>
 </div>`.trim(), { frame: FRAME });
+
+/**
+ * Images that arrive as the strip is approached — the same contract as React.
+ *
+ * A slide carries `data-visible` while it is on screen or within
+ * `data-lookahead` of it, and `data-src` / `data-srcset` / `data-sizes` /
+ * `data-poster` are moved onto the real attributes the moment it is. Identical
+ * in both builds because it is a contract about the DOM, not about a
+ * framework — the same function does the swap in each.
+ *
+ * `loading="lazy"` is still the right default and needs none of this: the
+ * browser already defers a slide scrolled off to the side, and it keeps
+ * working with the script absent, which this does not. Reach for `data-src`
+ * when you need the look-ahead, or for what native lazy loading does not
+ * cover — an `<iframe>` map, a `<video>` poster.
+ *
+ * Give every deferred image `width` and `height`, or the slide jumps when the
+ * bytes land. It warns in the console if you forget.
+ */
+export const DeferredImages: Story = htmlStory(`
+<div class="df-carousel" data-df-carousel data-draggable data-lookahead="1"
+     style="--df-carousel-per-page-xs: 1; --df-carousel-per-page-md: 3">
+  <div class="df-carousel-viewport" tabindex="0" role="group" aria-label="Photos">
+${Array.from({ length: 8 }, (unused, i) => `    <div class="df-carousel-slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of 8">
+      <img data-src="https://placehold.co/400x225/EEE/333?text=Photo+${i + 1}"
+           width="400" height="225" alt=""
+           style="inline-size: 100%; block-size: auto; border-radius: var(--df-shape-surface)">
+    </div>`).join('\n')}
+  </div>
+${arrows()}
+</div>`.trim(), { frame: FRAME });

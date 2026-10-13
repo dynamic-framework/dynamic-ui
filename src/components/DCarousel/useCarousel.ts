@@ -58,6 +58,8 @@ type Options = {
   interval: number;
   pauseOnHover: boolean;
   draggable: boolean;
+  /** Slides to mark visible on each side of the ones actually on screen. */
+  lookahead: number;
 };
 
 export type CarouselState = {
@@ -68,6 +70,15 @@ export type CarouselState = {
   activePage: number;
   canPrev: boolean;
   canNext: boolean;
+  /**
+   * The slides worth having content for: the ones on screen, widened by the
+   * look-ahead. Real indices, with the loop's clones folded away.
+   *
+   * Before this, the only per-slide state leaving the hook was `data-active`
+   * on exactly one slide — so nothing could know that slide 7 of 20 was about
+   * to be needed, which is the question deferring an image has to answer.
+   */
+  visible: { first: number; last: number };
   /** Whether slides are advancing right now. */
   playing: boolean;
   /**
@@ -149,9 +160,12 @@ export function useCarousel(
     interval,
     pauseOnHover,
     draggable,
+    lookahead,
   }: Options,
 ): CarouselState & {
     goToPage: (page: number) => void;
+    /** Brings one slide to the alignment point, by its real index. */
+    goToSlide: (index: number) => void;
     move: (direction: 1 | -1) => void;
     togglePlay: () => void;
   } {
@@ -160,6 +174,17 @@ export function useCarousel(
   const [activeIndex, setActiveIndex] = useState(0);
   const [perPage, setPerPage] = useState(1);
   const [range, setRange] = useState({ scroll: 0, max: 0 });
+  /*
+   * Which real slides are on screen, plus the look-ahead.
+   *
+   * Derived inside the loop `measure` already runs over every slide, so it
+   * costs one comparison rather than a second pass — and it is what makes
+   * deferring a slide's content possible at all. Before this, the only
+   * per-slide state leaving the hook was `data-active` on exactly one of
+   * them, so a consumer had no way to know that slide 7 of 20 was about to
+   * be needed.
+   */
+  const [visible, setVisible] = useState(() => ({ first: 0, last: lookahead }));
 
   /**
    * Two kinds of stopped, which is not a distinction worth collapsing.
@@ -220,13 +245,31 @@ export function useCarousel(
     if (!slides.length) return;
 
     const metrics = readMetrics(viewport);
+    const viewStart = metrics.contentStart;
+    const viewEnd = metrics.contentStart + metrics.contentWidth;
+
     let nearest = 0;
     let nearestDistance = Infinity;
+    let firstOnScreen = -1;
+    let lastOnScreen = -1;
+
     for (let i = 0; i < slides.length; i += 1) {
       const distance = Math.abs(alignDelta(metrics, slides[i], align));
       if (distance < nearestDistance - 0.5) {
         nearestDistance = distance;
         nearest = i;
+      }
+
+      /*
+       * Overlap, not containment: a slide half in view is in view, and with a
+       * `peek` the edge slides are never fully inside. `EPSILON` keeps a slide
+       * that ends exactly on the boundary from flickering in and out as
+       * fractional scroll positions round differently frame to frame.
+       */
+      const rect = slides[i].getBoundingClientRect();
+      if (rect.right > viewStart + EPSILON && rect.left < viewEnd - EPSILON) {
+        if (firstOnScreen === -1) firstOnScreen = i;
+        lastOnScreen = i;
       }
     }
 
@@ -237,7 +280,27 @@ export function useCarousel(
       ? (((nearest - cloneCount) % slideCount) + slideCount) % slideCount
       : nearest;
     setActiveIndex(realIndex);
-  }, [align, cloneCount, infinite, slideCount, viewportRef]);
+
+    if (firstOnScreen === -1) return;
+
+    /*
+     * Reported against the REAL slides, with the clones folded away, because
+     * an index a consumer cannot match to a child they wrote is useless. A
+     * window that wraps past the end under a loop is clamped rather than split
+     * in two: the look-ahead is a hint for loading, and loading a few extra
+     * slides is cheaper than an API that returns two ranges.
+     */
+    const toReal = (i: number) => (infinite
+      ? (((i - cloneCount) % slideCount) + slideCount) % slideCount
+      : i);
+
+    const first = Math.max(0, toReal(firstOnScreen) - lookahead);
+    const last = Math.min(slideCount - 1, toReal(lastOnScreen) + lookahead);
+
+    setVisible((current) => (
+      current.first === first && current.last === last ? current : { first, last }
+    ));
+  }, [align, cloneCount, infinite, lookahead, slideCount, viewportRef]);
 
   /* --- the loop jump ---------------------------------------------------- */
 
@@ -430,18 +493,37 @@ export function useCarousel(
    */
   const togglePlay = useCallback(() => setPaused((was) => !was), []);
 
+  /**
+   * Brings one slide to the alignment point, by its REAL index.
+   *
+   * This was buried inside `goToPage`'s infinite branch, which is why there
+   * was no slide-level navigation anywhere — not on the handle, not on the
+   * controller. Pulling it out is most of what a thumbnail strip driving a
+   * main carousel needs: the other half, `onSlideChange`, was already there.
+   *
+   * `clamp` rather than ignore, because an index out of range is almost always
+   * an off-by-one at the call site and the useful answer is the nearest end,
+   * not nothing happening.
+   */
+  const goToSlide = useCallback((index: number) => {
+    const viewport = viewportRef.current;
+    if (!viewport || slideCount <= 0) return;
+
+    const real = Math.min(slideCount - 1, Math.max(0, Math.round(index)));
+    const slides = allSlides(viewport);
+    /* Under a loop the strip is [tail clones][real][head clones]. */
+    const target = slides[infinite ? cloneCount + real : real];
+    if (!target) return;
+
+    viewport.scrollBy({ left: alignDelta(readMetrics(viewport), target, align) });
+  }, [align, cloneCount, infinite, slideCount, viewportRef]);
+
   const goToPage = useCallback((page: number) => {
     const viewport = viewportRef.current;
     if (!viewport || pageCount <= 1) return;
 
     if (infinite) {
-      const slides = allSlides(viewport);
-      const index = cloneCount + Math.min(
-        slideCount - 1,
-        page * (perMove === 'page' ? perPage : (perMove)),
-      );
-      const target = slides[index];
-      if (target) viewport.scrollBy({ left: alignDelta(readMetrics(viewport), target, align) });
+      goToSlide(page * (perMove === 'page' ? perPage : perMove));
       return;
     }
 
@@ -450,7 +532,7 @@ export function useCarousel(
     const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
     const left = (page / (pageCount - 1)) * max;
     viewport.scrollTo({ left: readMetrics(viewport).rtl ? -left : left });
-  }, [align, cloneCount, infinite, pageCount, perMove, perPage, slideCount, viewportRef]);
+  }, [goToSlide, infinite, pageCount, perMove, perPage, viewportRef]);
 
   /* --- autoplay ---------------------------------------------------------- */
 
@@ -609,12 +691,14 @@ export function useCarousel(
     activeIndex,
     pageCount,
     activePage,
+    visible,
     canPrev: Boolean(loop) || range.scroll > EPSILON,
     canNext: Boolean(loop) || range.scroll < range.max - EPSILON,
     playing,
     paused,
     togglePlay,
     goToPage,
+    goToSlide,
     move,
   };
 }

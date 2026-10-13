@@ -20,12 +20,16 @@ import type {
 
 import DIcon from '../DIcon';
 import DCarouselSlide from './components/DCarouselSlide';
+import loadDeferredMedia from './lazyMedia';
+import DCarouselAutoplay from './components/DCarouselAutoplay';
 import DCarouselNext from './components/DCarouselNext';
 import DCarouselPagination from './components/DCarouselPagination';
 import DCarouselPrev from './components/DCarouselPrev';
 import { useCarousel } from './useCarousel';
 
 import { useDContext } from '../../contexts';
+import { useResponsiveProp } from '../../hooks/useResponsiveProp';
+
 import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
 import type { BaseProps } from '../interface';
 import type { CarouselAlign, CarouselLoop, CarouselPerMove } from './useCarousel';
@@ -64,8 +68,16 @@ export type Props = BaseProps & PropsWithChildren<{
   /** `true` loops seamlessly through clones; `'rewind'` jumps back to the start. */
   loop?: CarouselLoop;
   autoplay?: boolean;
-  /** Milliseconds between automatic moves. */
-  interval?: number;
+  /**
+   * Milliseconds between automatic moves.
+   *
+   * Responsive like `perPage` and `gap`, because the right pace depends on how
+   * much is on screen: one slide at a time on a phone wants longer than three
+   * side by side on a desktop. Resolved in JavaScript rather than through a
+   * custom property, since the timer is the one part of this component CSS
+   * cannot own.
+   */
+  interval?: Responsive<number>;
   pauseOnHover?: boolean;
   arrows?: boolean;
   pagination?: boolean;
@@ -73,6 +85,16 @@ export type Props = BaseProps & PropsWithChildren<{
   draggable?: boolean;
   /** A fixed height for the strip. Slides stretch to it. */
   height?: string | number;
+  /**
+   * How many slides either side of the visible ones to mark ready.
+   *
+   * A slide carries `data-visible` while it is on screen or within this many
+   * of it, which is what `data-src` images and any other deferred content key
+   * off. One is the default because it is the smallest window that keeps the
+   * NEXT slide from arriving blank: at zero, loading starts the moment a slide
+   * is already being looked at.
+   */
+  lookahead?: number;
   /**
    * Overrides for the arrow icons. Both default to the context's icon map, so
    * a consumer who has already swapped their icon set does not have to name
@@ -103,6 +125,12 @@ export type DCarouselHandle = {
   next: () => void;
   prev: () => void;
   goToPage: (page: number) => void;
+  /**
+   * Brings one slide to the alignment point, by its index among the real
+   * slides — clones are not counted, so the index is the one the consumer
+   * wrote.
+   */
+  goToSlide: (index: number) => void;
   /** The outer element, for measuring or scrolling into view. */
   element: HTMLDivElement | null;
 };
@@ -158,6 +186,7 @@ function DCarousel(
     arrows = true,
     pagination = true,
     draggable = true,
+    lookahead = 1,
     height,
     iconArrowLeft,
     iconArrowRight,
@@ -199,16 +228,29 @@ function DCarousel(
    */
   const viewportId = useId();
 
+  /*
+   * `true` so the pace follows a resize. Every other responsive prop is
+   * resolved by a media query in the stylesheet, which re-resolves on its own;
+   * this one is read once per render and would otherwise keep a phone's pace
+   * after the window grew.
+   */
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedInterval = typeof interval === 'number'
+    ? interval
+    : responsivePropValue(interval) ?? 5000;
+
   const {
     activeIndex,
     pageCount,
     activePage,
     canPrev,
     canNext,
+    visible,
     playing,
     paused,
     togglePlay,
     goToPage,
+    goToSlide,
     move,
   } = useCarousel({
     rootRef,
@@ -219,21 +261,40 @@ function DCarousel(
     loop,
     cloneCount,
     autoplay,
-    interval,
+    interval: resolvedInterval,
     pauseOnHover,
     draggable,
+    lookahead,
   });
 
   useImperativeHandle(ref, () => ({
     next: () => move(1),
     prev: () => move(-1),
     goToPage,
+    goToSlide,
     element: rootRef.current,
-  }), [goToPage, move]);
+  }), [goToPage, goToSlide, move]);
 
   useEffect(() => {
     onSlideChange?.(activeIndex);
   }, [activeIndex, onSlideChange]);
+
+  /**
+   * Loads the deferred media of every slide now in the window.
+   *
+   * After the commit that set `data-visible`, so the query finds them — and
+   * through the same function the framework-free build calls, because the
+   * contract is about the DOM rather than about React. `loadDeferredMedia`
+   * removes each attribute as it moves it, so a slide scrolling in and out
+   * does nothing the second time.
+   */
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    viewport
+      .querySelectorAll('.df-carousel-slide[data-visible]')
+      .forEach((slide) => loadDeferredMedia(slide));
+  }, [visible]);
 
   /* --- the controller, for controls elsewhere in the tree ----------------- */
 
@@ -258,8 +319,12 @@ function DCarousel(
    * things that can re-connect are a new controller and a new viewport id,
    * neither of which happens while the carousel is simply scrolling.
    */
-  const actionsRef = useRef({ move, goToPage, togglePlay });
-  actionsRef.current = { move, goToPage, togglePlay };
+  const actionsRef = useRef({
+    move, goToPage, goToSlide, togglePlay,
+  });
+  actionsRef.current = {
+    move, goToPage, goToSlide, togglePlay,
+  };
 
   useEffect(() => {
     if (!connect) return undefined;
@@ -269,6 +334,7 @@ function DCarousel(
         next: () => actionsRef.current.move(1),
         prev: () => actionsRef.current.move(-1),
         goToPage: (page) => actionsRef.current.goToPage(page),
+        goToSlide: (index) => actionsRef.current.goToSlide(index),
         togglePlay: () => actionsRef.current.togglePlay(),
       },
     });
@@ -309,6 +375,13 @@ function DCarousel(
       index,
       total: slideCount,
       active: !clone && index === activeIndex,
+      /*
+       * The window is in REAL indices, and a clone carries the real index of
+       * the slide it copies — so the same comparison answers for both, which
+       * is what makes a clone's deferred media load while it is the thing on
+       * screen.
+       */
+      visible: index >= visible.first && index <= visible.last,
       clone,
     };
 
@@ -323,7 +396,11 @@ function DCarousel(
       ref={rootRef}
       className={classNames('df-carousel', className)}
       style={cssVars}
-      {...label && { 'aria-roledescription': 'carousel', 'aria-label': label, role: 'group' }}
+      {...label && {
+        'aria-roledescription': 'carousel',
+        'aria-label': label,
+        role: 'group',
+      }}
       {...draggable && { 'data-draggable': '' }}
       {...dataAttributes}
     >
@@ -444,4 +521,5 @@ export default Object.assign(ForwardedDCarousel, {
   Prev: DCarouselPrev,
   Next: DCarouselNext,
   Pagination: DCarouselPagination,
+  Autoplay: DCarouselAutoplay,
 });

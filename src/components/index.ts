@@ -39,6 +39,7 @@ export {
   DCarouselPrev,
   DCarouselNext,
   DCarouselPagination,
+  DCarouselAutoplay,
   useDCarouselController,
   createCarouselController,
 } from './DCarousel';

@@ -391,6 +391,8 @@ export const IconConsumption: Story = {
     upload: 'upload',
     calendar: 'calendar_month',
     check: 'check',
+    play: 'play_arrow',
+    pause: 'pause',
     alert: { warning: 'warning', danger: 'error', success: 'task_alt', info: 'info' },
     input: { search: 'search', show: 'visibility', hide: 'visibility_off', increase: 'add', decrease: 'remove' },
   }}

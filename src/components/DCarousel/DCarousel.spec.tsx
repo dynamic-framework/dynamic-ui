@@ -1,10 +1,13 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { createRef } from 'react';
+
+import type { ComponentProps } from 'react';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DCarousel from '.';
+import { DContextProvider } from '../../contexts';
 import type { DCarouselHandle } from './DCarousel';
 
 /**
@@ -373,6 +376,97 @@ describe('<DCarousel />', () => {
       expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
       expect(screen.getByRole('group', { name: 'Diapositivas' })).toBeInTheDocument();
+    });
+  });
+
+  /*
+   * The pace follows the breakpoint, like `perPage` and `gap`. One slide at a
+   * time on a phone wants longer than three side by side on a desktop, and
+   * before this the two had to share a number.
+   *
+   * Resolved in JavaScript rather than through a custom property, because the
+   * timer is the one part of this component CSS cannot own — so unlike the
+   * other responsive props there is no media query doing the work.
+   */
+  describe('a responsive interval', () => {
+    /*
+     * The breakpoints the hook compares against are read from CSS custom
+     * properties in a layout effect, and jsdom has no stylesheet — so without
+     * these the context holds empty strings, every `(min-width: )` is invalid,
+     * no tier ever matches, and the interval silently falls back to its
+     * default. Setting them on the root is the smallest honest stand-in for
+     * the stylesheet being present.
+     */
+    const PX = {
+      xs: '0px', sm: '576px', md: '768px', lg: '992px', xl: '1200px', xxl: '1400px',
+    };
+
+    const atWidth = (width: number) => {
+      Object.entries(PX).forEach(([name, value]) => {
+        document.documentElement.style.setProperty(`--df-breakpoint-${name}`, value);
+      });
+
+      window.matchMedia = jest.fn().mockImplementation((query: string) => {
+        const floor = Number(/min-width:\s*(\d+)px/.exec(query)?.[1] ?? NaN);
+        return {
+          /*
+           * Width queries only. Matching everything also matches
+           * `(prefers-reduced-motion: reduce)`, which switches autoplay off
+           * entirely — so the timer never starts and the test fails for a
+           * reason that has nothing to do with the interval.
+           */
+          matches: Number.isNaN(floor) ? false : width >= floor,
+          media: query,
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
+          addListener: jest.fn(),
+          removeListener: jest.fn(),
+          dispatchEvent: jest.fn(),
+          onchange: null,
+        };
+      });
+    };
+
+    afterEach(() => {
+      jest.useRealTimers();
+      Object.keys(PX).forEach((name) => {
+        document.documentElement.style.removeProperty(`--df-breakpoint-${name}`);
+      });
+    });
+
+    const mountAt = (width: number, interval: ComponentProps<typeof DCarousel>['interval']) => {
+      atWidth(width);
+      jest.useFakeTimers();
+      render(
+        <DContextProvider>
+          <DCarousel label="Offers" autoplay loop interval={interval}>{slides(4)}</DCarousel>
+        </DContextProvider>,
+      );
+      scrollBy.mockClear();
+    };
+
+    it('should take the tier that matches, not the smallest', () => {
+      mountAt(1000, { xs: 1000, md: 4000 });
+
+      jest.advanceTimersByTime(1500);
+      expect(scrollBy).not.toHaveBeenCalled();
+
+      jest.advanceTimersByTime(3000);
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    it('should take the smallest tier below the next breakpoint', () => {
+      mountAt(400, { xs: 1000, md: 4000 });
+
+      jest.advanceTimersByTime(1100);
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    it('should still take a plain number', () => {
+      mountAt(1000, 2000);
+
+      jest.advanceTimersByTime(2100);
+      expect(scrollBy).toHaveBeenCalled();
     });
   });
 });

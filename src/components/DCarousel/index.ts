@@ -7,6 +7,7 @@ export { default as DCarouselSlide } from './components/DCarouselSlide';
 export { default as DCarouselPrev } from './components/DCarouselPrev';
 export { default as DCarouselNext } from './components/DCarouselNext';
 export { default as DCarouselPagination } from './components/DCarouselPagination';
+export { default as DCarouselAutoplay } from './components/DCarouselAutoplay';
 export { default as useDCarouselController } from './useDCarouselController';
 export type { DCarouselController } from './useDCarouselController';
 export { default as createCarouselController } from './controller';

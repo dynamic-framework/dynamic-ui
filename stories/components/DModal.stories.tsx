@@ -573,7 +573,7 @@ export const Durations: Story = {
   style={{
     '--df-overlay-duration-enter': '600ms',
     '--df-overlay-duration-exit': '400ms',
-  }}
+  } as CSSProperties}
 >
   …
 </DModal>
@@ -647,7 +647,7 @@ export const Easings: Story = {
   style={{
     '--df-overlay-easing-enter': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
     '--df-overlay-easing-exit': 'ease-in',
-  }}
+  } as CSSProperties}
 >
   …
 </DModal>`,

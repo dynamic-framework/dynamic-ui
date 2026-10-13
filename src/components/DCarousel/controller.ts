@@ -76,6 +76,7 @@ export type DCarouselActions = {
   next: () => void;
   prev: () => void;
   goToPage: (page: number) => void;
+  goToSlide: (index: number) => void;
   togglePlay: () => void;
 };
 
@@ -220,6 +221,7 @@ export default function createCarouselController(): DCarouselControllerStore {
     next: () => act('next', (actions) => actions.next()),
     prev: () => act('prev', (actions) => actions.prev()),
     goToPage: (page: number) => act('goToPage', (actions) => actions.goToPage(page)),
+    goToSlide: (index: number) => act('goToSlide', (actions) => actions.goToSlide(index)),
     togglePlay: () => act('togglePlay', (actions) => actions.togglePlay()),
   };
 }

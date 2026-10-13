@@ -467,6 +467,71 @@ describe('vanilla carousel', () => {
     });
   });
 
+  /*
+   * Deferred media, which has to behave identically here and in React: the
+   * contract is `data-src` on the element and `data-visible` on the slide,
+   * and both layers call the same `loadDeferredMedia`.
+   *
+   * jsdom reports every rect as zeroes, so the MEASURED window cannot be
+   * asserted — what is asserted is the resting one, which is where a carousel
+   * starts and what decides whether the first screen of images is deferred.
+   */
+  describe('deferred media', () => {
+    const WITH_IMAGES = (attrs = '') => `
+      <div class="df-carousel" data-df-carousel ${attrs}>
+        <div class="df-carousel-viewport" tabindex="0" role="group">
+          <div class="df-carousel-slide">
+            <img data-src="first.jpg" width="8" height="4" alt="">
+          </div>
+          <div class="df-carousel-slide">
+            <img data-src="second.jpg" width="8" height="4" alt="">
+          </div>
+          <div class="df-carousel-slide">
+            <img data-src="third.jpg" width="8" height="4" alt="">
+          </div>
+        </div>
+      </div>`;
+
+    const sources = () => Array.from(document.querySelectorAll('img'))
+      .map((image) => image.getAttribute('src'));
+
+    it('should load the media of the slides in the window', () => {
+      html(WITH_IMAGES());
+      expect(sources().slice(0, 2)).toEqual(['first.jpg', 'second.jpg']);
+    });
+
+    it('should leave the media outside the window deferred', () => {
+      html(WITH_IMAGES());
+
+      expect(sources()[2]).toBeNull();
+      expect(document.querySelectorAll('img')[2]).toHaveAttribute('data-src', 'third.jpg');
+    });
+
+    it('should mark the window on the slides', () => {
+      html(WITH_IMAGES());
+
+      const marked = Array.from(document.querySelectorAll('.df-carousel-slide'))
+        .map((slide) => slide.hasAttribute('data-visible'));
+      expect(marked).toEqual([true, true, false]);
+    });
+
+    it('should widen the window with data-lookahead', () => {
+      html(WITH_IMAGES('data-lookahead="2"'));
+      expect(sources()).toEqual(['first.jpg', 'second.jpg', 'third.jpg']);
+    });
+
+    it('should leave an image with a plain src alone', () => {
+      html(`
+        <div class="df-carousel" data-df-carousel>
+          <div class="df-carousel-viewport" tabindex="0" role="group">
+            <div class="df-carousel-slide"><img src="a.jpg" loading="lazy" alt=""></div>
+          </div>
+        </div>`);
+
+      expect(sources()).toEqual(['a.jpg']);
+    });
+  });
+
   it('should warn rather than throw when the viewport is missing', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     html('<div class="df-carousel" data-df-carousel></div>');

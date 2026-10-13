@@ -1,4 +1,5 @@
 import { define } from './registry';
+import loadDeferredMedia from '../components/DCarousel/lazyMedia';
 
 import type { Behaviour, Teardown } from './registry';
 
@@ -159,6 +160,12 @@ function mount(root: HTMLElement): Teardown {
    * The failure modes an id brings are answered below rather than left to be
    * discovered: a name nothing claims, and a name two carousels claim.
    */
+  /*
+   * `data-lookahead` on the root, defaulting to one. A page that wants nothing
+   * deferred sets `0`; a hero with heavy images may want `2`.
+   */
+  const lookahead = Math.max(0, Number(root.dataset.lookahead ?? 1) || 0);
+
   const name = root.dataset.dfCarousel;
   const external = collectExternal(root, name);
 
@@ -217,6 +224,48 @@ function mount(root: HTMLElement): Teardown {
     const atEnd = Math.abs(view.scrollLeft) + view.clientWidth >= view.scrollWidth - 1;
 
     all.forEach((slide, i) => slide.toggleAttribute('data-active', i === index));
+
+    /*
+     * The same window the React build marks, by the same rule: a slide
+     * overlapping the scrollport, widened by the look-ahead. One slide either
+     * side by default, which is the smallest window that keeps the next slide
+     * from arriving blank.
+     */
+    const box = view.getBoundingClientRect();
+    let first = -1;
+    let last = -1;
+    all.forEach((slide, i) => {
+      const rect = slide.getBoundingClientRect();
+      if (rect.right > box.left + 1 && rect.left < box.right - 1) {
+        if (first === -1) first = i;
+        last = i;
+      }
+    });
+
+    /*
+     * Nothing overlapping means nothing could be measured, not that nothing is
+     * on screen: a carousel inside a closed accordion or an inactive tab has
+     * zero-sized rects. Falling back to the resting window keeps the first
+     * screen of images loading anyway, and keeps this in step with the React
+     * build, which seeds the same window in state before its first measurement.
+     */
+    if (first === -1) {
+      first = 0;
+      last = 0;
+    }
+
+    const from = Math.max(0, first - lookahead);
+    const to = Math.min(all.length - 1, last + lookahead);
+    all.forEach((slide, i) => {
+      const inWindow = i >= from && i <= to;
+      slide.toggleAttribute('data-visible', inWindow);
+      /*
+       * Through the same function the React build calls — the contract is
+       * about the DOM, not about a framework. It removes each attribute as it
+       * moves it, so a slide scrolling in and out does nothing twice.
+       */
+      if (inWindow) loadDeferredMedia(slide);
+    });
 
     arrows.forEach((arrow) => {
       const prev = arrow.getAttribute('data-direction') === 'prev';

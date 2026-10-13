@@ -41,6 +41,12 @@ const BEHAVIOURAL = new Set([
   // technology with `aria-hidden`, not painted differently — if a rule ever
   // matched this, the seam between a real slide and its copy would be visible.
   'data-clone',
+  // Marks a carousel slide as on screen or within the look-ahead. It is the
+  // contract deferred media keys off — `data-src` becomes `src` when a slide
+  // gains it — and both builds read it from JavaScript. Painting it would mean
+  // a slide looked different for having been loaded, which is the one thing
+  // deferring must not be visible as.
+  'data-visible',
 ]);
 
 /** `data-df-*` is the framework-free layer's own namespace: selectors for JS. */
