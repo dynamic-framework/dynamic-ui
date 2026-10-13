@@ -573,6 +573,38 @@ if (darkOnly.size === 0) {
   }
 }
 
+/* ------------------------------------------------------------------ *
+ * An arrow outside the carousel flows.
+ *
+ * `.df-carousel-arrow` was `position: absolute` unconditionally, which was
+ * right while the only arrows were the carousel's own. The controller changed
+ * that: an arrow can now live in a section header or a control bar, and there
+ * an absolutely positioned one does not flow — two of them land on top of each
+ * other at the mid-height of whatever ancestor happens to be positioned.
+ *
+ * Nothing catches that in a test: the markup is correct, the component
+ * renders, and the bar is simply wrong on screen. So it is asserted here.
+ * ------------------------------------------------------------------ */
+
+const bareArrow = allRules.find((r) => r.selector === '.df-carousel-arrow');
+if (!bareArrow) {
+  errors.push('[carousel] no `.df-carousel-arrow` rule — has it been renamed?');
+} else if (/(^|[;{\s])position\s*:\s*absolute/.test(bareArrow.body)) {
+  errors.push(
+    '[carousel] `.df-carousel-arrow` is positioned absolutely, so an arrow '
+    + 'rendered outside the carousel — a header, a control bar — will not flow. '
+    + 'Scope the positioning to `.df-carousel > .df-carousel-arrow`.',
+  );
+}
+
+const floatingArrow = allRules.find((r) => r.selector === '.df-carousel > .df-carousel-arrow');
+if (!floatingArrow || !/(^|[;{\s])position\s*:\s*absolute/.test(floatingArrow.body)) {
+  errors.push(
+    '[carousel] the built-in arrows no longer float over the strip: '
+    + '`.df-carousel > .df-carousel-arrow` should be `position: absolute`.',
+  );
+}
+
 /* ------------------------------------------------------------------ */
 
 const worst = [...checked].sort((a, b) => a.ratio - b.ratio).slice(0, 3);
@@ -585,6 +617,7 @@ process.stdout.write(`css-verify: ${Object.keys(FILLS).length} overlay placement
 process.stdout.write('css-verify: the stacked stepper draws a connector at its shortest step\n');
 process.stdout.write('css-verify: an explicit border colour outranks the width utility\n');
 process.stdout.write('css-verify: no element is left to the UA for its margin\n');
+process.stdout.write('css-verify: an arrow outside the carousel flows\n');
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

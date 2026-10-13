@@ -33,9 +33,18 @@ export default function DCarouselAutoplay(
 ) {
   const { iconMap: { play, pause } } = useDContext();
   const text = { ...DEFAULT_CAROUSEL_I18N, ...i18n };
-  const { connected, playing, paused } = controller;
+  const { connected, canAutoplay, paused } = controller;
 
-  if (!connected || (!playing && !paused)) return null;
+  /*
+   * `canAutoplay`, not `playing || paused`.
+   *
+   * `playing` is false while the pointer is over the strip, so the earlier
+   * condition made this button vanish under the cursor that was reaching for
+   * it. `canAutoplay` says only whether there is an autoplay to control —
+   * false when the consumer did not ask for one, and false under
+   * `prefers-reduced-motion: reduce`, where pressing it could do nothing.
+   */
+  if (!connected || !canAutoplay) return null;
 
   return (
     <button

@@ -88,6 +88,17 @@ export type CarouselState = {
   /** Whether slides are advancing right now. */
   playing: boolean;
   /**
+   * Whether there is an autoplay to control at all.
+   *
+   * Not the same as `playing`, and the difference is what a play/pause control
+   * has to render on: `playing` is false while the pointer is over the strip,
+   * so a control shown on `playing || paused` vanishes under the cursor that
+   * is reaching for it. It is false under `prefers-reduced-motion: reduce`,
+   * where there is nothing to start and a control that pretends otherwise
+   * does nothing when pressed.
+   */
+  canAutoplay: boolean;
+  /**
    * Whether the USER stopped it, as opposed to it being held while they hover
    * or while the tab is in the background. The two are separate on purpose —
    * see {@link useCarousel}.
@@ -229,7 +240,30 @@ export function useCarousel(
    * does the opposite of what it says.
    */
   const [paused, setPaused] = useState(false);
-  const [suspended, setSuspended] = useState(false);
+  /**
+   * Why autoplay is held, by reason, rather than as one boolean.
+   *
+   * Four independent things suspend it — a hidden tab, being scrolled off the
+   * page, focus inside the strip, and the pointer over it — and a single flag
+   * let any one of them CLEAR the others. Moving the mouse away resumed a
+   * carousel in a background tab; leaving focus resumed one off screen.
+   *
+   * And the bug that sent me here: the built-in play button lives inside the
+   * carousel, so clicking it focused it, `focusin` suspended, and `playing`
+   * stayed false. Pressing play did nothing at all.
+   */
+  const [heldBy, setHeldBy] = useState({
+    hidden: false,
+    offscreen: false,
+    focus: false,
+    hover: false,
+  });
+
+  const hold = useCallback((reason: 'hidden' | 'offscreen' | 'focus' | 'hover', value: boolean) => {
+    setHeldBy((current) => (current[reason] === value ? current : { ...current, [reason]: value }));
+  }, []);
+
+  const suspended = heldBy.hidden || heldBy.offscreen || heldBy.focus || heldBy.hover;
 
   /**
    * Set while a loop jump is in flight.
@@ -573,7 +607,21 @@ export function useCarousel(
    * connect, disconnect, connect, forever, which React stopped at its nested
    * update limit.
    */
-  const togglePlay = useCallback(() => setPaused((was) => !was), []);
+  const togglePlay = useCallback(() => {
+    /*
+     * Resuming also clears the hover hold.
+     *
+     * `pauseOnHover` is a heuristic; a press is an instruction, and the
+     * heuristic must not silently overrule it. Without this, pressing play
+     * with the pointer still over the strip — which is where the pointer
+     * always is, because that is where the button is — resumed nothing until
+     * the mouse was moved away. Entering again re-holds it, as it should.
+     */
+    setPaused((was) => {
+      if (was) hold('hover', false);
+      return !was;
+    });
+  }, [hold]);
 
   /**
    * Brings one slide to the alignment point, by its REAL index.
@@ -624,7 +672,8 @@ export function useCarousel(
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ), []);
 
-  const playing = autoplay && !paused && !suspended && !reducedMotion;
+  const canAutoplay = autoplay && !reducedMotion;
+  const playing = canAutoplay && !paused && !suspended;
 
   useEffect(() => {
     if (!playing) return undefined;
@@ -643,13 +692,13 @@ export function useCarousel(
     if (!autoplay) return undefined;
     const root = rootRef.current;
 
-    const onVisibility = () => setSuspended(document.hidden);
+    const onVisibility = () => hold('hidden', document.hidden);
     document.addEventListener('visibilitychange', onVisibility);
 
     let observer: IntersectionObserver | undefined;
     if (root && typeof IntersectionObserver !== 'undefined') {
       observer = new IntersectionObserver(
-        ([entry]) => setSuspended(!entry.isIntersecting),
+        ([entry]) => hold('offscreen', !entry.isIntersecting),
         { threshold: 0 },
       );
       observer.observe(root);
@@ -659,32 +708,43 @@ export function useCarousel(
       document.removeEventListener('visibilitychange', onVisibility);
       observer?.disconnect();
     };
-  }, [autoplay, rootRef]);
+  }, [autoplay, hold, rootRef]);
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root || !autoplay) return undefined;
 
-    const suspend = () => setSuspended(true);
-    const release = () => setSuspended(false);
+    /*
+     * Focus always pauses, hover only if asked. Pausing on focus is not a
+     * preference: a keyboard user tabbing through the slides cannot read one
+     * that is about to scroll away, and WCAG 2.2.2 wants a way to stop it.
+     *
+     * The exception is the play control itself. It lives inside the carousel,
+     * so focusing it counts as focus in the strip — and the control whose only
+     * job is to start playback cannot be the thing that prevents it.
+     */
+    const onFocusIn = (event: FocusEvent) => {
+      const target = event.target as Element | null;
+      hold('focus', !target?.closest?.('.df-carousel-autoplay'));
+    };
+    const onFocusOut = () => hold('focus', false);
+    const onEnter = () => hold('hover', true);
+    const onLeave = () => hold('hover', false);
 
-    // Focus always pauses, hover only if asked. Pausing on focus is not a
-    // preference: a keyboard user tabbing through the slides cannot read one
-    // that is about to scroll away, and WCAG 2.2.2 wants a way to stop it.
-    root.addEventListener('focusin', suspend);
-    root.addEventListener('focusout', release);
+    root.addEventListener('focusin', onFocusIn);
+    root.addEventListener('focusout', onFocusOut);
     if (pauseOnHover) {
-      root.addEventListener('pointerenter', suspend);
-      root.addEventListener('pointerleave', release);
+      root.addEventListener('pointerenter', onEnter);
+      root.addEventListener('pointerleave', onLeave);
     }
 
     return () => {
-      root.removeEventListener('focusin', suspend);
-      root.removeEventListener('focusout', release);
-      root.removeEventListener('pointerenter', suspend);
-      root.removeEventListener('pointerleave', release);
+      root.removeEventListener('focusin', onFocusIn);
+      root.removeEventListener('focusout', onFocusOut);
+      root.removeEventListener('pointerenter', onEnter);
+      root.removeEventListener('pointerleave', onLeave);
     };
-  }, [autoplay, pauseOnHover, rootRef]);
+  }, [autoplay, hold, pauseOnHover, rootRef]);
 
   /* --- pointer drag ------------------------------------------------------ */
 
@@ -774,6 +834,7 @@ export function useCarousel(
     pageCount,
     activePage,
     visible,
+    canAutoplay,
     canPrev: Boolean(loop) || range.scroll > EPSILON,
     canNext: Boolean(loop) || range.scroll < range.max - EPSILON,
     playing,

@@ -9,6 +9,7 @@ const state = (over: Partial<DCarouselPublishedState> = {}): DCarouselPublishedS
   canPrev: false,
   canNext: true,
   playing: false,
+  canAutoplay: false,
   paused: false,
   ...over,
 });

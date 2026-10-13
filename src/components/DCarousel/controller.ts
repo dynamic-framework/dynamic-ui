@@ -49,6 +49,15 @@ export type DCarouselControllerState = {
   canNext: boolean;
   /** Whether slides are advancing right now. */
   playing: boolean;
+  /**
+   * Whether there is an autoplay to control at all.
+   *
+   * What a play/pause control renders on. `playing` is false while the
+   * pointer is over the strip, so a control shown on `playing || paused`
+   * vanishes under the cursor reaching for it — and it is false under
+   * `prefers-reduced-motion: reduce`, where pressing it could do nothing.
+   */
+  canAutoplay: boolean;
   /** Whether the USER stopped it, as opposed to a hover or a hidden tab. */
   paused: boolean;
   /**
@@ -98,6 +107,7 @@ const IDLE: DCarouselControllerState = Object.freeze({
   canPrev: false,
   canNext: false,
   playing: false,
+  canAutoplay: false,
   paused: false,
   connected: false,
   viewportId: undefined,

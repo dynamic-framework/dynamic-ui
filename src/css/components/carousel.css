@@ -187,10 +187,20 @@
    * photography — where a bare chevron would vanish — gets it back with
    * `--df-carousel-arrow-bg` and `--df-carousel-arrow-border-width`.
    */
+
+  /**
+   * The arrow itself carries no position.
+   *
+   * It used to be `position: absolute` unconditionally, which was right while
+   * the only arrows were the carousel's own — and wrong the moment the
+   * controller let one live somewhere else. In a header or a control bar an
+   * absolutely positioned arrow does not flow: two of them land on top of each
+   * other at the mid-height of whatever ancestor happens to be positioned.
+   *
+   * Floating over the strip is now what a DIRECT CHILD of `.df-carousel` does,
+   * which is exactly the built-in pair, and nothing else.
+   */
   .df-carousel-arrow {
-    position: absolute;
-    inset-block-start: 50%;
-    z-index: var(--df-z-raised);
     display: flex;
     flex: none;
     align-items: center;
@@ -204,15 +214,6 @@
     border: var(--df-carousel-arrow-border-width) solid var(--df-carousel-arrow-border-color);
     border-radius: var(--df-carousel-arrow-radius);
     box-shadow: var(--df-carousel-arrow-shadow);
-    transform: translateY(-50%);
-  }
-
-  .df-carousel-arrow[data-direction="prev"] {
-    inset-inline-start: var(--df-carousel-arrow-offset);
-  }
-
-  .df-carousel-arrow[data-direction="next"] {
-    inset-inline-end: var(--df-carousel-arrow-offset);
   }
 
   /**
@@ -243,6 +244,23 @@
       transition: background-color var(--df-motion-duration-hover) var(--df-motion-easing-standard);
     }
   }
+
+  /* The built-in pair, floating over the sides of the strip. */
+  .df-carousel > .df-carousel-arrow {
+    position: absolute;
+    inset-block-start: 50%;
+    z-index: var(--df-z-raised);
+    transform: translateY(-50%);
+  }
+
+  .df-carousel > .df-carousel-arrow[data-direction="prev"] {
+    inset-inline-start: var(--df-carousel-arrow-offset);
+  }
+
+  .df-carousel > .df-carousel-arrow[data-direction="next"] {
+    inset-inline-end: var(--df-carousel-arrow-offset);
+  }
+
 
   .df-carousel-arrow:focus-visible {
     outline: var(--df-focus-ring-width) solid var(--df-focus-ring);

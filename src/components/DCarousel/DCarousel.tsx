@@ -277,6 +277,7 @@ function DCarousel(
     canPrev,
     canNext,
     visible,
+    canAutoplay,
     playing,
     paused,
     togglePlay,
@@ -376,10 +377,10 @@ function DCarousel(
 
   useEffect(() => {
     publish?.({
-      activeIndex, pageCount, activePage, canPrev, canNext, playing, paused,
+      activeIndex, pageCount, activePage, canPrev, canNext, playing, canAutoplay, paused,
     });
   }, [
-    activeIndex, activePage, canNext, canPrev, pageCount, paused, playing, publish,
+    activeIndex, activePage, canAutoplay, canNext, canPrev, pageCount, paused, playing, publish,
   ]);
 
   const cssVars = useMemo<CSSProperties>(() => ({
@@ -504,9 +505,9 @@ function DCarousel(
         </>
       )}
 
-      {(pagination || autoplay) && slideCount > 0 && (
+      {(pagination || canAutoplay) && slideCount > 0 && (
         <div className="df-carousel-controls">
-          {autoplay && (
+          {canAutoplay && (
             <button
               type="button"
               className="df-carousel-autoplay"

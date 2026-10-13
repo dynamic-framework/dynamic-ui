@@ -3,7 +3,9 @@
 import { createRef } from 'react';
 
 import type { ComponentProps } from 'react';
-import { render, screen, within } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen, within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DCarousel from '.';
@@ -595,6 +597,112 @@ describe('<DCarousel />', () => {
 
     it('should be optional', () => {
       expect(() => render(<DCarousel label="Offers">{slides(4)}</DCarousel>)).not.toThrow();
+    });
+  });
+
+  /*
+   * Autoplay is held by four independent things — a hidden tab, being off
+   * screen, focus inside the strip, the pointer over it — and they used to
+   * share one boolean, so any of them clearing it cleared the others.
+   *
+   * The bug that surfaced it: the play button lives INSIDE the carousel, so
+   * clicking it focused it, focus suspended autoplay, and pressing play did
+   * nothing at all.
+   */
+  describe('resuming autoplay', () => {
+    const autoplaying = (extra = {}) => render(
+      <DCarousel label="Offers" autoplay loop interval={1000} {...extra}>
+        {slides(4)}
+      </DCarousel>,
+    );
+
+    afterEach(() => jest.useRealTimers());
+
+    it('should advance again after pause and play', () => {
+      jest.useFakeTimers();
+      const { container } = autoplaying();
+      const button = container.querySelector('.df-carousel-autoplay') as HTMLButtonElement;
+
+      fireEvent.click(button);
+      /* A real click focuses the button; that is the whole bug. */
+      fireEvent.focusIn(button);
+      fireEvent.click(button);
+
+      scrollBy.mockClear();
+      act(() => { jest.advanceTimersByTime(2500); });
+
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    /*
+     * `pauseOnHover` is a heuristic; a press is an instruction. Without this,
+     * pressing play with the pointer still over the strip — which is where the
+     * pointer always is, because that is where the button is — resumed
+     * nothing.
+     */
+    it('should beat the hover hold when play is pressed', () => {
+      jest.useFakeTimers();
+      const { container } = autoplaying();
+      const root = container.querySelector('.df-carousel') as HTMLElement;
+      const button = container.querySelector('.df-carousel-autoplay') as HTMLButtonElement;
+
+      fireEvent.pointerEnter(root);
+      fireEvent.click(button);
+      fireEvent.click(button);
+
+      scrollBy.mockClear();
+      act(() => { jest.advanceTimersByTime(2500); });
+
+      expect(scrollBy).toHaveBeenCalled();
+    });
+
+    /* Still held while the pointer is there and nobody asked otherwise. */
+    it('should stay held while hovering', () => {
+      jest.useFakeTimers();
+      const { container } = autoplaying();
+      fireEvent.pointerEnter(container.querySelector('.df-carousel') as HTMLElement);
+
+      scrollBy.mockClear();
+      act(() => { jest.advanceTimersByTime(2500); });
+
+      expect(scrollBy).not.toHaveBeenCalled();
+    });
+
+    /*
+     * One reason clearing another is what the single boolean allowed: moving
+     * the mouse away resumed a carousel in a hidden tab.
+     */
+    it('should keep each hold independent of the others', () => {
+      jest.useFakeTimers();
+      const { container } = autoplaying();
+      const root = container.querySelector('.df-carousel') as HTMLElement;
+
+      fireEvent.pointerEnter(root);
+      fireEvent.focusIn(root);
+      fireEvent.focusOut(root);
+
+      scrollBy.mockClear();
+      act(() => { jest.advanceTimersByTime(2500); });
+
+      expect(scrollBy).not.toHaveBeenCalled();
+    });
+
+    /*
+     * The control renders on whether there IS an autoplay, not on whether it
+     * is moving — `playing` is false under the cursor, so the earlier rule
+     * made the button vanish under the hand reaching for it.
+     */
+    it('should keep the control visible while hovering', () => {
+      const { container } = autoplaying();
+      fireEvent.pointerEnter(container.querySelector('.df-carousel') as HTMLElement);
+
+      expect(container.querySelector('.df-carousel-autoplay')).toBeInTheDocument();
+    });
+
+    it('should render no control when nothing autoplays', () => {
+      const { container } = render(<DCarousel label="Offers">{slides(4)}</DCarousel>);
+
+      expect(container.querySelector('.df-carousel-autoplay')).not.toBeInTheDocument();
     });
   });
 });
