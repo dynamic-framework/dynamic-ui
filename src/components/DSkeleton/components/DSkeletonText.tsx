@@ -8,7 +8,7 @@ import { roundedClass, toCount, toCssSize } from '../utils';
 export type SkeletonTextSize = 'xs' | 'sm' | 'lg';
 
 type Props = BaseProps & {
-  /** Number of lines to render. */
+  /** Number of lines to render. Capped at 100. */
   lines?: number;
   /** Line height, mapped to Bootstrap's `placeholder-{size}`. Defaults to `1em`. */
   size?: SkeletonTextSize;

@@ -9,11 +9,20 @@ export function toCssSize(value?: SkeletonDimension): string | undefined {
 }
 
 /**
- * Normalizes a repetition count to a finite, non-negative integer so it can
- * size an array. Non-finite values (`NaN`, `Infinity`) render nothing.
+ * Upper bound for `items` and `lines`. A skeleton only needs to fill the
+ * viewport, and an unbounded count would let `Array.from` throw or exhaust
+ * memory.
+ */
+export const MAX_SKELETON_COUNT = 100;
+
+/**
+ * Normalizes a repetition count to an integer between 0 and
+ * `MAX_SKELETON_COUNT` so it can size an array. Non-finite values (`NaN`,
+ * `Infinity`) render nothing.
  */
 export function toCount(value: number): number {
-  return Number.isFinite(value) ? Math.max(Math.floor(value), 0) : 0;
+  if (!Number.isFinite(value)) return 0;
+  return Math.min(Math.max(Math.floor(value), 0), MAX_SKELETON_COUNT);
 }
 
 /**

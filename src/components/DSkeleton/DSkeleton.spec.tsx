@@ -177,6 +177,15 @@ describe('<DSkeleton /> as iterator', () => {
     expect(container.querySelector('.d-skeleton-slot')).not.toBeInTheDocument();
   });
 
+  it('caps items at 100', () => {
+    const { container } = render(
+      <DSkeleton items={Number.MAX_SAFE_INTEGER}>
+        <DSkeleton.Block />
+      </DSkeleton>,
+    );
+    expect(container.querySelectorAll('.d-skeleton-slot')).toHaveLength(100);
+  });
+
   it('rounds a fractional items count down', () => {
     const { container } = render(
       <DSkeleton items={2.7}>
@@ -317,6 +326,13 @@ describe('<DSkeleton.Text />', () => {
   it.each([NaN, Infinity, -1])('renders no lines with lines=%s', (lines) => {
     const { container } = render(<DSkeleton.Text lines={lines} />);
     expect(getLines(container)).toHaveLength(0);
+  });
+
+  it('caps lines at 100 and keeps lastLineWidth on the last one', () => {
+    const { container } = render(<DSkeleton.Text lines={Number.MAX_SAFE_INTEGER} />);
+    const lines = getLines(container);
+    expect(lines).toHaveLength(100);
+    expect(lines[99].style.width).toBe('60%');
   });
 
   it('applies lastLineWidth to the last line of a fractional count', () => {

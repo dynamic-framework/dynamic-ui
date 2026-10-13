@@ -64,6 +64,9 @@ between the shapes of each item, which stack. For an item laid out on a row, nes
 \`DSkeleton direction="horizontal"\` as the item. Without \`items\` and without a function child,
 children render as-is and no wrapper is added.
 
+\`items\` and \`DSkeleton.Text\`'s \`lines\` are floored and capped at 100; non-finite or negative
+values render nothing.
+
 ## Accessibility
 
 \`DSkeleton\` renders a visually hidden \`role="status"\` region (implicit \`aria-live="polite"\`)

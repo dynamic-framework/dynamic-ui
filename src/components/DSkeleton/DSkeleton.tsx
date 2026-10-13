@@ -41,6 +41,7 @@ type Props = BaseProps & {
   /**
    * Number of times the item is repeated. Setting it turns the skeleton into an
    * iterator: every repetition is wrapped in its own `.d-skeleton-slot`.
+   * Capped at 100.
    */
   items?: number;
   /** Class applied to the wrapper of every item. */
