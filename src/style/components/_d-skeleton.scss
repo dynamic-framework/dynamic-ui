@@ -73,6 +73,14 @@
   flex-shrink: 0;
 }
 
+// `.placeholder` sets a `1em` minimum height, which overrides blocks and
+// circles sized below the font size. Lines keep it: their height comes from the
+// `placeholder-{size}` utilities.
+.d-skeleton-block,
+.d-skeleton-circle {
+  min-height: 0;
+}
+
 .d-skeleton-text {
   display: flex;
   flex-direction: column;
