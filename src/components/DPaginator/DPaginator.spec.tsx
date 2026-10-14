@@ -392,3 +392,92 @@ describe('<DPaginator /> arrow content', () => {
     expect(prev().querySelector('.d-icon')).not.toBeInTheDocument();
   });
 });
+
+/**
+ * `pageHref` has to reach the arrows too.
+ *
+ * They used to be buttons whatever `pageHref` said, so with no `onPageChange`
+ * an enabled arrow was a dead control — `goTo` only calls the callback — while
+ * the numbered links beside it navigated fine. They were also the only part of
+ * the strip that did not work with JavaScript disabled.
+ */
+describe('<DPaginator /> arrows with pageHref', () => {
+  const href = (p: number) => `/items?page=${p}`;
+  const prev = () => document.querySelector('[data-direction="prev"]') as HTMLElement;
+  const next = () => document.querySelector('[data-direction="next"]') as HTMLElement;
+
+  it('renders an enabled arrow as a link to its target', () => {
+    render(<DPaginator total={10} current={4} pageHref={href} />);
+
+    expect(next().tagName).toBe('A');
+    expect(next()).toHaveAttribute('href', '/items?page=5');
+    expect(prev().tagName).toBe('A');
+    expect(prev()).toHaveAttribute('href', '/items?page=3');
+  });
+
+  /**
+   * An anchor cannot be disabled — `aria-disabled` leaves it focusable and
+   * still followable — so the ends stay real buttons.
+   */
+  it('keeps a spent arrow as a disabled button', () => {
+    render(<DPaginator total={10} current={1} pageHref={href} />);
+
+    expect(prev().tagName).toBe('BUTTON');
+    expect(prev()).toBeDisabled();
+    expect(prev()).not.toHaveAttribute('href');
+    expect(next().tagName).toBe('A');
+  });
+
+  it('stays a button when there is no pageHref', () => {
+    render(<DPaginator total={10} current={4} onPageChange={() => {}} />);
+
+    expect(next().tagName).toBe('BUTTON');
+  });
+
+  /** With a callback, a plain click is ours: no navigation, just the handler. */
+  it('intercepts a plain click when onPageChange is given', async () => {
+    const user = userEvent.setup();
+    const onPageChange = jest.fn();
+    render(<DPaginator total={10} current={4} pageHref={href} onPageChange={onPageChange} />);
+
+    await user.click(next());
+    expect(onPageChange).toHaveBeenCalledWith(5);
+  });
+
+  /** A modified click belongs to the browser: open in a tab, a window, download. */
+  it('leaves a modified click alone', async () => {
+    const user = userEvent.setup();
+    const onPageChange = jest.fn();
+    render(<DPaginator total={10} current={4} pageHref={href} onPageChange={onPageChange} />);
+
+    await user.keyboard('[ControlLeft>]');
+    await user.click(next());
+    await user.keyboard('[/ControlLeft]');
+
+    expect(onPageChange).not.toHaveBeenCalled();
+  });
+});
+
+/**
+ * `style` goes on the list, not on the `<nav>`.
+ *
+ * The documented custom properties are declared on `.pagination`, and a
+ * declaration on the element beats a value inherited from an ancestor — so an
+ * override set on the nav was shadowed by the stylesheet one level down.
+ */
+describe('<DPaginator /> style', () => {
+  it('puts inline style on the element that declares the variables', () => {
+    const { container } = render(
+      <DPaginator
+        total={10}
+        current={4}
+        style={{ '--bs-pagination-arrow-glyph-size': '2rem' } as React.CSSProperties}
+      />,
+    );
+
+    expect(container.querySelector('nav')).not.toHaveAttribute('style');
+    expect(container.querySelector('.pagination')).toHaveStyle({
+      '--bs-pagination-arrow-glyph-size': '2rem',
+    });
+  });
+});

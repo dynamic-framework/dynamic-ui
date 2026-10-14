@@ -166,6 +166,25 @@ export default function DPaginator(
     onPageChange?.(target);
   }, [onPageChange, page, total]);
 
+  /**
+   * What a click on a page LINK does.
+   *
+   * Shared by the numbers and the arrows so the two cannot drift: both have to
+   * leave a modified click alone — open in a tab, a window, download is the
+   * browser's job — and both have to let the navigation happen when there is no
+   * `onPageChange` to intercept it.
+   */
+  const onLinkClick = useCallback(
+    (target: number) => (event: React.MouseEvent) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (onPageChange) {
+        event.preventDefault();
+        goTo(target);
+      }
+    },
+    [goTo, onPageChange],
+  );
+
   // A whole paginator for one page is a control with nothing to control.
   if (total < 2) return null;
 
@@ -192,20 +211,42 @@ export default function DPaginator(
       disabled: boolean;
       target: number;
     },
-  ) => (
-    <li className={classNames('page-item', 'page-item-arrow', { disabled })} data-nav>
-      <button
-        type="button"
-        className="page-link"
-        data-direction={direction}
-        {...content === undefined && { 'aria-label': label }}
-        disabled={disabled}
-        onClick={() => goTo(target)}
-      >
-        {content === undefined ? <DIcon icon={icon} {...iconProps} /> : content}
-      </button>
-    </li>
-  );
+  ) => {
+    const inner = content === undefined ? <DIcon icon={icon} {...iconProps} /> : content;
+    const shared = {
+      className: 'page-link',
+      'data-direction': direction,
+      ...content === undefined && { 'aria-label': label },
+    };
+
+    return (
+      <li className={classNames('page-item', 'page-item-arrow', { disabled })} data-nav>
+        {pageHref && !disabled ? (
+          /*
+           * An anchor, like the numbers beside it.
+           *
+           * The arrows used to be buttons whatever `pageHref` said, and with no
+           * `onPageChange` to intercept the click that made them dead controls:
+           * `goTo` only calls the callback, so an enabled arrow did nothing at
+           * all while the numbered links navigated perfectly well. They were
+           * also the only part of the strip that did not work with JavaScript
+           * disabled.
+           *
+           * Only while it has somewhere to go. An anchor cannot be disabled —
+           * `aria-disabled` leaves it focusable and still followable — so at the
+           * ends it stays a real `<button disabled>`.
+           */
+          <a {...shared} href={pageHref(target)} onClick={onLinkClick(target)}>
+            {inner}
+          </a>
+        ) : (
+          <button {...shared} type="button" disabled={disabled} onClick={() => goTo(target)}>
+            {inner}
+          </button>
+        )}
+      </li>
+    );
+  };
 
   const renderPage = (value: number) => {
     const isCurrent = value === page;
@@ -221,15 +262,7 @@ export default function DPaginator(
         <a
           {...shared}
           href={pageHref(value)}
-          onClick={(event) => {
-            // Let a modified click do what the browser would: open in a tab, a
-            // window, or download. Only a plain click is ours to handle.
-            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            if (onPageChange) {
-              event.preventDefault();
-              goTo(value);
-            }
-          }}
+          onClick={onLinkClick(value)}
         >
           {content}
         </a>
@@ -246,8 +279,20 @@ export default function DPaginator(
   return (
     // `nav` so the control is one of the landmarks a screen reader can jump
     // between, and named because a page often has two of them.
-    <nav aria-label={i18n.label} style={style} {...dataAttributes}>
+    <nav aria-label={i18n.label} {...dataAttributes}>
       <ul
+        /*
+         * `style` on the LIST, not on the `<nav>`.
+         *
+         * The documented custom properties are declared on `.pagination`, which
+         * is this element — and a declaration on the element always beats a
+         * value inherited from an ancestor. So an inline
+         * `--bs-pagination-arrow-glyph-size` set on the nav was shadowed by the
+         * stylesheet's own value one level down and did nothing. It also puts
+         * `style` where `className` already is, rather than splitting the two
+         * across elements.
+         */
+        style={style}
         /*
          * `pagination-sm` / `pagination-lg` rather than a `data-size`: those are
          * the hooks `base/_pagination.scss` already reads, and Bootstrap's own
