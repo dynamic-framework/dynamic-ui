@@ -1,5 +1,7 @@
 .pagination {
   --#{$prefix}pagination-page-item-size: #{$pagination-page-item-size};
+  --#{$prefix}pagination-ellipsis-color: #{$pagination-ellipsis-color};
+  --#{$prefix}pagination-arrow-glyph-size: #{$pagination-arrow-glyph-size};
   --#{$prefix}pagination-border-radius: #{$pagination-page-border-radius};
   --#{$prefix}pagination-page-control-color: #{$pagination-page-control-color};
   --#{$prefix}pagination-page-control-disabled-color: #{$pagination-page-control-disabled-color};
@@ -29,8 +31,41 @@
     height: 100%;
     padding-inline: .5rem;
     border-radius: var(--#{$prefix}pagination-border-radius);
+
+    // A visible focus ring, which the control did not have.
+    //
+    // `$pagination-focus-box-shadow` and `$pagination-focus-outline` are both
+    // `0` here, so Bootstrap drew nothing and the browser's own outline was
+    // suppressed — a keyboard user could tab through the pages with no idea
+    // where they were. That is a WCAG 2.4.7 failure, and it applied to the
+    // `react-responsive-pagination` markup too; it simply went unnoticed while
+    // the markup belonged to somebody else.
+    //
+    // Inset, because the ring on the first or last button would otherwise be
+    // clipped by whatever the paginator sits in.
+    &:focus-visible {
+      outline: $focus-ring-width solid var(--#{$prefix}focus-ring-color);
+      outline-offset: -1px;
+    }
   }
 
+  // The gap between runs of pages.
+  //
+  // Decoration, not a control: the component marks it `aria-hidden` and gives
+  // it no handler, so it must not look pressable either.
+  .page-item[data-ellipsis] .page-link {
+    color: var(--#{$prefix}pagination-ellipsis-color);
+    cursor: default;
+    background: none;
+  }
+
+  // The glyph is a `DIcon`, so its size comes from the icon's own custom
+  // property rather than from a rule about `svg` — `DIcon` is a styled `<i>`
+  // when the icon set is a font. An author passing `iconArrowLeft={{ size }}`
+  // sets the same property inline and wins, which is what should happen.
+  .page-item-arrow .d-icon {
+    --#{$prefix}icon-component-size: var(--#{$prefix}pagination-arrow-glyph-size);
+  }
 }
 
 .pagination-lg {

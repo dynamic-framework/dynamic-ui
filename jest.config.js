@@ -15,7 +15,6 @@ module.exports = {
     '<rootDir>/tests/setup.ts',
   ],
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(react-responsive-pagination)/)',
     '<rootDir>/dist/',
     '<rootDir>/dist-transpiled/',
   ],
