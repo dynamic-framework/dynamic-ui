@@ -36,3 +36,13 @@ $pagination-disabled-bg: var(--#{$prefix}transparent) !default;
 // $pagination-border-radius-sm: $pagination-page-item-size-sm !default;
 // $pagination-border-radius-lg: $pagination-page-item-size-lg !default;
 // scss-docs-end pagination-variables
+
+// DPaginator
+//
+// The component renders its own markup now — `react-responsive-pagination` is
+// gone — but it emits Bootstrap's class names, so everything above still
+// applies. These are the few things the wrapper never had.
+// scss-docs-start d-paginator-variables
+$pagination-ellipsis-color: var(--#{$prefix}gray-400) !default;
+$pagination-arrow-glyph-size: $spacer-5 !default;
+// scss-docs-end d-paginator-variables
