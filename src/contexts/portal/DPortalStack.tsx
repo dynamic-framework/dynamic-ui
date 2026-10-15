@@ -1,17 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AnimatePresence, motion } from 'framer-motion';
 
-import type { FC } from 'react';
+import type { PortalStackProps } from './types';
 
-type Props = {
-  stack: Array<{
-    name: string;
-    Component: FC<{ name: string; payload: any }>;
-    payload: unknown;
-  }>;
-};
-
-export default function DPortalStack({ stack }: Props) {
+export default function DPortalStack({ stack }: PortalStackProps) {
   return (
     <AnimatePresence>
       {stack.flatMap((
