@@ -78,6 +78,7 @@
     "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint '**/*.css' '**/*.scss' --rd",
     "postversion": "npm run build:scss",
+    "prepack": "npm run build:known-tokens",
     "publish:cdn": "npm run publish:cdn-version && npm run publish:cdn-latest",
     "publish:cdn-version": "node scripts/publish-cdn.js",
     "publish:cdn-latest": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/latest/ui-react --delete --exclude 'api.json' --exclude 'manifests/*' --acl public-read",

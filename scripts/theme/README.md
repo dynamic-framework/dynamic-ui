@@ -194,7 +194,9 @@ navegador: deja la propiedad en su valor inicial, y el fallo es invisible.
 `known-tokens.json` se regenera con
 `node scripts/theme/build-known-tokens.mjs [ruta/al/dynamic-ui.css]` — `dist/`
 está gitignoreado, así que el JSON se versiona y el script se corre a mano tras
-un build o contra el CSS de un tarball publicado.
+un build o contra el CSS de un tarball publicado. `npm pack` y `npm publish` lo
+regeneran solos vía `prepack`, así que el paquete siempre lleva el inventario
+del CSS que publica.
 
 ### Qué no va en un theme
 
