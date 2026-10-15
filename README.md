@@ -22,15 +22,15 @@ Quickly create feature-rich financial applications through a robust micro fronte
 
 | Browser | Minimum |
 | --- | --- |
-| Chrome / Edge | 105 |
+| Chrome / Edge | 111 |
 | Firefox | 121 (and the current ESR) |
-| Safari / iOS Safari | 15.4 |
+| Safari / iOS Safari | 16.2 |
 
-The floor comes from features the library already relies on: `:has()` in form validation and input group styles (Chrome 105, Firefox 121), and `Array.prototype.at()` and `:focus-visible` (Safari 15.4).
+The floor comes from features the library already relies on: `color-mix()` in table variant colors and the file input button hover (Chrome 111, Safari 16.2), and `:has()` in form validation and input group styles (Firefox 121).
 
 - The library ships modern JavaScript as is: `tsc` targets ES2017 syntax, but there is no API transpilation or polyfills (`core-js`). Dependencies such as React or framer-motion have their own minimums.
 - `npm run eslint` checks `src` with `eslint-plugin-compat` against `.browserslistrc`. It detects global APIs (`queueMicrotask`, `Object.fromEntries`, …) but not instance methods (`.at()`, `.flatMap()`, `MediaQueryList.addEventListener`), so review those by hand.
-- `npm run stylelint:compat` checks the compiled `dist/css/dynamic-ui.min.css` (run `npm run build` first). It ignores features no version of a target browser supports, such as `cursor` on iOS or `scrollbar-width` styling, because they only degrade the experience.
+- `npm run stylelint:compat` checks the compiled `dist/css/dynamic-ui.min.css` (run `npm run build` first). It ignores features no version of a target browser supports, such as `cursor` on iOS or `scrollbar-width` styling, because they only degrade the experience. caniuse-lite has no data for `color-mix()`, so this check does not catch it either.
 - `autoprefixer` reads the same file when building the CSS.
 
 Supporting older browsers requires refactoring that code and adding polyfills; open an issue first.

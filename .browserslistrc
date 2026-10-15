@@ -2,12 +2,13 @@
 #
 # Minimum supported browsers for the JavaScript and the CSS of the library,
 # measured with `npm run eslint` (eslint-plugin-compat) and
-# `npm run stylelint:compat`. See "Browser Support" in README.md.
+# `npm run stylelint:compat`. `color-mix()` (Chrome 111, Safari 16.2) is not in
+# caniuse-lite, so neither linter catches it. See "Browser Support" in README.md.
 
-Chrome >= 105
-Edge >= 105
+Chrome >= 111
+Edge >= 111
 Firefox >= 121
 Firefox ESR
-Safari >= 15.4
-iOS >= 15.4
+Safari >= 16.2
+iOS >= 16.2
 not dead
