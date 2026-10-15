@@ -20,12 +20,21 @@ let warnedMissingBreakpoints = false;
  * When used with `useResponsiveProp`, the value for
  * the highest matching breakpoint will be selected.
  *
+ * Defaults to `string`, which is what most props here accept. Pass a narrower
+ * type when the prop has a closed set of values, so a typo is a type error
+ * rather than a class name that silently does nothing:
+ *
+ * ```ts
+ * size?: Size | ResponsiveProp<Size>;   // Size = 'sm' | 'md' | 'lg'
+ * ```
+ *
  * Usage example:
  * ```ts
  * const prop: ResponsiveProp = { xs: "small", md: "medium", xl: "large" };
  * ```
  */
-export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
+export type ResponsiveProp<T = string> =
+  Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', T>>;
 
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
@@ -56,7 +65,7 @@ export function useResponsiveProp(useListener: boolean = false) {
   // `xs` is `0` and can't tell a missing variable apart, so `sm` is checked.
   const hasBreakpoints = !!useBreakpointValue('sm');
 
-  const responsivePropValue = useCallback((prop: ResponsiveProp) => {
+  const responsivePropValue = useCallback(<T = string>(prop: ResponsiveProp<T>) => {
     if (process.env.NODE_ENV !== 'production' && !hasBreakpoints && !warnedMissingBreakpoints) {
       warnedMissingBreakpoints = true;
       // eslint-disable-next-line no-console

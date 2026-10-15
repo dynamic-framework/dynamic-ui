@@ -62,6 +62,11 @@ export {
 export { default as DPaginator } from './DPaginator';
 export { default as DPopover } from './DPopover';
 export { default as DProgress } from './DProgress';
+export type {
+  DChoiceGroupProps,
+  DChoiceGroupOption,
+  DChoiceGroupSize,
+} from './DChoiceGroup';
 export {
   default as DSkeleton,
   DSkeletonText,
