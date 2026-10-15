@@ -64,6 +64,7 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 // scss-docs-end input-btn-variables
 
 @import "buttons";
+@import "choice"; // after buttons: every choice token derives from one
 @import "forms";
 @import "z-index";
 @import "shadow";
@@ -96,4 +97,5 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 @import "datepicker";
 @import "input-phone";
 @import "input-currency";
+@import "skeleton";
 // end custom

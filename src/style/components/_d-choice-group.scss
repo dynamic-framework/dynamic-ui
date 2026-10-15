@@ -1,0 +1,225 @@
+// Choice group.
+//
+// A set of radios or checkboxes that reads as a row of buttons. The input is
+// the control; the label next to it is what you see.
+//
+// ## Why the markup carries no button class
+//
+// Looking like a button and being one are different things. A choice is a
+// label bound to an input: it has no `button` role, it is not in the tab order
+// itself, and its state lives in a form value rather than in a click handler.
+// Borrowing `.btn` would borrow all of that semantics with the paint.
+//
+// What it borrows instead is the *tokens*. Every value below resolves to a
+// button variable, so the two controls stay in the same family without the
+// choice pretending to be one:
+//
+//   resting   -> the SOFT variant of the group's colour
+//   selected  -> the SOLID variant of the same colour
+//
+// That pairing is the whole look: a quiet chip that fills in once you pick it.
+//
+// ## Why the input is hidden the way it is
+//
+// `display: none` and `visibility: hidden` would take the input out of the
+// accessibility tree AND out of the tab order, which is how a control like
+// this usually ends up unreachable by keyboard. The clip technique below
+// leaves it focusable and announced; it is simply not painted, because the
+// label is painted for it.
+
+.d-choice-group {
+  --#{$prefix}choice-group-gap: #{$choice-group-gap};
+  --#{$prefix}choice-group-label-gap: #{$choice-group-label-gap};
+  --#{$prefix}choice-group-label-font-weight: #{$choice-group-label-font-weight};
+  --#{$prefix}choice-group-hint-font-size: #{$choice-group-hint-font-size};
+
+  --#{$prefix}choice-padding-y: #{$choice-padding-y};
+  --#{$prefix}choice-padding-x: #{$choice-padding-x};
+  --#{$prefix}choice-font-weight: #{$choice-font-weight};
+  --#{$prefix}choice-line-height: #{$choice-line-height};
+  --#{$prefix}choice-border-width: #{$choice-border-width};
+  --#{$prefix}choice-border-radius: #{$choice-border-radius};
+  --#{$prefix}choice-disabled-opacity: #{$choice-disabled-opacity};
+  --#{$prefix}choice-focus-width: #{$choice-focus-width};
+
+  // A fieldset is `display: block` with a border, a margin and an inline-size
+  // floor of `min-content` that no other element has. All four have to go
+  // before it can be laid out like anything else.
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+// Carried by the `<legend>`, which is what names the group for a screen reader.
+.d-choice-group-label {
+  display: block;
+  float: none; // a legend floats in some engines, which breaks the flow below
+  inline-size: auto;
+  padding: 0;
+  margin-block-end: var(--#{$prefix}choice-group-label-gap);
+  font-size: inherit;
+  font-weight: var(--#{$prefix}choice-group-label-font-weight);
+  line-height: inherit;
+}
+
+// The layout container, and the only part a consumer is expected to restyle:
+// a wrapping row by default, a grid or a single scrolling line by passing a
+// class. The group itself stays a plain block so the legend keeps behaving.
+//
+// `:where()` holds this at zero specificity on purpose. `optionsClassName` is
+// the documented way to change the layout, and a default declared at the same
+// specificity as the consumer's class would beat it on source order alone —
+// this stylesheet is always loaded after the utilities. At zero specificity it
+// is a real default: `grid`, `d-flex` or anything else simply replaces it.
+:where(.d-choice-group-options) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--#{$prefix}choice-group-gap);
+}
+
+.d-choice-group-hint {
+  display: block;
+  margin-block-start: var(--#{$prefix}choice-group-label-gap);
+  font-size: var(--#{$prefix}choice-group-hint-font-size);
+  color: var(--#{$prefix}secondary-color);
+}
+
+// Hidden from sight, not from the keyboard or the accessibility tree.
+.d-choice-input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.d-choice {
+  display: inline-flex;
+  gap: var(--#{$prefix}choice-gap, #{$spacer-2});
+  align-items: center;
+  justify-content: center;
+  padding: var(--#{$prefix}choice-padding-y) var(--#{$prefix}choice-padding-x);
+  font-size: var(--#{$prefix}choice-font-size);
+  font-weight: var(--#{$prefix}choice-font-weight);
+  line-height: var(--#{$prefix}choice-line-height);
+  color: var(--#{$prefix}choice-color);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--#{$prefix}choice-bg);
+  border: var(--#{$prefix}choice-border-width) solid var(--#{$prefix}choice-border-color);
+  border-radius: var(--#{$prefix}choice-border-radius);
+  @include transition($choice-transition);
+
+  // The glyph follows the choice's own font size, the same way it follows a
+  // button's, unless something sets `--#{$prefix}icon-component-size`.
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, var(--#{$prefix}choice-font-size, 1em));
+  }
+}
+
+// Hover only applies to a choice that is not already selected: a selected one
+// has its own hover, and the resting hover would wash it out.
+.d-choice-input:not(:checked):not(:disabled) + .d-choice:hover {
+  color: var(--#{$prefix}choice-hover-color);
+  background-color: var(--#{$prefix}choice-hover-bg);
+  border-color: var(--#{$prefix}choice-hover-border-color);
+}
+
+.d-choice-input:checked + .d-choice {
+  color: var(--#{$prefix}choice-selected-color);
+  background-color: var(--#{$prefix}choice-selected-bg);
+  border-color: var(--#{$prefix}choice-selected-border-color);
+}
+
+.d-choice-input:checked:not(:disabled) + .d-choice:hover {
+  color: var(--#{$prefix}choice-selected-hover-color);
+  background-color: var(--#{$prefix}choice-selected-hover-bg);
+  border-color: var(--#{$prefix}choice-selected-hover-border-color);
+}
+
+// Focus is on the input, so the ring is drawn on the label standing in for it.
+// Same formula as a button's `--#{$prefix}btn-focus-box-shadow`, so the two
+// rings are the same ring.
+.d-choice-input:focus-visible + .d-choice {
+  outline: 0;
+  box-shadow: 0 0 0 var(--#{$prefix}choice-focus-width) rgba(var(--#{$prefix}choice-focus-shadow-rgb), .5);
+}
+
+.d-choice-input:disabled + .d-choice {
+  cursor: default;
+  opacity: var(--#{$prefix}choice-disabled-opacity);
+}
+
+// --- sizes ------------------------------------------------------------------
+//
+// `md` is the default and has no class. The two modifiers below only move the
+// variables; everything that reads them is declared once, above.
+//
+// The names are safe next to the colour modifiers because no theme colour is
+// called `sm` or `lg`.
+
+.d-choice-group-sm {
+  --#{$prefix}choice-padding-y: #{$choice-padding-y-sm};
+  --#{$prefix}choice-padding-x: #{$choice-padding-x-sm};
+  --#{$prefix}choice-font-size: #{$choice-font-size-sm};
+  --#{$prefix}choice-border-radius: #{$choice-border-radius-sm};
+}
+
+.d-choice-group-lg {
+  --#{$prefix}choice-padding-y: #{$choice-padding-y-lg};
+  --#{$prefix}choice-padding-x: #{$choice-padding-x-lg};
+  --#{$prefix}choice-font-size: #{$choice-font-size-lg};
+  --#{$prefix}choice-border-radius: #{$choice-border-radius-lg};
+}
+
+// --- colours ----------------------------------------------------------------
+//
+// One modifier per theme colour, mapping this component's variables onto the
+// `--#{$prefix}btn-{color}-*` layer that already exists for every colour.
+//
+// Soft answers for the resting state and solid for the selected one. Nothing
+// here invents a value; if a theme moves its buttons, the choices move with
+// them.
+
+@each $color, $value in $theme-colors {
+  @if not map-has-key($theme-colors-extra, $color) {
+    .d-choice-group-#{$color} {
+      --#{$prefix}choice-color: var(--#{$prefix}btn-soft-#{$color}-color);
+      --#{$prefix}choice-bg: var(--#{$prefix}btn-soft-#{$color}-bg);
+      --#{$prefix}choice-border-color: var(--#{$prefix}btn-soft-#{$color}-border-color);
+
+      --#{$prefix}choice-hover-color: var(--#{$prefix}btn-soft-#{$color}-hover-color);
+      --#{$prefix}choice-hover-bg: var(--#{$prefix}btn-soft-#{$color}-hover-bg);
+      --#{$prefix}choice-hover-border-color: var(--#{$prefix}btn-soft-#{$color}-hover-border-color);
+
+      --#{$prefix}choice-selected-color: var(--#{$prefix}btn-#{$color}-color);
+      --#{$prefix}choice-selected-bg: var(--#{$prefix}btn-#{$color}-bg);
+      --#{$prefix}choice-selected-border-color: var(--#{$prefix}btn-#{$color}-border-color);
+
+      --#{$prefix}choice-selected-hover-color: var(--#{$prefix}btn-#{$color}-hover-color);
+      --#{$prefix}choice-selected-hover-bg: var(--#{$prefix}btn-#{$color}-hover-bg);
+      --#{$prefix}choice-selected-hover-border-color: var(--#{$prefix}btn-#{$color}-hover-border-color);
+
+      --#{$prefix}choice-focus-shadow-rgb: var(--#{$prefix}btn-#{$color}-focus-shadow-rgb);
+    }
+  }
+}
+
+// --- invalid ----------------------------------------------------------------
+//
+// Only the resting border and the hint change. Repainting the options
+// themselves would collide with the selected state, which is the one thing the
+// reader still needs to be able to see while fixing the error.
+
+.d-choice-group[data-invalid] {
+  --#{$prefix}choice-border-color: #{$form-feedback-invalid-color};
+  --#{$prefix}choice-hover-border-color: #{$form-feedback-invalid-color};
+}
+
+.d-choice-group[data-invalid] .d-choice-group-hint {
+  color: #{$form-feedback-invalid-color};
+}

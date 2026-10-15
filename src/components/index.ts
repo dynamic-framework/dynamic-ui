@@ -62,6 +62,18 @@ export {
 export { default as DPaginator } from './DPaginator';
 export { default as DPopover } from './DPopover';
 export { default as DProgress } from './DProgress';
+export type {
+  DChoiceGroupProps,
+  DChoiceGroupOption,
+  DChoiceGroupSize,
+} from './DChoiceGroup';
+export {
+  default as DSkeleton,
+  DSkeletonText,
+  DSkeletonBlock,
+  DSkeletonCircle,
+} from './DSkeleton';
+export type { SkeletonAnimation, SkeletonDirection } from './DSkeleton';
 export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';

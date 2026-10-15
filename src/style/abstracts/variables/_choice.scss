@@ -1,0 +1,47 @@
+// Choice group
+//
+// A group of selectable options that reads as a row of buttons but is a set of
+// radios or checkboxes underneath.
+//
+// Every value here hangs off the button tokens on purpose. The two controls sit
+// next to each other in real forms, so a choice that did not move when
+// `$btn-padding-y` moved would drift out of the family within one release. What
+// this file owns is the *mapping* — which button token answers for which part
+// of a choice — not the values themselves.
+//
+// The colours come from the `--#{$prefix}btn-{color}-*` layer that
+// `df-button-variant-mapper` publishes for every theme colour, with the soft
+// variant answering for the resting state and the solid one for the selected
+// state. That pairing is the whole look: a quiet chip that turns into a filled
+// button once you pick it.
+
+// scss-docs-start choice-variables
+$choice-padding-y: $btn-padding-y !default;
+$choice-padding-x: $btn-padding-x !default;
+$choice-font-weight: $btn-font-weight !default;
+$choice-line-height: $btn-line-height !default;
+$choice-border-width: $btn-border-width !default;
+$choice-border-radius: $btn-border-radius !default;
+$choice-transition: $btn-transition !default;
+// `$btn-focus-width` itself is Bootstrap's and is not defined yet at this
+// point in the import order; this is the variable it defaults to, so the ring
+// is the same width as a button's either way.
+$choice-focus-width: $input-btn-focus-width !default;
+$choice-disabled-opacity: $btn-disabled-opacity !default;
+
+$choice-padding-y-sm: $btn-padding-y-sm !default;
+$choice-padding-x-sm: $btn-padding-x-sm !default;
+$choice-font-size-sm: $btn-font-size-sm !default;
+$choice-border-radius-sm: $btn-border-radius-sm !default;
+
+$choice-padding-y-lg: $btn-padding-y-lg !default;
+$choice-padding-x-lg: $btn-padding-x-lg !default;
+$choice-font-size-lg: $btn-lg-font-size !default;
+$choice-border-radius-lg: $btn-border-radius-lg !default;
+
+// The gap between options, and between the group's label and its options.
+$choice-group-gap: $spacer-2 !default;
+$choice-group-label-gap: $spacer-2 !default;
+$choice-group-label-font-weight: $font-weight-semibold !default;
+$choice-group-hint-font-size: $small-font-size !default;
+// scss-docs-end choice-variables

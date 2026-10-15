@@ -43,7 +43,7 @@ describe('DPortalContextProvider', () => {
   it.each([
     ['without availablePortals', undefined],
     ['with an empty availablePortals', {}],
-  ])('does not load the animated stack %s', async (_, availablePortals) => {
+  ])('does not render the portal stack %s', async (_, availablePortals) => {
     render(
       <DContextProvider availablePortals={availablePortals}>
         <span>Content</span>
@@ -53,12 +53,29 @@ describe('DPortalContextProvider', () => {
     expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
   });
 
-  it('cancels an open that is still waiting for the stack module', async () => {
+  it('opens and closes synchronously in the same tick', () => {
     renderWithPortals();
     fireEvent.click(screen.getByText('Open'));
+    expect(screen.getByText('Portal content')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Close'));
-    await waitFor(() => expect(document.getElementById('d-portal')).not.toBeEmptyDOMElement());
     expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
+  });
+
+  it('keeps an open portal closable when availablePortals is emptied', () => {
+    const { rerender } = renderWithPortals();
+    fireEvent.click(screen.getByText('Open'));
+
+    rerender(
+      <DContextProvider availablePortals={{}}>
+        <Opener />
+      </DContextProvider>,
+    );
+    expect(screen.getByText('Portal content')).toBeInTheDocument();
+    expect(document.querySelector('#d-portal .backdrop')).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument();
+    expect(document.getElementById('d-portal')).toBeEmptyDOMElement();
   });
 
   it('opens a portal only once when opened from an effect', async () => {
