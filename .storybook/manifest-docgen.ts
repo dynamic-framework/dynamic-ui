@@ -80,11 +80,19 @@ function findDoc(docs: ComponentDoc[], displayName?: string) {
 
 export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
   const components = manifests.components?.components ?? {};
+  const docsByFile = new Map<string, ComponentDoc[]>();
 
   Object.values(components).forEach(({ reactDocgen }) => {
     if (!reactDocgen?.definedInFile || !existsSync(reactDocgen.definedInFile)) return;
 
-    const doc = findDoc(getParser().parse(reactDocgen.definedInFile), reactDocgen.displayName);
+    const file = reactDocgen.definedInFile;
+    let docs = docsByFile.get(file);
+    if (!docs) {
+      docs = getParser().parse(file);
+      docsByFile.set(file, docs);
+    }
+
+    const doc = findDoc(docs, reactDocgen.displayName);
     if (!doc) return;
 
     if (reactDocgen.actualName?.startsWith('Forwarded') && doc.displayName) {
