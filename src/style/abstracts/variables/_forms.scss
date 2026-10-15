@@ -155,3 +155,22 @@ $form-validation-states: (
 ) !default;
 // scss-docs-end form-validation-states
 
+
+// Range slider (DRangeSlider)
+//
+// The two-ended sibling of `.form-range`. It borrows the track and thumb
+// variables above so the two controls read as one family, and adds only what a
+// second thumb and a histogram need.
+// scss-docs-start range-slider-variables
+$range-slider-fill-bg: var(--#{$prefix}primary) !default;
+$range-slider-thumb-bg: var(--#{$prefix}white) !default;
+$range-slider-thumb-border: 1px solid var(--#{$prefix}gray-300) !default;
+$range-slider-thumb-size: $spacer-6 !default;
+$range-slider-histogram-height: $spacer-12 !default;
+$range-slider-histogram-gap: 2px !default;
+$range-slider-bar-bg: var(--#{$prefix}primary-100) !default;
+$range-slider-bar-in-range-bg: var(--#{$prefix}primary) !default;
+$range-slider-bar-radius: 2px !default;
+$range-slider-label-gap: $spacer-2 !default;
+$range-slider-disabled-opacity: .5 !default;
+// scss-docs-end range-slider-variables

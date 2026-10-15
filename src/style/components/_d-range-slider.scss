@@ -1,0 +1,224 @@
+// Range slider.
+//
+// Two native `<input type="range">` stacked on one rail. The element brings the
+// keyboard, the touch handling, the pointer capture and the `slider` role; this
+// file does the one thing the element cannot, which is let two of them share a
+// track without fighting for the pointer.
+//
+// ## How the overlap works
+//
+// Both inputs cover the whole rail, so under the default rules the one on top
+// would swallow every press — including presses meant for the other thumb, and
+// presses on the rail between them.
+//
+// So the input is `pointer-events: none` and only its THUMB takes them back.
+// A press then lands on whichever thumb is under it, and the rail below stays
+// inert. That is also why the visible track and fill are separate elements:
+// the inputs' own tracks are transparent, because they cannot be shared.
+
+.d-range-slider {
+  --#{$prefix}range-slider-track-bg: #{$form-range-track-bg};
+  --#{$prefix}range-slider-track-height: #{$form-range-track-height};
+  --#{$prefix}range-slider-track-radius: #{$form-range-track-border-radius};
+  --#{$prefix}range-slider-fill-bg: #{$range-slider-fill-bg};
+  --#{$prefix}range-slider-thumb-size: #{$range-slider-thumb-size};
+  --#{$prefix}range-slider-thumb-bg: #{$range-slider-thumb-bg};
+  --#{$prefix}range-slider-thumb-border: #{$range-slider-thumb-border};
+  --#{$prefix}range-slider-thumb-shadow: #{$form-range-thumb-box-shadow};
+  --#{$prefix}range-slider-thumb-focus-shadow: #{$form-range-thumb-focus-box-shadow};
+  --#{$prefix}range-slider-histogram-height: #{$range-slider-histogram-height};
+  --#{$prefix}range-slider-histogram-gap: #{$range-slider-histogram-gap};
+  --#{$prefix}range-slider-bar-bg: #{$range-slider-bar-bg};
+  --#{$prefix}range-slider-bar-in-range-bg: #{$range-slider-bar-in-range-bg};
+  --#{$prefix}range-slider-bar-radius: #{$range-slider-bar-radius};
+  --#{$prefix}range-slider-disabled-opacity: #{$range-slider-disabled-opacity};
+
+  // Written by the component, as the two ends of the selection.
+  --#{$prefix}range-slider-low: 0%;
+  --#{$prefix}range-slider-high: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: #{$range-slider-label-gap};
+
+  &[data-disabled] {
+    opacity: var(--#{$prefix}range-slider-disabled-opacity);
+  }
+}
+
+.d-range-slider-label {
+  font-weight: $font-weight-semibold;
+}
+
+// The rail stacks the bars on top of the track, in flow, and positions the
+// thumbs over both.
+//
+// Its padding is what keeps the thumbs inside the component. A thumb is wider
+// and taller than the track it rides on, so without it the thumbs at either
+// extreme would hang over the component's edges, and the measured height would
+// be short of what is actually painted.
+//
+// Inline: half a thumb at each end, which also makes the track exactly as wide
+// as the distance a thumb centre travels — so a percentage on the fill and the
+// native thumb position are the same geometry, not two that happen to agree.
+.d-range-slider-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: calc((var(--#{$prefix}range-slider-thumb-size) - var(--#{$prefix}range-slider-track-height)) / 2);
+  padding-inline: calc(var(--#{$prefix}range-slider-thumb-size) / 2);
+}
+
+// --- the distribution -------------------------------------------------------
+
+.d-range-slider-histogram {
+  display: flex;
+  flex: none;
+  gap: var(--#{$prefix}range-slider-histogram-gap);
+  align-items: flex-end;
+  block-size: var(--#{$prefix}range-slider-histogram-height);
+}
+
+.d-range-slider-bar {
+  // `--bs-range-slider-bar` is the count as a fraction of the tallest bucket.
+  //
+  // `max()` keeps an empty bucket visible as a hairline rather than vanishing:
+  // a gap in the data is information, and a bar of zero height reads as the
+  // chart having fewer buckets than it does.
+  flex: 1 1 0;
+  block-size: max(1px, calc(var(--#{$prefix}range-slider-bar, 0) * 100%));
+  background-color: var(--#{$prefix}range-slider-bar-bg);
+  border-radius: var(--#{$prefix}range-slider-bar-radius);
+
+  // Dimmed rather than hidden, so narrowing the range does not also destroy the
+  // shape of the distribution you are narrowing within.
+  &[data-in-range] {
+    background-color: var(--#{$prefix}range-slider-bar-in-range-bg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d-range-slider-bar {
+    transition: background-color .15s cubic-bezier(.2, 0, 0, 1);
+  }
+}
+
+// --- the track --------------------------------------------------------------
+
+// In flow, directly beneath the bars: the bars stand ON the track rather than
+// through it, so the selected span stays legible behind a dense histogram.
+// Being in flow is also what gives the rail its height, with or without bars.
+.d-range-slider-track {
+  position: relative;
+  flex: none;
+  block-size: var(--#{$prefix}range-slider-track-height);
+  background-color: var(--#{$prefix}range-slider-track-bg);
+  border-radius: var(--#{$prefix}range-slider-track-radius);
+}
+
+// The selected span, drawn between the two ends the component publishes.
+.d-range-slider-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--#{$prefix}range-slider-low);
+  inline-size: calc(var(--#{$prefix}range-slider-high) - var(--#{$prefix}range-slider-low));
+  background-color: var(--#{$prefix}range-slider-fill-bg);
+  border-radius: inherit;
+}
+
+// --- the thumbs -------------------------------------------------------------
+
+// Centred on the track by the rail's own padding: the thumb's bottom sits on
+// the rail's bottom edge, half a thumb below the track's centre line.
+.d-range-slider-thumb {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: var(--#{$prefix}range-slider-thumb-size);
+  padding: 0;
+  margin: 0;
+  appearance: none;
+
+  // The whole point: the input is transparent to the pointer and only its thumb
+  // takes presses back, so two stacked inputs do not swallow each other's.
+  pointer-events: none;
+  background: none;
+  border: 0;
+
+  &:focus {
+    outline: 0;
+  }
+
+  // Each engine names the thumb differently, and a selector list containing one
+  // name a browser does not know invalidates the WHOLE list — so these cannot
+  // be combined, however much they repeat.
+  &::-webkit-slider-thumb {
+    inline-size: var(--#{$prefix}range-slider-thumb-size);
+    block-size: var(--#{$prefix}range-slider-thumb-size);
+    appearance: none;
+    pointer-events: auto;
+    cursor: grab;
+    background-color: var(--#{$prefix}range-slider-thumb-bg);
+    border: var(--#{$prefix}range-slider-thumb-border);
+    border-radius: 50%;
+    box-shadow: var(--#{$prefix}range-slider-thumb-shadow);
+  }
+
+  &::-moz-range-thumb {
+    inline-size: var(--#{$prefix}range-slider-thumb-size);
+    block-size: var(--#{$prefix}range-slider-thumb-size);
+    appearance: none;
+    pointer-events: auto;
+    cursor: grab;
+    background-color: var(--#{$prefix}range-slider-thumb-bg);
+    border: var(--#{$prefix}range-slider-thumb-border);
+    border-radius: 50%;
+    box-shadow: var(--#{$prefix}range-slider-thumb-shadow);
+  }
+
+  // The native tracks are not shared, so they are not drawn. `.d-range-slider-track`
+  // below both of them is the one the reader sees.
+  &::-webkit-slider-runnable-track {
+    background: none;
+    border: 0;
+  }
+
+  &::-moz-range-track {
+    background: none;
+    border: 0;
+  }
+}
+
+// Focus lands on the thumb, so the ring is drawn there rather than around the
+// full-width input, which would ring the entire rail.
+
+.d-range-slider-thumb:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--#{$prefix}range-slider-thumb-focus-shadow);
+}
+
+.d-range-slider-thumb:focus-visible::-moz-range-thumb {
+  box-shadow: var(--#{$prefix}range-slider-thumb-focus-shadow);
+}
+
+.d-range-slider[data-disabled] .d-range-slider-thumb::-webkit-slider-thumb {
+  cursor: default;
+}
+
+.d-range-slider[data-disabled] .d-range-slider-thumb::-moz-range-thumb {
+  cursor: default;
+}
+
+// When the two thumbs sit on the same pixel, the high one takes the press: it
+// is later in the DOM and this makes the order explicit rather than incidental.
+//
+// That leaves the low thumb unreachable by pointer at a collapsed pair, which
+// cannot be solved here — a hit area is a painted circle, and the two circles
+// are the same circle. The component solves it instead, by routing a downward
+// drag on a collapsed pair to the low end. See `DRangeSlider.tsx`.
+.d-range-slider-thumb[data-thumb="low"] {
+  z-index: 2;
+}
+
+.d-range-slider-thumb[data-thumb="high"] {
+  z-index: 3;
+}

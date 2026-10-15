@@ -61,6 +61,12 @@ export {
 } from './DOffcanvas';
 export { default as DPaginator } from './DPaginator';
 export { default as DPopover } from './DPopover';
+export { default as DRangeSlider } from './DRangeSlider';
+export type {
+  DRangeSliderProps,
+  DRangeSliderValue,
+  DRangeSliderI18n,
+} from './DRangeSlider';
 export { default as DProgress } from './DProgress';
 export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
