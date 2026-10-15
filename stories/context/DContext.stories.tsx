@@ -48,6 +48,7 @@ Root provider used to share Dynamic UI global settings with descendants.
 - 'language' locale string consumed by UI and hooks
 - 'currency' formatting options consumed by 'useFormatCurrency' and currency components
 - 'icon' and 'iconMap' defaults consumed by 'DIcon' and components with semantic icons
+  ('iconMap' is merged onto the defaults, so name only the icons you want to change)
 - 'iconRegistry' custom icon component map consumed by 'DIcon' when icon values are strings
 - 'portalName' and 'availablePortals' consumed by 'useDPortalContext' for modal/offcanvas flows
 - 'breakpoints' values resolved from Bootstrap CSS variables and consumed by media hooks

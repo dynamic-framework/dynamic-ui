@@ -26,6 +26,8 @@ export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
     chevronDown: 'expand_more',
     chevronLeft: 'chevron_left',
     chevronRight: 'chevron_right',
+    play: 'play_arrow',
+    pause: 'pause',
     upload: 'cloud_upload',
     calendar: 'calendar_month',
     check: 'verified',

@@ -68,6 +68,10 @@ export type IconMapProps = {
   chevronLeft: string;
   /** Class suffix for the chevron-right icon. */
   chevronRight: string;
+  /** Icon name for the play control, used by the carousel's autoplay button. */
+  play: string;
+  /** Icon name for the pause control, used by the carousel's autoplay button. */
+  pause: string;
   /** Per-state alert icon map (one icon per `ComponentStateColor` value). */
   alert: AlertThemeIconMap;
   /** Class suffix for the upload/attach icon. */
@@ -119,7 +123,25 @@ type Props = {
   breakpoints: BreakpointProps;
 };
 
-type DContextProviderProps<T extends Record<string, unknown>> = Props & PortalContextProps<T>;
+/**
+ * What a consumer passes. Differs from `Props` in one place: `iconMap`.
+ *
+ * The context always carries a COMPLETE map — every component reads it without
+ * guarding — but requiring a complete one from the consumer made the map
+ * impossible to extend. Adding `play` and `pause` for the carousel's autoplay
+ * control broke every caller that had spelled the map out in full, including
+ * two inside this repository, and it would have broken them again on the next
+ * icon. A partial map merged onto the defaults cannot: a caller names the icons
+ * they want to change and inherits the rest.
+ *
+ * Nothing is lost by merging. A complete map still type-checks and still wins
+ * key for key, and a partial map was never legal before, so no caller can be
+ * relying on the holes.
+ */
+type DContextProviderProps<T extends Record<string, unknown>> =
+  Omit<Props, 'iconMap'>
+  & { iconMap: Partial<IconMapProps> }
+  & PortalContextProps<T>;
 
 type Context = Props & {
   setContext: (value: Partial<Props>) => void;
@@ -146,6 +168,8 @@ const DEFAULT_STATE = {
     chevronDown: 'ChevronDown',
     chevronLeft: 'ChevronLeft',
     chevronRight: 'ChevronRight',
+    play: 'Play',
+    pause: 'Pause',
     upload: 'Upload',
     calendar: 'Calendar',
     check: 'Check',
@@ -212,12 +236,23 @@ export function DContextProvider<T extends Record<string, unknown>>(
     currency = DEFAULT_STATE.currency,
     icon = DEFAULT_STATE.icon,
     iconRegistry = DEFAULT_STATE.iconRegistry,
-    iconMap = DEFAULT_STATE.iconMap,
+    iconMap,
     portalName = 'd-portal',
     availablePortals,
     children,
   }: PropsWithChildren<Partial<DContextProviderProps<T>>>,
 ) {
+  /*
+   * Shallow on purpose. The nested groups (`alert`, `input`) are still typed
+   * complete, so overriding one means naming all of its keys — which is the
+   * right granularity: those are sets where a half-filled map would leave one
+   * state drawn in a different icon family from its neighbours.
+   */
+  const resolvedIconMap = useMemo<IconMapProps>(
+    () => ({ ...DEFAULT_STATE.iconMap, ...iconMap }),
+    [iconMap],
+  );
+
   const [
     internalContext,
     setInternalContext,
@@ -226,7 +261,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     currency,
     icon,
     iconRegistry,
-    iconMap,
+    iconMap: resolvedIconMap,
     breakpoints: DEFAULT_STATE.breakpoints,
   });
 

@@ -1,0 +1,311 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import {
+  ExampleBuiltInControls,
+  ExampleOwnMarkup,
+  ExampleThumbnails,
+  ExampleRefHandle,
+} from './useDCarouselControllerExamples';
+
+<Meta title="Design System/Hooks/useDCarouselController" />
+
+# useDCarouselController
+
+Everything needed to build controls for a `DCarousel` that live somewhere else
+in the tree — a page header, a sidebar, a toolbar, another component entirely.
+
+## Which one do I need?
+
+Two ways to drive a carousel from outside, and they are not interchangeable.
+
+| | `ref` (`DCarouselHandle`) | `useDCarouselController` |
+|---|---|---|
+| Move the strip | yes | yes |
+| Read its state | **no** | yes |
+| Re-renders the holder on a move | **no** | yes |
+| Disable a button at the end of the strip | **no** | yes |
+| Show "3 of 7" | **no** | yes |
+| Cost | a ref | a subscription + a re-render per move |
+
+The rule: **a ref can tell the carousel what to do; only the controller can
+tell you what the carousel is doing.** A ref carries no state and never
+re-renders whoever holds it, so a control that has to reflect the carousel —
+disable itself, mark the current page, show a counter — needs the controller.
+
+## Parameters
+
+None. The hook creates its own store.
+
+## Return value
+
+### `DCarouselController`
+
+One object with three groups of members. The state fields change identity on
+every move, which is what re-renders the controls; the actions never do, so
+they are safe in a dependency array.
+
+**State — render from these**
+
+- **`activeIndex`**: index of the real slide aligned to the scrollport. Clones
+  are not counted, so it matches the slide order written in the JSX.
+- **`pageCount`** / **`activePage`**: pagination stops, and which one is current.
+- **`canPrev`** / **`canNext`**: whether there is anywhere left to go. What an
+  arrow's `disabled` reads.
+- **`playing`**: whether slides are advancing right now.
+- **`paused`**: whether the USER stopped it, as opposed to a hover or a hidden
+  tab.
+- **`canAutoplay`**: whether there is an autoplay to control at all. What a
+  play/pause control should render on — `playing` is false while the pointer is
+  over the strip, so a control shown on `playing || paused` vanishes under the
+  cursor reaching for it.
+- **`connected`**: whether a `DCarousel` is attached. Controls rendered before
+  their carousel mounts can disable themselves rather than look live and do
+  nothing.
+
+**Actions — call these**
+
+- **`next()`** / **`prev()`**: one move, honouring `perMove`.
+- **`goToPage(page)`**: a pagination stop, zero-based.
+- **`goToSlide(index)`**: one slide, by its index among the real slides. Out of
+  range clamps to the nearest end.
+- **`togglePlay()`**: pause or resume autoplay.
+
+**Plumbing — pass this to the carousel, do not call it**
+
+- **`connect`** / **`publish`**: how `DCarousel` attaches itself. Pass the whole
+  controller to the component's `controller` prop and never touch these.
+
+## Setup `App.tsx`
+
+<Source
+  code={`
+import { DContextProvider } from '@dynamic-framework/ui-react';
+
+import ExampleOfUse from './ExampleOfUse';
+
+export function App() {
+  return (
+    <DContextProvider>
+      <ExampleOfUse />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+## The controls the library ships
+
+`DCarousel.Prev`, `.Next`, `.Pagination` and `.Autoplay` each take a
+`controller` and nothing else. They share the markup, the classes and the ARIA
+of the built-in controls, so moving them out of the carousel costs no styling
+and no accessibility work — and they add the two things distance makes
+necessary: `aria-controls` pointing at the scrollport, and `disabled` while
+nothing is connected.
+
+Pair them with `arrows={false} pagination={false}` so the carousel does not also
+draw its own.
+
+<Source
+  code={`
+import {
+  DCarousel,
+  useDCarouselController,
+} from '@dynamic-framework/ui-react';
+
+export default function ExampleOfUse() {
+  const controller = useDCarouselController();
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <div className="d-flex align-items-center justify-content-between">
+        <h5 className="m-0">Account</h5>
+        <div className="d-flex align-items-center gap-2">
+          <DCarousel.Prev controller={controller} />
+          <DCarousel.Next controller={controller} />
+        </div>
+      </div>
+
+      <DCarousel
+        label="Account sections"
+        controller={controller}
+        perPage={{ xs: 1, md: 2 }}
+        gap={4}
+        arrows={false}
+        pagination={false}
+      >
+        <DCarousel.Slide>Summary</DCarousel.Slide>
+        <DCarousel.Slide>Movements</DCarousel.Slide>
+        <DCarousel.Slide>Statements</DCarousel.Slide>
+        <DCarousel.Slide>Settings</DCarousel.Slide>
+      </DCarousel>
+
+      <DCarousel.Pagination controller={controller} />
+    </div>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ExampleBuiltInControls />
+</Unstyled>
+
+## Your own markup
+
+Rolling your own is fine — every field the built-in controls read is published.
+What you take on is what they do for you: `aria-controls` on a button that is
+not next to the strip it drives, and disabling it while nothing is connected.
+Both fail quietly.
+
+<Source
+  code={`
+const controller = useDCarouselController();
+
+<DCarousel
+  label="Account sections"
+  controller={controller}
+  perPage={1}
+  arrows={false}
+  pagination={false}
+>
+  …
+</DCarousel>
+
+<DButton text="Back" disabled={!controller.canPrev} onClick={controller.prev} />
+<DButton text="Forward" disabled={!controller.canNext} onClick={controller.next} />
+<span>
+  {controller.connected
+    ? \`\${controller.activePage + 1} of \${controller.pageCount}\`
+    : 'No carousel attached'}
+</span>
+`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ExampleOwnMarkup />
+</Unstyled>
+
+## A thumbnail strip
+
+`goToSlide` indexes the REAL slides, so the number passed is the one written in
+the JSX even under `loop`, where the DOM also holds clones.
+
+<Source
+  code={`
+const controller = useDCarouselController();
+
+{SECTIONS.map((title, index) => (
+  <DButton
+    key={title}
+    text={title}
+    size="sm"
+    variant={controller.activeIndex === index ? undefined : 'outline'}
+    onClick={() => controller.goToSlide(index)}
+  />
+))}
+`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ExampleThumbnails />
+</Unstyled>
+
+## The `ref` handle, when state is not needed
+
+`DCarouselHandle` is the cheaper option for a one-off nudge — a "skip intro"
+button, a deep link, scrolling the strip into view. It exposes `next`, `prev`,
+`goToPage`, `goToSlide` and `element`, and nothing to render from.
+
+Pair it with `onSlideChange` when the position is all that is wanted: that is a
+callback rather than a subscription, so it costs one state update in your own
+component instead of one per controller field.
+
+<Source
+  code={`
+import { useRef } from 'react';
+import { DCarousel } from '@dynamic-framework/ui-react';
+import type { DCarouselHandle } from '@dynamic-framework/ui-react';
+
+const ref = useRef<DCarouselHandle>(null);
+
+<DCarousel ref={ref} label="Account sections" onSlideChange={setIndex}>
+  …
+</DCarousel>
+
+<DButton text="Jump to the last" onClick={() => ref.current?.goToSlide(3)} />
+`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ExampleRefHandle />
+</Unstyled>
+
+## Outside React: `createCarouselController`
+
+The hook is a thin wrapper over a plain store. `createCarouselController()`
+returns the same object without the subscription, for code that is not a
+component — a router guard, a test, an imperative controller held in a class.
+
+It is an object rather than a string id on purpose: nothing is read from a
+global registry, so two carousels cannot collide and a typo cannot leave a
+control silently wired to nothing.
+
+<Source
+  code={`
+import { createCarouselController } from '@dynamic-framework/ui-react';
+
+const hero = createCarouselController();
+
+// In a component
+<DCarousel controller={hero}>…</DCarousel>
+
+// Anywhere else
+hero.getSnapshot().canNext;
+hero.subscribe(() => console.log(hero.getSnapshot().activeIndex));
+`}
+  language="tsx"
+  dark
+/>
+
+## Labels
+
+Every control takes an `i18n` partial, merged onto the defaults. The carousel
+itself takes the same object, so one spread covers the set.
+
+<Source
+  code={`
+const labels = {
+  prev: 'Anterior',
+  next: 'Siguiente',
+  slides: 'Diapositivas',
+  goToSlide: 'Ir a la diapositiva',
+  play: 'Reproducir',
+  pause: 'Pausar',
+};
+
+<DCarousel i18n={labels} controller={controller}>…</DCarousel>
+<DCarousel.Prev controller={controller} i18n={labels} />
+`}
+  language="tsx"
+  dark
+/>
+
+## Two mistakes worth naming
+
+**Two carousels, one controller.** A controller holds one connection. Pointing
+two carousels at the same one leaves the second overwriting the first's state,
+and the controls driving whichever connected last. Call the hook once per
+carousel.
+
+**Forgetting `arrows={false} pagination={false}`.** The built-in controls keep
+working alongside an external set — sometimes that is what you want — but if it
+is not, you get two of everything.

@@ -46,15 +46,10 @@ export const LightBackgrounds: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Marketing Campaigns</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 5000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        loop
+        perPage={1}
+        autoplay
+        interval={5000}
       >
         <DCarousel.Slide>
           <div className="bg-white rounded overflow-hidden">
@@ -145,15 +140,10 @@ export const DarkBackgrounds: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Premium Offers</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 5000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        loop
+        perPage={1}
+        autoplay
+        interval={5000}
       >
         <DCarousel.Slide>
           <div className="bg-primary rounded overflow-hidden">
@@ -244,15 +234,10 @@ export const ImageLeft: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Featured Campaigns</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 4000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        loop
+        perPage={1}
+        autoplay
+        interval={4000}
       >
         <DCarousel.Slide>
           <div className="bg-white rounded overflow-hidden border">
@@ -344,15 +329,10 @@ export const ImageRight: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Special Offers</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 4500,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-        }}
+        loop
+        perPage={1}
+        autoplay
+        interval={4500}
       >
         <DCarousel.Slide>
           <div className="bg-success-50 rounded overflow-hidden">
@@ -445,16 +425,11 @@ export const CompactVersion: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Quick Promotions</h5>
       <DCarousel
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          interval: 3000,
-          pauseOnHover: true,
-          arrows: true,
-          pagination: true,
-          height: '250px',
-        }}
+        loop
+        perPage={1}
+        autoplay
+        interval={3000}
+        height={250}
       >
         <DCarousel.Slide>
           <div className="bg-primary rounded overflow-hidden h-100">
