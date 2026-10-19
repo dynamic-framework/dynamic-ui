@@ -219,8 +219,9 @@ export default function DChoiceGroup(
     const form = fieldsetRef.current?.form;
     if (!form) return undefined;
 
-    const handleReset = () => {
+    const handleReset = (event: Event) => {
       queueMicrotask(() => {
+        if (event.defaultPrevented) return;
         const state = reset.current;
 
         /*
