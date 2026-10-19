@@ -4,12 +4,19 @@ import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import DChoiceGroup from '.';
+import { DChoiceGroup as DChoiceGroupFromEntry } from '../..';
 
 const MATERIALS = [
   { value: 'synthetic', label: 'Synthetic' },
   { value: 'wool', label: 'Wool' },
   { value: 'cotton', label: 'Cotton' },
 ];
+
+/** Native validation only means something inside a form, so render one. */
+const inForm = (ui: React.ReactNode) => {
+  const { container } = render(<form>{ui}</form>);
+  return container.querySelector('form') as HTMLFormElement;
+};
 
 describe('<DChoiceGroup />', () => {
   describe('Rendering', () => {
@@ -45,6 +52,14 @@ describe('<DChoiceGroup />', () => {
 
       expect(new Set(names).size).toBe(1);
       expect(names[0]).toBeTruthy();
+    });
+
+    it('should be reachable from the public entry point', () => {
+      expect(DChoiceGroupFromEntry).toBe(DChoiceGroup);
+
+      render(<DChoiceGroupFromEntry options={MATERIALS} label="Main material" />);
+
+      expect(screen.getAllByRole('radio')).toHaveLength(3);
     });
 
     it('should bind each label to its own input', () => {
@@ -141,22 +156,27 @@ describe('<DChoiceGroup />', () => {
   });
 
   describe('Size', () => {
-    it('should carry no modifier at the default size', () => {
+    /**
+     * The regular size is the absence of a modifier, not a value you can ask
+     * for — there is no `md`, so there is no `.d-choice-group-md` either.
+     */
+    it('should carry no size modifier when none is given', () => {
       const { container } = render(<DChoiceGroup options={MATERIALS} />);
+      const classes = [...(container.querySelector('.d-choice-group')?.classList ?? [])];
 
-      expect(container.querySelector('.d-choice-group')).not.toHaveClass('d-choice-group-md');
+      expect(classes.filter((name) => /^d-choice-group-(sm|md|lg)$/.test(name))).toEqual([]);
     });
 
-    it('should apply a plain size', () => {
-      const { container } = render(<DChoiceGroup options={MATERIALS} size="sm" />);
+    it.each(['sm', 'lg'] as const)('should apply the %s modifier', (size) => {
+      const { container } = render(<DChoiceGroup options={MATERIALS} size={size} />);
 
-      expect(container.querySelector('.d-choice-group')).toHaveClass('d-choice-group-sm');
+      expect(container.querySelector('.d-choice-group')).toHaveClass(`d-choice-group-${size}`);
     });
 
     /**
      * jsdom reports no breakpoint variables, so `useResponsiveProp` resolves to
-     * `undefined` and the group falls back to the default size rather than
-     * applying a broken modifier.
+     * `undefined` and the group falls back to the regular size rather than
+     * applying a modifier built out of it.
      */
     it('should survive a responsive size with no breakpoints available', () => {
       const { container } = render(<DChoiceGroup options={MATERIALS} size={{ xs: 'sm', lg: 'lg' }} />);
@@ -302,6 +322,67 @@ describe('<DChoiceGroup />', () => {
       render(<DChoiceGroup multiple options={MATERIALS} required />);
 
       screen.getAllByRole('checkbox').forEach((input) => expect(input).not.toBeRequired());
+    });
+
+    /**
+     * ...but it must still be required. Without the group-level constraint an
+     * empty multi-select passes native validation and the form submits with
+     * nothing chosen, which is the combination silently doing nothing.
+     */
+    it('should block an empty required multi-select', () => {
+      const form = inForm(<DChoiceGroup multiple options={MATERIALS} required />);
+
+      expect(form.checkValidity()).toBe(false);
+    });
+
+    it('should release the constraint once something is chosen', () => {
+      const form = inForm(
+        <DChoiceGroup multiple options={MATERIALS} required defaultValue={['wool']} />,
+      );
+
+      expect(form.checkValidity()).toBe(true);
+    });
+
+    it('should carry the constraint on an option that can hold it', () => {
+      const { container } = render(
+        <DChoiceGroup
+          multiple
+          required
+          options={[
+            { value: 'synthetic', label: 'Synthetic', disabled: true },
+            { value: 'wool', label: 'Wool' },
+            { value: 'cotton', label: 'Cotton' },
+          ]}
+        />,
+      );
+
+      // A disabled control is barred from constraint validation, so hanging
+      // the group's only constraint on the first option would drop it.
+      const inputs = [...container.querySelectorAll('input')];
+      expect(inputs[0].validity.customError).toBe(false);
+      expect(inputs[1].validity.customError).toBe(true);
+    });
+
+    it('should use the message it is given', () => {
+      const { container } = render(
+        <DChoiceGroup multiple options={MATERIALS} required requiredMessage="Pick a material" />,
+      );
+
+      expect((container.querySelector('input') as HTMLInputElement).validationMessage)
+        .toBe('Pick a material');
+    });
+
+    it('should not constrain a multi-select that is not required', () => {
+      const form = inForm(<DChoiceGroup multiple options={MATERIALS} />);
+
+      expect(form.checkValidity()).toBe(true);
+    });
+
+    /** A disabled group cannot be filled in, so it must not block the form. */
+    it('should not block the form when the group is disabled', () => {
+      const form = inForm(<DChoiceGroup multiple options={MATERIALS} required disabled />);
+
+      expect(form.checkValidity()).toBe(true);
     });
 
     it('should describe the group with its hint', () => {

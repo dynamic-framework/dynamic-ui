@@ -1,8 +1,10 @@
 import {
   Fragment,
   useCallback,
+  useEffect,
   useId,
   useMemo,
+  useRef,
 } from 'react';
 import classNames from 'classnames';
 
@@ -14,7 +16,12 @@ import { useResponsiveProp } from '../../hooks/useResponsiveProp';
 import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
 import type { BaseProps, ComponentColor } from '../interface';
 
-export type DChoiceGroupSize = 'sm' | 'md' | 'lg';
+/**
+ * There is no `md`. The regular size is what the component renders with no
+ * size at all, so asking for it would be asking for the default by name — two
+ * ways to say one thing, and a modifier class that has nothing to modify.
+ */
+export type DChoiceGroupSize = 'sm' | 'lg';
 
 export type DChoiceGroupOption = {
   /** Submitted as the control's value, and what identifies the option. */
@@ -40,10 +47,11 @@ type CommonProps = BaseProps & {
   /** Help text under the options. Announced with the group. */
   hint?: string;
   /**
-   * Resolved against the viewport when given per breakpoint.
+   * Omit it for the regular size; there is no `md` to ask for.
    *
-   * `{ xs: 'sm', lg: 'md' }` — compact where space is short, regular once
-   * there is room.
+   * Resolved against the viewport when given per breakpoint:
+   * `{ xs: 'sm', lg: 'lg' }` — compact where space is short, roomy once there
+   * is room, and regular in between because no breakpoint claims that range.
    */
   size?: DChoiceGroupSize | ResponsiveProp<DChoiceGroupSize>;
   /**
@@ -56,7 +64,23 @@ type CommonProps = BaseProps & {
   /** Disables the whole group. Individual options have their own `disabled`. */
   disabled?: boolean;
   invalid?: boolean;
+  /**
+   * At least one option has to be chosen for the form to submit.
+   *
+   * Radios get this natively. Checkboxes cannot: `required` on a checkbox
+   * means *that* box must be ticked, so putting it on each one would demand
+   * all of them. A multi-select group enforces it through the constraint
+   * validation API instead, on the first option that can take it — the form
+   * blocks and the browser reports `requiredMessage`.
+   */
   required?: boolean;
+  /**
+   * What the browser says when a required multi-select group is left empty.
+   *
+   * Only reaches the screen in that case; a required radio group uses the
+   * browser's own wording for a missing selection.
+   */
+  requiredMessage?: string;
   /** Put the layout here: a grid, a single scrolling row, a wrapping row. */
   optionsClassName?: string;
   /** Applied to every option. */
@@ -111,11 +135,12 @@ export default function DChoiceGroup(
     label,
     ariaLabel,
     hint,
-    size = 'md',
+    size,
     color = 'primary',
     disabled = false,
     invalid = false,
     required = false,
+    requiredMessage = 'Select at least one option.',
     multiple,
     value,
     defaultValue,
@@ -176,21 +201,52 @@ export default function DChoiceGroup(
   }, [current, emit, multiple]);
 
   /*
+   * "At least one" for a group of checkboxes.
+   *
+   * There is no HTML attribute for it: `required` on a checkbox is about that
+   * checkbox. So the constraint is carried by one of them through
+   * `setCustomValidity`, which is enough to make the whole form invalid, block
+   * submission and get the browser to report it — without claiming that any
+   * single box is the required one.
+   *
+   * It goes on the first option that can actually hold it. A disabled control
+   * is barred from constraint validation, so hanging the group's only
+   * constraint on one would silently drop it.
+   */
+  const constraintRef = useRef<HTMLInputElement>(null);
+  const constraintIndex = useMemo(() => (
+    options.findIndex((option) => !option.disabled)
+  ), [options]);
+
+  useEffect(() => {
+    const input = constraintRef.current;
+    if (!input) return;
+
+    if (!multiple || !required || disabled) {
+      input.setCustomValidity('');
+      return;
+    }
+    input.setCustomValidity(current.length ? '' : requiredMessage);
+  }, [current.length, disabled, multiple, required, requiredMessage]);
+
+  /*
    * `true` keeps the listener on: a responsive size has to follow the viewport
    * while it changes, not only on the render that happened to mount it.
    */
   const { responsivePropValue } = useResponsiveProp(true);
-  const resolvedSize = useMemo(() => (
-    typeof size === 'string' ? size : responsivePropValue(size)
-  ), [responsivePropValue, size]);
+  const resolvedSize = useMemo(() => {
+    if (!size) return undefined;
+    return typeof size === 'string' ? size : responsivePropValue(size);
+  }, [responsivePropValue, size]);
 
   return (
     <fieldset
       className={classNames(
         'd-choice-group',
         `d-choice-group-${color}`,
-        // `md` is the default, and has no modifier to apply.
-        { [`d-choice-group-${resolvedSize}`]: !!resolvedSize && resolvedSize !== 'md' },
+        // No size, or a responsive one no breakpoint claims, means the regular
+        // size — which is the base class on its own, with nothing added.
+        { [`d-choice-group-${resolvedSize}`]: !!resolvedSize },
         className,
       )}
       style={style}
@@ -203,7 +259,7 @@ export default function DChoiceGroup(
       {label && <legend className="d-choice-group-label">{label}</legend>}
 
       <div className={classNames('d-choice-group-options', optionsClassName)}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           const id = `${reactId}-${option.value}`;
           return (
             /*
@@ -214,6 +270,7 @@ export default function DChoiceGroup(
              */
             <Fragment key={option.value}>
               <input
+                ref={index === constraintIndex ? constraintRef : undefined}
                 className="d-choice-input"
                 id={id}
                 type={multiple ? 'checkbox' : 'radio'}
@@ -222,10 +279,9 @@ export default function DChoiceGroup(
                 checked={current.includes(option.value)}
                 disabled={option.disabled}
                 /*
-                 * On radios, `required` on any one of them makes the group
-                 * required — which is the intent. On checkboxes it would make
-                 * each box required on its own, so every option would have to
-                 * be ticked, which is not.
+                 * Radios only. On a checkbox this would demand that box in
+                 * particular, so every option would have to be ticked; the
+                 * group-level constraint above covers that case instead.
                  */
                 required={required && !multiple}
                 onChange={handleChange(option.value)}

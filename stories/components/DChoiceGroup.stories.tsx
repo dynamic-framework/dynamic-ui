@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import DChoiceGroup from '../../src/components/DChoiceGroup';
+import { DChoiceGroup } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const MATERIALS = [
@@ -69,6 +69,20 @@ of \`value\` and \`onChange\`:
 The types are a discriminated union, so TypeScript picks the right pair for you
 and rejects the other one.
 
+### \`required\` with \`multiple\`
+
+\`required\` on a checkbox means *that* box has to be ticked, so putting it on
+each option would demand all of them. A required multi-select group instead
+carries one group-level constraint, through the constraint validation API, on
+the first option that can hold it: the form will not submit while nothing is
+chosen, and the browser reports \`requiredMessage\`.
+
+## Sizes
+
+There are two: \`sm\` and \`lg\`. The regular size is what you get by passing
+no \`size\` at all — there is no \`md\` to ask for, and no
+\`.d-choice-group-md\` class.
+
 ## CSS Variables
 
 | Variable | Class | Type | Description |
@@ -101,7 +115,7 @@ together.
     multiple: { control: 'boolean', table: { category: 'Behavior' } },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: [undefined, 'sm', 'lg'],
       table: { category: 'Appearance' },
     },
     color: { control: 'text', table: { category: 'Appearance' } },
@@ -165,7 +179,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="d-flex flex-column gap-4">
       <DChoiceGroup label="Small" size="sm" options={THREE} defaultValue="wool" />
-      <DChoiceGroup label="Medium (default)" options={THREE} defaultValue="wool" />
+      <DChoiceGroup label="Regular — no size prop" options={THREE} defaultValue="wool" />
       <DChoiceGroup label="Large" size="lg" options={THREE} defaultValue="wool" />
     </div>
   ),
@@ -173,17 +187,21 @@ export const Sizes: Story = {
 
 /**
  * `size` also takes an object by breakpoint, resolved against the viewport as
- * it changes.
+ * it changes. Same prop shape `DButton` and `DBadge` already accept.
  *
- * Resize the preview: compact below `md`, regular from `md` up, large from
- * `xl`. It is the same prop shape `DButton` and `DBadge` already accept.
+ * Resize the preview: compact below `xl`, roomy from `xl` up.
+ *
+ * Note what cannot be expressed: there is no size value meaning "the regular
+ * one", so a map cannot step back to it at a higher breakpoint. A breakpoint
+ * you leave out keeps whatever the one below it set. Start from the regular
+ * size and go up, rather than trying to return to it.
  */
 export const ResponsiveSize: Story = {
   args: {
     label: 'Main material',
     options: MATERIALS.slice(0, 4),
     defaultValue: 'linen',
-    size: { xs: 'sm', md: 'md', xl: 'lg' },
+    size: { xs: 'sm', xl: 'lg' },
   },
 };
 
@@ -301,6 +319,42 @@ export const Invalid: Story = {
     invalid: true,
     required: true,
   },
+};
+
+/**
+ * A required multi-select. Submit with nothing chosen and the browser blocks
+ * the form and reports the message; tick anything and it goes through.
+ *
+ * This is the combination that has no HTML attribute behind it — see the
+ * `required` note above.
+ */
+export const RequiredMultiple: Story = {
+  args: { label: 'Available sizes', options: THREE },
+  render: () => (
+    <form
+      className="d-flex flex-column align-items-start gap-3"
+      onSubmit={(event) => {
+        event.preventDefault();
+        // eslint-disable-next-line no-alert
+        window.alert('Submitted');
+      }}
+    >
+      <DChoiceGroup
+        multiple
+        required
+        requiredMessage="Pick at least one size"
+        label="Available sizes"
+        hint="Required — choose one or more"
+        options={[
+          { value: 's', label: 'S' },
+          { value: 'm', label: 'M' },
+          { value: 'l', label: 'L' },
+          { value: 'xl', label: 'XL' },
+        ]}
+      />
+      <button type="submit" className="btn btn-primary">Submit</button>
+    </form>
+  ),
 };
 
 function Filters() {

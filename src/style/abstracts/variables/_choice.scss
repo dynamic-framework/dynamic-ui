@@ -29,6 +29,11 @@ $choice-transition: $btn-transition !default;
 $choice-focus-width: $input-btn-focus-width !default;
 $choice-disabled-opacity: $btn-disabled-opacity !default;
 
+// The regular font size is NOT here: it derives from `$btn-font-size`, which
+// is Bootstrap's and is not defined yet at this point in the import order.
+// `_d-choice-group.scss` reads it directly, which also means the choice keeps
+// following a theme that overrides the button's size. The two below can live
+// here because their sources are this project's own.
 $choice-padding-y-sm: $btn-padding-y-sm !default;
 $choice-padding-x-sm: $btn-padding-x-sm !default;
 $choice-font-size-sm: $btn-font-size-sm !default;

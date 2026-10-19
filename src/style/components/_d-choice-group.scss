@@ -35,6 +35,16 @@
 
   --#{$prefix}choice-padding-y: #{$choice-padding-y};
   --#{$prefix}choice-padding-x: #{$choice-padding-x};
+
+  // The base size, declared here and not with the other `$choice-*` variables
+  // because `$btn-font-size` is Bootstrap's and the variables file is loaded
+  // before it — see `_choice.scss`. Reading it here is also what keeps the
+  // choice following a theme that overrides the button's own size.
+  //
+  // Through `rfs` and not a plain assignment, exactly as `.btn` does it: the
+  // token has to carry the responsive clamp, or the two controls stop matching
+  // the moment `$enable-rfs` is on.
+  @include rfs($btn-font-size, --#{$prefix}choice-font-size);
   --#{$prefix}choice-font-weight: #{$choice-font-weight};
   --#{$prefix}choice-line-height: #{$choice-line-height};
   --#{$prefix}choice-border-width: #{$choice-border-width};
@@ -102,7 +112,6 @@
   align-items: center;
   justify-content: center;
   padding: var(--#{$prefix}choice-padding-y) var(--#{$prefix}choice-padding-x);
-  font-size: var(--#{$prefix}choice-font-size);
   font-weight: var(--#{$prefix}choice-font-weight);
   line-height: var(--#{$prefix}choice-line-height);
   color: var(--#{$prefix}choice-color);
@@ -112,12 +121,13 @@
   background-color: var(--#{$prefix}choice-bg);
   border: var(--#{$prefix}choice-border-width) solid var(--#{$prefix}choice-border-color);
   border-radius: var(--#{$prefix}choice-border-radius);
+  @include font-size(var(--#{$prefix}choice-font-size));
   @include transition($choice-transition);
 
   // The glyph follows the choice's own font size, the same way it follows a
   // button's, unless something sets `--#{$prefix}icon-component-size`.
   .d-icon {
-    --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, var(--#{$prefix}choice-font-size, 1em));
+    --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, var(--#{$prefix}choice-font-size));
   }
 }
 
@@ -156,8 +166,13 @@
 
 // --- sizes ------------------------------------------------------------------
 //
-// `md` is the default and has no class. The two modifiers below only move the
-// variables; everything that reads them is declared once, above.
+// There are two modifiers and no third one. The regular size is what
+// `.d-choice-group` already declares, so it is the absence of a modifier
+// rather than a value you can ask for — there is no `.d-choice-group-md`.
+//
+// Each modifier redefines the same tokens the base declares, which is how
+// `button-size()` works too. Note the `rfs` include rather than a plain
+// assignment, for the same reason as above.
 //
 // The names are safe next to the colour modifiers because no theme colour is
 // called `sm` or `lg`.
@@ -165,15 +180,15 @@
 .d-choice-group-sm {
   --#{$prefix}choice-padding-y: #{$choice-padding-y-sm};
   --#{$prefix}choice-padding-x: #{$choice-padding-x-sm};
-  --#{$prefix}choice-font-size: #{$choice-font-size-sm};
   --#{$prefix}choice-border-radius: #{$choice-border-radius-sm};
+  @include rfs($choice-font-size-sm, --#{$prefix}choice-font-size);
 }
 
 .d-choice-group-lg {
   --#{$prefix}choice-padding-y: #{$choice-padding-y-lg};
   --#{$prefix}choice-padding-x: #{$choice-padding-x-lg};
-  --#{$prefix}choice-font-size: #{$choice-font-size-lg};
   --#{$prefix}choice-border-radius: #{$choice-border-radius-lg};
+  @include rfs($choice-font-size-lg, --#{$prefix}choice-font-size);
 }
 
 // --- colours ----------------------------------------------------------------
