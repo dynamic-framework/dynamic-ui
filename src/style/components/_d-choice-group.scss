@@ -238,3 +238,54 @@
 .d-choice-group[data-invalid] .d-choice-group-hint {
   color: #{$form-feedback-invalid-color};
 }
+
+// --- forced colors ----------------------------------------------------------
+//
+// Windows High Contrast and friends replace author colours with the user's
+// palette and drop `box-shadow` entirely. Two things this component relies on
+// disappear at once:
+//
+//   - selected vs resting, which is only a background and a text colour, so
+//     both ends up painted the same — and the native control that would
+//     normally still show a tick is clipped out of sight;
+//   - the focus ring, which is a `box-shadow`.
+//
+// Measured in Chromium with `forced-colors: active`: a checked and an
+// unchecked option both computed to `background-color: rgb(255,255,255)`,
+// `color: rgb(0,0,0)`, `border: 1px solid rgb(0,0,0)`, and the focus ring
+// computed to `none`.
+//
+// Opting out with `forced-color-adjust: none` is not the fix — the user picked
+// that palette for a reason.
+//
+// Nor is `background-color: highlight` with `color: highlighttext`, which is
+// the usual advice: Chromium paints a `Canvas`-coloured backplate behind text
+// in this mode, so white-on-Highlight became white-on-white and the label
+// vanished entirely. Measured, not assumed.
+//
+// What forced colours cannot take away is a glyph. The selected state is
+// marked with one, and the focus ring moves from `box-shadow` to `outline`,
+// which this mode keeps.
+
+@media (forced-colors: active) {
+  // Paired with `/ ""` so the mark stays out of the accessible name: the label
+  // IS the input's name, and "✓ Linen" is not what the option is called. The
+  // checkbox already announces its own state.
+  .d-choice-input:checked + .d-choice::before {
+    font-weight: 700;
+    content: "✓" / "";
+  }
+
+  // `canvastext` and not the default `currentColor`: the ring is offset
+  // outside the option, so it lands on the page background rather than on the
+  // option itself.
+  .d-choice-input:focus-visible + .d-choice {
+    outline: 2px solid canvastext;
+    outline-offset: 2px;
+  }
+
+  .d-choice-input:disabled + .d-choice {
+    color: graytext;
+    border-color: graytext;
+  }
+}
