@@ -44,6 +44,30 @@ $choice-padding-x-lg: $btn-padding-x-lg !default;
 $choice-font-size-lg: $btn-lg-font-size !default;
 $choice-border-radius-lg: $btn-border-radius-lg !default;
 
+// The selected state.
+//
+// A darker step of the group's own colour, so the selection keeps the colour's
+// identity instead of turning into the same slab everywhere.
+//
+// Which step is a contrast question, not a taste one. Measured against the
+// resting fill (`{color}-50`) with white text on top:
+//
+//   -100 … -400   1.06 – 3.18   nowhere near; white text fails on all of them
+//   -600          2.63 – 6.40   fine except warning
+//   -700          4.42 – 9.03   every colour passes
+//   -800          7.91 – 15.99  comfortable everywhere
+//
+// So `-700`, except for warning, which is a yellow and therefore lighter at
+// the same step — it needs `-800`. That is not a special case invented here:
+// the theme already makes it, `$warning-text-emphasis` is `-800` where every
+// other colour is `-600`.
+//
+// `light` and `dark` have no numeric scale, so they fall back to grey, which
+// is what the theme does for them too.
+$choice-selected-step: 500 !default;
+$choice-selected-step-warning: 700 !default;
+$choice-selected-color: var(--#{$prefix}white) !default;
+
 // The gap between options, and between the group's label and its options.
 $choice-group-gap: $spacer-2 !default;
 $choice-group-label-gap: $spacer-2 !default;

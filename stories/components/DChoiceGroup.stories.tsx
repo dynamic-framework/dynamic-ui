@@ -83,6 +83,25 @@ There are two: \`sm\` and \`lg\`. The regular size is what you get by passing
 no \`size\` at all — there is no \`md\` to ask for, and no
 \`.d-choice-group-md\` class.
 
+## Colour, and the selected state
+
+\`color\` drives both states, but not through the same layer. The resting
+option is the soft button variant of that colour; the selected one is a
+**darker step of the same colour taken from the scale** — \`{color}-700\`,
+and \`-800\` for \`warning\`, which is a yellow and therefore lighter at the
+same step. The border is the same on every colour: it is the shape of the
+selected state, not another way of saying its colour.
+
+It does **not** come from the solid button variant, which was the obvious
+mapping and the wrong one: \`secondary\` and \`light\` define their solid
+variant *as* their soft one, so both states resolved to the same fill and the
+selection disappeared (ratio 1.00), with \`warning\` close behind at 1.68.
+Three of eight colours.
+
+Measured across every theme colour with the step above, the selected fill
+reads at **7.91:1 or better** against the resting one, and white on it at
+**8.43:1 or better**.
+
 ## CSS Variables
 
 | Variable | Class | Type | Description |
@@ -94,13 +113,14 @@ no \`size\` at all — there is no \`md\` to ask for, and no
 | --${PREFIX_BS}choice-border-width | .d-choice-group | css length | Option border width |
 | --${PREFIX_BS}choice-bg | .d-choice-group | css color | Resting background |
 | --${PREFIX_BS}choice-color | .d-choice-group | css color | Resting text |
-| --${PREFIX_BS}choice-selected-bg | .d-choice-group | css color | Selected background |
+| --${PREFIX_BS}choice-selected-bg | .d-choice-group | css color | Selected background, a darker step of the colour |
 | --${PREFIX_BS}choice-selected-color | .d-choice-group | css color | Selected text |
 | --${PREFIX_BS}choice-focus-width | .d-choice-group | css length | Focus ring width |
 | --${PREFIX_BS}choice-group-gap | .d-choice-group | css length | Gap between options |
 
 All of them default to a \`$btn-*\` SCSS variable, so the two controls move
 together.
+
         `,
       },
     },
@@ -206,23 +226,32 @@ export const ResponsiveSize: Story = {
 };
 
 /**
- * The resting state is the soft variant of the colour and the selected state
- * the solid one, so a group sits next to buttons of the same colour without
- * being one.
+ * The resting state is the soft variant of the colour, so a group sits next to
+ * buttons of the same colour without being one.
+ *
+ * Every theme colour is here on purpose. The selected option is a darker step
+ * of its own colour, so each row keeps its identity, and the border is the
+ * same on all of them.
+ *
+ * If you add a colour to the theme, check it here — and check it has a
+ * numeric scale. `light` and `dark` do not, which is why they fall back to
+ * grey.
  */
 export const Colors: Story = {
   args: { label: 'Main material', options: THREE },
   render: () => (
     <div className="d-flex flex-column gap-4">
-      {['primary', 'secondary', 'success', 'danger'].map((color) => (
-        <DChoiceGroup
-          key={color}
-          label={color}
-          color={color}
-          options={THREE}
-          defaultValue="wool"
-        />
-      ))}
+      {['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'].map(
+        (color) => (
+          <DChoiceGroup
+            key={color}
+            label={color}
+            color={color}
+            options={THREE}
+            defaultValue="wool"
+          />
+        ),
+      )}
     </div>
   ),
 };

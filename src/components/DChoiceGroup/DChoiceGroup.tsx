@@ -40,22 +40,7 @@ type CommonProps = BaseProps & {
   ariaLabel?: string;
   /** Help text under the options. Announced with the group. */
   hint?: string;
-  /**
-   * Omit it for the regular size. `ComponentSize` has no `md` — across the
-   * library the regular size is the absence of a modifier, not a value you
-   * ask for.
-   *
-   * Resolved against the viewport when given per breakpoint:
-   * `{ xs: 'sm', xl: 'lg' }` — compact where space is short, roomy once there
-   * is room, and regular in between because no breakpoint claims that range.
-   */
   size?: ComponentSize | ResponsiveProp<ComponentSize>;
-  /**
-   * Which theme colour the options take.
-   *
-   * Resting options use the soft variant of this colour and the selected one
-   * the solid variant, so the group matches buttons of the same colour.
-   */
   color?: ComponentColor;
   /** Disables the whole group. Individual options have their own `disabled`. */
   disabled?: boolean;
@@ -113,10 +98,15 @@ export type Props = CommonProps & (SingleProps | MultipleProps);
  * role, none of which a `<button>` has. The label is only what gets painted.
  *
  * The markup carries no button class for the same reason. What it does borrow
- * is the button *tokens*: every value in the stylesheet resolves to a
- * `--bs-btn-*` variable, with the soft variant answering for a resting option
- * and the solid one for a selected option. Buttons and choices then stay in
- * the same family without the choice pretending to be one.
+ * is the button *tokens*: spacing, radius, the focus ring, and the resting
+ * state of each option, which is the soft variant of the group's colour — so
+ * buttons and choices stay in the same family without the choice pretending
+ * to be one.
+ *
+ * The selected state is the exception: it comes from a darker step of the
+ * colour's own scale rather than from the solid button variant, because that
+ * variant left three of the eight theme colours with a selection you could
+ * not see. See the stylesheet.
  *
  * ## Layout is the consumer's
  *

@@ -52,6 +52,14 @@
   --#{$prefix}choice-disabled-opacity: #{$choice-disabled-opacity};
   --#{$prefix}choice-focus-width: #{$choice-focus-width};
 
+  // A selected option has no visible edge of its own: the border IS the fill.
+  // Written as a reference rather than a copy of the same expression, so the
+  // two cannot be changed apart — including by a consumer who overrides only
+  // `--#{$prefix}choice-selected-bg`.
+  --#{$prefix}choice-selected-border-color: var(--#{$prefix}choice-selected-bg);
+  --#{$prefix}choice-selected-hover-border-color: var(--#{$prefix}choice-selected-hover-bg);
+
+
   // A fieldset is `display: block` with a border, a margin and an inline-size
   // floor of `min-content` that no other element has. All four have to go
   // before it can be laid out like anything else.
@@ -193,15 +201,32 @@
 
 // --- colours ----------------------------------------------------------------
 //
-// One modifier per theme colour, mapping this component's variables onto the
-// `--#{$prefix}btn-{color}-*` layer that already exists for every colour.
+// One modifier per theme colour. The RESTING state maps onto the
+// `--#{$prefix}btn-soft-{color}-*` layer that already exists for every colour,
+// so if a theme moves its buttons the resting options move with them.
 //
-// Soft answers for the resting state and solid for the selected one. Nothing
-// here invents a value; if a theme moves its buttons, the choices move with
-// them.
+// ## The selected state
+//
+// A darker step of the same colour — it keeps the colour's identity, which a
+// single shared fill would throw away.
+//
+// It does NOT map onto the solid button variant, which was the obvious choice
+// and the wrong one: `secondary` and `light` define their solid variant AS
+// their soft one, so both states resolved to the same fill and the selection
+// disappeared. `warning` was nearly as bad. Three of eight colours, with no
+// guarantee a future theme would not add a fourth.
+//
+// Going to the scale directly sidesteps that, because the distance between
+// `-50` and `-700` is a property of the ramp itself. See `_choice.scss` for
+// the measurements behind the step.
+//
+// The BORDER is the same on every selected option, by design: it is the shape
+// of the selected state, not another way of saying its colour.
 
 @each $color, $value in $theme-colors {
   @if not map-has-key($theme-colors-extra, $color) {
+    $step: if($color == "warning", $choice-selected-step-warning, $choice-selected-step);
+
     .d-choice-group-#{$color} {
       --#{$prefix}choice-color: var(--#{$prefix}btn-soft-#{$color}-color);
       --#{$prefix}choice-bg: var(--#{$prefix}btn-soft-#{$color}-bg);
@@ -211,13 +236,16 @@
       --#{$prefix}choice-hover-bg: var(--#{$prefix}btn-soft-#{$color}-hover-bg);
       --#{$prefix}choice-hover-border-color: var(--#{$prefix}btn-soft-#{$color}-hover-border-color);
 
-      --#{$prefix}choice-selected-color: var(--#{$prefix}btn-#{$color}-color);
-      --#{$prefix}choice-selected-bg: var(--#{$prefix}btn-#{$color}-bg);
-      --#{$prefix}choice-selected-border-color: var(--#{$prefix}btn-#{$color}-border-color);
+      // `light` and `dark` have no numeric scale; the fallback is the grey one
+      // the theme already stands in for them.
+      // Only the fills. The borders follow them from the base rule, so the
+      // two cannot drift apart — and `light` and `dark`, which have no
+      // numeric scale, keep the grey fallback on both.
+      --#{$prefix}choice-selected-color: #{$choice-selected-color};
+      --#{$prefix}choice-selected-bg: var(--#{$prefix}#{$color}-#{$step}, var(--#{$prefix}gray-#{$step}));
 
-      --#{$prefix}choice-selected-hover-color: var(--#{$prefix}btn-#{$color}-hover-color);
-      --#{$prefix}choice-selected-hover-bg: var(--#{$prefix}btn-#{$color}-hover-bg);
-      --#{$prefix}choice-selected-hover-border-color: var(--#{$prefix}btn-#{$color}-hover-border-color);
+      --#{$prefix}choice-selected-hover-color: #{$choice-selected-color};
+      --#{$prefix}choice-selected-hover-bg: var(--#{$prefix}#{$color}-#{$step + 100}, var(--#{$prefix}gray-#{$step + 100}));
 
       --#{$prefix}choice-focus-shadow-rgb: var(--#{$prefix}btn-#{$color}-focus-shadow-rgb);
     }
