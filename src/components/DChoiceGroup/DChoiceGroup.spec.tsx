@@ -1,7 +1,9 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import DChoiceGroup from '.';
 import { DChoiceGroup as DChoiceGroupFromEntry } from '../..';
@@ -497,6 +499,144 @@ describe('<DChoiceGroup />', () => {
 
       expect(group).toHaveAttribute('aria-describedby', hint?.id);
       expect(hint).toHaveTextContent('Pick the dominant one');
+    });
+  });
+
+  /**
+   * A native form reset restores the inputs to the `defaultChecked` React
+   * wrote at mount, but fires no `change` — so without handling it the state
+   * and the DOM walk away from each other, quietly.
+   */
+  describe('Form reset', () => {
+    /** The reset defers its work a microtask, so let it run. */
+    const settle = () => act(async () => { await Promise.resolve(); });
+
+    /**
+     * `form.reset()` is exactly what activating a reset button runs — the same
+     * event, the same restore algorithm — without a raw `<button type="reset">`
+     * that the lint config rejects.
+     */
+    const withReset = (ui: React.ReactNode) => {
+      const { container } = render(<form>{ui}</form>);
+      return container.querySelector('form') as HTMLFormElement;
+    };
+    const chosen = (role: 'radio' | 'checkbox' = 'radio') => screen
+      .getAllByRole<HTMLInputElement>(role)
+      .filter((input) => input.checked)
+      .map((input) => input.value);
+
+    it('should put an uncontrolled group back to its defaultValue', async () => {
+      const form = withReset(<DChoiceGroup options={MATERIALS} defaultValue="wool" />);
+      fireEvent.click(screen.getByRole('radio', { name: 'Cotton' }));
+      expect(chosen()).toEqual(['cotton']);
+
+      form.reset();
+      await settle();
+
+      expect(chosen()).toEqual(['wool']);
+    });
+
+    /**
+     * The one that bites. The browser gets the DOM right on its own; it is
+     * the state left holding the old answer that puts it back on the next
+     * render, for any reason at all.
+     */
+    it('should still hold the reset value after an unrelated re-render', async () => {
+      function Host() {
+        const [, force] = useState(0);
+        return (
+          <form>
+            <DChoiceGroup options={MATERIALS} defaultValue="wool" />
+            <button type="button" onClick={() => force((tick) => tick + 1)}>bump</button>
+          </form>
+        );
+      }
+      const { container } = render(<Host />);
+      fireEvent.click(screen.getByRole('radio', { name: 'Cotton' }));
+      (container.querySelector('form') as HTMLFormElement).reset();
+      await settle();
+
+      fireEvent.click(screen.getByText('bump'));
+
+      expect(chosen()).toEqual(['wool']);
+    });
+
+    it('should tell the consumer the value changed', async () => {
+      const onChange = jest.fn();
+      const form = withReset(<DChoiceGroup options={MATERIALS} defaultValue="wool" onChange={onChange} />);
+      fireEvent.click(screen.getByRole('radio', { name: 'Cotton' }));
+      onChange.mockClear();
+
+      form.reset();
+      await settle();
+
+      expect(onChange).toHaveBeenCalledWith('wool');
+    });
+
+    it('should say nothing when the reset changes nothing', async () => {
+      const onChange = jest.fn();
+      const form = withReset(<DChoiceGroup options={MATERIALS} defaultValue="wool" onChange={onChange} />);
+
+      form.reset();
+      await settle();
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('should empty an uncontrolled multi-select back to its defaultValue', async () => {
+      const form = withReset(<DChoiceGroup multiple options={MATERIALS} defaultValue={['wool']} />);
+      fireEvent.click(screen.getByRole('checkbox', { name: 'Cotton' }));
+      expect(chosen('checkbox')).toEqual(['wool', 'cotton']);
+
+      form.reset();
+      await settle();
+
+      expect(chosen('checkbox')).toEqual(['wool']);
+    });
+
+    /**
+     * The hole this leaves open: a required group emptied by a reset would go
+     * on counting a selection nothing shows, and the form would submit with
+     * nothing chosen.
+     */
+    it('should block a required multi-select again after a reset empties it', async () => {
+      const form = withReset(<DChoiceGroup multiple required options={MATERIALS} />);
+      fireEvent.click(screen.getByRole('checkbox', { name: 'Cotton' }));
+      expect(form.checkValidity()).toBe(true);
+
+      form.reset();
+      await settle();
+
+      expect(chosen('checkbox')).toEqual([]);
+      expect(form.checkValidity()).toBe(false);
+    });
+
+    /**
+     * Controlled is the consumer's value, and a reset is not their decision to
+     * change it — but the browser has already moved the DOM, so the group has
+     * to write their value back over it.
+     */
+    it('should keep a controlled value across a reset', async () => {
+      function Controlled() {
+        const [material, setMaterial] = useState('cotton');
+        return (
+          <form>
+            <DChoiceGroup options={MATERIALS} value={material} onChange={setMaterial} />
+          </form>
+        );
+      }
+      const { container } = render(<Controlled />);
+      expect(chosen()).toEqual(['cotton']);
+
+      (container.querySelector('form') as HTMLFormElement).reset();
+      await settle();
+
+      expect(chosen()).toEqual(['cotton']);
+    });
+
+    it('should survive a group that is not inside a form', () => {
+      expect(() => render(<DChoiceGroup options={MATERIALS} defaultValue="wool" />)).not.toThrow();
+      expect(chosen()).toEqual(['wool']);
     });
   });
 

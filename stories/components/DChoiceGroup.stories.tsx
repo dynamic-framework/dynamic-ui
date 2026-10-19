@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { DChoiceGroup } from '../../src';
+import { DButton, DChoiceGroup } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const MATERIALS = [
@@ -355,6 +355,157 @@ export const RequiredMultiple: Story = {
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
   ),
+};
+
+function ResetDemo() {
+  const [material, setMaterial] = useState('linen');
+  const [locked, setLocked] = useState('cotton');
+  const [sizes, setSizes] = useState<string[]>([]);
+  const [renders, rerender] = useReducer((tick: number) => tick + 1, 0);
+  const [sent, setSent] = useState(0);
+
+  return (
+    <form
+      className="d-flex flex-column gap-4"
+      style={{ width: 560 }}
+      onSubmit={(event) => { event.preventDefault(); setSent((n) => n + 1); }}
+      onReset={() => setSent(0)}
+    >
+      <DChoiceGroup
+        label="Uncontrolled"
+        hint="defaultValue=&quot;linen&quot; — reset puts it back, and says so"
+        options={MATERIALS.slice(0, 4)}
+        defaultValue="linen"
+        onChange={setMaterial}
+      />
+
+      <DChoiceGroup
+        multiple
+        required
+        requiredMessage="Pick at least one size"
+        label="Required multi-select"
+        hint="nothing chosen by default — reset must make it block again"
+        options={[
+          { value: 's', label: 'S' },
+          { value: 'm', label: 'M' },
+          { value: 'l', label: 'L' },
+        ]}
+        onChange={setSizes}
+      />
+
+      <DChoiceGroup
+        label="Controlled"
+        hint="the value is the consumer's — a reset must not touch it"
+        options={MATERIALS.slice(0, 4)}
+        value={locked}
+        onChange={setLocked}
+      />
+
+      <table className="table table-sm m-0">
+        <tbody>
+          <tr>
+            <td className="text-muted small">Uncontrolled state</td>
+            <td className="fw-semibold">{material}</td>
+          </tr>
+          <tr>
+            <td className="text-muted small">Required state</td>
+            <td className="fw-semibold">{sizes.length ? sizes.join(', ') : '—'}</td>
+          </tr>
+          <tr>
+            <td className="text-muted small">Controlled state</td>
+            <td className="fw-semibold">{locked}</td>
+          </tr>
+          <tr>
+            <td className="text-muted small">Renders since mount</td>
+            <td className="fw-semibold">{renders}</td>
+          </tr>
+          <tr>
+            <td className="text-muted small">Submits that got through</td>
+            <td className="fw-semibold">{sent}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div className="d-flex gap-2">
+        <DButton type="submit" text="Submit" />
+        <DButton type="reset" variant="outline" text="Reset" />
+        <DButton variant="link" text="Force a re-render" onClick={rerender} />
+      </div>
+    </form>
+  );
+}
+
+/**
+ * A native form reset, which is the one interaction React controlled inputs do
+ * not hear about on their own.
+ *
+ * The browser restores the inputs to what they were at mount, but fires no
+ * `change` — so a group that does not handle it keeps the old selection in
+ * state while the DOM shows the new one. Three things to try here:
+ *
+ * 1. **Change the first group, then Reset.** It returns to `linen`, *and* the
+ *    readout follows — the group reports the reset through `onChange`.
+ * 2. **Then press "Force a re-render".** The selection stays put. Without the
+ *    reset handling, this is where the old value comes back and quietly undoes
+ *    the reset.
+ * 3. **Tick a size, Submit (it goes through), then Reset and Submit again.**
+ *    The second submit is blocked: the group-level constraint came back when
+ *    the reset emptied it. Without the fix the form would submit with nothing
+ *    chosen.
+ *
+ * The third group is controlled, so the reset leaves it alone — the value is
+ * the consumer's, and a reset is not their decision to change it.
+ */
+export const FormReset: Story = {
+  name: 'Form reset',
+  args: { label: 'Uncontrolled', options: MATERIALS.slice(0, 4) },
+  render: () => <ResetDemo />,
+  parameters: {
+    docs: {
+      source: {
+        code: `function ResetDemo() {
+  const [material, setMaterial] = useState('linen');
+  const [locked, setLocked] = useState('cotton');
+  const [sizes, setSizes] = useState<string[]>([]);
+
+  return (
+    <form onSubmit={onSubmit}>
+      {/* Uncontrolled: a reset returns it to defaultValue and reports it. */}
+      <DChoiceGroup
+        label="Uncontrolled"
+        options={MATERIALS}
+        defaultValue="linen"
+        onChange={setMaterial}
+      />
+
+      {/* Required: the group constraint comes back when a reset empties it. */}
+      <DChoiceGroup
+        multiple
+        required
+        requiredMessage="Pick at least one size"
+        label="Required multi-select"
+        options={SIZES}
+        onChange={setSizes}
+      />
+
+      {/* Controlled: the value is yours, so the reset leaves it alone. */}
+      <DChoiceGroup
+        label="Controlled"
+        options={MATERIALS}
+        value={locked}
+        onChange={setLocked}
+      />
+
+      <DButton type="submit" text="Submit" />
+      <DButton type="reset" variant="outline" text="Reset" />
+    </form>
+  );
+}`,
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
 };
 
 function Filters() {

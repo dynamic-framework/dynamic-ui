@@ -4,6 +4,7 @@ import {
   useEffect,
   useId,
   useMemo,
+  useReducer,
   useRef,
 } from 'react';
 import classNames from 'classnames';
@@ -196,6 +197,67 @@ export default function DChoiceGroup(
   }, [current, emit, multiple]);
 
   /*
+   * A native form reset.
+   *
+   * The inputs are React-controlled, so the browser restores them to the
+   * `defaultChecked` React wrote at mount — the DOM lands on the right values
+   * — but no `change` event fires and this component's state never hears
+   * about it. Three things go wrong, all of them silent:
+   *
+   *   - the state still holds the old selection, so the next render for any
+   *     reason at all puts it back and the reset undoes itself;
+   *   - a required multi-select counts a selection that is no longer checked,
+   *     so an emptied group passes validation and the form submits;
+   *   - `onChange` never fires, so anything the consumer derives from the
+   *     value stays on the pre-reset answer.
+   *
+   * `reset` fires BEFORE the browser restores the controls, so the work is
+   * deferred a microtask to land after them.
+   */
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+  const [, resyncDom] = useReducer((tick: number) => tick + 1, 0);
+
+  /* Read inside the listener, which is subscribed once. */
+  const reset = useRef({
+    current, initial, isControlled: value !== undefined && onChange !== undefined, emit,
+  });
+  reset.current = {
+    current, initial, isControlled: value !== undefined && onChange !== undefined, emit,
+  };
+
+  useEffect(() => {
+    const form = fieldsetRef.current?.form;
+    if (!form) return undefined;
+
+    const handleReset = () => {
+      queueMicrotask(() => {
+        const state = reset.current;
+
+        /*
+         * Controlled: the value is the consumer's, and a reset is not their
+         * decision to change it. The DOM has moved, though, and React will
+         * not notice on its own — so the group re-renders to write the
+         * consumer's value back over what the browser just did.
+         */
+        if (state.isControlled) {
+          resyncDom();
+          return;
+        }
+
+        const same = state.initial.length === state.current.length
+          && state.initial.every((item) => state.current.includes(item));
+        if (same) return;
+
+        /* Uncontrolled: back to `defaultValue`, and say so. */
+        state.emit(state.initial);
+      });
+    };
+
+    form.addEventListener('reset', handleReset);
+    return () => form.removeEventListener('reset', handleReset);
+  }, []);
+
+  /*
    * "At least one" for a group of checkboxes.
    *
    * There is no HTML attribute for it: `required` on a checkbox is about that
@@ -255,6 +317,7 @@ export default function DChoiceGroup(
 
   return (
     <fieldset
+      ref={fieldsetRef}
       className={classNames(
         'd-choice-group',
         `d-choice-group-${color}`,
