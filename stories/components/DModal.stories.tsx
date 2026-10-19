@@ -8,15 +8,22 @@ import DButton from '../../src/components/DButton';
 import DModal from '../../src/components/DModal/DModal';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
-type TransitionPreset = { label: string; value: Transition };
+// `DSelect` carries a scalar value, the way a native `<select>` does, so the
+// transition itself rides along on the option rather than being the value.
+type TransitionPresetName = 'default' | 'spring' | 'slow' | 'bouncy' | 'fast' | 'none';
+type TransitionPreset = {
+  value: TransitionPresetName;
+  label: string;
+  transition: Transition;
+};
 
 const TRANSITION_PRESETS: TransitionPreset[] = [
-  { label: 'Default', value: { ease: 'easeInOut', duration: 0.3 } },
-  { label: 'Spring', value: { type: 'spring', stiffness: 300, damping: 20 } },
-  { label: 'Slow', value: { ease: 'easeInOut', duration: 0.8 } },
-  { label: 'Bouncy', value: { type: 'spring', stiffness: 400, damping: 20 } },
-  { label: 'Fast', value: { ease: 'easeOut', duration: 0.15 } },
-  { label: 'None', value: { ease: 'linear', duration: 0 } },
+  { value: 'default', label: 'Default', transition: { ease: 'easeInOut', duration: 0.3 } },
+  { value: 'spring', label: 'Spring', transition: { type: 'spring', stiffness: 300, damping: 20 } },
+  { value: 'slow', label: 'Slow', transition: { ease: 'easeInOut', duration: 0.8 } },
+  { value: 'bouncy', label: 'Bouncy', transition: { type: 'spring', stiffness: 400, damping: 20 } },
+  { value: 'fast', label: 'Fast', transition: { ease: 'easeOut', duration: 0.15 } },
+  { value: 'none', label: 'None', transition: { ease: 'linear', duration: 0 } },
 ];
 
 const meta = {
@@ -120,15 +127,17 @@ function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) 
 }
 
 function OpenConfirmModalButton() {
-  const [selectedPreset, setSelectedPreset] = useState<TransitionPreset>(TRANSITION_PRESETS[0]);
+  const [presetName, setPresetName] = useState<TransitionPresetName>('default');
+  const selectedPreset = TRANSITION_PRESETS
+    .find((preset) => preset.value === presetName) ?? TRANSITION_PRESETS[0];
   const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
     <div className="d-flex flex-column gap-2 align-items-center">
-      <DSelect<TransitionPreset>
+      <DSelect<TransitionPresetName>
         label="Transition Preset"
         options={TRANSITION_PRESETS}
-        value={selectedPreset}
-        onChange={(opt) => { if (opt) setSelectedPreset(opt); }}
+        value={presetName}
+        onChange={(next) => { if (next) setPresetName(next as TransitionPresetName); }}
       />
       <DButton
         text="Open Modal"
@@ -136,14 +145,14 @@ function OpenConfirmModalButton() {
           'confirm',
           {
             description: 'Payload passed via openPortal.',
-            transition: selectedPreset.value,
+            transition: selectedPreset.transition,
           },
         )}
       />
       <div className="mt-4">
         <pre>
           <code>
-            {JSON.stringify({ transition: selectedPreset.value }, null, 2)}
+            {JSON.stringify({ transition: selectedPreset.transition }, null, 2)}
           </code>
         </pre>
       </div>

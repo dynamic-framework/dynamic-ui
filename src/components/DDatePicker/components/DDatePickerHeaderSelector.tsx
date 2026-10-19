@@ -49,6 +49,10 @@ type Props =
   nextMonthAriaLabel?: string;
   prevYearAriaLabel?: string;
   nextYearAriaLabel?: string;
+  /** Accessible name of the year dropdown shown by `showHeaderSelectors`. */
+  yearSelectAriaLabel?: string;
+  /** Accessible name of the month dropdown shown by `showHeaderSelectors`. */
+  monthSelectAriaLabel?: string;
   iconSize?: ComponentSize;
   minYearSelect?: number;
   maxYearSelect?: number;
@@ -84,6 +88,8 @@ export default function DDatePickerHeaderSelector(
     nextMonthAriaLabel = 'increase month',
     prevYearAriaLabel = 'decrease year',
     nextYearAriaLabel = 'increase year',
+    yearSelectAriaLabel = 'select year',
+    monthSelectAriaLabel = 'select month',
     iconSize,
     style,
     className,
@@ -193,12 +199,13 @@ export default function DDatePickerHeaderSelector(
         />
         <div className="react-datepicker__header-year-selector">
           {showHeaderSelectors ? (
-            <DSelect
+            <DSelect<number>
               options={years}
-              value={defaultYear}
-              defaultValue={defaultYear}
-              onChange={(year) => changeYear(Number(year?.value))}
+              value={getYear(monthDate)}
+              onChange={(year) => changeYear(Number(year))}
               searchable={false}
+              ariaLabel={yearSelectAriaLabel}
+              menuClassName="d-combobox-menu-datepicker"
             />
           ) : (
             <p>{defaultYear?.label}</p>
@@ -222,13 +229,14 @@ export default function DDatePickerHeaderSelector(
     <>
       <div className="datepicker-top-header">
         {showHeaderSelectors && (
-          <DSelect
+          <DSelect<number>
             options={years}
-            value={defaultYear}
-            defaultValue={defaultYear}
-            onChange={(year) => changeYear(Number(year?.value))}
+            value={getYear(monthDate)}
+            onChange={(year) => changeYear(Number(year))}
             searchable={false}
+            ariaLabel={yearSelectAriaLabel}
             className="custom-year-selector"
+            menuClassName="d-combobox-menu-datepicker"
           />
         )}
         <h4 className="datepicker-top-header-title">
@@ -253,13 +261,14 @@ export default function DDatePickerHeaderSelector(
           style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
         {showHeaderSelectors ? (
-          <DSelect
+          <DSelect<number>
             options={months}
-            value={defaultMonth}
-            defaultValue={defaultMonth}
-            onChange={(month) => changeMonth(month?.value || 0)}
+            value={getMonth(monthDate)}
+            onChange={(month) => changeMonth(Number(month ?? 0))}
             searchable={false}
+            ariaLabel={monthSelectAriaLabel}
             className="custom-month-selector"
+            menuClassName="d-combobox-menu-datepicker"
           />
         ) : (
           <p>{`${defaultMonth.label} ${defaultYear?.label}`}</p>

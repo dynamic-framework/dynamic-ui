@@ -42,6 +42,16 @@ export type { DInputSelectDefaultOption, DInputSelectProps } from './DInputSelec
 export { default as DInputSwitch } from './DInputSwitch';
 export { default as DInputRange } from './DInputRange';
 export { default as DSelect } from './DSelect';
+export { flattenOptions, isGrouped, useSelect } from './DSelect';
+export type {
+  DSelectProps,
+  DSelectOption,
+  DSelectGroup,
+  DSelectItems,
+  DSelectOptionState,
+  DSelectI18n,
+  DSelectRenderOption,
+} from './DSelect';
 
 export {
   default as DListGroup,
