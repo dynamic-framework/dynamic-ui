@@ -285,7 +285,9 @@ export default function DChoiceGroup(
     if (!input) return undefined;
 
     input.setCustomValidity(
-      !multiple || !required || disabled || selectedCount ? '' : requiredMessage,
+      !multiple || !required || disabled || selectedCount
+        ? ''
+        : (requiredMessage || 'Select at least one option.'),
     );
 
     /*
