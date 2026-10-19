@@ -14,14 +14,7 @@ import useControlledState from '../../hooks/useControlledState';
 import { useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import type { ResponsiveProp } from '../../hooks/useResponsiveProp';
-import type { BaseProps, ComponentColor } from '../interface';
-
-/**
- * There is no `md`. The regular size is what the component renders with no
- * size at all, so asking for it would be asking for the default by name — two
- * ways to say one thing, and a modifier class that has nothing to modify.
- */
-export type DChoiceGroupSize = 'sm' | 'lg';
+import type { BaseProps, ComponentColor, ComponentSize } from '../interface';
 
 export type DChoiceGroupOption = {
   /** Submitted as the control's value, and what identifies the option. */
@@ -47,13 +40,15 @@ type CommonProps = BaseProps & {
   /** Help text under the options. Announced with the group. */
   hint?: string;
   /**
-   * Omit it for the regular size; there is no `md` to ask for.
+   * Omit it for the regular size. `ComponentSize` has no `md` — across the
+   * library the regular size is the absence of a modifier, not a value you
+   * ask for.
    *
    * Resolved against the viewport when given per breakpoint:
-   * `{ xs: 'sm', lg: 'lg' }` — compact where space is short, roomy once there
+   * `{ xs: 'sm', xl: 'lg' }` — compact where space is short, roomy once there
    * is room, and regular in between because no breakpoint claims that range.
    */
-  size?: DChoiceGroupSize | ResponsiveProp<DChoiceGroupSize>;
+  size?: ComponentSize | ResponsiveProp<ComponentSize>;
   /**
    * Which theme colour the options take.
    *

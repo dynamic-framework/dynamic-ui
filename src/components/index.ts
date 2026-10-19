@@ -66,7 +66,6 @@ export { default as DChoiceGroup } from './DChoiceGroup';
 export type {
   DChoiceGroupProps,
   DChoiceGroupOption,
-  DChoiceGroupSize,
 } from './DChoiceGroup';
 export {
   default as DSkeleton,
