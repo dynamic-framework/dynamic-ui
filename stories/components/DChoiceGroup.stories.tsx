@@ -87,10 +87,10 @@ no \`size\` at all — there is no \`md\` to ask for, and no
 
 \`color\` drives both states, but not through the same layer. The resting
 option is the soft button variant of that colour; the selected one is a
-**darker step of the same colour taken from the scale** — \`{color}-700\`,
-and \`-800\` for \`warning\`, which is a yellow and therefore lighter at the
-same step. The border is the same on every colour: it is the shape of the
-selected state, not another way of saying its colour.
+**darker step of the same colour taken from the scale** — \`{color}-500\`,
+and \`-700\` for \`warning\`, which is a yellow and therefore lighter at the
+same step. The border is the selected fill itself, so the two never drift
+apart.
 
 It does **not** come from the solid button variant, which was the obvious
 mapping and the wrong one: \`secondary\` and \`light\` define their solid
@@ -98,9 +98,18 @@ variant *as* their soft one, so both states resolved to the same fill and the
 selection disappeared (ratio 1.00), with \`warning\` close behind at 1.68.
 Three of eight colours.
 
-Measured across every theme colour with the step above, the selected fill
-reads at **7.91:1 or better** against the resting one, and white on it at
-**8.43:1 or better**.
+Measured in Chromium across every theme colour with the steps above:
+
+| | selected vs resting | white text on selected |
+|---|---|---|
+| best | 12.32:1 (\`secondary\`) | 14.02:1 |
+| worst | **3.93:1** (\`danger\`) | **4.53:1** (\`success\`, \`danger\`) |
+
+All of it clears WCAG AA — 3:1 for the state, 4.5:1 for the text — but the
+text on \`success\` and \`danger\` clears it by three hundredths. Nothing in
+the build checks that, so if you retune either ramp, re-measure. The step is
+\`$choice-selected-step\`, and \`-700\` is the value that leaves real room
+(8.43:1 at worst).
 
 ## CSS Variables
 

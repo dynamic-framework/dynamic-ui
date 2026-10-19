@@ -217,8 +217,9 @@
 // guarantee a future theme would not add a fourth.
 //
 // Going to the scale directly sidesteps that, because the distance between
-// `-50` and `-700` is a property of the ramp itself. See `_choice.scss` for
-// the measurements behind the step.
+// `-50` and the selected step is a property of the ramp itself. See
+// `_choice.scss` for the measurements behind which step, and for the note on
+// how much margin the shipped one leaves.
 //
 // The BORDER is the same on every selected option, by design: it is the shape
 // of the selected state, not another way of saying its colour.
