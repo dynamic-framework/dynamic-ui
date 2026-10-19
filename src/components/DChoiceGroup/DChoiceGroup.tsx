@@ -218,16 +218,35 @@ export default function DChoiceGroup(
     options.findIndex((option) => !option.disabled)
   ), [options]);
 
+  /*
+   * Which element currently holds the constraint. Keys are option values, so
+   * a change here is a change of DOM node — and the signal that the effect
+   * has to move with it.
+   */
+  const constraintKey = options[constraintIndex]?.value;
+
+  /* Counted against what is on screen, not against what state remembers. */
+  const selectedCount = useMemo(() => (
+    options.reduce((total, option) => (
+      current.includes(option.value) ? total + 1 : total
+    ), 0)
+  ), [current, options]);
+
   useEffect(() => {
     const input = constraintRef.current;
-    if (!input) return;
+    if (!input) return undefined;
 
-    if (!multiple || !required || disabled) {
-      input.setCustomValidity('');
-      return;
-    }
-    input.setCustomValidity(current.length ? '' : requiredMessage);
-  }, [current.length, disabled, multiple, required, requiredMessage]);
+    input.setCustomValidity(
+      !multiple || !required || disabled || selectedCount ? '' : requiredMessage,
+    );
+
+    /*
+     * Runs before the next pass and on unmount, against the element this pass
+     * captured — which by then may no longer be the one the ref points at.
+     * That is the point: it is how the previous holder gives the error back.
+     */
+    return () => { input.setCustomValidity(''); };
+  }, [constraintKey, disabled, multiple, required, requiredMessage, selectedCount]);
 
   /*
    * `true` keeps the listener on: a responsive size has to follow the viewport

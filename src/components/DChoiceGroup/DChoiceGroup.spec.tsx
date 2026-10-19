@@ -14,8 +14,11 @@ const MATERIALS = [
 
 /** Native validation only means something inside a form, so render one. */
 const inForm = (ui: React.ReactNode) => {
-  const { container } = render(<form>{ui}</form>);
-  return container.querySelector('form') as HTMLFormElement;
+  const { container, rerender } = render(<form>{ui}</form>);
+  return {
+    form: container.querySelector('form') as HTMLFormElement,
+    rerender: (next: React.ReactNode) => rerender(<form>{next}</form>),
+  };
 };
 
 describe('<DChoiceGroup />', () => {
@@ -330,13 +333,13 @@ describe('<DChoiceGroup />', () => {
      * nothing chosen, which is the combination silently doing nothing.
      */
     it('should block an empty required multi-select', () => {
-      const form = inForm(<DChoiceGroup multiple options={MATERIALS} required />);
+      const { form } = inForm(<DChoiceGroup multiple options={MATERIALS} required />);
 
       expect(form.checkValidity()).toBe(false);
     });
 
     it('should release the constraint once something is chosen', () => {
-      const form = inForm(
+      const { form } = inForm(
         <DChoiceGroup multiple options={MATERIALS} required defaultValue={['wool']} />,
       );
 
@@ -373,16 +376,116 @@ describe('<DChoiceGroup />', () => {
     });
 
     it('should not constrain a multi-select that is not required', () => {
-      const form = inForm(<DChoiceGroup multiple options={MATERIALS} />);
+      const { form } = inForm(<DChoiceGroup multiple options={MATERIALS} />);
 
       expect(form.checkValidity()).toBe(true);
     });
 
     /** A disabled group cannot be filled in, so it must not block the form. */
     it('should not block the form when the group is disabled', () => {
-      const form = inForm(<DChoiceGroup multiple options={MATERIALS} required disabled />);
+      const { form } = inForm(<DChoiceGroup multiple options={MATERIALS} required disabled />);
 
       expect(form.checkValidity()).toBe(true);
+    });
+
+    /**
+     * The constraint lives on one particular input, so anything that changes
+     * WHICH input that is has to be accounted for. These three transitions all
+     * end with the form in the wrong state if the effect only watches the
+     * selection.
+     */
+    describe('when the options change under it', () => {
+      const PAIR = [
+        { value: 'synthetic', label: 'Synthetic' },
+        { value: 'wool', label: 'Wool' },
+      ];
+
+      it('should keep blocking when the constraint moves to another option', () => {
+        const { form, rerender } = inForm(
+          <DChoiceGroup multiple required options={PAIR} />,
+        );
+        expect(form.checkValidity()).toBe(false);
+
+        rerender(<DChoiceGroup
+          multiple
+          required
+          options={[{ value: 'linen', label: 'Linen' }, { value: 'denim', label: 'Denim' }]}
+        />);
+
+        expect(form.checkValidity()).toBe(false);
+      });
+
+      /**
+       * Prepending an option hands the constraint to the newcomer while the
+       * previous holder stays rendered AND enabled — so if it keeps the error
+       * it was given, nothing can ever clear it and the form is blocked for
+       * good.
+       *
+       * The enabled part is what makes this the real test: a disabled control
+       * is barred from constraint validation, so a stale error on one would
+       * hide the bug rather than expose it.
+       */
+      it('should not leave the error behind on the option it left', () => {
+        const { form, rerender } = inForm(
+          <DChoiceGroup multiple required options={[PAIR[1]]} />,
+        );
+        expect(form.checkValidity()).toBe(false);
+
+        rerender(<DChoiceGroup
+          multiple
+          required
+          value={['wool']}
+          onChange={() => {}}
+          options={[{ value: 'linen', label: 'Linen' }, PAIR[1]]}
+        />);
+
+        const inputs = [...form.querySelectorAll('input')];
+        expect(inputs.every((input) => !input.disabled)).toBe(true);
+        expect(form.checkValidity()).toBe(true);
+      });
+
+      /**
+       * A value that no longer matches any rendered option is not a selection.
+       * Counting it as one lets a group that looks empty submit.
+       */
+      it('should block again when the chosen option is taken away', () => {
+        const { form, rerender } = inForm(
+          <DChoiceGroup
+            multiple
+            required
+            value={['wool']}
+            onChange={() => {}}
+            options={PAIR}
+          />,
+        );
+        expect(form.checkValidity()).toBe(true);
+
+        rerender(<DChoiceGroup
+          multiple
+          required
+          value={['wool']}
+          onChange={() => {}}
+          options={[PAIR[0]]}
+        />);
+
+        expect(form.checkValidity()).toBe(false);
+      });
+
+      /** Nothing can hold the constraint, so it must not block the form. */
+      it('should stop blocking when every option becomes disabled', () => {
+        const { form, rerender } = inForm(
+          <DChoiceGroup multiple required options={PAIR} />,
+        );
+        expect(form.checkValidity()).toBe(false);
+
+        rerender(<DChoiceGroup
+          multiple
+          required
+          options={PAIR.map((option) => ({ ...option, disabled: true }))}
+        />);
+
+        expect(form.checkValidity()).toBe(true);
+      });
     });
 
     it('should describe the group with its hint', () => {
