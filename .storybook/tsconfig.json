@@ -6,7 +6,8 @@
       "node"
     ],
     "jsx": "react-jsx",
-    "noEmit": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": [
     "./**/*.ts",
