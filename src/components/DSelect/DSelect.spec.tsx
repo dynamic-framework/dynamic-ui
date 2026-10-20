@@ -546,6 +546,37 @@ describe('<DSelect />', () => {
       expect(screen.getByRole('listbox')).toBeInTheDocument();
     });
 
+    /**
+     * The tags and the keyboard have to agree on which one is last. Deriving
+     * the chosen options by filtering the option list put them out of step:
+     * tags came out in list order, Backspace removed the last entry of
+     * `value`, and with a value ordered against the list those were two
+     * different options.
+     */
+    it('should show tags in the order they were chosen', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      // OPTIONS runs Spain, México, Chile; this value runs the other way.
+      render(
+        <DSelect
+          options={OPTIONS}
+          label="Countries"
+          multi
+          value={['cl', 'es']}
+          onChange={onChange}
+        />,
+      );
+
+      const labelled = screen.getAllByRole('button', { name: /^Remove / })
+        .map((button) => button.getAttribute('aria-label'));
+      expect(labelled).toEqual(['Remove Chile', 'Remove Spain']);
+
+      // So Backspace takes Spain — the one actually sitting last.
+      await user.click(combobox());
+      await user.keyboard('{Backspace}');
+      expect(onChange).toHaveBeenLastCalledWith(['cl'], expect.anything());
+    });
+
     /** The behaviour every tag input has, and only with an empty query. */
     it('should remove the last tag on Backspace', async () => {
       const user = userEvent.setup();

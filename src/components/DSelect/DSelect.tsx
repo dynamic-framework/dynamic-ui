@@ -566,7 +566,7 @@ export default function DSelect<Value extends string | number = string>(
       </span>
 
       {/* One hidden input per value, so a multi-select posts like a real one. */}
-      {name && (multi
+      {name && !disabled && (multi
         ? selectedOptions.map((option) => (
           <input
             key={String(option.value)}

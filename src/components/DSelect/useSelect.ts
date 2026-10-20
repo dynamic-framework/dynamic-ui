@@ -96,10 +96,32 @@ export function useSelect<Value>(
     return new Set<Value>(Array.isArray(value) ? value : [value]);
   }, [value]);
 
-  const selectedOptions = useMemo(
-    () => allOptions.filter((option) => selectedValues.has(option.value)),
-    [allOptions, selectedValues],
-  );
+  /**
+   * The chosen options, in the order they were CHOSEN — not in the order the
+   * option list happens to be in.
+   *
+   * Filtering `allOptions` read naturally and put the two halves of a
+   * multi-select out of step: tags came out in list order while Backspace
+   * removed the last entry of `value`. With options `[Spain, Chile]` and a
+   * value of `['cl', 'es']`, the last tag on screen was Chile and Backspace
+   * took Spain.
+   *
+   * Selection order is also the honest one. `commit` appends, so `onChange`
+   * already emits in the order things were picked; rendering in list order
+   * silently reorders the array the parent handed over.
+   *
+   * A value with no matching option — one whose list has not arrived yet —
+   * contributes no tag, which is why Backspace stays on `value` rather than on
+   * the last tag rendered: it keeps making progress through the array instead
+   * of stranding an entry nobody can see or delete.
+   */
+  const selectedOptions = useMemo(() => {
+    const optionsByValue = new Map(allOptions.map((option) => [option.value, option]));
+    return Array.from(selectedValues).flatMap((selectedValue) => {
+      const option = optionsByValue.get(selectedValue);
+      return option ? [option] : [];
+    });
+  }, [allOptions, selectedValues]);
 
   /**
    * The options the menu is showing.
