@@ -603,6 +603,74 @@ describe('<DSelect />', () => {
     });
   });
 
+  /**
+   * The case a parent owns both halves: a dependent pair, or a list that
+   * arrives from a server after the value it belongs to.
+   */
+  describe('Driven by a parent', () => {
+    const CITIES: Array<DSelectOption> = [
+      { value: 'scl', label: 'Santiago' },
+      { value: 'vap', label: 'Valparaíso' },
+    ];
+
+    it('should follow a value the parent changes', () => {
+      const { rerender } = render(<DSelect options={OPTIONS} label="Country" value="cl" />);
+      expect(combobox()).toHaveValue('Chile');
+
+      rerender(<DSelect options={OPTIONS} label="Country" value="es" />);
+      expect(combobox()).toHaveValue('Spain');
+    });
+
+    /**
+     * A value set before its options exist — which is every form that loads
+     * its lists from a server — must not read as empty once they arrive.
+     */
+    it('should show the label for a value whose option arrives later', () => {
+      const { rerender } = render(<DSelect options={[]} label="Country" value="cl" />);
+      expect(combobox()).toHaveValue('');
+
+      rerender(<DSelect options={OPTIONS} label="Country" value="cl" />);
+      expect(combobox()).toHaveValue('Chile');
+    });
+
+    it('should empty itself when the parent swaps both the options and the value', () => {
+      const { rerender } = render(<DSelect options={OPTIONS} label="Place" value="cl" />);
+      expect(combobox()).toHaveValue('Chile');
+
+      rerender(<DSelect options={CITIES} label="Place" value={null} />);
+      expect(combobox()).toHaveValue('');
+    });
+
+    it('should land on the new value when the parent swaps both at once', () => {
+      const { rerender } = render(<DSelect options={OPTIONS} label="Place" value="cl" />);
+
+      rerender(<DSelect options={CITIES} label="Place" value="vap" />);
+      expect(combobox()).toHaveValue('Valparaíso');
+    });
+
+    it('should offer the options the parent last passed', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(<DSelect options={OPTIONS} label="Place" value={null} />);
+
+      rerender(<DSelect options={CITIES} label="Place" value={null} />);
+      await user.click(combobox());
+
+      expect(optionLabels()).toEqual(['Santiago', 'Valparaíso']);
+    });
+
+    it('should re-tag a multi select the parent changed', () => {
+      const { rerender } = render(
+        <DSelect options={OPTIONS} label="Countries" multi value={['es']} />,
+      );
+      expect(screen.getByRole('button', { name: 'Remove Spain' })).toBeInTheDocument();
+
+      rerender(<DSelect options={OPTIONS} label="Countries" multi value={['cl', 'mx']} />);
+      expect(screen.queryByRole('button', { name: 'Remove Spain' })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove Chile' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove México' })).toBeInTheDocument();
+    });
+  });
+
   describe('Uncontrolled and controlled together', () => {
     it('should drive a controlled consumer', async () => {
       function Controlled() {

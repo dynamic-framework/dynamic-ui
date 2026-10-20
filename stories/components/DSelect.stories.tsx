@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import DSelect from '../../src/components/DSelect';
 import { PREFIX_BS } from '../../src/components/config';
 
-import type { DSelectOption } from '../../src/components/DSelect';
+import type { DSelectOption, DSelectRenderOption } from '../../src/components/DSelect';
 
 const config: Meta<typeof DSelect> = {
   title: 'Design System/Components/Select',
@@ -208,7 +208,14 @@ The menu is portalled out of the control, so its variables are declared on
 };
 
 export default config;
-type Story = StoryObj<typeof DSelect>;
+
+// Bound to `string` so the stories' args carry the value type a consumer's
+// options would give them. Left open, Storybook widens `Value` to the whole
+// `string | number` constraint, and `renderAccountOption` below — typed the
+// way a consumer would type it — stops fitting.
+type Story = StoryObj<typeof DSelect<string>>;
+
+/* --- the data the examples use ------------------------------------------- */
 
 const COUNTRIES: Array<DSelectOption> = [
   { value: 'ar', label: 'Argentina' },
@@ -243,6 +250,30 @@ const LANGUAGES: Array<DSelectOption> = [
   { value: 'fr', label: 'Français', emoji: '🇫🇷' },
 ];
 
+/**
+ * Cities per country, for the dependent pair below. A plain lookup, because
+ * the point of that example is the parent swapping one list for another.
+ */
+const CITIES: Record<string, Array<DSelectOption>> = {
+  cl: [
+    { value: 'scl', label: 'Santiago' },
+    { value: 'vap', label: 'Valparaíso' },
+    { value: 'ccp', label: 'Concepción' },
+  ],
+  es: [
+    { value: 'mad', label: 'Madrid' },
+    { value: 'bcn', label: 'Barcelona' },
+    { value: 'svq', label: 'Sevilla' },
+  ],
+  mx: [
+    { value: 'cmx', label: 'Ciudad de México' },
+    { value: 'gdl', label: 'Guadalajara' },
+    { value: 'mty', label: 'Monterrey' },
+  ],
+};
+
+const COUNTRIES_WITH_CITIES = COUNTRIES.filter((country) => country.value in CITIES);
+
 const GROUPED = [
   {
     label: 'South America',
@@ -252,14 +283,160 @@ const GROUPED = [
   { label: 'North America', options: COUNTRIES.filter((c) => c.value === 'mx') },
 ];
 
+/**
+ * A bespoke option: an initial in a circle, then the name over the balance.
+ *
+ * Declared here rather than inline in the story's `renderOption` prop because
+ * the function IS the example — it is what a consumer copies when the `icon`,
+ * `emoji` and `description` fields are not enough. Buried in a prop it reads
+ * as the story's plumbing instead of the thing being shown.
+ */
+const renderAccountOption: DSelectRenderOption = (option, state) => (
+  <span className="d-flex align-items-center gap-3 w-100">
+    <span
+      className="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary fw-semibold"
+      style={{ width: 32, height: 32 }}
+    >
+      {option.label.charAt(0)}
+    </span>
+    <span className="d-flex flex-column">
+      <span className={state.selected ? 'fw-semibold' : undefined}>{option.label}</span>
+      <span className="small text-secondary">{option.description}</span>
+    </span>
+  </span>
+);
+
+/* --- docs source ----------------------------------------------------------
+ *
+ * Storybook writes a story's snippet from what it renders, which for these is
+ * `<DSelect {...args} />` with the data serialised into it and every function
+ * prop reduced to `() => {}`. The docs page is what a consumer reads to learn
+ * the component, so each story states its own source in full — including the
+ * constant it selects over, which otherwise appears from nowhere.
+ */
+
+const COUNTRIES_SOURCE = `const COUNTRIES = [
+  { value: 'ar', label: 'Argentina' },
+  { value: 'br', label: 'Brasil' },
+  { value: 'cl', label: 'Chile' },
+  { value: 'co', label: 'Colombia' },
+  { value: 'es', label: 'España' },
+  { value: 'mx', label: 'México' },
+  { value: 'pe', label: 'Perú' },
+  { value: 'uy', label: 'Uruguay' },
+];`;
+
+const ACCOUNTS_SOURCE = `const ACCOUNTS = [
+  { value: 'checking', label: 'Checking', description: '•••• 4821 · $12,430.55', icon: 'Wallet' },
+  { value: 'savings', label: 'Savings', description: '•••• 9043 · $48,900.00', icon: 'PiggyBank' },
+  { value: 'credit', label: 'Credit card', description: '•••• 1127 · $1,204.30 due', icon: 'CreditCard' },
+  { value: 'closed', label: 'Closed account', description: 'No longer available', icon: 'Ban', disabled: true },
+];`;
+
+const LANGUAGES_SOURCE = `const LANGUAGES = [
+  { value: 'es', label: 'Español', emoji: '🇪🇸' },
+  { value: 'en', label: 'English', emoji: '🇬🇧' },
+  { value: 'pt', label: 'Português', emoji: '🇧🇷' },
+  { value: 'fr', label: 'Français', emoji: '🇫🇷' },
+];`;
+
+const GROUPED_SOURCE = `const GROUPED = [
+  {
+    label: 'South America',
+    options: [
+      { value: 'ar', label: 'Argentina' },
+      { value: 'br', label: 'Brasil' },
+      { value: 'cl', label: 'Chile' },
+      { value: 'co', label: 'Colombia' },
+      { value: 'pe', label: 'Perú' },
+      { value: 'uy', label: 'Uruguay' },
+    ],
+  },
+  { label: 'Europe', options: [{ value: 'es', label: 'España' }] },
+  { label: 'North America', options: [{ value: 'mx', label: 'México' }] },
+];`;
+
+const CITIES_SOURCE = `const CITIES: Record<string, Array<DSelectOption>> = {
+  cl: [
+    { value: 'scl', label: 'Santiago' },
+    { value: 'vap', label: 'Valparaíso' },
+    { value: 'ccp', label: 'Concepción' },
+  ],
+  es: [
+    { value: 'mad', label: 'Madrid' },
+    { value: 'bcn', label: 'Barcelona' },
+    { value: 'svq', label: 'Sevilla' },
+  ],
+  mx: [
+    { value: 'cmx', label: 'Ciudad de México' },
+    { value: 'gdl', label: 'Guadalajara' },
+    { value: 'mty', label: 'Monterrey' },
+  ],
+};
+
+const COUNTRIES_WITH_CITIES = COUNTRIES.filter((country) => country.value in CITIES);`;
+
+const RENDER_ACCOUNT_OPTION_SOURCE = `import type { DSelectRenderOption } from '@dynamic-framework/ui-react';
+
+const renderAccountOption: DSelectRenderOption = (option, state) => (
+  <span className="d-flex align-items-center gap-3 w-100">
+    <span
+      className="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary fw-semibold"
+      style={{ width: 32, height: 32 }}
+    >
+      {option.label.charAt(0)}
+    </span>
+    <span className="d-flex flex-column">
+      <span className={state.selected ? 'fw-semibold' : undefined}>{option.label}</span>
+      <span className="small text-secondary">{option.description}</span>
+    </span>
+  </span>
+);`;
+
+/**
+ * Builds a story's `parameters`, with the full example as its source.
+ *
+ * `type: 'code'` is what stops the docs addon from replacing the snippet with
+ * its own render of the story.
+ */
+function docs(code: string, story?: string) {
+  return {
+    docs: {
+      ...story && { description: { story } },
+      source: { code: code.trim(), language: 'tsx', type: 'code' },
+    },
+  };
+}
+
+/* --- stories -------------------------------------------------------------- */
+
 export const Default: Story = {
   args: { label: 'Country', options: COUNTRIES, placeholder: 'Search a country…' },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  placeholder="Search a country…"
+/>
+  `),
 };
 
 export const Selected: Story = {
   args: {
     label: 'Country', options: COUNTRIES, defaultValue: 'cl', clearable: true,
   },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="cl"
+  clearable
+/>
+  `),
 };
 
 /**
@@ -267,27 +444,40 @@ export const Selected: Story = {
  * need a search box, eighty do.
  */
 export const Searching: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Type `mexico` without the accent — the filter folds accents, which in a Spanish-language product is most of the searches people actually make.',
-      },
-    },
-  },
   args: { label: 'Country', options: COUNTRIES, defaultOpen: true },
+  parameters: docs(
+    `
+${COUNTRIES_SOURCE}
+
+// \`defaultOpen\` is for documentation and tests — a page should not open a
+// menu nobody asked for.
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultOpen
+/>
+    `,
+    'Type `mexico` without the accent — the filter folds accents, which in a Spanish-language product is most of the searches people actually make.',
+  ),
 };
 
 export const WithoutSearch: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'The box takes no text and a mobile keyboard will not open, but typing still jumps by prefix the way a native `<select>` does.',
-      },
-    },
-  },
   args: {
     label: 'Country', options: COUNTRIES, searchable: false, defaultValue: 'es',
   },
+  parameters: docs(
+    `
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="es"
+  searchable={false}
+/>
+    `,
+    'The box takes no text and a mobile keyboard will not open, but typing still jumps by prefix the way a native `<select>` does.',
+  ),
 };
 
 /**
@@ -302,6 +492,17 @@ export const Multiple: Story = {
     defaultValue: ['cl', 'mx'],
     clearable: true,
   },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Countries"
+  options={COUNTRIES}
+  defaultValue={['cl', 'mx']}
+  multi
+  clearable
+/>
+  `),
 };
 
 export const MultipleOpen: Story = {
@@ -312,6 +513,17 @@ export const MultipleOpen: Story = {
     defaultValue: ['cl', 'mx'],
     defaultOpen: true,
   },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Countries"
+  options={COUNTRIES}
+  defaultValue={['cl', 'mx']}
+  multi
+  defaultOpen
+/>
+  `),
 };
 
 /**
@@ -322,23 +534,48 @@ export const RichOptions: Story = {
   args: {
     label: 'Account', options: ACCOUNTS, defaultValue: 'checking', defaultOpen: true,
   },
+  parameters: docs(`
+${ACCOUNTS_SOURCE}
+
+<DSelect
+  label="Account"
+  options={ACCOUNTS}
+  defaultValue="checking"
+  defaultOpen
+/>
+  `),
 };
 
 export const EmojiOptions: Story = {
   args: {
     label: 'Language', options: LANGUAGES, defaultValue: 'es', searchable: false,
   },
+  parameters: docs(`
+${LANGUAGES_SOURCE}
+
+<DSelect
+  label="Language"
+  options={LANGUAGES}
+  defaultValue="es"
+  searchable={false}
+/>
+  `),
 };
 
 export const Grouped: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'A group whose options are all filtered out disappears with them, rather than leaving a heading over nothing.',
-      },
-    },
-  },
   args: { label: 'Country', options: GROUPED, defaultOpen: true },
+  parameters: docs(
+    `
+${GROUPED_SOURCE}
+
+<DSelect
+  label="Country"
+  options={GROUPED}
+  defaultOpen
+/>
+    `,
+    'A group whose options are all filtered out disappears with them, rather than leaving a heading over nothing.',
+  ),
 };
 
 /**
@@ -351,33 +588,53 @@ export const CustomOption: Story = {
     options: ACCOUNTS,
     defaultValue: 'savings',
     defaultOpen: true,
-    renderOption: (option, state) => (
-      <span className="d-flex align-items-center gap-3 w-100">
-        <span
-          className="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary fw-semibold"
-          style={{ width: 32, height: 32 }}
-        >
-          {option.label.charAt(0)}
-        </span>
-        <span className="d-flex flex-column">
-          <span className={state.selected ? 'fw-semibold' : undefined}>{option.label}</span>
-          <span className="small text-secondary">{option.description}</span>
-        </span>
-      </span>
-    ),
+    renderOption: renderAccountOption,
   },
+  parameters: docs(`
+${RENDER_ACCOUNT_OPTION_SOURCE}
+
+${ACCOUNTS_SOURCE}
+
+<DSelect
+  label="Account"
+  options={ACCOUNTS}
+  defaultValue="savings"
+  renderOption={renderAccountOption}
+  defaultOpen
+/>
+  `),
 };
 
 export const Clearable: Story = {
   args: {
     label: 'Country', options: COUNTRIES, defaultValue: 'br', clearable: true,
   },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="br"
+  clearable
+/>
+  `),
 };
 
 export const FloatingLabel: Story = {
   args: {
     label: 'Country', options: COUNTRIES, floatingLabel: true, defaultValue: 'uy',
   },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="uy"
+  floatingLabel
+/>
+  `),
 };
 
 export const Sizes: Story = {
@@ -389,6 +646,15 @@ export const Sizes: Story = {
     </div>
   ),
   args: { options: COUNTRIES, defaultValue: 'cl' },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<div className="d-flex flex-column gap-4">
+  <DSelect label="Small" options={COUNTRIES} defaultValue="cl" size="sm" />
+  <DSelect label="Default" options={COUNTRIES} defaultValue="cl" />
+  <DSelect label="Large" options={COUNTRIES} defaultValue="cl" size="lg" />
+</div>
+  `),
 };
 
 export const States: Story = {
@@ -401,6 +667,16 @@ export const States: Story = {
     </div>
   ),
   args: { options: COUNTRIES },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<div className="d-flex flex-column gap-4">
+  <DSelect label="Invalid" options={COUNTRIES} invalid hint="Pick a country to continue" />
+  <DSelect label="Valid" options={COUNTRIES} defaultValue="cl" valid />
+  <DSelect label="Disabled" options={COUNTRIES} defaultValue="es" disabled />
+  <DSelect label="Loading" options={COUNTRIES} loading />
+</div>
+  `),
 };
 
 /**
@@ -435,6 +711,34 @@ export const AsyncSearch: Story = {
       />
     );
   },
+  parameters: docs(`
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+import type { DSelectOption } from '@dynamic-framework/ui-react';
+
+function CountrySearch() {
+  const [options, setOptions] = useState<Array<DSelectOption>>([]);
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <DSelect
+      label="Country"
+      options={options}
+      loading={loading}
+      placeholder="Type to search…"
+      onSearch={async (query) => {
+        if (!query) { setOptions([]); return; }
+        setLoading(true);
+        setOptions(await searchCountries(query));
+        setLoading(false);
+      }}
+      // The list is already filtered by the server; filtering it again would
+      // hide results that matched for a reason the client cannot see.
+      filterOption={() => true}
+    />
+  );
+}
+  `),
 };
 
 /**
@@ -456,6 +760,149 @@ export const Controlled: Story = {
       </div>
     );
   },
+  parameters: docs(`
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+
+${COUNTRIES_SOURCE}
+
+function CountryField() {
+  const [value, setValue] = useState<string | null>('cl');
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <DSelect
+        label="Country"
+        options={COUNTRIES}
+        value={value}
+        onChange={(next) => setValue(next as string | null)}
+        clearable
+      />
+      <output className="small text-secondary">{\`value: \${value ?? 'null'}\`}</output>
+    </div>
+  );
+}
+  `),
+};
+
+/**
+ * Both halves owned by the parent: the `value` AND the `options`.
+ *
+ * Picking a country swaps the city list and drops the city that belonged to
+ * the old one. The buttons go further and set both selects at once — country,
+ * city list and city in a single update — which is the same thing a form
+ * loading a saved record does.
+ *
+ * Nothing about this is opt-in. A controlled `DSelect` holds no copy of the
+ * list or of the choice: it reads what it is given on every render, so the
+ * text in the box follows a value whose option only arrives later, and empties
+ * itself when the parent swaps a list the value is not in.
+ */
+export const DrivenByAParent: Story = {
+  render: function Render() {
+    const [country, setCountry] = useState<string | null>('cl');
+    const [city, setCity] = useState<string | null>('scl');
+
+    const cities = country ? CITIES[country] : [];
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <DSelect
+          label="Country"
+          options={COUNTRIES_WITH_CITIES}
+          value={country}
+          onChange={(next) => {
+            setCountry(next as string | null);
+            // The chosen city belongs to the country that no longer is.
+            setCity(null);
+          }}
+          clearable
+        />
+        <DSelect
+          label="City"
+          options={cities}
+          value={city}
+          onChange={(next) => setCity(next as string | null)}
+          disabled={!country}
+          placeholder={country ? 'Choose a city' : 'Choose a country first'}
+        />
+        <div className="d-flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => { setCountry('es'); setCity('bcn'); }}
+          >
+            Jump to Barcelona
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => { setCountry('mx'); setCity('mty'); }}
+          >
+            Jump to Monterrey
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => { setCountry(null); setCity(null); }}
+          >
+            Clear both
+          </button>
+        </div>
+        <output className="small text-secondary">
+          {`country: ${country ?? 'null'} · city: ${city ?? 'null'}`}
+        </output>
+      </div>
+    );
+  },
+  parameters: docs(
+    `
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+import type { DSelectOption } from '@dynamic-framework/ui-react';
+
+${COUNTRIES_SOURCE}
+
+${CITIES_SOURCE}
+
+function Destination() {
+  const [country, setCountry] = useState<string | null>('cl');
+  const [city, setCity] = useState<string | null>('scl');
+
+  const cities = country ? CITIES[country] : [];
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <DSelect
+        label="Country"
+        options={COUNTRIES_WITH_CITIES}
+        value={country}
+        onChange={(next) => {
+          setCountry(next as string | null);
+          // The chosen city belongs to the country that no longer is.
+          setCity(null);
+        }}
+        clearable
+      />
+      <DSelect
+        label="City"
+        options={cities}
+        value={city}
+        onChange={(next) => setCity(next as string | null)}
+        disabled={!country}
+        placeholder={country ? 'Choose a city' : 'Choose a country first'}
+      />
+
+      {/* Country, city list and city, all replaced in one update. */}
+      <button type="button" onClick={() => { setCountry('es'); setCity('bcn'); }}>
+        Jump to Barcelona
+      </button>
+    </div>
+  );
+}
+    `,
+    'Pick a country and the city list below is replaced. The buttons set the country, its city list and the city together, in one update.',
+  ),
 };
 
 /**
@@ -486,4 +933,28 @@ export const InAForm: Story = {
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
   ),
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+${LANGUAGES_SOURCE}
+
+<form
+  className="d-flex flex-column gap-4"
+  onSubmit={(event) => {
+    event.preventDefault();
+    // country: 'es', 'languages[]': ['es', 'en']
+    const data = new FormData(event.currentTarget);
+  }}
+>
+  <DSelect label="Country" name="country" options={COUNTRIES} defaultValue="es" />
+  <DSelect
+    label="Languages"
+    name="languages"
+    options={LANGUAGES}
+    defaultValue={['es', 'en']}
+    multi
+  />
+  <button type="submit" className="btn btn-primary">Submit</button>
+</form>
+  `),
 };
