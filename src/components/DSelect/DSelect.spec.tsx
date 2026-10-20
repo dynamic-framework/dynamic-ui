@@ -1,7 +1,9 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { useState } from 'react';
-import { render, screen, within } from '@testing-library/react';
+import {
+  fireEvent, render, screen, within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DSelect from '.';
@@ -177,6 +179,40 @@ describe('<DSelect />', () => {
       expect(onChange).not.toHaveBeenCalled();
     });
 
+    /**
+     * Assistive technology activates an option by synthesizing a click, with
+     * no mouse events in front of it. Committing on `mousedown` left a screen
+     * reader user pressing an option that did nothing.
+     */
+    it('should select on a click with no mouse press in front of it', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(<DSelect options={OPTIONS} label="Country" onChange={onChange} />);
+
+      await user.click(combobox());
+      // `fireEvent` and not `user.click`: the point is a bare click, with no
+      // pointer or mouse events in front of it — which is what activating an
+      // option through assistive technology dispatches.
+      fireEvent.click(screen.getByRole('option', { name: 'Spain' }));
+
+      expect(onChange).toHaveBeenCalledWith('es', expect.objectContaining({ value: 'es' }));
+    });
+
+    /** `mousedown` fires for every button; `click` is primary-button only. */
+    it('should not select on a right-click', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(<DSelect options={OPTIONS} label="Country" onChange={onChange} />);
+
+      await user.click(combobox());
+      await user.pointer({
+        keys: '[MouseRight]',
+        target: screen.getByRole('option', { name: 'Spain' }),
+      });
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
     it('should take a controlled value', () => {
       render(<DSelect options={OPTIONS} label="Country" value="cl" />);
       expect(combobox()).toHaveValue('Chile');
@@ -261,6 +297,57 @@ describe('<DSelect />', () => {
       expect(optionLabels()).toHaveLength(OPTIONS.length);
     });
 
+    /**
+     * `search` aims at row 0 before the new query has been applied, so the aim
+     * has to be validated against the list that comes back. Row 0 disabled
+     * meant Enter did nothing, with an enabled match sitting right below it.
+     */
+    it('should aim Enter at the first result that can be chosen', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <DSelect
+          label="Word"
+          onChange={onChange}
+          options={[
+            { value: 'alpha', label: 'Alpha', disabled: true },
+            { value: 'alpaca', label: 'Alpaca' },
+          ]}
+        />,
+      );
+
+      await user.click(combobox());
+      await user.keyboard('alp{Enter}');
+
+      expect(onChange).toHaveBeenCalledWith('alpaca', expect.anything());
+    });
+
+    /**
+     * The shape of a remote search: the list empties while the request is in
+     * flight and comes back with results. Emptying put the cursor at -1, and
+     * nothing moved it off -1 when the results landed — so the first Enter
+     * after a search resolved chose nothing.
+     */
+    it('should aim at the first result when a list comes back after emptying', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      // The server does the filtering, so the client must not filter again.
+      const props = { label: 'Country', onChange, filterOption: () => true };
+      const { rerender } = render(<DSelect {...props} options={OPTIONS} />);
+
+      await user.click(combobox());
+      await user.keyboard('chi');
+
+      // In flight.
+      rerender(<DSelect {...props} options={[]} />);
+      // Resolved.
+      rerender(<DSelect {...props} options={[{ value: 'cl', label: 'Chile' }]} />);
+
+      await user.keyboard('{Enter}');
+
+      expect(onChange).toHaveBeenCalledWith('cl', expect.anything());
+    });
+
     it('should take no text when it is not searchable', () => {
       render(<DSelect options={OPTIONS} label="Country" searchable={false} />);
       expect(combobox()).toHaveAttribute('readonly');
@@ -330,6 +417,70 @@ describe('<DSelect />', () => {
       await user.click(combobox());
       await user.keyboard('chi');
       expect(within(listbox()).getAllByRole('option')[2]).toHaveAttribute('data-active');
+    });
+
+    /**
+     * The keystroke that opens the menu may already have aimed somewhere.
+     * Opening used to overwrite that aim with the selection, so pressing a
+     * letter from a closed menu looked ignored.
+     */
+    it('should keep the target the opening keystroke aimed at', async () => {
+      const user = userEvent.setup();
+      render(<DSelect options={OPTIONS} label="Country" searchable={false} />);
+
+      combobox().focus();
+      await user.keyboard('{Escape}c');
+
+      expect(within(listbox()).getAllByRole('option')[2]).toHaveAttribute('data-active');
+    });
+
+    /**
+     * Enter confirms the candidate word in an input method editor. Acting on
+     * it chose an option while the person was still spelling their query.
+     */
+    it('should leave Enter to an input method editor mid-composition', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(<DSelect options={OPTIONS} label="Country" onChange={onChange} />);
+
+      await user.click(combobox());
+      await user.keyboard('{ArrowDown}');
+      fireEvent.keyDown(combobox(), { key: 'Enter', isComposing: true });
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+
+      // The same key, once composition is over, does choose.
+      fireEvent.keyDown(combobox(), { key: 'Enter' });
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    /**
+     * `DPortalContext` closes the top modal or offcanvas from a `keydown`
+     * listener on `window` without consulting `defaultPrevented`, so one
+     * Escape over an open menu took the panel around it with it.
+     */
+    it('should keep Escape from reaching the overlay that contains it', async () => {
+      const user = userEvent.setup();
+      const onWindowKeyDown = jest.fn();
+      window.addEventListener('keydown', onWindowKeyDown);
+
+      try {
+        render(<DSelect options={OPTIONS} label="Country" />);
+
+        await user.click(combobox());
+        await user.keyboard('{Escape}');
+
+        expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+        expect(onWindowKeyDown).not.toHaveBeenCalled();
+
+        // With the menu shut there is nothing left to absorb it, so the next
+        // press falls through to whatever contains the select.
+        await user.keyboard('{Escape}');
+        expect(onWindowKeyDown).toHaveBeenCalledTimes(1);
+      } finally {
+        window.removeEventListener('keydown', onWindowKeyDown);
+      }
     });
   });
 
@@ -493,6 +644,32 @@ describe('<DSelect />', () => {
 
       expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
       await user.click(combobox());
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    /**
+     * A form that locks itself on submit, or a `loading` that arrives from a
+     * fetch, disables the control with its menu already open. Refusing to
+     * close while disabled stranded that menu on screen.
+     */
+    it('should close an open menu when it becomes disabled', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(<DSelect options={OPTIONS} label="Country" />);
+
+      await user.click(combobox());
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+
+      rerender(<DSelect options={OPTIONS} label="Country" disabled />);
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('should close an open menu when it starts loading', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(<DSelect options={OPTIONS} label="Country" />);
+
+      await user.click(combobox());
+      rerender(<DSelect options={OPTIONS} label="Country" loading />);
+
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     });
 

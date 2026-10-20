@@ -308,6 +308,15 @@ export default function DSelect<Value extends string | number = string>(
     const active = index === activeIndex;
 
     return (
+      /*
+       * The rule reads a click handler as what MAKES a non-interactive element
+       * interactive, and so as owing the keyboard an equivalent. The
+       * equivalent exists; it is just not here. Focus never moves to an
+       * option — the input keeps it and points at the active one with
+       * `aria-activedescendant` — so a key listener on this `<li>` could never
+       * fire. Enter and the arrows live on the input, in `useSelect`.
+       */
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <li
         key={String(option.value)}
         id={optionId(index)}
@@ -316,9 +325,25 @@ export default function DSelect<Value extends string | number = string>(
         aria-selected={selected}
         {...option.disabled && { 'aria-disabled': true }}
         {...active && { 'data-active': '' }}
-        // `onMouseDown` and not `onClick`: a click would blur the input first,
-        // which closes the menu and takes the option out from under the cursor.
-        onMouseDown={(event) => { event.preventDefault(); commit(option); }}
+        /*
+         * The press and the activation are two different jobs, on two
+         * different events.
+         *
+         * `onMouseDown` only prevents the default. Pressing on an option would
+         * otherwise blur the input, and the blur closes the menu and takes the
+         * option out from under the pointer before the click can land.
+         *
+         * The commit is on `onClick`, which is the event that means "this was
+         * activated". Doing it on `onMouseDown` got both ends wrong: assistive
+         * technology activating an option synthesizes a click with no mouse
+         * events in front of it, so a screen reader user pressed an option and
+         * nothing happened; and `mousedown` fires for every button, so a
+         * right-click selected before the context menu had even opened.
+         * `click` is primary-button only — an auxiliary button fires
+         * `auxclick` instead.
+         */
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commit(option)}
         onMouseMove={() => { if (!option.disabled) setActiveIndex(index); }}
       >
         {renderOption

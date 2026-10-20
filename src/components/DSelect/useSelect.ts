@@ -128,14 +128,35 @@ export function useSelect<Value>(
     return -1;
   }, [matching]);
 
+  /**
+   * Opening is refused while the control is disabled; CLOSING never is.
+   *
+   * Refusing both looked symmetrical and was a trap: a control disabled while
+   * its menu was open — a form that locks itself on submit, a `loading` that
+   * arrives from a fetch — could no longer be told to close, so the menu
+   * stayed on screen over a control nobody could use.
+   */
   const setOpen = useCallback((next: boolean) => {
-    if (disabled) return;
+    if (next && disabled) return;
     setOpenState(next);
     if (!next) setActiveIndex(-1);
   }, [disabled]);
 
+  /** Being disabled with the menu open closes it rather than stranding it. */
+  useEffect(() => {
+    if (disabled) setOpen(false);
+  }, [disabled, setOpen]);
+
+  /*
+   * Every mutation checks the CONTROL's disabled state, not only the option's.
+   * The menu is dismissed the moment the control is disabled, so in practice
+   * there is nothing left to click — but `commit`, `remove` and `clear` are
+   * returned to the component and reachable from an event already in flight,
+   * and a disabled control that changes its value is a disabled control in
+   * name only.
+   */
   const commit = useCallback((option: DSelectOption<Value>) => {
-    if (option.disabled) return;
+    if (disabled || option.disabled) return;
 
     let nextValue: Value | Value[] | null;
     if (multi) {
@@ -154,30 +175,40 @@ export function useSelect<Value>(
     // a single one shows what was chosen.
     setQuery(multi ? '' : option.label);
     if (closeOnSelect) setOpen(false);
-  }, [closeOnSelect, isControlled, multi, onChange, setOpen, value]);
+  }, [closeOnSelect, disabled, isControlled, multi, onChange, setOpen, value]);
 
   const remove = useCallback((target: Value) => {
+    if (disabled) return;
     const current = Array.isArray(value) ? value : [];
     const nextValue = current.filter((entry) => entry !== target);
     if (!isControlled) setUncontrolled(nextValue);
     onChange?.(nextValue, allOptions.find((o) => o.value === target) ?? null);
-  }, [allOptions, isControlled, onChange, value]);
+  }, [allOptions, disabled, isControlled, onChange, value]);
 
   const clear = useCallback(() => {
+    if (disabled) return;
     const nextValue = multi ? [] : null;
     if (!isControlled) setUncontrolled(nextValue);
     onChange?.(nextValue, null);
     setQuery('');
-  }, [isControlled, multi, onChange]);
+  }, [disabled, isControlled, multi, onChange]);
 
   const search = useCallback((next: string) => {
+    if (disabled) return;
     setQuery(next);
     onSearch?.(next);
     if (!open) setOpen(true);
-    // The first match is the sensible target, so Enter after typing picks what
-    // the user is looking at rather than nothing.
+    /*
+     * Aims at the first row, so Enter after typing picks what the user is
+     * looking at rather than nothing.
+     *
+     * Only AIMS: the query has not been applied yet, so the list this would be
+     * choosing from is still the previous one — row 0 may be disabled, or may
+     * not survive the filter at all. The effect below validates the aim once
+     * `matching` has caught up.
+     */
     setActiveIndex(0);
-  }, [onSearch, open, setOpen]);
+  }, [disabled, onSearch, open, setOpen]);
 
   /**
    * The query shown in the input when nobody is typing.
@@ -191,29 +222,65 @@ export function useSelect<Value>(
     setQuery(selectedOptions.length === 1 ? selectedOptions[0].label : '');
   }, [multi, open, selectedOptions]);
 
-  /** Opening puts the cursor on the selection, or on the first option. */
+  /**
+   * Opening puts the cursor on the selection, or on the first option.
+   *
+   * Unless the keystroke that OPENED the menu already aimed somewhere, which
+   * typeahead does: on a non-searchable select, pressing `c` from a closed
+   * menu both opens it and targets Chile, in one batch. Overwriting that
+   * target here sent the cursor back to the selection and made the keystroke
+   * look ignored — press Escape, type `c`, land on nothing.
+   */
   useEffect(() => {
     if (!open) return;
-    const selectedIndex = matching.findIndex((option) => selectedValues.has(option.value));
-    setActiveIndex(selectedIndex >= 0 ? selectedIndex : step(-1, 1));
+    setActiveIndex((current) => {
+      if (current >= 0 && !matching[current]?.disabled) return current;
+      const selectedIndex = matching.findIndex((option) => selectedValues.has(option.value));
+      return selectedIndex >= 0 ? selectedIndex : step(-1, 1);
+    });
     // Only when the menu opens: re-running as `matching` changes would drag the
     // cursor back to the selection on every keystroke.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  /** Keeps the cursor inside the list as filtering shortens it. */
+  /**
+   * Keeps the cursor on something that can actually be chosen as the list
+   * changes under it.
+   *
+   * Clamping the index to the list's length was not enough. It left the cursor
+   * on a row the filter had since disabled — so Enter did nothing even with an
+   * enabled match right below — and it left a cursor at `-1`, where an empty
+   * result set put it, exactly where it was when options arrived later from a
+   * server.
+   *
+   * Only ever moves an INVALID target: a valid one is the user's, set by an
+   * arrow key or by opening on the selection, and must survive a re-render.
+   */
   useEffect(() => {
+    if (!open) return;
     setActiveIndex((current) => {
-      if (current < 0) return current;
-      return Math.min(current, matching.length - 1);
+      const target = current >= 0 ? matching[current] : undefined;
+      if (target && !target.disabled) return current;
+      return step(-1, 1);
     });
-  }, [matching.length]);
+  }, [matching, open, step]);
 
   const lastTypedAt = useRef(0);
   const typeahead = useRef('');
 
   const onKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (disabled) return;
+
+    /*
+     * A keystroke confirming a candidate in an input method editor is not a
+     * keystroke for the menu.
+     *
+     * Typing Japanese, Chinese or Korean, Enter accepts the word being
+     * composed; acting on it here chose an option while the person was still
+     * spelling their query, and closed the menu on them. `isComposing` is the
+     * standard signal, `keyCode === 229` the one older browsers give instead.
+     */
+    if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return;
 
     switch (event.key) {
       case 'ArrowDown':
@@ -251,6 +318,17 @@ export function useSelect<Value>(
       case 'Escape': {
         if (!open) return;
         event.preventDefault();
+        /*
+         * Stopped, not just defaulted.
+         *
+         * `DPortalContext` closes the top modal or offcanvas from a `keydown`
+         * listener on `window`, and it does not consult `defaultPrevented` —
+         * so one Escape over an open menu dismissed the menu AND the panel
+         * around it. Escape belongs to the innermost thing that can absorb it;
+         * a second press, with the menu now shut, falls through to the
+         * overlay.
+         */
+        event.stopPropagation();
         setOpen(false);
         return;
       }
