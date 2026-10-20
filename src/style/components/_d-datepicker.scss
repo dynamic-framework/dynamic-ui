@@ -604,7 +604,11 @@ react-datepicker__navigation
 // `DSelect` portals its menu, so it is no longer a descendant of
 // `.react-datepicker` and cannot be reached by nesting — the component hands
 // it this class instead (`menuClassName`).
-.d-combobox-menu-datepicker {
+.d-combobox-menu.d-combobox-menu-datepicker {
+  --#{$prefix}datepicker-bg: #{$datepicker-bg};
+  --#{$prefix}datepicker-border: 0px solid #{$datepicker-border-color};
+  --#{$prefix}datepicker-day-hover-bg: #{$datepicker-day-hover-bg};
+
   --#{$prefix}combobox-option-selected-bg: var(--#{$prefix}datepicker-bg);
   --#{$prefix}combobox-option-padding-y: var(--#{$prefix}ref-spacer-1);
   --#{$prefix}combobox-option-padding-x: var(--#{$prefix}ref-spacer-2);
