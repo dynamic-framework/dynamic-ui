@@ -429,6 +429,12 @@ export default function DSelect<Value extends string | number = string>(
           focusInput();
         }}
       >
+        {!multi && selectedOptions[0]?.emoji && (
+          <span aria-hidden="true">{selectedOptions[0].emoji}</span>
+        )}
+        {!multi && selectedOptions[0]?.icon && (
+          <DIcon icon={selectedOptions[0].icon} />
+        )}
         {multi && selectedOptions.map((option) => (
           <span key={String(option.value)} className="d-combobox-tag">
             {option.emoji && <span aria-hidden="true">{option.emoji}</span>}
