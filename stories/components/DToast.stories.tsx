@@ -19,13 +19,20 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)
 
-## Accessibility: live region role
+## Accessibility: where the live region lives
 
-| \`role\`            | Screen reader behavior            | Use it for                                             |
-|---------------------|-----------------------------------|--------------------------------------------------------|
-| \`alert\` (default) | Interrupts what it is announcing  | Critical errors that need immediate attention          |
-| \`status\`          | Announces without interrupting    | Confirmations and other dynamic, non-critical messages |
-| \`none\`            | Not announced as a live region    | Static content already on screen when the page loads   |
+\`DToast\` is markup, and nothing else. It used to carry
+\`role="alert" aria-live="assertive"\`, which was wrong in a way that passed
+every test: a live region inserted at the same moment as its content is
+frequently not announced at all, because the technology has to be watching the
+element before the change happens. The announcement came and went depending on
+timing.
+
+\`DToastContainer\` owns it now — one \`role="status" aria-live="polite"\`
+region per corner, rendered for the container's lifetime and empty between
+toasts. A \`DToast\` placed in the page by hand, as these stories do, is
+therefore not announced, which is correct: static markup is not an event. A
+message that genuinely must interrupt is a dialog.
 
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Toast CSS Variables](https://getbootstrap.com/docs/5.3/components/toasts/#css)
@@ -42,15 +49,6 @@ The Bootstrap documentation provides details on the default [Toast CSS Variables
     },
   },
   argTypes: {
-    role: {
-      control: 'select',
-      options: ['alert', 'status', 'none'],
-      description: 'Live region role: `alert` interrupts the screen reader, `status` announces without interrupting, `none` is not a live region.',
-      table: {
-        defaultValue: { summary: 'alert' },
-        category: 'Accessibility',
-      },
-    },
     className: {
       control: 'text',
       type: 'string',

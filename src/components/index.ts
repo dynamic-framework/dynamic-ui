@@ -87,6 +87,19 @@ export {
   useDToast,
 } from './DToastContainer';
 export type { DToastContainerProps, DToastOptions, ToastData } from './DToastContainer';
+/*
+ * The dismiss button and the context a toast's content reads.
+ *
+ * Exported because a CUSTOM toast needs them: `toast(<MyToast />)` closes
+ * itself with `<DToastDismiss />`, which is also what the default layout uses.
+ * Closing a custom toast used to mean importing `react-hot-toast` and calling
+ * the library's `toast.dismiss(id)` with the id it had handed the render
+ * function.
+ */
+export { default as DToastDismiss } from './DToast/DToastDismiss';
+export { useDToastContext } from './DToast/DToastContext';
+export type { DToastContextValue } from './DToast/DToastContext';
+export type { ToastPlacement } from './DToast/store';
 
 export { default as DInputPhone } from './DInputPhone';
 export { default as DCreditCard } from './DCreditCard';

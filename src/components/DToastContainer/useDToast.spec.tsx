@@ -1,341 +1,277 @@
-import { act, render, renderHook } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { toast as reactHotToast, Toast } from 'react-hot-toast';
-import { DContextProvider } from '../../contexts';
+import '@testing-library/jest-dom';
+
+import DToastContainer from './DToastContainer';
 import useDToast from './useDToast';
+import { toastStore } from '../DToast/toastStore';
+import { DContextProvider } from '../../contexts';
 
-// Type for the toast render function
-type ToastRenderFunction = (toast: Pick<Toast, 'id' | 'visible'>) => React.ReactElement | null;
+/**
+ * The toast surface, with no library behind it.
+ *
+ * The previous version of this file mocked `react-hot-toast` and asserted that
+ * the wrapper called `toast.custom()` with the right arguments — which tested
+ * the wiring to a third party and not one thing a reader would notice. These
+ * assert what ends up on the page.
+ *
+ * `DToast/store.spec.ts` covers the queue and the timers, with an injected
+ * clock. What is here is rendering, dismissal and the announcement.
+ */
 
-// Type for the hook return value
-type UseDToastHook = () => ReturnType<typeof useDToast>;
+function Harness({ onReady }: { onReady: (api: ReturnType<typeof useDToast>) => void }) {
+  const api = useDToast();
+  onReady(api);
+  return null;
+}
 
-// Mock toast object for testing
-const createMockToast = (overrides: Partial<Pick<Toast, 'id' | 'visible'>> = {}): Pick<Toast, 'id' | 'visible'> => ({
-  id: 'test-id',
-  visible: true,
-  ...overrides,
-});
+type Api = ReturnType<typeof useDToast>;
 
-// Mock react-hot-toast
-jest.mock('react-hot-toast', () => {
-  /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
-  const actualModule = jest.requireActual('react-hot-toast');
-  const mockCustom = jest.fn();
-  const mockDismiss = jest.fn();
-
-  return {
-    ...actualModule,
-    toast: {
-      /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-      ...actualModule.toast,
-      /* eslint-enable */
-      custom: mockCustom,
-      dismiss: mockDismiss,
-    },
-  };
-  /* eslint-enable */
-});
-
-// Get references to the mocked functions after the module is mocked
-const mockCustom = (reactHotToast.custom as jest.MockedFunction<typeof reactHotToast.custom>);
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const mockDismiss = (reactHotToast.dismiss as jest.MockedFunction<typeof reactHotToast.dismiss>);
-
-const renderWithContext = (hook: UseDToastHook) => renderHook(hook, {
-  wrapper: ({ children }) => (
+function setup(props: React.ComponentProps<typeof DToastContainer> = {}) {
+  let api!: Api;
+  render(
     <DContextProvider>
-      {children}
-    </DContextProvider>
-  ),
+      <Harness onReady={(value) => { api = value; }} />
+      <DToastContainer portal={false} {...props} />
+    </DContextProvider>,
+  );
+  return { api: () => api };
+}
+
+afterEach(() => {
+  act(() => toastStore.reset());
 });
 
-describe('useDToast', () => {
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    jest.clearAllMocks();
+describe('rendering', () => {
+  it('should render nothing until a toast exists', () => {
+    setup();
+    expect(document.querySelector('.toast-container')).not.toBeInTheDocument();
   });
 
-  it('should return toast function', () => {
-    const { result } = renderWithContext(() => useDToast());
+  it('should show a toast', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
 
-    expect(result.current).toHaveProperty('toast');
-    expect(typeof result.current.toast).toBe('function');
+    expect(screen.getByText('Saved')).toBeInTheDocument();
+    expect(document.querySelector('.toast')).toBeInTheDocument();
   });
 
-  it('should call reactHotToast.custom with function data', () => {
-    const { result } = renderWithContext(() => useDToast());
-    const mockFunction = jest.fn();
-    const mockProps = { duration: 5000 };
+  /* No `description` means one compact row, not an empty header. */
+  it('should put everything in the body when there is no description', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
 
+    expect(document.querySelector('.toast-header')).not.toBeInTheDocument();
+    expect(document.querySelector('.toast-body')).toBeInTheDocument();
+  });
+
+  it('should render a header and a body as siblings when described', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved', description: 'Three files uploaded' }); });
+
+    const header = document.querySelector('.toast-header')!;
+    const body = document.querySelector('.toast-body')!;
+    expect(header).toBeInTheDocument();
+    expect(body).toBeInTheDocument();
+    expect(header.contains(body)).toBe(false);
+    expect(header.parentElement).toBe(body.parentElement);
+  });
+
+  it('should show the timestamp only with a description', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved', timestamp: 'just now' }); });
+    expect(screen.queryByText('just now')).not.toBeInTheDocument();
+
+    act(() => { api().toast({ title: 'Other', description: 'd', timestamp: 'just now' }); });
+    expect(screen.getByText('just now')).toBeInTheDocument();
+  });
+
+  it('should render an icon only when one is asked for', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
+    expect(document.querySelector('.toast-icon')).not.toBeInTheDocument();
+
+    act(() => { api().toast({ title: 'Other', icon: 'Star' }); });
+    expect(document.querySelector('.toast-icon')).toBeInTheDocument();
+  });
+
+  it('should apply the colour as a modifier class', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved', color: 'danger' }); });
+    expect(document.querySelector('.toast')).toHaveClass('toast-danger');
+  });
+
+  /* Anything React can render, for a toast the default layout cannot express. */
+  it('should accept arbitrary content', () => {
+    const { api } = setup();
+    act(() => { api().toast(<p>Custom</p>); });
+    expect(screen.getByText('Custom')).toBeInTheDocument();
+  });
+});
+
+describe('stacking', () => {
+  it('should stack several in one region', () => {
+    const { api } = setup();
     act(() => {
-      result.current.toast(mockFunction, mockProps);
+      api().toast({ title: 'One' });
+      api().toast({ title: 'Two' });
     });
 
-    expect(mockCustom).toHaveBeenCalledWith(mockFunction, mockProps);
+    expect(document.querySelectorAll('.toast')).toHaveLength(2);
+    expect(document.querySelectorAll('.toast-container')).toHaveLength(1);
   });
 
-  it('should create toast without description', () => {
-    const { result } = renderWithContext(() => useDToast());
-
+  it('should keep the order they arrived in', () => {
+    const { api } = setup();
     act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        icon: 'star',
-        color: 'success',
-      });
+      api().toast({ title: 'One' });
+      api().toast({ title: 'Two' });
     });
 
-    expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), undefined);
-
-    // Test the render function
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const toastElement = renderFunction(createMockToast({ visible: true }));
-
-    expect(toastElement).toBeTruthy();
+    const titles = [...document.querySelectorAll('.toast-title')].map((n) => n.textContent);
+    expect(titles).toEqual(['One', 'Two']);
   });
 
-  it('should create toast with description', () => {
-    const { result } = renderWithContext(() => useDToast());
-
+  it('should reverse the order when asked', () => {
+    const { api } = setup({ reverseOrder: true });
     act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        description: 'Test Description',
-        timestamp: '10:30 AM',
-        icon: 'info',
-        color: 'success',
-      });
+      api().toast({ title: 'One' });
+      api().toast({ title: 'Two' });
     });
 
-    expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), undefined);
+    const titles = [...document.querySelectorAll('.toast-title')].map((n) => n.textContent);
+    expect(titles).toEqual(['Two', 'One']);
   });
 
-  it('should pass toast props correctly', () => {
-    const { result } = renderWithContext(() => useDToast());
-    const toastProps = {
-      id: 'custom-id',
-      duration: 3000,
-      position: 'top-right' as const,
-    };
-
+  it('should make one region per corner in use, and no more', () => {
+    const { api } = setup();
     act(() => {
-      result.current.toast({
-        title: 'Test Title',
-      }, toastProps);
+      api().toast({ title: 'Top' }, { placement: 'top-end' });
+      api().toast({ title: 'Bottom' }, { placement: 'bottom-start' });
     });
 
-    expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), toastProps);
+    const regions = [...document.querySelectorAll('.toast-container')];
+    expect(regions).toHaveLength(2);
+    expect(regions.map((r) => r.getAttribute('data-placement')).sort())
+      .toEqual(['bottom-start', 'top-end']);
   });
 
-  it('should return null when toast is not visible', () => {
-    const { result } = renderWithContext(() => useDToast());
+  it('should send unplaced toasts to the container default', () => {
+    const { api } = setup({ placement: 'top-start' });
+    act(() => { api().toast({ title: 'Saved' }); });
 
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const toastElement = renderFunction(createMockToast({ visible: false }));
-
-    expect(toastElement).toBeNull();
+    expect(document.querySelector('.toast-container'))
+      .toHaveAttribute('data-placement', 'top-start');
   });
+});
 
-  it('should use custom close icon', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        closeIcon: 'custom-close',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    const closeButton = container.querySelector('.d-close');
-    expect(closeButton).toBeInTheDocument();
-  });
-
-  it('should handle close button click for toast without description', async () => {
+describe('dismissing', () => {
+  it('should close on the dismiss button', async () => {
     const user = userEvent.setup();
-    const { result } = renderWithContext(() => useDToast());
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }, { duration: 0 }); });
 
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
-    expect(closeButton).toBeInTheDocument();
-
-    await user.click(closeButton);
-
-    expect(mockDismiss).toHaveBeenCalledWith('test-id');
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    expect(document.querySelector('.toast-slot')).toHaveAttribute('data-leaving');
   });
 
-  it('should handle close button click for toast with description', async () => {
+  it('should name the dismiss button in the page language', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Guardado', closeLabel: 'Cerrar' }); });
+    expect(screen.getByRole('button', { name: 'Cerrar' })).toBeInTheDocument();
+  });
+
+  it('should dismiss by id', () => {
+    const { api } = setup();
+    let id = '';
+    act(() => { id = api().toast({ title: 'Saved' }, { duration: 0 }); });
+
+    act(() => { api().dismiss(id); });
+    expect(document.querySelector('.toast-slot')).toHaveAttribute('data-leaving');
+  });
+
+  it('should dismiss all of them', () => {
+    const { api } = setup();
+    act(() => {
+      api().toast({ title: 'One' }, { duration: 0 });
+      api().toast({ title: 'Two' }, { duration: 0, placement: 'top-end' });
+    });
+
+    act(() => { api().dismissAll(); });
+    document.querySelectorAll('.toast-slot').forEach((slot) => {
+      expect(slot).toHaveAttribute('data-leaving');
+    });
+  });
+});
+
+describe('updating in place', () => {
+  it('should replace the content of a toast with the same id', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saving…' }, { id: 'save' }); });
+    act(() => { api().toast({ title: 'Saved' }, { id: 'save' }); });
+
+    expect(document.querySelectorAll('.toast')).toHaveLength(1);
+    expect(screen.getByText('Saved')).toBeInTheDocument();
+    expect(screen.queryByText('Saving…')).not.toBeInTheDocument();
+  });
+
+  /*
+   * The dismiss button reads its toast from context, so an update has to carry
+   * the id the caller gave rather than minting a new one — otherwise the
+   * button in the replaced content points at a toast that does not exist.
+   */
+  it('should leave the dismiss button pointing at the same toast', async () => {
     const user = userEvent.setup();
-    const { result } = renderWithContext(() => useDToast());
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saving…' }, { id: 'save', duration: 0 }); });
+    act(() => { api().toast({ title: 'Saved' }, { id: 'save', duration: 0 }); });
 
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        description: 'Test Description',
-      });
-    });
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    expect(document.querySelector('.toast-slot')).toHaveAttribute('data-leaving');
+  });
+});
 
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
+describe('the announcement', () => {
+  /*
+   * The live region is the REGION, not each toast.
+   *
+   * Every `DToast` used to carry `role="alert" aria-live="assertive"`. A live
+   * region inserted at the same moment as its content is frequently not
+   * announced at all — the technology has to be watching the element before
+   * the change happens. The announcement came and went depending on timing.
+   */
+  it('should put the live region on the container, not the toast', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
 
-    const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
-    expect(closeButton).toBeInTheDocument();
-
-    await user.click(closeButton);
-
-    expect(mockDismiss).toHaveBeenCalledWith('test-id');
+    const region = document.querySelector('.toast-container')!;
+    expect(region).toHaveAttribute('aria-live', 'polite');
+    expect(region).toHaveAttribute('role', 'status');
+    expect(document.querySelector('.toast')).not.toHaveAttribute('aria-live');
   });
 
-  it('should render toast with all elements when description is provided', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        description: 'Test Description',
-        timestamp: '10:30 AM',
-        icon: 'info',
-        color: 'info',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    expect(container.querySelector('.toast-title')).toHaveTextContent('Test Title');
-    expect(container.querySelector('.toast-timestamp')).toHaveTextContent('10:30 AM');
-    expect(container).toHaveTextContent('Test Description');
-    expect(container.querySelector('.toast-icon')).toBeInTheDocument();
+  /* `polite`, not `assertive`: a confirmation is not worth interrupting what a
+     screen reader is in the middle of saying. A toast that must interrupt is a
+     dialog. */
+  it('should not interrupt', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
+    expect(document.querySelector('[aria-live="assertive"]')).not.toBeInTheDocument();
   });
 
-  it('should render toast without timestamp when not provided', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        description: 'Test Description',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    expect(container.querySelector('.toast-timestamp')).not.toBeInTheDocument();
+  /* `false`, so an arriving toast is announced on its own rather than the
+     region re-reading everything already in it. */
+  it('should announce one toast rather than the whole stack', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }); });
+    expect(document.querySelector('.toast-container'))
+      .toHaveAttribute('aria-atomic', 'false');
   });
 
-  it('should render toast without icon when not provided', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    expect(container.querySelector('.toast-icon')).not.toBeInTheDocument();
-  });
-
-  it('should apply correct color classes', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        color: 'danger',
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    expect(container.querySelector('.toast-danger')).toBeInTheDocument();
-    expect(container.querySelector('.show')).toBeInTheDocument();
-  });
-
-  describe.each([
-    ['without description', undefined],
-    ['with description', 'Detalle'],
-  ])('toast %s', (_, description) => {
-    const renderToast = (data: Omit<Parameters<ReturnType<typeof useDToast>['toast']>[0] & object, 'title'>) => {
-      const { result } = renderWithContext(() => useDToast());
-      act(() => {
-        result.current.toast({ title: 'Transferencia enviada', description, ...data });
-      });
-      const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-      const { container, getByRole } = render(
-        <DContextProvider>
-          {renderFunction(createMockToast({ visible: true }))}
-        </DContextProvider>,
-      );
-      return { toast: container.querySelector('.toast'), getByRole };
-    };
-
-    it.each([
-      ['omitted (default)', undefined, { role: 'alert', 'aria-live': 'assertive' }],
-      ['alert', 'alert', { role: 'alert', 'aria-live': 'assertive' }],
-      ['status', 'status', { role: 'status', 'aria-live': 'polite' }],
-      ['none', 'none', { role: null, 'aria-live': null }],
-    ] as const)('renders the live region for role %s', (__, role, expected) => {
-      const { toast } = renderToast({ role });
-      expect(toast?.getAttribute('role')).toBe(expected.role);
-      expect(toast?.getAttribute('aria-live')).toBe(expected['aria-live']);
-      expect(toast?.getAttribute('aria-atomic')).toBe(role === 'none' ? null : 'true');
-    });
-
-    it('names the close button with closeAriaLabel, "Close" by default', () => {
-      expect(renderToast({ closeAriaLabel: 'Cerrar notificación' })
-        .getByRole('button', { name: 'Cerrar notificación' })).toBeInTheDocument();
-      mockCustom.mockClear();
-      expect(renderToast({}).getByRole('button', { name: 'Close' })).toBeInTheDocument();
-    });
+  it('should not move focus', () => {
+    const { api } = setup();
+    const before = document.activeElement;
+    act(() => { api().toast({ title: 'Saved' }); });
+    expect(document.activeElement).toBe(before);
   });
 });

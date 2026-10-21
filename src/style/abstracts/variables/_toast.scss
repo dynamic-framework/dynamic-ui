@@ -3,3 +3,15 @@ $toast-header-color: var(--#{$prefix}body-color) !default;
 $toast-header-background-color: var(--#{$prefix}white) !default;
 $toast-border-color: var(--#{$prefix}border-color) !default;
 $toast-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
+
+// The region toasts stack in. Owned by `DToastContainer` since react-hot-toast
+// went away — the library positioned its container with inline styles, which
+// is the one thing a design system cannot theme.
+$toast-container-inset: var(--#{$prefix}ref-spacer-4) !default;
+// Feeds Bootstrap's own `--#{$prefix}toast-spacing`, which is what puts the
+// gap between stacked toasts. Bootstrap's default is `$container-padding-x`
+// (1.5rem), far too much for a notification stack.
+$toast-container-gap: var(--#{$prefix}ref-spacer-2) !default;
+$toast-slot-transition-duration: .2s !default;
+$toast-slot-transition: opacity $toast-slot-transition-duration ease-in, transform $toast-slot-transition-duration ease-in !default;
+$toast-slot-travel: .5rem !default;
