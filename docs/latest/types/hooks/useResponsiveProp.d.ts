@@ -5,13 +5,14 @@
  * breakpoints ('xs', 'sm', 'md', 'lg', 'xl', 'xxl').
  * When used with `useResponsiveProp`, the value for
  * the highest matching breakpoint will be selected.
+ * `T` narrows the accepted values (defaults to any string).
  *
  * Usage example:
  * ```ts
  * const prop: ResponsiveProp = { xs: "small", md: "medium", xl: "large" };
  * ```
  */
-export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
+export type ResponsiveProp<T extends string = string> = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', T>>;
 /**
  * React hook to resolve a responsive property value based on the current viewport breakpoint.
  *
@@ -31,5 +32,5 @@ export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '
  * ```
  */
 export declare function useResponsiveProp(useListener?: boolean): {
-    responsivePropValue: (prop: ResponsiveProp) => string | undefined;
+    responsivePropValue: <T extends string>(prop: Partial<Record<"sm" | "lg" | "md" | "xl" | "xxl" | "xs", T>>) => T | undefined;
 };

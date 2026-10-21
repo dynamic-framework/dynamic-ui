@@ -1,12 +1,12 @@
 import { type ButtonHTMLAttributes } from 'react';
 import { ResponsiveProp } from '../../hooks/useResponsiveProp';
-import type { BaseProps, ButtonVariant, ComponentColor, EndIconProps, StartIconProps } from '../interface';
+import type { BaseProps, ButtonVariant, ComponentColor, ComponentSize, EndIconProps, StartIconProps } from '../interface';
 interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>, BaseProps, StartIconProps, EndIconProps {
     href?: string;
     target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
     rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
     color?: ComponentColor;
-    size?: string | ResponsiveProp;
+    size?: ComponentSize | ResponsiveProp<ComponentSize>;
     variant?: ButtonVariant;
     text?: string;
     loading?: boolean;

@@ -171,30 +171,55 @@ function getKeyboardFocusableElements(container) {
     ].filter((element) => !element.hasAttribute('disabled'));
 }
 
-const loadPortalStack = () => Promise.resolve().then(function () { return require('./DPortalStack-6zJm6JoD.js'); }).then((module) => module.default);
+/**
+ * Portal stack without animations. Default renderer until an overlay component
+ * registers the animated `DPortalStack`.
+ */
+function DPortalStackStatic({ stack }) {
+    return (jsxRuntime.jsx(jsxRuntime.Fragment, { children: stack.flatMap(({ Component, name, payload, }) => [
+            jsxRuntime.jsx("div", { className: "backdrop show" }, `${name}-backdrop`),
+            jsxRuntime.jsx(Component, { name: name, payload: payload }, name),
+        ]) }));
+}
+
+/**
+ * Renderer used by `DPortalContextProvider` to paint the portal stack.
+ *
+ * Starts as `DPortalStackStatic` (no `framer-motion`). `DModal` and `DOffcanvas`
+ * register the animated `DPortalStack` when their module is evaluated, so
+ * `framer-motion` only ends up in a bundle that imports one of them (the
+ * confirm modal does, through `DModal`).
+ */
+let renderer = DPortalStackStatic;
+const listeners = new Set();
+function registerPortalStack(next) {
+    if (renderer === next)
+        return;
+    renderer = next;
+    listeners.forEach((listener) => listener());
+}
+function subscribePortalStack(listener) {
+    listeners.add(listener);
+    return () => {
+        listeners.delete(listener);
+    };
+}
+function getPortalStack() {
+    return renderer;
+}
+
 const DPortalContext = React.createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop }] = useStackState([]);
-    const [PortalStack, setPortalStack] = React.useState(null);
-    const pending = React.useRef([]);
-    const ready = React.useRef(false);
     useDisableBodyScrollEffect(Boolean(stack.length));
-    // Loads framer-motion off the critical path only when portals are configured,
-    // so the first openPortal does not wait for it.
-    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0;
-    React.useEffect(() => {
-        if (!hasPortals)
-            return;
-        loadPortalStack()
-            .then((Stack) => {
-            ready.current = true;
-            setPortalStack(() => Stack);
-        })
-            .catch(() => {
-            // openPortal retries the import and reports the failure.
-        });
-    }, [hasPortals]);
+    // The animated stack (framer-motion) is registered by the overlay components
+    // when they are imported; until then the static renderer is used.
+    const PortalStack = React.useSyncExternalStore(subscribePortalStack, getPortalStack, getPortalStack);
+    // Open portals keep rendering even if `availablePortals` is emptied meanwhile:
+    // otherwise the entry stays in the stack, invisible, with the body scroll
+    // locked and no backdrop or Escape to close it.
+    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0 || stack.length > 0;
     const openPortal = React.useCallback(
     // eslint-disable-next-line prefer-arrow-callback
     function openPortalImpl(name, payload) {
@@ -210,30 +235,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         }
         // K is a specific member of keyof T & string so the object satisfies
         // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
-        const item = { name, Component, payload };
-        if (ready.current) {
-            push(item);
-        }
-        else {
-            // Not loaded yet: the portal enters the stack together with its renderer.
-            pending.current.push(item);
-            loadPortalStack().then((Stack) => {
-                ready.current = true;
-                setPortalStack(() => Stack);
-                pending.current.splice(0).forEach(push);
-            }).catch((error) => {
-                pending.current = [];
-                // eslint-disable-next-line no-console
-                console.error('[DPortalContext] Could not load the portal stack', error);
-            });
-        }
+        push({ name, Component, payload });
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = React.useCallback(() => {
-        if (pending.current.length > 0) {
-            pending.current.pop();
-            return;
-        }
         // pop() is safe on empty stacks, so close remains idempotent.
         pop();
     }, [pop]);
@@ -290,7 +295,7 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
             window.removeEventListener('keydown', keyEvent);
         };
     }, [handleClose, portalName, stack.length]);
-    return (jsxRuntime.jsxs(DPortalContext.Provider, { value: value, children: [children, created && PortalStack && reactDom.createPortal(
+    return (jsxRuntime.jsxs(DPortalContext.Provider, { value: value, children: [children, created && hasPortals && reactDom.createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             jsxRuntime.jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsxRuntime.jsx(PortalStack, { stack: stack }) }), document.getElementById(portalName))] }));
@@ -3308,6 +3313,13 @@ var DListGroup = Object.assign(DListGroup$1, {
     Item: DListGroupItem,
 });
 
+function DPortalStack({ stack }) {
+    return (jsxRuntime.jsx(framerMotion.AnimatePresence, { children: stack.flatMap(({ Component, name, payload, }) => [
+            jsxRuntime.jsx(framerMotion.motion.div, { className: "backdrop", initial: { opacity: 0 }, animate: { opacity: 0.5 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' } }, `${name}-backdrop`),
+            jsxRuntime.jsx(Component, { name: name, payload: payload }, name),
+        ]) }));
+}
+
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, iconMaterialStyle, materialStyle: materialStyleProp, }) {
     var _a;
     const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
@@ -3331,6 +3343,9 @@ const defaultTransition$1 = {
     ease: 'easeInOut',
     duration: 0.3,
 };
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }) {
     const fullScreenClass = React.useMemo(() => {
         if (fullScreen) {
@@ -3398,6 +3413,9 @@ const defaultTransition = {
     ease: 'easeInOut',
     duration: 0.3,
 };
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', width, height, transition, children, dataAttributes, }) {
     // Only subscribe to breakpoint-change listeners when a responsive object is
     // actually provided, avoiding unnecessary matchMedia subscriptions for the
@@ -3503,6 +3521,97 @@ function DProgress({ className, style, currentValue, minValue = 0, maxValue = 10
     }), [enableStripedAnimation]);
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames('progress', className), style: Object.assign({ height }, style) }, dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": ariaLabelledBy ? undefined : (ariaLabel !== null && ariaLabel !== void 0 ? ariaLabel : 'Progress bar'), "aria-labelledby": ariaLabelledBy, style: { width: formatProgress }, "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
 }
+
+/** Numbers are treated as pixels; strings are passed as-is (`'50%'`, `'2rem'`). */
+function toCssSize(value) {
+    if (value === undefined)
+        return undefined;
+    return typeof value === 'number' ? `${value}px` : value;
+}
+/**
+ * Upper bound for `items` and `lines`. A skeleton only needs to fill the
+ * viewport, and an unbounded count would let `Array.from` throw or exhaust
+ * memory.
+ */
+const MAX_SKELETON_COUNT = 100;
+/**
+ * Normalizes a repetition count to an integer between 0 and
+ * `MAX_SKELETON_COUNT` so it can size an array. Non-finite values (`NaN`,
+ * `Infinity`) render nothing.
+ */
+function toCount(value) {
+    if (!Number.isFinite(value))
+        return 0;
+    return Math.min(Math.max(Math.floor(value), 0), MAX_SKELETON_COUNT);
+}
+/**
+ * Maps `rounded` to Bootstrap's `rounded-*` utilities. `undefined` keeps the
+ * radius from `--bs-skeleton-border-radius`.
+ */
+function roundedClass(rounded) {
+    if (rounded === undefined)
+        return undefined;
+    if (rounded === true)
+        return 'rounded';
+    if (rounded === false)
+        return 'rounded-0';
+    return `rounded-${rounded}`;
+}
+
+function DSkeletonText({ lines = 3, size, widths, lastLineWidth = '60%', rounded, className, style, dataAttributes, }) {
+    const lineWidths = React.useMemo(() => {
+        const count = toCount(lines);
+        return Array.from({ length: count }, (_, index) => {
+            if (widths === null || widths === void 0 ? void 0 : widths.length)
+                return toCssSize(widths[index % widths.length]);
+            if (count > 1 && index === count - 1)
+                return toCssSize(lastLineWidth);
+            return '100%';
+        });
+    }, [lines, widths, lastLineWidth]);
+    return (jsxRuntime.jsx("span", Object.assign({ className: classNames('d-skeleton-text', className), style: style, "aria-hidden": "true" }, dataAttributes, { children: lineWidths.map((width, index) => (jsxRuntime.jsx("span", { className: classNames('placeholder d-skeleton-item d-skeleton-line', size && `placeholder-${size}`, roundedClass(rounded)), style: { width } }, index))) })));
+}
+
+function DSkeletonBlock({ width = '100%', height = '1em', rounded, className, style, dataAttributes, }) {
+    return (jsxRuntime.jsx("span", Object.assign({ className: classNames('placeholder d-skeleton-item d-skeleton-block', roundedClass(rounded), className), style: Object.assign({ width: toCssSize(width), height: toCssSize(height) }, style), "aria-hidden": "true" }, dataAttributes)));
+}
+
+function DSkeletonCircle({ size = 40, className, style, dataAttributes, }) {
+    const diameter = toCssSize(size);
+    return (jsxRuntime.jsx("span", Object.assign({ className: classNames('placeholder d-skeleton-item d-skeleton-circle rounded-circle', className), style: Object.assign({ width: diameter, height: diameter }, style), "aria-hidden": "true" }, dataAttributes)));
+}
+
+/**
+ * `true` when a `DSkeleton` is rendered inside another one. Nested skeletons
+ * only lay out their items: the outermost one owns the `role="status"` region
+ * and the label announced by assistive technology, so composing skeletons made
+ * of skeletons never duplicates the announcement.
+ */
+const SkeletonContext = React.createContext(false);
+
+function DSkeleton$1({ animation, ariaLabel = 'Loading...', color, gap, direction = 'vertical', items, itemClassName, className, style, dataAttributes, children, }) {
+    const isNested = React.useContext(SkeletonContext);
+    // Nested skeletons without an explicit animation keep the one of their parent.
+    const resolvedAnimation = animation !== null && animation !== void 0 ? animation : (isNested ? undefined : 'glow');
+    const skeletonStyle = React.useMemo(() => (Object.assign(Object.assign(Object.assign({}, color && { [`--${PREFIX_BS}skeleton-bg`]: `var(--${PREFIX_BS}${color})` }), gap !== undefined && { [`--${PREFIX_BS}skeleton-gap`]: toCssSize(gap) }), style)), [color, gap, style]);
+    const content = React.useMemo(() => {
+        const isIterated = items !== undefined || typeof children === 'function';
+        if (!isIterated)
+            return children;
+        return Array.from({ length: toCount(items !== null && items !== void 0 ? items : 1) }, (_, index) => (jsxRuntime.jsx("div", { className: classNames('d-skeleton-slot', itemClassName), children: typeof children === 'function' ? children(index) : children }, index)));
+    }, [items, itemClassName, children]);
+    const contentClassName = classNames('d-skeleton-content', direction === 'horizontal' && 'd-skeleton-content-horizontal');
+    const animationClassName = resolvedAnimation && `d-skeleton-animation-${resolvedAnimation}`;
+    if (isNested) {
+        return (jsxRuntime.jsx("div", Object.assign({ className: classNames(contentClassName, animationClassName, className), style: skeletonStyle }, dataAttributes, { children: content })));
+    }
+    return (jsxRuntime.jsx(SkeletonContext.Provider, { value: true, children: jsxRuntime.jsxs("div", Object.assign({ className: classNames('d-skeleton', animationClassName, className), style: skeletonStyle }, dataAttributes, { children: [jsxRuntime.jsx("span", { className: "visually-hidden", role: "status", children: ariaLabel }), jsxRuntime.jsx("div", { className: contentClassName, "aria-hidden": "true", children: content })] })) }));
+}
+var DSkeleton = Object.assign(DSkeleton$1, {
+    Text: DSkeletonText,
+    Block: DSkeletonBlock,
+    Circle: DSkeletonCircle,
+});
 
 function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical = false, completed, alignStart = false, className, style, }) {
     const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { check, }, } = useDContext();
@@ -4794,6 +4903,10 @@ exports.DPasswordStrengthMeter = DPasswordStrengthMeter;
 exports.DPopover = DPopover;
 exports.DProgress = DProgress;
 exports.DSelect = DSelect;
+exports.DSkeleton = DSkeleton;
+exports.DSkeletonBlock = DSkeletonBlock;
+exports.DSkeletonCircle = DSkeletonCircle;
+exports.DSkeletonText = DSkeletonText;
 exports.DStepper = DStepper;
 exports.DStepperDesktop = DStepper$2;
 exports.DStepperMobile = DStepper$1;

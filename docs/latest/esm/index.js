@@ -55,6 +55,10 @@ export { default as DPasswordStrengthMeter } from './components/DPasswordStrengt
 export { default as DPopover } from './components/DPopover/DPopover.js';
 export { default as DProgress } from './components/DProgress/DProgress.js';
 export { default as DSelect } from './components/DSelect/DSelect.js';
+export { default as DSkeleton } from './components/DSkeleton/DSkeleton.js';
+export { default as DSkeletonText } from './components/DSkeleton/components/DSkeletonText.js';
+export { default as DSkeletonBlock } from './components/DSkeleton/components/DSkeletonBlock.js';
+export { default as DSkeletonCircle } from './components/DSkeleton/components/DSkeletonCircle.js';
 export { default as DStepper } from './components/DStepper/DStepper.js';
 export { default as DStepperDesktop } from './components/DStepperDesktop/DStepperDesktop.js';
 export { default as DStepperMobile } from './components/DStepperMobile/DStepperMobile.js';

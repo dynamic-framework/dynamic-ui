@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, StartIconProps } from '../interface';
-declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "onChange" | "value">, "label" | "onChange" | "invalid" | "value" | "size" | "floatingLabel" | keyof BaseProps | keyof FamilyIconProps | keyof StartIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "inputStart" | "inputEnd" | "readonly" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & StartIconProps & EndIconProps & {
+declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "label" | "invalid" | "value" | "size" | "onChange" | "floatingLabel" | keyof BaseProps | keyof FamilyIconProps | keyof StartIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "inputStart" | "inputEnd" | "readonly" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & StartIconProps & EndIconProps & {
     value?: string | undefined;
     /**
      * The label of the control. Any node is accepted, so it can carry a link, an

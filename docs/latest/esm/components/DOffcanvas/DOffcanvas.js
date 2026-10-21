@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { PREFIX_BS } from '../config.js';
+import DPortalStack from '../../contexts/portal/DPortalStack.js';
+import { registerPortalStack } from '../../contexts/portal/portalStackRegistry.js';
 import { useResponsiveProp } from '../../hooks/useResponsiveProp.js';
 import DOffcanvasHeader from './components/DOffcanvasHeader.js';
 import DOffcanvasBody from './components/DOffcanvasBody.js';
@@ -34,6 +36,9 @@ const defaultTransition = {
     ease: 'easeInOut',
     duration: 0.3,
 };
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', width, height, transition, children, dataAttributes, }) {
     // Only subscribe to breakpoint-change listeners when a responsive object is
     // actually provided, avoiding unnecessary matchMedia subscriptions for the

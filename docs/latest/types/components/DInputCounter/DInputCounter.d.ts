@@ -17,7 +17,7 @@ type NonDInputProps = {
     maxValue: number;
     onChange?: (value?: number) => void;
 };
-declare const ForwardedDInputCounter: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "onChange" | "value">, "label" | "onChange" | "invalid" | "value" | "size" | "floatingLabel" | keyof import("../interface").BaseProps | keyof import("../interface").FamilyIconProps | keyof import("../interface").StartIconProps | keyof import("../interface").EndIconProps | "loading" | "hint" | "valid" | "inputStart" | "inputEnd" | "readonly" | "onIconStartClick" | "onIconEndClick"> & import("../interface").BaseProps & import("../interface").FamilyIconProps & import("../interface").StartIconProps & import("../interface").EndIconProps & {
+declare const ForwardedDInputCounter: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "label" | "invalid" | "value" | "size" | "onChange" | "floatingLabel" | keyof import("../interface").BaseProps | keyof import("../interface").FamilyIconProps | keyof import("../interface").StartIconProps | keyof import("../interface").EndIconProps | "loading" | "hint" | "valid" | "inputStart" | "inputEnd" | "readonly" | "onIconStartClick" | "onIconEndClick"> & import("../interface").BaseProps & import("../interface").FamilyIconProps & import("../interface").StartIconProps & import("../interface").EndIconProps & {
     value?: string | undefined;
     label?: import("react").ReactNode;
     loading?: boolean | undefined;
@@ -32,5 +32,5 @@ declare const ForwardedDInputCounter: import("react").ForwardRefExoticComponent<
     onChange?: ((value: string) => void) | undefined;
     onIconStartClick?: ((value?: string | undefined) => void) | undefined;
     onIconEndClick?: ((value?: string | undefined) => void) | undefined;
-} & import("react").RefAttributes<HTMLInputElement>, "ref">, "onChange" | "value" | "type" | "validIcon" | "invalidIcon">, keyof NonDInputProps> & NonDInputProps & import("react").RefAttributes<HTMLInputElement>>;
+} & import("react").RefAttributes<HTMLInputElement>, "ref">, "value" | "type" | "onChange" | "validIcon" | "invalidIcon">, keyof NonDInputProps> & NonDInputProps & import("react").RefAttributes<HTMLInputElement>>;
 export default ForwardedDInputCounter;

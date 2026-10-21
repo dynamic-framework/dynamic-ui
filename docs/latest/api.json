@@ -1,9 +1,9 @@
 {
   "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
   "schemaVersion": "1.1.0",
-  "packageVersion": "2.11.0",
+  "packageVersion": "2.12.0",
   "repository": "https://github.com/dynamic-framework/dynamic-ui",
-  "generatedAt": "2026-10-06T19:32:53.740Z",
+  "generatedAt": "2026-10-21T23:08:02.237Z",
   "components": {
     "DAlert": {
       "description": "",
@@ -208,7 +208,7 @@
           "description": ""
         },
         "size": {
-          "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+          "type": "ComponentSize | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", ComponentSize>> | undefined",
           "required": false,
           "defaultValue": null,
           "description": ""
@@ -460,7 +460,7 @@
           "description": ""
         },
         "size": {
-          "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+          "type": "ComponentSize | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", ComponentSize>> | undefined",
           "required": false,
           "defaultValue": null,
           "description": ""
@@ -5797,6 +5797,210 @@
       "props": {},
       "parent": "DSelect",
       "accessor": "DSelect.Placeholder"
+    },
+    "DSkeleton": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/DSkeleton.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "animation": {
+          "type": "undefined | \"glow\" | \"wave\" | \"none\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Animation applied to every skeleton item inside. Nested skeletons inherit\nthe animation of the closest skeleton that sets one, so a nested skeleton\ncan replace it or turn it off with `none`."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Text announced by screen readers while loading. The skeleton shapes are\nhidden from assistive technology, so this is the only thing announced.\nIgnored by nested skeletons."
+        },
+        "color": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Theme color for the skeleton items (`primary`, `secondary`, `info`, ...)."
+        },
+        "gap": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Space between items, and between the shapes of every item. Numbers are\npixels."
+        },
+        "direction": {
+          "type": "undefined | \"vertical\" | \"horizontal\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Axis the items and their shapes are laid out on."
+        },
+        "items": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Number of times the item is repeated. Setting it turns the skeleton into an\niterator: every repetition is wrapped in its own `.d-skeleton-slot`.\nCapped at 100."
+        },
+        "itemClassName": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Class applied to the wrapper of every item."
+        },
+        "children": {
+          "type": "ReactNode | ((index: number) => ReactNode)",
+          "required": false,
+          "defaultValue": null,
+          "description": "Template of each item, as a node or as a function receiving the index.\nWithout `items` and without a function, children render as-is."
+        }
+      }
+    },
+    "DSkeletonText": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/components/DSkeletonText.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "lines": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": 3,
+          "description": "Number of lines to render. Capped at 100."
+        },
+        "size": {
+          "type": "undefined | \"xs\" | \"sm\" | \"lg\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Line height, mapped to Bootstrap's `placeholder-{size}`. Defaults to `1em`."
+        },
+        "widths": {
+          "type": "SkeletonDimension[] | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Width per line. When there are fewer widths than lines, the list repeats.\nTakes precedence over `lastLineWidth`."
+        },
+        "lastLineWidth": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": "60%",
+          "description": "Width of the last line when there is more than one line and no `widths`."
+        },
+        "rounded": {
+          "type": "SkeletonRounded | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Border radius of each line. See `DSkeleton.Block`."
+        }
+      },
+      "parent": "DSkeleton",
+      "accessor": "DSkeleton.Text"
+    },
+    "DSkeletonBlock": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/components/DSkeletonBlock.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "width": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": "100%",
+          "description": "Width of the block. Numbers are pixels."
+        },
+        "height": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": "1em",
+          "description": "Height of the block. Numbers are pixels."
+        },
+        "rounded": {
+          "type": "SkeletonRounded | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Border radius as a Bootstrap `rounded-*` utility. `true` maps to `rounded`,\n`false` to `rounded-0`. When omitted, `--bs-skeleton-border-radius` applies."
+        }
+      },
+      "parent": "DSkeleton",
+      "accessor": "DSkeleton.Block"
+    },
+    "DSkeletonCircle": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/components/DSkeletonCircle.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "size": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": 40,
+          "description": "Diameter of the circle. Numbers are pixels."
+        }
+      },
+      "parent": "DSkeleton",
+      "accessor": "DSkeleton.Circle"
     },
     "DStepper": {
       "description": "",

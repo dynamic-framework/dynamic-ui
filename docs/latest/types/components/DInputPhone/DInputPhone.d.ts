@@ -7,7 +7,7 @@ type OnChangeType = {
     country: ParsedCountry;
     isValid: boolean;
 };
-declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "inputMode" | "onChange" | "onWheel" | "value" | "type">, "label" | "onChange" | "invalid" | "value" | "size" | "floatingLabel" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
+declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "value" | "type" | "onChange" | "onWheel" | "inputMode">, "label" | "invalid" | "value" | "size" | "onChange" | "floatingLabel" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
     value?: string | undefined;
     /**
      * The label of the control. Any node is accepted, so it can carry a link, an

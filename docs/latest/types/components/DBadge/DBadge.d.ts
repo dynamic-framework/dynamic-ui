@@ -1,10 +1,10 @@
 /// <reference types="react" />
-import type { BaseProps, ComponentColor } from '../interface';
+import type { BaseProps, ComponentColor, ComponentSize } from '../interface';
 import { ResponsiveProp } from '../../hooks/useResponsiveProp';
 type Props = BaseProps & {
     text?: string;
     soft?: boolean;
-    size?: string | ResponsiveProp;
+    size?: ComponentSize | ResponsiveProp<ComponentSize>;
     rounded?: boolean;
     color?: ComponentColor;
     id?: string;

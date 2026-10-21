@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { PREFIX_BS } from '../config.js';
+import DPortalStack from '../../contexts/portal/DPortalStack.js';
+import { registerPortalStack } from '../../contexts/portal/portalStackRegistry.js';
 import DModalHeader from './components/DModalHeader.js';
 import DModalBody from './components/DModalBody.js';
 import DModalFooter from './components/DModalFooter.js';
@@ -11,6 +13,9 @@ const defaultTransition = {
     ease: 'easeInOut',
     duration: 0.3,
 };
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }) {
     const fullScreenClass = useMemo(() => {
         if (fullScreen) {

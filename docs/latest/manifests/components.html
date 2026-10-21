@@ -588,7 +588,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/72 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">68/72 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">11/513 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">4/73 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">69/73 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">11/527 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">38 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -1698,7 +1698,7 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DAlert</h2>
       <div class="badges">
-        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">7 prop types</label>
+        <label for="c-1-design-system-components-alert-props" class="badge ok as-toggle">18 prop types</label>
         <label for="c-1-design-system-components-alert-info" class="badge info as-toggle">1 info</label>
         <label for="c-1-design-system-components-alert-stories" class="badge ok as-toggle">11 stories</label>
         
@@ -1734,21 +1734,56 @@ function SettingsOffcanvas({ name }: PortalProps&lt;SettingsOffcanvasPayloads[&#
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">7 prop types</span>
+              <span class="badge ok">18 prop types</span>
             </div>
             <pre><code>Component: src/components/DAlert/DAlert.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>className?: string
 
-closeAriaLabel?: any = &#39;Close&#39;
+/**
+ * Accessible name of the close button.
+ */
+closeAriaLabel?: string | undefined = &#39;Close&#39;
 
-color?: any = &#39;success&#39;
+color?: ComponentStateColor | undefined = &#39;success&#39;
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-role?: any = &#39;alert&#39;
+icon?: string | undefined
 
-showIcon?: any = true
+iconClose?: string | undefined
+
+iconCloseFamilyClass?: string | undefined
+
+iconCloseFamilyPrefix?: string | undefined
+
+iconCloseMaterialStyle?: boolean | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+id?: string | undefined
+
+onClose?: (() =&gt; void) | undefined
+
+/**
+ * `alert` (default) interrupts the screen reader, for critical errors.
+ * `status` announces without interrupting, for dynamic non-critical
+ * messages. `none` renders no role, for static content already on screen.
+ */
+role?: LiveRegionRole | undefined = &#39;alert&#39;
+
+showClose?: boolean | undefined
+
+/**
+ * Renders the leading icon. Set to `false` for an alert without icon, such
+ * as an informative block inside a form where the icon competes with the
+ * content. When `true`, `icon` falls back to the one mapped to `color`.
+ */
+showIcon?: boolean | undefined = true
 
 style?: CSSProperties</code></pre>
           </div>
@@ -2149,7 +2184,7 @@ id?: string
 
 rounded?: boolean
 
-size?: string | ResponsiveProp
+size?: ComponentSize | ResponsiveProp&lt;ComponentSize&gt;
 
 soft?: boolean
 
@@ -2349,7 +2384,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-4-design-system-components-box-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-4-design-system-components-box-info" class="badge info as-toggle">1 info</label>
         <label for="c-4-design-system-components-box-stories" class="badge ok as-toggle">2 stories</label>
         
@@ -2368,7 +2403,7 @@ text?: string</code></pre>
   <input id="c-4-design-system-components-box-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-4-design-system-components-box-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2381,6 +2416,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -2435,7 +2485,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-5-patterns-mobile-bottom-sheets-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-5-patterns-mobile-bottom-sheets-info" class="badge info as-toggle">1 info</label>
         <label for="c-5-patterns-mobile-bottom-sheets-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -2454,7 +2504,7 @@ text?: string</code></pre>
   <input id="c-5-patterns-mobile-bottom-sheets-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-5-patterns-mobile-bottom-sheets-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2467,6 +2517,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -2551,7 +2616,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-6-patterns-mobile-dock-menus-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-6-patterns-mobile-dock-menus-info" class="badge info as-toggle">1 info</label>
         <label for="c-6-patterns-mobile-dock-menus-stories" class="badge ok as-toggle">6 stories</label>
         
@@ -2570,7 +2635,7 @@ text?: string</code></pre>
   <input id="c-6-patterns-mobile-dock-menus-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-6-patterns-mobile-dock-menus-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2583,6 +2648,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -2808,7 +2888,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-7-patterns-mobile-list-item-swipe-actions-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-7-patterns-mobile-list-item-swipe-actions-info" class="badge info as-toggle">1 info</label>
         <label for="c-7-patterns-mobile-list-item-swipe-actions-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -2827,7 +2907,7 @@ text?: string</code></pre>
   <input id="c-7-patterns-mobile-list-item-swipe-actions-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-7-patterns-mobile-list-item-swipe-actions-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2840,6 +2920,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -2897,7 +2992,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-8-patterns-mobile-lists-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-8-patterns-mobile-lists-info" class="badge info as-toggle">1 info</label>
         <label for="c-8-patterns-mobile-lists-stories" class="badge ok as-toggle">4 stories</label>
         
@@ -2916,7 +3011,7 @@ text?: string</code></pre>
   <input id="c-8-patterns-mobile-lists-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-8-patterns-mobile-lists-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2929,6 +3024,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -3022,7 +3132,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-9-patterns-mobile-otp-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-9-patterns-mobile-otp-info" class="badge info as-toggle">1 info</label>
         <label for="c-9-patterns-mobile-otp-stories" class="badge ok as-toggle">2 stories</label>
         
@@ -3041,7 +3151,7 @@ text?: string</code></pre>
   <input id="c-9-patterns-mobile-otp-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-9-patterns-mobile-otp-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3054,6 +3164,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -3118,7 +3243,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-10-patterns-mobile-welcome-carousel-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-10-patterns-mobile-welcome-carousel-info" class="badge info as-toggle">1 info</label>
         <label for="c-10-patterns-mobile-welcome-carousel-stories" class="badge ok as-toggle">2 stories</label>
         
@@ -3137,7 +3262,7 @@ text?: string</code></pre>
   <input id="c-10-patterns-mobile-welcome-carousel-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-10-patterns-mobile-welcome-carousel-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3150,6 +3275,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -3349,7 +3489,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-11-patterns-dashboard-view-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-11-patterns-dashboard-view-info" class="badge info as-toggle">1 info</label>
         <label for="c-11-patterns-dashboard-view-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -3368,7 +3508,7 @@ text?: string</code></pre>
   <input id="c-11-patterns-dashboard-view-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-11-patterns-dashboard-view-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3381,6 +3521,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -4110,7 +4265,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-12-patterns-form-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-12-patterns-form-info" class="badge info as-toggle">1 info</label>
         <label for="c-12-patterns-form-stories" class="badge ok as-toggle">8 stories</label>
         
@@ -4129,7 +4284,7 @@ text?: string</code></pre>
   <input id="c-12-patterns-form-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-12-patterns-form-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -4142,6 +4297,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -4623,7 +4793,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-13-patterns-input-range-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-13-patterns-input-range-info" class="badge info as-toggle">1 info</label>
         <label for="c-13-patterns-input-range-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -4642,7 +4812,7 @@ text?: string</code></pre>
   <input id="c-13-patterns-input-range-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-13-patterns-input-range-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -4655,6 +4825,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -4828,7 +5013,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-14-patterns-input-switch-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-14-patterns-input-switch-info" class="badge info as-toggle">1 info</label>
         <label for="c-14-patterns-input-switch-stories" class="badge ok as-toggle">4 stories</label>
         
@@ -4847,7 +5032,7 @@ text?: string</code></pre>
   <input id="c-14-patterns-input-switch-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-14-patterns-input-switch-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -4860,6 +5045,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -5178,7 +5378,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-15-patterns-master-detail-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-15-patterns-master-detail-info" class="badge info as-toggle">1 info</label>
         <label for="c-15-patterns-master-detail-stories" class="badge ok as-toggle">2 stories</label>
         
@@ -5197,7 +5397,7 @@ text?: string</code></pre>
   <input id="c-15-patterns-master-detail-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-15-patterns-master-detail-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -5210,6 +5410,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -5447,7 +5662,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-16-patterns-otp-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-16-patterns-otp-info" class="badge info as-toggle">1 info</label>
         <label for="c-16-patterns-otp-stories" class="badge ok as-toggle">4 stories</label>
         
@@ -5466,7 +5681,7 @@ text?: string</code></pre>
   <input id="c-16-patterns-otp-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-16-patterns-otp-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -5479,6 +5694,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -5563,7 +5793,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-17-patterns-radio-button-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-17-patterns-radio-button-info" class="badge info as-toggle">1 info</label>
         <label for="c-17-patterns-radio-button-stories" class="badge ok as-toggle">4 stories</label>
         
@@ -5582,7 +5812,7 @@ text?: string</code></pre>
   <input id="c-17-patterns-radio-button-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-17-patterns-radio-button-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -5595,6 +5825,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -5862,7 +6107,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DBox</h2>
       <div class="badges">
-        
+        <label for="c-18-patterns-table-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-18-patterns-table-info" class="badge info as-toggle">1 info</label>
         <label for="c-18-patterns-table-stories" class="badge ok as-toggle">16 stories</label>
         
@@ -5881,7 +6126,7 @@ text?: string</code></pre>
   <input id="c-18-patterns-table-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-18-patterns-table-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -5894,6 +6139,21 @@ text?: string</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DBox/DBox.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -6871,7 +7131,7 @@ loadingText?: string
 
 rel?: React.AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;[&#39;rel&#39;]
 
-size?: string | ResponsiveProp
+size?: ComponentSize | ResponsiveProp&lt;ComponentSize&gt;
 
 style?: CSSProperties
 
@@ -7553,7 +7813,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCard</h2>
       <div class="badges">
-        
+        <label for="c-22-design-system-components-card-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-22-design-system-components-card-info" class="badge info as-toggle">1 info</label>
         <label for="c-22-design-system-components-card-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -7572,7 +7832,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
   <input id="c-22-design-system-components-card-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-22-design-system-components-card-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -7585,6 +7845,21 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DCard/DCard.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -7724,7 +7999,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCard</h2>
       <div class="badges">
-        
+        <label for="c-23-patterns-card-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-23-patterns-card-info" class="badge info as-toggle">1 info</label>
         <label for="c-23-patterns-card-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -7743,7 +8018,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
   <input id="c-23-patterns-card-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-23-patterns-card-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -7756,6 +8031,21 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DCard/DCard.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -8054,7 +8344,7 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCarousel</h2>
       <div class="badges">
-        <label for="c-24-design-system-components-carousel-props" class="badge ok as-toggle">2 prop types</label>
+        <label for="c-24-design-system-components-carousel-props" class="badge ok as-toggle">31 prop types</label>
         <label for="c-24-design-system-components-carousel-info" class="badge info as-toggle">1 info</label>
         <label for="c-24-design-system-components-carousel-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -8090,11 +8380,13 @@ variant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;<
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">2 prop types</span>
+              <span class="badge ok">31 prop types</span>
             </div>
             <pre><code>Component: src/components/DCarousel/DCarousel.tsx</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>/**
+            <pre><code>dataAttributes?: DataAttributes | undefined
+
+/**
  * DIcon props used to render the &quot;previous&quot; arrow icon.
  */
 iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
@@ -8102,7 +8394,63 @@ iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
 /**
  * DIcon props used to render the &quot;next&quot; arrow icon.
  */
-iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
+iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;
+
+onActive?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onArrowsMounted?: ((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement) =&gt; void) | undefined
+
+onArrowsUpdated?: ((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement, prevIndex: number, nextIndex: number) =&gt; void) | undefined
+
+onAutoplayPause?: ((splide: Splide) =&gt; void) | undefined
+
+onAutoplayPlay?: ((splide: Splide) =&gt; void) | undefined
+
+onAutoplayPlaying?: ((splide: Splide, rate: number) =&gt; void) | undefined
+
+onClick?: ((splide: Splide, Slide: SlideComponent, e: MouseEvent) =&gt; void) | undefined
+
+onDestroy?: ((splide: Splide) =&gt; void) | undefined
+
+onDrag?: ((splide: Splide) =&gt; void) | undefined
+
+onDragged?: ((splide: Splide) =&gt; void) | undefined
+
+onDragging?: ((splide: Splide) =&gt; void) | undefined
+
+onHidden?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onInactive?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onLazyLoadLoaded?: ((splide: Splide, img: HTMLImageElement, Slide: SlideComponent) =&gt; void) | undefined
+
+onMounted?: ((splide: Splide) =&gt; void) | undefined
+
+onMove?: ((splide: Splide, index: number, prev: number, dest: number) =&gt; void) | undefined
+
+onMoved?: ((splide: Splide, index: number, prev: number, dest: number) =&gt; void) | undefined
+
+onNavigationMounted?: ((splide: Splide, splides: Splide[]) =&gt; void) | undefined
+
+onPaginationMounted?: ((splide: Splide, data: PaginationData, item: PaginationItem) =&gt; void) | undefined
+
+onPaginationUpdated?: ((splide: Splide, data: PaginationData, prev: PaginationItem, curr: PaginationItem) =&gt; void) | undefined
+
+onReady?: ((splide: Splide) =&gt; void) | undefined
+
+onRefresh?: ((splide: Splide) =&gt; void) | undefined
+
+onResize?: ((splide: Splide) =&gt; void) | undefined
+
+onResized?: ((splide: Splide) =&gt; void) | undefined
+
+onScroll?: ((splide: Splide) =&gt; void) | undefined
+
+onScrolled?: ((splide: Splide) =&gt; void) | undefined
+
+onUpdated?: ((splide: Splide, options: Options) =&gt; void) | undefined
+
+onVisible?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined</code></pre>
           </div>
         </div>
     
@@ -8308,7 +8656,7 @@ iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCarousel</h2>
       <div class="badges">
-        <label for="c-25-patterns-carousel-props" class="badge ok as-toggle">2 prop types</label>
+        <label for="c-25-patterns-carousel-props" class="badge ok as-toggle">31 prop types</label>
         <label for="c-25-patterns-carousel-info" class="badge info as-toggle">1 info</label>
         <label for="c-25-patterns-carousel-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -8344,11 +8692,13 @@ iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">2 prop types</span>
+              <span class="badge ok">31 prop types</span>
             </div>
             <pre><code>Component: src/components/DCarousel/DCarousel.tsx</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>/**
+            <pre><code>dataAttributes?: DataAttributes | undefined
+
+/**
  * DIcon props used to render the &quot;previous&quot; arrow icon.
  */
 iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
@@ -8356,7 +8706,63 @@ iconArrowLeft?: ComponentProps&lt;typeof DIcon&gt;
 /**
  * DIcon props used to render the &quot;next&quot; arrow icon.
  */
-iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;</code></pre>
+iconArrowRight?: ComponentProps&lt;typeof DIcon&gt;
+
+onActive?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onArrowsMounted?: ((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement) =&gt; void) | undefined
+
+onArrowsUpdated?: ((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement, prevIndex: number, nextIndex: number) =&gt; void) | undefined
+
+onAutoplayPause?: ((splide: Splide) =&gt; void) | undefined
+
+onAutoplayPlay?: ((splide: Splide) =&gt; void) | undefined
+
+onAutoplayPlaying?: ((splide: Splide, rate: number) =&gt; void) | undefined
+
+onClick?: ((splide: Splide, Slide: SlideComponent, e: MouseEvent) =&gt; void) | undefined
+
+onDestroy?: ((splide: Splide) =&gt; void) | undefined
+
+onDrag?: ((splide: Splide) =&gt; void) | undefined
+
+onDragged?: ((splide: Splide) =&gt; void) | undefined
+
+onDragging?: ((splide: Splide) =&gt; void) | undefined
+
+onHidden?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onInactive?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined
+
+onLazyLoadLoaded?: ((splide: Splide, img: HTMLImageElement, Slide: SlideComponent) =&gt; void) | undefined
+
+onMounted?: ((splide: Splide) =&gt; void) | undefined
+
+onMove?: ((splide: Splide, index: number, prev: number, dest: number) =&gt; void) | undefined
+
+onMoved?: ((splide: Splide, index: number, prev: number, dest: number) =&gt; void) | undefined
+
+onNavigationMounted?: ((splide: Splide, splides: Splide[]) =&gt; void) | undefined
+
+onPaginationMounted?: ((splide: Splide, data: PaginationData, item: PaginationItem) =&gt; void) | undefined
+
+onPaginationUpdated?: ((splide: Splide, data: PaginationData, prev: PaginationItem, curr: PaginationItem) =&gt; void) | undefined
+
+onReady?: ((splide: Splide) =&gt; void) | undefined
+
+onRefresh?: ((splide: Splide) =&gt; void) | undefined
+
+onResize?: ((splide: Splide) =&gt; void) | undefined
+
+onResized?: ((splide: Splide) =&gt; void) | undefined
+
+onScroll?: ((splide: Splide) =&gt; void) | undefined
+
+onScrolled?: ((splide: Splide) =&gt; void) | undefined
+
+onUpdated?: ((splide: Splide, options: Options) =&gt; void) | undefined
+
+onVisible?: ((splide: Splide, Slide: SlideComponent) =&gt; void) | undefined</code></pre>
           </div>
         </div>
     
@@ -9079,7 +9485,7 @@ text?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DCollapse</h2>
       <div class="badges">
-        <label for="c-27-design-system-components-collapse-props" class="badge ok as-toggle">7 prop types</label>
+        <label for="c-27-design-system-components-collapse-props" class="badge ok as-toggle">12 prop types</label>
         <label for="c-27-design-system-components-collapse-info" class="badge info as-toggle">1 info</label>
         <label for="c-27-design-system-components-collapse-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -9115,21 +9521,36 @@ text?: string</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">7 prop types</span>
+              <span class="badge ok">12 prop types</span>
             </div>
             <pre><code>Component: src/components/DCollapse/DCollapse.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>className?: string
 
+Component: ReactNode | ReactElement&lt;unknown, string | JSXElementConstructor&lt;any&gt;&gt;
+
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-defaultCollapsed?: any = true
+/**
+ * Reactive prop for controlled and uncontrolled mode.
+ * @param true show the component closed (collapsed)
+ * @param false show the component open (expanded)
+ */
+defaultCollapsed?: boolean | undefined = true
+
+iconClose?: string | undefined
 
 iconFamilyClass?: string
 
 iconFamilyPrefix?: string
 
 iconMaterialStyle?: boolean
+
+iconOpen?: string | undefined
+
+id?: string | undefined
+
+onChange?: ((value: boolean) =&gt; void) | undefined
 
 style?: CSSProperties</code></pre>
           </div>
@@ -9267,7 +9688,7 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DContextProvider</h2>
       <div class="badges">
-        <label for="c-28-design-system-context-contextprovider-props" class="badge ok as-toggle">6 prop types</label>
+        <label for="c-28-design-system-context-contextprovider-props" class="badge ok as-toggle">8 prop types</label>
         
         <label for="c-28-design-system-context-contextprovider-stories" class="badge ok as-toggle">11 stories</label>
         
@@ -9296,24 +9717,31 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">6 prop types</span>
+              <span class="badge ok">8 prop types</span>
             </div>
             <pre><code>Component: src/contexts/DContext.tsx::DContextProvider</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>currency?: any = {
+            <pre><code>/**
+ * Map of portal name to the component that renders it.
+ */
+availablePortals?: PortalAvailableList&lt;T&gt; | undefined
+
+breakpoints?: BreakpointProps | undefined
+
+currency?: CurrencyProps | undefined = {
   symbol: &#39;$&#39;,
   precision: 2,
   separator: &#39;,&#39;,
   decimal: &#39;.&#39;,
 }
 
-icon?: any = {
+icon?: IconProps | undefined = {
   familyClass: DEFAULT_ICON_FAMILY_CLASS,
   familyPrefix: DEFAULT_ICON_FAMILY_PREFIX,
   materialStyle: false,
 }
 
-iconMap?: any = {
+iconMap?: IconMapProps | undefined = {
   x: &#39;X&#39;,
   xLg: &#39;X&#39;,
   chevronUp: &#39;ChevronUp&#39;,
@@ -9338,11 +9766,14 @@ iconMap?: any = {
   },
 }
 
-iconRegistry?: any = undefined
+iconRegistry?: Record&lt;string, IconComponent&gt; | undefined = undefined
 
-language?: any = &#39;en&#39;
+language?: string | undefined = &#39;en&#39;
 
-portalName?: any = &#39;d-portal&#39;</code></pre>
+/**
+ * DOM element id used as the portal mount point.
+ */
+portalName?: string | undefined = &#39;d-portal&#39;</code></pre>
           </div>
         </div>
     
@@ -9846,7 +10277,7 @@ Component to format and display a currency value using a `DContextProvider` to g
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DDataStateWrapper</h2>
       <div class="badges">
-        
+        <label for="c-31-design-system-components-data-state-wrapper-props" class="badge ok as-toggle">9 prop types</label>
         
         <label for="c-31-design-system-components-data-state-wrapper-stories" class="badge ok as-toggle">8 stories</label>
         
@@ -9865,12 +10296,46 @@ Component to format and display a currency value using a `DContextProvider` to g
   <input id="c-31-design-system-components-data-state-wrapper-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-31-design-system-components-data-state-wrapper-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
     
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">9 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DDataStateWrapper/DDataStateWrapper.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Receives the array.
+ */
+children: (data: T[]) =&gt; ReactNode
+
+/**
+ * A collection; empty when it has no items. For a single resource, pass the
+ * object itself: that overload is typed by `DDataStateWrapperSingleProps`.
+ */
+data: T[] | undefined
+
+isError: boolean
+
+isLoading: boolean
+
+messages?: DDataStateMessages | undefined
+
+onRetry?: (() =&gt; void) | undefined
+
+renderEmpty?: Renderable
+
+renderError?: Renderable
+
+renderLoading?: Renderable</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -10240,7 +10705,7 @@ Component to format and display a currency value using a `DContextProvider` to g
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DDatePicker</h2>
       <div class="badges">
-        <label for="c-32-design-system-components-datepicker-props" class="badge ok as-toggle">29 prop types</label>
+        <label for="c-32-design-system-components-datepicker-props" class="badge ok as-toggle">114 prop types</label>
         <label for="c-32-design-system-components-datepicker-info" class="badge info as-toggle">1 info</label>
         <label for="c-32-design-system-components-datepicker-stories" class="badge ok as-toggle">19 stories</label>
         <label for="c-32-design-system-components-datepicker-docs" class="badge ok as-toggle">1 doc</label>
@@ -10276,17 +10741,65 @@ Component to format and display a currency value using a `DContextProvider` to g
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">29 prop types</span>
+              <span class="badge ok">114 prop types</span>
             </div>
             <pre><code>Component: src/components/DDatePicker/DDatePicker.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>ariaLabelInputTime?: string
+            <pre><code>allowSameDay?: boolean | undefined
+
+ariaDescribedBy?: string | undefined
+
+ariaInvalid?: string | undefined
+
+ariaLabelClose?: string | undefined
+
+ariaLabelInputTime?: string
+
+ariaLabelledBy?: string | undefined
+
+ariaRequired?: string | undefined
+
+autoComplete?: string | undefined
+
+autoFocus?: boolean | undefined
+
+calendarClassName?: string | undefined
+
+calendarContainer?: ElementType&lt;any, keyof IntrinsicElements&gt; | undefined
+
+calendarIconClassname?: undefined
+
+calendarIconClassName?: string | undefined
 
 className?: string
 
+clearButtonClassName?: string | undefined
+
+clearButtonTitle?: string | undefined
+
+closeOnScroll?: boolean | ((event: Event) =&gt; boolean) | undefined
+
+customInput?: ReactElement&lt;unknown, string | JSXElementConstructor&lt;any&gt;&gt; | undefined
+
+customInputRef?: string | undefined
+
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
+dateFormat?: string | string[] | undefined
+
+dateFormatCalendar?: string | undefined
+
+disabled?: boolean | undefined
+
+focusSelectedMonth?: boolean | undefined
+
+forceShowMonthNavigation?: boolean | undefined
+
+form?: string | undefined
+
 formatHeaderDate?: string
+
+formatWeekDay?: ((date: string) =&gt; string) | undefined
 
 headerButtonColor?: string
 
@@ -10295,6 +10808,10 @@ headerButtonVariant?: &#39;solid&#39; | &#39;outline&#39; | &#39;link&#39; | &#3
 headerNextMonthAriaLabel?: string
 
 headerPrevMonthAriaLabel?: string
+
+highlightDates?: (Date | HighlightDate)[] | undefined
+
+holidays?: Holiday[] | undefined
 
 iconFamilyClass?: string
 
@@ -10310,6 +10827,8 @@ iconInput?: string
 
 iconMaterialStyle?: boolean
 
+id?: string | undefined
+
 inputActionAriaLabel?: string = &#39;open calendar&#39;
 
 inputAriaLabel?: string
@@ -10322,21 +10841,137 @@ inputLabel?: string
 
 invalid?: boolean = false
 
+isClearable?: boolean | undefined
+
 locale?: Locale
 
 maxYearSelect?: number
 
 minYearSelect?: number
 
+monthAriaLabelPrefix?: string | undefined
+
+monthsShown?: number | undefined
+
+name?: string | undefined
+
+nextMonthAriaLabel?: string | undefined
+
+nextMonthButtonLabel?: ReactNode
+
+nextYearAriaLabel?: string | undefined
+
+nextYearButtonLabel?: string | undefined
+
+onBlur?: FocusEventHandler&lt;HTMLElement&gt; | undefined
+
+onCalendarClose?: VoidFunction | undefined
+
+onCalendarOpen?: VoidFunction | undefined
+
+onChange?: ((date: Date | null, event?: MouseEvent&lt;HTMLElement, MouseEvent&gt; | KeyboardEvent&lt;HTMLElement&gt; | undefined) =&gt; void) | ((date: [...], event?: MouseEvent&lt;...&gt; | ... 1 more ... | undefined) =&gt; void) | ((date: Date[] | null, event?: MouseEvent&lt;...&gt; | ... 1 more ... | undefined) =&gt; void) | undefined
+
+onChangeRaw?: ((event?: MouseEvent&lt;HTMLElement, MouseEvent&gt; | KeyboardEvent&lt;HTMLElement&gt; | undefined) =&gt; void) | undefined
+
+onClickOutside?: ClickOutsideHandler | undefined
+
+onDayMouseEnter?: ((date: Date) =&gt; void) | undefined
+
+onFocus?: FocusEventHandler&lt;HTMLElement&gt; | undefined
+
+onInputClick?: VoidFunction | undefined
+
+onInputError?: ((error: { code: 1; msg: string; }) =&gt; void) | undefined
+
+onKeyDown?: ((event: KeyboardEvent&lt;HTMLElement&gt;) =&gt; void) | undefined
+
+onMonthChange?: ((date: Date) =&gt; void) | undefined
+
+onMonthMouseLeave?: VoidFunction | undefined
+
+onSelect?: ((date: Date | null, event?: MouseEvent&lt;HTMLElement, MouseEvent&gt; | KeyboardEvent&lt;HTMLElement&gt; | undefined) =&gt; void) | undefined
+
+onYearChange?: ((date: Date) =&gt; void) | undefined
+
+onYearMouseEnter?: ((event: MouseEvent&lt;HTMLDivElement, MouseEvent&gt;, year: number) =&gt; void) | undefined
+
+onYearMouseLeave?: ((event: MouseEvent&lt;HTMLDivElement, MouseEvent&gt;, year: number) =&gt; void) | undefined
+
+open?: boolean | undefined
+
 placeholder?: string
+
+placeholderText?: string | undefined
+
+popperClassName?: string | undefined
+
+preventOpenOnFocus?: boolean | undefined
+
+previousMonthAriaLabel?: string | undefined
+
+previousMonthButtonLabel?: ReactNode
+
+previousYearAriaLabel?: string | undefined
+
+previousYearButtonLabel?: string | undefined
+
+readOnly?: boolean | undefined
+
+renderCustomHeader?: ((props: ReactDatePickerCustomHeaderProps) =&gt; ReactElement&lt;unknown, string | JSXElementConstructor&lt;any&gt;&gt;) | undefined
+
+required?: boolean | undefined
+
+selectsMultiple?: true | undefined
+
+selectsRange?: true | undefined
+
+showDateSelect?: boolean | undefined
+
+showDisabledMonthNavigation?: boolean | undefined
 
 showHeaderSelectors?: boolean
 
+showIcon?: boolean | undefined
+
+showPopperArrow?: boolean | undefined
+
+showPreviousMonths?: boolean | undefined
+
+showTimeInput?: boolean | undefined
+
+showTimeSelect?: boolean | undefined
+
+showYearPicker?: boolean | undefined
+
+startOpen?: boolean | undefined
+
+strictParsing?: boolean | undefined
+
 style?: CSSProperties
+
+swapRange?: boolean | undefined
+
+tabIndex?: number | undefined
+
+timeFormat?: string | undefined
 
 timeId?: string = &#39;input-time&#39;
 
-valid?: boolean = false</code></pre>
+timeIntervals?: number | undefined
+
+title?: string | undefined
+
+toggleCalendarOnIconClick?: boolean | undefined
+
+useWeekdaysShort?: boolean | undefined
+
+valid?: boolean = false
+
+value?: string | undefined
+
+weekDayClassName?: ((date: Date) =&gt; string) | undefined
+
+weekLabel?: string | undefined</code></pre>
           </div>
         </div>
     
@@ -11360,7 +11995,7 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DErrorBoundary</h2>
       <div class="badges">
-        
+        <label for="c-34-design-system-components-error-boundary-props" class="badge ok as-toggle">6 prop types</label>
         <label for="c-34-design-system-components-error-boundary-info" class="badge info as-toggle">1 info</label>
         <label for="c-34-design-system-components-error-boundary-stories" class="badge ok as-toggle">8 stories</label>
         
@@ -11379,7 +12014,7 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
   <input id="c-34-design-system-components-error-boundary-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-34-design-system-components-error-boundary-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -11392,6 +12027,30 @@ placement?: &#39;auto&#39; | ResolvedSide = &#39;auto&#39;</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">6 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DErrorBoundary/DErrorBoundary.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>fallback?: ((props: FallbackProps) =&gt; ReactNode) | undefined
+
+/**
+ * Texts of the default fallback. Ignored when `fallback` is provided.
+ */
+messages?: { error?: string | undefined; retry?: string | undefined; } | undefined
+
+name?: string | undefined
+
+onError?: ((error: unknown, info: ErrorInfo) =&gt; void) | undefined
+
+onReset?: (() =&gt; void) | undefined
+
+resetKeys?: unknown[] | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -12187,7 +12846,7 @@ useListenerSize?: boolean</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInput</h2>
       <div class="badges">
-        <label for="c-36-design-system-components-input-props" class="badge ok as-toggle">7 prop types</label>
+        <label for="c-36-design-system-components-input-props" class="badge ok as-toggle">36 prop types</label>
         <label for="c-36-design-system-components-input-info" class="badge info as-toggle">1 info</label>
         <label for="c-36-design-system-components-input-stories" class="badge ok as-toggle">9 stories</label>
         
@@ -12223,23 +12882,90 @@ useListenerSize?: boolean</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">7 prop types</span>
+              <span class="badge ok">36 prop types</span>
             </div>
             <pre><code>Component: src/components/DInput/DInput.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>disabled?: any = false
+            <pre><code>className?: string | undefined
 
-floatingLabel?: any = false
+dataAttributes?: DataAttributes | undefined
 
-invalid?: any = false
+disabled?: any = false
 
-label?: any = &#39;&#39;
+floatingLabel?: boolean | undefined = false
 
-loading?: any = false
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined = false
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode = &#39;&#39;
+
+loading?: boolean | undefined = false
+
+onChange?: ((value: string) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
 
 placeholder?: any = &#39;&#39;
 
-valid?: any = false</code></pre>
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined = false
+
+value?: string | undefined</code></pre>
           </div>
         </div>
     
@@ -13055,7 +13781,7 @@ value?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputCounter</h2>
       <div class="badges">
-        <label for="c-39-design-system-components-input-counter-props" class="badge ok as-toggle">2 prop types</label>
+        <label for="c-39-design-system-components-input-counter-props" class="badge ok as-toggle">37 prop types</label>
         <label for="c-39-design-system-components-input-counter-info" class="badge info as-toggle">1 info</label>
         <label for="c-39-design-system-components-input-counter-stories" class="badge ok as-toggle">7 stories</label>
         
@@ -13091,13 +13817,105 @@ value?: string</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">2 prop types</span>
+              <span class="badge ok">37 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputCounter/DInputCounter.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>iconEndAriaLabel?: any = &#39;increase action&#39;
+            <pre><code>className?: string | undefined
 
-iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
+dataAttributes?: DataAttributes | undefined
+
+/**
+ * Starting value for uncontrolled usage; falls back to `minValue`.
+ */
+defaultValue?: number | undefined
+
+floatingLabel?: boolean | undefined
+
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined = &#39;increase action&#39;
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined = &#39;decrease action&#39;
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode
+
+loading?: boolean | undefined
+
+maxValue: number
+
+minValue: number
+
+onChange?: ((value?: number | undefined) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined
+
+/**
+ * Current value of the counter.
+ * 
+ * Passed together with `onChange` the counter is fully controlled: when the
+ * parent rejects a change the counter snaps back to this value.
+ * 
+ * Passed on its own it is taken as the starting value and the counter keeps
+ * counting by itself — the historical behaviour. Prefer `defaultValue` for
+ * that, it says so out loud.
+ */
+value?: number | undefined</code></pre>
           </div>
         </div>
     
@@ -13256,7 +14074,7 @@ iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DInputCurrency</h2>
       <div class="badges">
-        <label for="c-40-design-system-components-input-currency-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-40-design-system-components-input-currency-props" class="badge ok as-toggle">38 prop types</label>
         <label for="c-40-design-system-components-input-currency-info" class="badge info as-toggle">1 info</label>
         <label for="c-40-design-system-components-input-currency-stories" class="badge err as-toggle">11/11 story errors</label>
         
@@ -13292,11 +14110,100 @@ iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">1 prop type</span>
+              <span class="badge ok">38 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputCurrency/DInputCurrency.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>clamp?: any = true</code></pre>
+            <pre><code>/**
+ * When `true` (default) a value outside `minValue`/`maxValue` is brought
+ * into range on mount, when it changes and on blur, and `onChange` receives
+ * the clamped number. When `false` the entered value is kept and the input
+ * is marked invalid while it is out of range, unless `invalid` is set.
+ */
+clamp?: boolean | undefined = true
+
+className?: string | undefined
+
+currencyCode?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+floatingLabel?: boolean | undefined
+
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode
+
+loading?: boolean | undefined
+
+maxValue?: number | undefined
+
+minValue?: number | undefined
+
+onChange?: ((value?: number | undefined) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined
+
+value?: number | undefined</code></pre>
           </div>
         </div>
     
@@ -13516,7 +14423,7 @@ iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputMask</h2>
       <div class="badges">
-        
+        <label for="c-41-design-system-components-input-mask-props" class="badge ok as-toggle">35 prop types</label>
         <label for="c-41-design-system-components-input-mask-info" class="badge info as-toggle">1 info</label>
         <label for="c-41-design-system-components-input-mask-stories" class="badge ok as-toggle">3 stories</label>
         <label for="c-41-design-system-components-input-mask-docs" class="badge ok as-toggle">1 doc</label>
@@ -13535,7 +14442,7 @@ iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
   <input id="c-41-design-system-components-input-mask-stories" class="tg tg-stories" type="checkbox" hidden />
   <input id="c-41-design-system-components-input-mask-docs" class="tg tg-docs" type="checkbox" hidden />
   
-  
+  <input id="c-41-design-system-components-input-mask-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -13548,6 +14455,94 @@ iconStartAriaLabel?: any = &#39;decrease action&#39;</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">35 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DInputMask/DInputMask.tsx::default</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+component?: ForwardRefExoticComponent&lt;Omit&lt;Omit&lt;Omit&lt;DetailedHTMLProps&lt;InputHTMLAttributes&lt;HTMLInputElement&gt;, HTMLInputElement&gt;, &quot;ref&quot;&gt;, &quot;value&quot; | &quot;onChange&quot;&gt;, &quot;label&quot; | ... 16 more ... | &quot;onIconEndClick&quot;&gt; &amp; ... 5 more ... &amp; RefAttributes&lt;...&gt;&gt; | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+floatingLabel?: boolean | undefined
+
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode
+
+loading?: boolean | undefined
+
+onChange?: ((value: string) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined
+
+value?: string | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -13768,7 +14763,7 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputPassword</h2>
       <div class="badges">
-        <label for="c-42-design-system-components-input-password-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-42-design-system-components-input-password-props" class="badge ok as-toggle">34 prop types</label>
         <label for="c-42-design-system-components-input-password-info" class="badge info as-toggle">1 info</label>
         <label for="c-42-design-system-components-input-password-stories" class="badge ok as-toggle">6 stories</label>
         
@@ -13804,11 +14799,86 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">1 prop type</span>
+              <span class="badge ok">34 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputPassword/DInputPassword.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>iconEndAriaLabel?: any = &#39;show/hide password&#39;</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+floatingLabel?: boolean | undefined
+
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined = &#39;show/hide password&#39;
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode
+
+loading?: boolean | undefined
+
+onChange?: ((value: string) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined
+
+value?: string | undefined</code></pre>
           </div>
         </div>
     
@@ -13932,7 +15002,7 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputPhone</h2>
       <div class="badges">
-        <label for="c-43-design-system-components-input-phone-props" class="badge ok as-toggle">8 prop types</label>
+        <label for="c-43-design-system-components-input-phone-props" class="badge ok as-toggle">29 prop types</label>
         <label for="c-43-design-system-components-input-phone-info" class="badge info as-toggle">1 info</label>
         <label for="c-43-design-system-components-input-phone-stories" class="badge ok as-toggle">10 stories</label>
         
@@ -13968,25 +15038,76 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">8 prop types</span>
+              <span class="badge ok">29 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputPhone/DInputPhone.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>defaultCountry?: any = &#39;cl&#39;
+            <pre><code>className?: string | undefined
+
+countrySelectorProps?: Omit&lt;CountrySelectorProps, &quot;disabled&quot; | &quot;onSelect&quot; | &quot;selectedCountry&quot; | &quot;countries&quot;&gt; | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+defaultCountry?: CountryIso2 | undefined = &#39;cl&#39;
 
 disabled?: any = false
 
-floatingLabel?: any = false
+filteredCountries?: CountryIso2[] | undefined
 
-invalid?: any = false
+floatingLabel?: boolean | undefined = false
 
-label?: any = &#39;&#39;
+hint?: string | undefined
 
-loading?: any = false
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+inputEnd?: ReactNode
+
+invalid?: boolean | undefined = false
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode = &#39;&#39;
+
+loading?: boolean | undefined = false
+
+onChange?: ((value: OnChangeType) =&gt; void) | undefined
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
 
 placeholder?: any = &#39;&#39;
 
-valid?: any = false</code></pre>
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined = false
+
+value?: string | undefined</code></pre>
           </div>
         </div>
     
@@ -14382,7 +15503,7 @@ valid?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputRange</h2>
       <div class="badges">
-        <label for="c-45-design-system-components-input-range-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-45-design-system-components-input-range-props" class="badge ok as-toggle">9 prop types</label>
         <label for="c-45-design-system-components-input-range-info" class="badge info as-toggle">1 info</label>
         <label for="c-45-design-system-components-input-range-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -14418,15 +15539,38 @@ valid?: boolean = false</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">9 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputRange/DInputRange.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>filledValue?: any = true
+            <pre><code>/**
+ * Accessible name of the control, needed when `label` is not plain text.
+ * Without it the name becomes whatever the label subtree computes to, which
+ * for a label carrying a link or an icon reads as the wrong name or as none.
+ */
+ariaLabel?: string | undefined
+
+className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+filledValue?: boolean | undefined = true
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `ariaLabel` alongside it; a development-only warning says so when it
+ * is missing.
+ */
+label?: ReactNode
 
 max?: any = &#39;100&#39;
 
 min?: any = &#39;0&#39;
+
+style?: CSSProperties | undefined
 
 value?: any = &#39;0&#39;</code></pre>
           </div>
@@ -14533,7 +15677,7 @@ value?: any = &#39;0&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DInputSearch</h2>
       <div class="badges">
-        <label for="c-46-design-system-components-input-search-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-46-design-system-components-input-search-props" class="badge ok as-toggle">38 prop types</label>
         <label for="c-46-design-system-components-input-search-info" class="badge info as-toggle">1 info</label>
         <label for="c-46-design-system-components-input-search-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -14569,19 +15713,94 @@ value?: any = &#39;0&#39;</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">5 prop types</span>
+              <span class="badge ok">38 prop types</span>
             </div>
             <pre><code>Component: src/components/DInputSearch/DInputSearch.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>debounceMs?: number = 300
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+debounceMs?: number = 300
 
 defaultValue?: string
 
+floatingLabel?: boolean | undefined
+
+hint?: string | undefined
+
+iconEnd?: IconValue | undefined
+
+iconEndAriaLabel?: string | undefined
+
+iconEndDisabled?: boolean | undefined
+
+iconEndFamilyClass?: string | undefined
+
+iconEndFamilyPrefix?: string | undefined
+
+iconEndMaterialStyle?: boolean | undefined
+
+iconEndTabIndex?: number | undefined
+
+iconFamilyClass?: string | undefined
+
+iconFamilyPrefix?: string | undefined
+
+iconMaterialStyle?: boolean | undefined
+
+iconStart?: IconValue | undefined
+
+iconStartAriaLabel?: string | undefined
+
+iconStartDisabled?: boolean | undefined
+
+iconStartFamilyClass?: string | undefined
+
+iconStartFamilyPrefix?: string | undefined
+
+iconStartMaterialStyle?: boolean | undefined
+
+iconStartTabIndex?: number | undefined
+
+inputEnd?: ReactNode
+
+inputStart?: ReactNode
+
+invalid?: boolean | undefined
+
+/**
+ * The label of the control. Any node is accepted, so it can carry a link, an
+ * info trigger or other markup — the terms-and-conditions pattern.
+ * 
+ * Text doubles as the control&#39;s accessible name. A richer label does not, so
+ * pass `aria-label` alongside it; a development-only warning says so when it
+ * is missing. A rich label also does not fit `floatingLabel`, whose layout
+ * animates a single line of text.
+ */
+label?: ReactNode
+
+loading?: boolean | undefined
+
 onChange?: (value: string) =&gt; void
+
+onIconEndClick?: ((value?: string | undefined) =&gt; void) | undefined
+
+onIconStartClick?: ((value?: string | undefined) =&gt; void) | undefined
 
 onImmediateChange?: (value: string) =&gt; void
 
-placeholder?: any = &#39;Search...&#39;</code></pre>
+placeholder?: any = &#39;Search...&#39;
+
+readonly?: boolean | undefined
+
+size?: ComponentSize | undefined
+
+style?: CSSProperties | undefined
+
+valid?: boolean | undefined
+
+value?: string | undefined</code></pre>
           </div>
         </div>
     
@@ -15327,7 +16546,7 @@ valid?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DLayout</h2>
       <div class="badges">
-        
+        <label for="c-49-design-system-components-layout-props" class="badge ok as-toggle">10 prop types</label>
         <label for="c-49-design-system-components-layout-info" class="badge info as-toggle">1 info</label>
         <label for="c-49-design-system-components-layout-stories" class="badge ok as-toggle">10 stories</label>
         
@@ -15346,7 +16565,7 @@ valid?: boolean = false</code></pre>
   <input id="c-49-design-system-components-layout-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  
+  <input id="c-49-design-system-components-layout-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -15359,6 +16578,35 @@ valid?: boolean = false</code></pre>
     </div>
         </div>
     
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">10 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DLayout/DLayout.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>className?: string | undefined
+
+columns?: number | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+gap?: DLayoutGap | undefined
+
+gapLg?: DLayoutGap | undefined
+
+gapMd?: DLayoutGap | undefined
+
+gapSm?: DLayoutGap | undefined
+
+gapXl?: DLayoutGap | undefined
+
+gapXxl?: DLayoutGap | undefined
+
+style?: CSSProperties | undefined</code></pre>
+          </div>
+        </div>
     
         <div class="panel panel-stories">
           
@@ -15778,7 +17026,7 @@ valid?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DListGroup</h2>
       <div class="badges">
-        <label for="c-50-design-system-components-list-group-props" class="badge ok as-toggle">19 prop types</label>
+        <label for="c-50-design-system-components-list-group-props" class="badge ok as-toggle">25 prop types</label>
         <label for="c-50-design-system-components-list-group-info" class="badge info as-toggle">1 info</label>
         <label for="c-50-design-system-components-list-group-stories" class="badge ok as-toggle">15 stories</label>
         
@@ -15814,17 +17062,31 @@ valid?: boolean = false</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">19 prop types</span>
+              <span class="badge ok">25 prop types</span>
             </div>
             <pre><code>Component: src/components/DListGroup/components/DListGroupItem.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>ariaCurrent?: any = &#39;true&#39;
+            <pre><code>action?: boolean | undefined
 
-as?: any = &#39;li&#39;
+active?: boolean | undefined
+
+/**
+ * Value of `aria-current` while the item is `active`: `&#39;page&#39;` for the
+ * current page of a navigation, `&#39;step&#39;` for the current step of a flow.
+ */
+ariaCurrent?: &quot;page&quot; | &quot;step&quot; | &quot;location&quot; | &quot;date&quot; | &quot;time&quot; | &quot;true&quot; | undefined = &#39;true&#39;
+
+as?: &quot;li&quot; | &quot;a&quot; | &quot;button&quot; | undefined = &#39;li&#39;
 
 className?: string
 
+color?: string | undefined
+
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+disabled?: boolean | undefined
+
+href?: string | undefined
 
 iconEnd?: string | IconComponent
 
@@ -15853,6 +17115,8 @@ iconStartFamilyPrefix?: string
 iconStartMaterialStyle?: boolean
 
 iconStartTabIndex?: number
+
+onClick?: (() =&gt; void) | undefined
 
 style?: CSSProperties</code></pre>
           </div>
@@ -16160,7 +17424,7 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DListGroup</h2>
       <div class="badges">
-        <label for="c-51-patterns-list-group-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-51-patterns-list-group-props" class="badge ok as-toggle">9 prop types</label>
         <label for="c-51-patterns-list-group-info" class="badge info as-toggle">1 info</label>
         <label for="c-51-patterns-list-group-stories" class="badge ok as-toggle">11 stories</label>
         
@@ -16196,15 +17460,34 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">9 prop types</span>
             </div>
             <pre><code>Component: src/components/DListGroup/DListGroup.tsx</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>as?: any = &#39;ul&#39;
+            <pre><code>/**
+ * Accessible name of the list, so screen readers can tell it apart from
+ * other lists on the page (e.g. &quot;Recent movements&quot;). Ignored when
+ * `ariaLabelledBy` is set.
+ */
+ariaLabel?: string | undefined
+
+/**
+ * Id of a visible element that names the list, such as the heading above
+ * it. When set, `aria-label` is not rendered.
+ */
+ariaLabelledBy?: string | undefined
+
+as?: &quot;ul&quot; | &quot;ol&quot; | &quot;div&quot; | undefined = &#39;ul&#39;
 
 className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+flush?: boolean | undefined
+
+horizontal?: boolean | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot; | &quot;xxl&quot; | undefined
+
+numbered?: boolean | undefined
 
 style?: CSSProperties</code></pre>
           </div>
@@ -17435,7 +18718,7 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DModal</h2>
       <div class="badges">
-        <label for="c-52-design-system-components-modal-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-52-design-system-components-modal-props" class="badge ok as-toggle">11 prop types</label>
         <label for="c-52-design-system-components-modal-info" class="badge info as-toggle">1 info</label>
         <label for="c-52-design-system-components-modal-stories" class="badge ok as-toggle">10 stories</label>
         <label for="c-52-design-system-components-modal-docs" class="badge ok as-toggle">1 doc</label>
@@ -17471,15 +18754,31 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">3 prop types</span>
+              <span class="badge ok">11 prop types</span>
             </div>
             <pre><code>Component: src/components/DModal/DModal.tsx</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>className?: string
+            <pre><code>centered?: boolean | undefined
+
+className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-style?: CSSProperties</code></pre>
+fullScreen?: boolean | undefined
+
+fullScreenFrom?: ModalFullScreenFrom | undefined
+
+name: string
+
+scrollable?: boolean | undefined
+
+size?: ModalSize | undefined
+
+staticBackdrop?: boolean | undefined
+
+style?: CSSProperties
+
+transition?: Transition | undefined</code></pre>
           </div>
         </div>
     
@@ -17821,7 +19120,7 @@ This section provides guidance specifically for using `DModal` in **inline** sce
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DOffcanvas</h2>
       <div class="badges">
-        <label for="c-53-design-system-components-offcanvas-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-53-design-system-components-offcanvas-props" class="badge ok as-toggle">10 prop types</label>
         <label for="c-53-design-system-components-offcanvas-info" class="badge info as-toggle">1 info</label>
         <label for="c-53-design-system-components-offcanvas-stories" class="badge ok as-toggle">13 stories</label>
         <label for="c-53-design-system-components-offcanvas-docs" class="badge ok as-toggle">1 doc</label>
@@ -17857,7 +19156,7 @@ This section provides guidance specifically for using `DModal` in **inline** sce
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">10 prop types</span>
             </div>
             <pre><code>Component: src/components/DOffcanvas/DOffcanvas.tsx</code></pre>
             <pre><code>Props:</code></pre>
@@ -17865,9 +19164,29 @@ This section provides guidance specifically for using `DModal` in **inline** sce
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-openFrom?: any = &#39;end&#39;
+/**
+ * Overrides the offcanvas size on the `top`/`bottom` placements (defaults to `100%`).
+ * Accepts any CSS length (e.g. `&#39;50vh&#39;`, `&#39;320px&#39;`) or a `ResponsiveProp` object.
+ */
+height?: string | Partial&lt;Record&lt;&quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot; | &quot;xxl&quot;, string&gt;&gt; | undefined
 
-style?: CSSProperties</code></pre>
+name: string
+
+openFrom?: OffcanvasPositionToggleFrom | Partial&lt;Record&lt;&quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot; | &quot;xxl&quot;, OffcanvasPositionToggleFrom&gt;&gt; | undefined = &#39;end&#39;
+
+scrollable?: boolean | undefined
+
+staticBackdrop?: boolean | undefined
+
+style?: CSSProperties
+
+transition?: Transition | undefined
+
+/**
+ * Overrides the offcanvas size on the `start`/`end` placements (defaults to `400px`).
+ * Accepts any CSS length (e.g. `&#39;320px&#39;`, `&#39;50vw&#39;`, `&#39;100%&#39;`) or a `ResponsiveProp` object.
+ */
+width?: string | Partial&lt;Record&lt;&quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot; | &quot;xxl&quot;, string&gt;&gt; | undefined</code></pre>
           </div>
         </div>
     
@@ -18261,7 +19580,7 @@ This section provides guidance specifically for using `DOffcanvas` in **inline**
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DOtp</h2>
       <div class="badges">
-        <label for="c-54-design-system-components-otp-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-54-design-system-components-otp-props" class="badge ok as-toggle">6 prop types</label>
         <label for="c-54-design-system-components-otp-info" class="badge info as-toggle">1 info</label>
         <label for="c-54-design-system-components-otp-stories" class="badge ok as-toggle">3 stories</label>
         
@@ -18297,15 +19616,21 @@ This section provides guidance specifically for using `DOffcanvas` in **inline**
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">3 prop types</span>
+              <span class="badge ok">6 prop types</span>
             </div>
             <pre><code>Component: src/components/DOtp/DOtp.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>otpSize?: any = 6
+            <pre><code>action: () =&gt; void | Promise&lt;void&gt;
 
-seconds?: any = 15
+className?: string | undefined
 
-texts?: any = {
+isLoading?: boolean | undefined
+
+otpSize?: number | undefined = 6
+
+seconds?: number | undefined = 15
+
+texts?: { submit?: string | undefined; resend?: string | undefined; title?: string | undefined; contact?: ReactNode; resendText?: string | undefined; invalidCode?: string | undefined; } | undefined = {
   resend: &#39;Resend&#39;,
   resendText: &#39;Resend&#39;,
   submit: &#39;Authorize and continue&#39;,
@@ -18464,7 +19789,7 @@ texts?: any = {
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DPaginator</h2>
       <div class="badges">
-        <label for="c-55-design-system-components-paginator-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-55-design-system-components-paginator-props" class="badge ok as-toggle">24 prop types</label>
         <label for="c-55-design-system-components-paginator-info" class="badge info as-toggle">1 info</label>
         <label for="c-55-design-system-components-paginator-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -18500,11 +19825,57 @@ texts?: any = {
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">1 prop type</span>
+              <span class="badge ok">24 prop types</span>
             </div>
             <pre><code>Component: src/components/DPaginator/DPaginator.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;</code></pre>
+            <pre><code>activeItemClassName?: string | undefined
+
+ariaCurrentAttr?: boolean | undefined
+
+ariaNextLabel?: string | undefined
+
+ariaPreviousLabel?: string | undefined
+
+className?: string | undefined
+
+current: number
+
+dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+disabledItemClassName?: string | undefined
+
+disabledLinkClassName?: string | undefined
+
+extraClassName?: string | undefined
+
+labelBehaviour?: LabelBehaviour | undefined
+
+linkHref?: ((page: number) =&gt; string) | &quot;hash&quot; | &quot;omit&quot; | undefined
+
+maxWidth?: number | undefined
+
+narrowBehaviour?: NarrowBehaviour | undefined
+
+navClassName?: string | undefined
+
+nextClassName?: string | undefined
+
+nextLabel?: ReactNode
+
+onPageChange: (page: number) =&gt; void
+
+pageItemClassName?: string | undefined
+
+pageLinkClassName?: string | undefined
+
+previousClassName?: string | undefined
+
+previousLabel?: ReactNode
+
+renderNav?: boolean | undefined
+
+total: number</code></pre>
           </div>
         </div>
     
@@ -18943,7 +20314,7 @@ value?: string = &#39;&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DPopover</h2>
       <div class="badges">
-        <label for="c-57-design-system-components-popover-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-57-design-system-components-popover-props" class="badge ok as-toggle">7 prop types</label>
         <label for="c-57-design-system-components-popover-info" class="badge info as-toggle">1 info</label>
         <label for="c-57-design-system-components-popover-stories" class="badge ok as-toggle">2 stories</label>
         <label for="c-57-design-system-components-popover-docs" class="badge ok as-toggle">1 doc</label>
@@ -18979,15 +20350,21 @@ value?: string = &#39;&#39;</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">7 prop types</span>
             </div>
             <pre><code>Component: src/components/DPopover/DPopover.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>adjustContentToRender?: any = false
+            <pre><code>adjustContentToRender?: boolean | undefined = false
 
 className?: string
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+open: boolean
+
+renderComponent: (open: boolean) =&gt; ReactElement&lt;unknown, string | JSXElementConstructor&lt;any&gt;&gt;
+
+setOpen?: ((open: boolean) =&gt; void) | undefined
 
 style?: CSSProperties</code></pre>
           </div>
@@ -20037,14 +21414,448 @@ style?: CSSProperties</code></pre>
   no-story-error
   no-doc-error"
   role="listitem"
+  aria-label="DSkeleton">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> DSkeleton</h2>
+      <div class="badges">
+        <label for="c-61-design-system-components-skeleton-props" class="badge ok as-toggle">11 prop types</label>
+        <label for="c-61-design-system-components-skeleton-info" class="badge info as-toggle">1 info</label>
+        <label for="c-61-design-system-components-skeleton-stories" class="badge ok as-toggle">14 stories</label>
+        
+        
+      </div>
+    </div>
+    <div class="meta" title="./stories/components/DSkeleton.stories.tsx">design-system-components-skeleton · ./stories/components/DSkeleton.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-61-design-system-components-skeleton-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-61-design-system-components-skeleton-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+  <input id="c-61-design-system-components-skeleton-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">11 prop types</span>
+            </div>
+            <pre><code>Component: src/components/DSkeleton/DSkeleton.tsx</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Animation applied to every skeleton item inside. Nested skeletons inherit
+ * the animation of the closest skeleton that sets one, so a nested skeleton
+ * can replace it or turn it off with `none`.
+ */
+animation?: &#39;glow&#39; | &#39;wave&#39; | &#39;none&#39;
+
+/**
+ * Text announced by screen readers while loading. The skeleton shapes are
+ * hidden from assistive technology, so this is the only thing announced.
+ * Ignored by nested skeletons.
+ */
+ariaLabel?: string = &#39;Loading...&#39;
+
+/**
+ * Template of each item, as a node or as a function receiving the index.
+ * Without `items` and without a function, children render as-is.
+ */
+children?: ReactNode | ((index: number) =&gt; ReactNode)
+
+className?: string
+
+/**
+ * Theme color for the skeleton items (`primary`, `secondary`, `info`, ...).
+ */
+color?: string
+
+dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
+
+/**
+ * Axis the items and their shapes are laid out on.
+ */
+direction?: &#39;vertical&#39; | &#39;horizontal&#39; = &#39;vertical&#39;
+
+/**
+ * Space between items, and between the shapes of every item. Numbers are
+ * pixels.
+ */
+gap?: string | number
+
+/**
+ * Class applied to the wrapper of every item.
+ */
+itemClassName?: string
+
+/**
+ * Number of times the item is repeated. Setting it turns the skeleton into an
+ * iterator: every repetition is wrapped in its own `.d-skeleton-slot`.
+ * Capped at 100.
+ */
+items?: number
+
+style?: CSSProperties</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { DDataStateWrapper, DSkeleton } from "@dynamic-framework/ui-react";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;DSkeleton animation=&quot;glow&quot; ariaLabel=&quot;Loading...&quot;&gt;
+    &lt;DSkeleton.Block height={24} width=&quot;50%&quot; /&gt;
+    &lt;DSkeleton.Text lines={3} /&gt;
+&lt;/DSkeleton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Animations</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Animations = () =&gt; (
+  &lt;div className=&quot;d-flex flex-column gap-4&quot;&gt;
+    {([&#39;glow&#39;, &#39;wave&#39;, &#39;none&#39;] as const).map((animation) =&gt; (
+      &lt;div key={animation}&gt;
+        &lt;p className=&quot;small fw-bold mb-2&quot;&gt;{animation}&lt;/p&gt;
+        &lt;DSkeleton animation={animation} ariaLabel={`Loading (${animation})`}&gt;
+          &lt;DSkeleton.Text lines={2} /&gt;
+        &lt;/DSkeleton&gt;
+      &lt;/div&gt;
+    ))}
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Nested Animation</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const NestedAnimation = () =&gt; (
+  &lt;DSkeleton animation=&quot;wave&quot; ariaLabel=&quot;Loading profile&quot;&gt;
+    &lt;DSkeleton direction=&quot;horizontal&quot; gap={16} className=&quot;align-items-center&quot;&gt;
+      &lt;DSkeleton.Circle size={48} /&gt;
+      &lt;DSkeleton.Text lines={2} widths={[&#39;60%&#39;, &#39;35%&#39;]} /&gt;
+    &lt;/DSkeleton&gt;
+    &lt;DSkeleton animation=&quot;none&quot;&gt;
+      &lt;DSkeleton.Block height={96} /&gt;
+    &lt;/DSkeleton&gt;
+    &lt;DSkeleton animation=&quot;glow&quot;&gt;
+      &lt;DSkeleton.Text lines={2} size=&quot;sm&quot; /&gt;
+    &lt;/DSkeleton&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Text Lines</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TextLines = () =&gt; (
+  &lt;DSkeleton gap={32}&gt;
+    &lt;DSkeleton.Text lines={1} size=&quot;lg&quot; /&gt;
+    &lt;DSkeleton.Text lines={4} lastLineWidth=&quot;35%&quot; /&gt;
+    &lt;DSkeleton.Text lines={3} size=&quot;sm&quot; widths={[&#39;90%&#39;, &#39;75%&#39;, &#39;40%&#39;]} /&gt;
+    &lt;DSkeleton.Text lines={6} size=&quot;xs&quot; widths={[&#39;100%&#39;, 220]} /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Shapes</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Shapes = () =&gt; (
+  &lt;DSkeleton gap={24}&gt;
+    &lt;div className=&quot;d-flex gap-3 align-items-end&quot;&gt;
+      &lt;DSkeleton.Circle size={24} /&gt;
+      &lt;DSkeleton.Circle size={40} /&gt;
+      &lt;DSkeleton.Circle size={56} /&gt;
+      &lt;DSkeleton.Circle size=&quot;5rem&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div className=&quot;d-flex gap-3&quot;&gt;
+      {([false, 1, 3, 5, &#39;pill&#39;] as const).map((rounded) =&gt; (
+        &lt;DSkeleton.Block key={String(rounded)} width={64} height={40} rounded={rounded} /&gt;
+      ))}
+    &lt;/div&gt;
+    &lt;DSkeleton.Block height={120} /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Colors</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Colors = () =&gt; (
+  &lt;div className=&quot;d-flex flex-column gap-3&quot;&gt;
+    {THEMES.map((color) =&gt; (
+      &lt;DSkeleton key={color} color={color} ariaLabel={`Loading (${color})`}&gt;
+        &lt;div className=&quot;d-flex gap-3 align-items-center&quot;&gt;
+          &lt;DSkeleton.Circle size={32} /&gt;
+          &lt;DSkeleton.Text lines={1} /&gt;
+        &lt;/div&gt;
+      &lt;/DSkeleton&gt;
+    ))}
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Card Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CardSkeleton = () =&gt; (
+  &lt;div className=&quot;card&quot;&gt;
+    &lt;DSkeleton ariaLabel=&quot;Loading product&quot;&gt;
+      &lt;DSkeleton.Block height={160} rounded={false} /&gt;
+      &lt;div className=&quot;card-body d-flex flex-column gap-3 pt-0&quot;&gt;
+        &lt;DSkeleton.Block height={24} width=&quot;70%&quot; /&gt;
+        &lt;DSkeleton.Text lines={3} size=&quot;sm&quot; /&gt;
+        &lt;DSkeleton.Block height={40} width={120} /&gt;
+      &lt;/div&gt;
+    &lt;/DSkeleton&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">List Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ListSkeleton = () =&gt; (
+  &lt;DSkeleton items={4} ariaLabel=&quot;Loading transactions&quot; animation=&quot;wave&quot;&gt;
+    &lt;TransactionSkeleton /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Iterating Children</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const IteratingChildren = () =&gt; (
+  &lt;div className=&quot;d-flex flex-column gap-4&quot;&gt;
+    &lt;DSkeleton items={3} ariaLabel=&quot;Loading paragraphs&quot;&gt;
+      &lt;DSkeleton.Text lines={2} size=&quot;sm&quot; /&gt;
+    &lt;/DSkeleton&gt;
+    &lt;DSkeleton items={4} gap={8} ariaLabel=&quot;Loading menu&quot;&gt;
+      {(index) =&gt; &lt;DSkeleton.Block height={14} width={`${100 - (index * 15)}%`} /&gt;}
+    &lt;/DSkeleton&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Direction</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Direction = () =&gt; (
+  &lt;DSkeleton direction=&quot;horizontal&quot; items={3} gap={16} ariaLabel=&quot;Loading cards&quot;&gt;
+    &lt;DSkeleton.Block height={96} rounded={3} /&gt;
+    &lt;DSkeleton.Text lines={2} size=&quot;sm&quot; /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Table Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TableSkeleton = () =&gt; (
+  &lt;DSkeleton ariaLabel=&quot;Loading accounts&quot;&gt;
+    &lt;table className=&quot;table mb-0&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th scope=&quot;col&quot;&gt;Account&lt;/th&gt;
+          &lt;th scope=&quot;col&quot;&gt;Type&lt;/th&gt;
+          &lt;th scope=&quot;col&quot; className=&quot;text-end&quot;&gt;Balance&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        {Array.from({ length: 5 }, (_, row) =&gt; (
+          &lt;tr key={row}&gt;
+            &lt;td aria-hidden=&quot;true&quot;&gt;&lt;DSkeleton.Block width=&quot;80%&quot; /&gt;&lt;/td&gt;
+            &lt;td aria-hidden=&quot;true&quot;&gt;&lt;DSkeleton.Block width=&quot;50%&quot; /&gt;&lt;/td&gt;
+            &lt;td aria-hidden=&quot;true&quot;&gt;&lt;DSkeleton.Block width=&quot;60%&quot; className=&quot;ms-auto&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        ))}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Form Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const FormSkeleton = () =&gt; (
+  &lt;DSkeleton ariaLabel=&quot;Loading form&quot; gap={20}&gt;
+    &lt;DSkeleton items={3} gap={20}&gt;
+      &lt;DSkeleton.Block width=&quot;30%&quot; height={14} /&gt;
+      &lt;DSkeleton.Block height={44} /&gt;
+    &lt;/DSkeleton&gt;
+    &lt;DSkeleton.Block width=&quot;100%&quot; height={44} rounded=&quot;pill&quot; /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With DDataStateWrapper</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithDataStateWrapper = function Render() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState&lt;Account[]&gt;();
+
+  useEffect(() =&gt; {
+    if (!isLoading) return undefined;
+    const timeout = setTimeout(() =&gt; {
+      setData([
+        { alias: &#39;Cuenta corriente&#39;, number: &#39;•••• 1290&#39;, balance: &#39;$ 1.250.000&#39; },
+        { alias: &#39;Cuenta de ahorros&#39;, number: &#39;•••• 4821&#39;, balance: &#39;$ 12.450.000&#39; },
+        { alias: &#39;Tarjeta de crédito&#39;, number: &#39;•••• 7733&#39;, balance: &#39;$ 320.500&#39; },
+      ]);
+      setIsLoading(false);
+    }, 2000);
+    return () =&gt; clearTimeout(timeout);
+  }, [isLoading]);
+
+  return (
+    &lt;div className=&quot;d-flex flex-column gap-3&quot;&gt;
+      &lt;button
+        type=&quot;button&quot;
+        className=&quot;btn btn-sm btn-outline-primary align-self-start&quot;
+        onClick={() =&gt; setIsLoading(true)}
+        disabled={isLoading}
+      &gt;
+        Reload
+      &lt;/button&gt;
+      &lt;DDataStateWrapper
+        isLoading={isLoading}
+        isError={false}
+        data={data}
+        renderLoading={accountsSkeleton}
+      &gt;
+        {(accounts) =&gt; (
+          &lt;ul className=&quot;list-unstyled d-flex flex-column gap-3 mb-0&quot;&gt;
+            {accounts.map((account) =&gt; (
+              &lt;li key={account.number} className=&quot;d-flex justify-content-between align-items-center gap-3&quot;&gt;
+                &lt;div&gt;
+                  &lt;p className=&quot;mb-0&quot;&gt;{account.alias}&lt;/p&gt;
+                  &lt;p className=&quot;mb-0 small text-secondary&quot;&gt;{account.number}&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;span className=&quot;fw-bold&quot;&gt;{account.balance}&lt;/span&gt;
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        )}
+      &lt;/DDataStateWrapper&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Customization with CSS Variables</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CustomizationWithCSSVariables = () =&gt; (
+  &lt;DSkeleton
+    ariaLabel=&quot;Loading profile&quot;
+    style={{
+      [`--${PREFIX_BS}skeleton-bg`]: `var(--${PREFIX_BS}info)`,
+      [`--${PREFIX_BS}skeleton-border-radius`]: &#39;1rem&#39;,
+      [`--${PREFIX_BS}skeleton-gap`]: &#39;1.5rem&#39;,
+      [`--${PREFIX_BS}skeleton-line-gap`]: &#39;0.75rem&#39;,
+    } as CSSProperties}
+  &gt;
+    &lt;div className=&quot;d-flex gap-3 align-items-center&quot;&gt;
+      &lt;DSkeleton.Circle size={64} /&gt;
+      &lt;DSkeleton.Text lines={2} widths={[&#39;60%&#39;, &#39;40%&#39;]} /&gt;
+    &lt;/div&gt;
+    &lt;DSkeleton.Block height={96} /&gt;
+  &lt;/DSkeleton&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
   aria-label="DStepper">
   <div class="head">
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DStepper</h2>
       <div class="badges">
-        <label for="c-61-design-system-components-stepper-props" class="badge ok as-toggle">12 prop types</label>
-        <label for="c-61-design-system-components-stepper-info" class="badge info as-toggle">1 info</label>
-        <label for="c-61-design-system-components-stepper-stories" class="badge ok as-toggle">6 stories</label>
+        <label for="c-62-design-system-components-stepper-props" class="badge ok as-toggle">12 prop types</label>
+        <label for="c-62-design-system-components-stepper-info" class="badge info as-toggle">1 info</label>
+        <label for="c-62-design-system-components-stepper-stories" class="badge ok as-toggle">6 stories</label>
         
         
       </div>
@@ -20057,11 +21868,11 @@ style?: CSSProperties</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-61-design-system-components-stepper-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-61-design-system-components-stepper-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-62-design-system-components-stepper-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-62-design-system-components-stepper-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-61-design-system-components-stepper-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-62-design-system-components-stepper-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -20256,9 +22067,9 @@ vertical?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DStepperDesktop</h2>
       <div class="badges">
-        <label for="c-62-design-system-components-stepper-desktop-props" class="badge ok as-toggle">12 prop types</label>
-        <label for="c-62-design-system-components-stepper-desktop-info" class="badge info as-toggle">1 info</label>
-        <label for="c-62-design-system-components-stepper-desktop-stories" class="badge ok as-toggle">3 stories</label>
+        <label for="c-63-design-system-components-stepper-desktop-props" class="badge ok as-toggle">12 prop types</label>
+        <label for="c-63-design-system-components-stepper-desktop-info" class="badge info as-toggle">1 info</label>
+        <label for="c-63-design-system-components-stepper-desktop-stories" class="badge ok as-toggle">3 stories</label>
         
         
       </div>
@@ -20271,11 +22082,11 @@ vertical?: boolean = false</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-62-design-system-components-stepper-desktop-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-62-design-system-components-stepper-desktop-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-63-design-system-components-stepper-desktop-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-63-design-system-components-stepper-desktop-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-62-design-system-components-stepper-desktop-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-63-design-system-components-stepper-desktop-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -20464,9 +22275,9 @@ vertical?: boolean = false</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DStepperMobile</h2>
       <div class="badges">
-        <label for="c-63-design-system-components-stepper-mobile-props" class="badge ok as-toggle">5 prop types</label>
-        <label for="c-63-design-system-components-stepper-mobile-info" class="badge info as-toggle">1 info</label>
-        <label for="c-63-design-system-components-stepper-mobile-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-64-design-system-components-stepper-mobile-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-64-design-system-components-stepper-mobile-info" class="badge info as-toggle">1 info</label>
+        <label for="c-64-design-system-components-stepper-mobile-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -20479,11 +22290,11 @@ vertical?: boolean = false</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-63-design-system-components-stepper-mobile-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-63-design-system-components-stepper-mobile-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-64-design-system-components-stepper-mobile-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-64-design-system-components-stepper-mobile-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-63-design-system-components-stepper-mobile-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-64-design-system-components-stepper-mobile-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -20582,9 +22393,9 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DTabs</h2>
       <div class="badges">
-        <label for="c-64-design-system-components-tabs-props" class="badge ok as-toggle">3 prop types</label>
-        <label for="c-64-design-system-components-tabs-info" class="badge info as-toggle">1 info</label>
-        <label for="c-64-design-system-components-tabs-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-65-design-system-components-tabs-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-65-design-system-components-tabs-info" class="badge info as-toggle">1 info</label>
+        <label for="c-65-design-system-components-tabs-stories" class="badge ok as-toggle">10 stories</label>
         
         
       </div>
@@ -20597,11 +22408,11 @@ style?: CSSProperties</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-64-design-system-components-tabs-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-64-design-system-components-tabs-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-65-design-system-components-tabs-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-65-design-system-components-tabs-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-64-design-system-components-tabs-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-65-design-system-components-tabs-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -20618,7 +22429,7 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">3 prop types</span>
+              <span class="badge ok">4 prop types</span>
             </div>
             <pre><code>Component: src/components/DTabs/components/DTabContent.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
@@ -20626,7 +22437,9 @@ style?: CSSProperties</code></pre>
 
 dataAttributes?: Record&lt;`data-${string}`, string | number | undefined | null | boolean&gt;
 
-style?: CSSProperties</code></pre>
+style?: CSSProperties
+
+tab: string</code></pre>
           </div>
         </div>
     
@@ -21253,9 +23066,9 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DTimeline</h2>
       <div class="badges">
-        <label for="c-65-design-system-components-timeline-props" class="badge ok as-toggle">4 prop types</label>
-        <label for="c-65-design-system-components-timeline-info" class="badge info as-toggle">1 info</label>
-        <label for="c-65-design-system-components-timeline-stories" class="badge ok as-toggle">5 stories</label>
+        <label for="c-66-design-system-components-timeline-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-66-design-system-components-timeline-info" class="badge info as-toggle">1 info</label>
+        <label for="c-66-design-system-components-timeline-stories" class="badge ok as-toggle">5 stories</label>
         
         
       </div>
@@ -21268,11 +23081,11 @@ style?: CSSProperties</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-65-design-system-components-timeline-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-65-design-system-components-timeline-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-66-design-system-components-timeline-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-66-design-system-components-timeline-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-65-design-system-components-timeline-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-66-design-system-components-timeline-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -21498,9 +23311,9 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DToast</h2>
       <div class="badges">
-        <label for="c-66-design-system-components-toast-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-66-design-system-components-toast-info" class="badge info as-toggle">1 info</label>
-        <label for="c-66-design-system-components-toast-stories" class="badge ok as-toggle">8 stories</label>
+        <label for="c-67-design-system-components-toast-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-67-design-system-components-toast-info" class="badge info as-toggle">1 info</label>
+        <label for="c-67-design-system-components-toast-stories" class="badge ok as-toggle">8 stories</label>
         
         
       </div>
@@ -21513,11 +23326,11 @@ style?: CSSProperties</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-66-design-system-components-toast-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-66-design-system-components-toast-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-67-design-system-components-toast-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-67-design-system-components-toast-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-66-design-system-components-toast-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-67-design-system-components-toast-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -21534,11 +23347,22 @@ style?: CSSProperties</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">1 prop type</span>
+              <span class="badge ok">4 prop types</span>
             </div>
             <pre><code>Component: src/components/DToast/DToast.tsx</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>role?: any = &#39;alert&#39;</code></pre>
+            <pre><code>className?: string | undefined
+
+dataAttributes?: DataAttributes | undefined
+
+/**
+ * `alert` (default) interrupts the screen reader, for critical errors.
+ * `status` announces without interrupting, for confirmations and other
+ * non-critical messages. `none` renders no live region.
+ */
+role?: LiveRegionRole | undefined = &#39;alert&#39;
+
+style?: CSSProperties | undefined</code></pre>
           </div>
         </div>
     
@@ -21790,9 +23614,9 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DTooltip</h2>
       <div class="badges">
-        <label for="c-67-design-system-components-tooltip-props" class="badge ok as-toggle">14 prop types</label>
+        <label for="c-68-design-system-components-tooltip-props" class="badge ok as-toggle">14 prop types</label>
         
-        <label for="c-67-design-system-components-tooltip-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-68-design-system-components-tooltip-stories" class="badge ok as-toggle">4 stories</label>
         
         
       </div>
@@ -21806,10 +23630,10 @@ style?: CSSProperties</code></pre>
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
   
-  <input id="c-67-design-system-components-tooltip-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-68-design-system-components-tooltip-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-67-design-system-components-tooltip-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-68-design-system-components-tooltip-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -21983,9 +23807,9 @@ withHover?: boolean = true</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DVoucher</h2>
       <div class="badges">
-        <label for="c-68-design-system-components-voucher-props" class="badge ok as-toggle">4 prop types</label>
-        <label for="c-68-design-system-components-voucher-info" class="badge info as-toggle">1 info</label>
-        <label for="c-68-design-system-components-voucher-stories" class="badge ok as-toggle">7 stories</label>
+        <label for="c-69-design-system-components-voucher-props" class="badge ok as-toggle">11 prop types</label>
+        <label for="c-69-design-system-components-voucher-info" class="badge info as-toggle">1 info</label>
+        <label for="c-69-design-system-components-voucher-stories" class="badge ok as-toggle">7 stories</label>
         
         
       </div>
@@ -21998,11 +23822,11 @@ withHover?: boolean = true</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-68-design-system-components-voucher-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-68-design-system-components-voucher-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-69-design-system-components-voucher-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-69-design-system-components-voucher-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-68-design-system-components-voucher-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-69-design-system-components-voucher-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -22019,17 +23843,31 @@ withHover?: boolean = true</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">4 prop types</span>
+              <span class="badge ok">11 prop types</span>
             </div>
             <pre><code>Component: src/components/DVoucher/DVoucher.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>downloadText?: any = &#39;Download&#39;
+            <pre><code>amount?: string | undefined
 
-fileName?: any = &#39;voucher&#39;
+amountDetails?: ReactNode
 
-hideActions?: any = false
+className?: string | undefined
 
-shareText?: any = &#39;Share&#39;</code></pre>
+downloadText?: string | undefined = &#39;Download&#39;
+
+fileName?: string | undefined = &#39;voucher&#39;
+
+hideActions?: boolean | undefined = false
+
+icon?: string | false | Partial&lt;BaseProps &amp; { icon: IconValue; color?: string | undefined; size?: string | Partial&lt;Record&lt;&quot;xs&quot; | &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; | &quot;xl&quot; | &quot;xxl&quot;, string&gt;&gt; | undefined; ... 7 more ...; ariaLabel?: string | undefined; }&gt; | null | undefined
+
+message: string
+
+onError?: ((err: Error) =&gt; void | Promise&lt;void&gt;) | undefined
+
+shareText?: string | undefined = &#39;Share&#39;
+
+title: string</code></pre>
           </div>
         </div>
     
@@ -22228,9 +24066,9 @@ shareText?: any = &#39;Share&#39;</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> PlanComparator</h2>
       <div class="badges">
-        <label for="c-69-patterns-plan-comparator-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-69-patterns-plan-comparator-info" class="badge info as-toggle">1 info</label>
-        <label for="c-69-patterns-plan-comparator-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-70-patterns-plan-comparator-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-70-patterns-plan-comparator-info" class="badge info as-toggle">1 info</label>
+        <label for="c-70-patterns-plan-comparator-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -22242,9 +24080,9 @@ shareText?: any = &#39;Share&#39;</code></pre>
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-69-patterns-plan-comparator-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-69-patterns-plan-comparator-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-69-patterns-plan-comparator-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-70-patterns-plan-comparator-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-70-patterns-plan-comparator-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-70-patterns-plan-comparator-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -22505,9 +24343,9 @@ export const FourPlans: Story = {
     <div class="title">
       <h2><span class="status-dot dot-err"></span> QuickActions</h2>
       <div class="badges">
-        <label for="c-70-patterns-quick-actions-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-70-patterns-quick-actions-info" class="badge info as-toggle">1 info</label>
-        <label for="c-70-patterns-quick-actions-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-71-patterns-quick-actions-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-71-patterns-quick-actions-info" class="badge info as-toggle">1 info</label>
+        <label for="c-71-patterns-quick-actions-stories" class="badge ok as-toggle">9 stories</label>
         
         
       </div>
@@ -22519,9 +24357,9 @@ export const FourPlans: Story = {
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-70-patterns-quick-actions-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-70-patterns-quick-actions-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-70-patterns-quick-actions-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-71-patterns-quick-actions-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-71-patterns-quick-actions-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-71-patterns-quick-actions-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -23910,9 +25748,9 @@ export const SidebarListGrouped: Story = {
     <div class="title">
       <h2><span class="status-dot dot-err"></span> TextBackgroundVariants</h2>
       <div class="badges">
-        <label for="c-71-design-system-examples-text-background-variants-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-71-design-system-examples-text-background-variants-info" class="badge info as-toggle">2 infos</label>
-        <label for="c-71-design-system-examples-text-background-variants-stories" class="badge ok as-toggle">5 stories</label>
+        <label for="c-72-design-system-examples-text-background-variants-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-72-design-system-examples-text-background-variants-info" class="badge info as-toggle">2 infos</label>
+        <label for="c-72-design-system-examples-text-background-variants-stories" class="badge ok as-toggle">5 stories</label>
         
         
       </div>
@@ -23924,9 +25762,9 @@ export const SidebarListGrouped: Story = {
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-71-design-system-examples-text-background-variants-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-71-design-system-examples-text-background-variants-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-71-design-system-examples-text-background-variants-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-72-design-system-examples-text-background-variants-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-72-design-system-examples-text-background-variants-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-72-design-system-examples-text-background-variants-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   

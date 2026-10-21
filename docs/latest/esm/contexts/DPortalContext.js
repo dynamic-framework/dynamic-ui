@@ -1,35 +1,24 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
-import { createContext, useState, useRef, useEffect, useCallback, useMemo, useContext } from 'react';
+import { createContext, useSyncExternalStore, useCallback, useMemo, useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect.js';
 import usePortal from '../hooks/usePortal.js';
 import useStackState from '../hooks/useStackState.js';
 import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements.js';
+import { subscribePortalStack, getPortalStack } from './portal/portalStackRegistry.js';
 
-const loadPortalStack = () => import('./portal/DPortalStack.js').then((module) => module.default);
 const DPortalContext = createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop }] = useStackState([]);
-    const [PortalStack, setPortalStack] = useState(null);
-    const pending = useRef([]);
-    const ready = useRef(false);
     useDisableBodyScrollEffect(Boolean(stack.length));
-    // Loads framer-motion off the critical path only when portals are configured,
-    // so the first openPortal does not wait for it.
-    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0;
-    useEffect(() => {
-        if (!hasPortals)
-            return;
-        loadPortalStack()
-            .then((Stack) => {
-            ready.current = true;
-            setPortalStack(() => Stack);
-        })
-            .catch(() => {
-            // openPortal retries the import and reports the failure.
-        });
-    }, [hasPortals]);
+    // The animated stack (framer-motion) is registered by the overlay components
+    // when they are imported; until then the static renderer is used.
+    const PortalStack = useSyncExternalStore(subscribePortalStack, getPortalStack, getPortalStack);
+    // Open portals keep rendering even if `availablePortals` is emptied meanwhile:
+    // otherwise the entry stays in the stack, invisible, with the body scroll
+    // locked and no backdrop or Escape to close it.
+    const hasPortals = Object.keys(availablePortals !== null && availablePortals !== void 0 ? availablePortals : {}).length > 0 || stack.length > 0;
     const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
     function openPortalImpl(name, payload) {
@@ -45,30 +34,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         }
         // K is a specific member of keyof T & string so the object satisfies
         // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
-        const item = { name, Component, payload };
-        if (ready.current) {
-            push(item);
-        }
-        else {
-            // Not loaded yet: the portal enters the stack together with its renderer.
-            pending.current.push(item);
-            loadPortalStack().then((Stack) => {
-                ready.current = true;
-                setPortalStack(() => Stack);
-                pending.current.splice(0).forEach(push);
-            }).catch((error) => {
-                pending.current = [];
-                // eslint-disable-next-line no-console
-                console.error('[DPortalContext] Could not load the portal stack', error);
-            });
-        }
+        push({ name, Component, payload });
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = useCallback(() => {
-        if (pending.current.length > 0) {
-            pending.current.pop();
-            return;
-        }
         // pop() is safe on empty stacks, so close remains idempotent.
         pop();
     }, [pop]);
@@ -125,7 +94,7 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
             window.removeEventListener('keydown', keyEvent);
         };
     }, [handleClose, portalName, stack.length]);
-    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && PortalStack && createPortal(
+    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && hasPortals && createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(PortalStack, { stack: stack }) }), document.getElementById(portalName))] }));
