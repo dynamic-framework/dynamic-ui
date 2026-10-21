@@ -382,6 +382,15 @@ export default function DSelect<Value extends string | number = string>(
     ?? (hasLabelContent(label) || ariaLabelledBy ? undefined : i18n.ariaLabel);
 
   /**
+   * The one selected value, for the hidden input a single select posts.
+   *
+   * Read off the set rather than off `selectedOptions` for the same reason the
+   * input below is: whether the value can be given a label has nothing to do
+   * with whether it should be submitted.
+   */
+  const [onlySelectedValue] = selectedValues;
+
+  /**
    * The menu is a separate element from the control, so it is named
    * separately: a listbox announced on its own as "listbox" tells a screen
    * reader user nothing about which field they are in.
@@ -565,17 +574,32 @@ export default function DSelect<Value extends string | number = string>(
         {open ? `${matching.length} ${i18n.resultsAvailable}` : ''}
       </span>
 
-      {/* One hidden input per value, so a multi-select posts like a real one. */}
+      {/*
+        * One hidden input per value, so a multi-select posts like a real one.
+        *
+        * Serialised from `selectedValues`, NOT from `selectedOptions`.
+        *
+        * `selectedOptions` holds only what the current option list can put a
+        * name to, which is a rendering concern and not a data one. A remote
+        * search replaces that list, and the control's value then dropped out of
+        * the form — quietly, with no `onChange` to say it had gone, and with
+        * the single branch posting an empty string over it. A value nobody can
+        * label is still a value, and a form that shows one thing and submits
+        * another is the worst way to find that out.
+        *
+        * Omitted entirely while disabled, the way a browser leaves a disabled
+        * control out of a submission.
+        */}
       {name && !disabled && (multi
-        ? selectedOptions.map((option) => (
+        ? Array.from(selectedValues, (selectedValue) => (
           <input
-            key={String(option.value)}
+            key={String(selectedValue)}
             type="hidden"
             name={`${name}[]`}
-            value={String(option.value)}
+            value={String(selectedValue)}
           />
         ))
-        : <input type="hidden" name={name} value={selectedOptions[0]?.value ?? ''} />)}
+        : <input type="hidden" name={name} value={onlySelectedValue ?? ''} />)}
 
       {hint && <div className="form-text" id={`${id}Hint`}>{hint}</div>}
     </div>

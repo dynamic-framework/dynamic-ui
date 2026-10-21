@@ -741,6 +741,41 @@ describe('<DSelect />', () => {
     });
 
     /**
+     * What gets submitted cannot depend on whether the value can be given a
+     * label. A remote search replaces the option list, and the selection then
+     * dropped out of the form with no `onChange` to say so — the single branch
+     * posting an empty string over it.
+     */
+    it('should keep posting a value the option list can no longer name', () => {
+      // The server does the filtering, so the client must not filter again.
+      const props = { label: 'Country', name: 'country', filterOption: () => true };
+      const { container, rerender } = render(
+        <DSelect {...props} options={OPTIONS} value="cl" />,
+      );
+      expect(container.querySelector('input[type="hidden"]')).toHaveValue('cl');
+
+      rerender(<DSelect {...props} options={[{ value: 'ar', label: 'Argentina' }]} value="cl" />);
+
+      expect(container.querySelector('input[type="hidden"]')).toHaveValue('cl');
+    });
+
+    it('should keep posting every value when the list is replaced', () => {
+      const props = {
+        label: 'Countries', name: 'country', multi: true, filterOption: () => true,
+      };
+      const { container, rerender } = render(
+        <DSelect {...props} options={OPTIONS} value={['es', 'cl']} />,
+      );
+      const posted = () => [...container.querySelectorAll('input[type="hidden"]')]
+        .map((input) => (input as HTMLInputElement).value);
+      expect(posted()).toEqual(['es', 'cl']);
+
+      rerender(<DSelect {...props} options={[]} value={['es', 'cl']} />);
+
+      expect(posted()).toEqual(['es', 'cl']);
+    });
+
+    /**
      * The hidden inputs follow the SELECTION, not the `value` prop: a multi
      * select left uncontrolled starts with no `value` and no `defaultValue` at
      * all, and a form that posted nothing after three picks would be a control
