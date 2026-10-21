@@ -5,6 +5,8 @@ import { motion, type Transition } from 'framer-motion';
 import type { PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
+import DPortalStack from '../../contexts/portal/DPortalStack';
+import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import DModalHeader from './components/DModalHeader';
 import DModalBody from './components/DModalBody';
 import DModalFooter from './components/DModalFooter';
@@ -26,6 +28,10 @@ const defaultTransition: Transition = {
   ease: 'easeInOut',
   duration: 0.3,
 };
+
+// Portals rendered through DContextProvider animate their exit only when this
+// module is part of the bundle.
+registerPortalStack(DPortalStack);
 
 function DModal(
   {
