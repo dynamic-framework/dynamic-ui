@@ -109,16 +109,28 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
   let sequence = 0;
   const timers = new Map<string, Timer>();
   /**
-   * The toasts something is currently holding — a pointer over them, or focus
-   * inside them.
+   * Who is currently holding each toast — a pointer over it, or focus inside
+   * it.
    *
    * Kept beside the timers rather than inside them because a hold has to
    * OUTLIVE the timer it applies to: updating a toast in place replaces its
    * timer, and without this the replacement would start counting down under a
    * cursor that never left. The renderer sends no new enter event, because the
    * slot never unmounted.
+   *
+   * Holders are identified, not counted, because a renderer has to be able to
+   * release the hold IT took without touching anyone else's. A toast whose
+   * placement changes moves to another region, and the element holding it
+   * unmounts without ever emitting a leave event — so its renderer releases
+   * the hold on unmount. If that were a bare flag, releasing the dead element's
+   * hold would also clear the one its replacement had just taken.
    */
-  const holds = new Set<string>();
+  const holds = new Map<string, Set<unknown>>();
+
+  /** For a caller that has no identity of its own to offer. */
+  const ANONYMOUS_HOLDER = Symbol('toast-hold');
+
+  const isHeld = (id: string) => (holds.get(id)?.size ?? 0) > 0;
   const listeners = new Set<(state: ToastState<Content>) => void>();
 
   /*
@@ -224,15 +236,30 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     };
 
     timers.set(id, { cancel, pause, resume });
-    if (!holds.has(id)) schedule();
+    if (!isHeld(id)) schedule();
   };
 
   let autoId = 0;
 
+  /**
+   * An id no live toast is using.
+   *
+   * The counter alone is not enough: nothing stops a caller from passing
+   * `d-toast-2` as its own stable id, and the counter would hand that same
+   * string out later and silently replace a toast that has nothing to do with
+   * the new one. Only an id a caller DELIBERATELY reuses should update a toast.
+   */
+  const generateId = (): string => {
+    const taken = new Set(toasts.map((entry) => entry.id));
+    do {
+      autoId += 1;
+    } while (taken.has(`d-toast-${autoId}`));
+    return `d-toast-${autoId}`;
+  };
+
   /** Adds a toast, or updates the one with this id. Returns the id. */
   const show = (input: ToastInput<Content>): string => {
-    autoId += 1;
-    const id = input.id ?? `d-toast-${autoId}`;
+    const id = input.id ?? generateId();
     const duration = input.duration ?? DEFAULT_DURATION;
     const existing = toasts.find((entry) => entry.id === id);
 
@@ -295,17 +322,29 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
   /**
    * Holds the countdown — a pointer over it, or focus inside it.
    *
-   * Idempotent, and recorded even for a toast with no timer running, so an
-   * update that gives it one starts that timer held.
+   * Idempotent per holder, and recorded even for a toast with no timer
+   * running, so an update that gives it one starts that timer held.
+   *
+   * `holder` identifies who is holding. Pass the same value back to `resume`.
    */
-  const pause = (id: string) => {
-    if (holds.has(id)) return;
-    holds.add(id);
-    timers.get(id)?.pause();
+  const pause = (id: string, holder: unknown = ANONYMOUS_HOLDER) => {
+    let holders = holds.get(id);
+    if (!holders) {
+      holders = new Set();
+      holds.set(id, holders);
+    }
+    if (holders.has(holder)) return;
+    holders.add(holder);
+    /* The countdown stops for the FIRST holder; the rest just join. */
+    if (holders.size === 1) timers.get(id)?.pause();
   };
 
-  const resume = (id: string) => {
-    if (!holds.delete(id)) return;
+  /** Releases one holder's hold. The countdown resumes when the last one goes. */
+  const resume = (id: string, holder: unknown = ANONYMOUS_HOLDER) => {
+    const holders = holds.get(id);
+    if (!holders?.delete(holder)) return;
+    if (holders.size > 0) return;
+    holds.delete(id);
     timers.get(id)?.resume();
   };
 

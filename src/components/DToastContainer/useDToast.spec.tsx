@@ -4,6 +4,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
+
 import DToastContainer from './DToastContainer';
 import useDToast from './useDToast';
 import { toastStore } from '../DToast/toastStore';
@@ -401,6 +404,30 @@ describe('holding the timer', () => {
     expect(slot()).toHaveAttribute('data-leaving');
   });
 
+  /*
+   * An unmounting element emits no pointer-leave and no blur.
+   *
+   * Changing a toast's placement moves it to another region, which unmounts
+   * the element holding it. Without releasing the hold on unmount the toast
+   * would stay paused forever, and the replacement — which starts with nothing
+   * hovered or focused — could never release it either.
+   */
+  it('should release its hold when its slot unmounts', () => {
+    const { api } = setup();
+    act(() => {
+      api().toast({ title: 'Saved' }, { id: 'move', duration: 1000, placement: 'top-end' });
+    });
+    fireEvent.pointerEnter(slot()!);
+
+    act(() => {
+      api().toast({ title: 'Saved' }, { id: 'move', duration: 1000, placement: 'bottom-start' });
+    });
+
+    expect(slot()!.parentElement).toHaveAttribute('data-placement', 'bottom-start');
+    act(() => { jest.advanceTimersByTime(1001); });
+    expect(slot()).toHaveAttribute('data-leaving');
+  });
+
   /* The slot stays mounted across an update, so no new enter event arrives to
      re-hold the replacement timer. */
   it('should keep holding across an update in place', () => {
@@ -443,5 +470,71 @@ describe('the exit transition', () => {
 
     act(() => { fireEvent.transitionEnd(document.querySelector('.toast-slot')!); });
     expect(document.querySelector('.toast-slot')).not.toBeInTheDocument();
+  });
+});
+
+/**
+ * Server rendering.
+ *
+ * The server has no `document`, so the regions render in place. The first
+ * client render has to produce exactly that or React reports a mismatch and
+ * throws the server's markup away — so the portal opens after mounting, and
+ * the hydrating render reads an empty snapshot even when a toast is already
+ * queued.
+ */
+describe('hydration', () => {
+  const tree = () => (
+    <DContextProvider>
+      <DToastContainer />
+    </DContextProvider>
+  );
+
+  let cleanUp: (() => void) | undefined;
+  afterEach(() => {
+    act(() => cleanUp?.());
+    cleanUp = undefined;
+  });
+
+  const hydrateInto = (html: string) => {
+    const host = document.createElement('div');
+    host.innerHTML = html;
+    document.body.appendChild(host);
+    expect(host.querySelectorAll('.toast-container')).toHaveLength(6);
+
+    const errors = jest.spyOn(console, 'error').mockImplementation(() => {});
+    let root!: ReturnType<typeof hydrateRoot>;
+    act(() => { root = hydrateRoot(host, tree()); });
+    const calls = errors.mock.calls.map((args) => String(args[0]));
+    errors.mockRestore();
+
+    cleanUp = () => { root.unmount(); host.remove(); };
+    return { host, calls };
+  };
+
+  it('should render the regions in place on the server', () => {
+    const html = renderToString(tree());
+    expect(html.match(/toast-container/g)).toHaveLength(6);
+  });
+
+  it('should hydrate an empty store without a mismatch', () => {
+    const { host, calls } = hydrateInto(renderToString(tree()));
+
+    expect(calls.filter((message) => /hydrat|did not match/i.test(message))).toEqual([]);
+    /* Hydrated in place, then moved to the body once the effect opened the
+       portal — so the host is empty and the regions are all still there. */
+    expect(host).toBeEmptyDOMElement();
+    expect(document.body.querySelectorAll('.toast-container')).toHaveLength(6);
+  });
+
+  /* The hard case: a toast dispatched before hydration finished. The live
+     snapshot would disagree with the server's markup. */
+  it('should hydrate without a mismatch when a toast is already queued', () => {
+    const html = renderToString(tree());
+    act(() => { toastStore.show({ content: 'Early' }); });
+
+    const { calls } = hydrateInto(html);
+
+    expect(calls.filter((message) => /hydrat|did not match/i.test(message))).toEqual([]);
+    expect(screen.getByText('Early')).toBeInTheDocument();
   });
 });

@@ -107,6 +107,22 @@ describe('showing', () => {
     const { store } = setup();
     expect(store.show({ content: 'One' })).not.toBe(store.show({ content: 'Two' }));
   });
+
+  /*
+   * Nothing stops a caller from using `d-toast-2` as its own stable id, and a
+   * counter that does not look would hand that same string out later and
+   * silently replace a toast that has nothing to do with the new one. Only a
+   * deliberately reused id should update a toast.
+   */
+  it('should not generate an id a caller already took', () => {
+    const { store } = setup();
+    store.show({ id: 'd-toast-1', content: 'Mine' });
+    const generated = store.show({ content: 'New' });
+
+    expect(generated).not.toBe('d-toast-1');
+    expect(store.getSnapshot().toasts.map((entry) => entry.content))
+      .toEqual(['Mine', 'New']);
+  });
 });
 
 describe('updating in place', () => {
@@ -396,6 +412,40 @@ describe('the timer', () => {
     expect(store.getSnapshot().toasts[0].leaving).toBe(false);
     advance(2);
     expect(store.getSnapshot().toasts[0].leaving).toBe(true);
+  });
+
+  /*
+   * Holders are identified so one can let go without releasing another's hold:
+   * a renderer whose element unmounts releases the hold IT took, and must not
+   * clear the one its replacement may already have taken.
+   */
+  it('should keep holding until the last holder lets go', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saved', duration: 1000 });
+    const first = {};
+    const second = {};
+
+    store.pause(id, first);
+    store.pause(id, second);
+    store.resume(id, first);
+
+    advance(100000);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+
+    store.resume(id, second);
+    advance(1001);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(true);
+  });
+
+  it('should ignore a release from a holder that never held it', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saved', duration: 1000 });
+
+    store.pause(id, {});
+    store.resume(id, {});
+
+    advance(100000);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
   });
 
   it('should ignore a resume that matches no hold', () => {

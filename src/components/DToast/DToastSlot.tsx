@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useRef } from 'react';
+import {
+  useCallback, useEffect, useMemo, useRef,
+} from 'react';
 
 import type {
   FocusEvent, PointerEvent, ReactNode, TransitionEvent,
@@ -61,13 +63,30 @@ export default function DToastSlot({ entry }: Props) {
   const hovered = useRef(false);
   const focused = useRef(false);
 
+  /**
+   * This slot instance's identity, so the hold it takes is its own.
+   *
+   * A toast whose placement changes moves to another region, which unmounts
+   * this element and mounts a fresh one — and an unmounting element emits no
+   * pointer-leave and no blur, so without releasing it the store would keep a
+   * hold nobody can ever let go of and the toast would sit there forever. The
+   * replacement starts with both refs `false`, so it cannot release it either.
+   *
+   * Naming the holder is what makes the release safe: the two slots hold under
+   * different identities, so releasing the dead one's hold cannot clear the
+   * one its replacement may already have taken.
+   */
+  const holder = useRef({}).current;
+
   const sync = useCallback(() => {
     if (hovered.current || focused.current) {
-      toastStore.pause(id);
+      toastStore.pause(id, holder);
     } else {
-      toastStore.resume(id);
+      toastStore.resume(id, holder);
     }
-  }, [id]);
+  }, [id, holder]);
+
+  useEffect(() => () => { toastStore.resume(id, holder); }, [id, holder]);
 
   const onPointerEnter = useCallback(() => {
     hovered.current = true;

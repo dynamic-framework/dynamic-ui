@@ -1,10 +1,20 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
+
+import type { ReactNode } from 'react';
 
 import DToastRegion from '../DToast/DToastRegion';
 import { toastStore } from '../DToast/toastStore';
 
-import type { ToastPlacement } from '../DToast/store';
+import type { ToastPlacement, ToastState } from '../DToast/store';
+
+/**
+ * What the server renders, and what the client renders while hydrating.
+ *
+ * A module constant so its identity is stable: `useSyncExternalStore` compares
+ * snapshots by identity and would loop forever on a fresh object per call.
+ */
+const EMPTY_STATE: ToastState<ReactNode> = { toasts: [] };
 
 /** The six corners, in a fixed order so regions never reshuffle. */
 const PLACEMENTS: ToastPlacement[] = [
@@ -54,6 +64,16 @@ export type DToastContainerProps = {
  * An empty region costs an inert element: no size, no pointer events, nothing
  * to announce.
  *
+ * ## Server rendering
+ *
+ * The server has no `document`, so it renders the regions in place. The first
+ * client render has to produce exactly that — the same six empty regions, in
+ * the same position — or hydration reports a mismatch and React throws the
+ * server's markup away. So the portal is opened after mounting, not on the
+ * first render, and the hydrating render reads an empty snapshot even when a
+ * toast was already dispatched. React re-reads the live snapshot as soon as
+ * hydration finishes.
+ *
  * ## Where an unplaced toast goes is decided HERE
  *
  * `toast()` can be called before this mounts, so the store deliberately leaves
@@ -84,18 +104,28 @@ export default function DToastContainer(
     portal = true,
   }: DToastContainerProps,
 ) {
+  /*
+   * Mounted, not "is there a document".
+   *
+   * `typeof document !== 'undefined'` is true on the very first client render
+   * too, so it would open the portal during hydration — against a server tree
+   * that had rendered the regions in place.
+   */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const state = useSyncExternalStore(
     toastStore.subscribe,
     toastStore.getSnapshot,
     /*
-     * The server snapshot is the same empty one.
+     * Empty on the server, and empty again while hydrating.
      *
      * A toast is a response to something that happened in the browser, so
-     * there is never anything to render on the server — and returning a
-     * different object here would make React report a hydration mismatch for
-     * a difference that does not exist.
+     * there is never anything to render on the server. Returning the LIVE
+     * snapshot here instead would make the hydrating render disagree with the
+     * server's markup for any toast dispatched before hydration finished.
      */
-    toastStore.getSnapshot,
+    () => EMPTY_STATE,
   );
 
   const regions = (
@@ -112,7 +142,7 @@ export default function DToastContainer(
     </>
   );
 
-  return portal && typeof document !== 'undefined'
+  return portal && mounted
     ? createPortal(regions, document.body)
     : regions;
 }
