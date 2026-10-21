@@ -183,7 +183,15 @@ export default function DSelect<Value extends string | number = string>(
     items: options,
     multi,
     searchable,
-    disabled: disabled || loading,
+    /*
+     * `disabled`, and deliberately NOT `disabled || loading`.
+     *
+     * The two states are not the same thing. `disabled` is inert: nothing
+     * works. `loading` is busy but live — and for a combobox with `onSearch`
+     * it is busy BECAUSE the user is typing, so folding it into `disabled`
+     * stopped the search on its own first keystroke.
+     */
+    disabled,
     closeOnSelect: closeOnSelect ?? !multi,
     defaultValue,
     value,
@@ -265,10 +273,10 @@ export default function DSelect<Value extends string | number = string>(
   }, [activeIndex, open, refs.floating]);
 
   const focusInput = useCallback(() => {
-    if (disabled || loading) return;
+    if (disabled) return;
     inputRef.current?.focus();
     setOpen(true);
-  }, [disabled, loading, setOpen]);
+  }, [disabled, setOpen]);
 
   /* --- rendering ---------------------------------------------------------- */
 
@@ -412,7 +420,7 @@ export default function DSelect<Value extends string | number = string>(
           'd-combobox-filled': hasValue,
           'is-invalid': invalid,
           'is-valid': valid,
-          disabled: disabled || loading,
+          disabled,
         },
         className,
       )}
@@ -453,7 +461,7 @@ export default function DSelect<Value extends string | number = string>(
               type="button"
               className="d-combobox-tag-remove"
               aria-label={`${i18n.remove} ${option.label}`}
-              disabled={disabled || loading}
+              disabled={disabled}
               onClick={() => remove(option.value)}
             >
               <DIcon icon={x} />
@@ -481,7 +489,8 @@ export default function DSelect<Value extends string | number = string>(
           // Not searchable means the box is still the combobox — it just does
           // not take text. Read-only keeps a mobile keyboard from opening.
           readOnly={!searchable}
-          disabled={disabled || loading}
+          disabled={disabled}
+          {...loading && { 'aria-busy': true }}
           value={query}
           placeholder={floatingLabel && !hasValue ? ' ' : (placeholder ?? i18n.placeholder)}
           onChange={(event) => search(event.target.value)}
@@ -571,7 +580,8 @@ export default function DSelect<Value extends string | number = string>(
         * "still looking" from "nothing matches".
         */}
       <span className="visually-hidden" aria-live="polite">
-        {open ? `${matching.length} ${i18n.resultsAvailable}` : ''}
+        {loading && i18n.loading}
+        {!loading && open && `${matching.length} ${i18n.resultsAvailable}`}
       </span>
 
       {/*

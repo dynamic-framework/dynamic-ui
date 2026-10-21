@@ -669,13 +669,75 @@ describe('<DSelect />', () => {
       expect(container.querySelector('.d-combobox')).toHaveClass('disabled');
     });
 
-    it('should not open while loading', async () => {
+    it('should still open while loading', async () => {
       const user = userEvent.setup();
       render(<DSelect options={OPTIONS} label="Country" loading />);
 
       expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
       await user.click(combobox());
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+    });
+
+    it('should say it is busy rather than report an empty result set', () => {
+      const { container, rerender } = render(
+        <DSelect options={[]} label="Country" defaultOpen loading />,
+      );
+      const live = () => container.querySelector('[aria-live="polite"]');
+      expect(live()).toHaveTextContent('Loading…');
+
+      rerender(<DSelect options={OPTIONS} label="Country" defaultOpen />);
+      expect(live()).toHaveTextContent('4 options available');
+    });
+
+    /**
+     * The defect the `AsyncSearch` example had: `onSearch` sets `loading` on
+     * the first keystroke, and `loading` disabled the input — so the search
+     * killed the box it was being typed into, taking the focus with it.
+     */
+    it('should stay editable and focused through a remote search', async () => {
+      function Remote() {
+        const [loading, setLoading] = useState(false);
+        return (
+          <DSelect
+            label="Country"
+            options={[]}
+            loading={loading}
+            onSearch={(query) => setLoading(!!query)}
+            // The server does the filtering, so the client must not filter again.
+            filterOption={() => true}
+          />
+        );
+      }
+
+      const user = userEvent.setup();
+      render(<Remote />);
+
+      await user.click(combobox());
+      await user.keyboard('chi');
+
+      expect(combobox()).not.toBeDisabled();
+      expect(combobox()).toHaveFocus();
+      expect(combobox()).toHaveValue('chi');
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+    });
+
+    it('should let a tag be removed while loading', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <DSelect
+          options={OPTIONS}
+          label="Countries"
+          multi
+          loading
+          value={['es', 'cl']}
+          onChange={onChange}
+        />,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Remove Chile' }));
+
+      expect(onChange).toHaveBeenCalledWith(['es'], expect.anything());
     });
 
     /**
@@ -694,14 +756,19 @@ describe('<DSelect />', () => {
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     });
 
-    it('should close an open menu when it starts loading', async () => {
+    /**
+     * `loading` is busy, not dead — so unlike `disabled` it leaves the menu
+     * where it is. A list that empties mid-request and comes back is the whole
+     * shape of a remote search.
+     */
+    it('should keep its menu open while loading', async () => {
       const user = userEvent.setup();
       const { rerender } = render(<DSelect options={OPTIONS} label="Country" />);
 
       await user.click(combobox());
       rerender(<DSelect options={OPTIONS} label="Country" loading />);
 
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
     });
 
     it('should carry the validation and size classes the stylesheet expects', () => {
