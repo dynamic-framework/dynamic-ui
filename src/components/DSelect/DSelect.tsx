@@ -536,7 +536,33 @@ export default function DSelect<Value extends string | number = string>(
             // menu never paints at the document's top-left on its way to the
             // control.
             style={{ ...floatingStyles, visibility: isPositioned ? 'visible' : 'hidden' }}
-            {...getFloatingProps()}
+            {...getFloatingProps({
+              /*
+               * A press inside the menu is not an outside press — but the menu
+               * is in a portal, so to anything watching `document` it looks
+               * like one.
+               *
+               * `react-datepicker` dismisses its popup from a `mousedown`
+               * listener on `document`, and the header's month and year
+               * dropdowns are `DSelect`s living inside that popup: pressing an
+               * option unmounted the calendar with the option still under the
+               * pointer, so the click that would have committed the month or
+               * year never reached it. The option's `preventDefault` is no
+               * help — it stops the focus change, not the propagation.
+               *
+               * Its documented escape hatch cannot do it either:
+               * `react-datepicker-ignore-onclickoutside` is matched against the
+               * event's exact target, with no walk up the ancestors, and the
+               * target here is whatever leaf of the option was pressed.
+               *
+               * Stopping the press at the menu is the general answer rather
+               * than a datepicker patch: it is true of every outside-press
+               * handler that a press landing in this menu is not outside
+               * anything. The portal stays where it is, so overlay stacking is
+               * untouched.
+               */
+              onMouseDown: (event) => event.stopPropagation(),
+            })}
           >
             <ul
               ref={listRef}
