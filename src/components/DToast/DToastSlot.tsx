@@ -1,6 +1,8 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
-import type { ReactNode } from 'react';
+import type {
+  FocusEvent, PointerEvent, ReactNode, TransitionEvent,
+} from 'react';
 
 import { DToastContext } from './DToastContext';
 import { toastStore } from './toastStore';
@@ -10,6 +12,21 @@ import type { ToastEntry } from './store';
 type Props = {
   entry: ToastEntry<ReactNode>;
 };
+
+/**
+ * Whether the pointer or the focus went to something still inside the slot.
+ *
+ * `relatedTarget` is `null` when it went nowhere — out of the window, or to
+ * nothing focusable — and `Node.contains(null)` throws rather than returning
+ * `false` under jsdom's strict IDL conversion, so it is checked before use
+ * rather than cast past.
+ */
+function movedWithin(
+  slot: Element,
+  related: EventTarget | null,
+): boolean {
+  return related instanceof Node && slot.contains(related);
+}
 
 /**
  * One toast's wrapper: its state, its motion, and its context.
@@ -27,8 +44,71 @@ type Props = {
 export default function DToastSlot({ entry }: Props) {
   const { id, leaving } = entry;
 
-  const hold = useCallback(() => toastStore.pause(id), [id]);
-  const release = useCallback(() => toastStore.resume(id), [id]);
+  /*
+   * Hovering holds the timer, and so does focus — but they are two reasons for
+   * ONE hold, not two independent ones.
+   *
+   * Tracked here rather than left to the store because only this component can
+   * see both: a toast that is hovered AND focused used to pause twice, and
+   * `pause` subtracts the time since the countdown started, so the same
+   * stretch was subtracted twice. Then whichever ended first — moving the
+   * pointer away while the dismiss button still had focus — resumed a timer
+   * that was already short, and the toast vanished out from under the
+   * keyboard.
+   *
+   * Refs rather than state: nothing here should re-render the toast's content.
+   */
+  const hovered = useRef(false);
+  const focused = useRef(false);
+
+  const sync = useCallback(() => {
+    if (hovered.current || focused.current) {
+      toastStore.pause(id);
+    } else {
+      toastStore.resume(id);
+    }
+  }, [id]);
+
+  const onPointerEnter = useCallback(() => {
+    hovered.current = true;
+    sync();
+  }, [sync]);
+
+  const onPointerLeave = useCallback((event: PointerEvent<HTMLDivElement>) => {
+    /* A pointer moving onto a child has not left the slot. */
+    if (movedWithin(event.currentTarget, event.relatedTarget)) return;
+    hovered.current = false;
+    sync();
+  }, [sync]);
+
+  /*
+   * `onFocus` and `onBlur` are focusin/focusout, so they fire for descendants
+   * too — tabbing from a toast's action to its dismiss button would otherwise
+   * read as "left the toast" and restart the countdown mid-interaction.
+   */
+  const onFocus = useCallback(() => {
+    focused.current = true;
+    sync();
+  }, [sync]);
+
+  const onBlur = useCallback((event: FocusEvent<HTMLDivElement>) => {
+    if (movedWithin(event.currentTarget, event.relatedTarget)) return;
+    focused.current = false;
+    sync();
+  }, [sync]);
+
+  /*
+   * The exit ends when the SLOT's transition does, with the store's grace
+   * period as the backstop. Removing on `transitionend` rather than on a timer
+   * means the entry goes when the animation is actually over, whatever
+   * duration the stylesheet gives it — but the event bubbles, so a transition
+   * finishing anywhere inside a custom toast would otherwise cut the slot's
+   * own exit short.
+   */
+  const onTransitionEnd = useCallback((event: TransitionEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget) return;
+    if (leaving) toastStore.remove(id);
+  }, [id, leaving]);
 
   const context = useMemo(
     () => ({ id, dismiss: () => toastStore.dismiss(id) }),
@@ -39,27 +119,11 @@ export default function DToastSlot({ entry }: Props) {
     <div
       className="toast-slot"
       {...leaving && { 'data-leaving': '' }}
-      /*
-       * Hovering holds the timer, and so does focus.
-       *
-       * A toast that vanishes while it is being read is the complaint everyone
-       * has about toasts; WCAG 2.2.1 asks for the same thing. Focus counts
-       * because tabbing to a toast's action must not start a race with its own
-       * timer.
-       */
-      onPointerEnter={hold}
-      onPointerLeave={release}
-      onFocus={hold}
-      onBlur={release}
-      /*
-       * The exit ends when the transition does, with the store's grace period
-       * as the backstop. Removing on `transitionend` rather than on a timer
-       * means the entry goes when the animation is actually over, whatever
-       * duration the stylesheet gives it.
-       */
-      onTransitionEnd={() => {
-        if (leaving) toastStore.remove(id);
-      }}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onTransitionEnd={onTransitionEnd}
     >
       <DToastContext.Provider value={context}>
         {entry.content}

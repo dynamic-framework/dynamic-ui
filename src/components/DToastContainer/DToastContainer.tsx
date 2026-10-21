@@ -1,8 +1,7 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import DToastRegion from '../DToast/DToastRegion';
-import { activePlacements } from '../DToast/store';
 import { toastStore } from '../DToast/toastStore';
 
 import type { ToastPlacement } from '../DToast/store';
@@ -39,8 +38,28 @@ export type DToastContainerProps = {
 /**
  * The render target for every toast.
  *
- * Mount once, near the root. It renders nothing until a toast exists, and then
- * one region per corner in use.
+ * Mount once, near the root.
+ *
+ * ## The regions are always mounted
+ *
+ * All six corners render from the first paint, empty, and stay. This looks
+ * wasteful and is the entire point: a live region inserted at the same moment
+ * as its content is frequently not announced at all, because assistive
+ * technology has to be watching the element BEFORE the change happens. A
+ * container that mounted a region together with the first toast in it would
+ * reintroduce exactly the timing problem that moving the region off each toast
+ * was meant to fix — and it would miss precisely the isolated, one-off
+ * notification that matters most.
+ *
+ * An empty region costs an inert element: no size, no pointer events, nothing
+ * to announce.
+ *
+ * ## Where an unplaced toast goes is decided HERE
+ *
+ * `toast()` can be called before this mounts, so the store deliberately leaves
+ * `placement` unset rather than stamping a default onto the entry at creation
+ * time. Resolving it at render means this component's prop always wins, even
+ * for a notification dispatched earlier.
  *
  * ## What replaced `react-hot-toast`
  *
@@ -65,18 +84,6 @@ export default function DToastContainer(
     portal = true,
   }: DToastContainerProps,
 ) {
-  /*
-   * Registered with the store rather than applied here.
-   *
-   * The placement has to be decided when the toast is CREATED — the container
-   * groups by placement, so a toast with none would have no region to go in.
-   * An effect, because `toast()` can legitimately be called before this
-   * mounts and the first render must not have a side effect.
-   */
-  useEffect(() => {
-    toastStore.setDefaultPlacement(defaultPlacement);
-  }, [defaultPlacement]);
-
   const state = useSyncExternalStore(
     toastStore.subscribe,
     toastStore.getSnapshot,
@@ -91,17 +98,15 @@ export default function DToastContainer(
     toastStore.getSnapshot,
   );
 
-  const inUse = activePlacements(state);
-  if (!inUse.length) return null;
-
   const regions = (
     <>
-      {PLACEMENTS.filter((corner) => inUse.includes(corner)).map((corner) => (
+      {PLACEMENTS.map((corner) => (
         <DToastRegion
           key={corner}
           placement={corner}
           state={state}
           reverseOrder={reverseOrder}
+          fallback={defaultPlacement}
         />
       ))}
     </>

@@ -9,6 +9,8 @@ type Props = {
   placement: ToastPlacement;
   state: ToastState<ReactNode>;
   reverseOrder: boolean;
+  /** Where toasts that named no placement of their own belong. */
+  fallback: ToastPlacement;
 };
 
 /**
@@ -19,6 +21,10 @@ type Props = {
  * `--#{$prefix}toast-spacing`. What our stylesheet adds is the placement: the
  * `react-hot-toast` container positioned itself with inline styles, which is
  * the one thing a design system cannot theme.
+ *
+ * It is rendered empty from the first paint and stays — assistive technology
+ * has to be watching a live region before its content changes, so a region
+ * that arrived together with its first toast would announce nothing.
  *
  * ## The live region is HERE, not on each toast
  *
@@ -34,8 +40,12 @@ type Props = {
  * worth interrupting whatever a screen reader is in the middle of saying, and
  * a toast that must interrupt is a dialog.
  */
-export default function DToastRegion({ placement, state, reverseOrder }: Props) {
-  const entries = toastsAt(state, placement, reverseOrder);
+export default function DToastRegion(
+  {
+    placement, state, reverseOrder, fallback,
+  }: Props,
+) {
+  const entries = toastsAt(state, placement, reverseOrder, fallback);
 
   return (
     <div

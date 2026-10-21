@@ -1,4 +1,6 @@
-import { act, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
@@ -38,14 +40,40 @@ function setup(props: React.ComponentProps<typeof DToastContainer> = {}) {
   return { api: () => api };
 }
 
+/** The regions that actually hold a toast; the other corners render empty. */
+const occupied = () => [...document.querySelectorAll('.toast-container')]
+  .filter((region) => region.childElementCount > 0);
+
 afterEach(() => {
   act(() => toastStore.reset());
 });
 
 describe('rendering', () => {
-  it('should render nothing until a toast exists', () => {
+  /*
+   * The regions are there BEFORE anything arrives, and that is the point.
+   *
+   * Assistive technology has to be watching a live region before its content
+   * changes; one that mounted together with its first toast would announce
+   * nothing, which is the timing problem that moving the region off each toast
+   * was meant to fix.
+   */
+  it('should mount every region empty before any toast exists', () => {
     setup();
-    expect(document.querySelector('.toast-container')).not.toBeInTheDocument();
+
+    const regions = [...document.querySelectorAll('.toast-container')];
+    expect(regions).toHaveLength(6);
+    regions.forEach((region) => expect(region).toBeEmptyDOMElement());
+  });
+
+  it('should keep the regions mounted after the last toast goes', () => {
+    const { api } = setup();
+    let id = '';
+    act(() => { id = api().toast({ title: 'Saved' }, { duration: 0 }); });
+    act(() => { api().dismiss(id); });
+    act(() => { toastStore.remove(id); });
+
+    expect(document.querySelector('.toast-slot')).not.toBeInTheDocument();
+    expect(document.querySelectorAll('.toast-container')).toHaveLength(6);
   });
 
   it('should show a toast', () => {
@@ -118,7 +146,8 @@ describe('stacking', () => {
     });
 
     expect(document.querySelectorAll('.toast')).toHaveLength(2);
-    expect(document.querySelectorAll('.toast-container')).toHaveLength(1);
+    expect(document.querySelectorAll('.toast-slot')).toHaveLength(2);
+    expect(occupied()).toHaveLength(1);
   });
 
   it('should keep the order they arrived in', () => {
@@ -143,16 +172,14 @@ describe('stacking', () => {
     expect(titles).toEqual(['Two', 'One']);
   });
 
-  it('should make one region per corner in use, and no more', () => {
+  it('should put each toast in the corner it named, and leave the rest empty', () => {
     const { api } = setup();
     act(() => {
       api().toast({ title: 'Top' }, { placement: 'top-end' });
       api().toast({ title: 'Bottom' }, { placement: 'bottom-start' });
     });
 
-    const regions = [...document.querySelectorAll('.toast-container')];
-    expect(regions).toHaveLength(2);
-    expect(regions.map((r) => r.getAttribute('data-placement')).sort())
+    expect(occupied().map((r) => r.getAttribute('data-placement')).sort())
       .toEqual(['bottom-start', 'top-end']);
   });
 
@@ -160,8 +187,23 @@ describe('stacking', () => {
     const { api } = setup({ placement: 'top-start' });
     act(() => { api().toast({ title: 'Saved' }); });
 
-    expect(document.querySelector('.toast-container'))
-      .toHaveAttribute('data-placement', 'top-start');
+    expect(occupied().map((r) => r.getAttribute('data-placement')))
+      .toEqual(['top-start']);
+  });
+
+  /*
+   * `toast()` can legitimately be called before the container mounts — from a
+   * module-level error handler, or from an earlier sibling's mount effect.
+   * The store therefore leaves the placement unset rather than stamping the
+   * default that happened to be registered at that instant, and the container
+   * resolves it when it renders.
+   */
+  it('should honour the container placement for a toast dispatched before it mounted', () => {
+    act(() => { toastStore.show({ content: 'Early' }); });
+    setup({ placement: 'top-end' });
+
+    expect(occupied().map((r) => r.getAttribute('data-placement')))
+      .toEqual(['top-end']);
   });
 });
 
@@ -273,5 +315,133 @@ describe('the announcement', () => {
     const before = document.activeElement;
     act(() => { api().toast({ title: 'Saved' }); });
     expect(document.activeElement).toBe(before);
+  });
+});
+
+/**
+ * Hover and focus are two reasons for ONE hold.
+ *
+ * They used to pause the store independently, and `pause` subtracts the time
+ * since the countdown started — so a toast both hovered and focused had the
+ * same stretch subtracted twice, and whichever hold ended first resumed a
+ * timer that was already short. A toast could vanish while it still held the
+ * keyboard focus.
+ */
+describe('holding the timer', () => {
+  beforeEach(() => { jest.useFakeTimers(); });
+  afterEach(() => { jest.useRealTimers(); });
+
+  const slot = () => document.querySelector('.toast-slot');
+
+  it('should keep holding when the pointer leaves but focus stays', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }, { duration: 1000 }); });
+    const dismiss = screen.getByRole('button', { name: 'Close' });
+
+    fireEvent.pointerEnter(slot()!);
+    fireEvent.focusIn(dismiss);
+    act(() => { jest.advanceTimersByTime(600); });
+    fireEvent.pointerLeave(slot()!, { relatedTarget: null });
+
+    act(() => { jest.advanceTimersByTime(10000); });
+    expect(slot()).not.toHaveAttribute('data-leaving');
+  });
+
+  it('should keep holding when focus leaves but the pointer stays', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }, { duration: 1000 }); });
+    const dismiss = screen.getByRole('button', { name: 'Close' });
+
+    fireEvent.pointerEnter(slot()!);
+    fireEvent.focusIn(dismiss);
+    fireEvent.focusOut(dismiss, { relatedTarget: null });
+
+    act(() => { jest.advanceTimersByTime(10000); });
+    expect(slot()).not.toHaveAttribute('data-leaving');
+  });
+
+  /* `onFocus`/`onBlur` are focusin/focusout, so tabbing between a toast's own
+     controls must not read as leaving it. */
+  it('should keep holding while focus moves between its own controls', () => {
+    const { api } = setup();
+    act(() => {
+      api().toast(
+        <div>
+          <button type="button">First</button>
+          <button type="button">Second</button>
+        </div>,
+        { duration: 1000 },
+      );
+    });
+    const first = screen.getByRole('button', { name: 'First' });
+    const second = screen.getByRole('button', { name: 'Second' });
+
+    fireEvent.focusIn(first);
+    fireEvent.focusOut(first, { relatedTarget: second });
+    fireEvent.focusIn(second);
+
+    act(() => { jest.advanceTimersByTime(10000); });
+    expect(slot()).not.toHaveAttribute('data-leaving');
+  });
+
+  it('should resume once nothing is holding it', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saved' }, { duration: 1000 }); });
+    const dismiss = screen.getByRole('button', { name: 'Close' });
+
+    fireEvent.pointerEnter(slot()!);
+    fireEvent.focusIn(dismiss);
+    act(() => { jest.advanceTimersByTime(900); });
+    fireEvent.focusOut(dismiss, { relatedTarget: null });
+    fireEvent.pointerLeave(slot()!, { relatedTarget: null });
+
+    act(() => { jest.advanceTimersByTime(999); });
+    expect(slot()).not.toHaveAttribute('data-leaving');
+    act(() => { jest.advanceTimersByTime(2); });
+    expect(slot()).toHaveAttribute('data-leaving');
+  });
+
+  /* The slot stays mounted across an update, so no new enter event arrives to
+     re-hold the replacement timer. */
+  it('should keep holding across an update in place', () => {
+    const { api } = setup();
+    act(() => { api().toast({ title: 'Saving…' }, { id: 'save', duration: 1000 }); });
+    fireEvent.pointerEnter(slot()!);
+    act(() => { api().toast({ title: 'Saved' }, { id: 'save', duration: 1000 }); });
+
+    act(() => { jest.advanceTimersByTime(10000); });
+    expect(screen.getByText('Saved')).toBeInTheDocument();
+    expect(slot()).not.toHaveAttribute('data-leaving');
+  });
+});
+
+/**
+ * `transitionend` bubbles.
+ *
+ * The slot removes its entry when its exit transition ends, so a transition
+ * finishing anywhere inside a custom toast — a spinner, a hover effect — used
+ * to cut the slot's own exit short and make the toast disappear instantly.
+ */
+describe('the exit transition', () => {
+  it('should ignore a transition that ends inside its content', () => {
+    const { api } = setup();
+    let id = '';
+    act(() => {
+      id = api().toast(<p data-testid="content">Custom</p>, { duration: 0 });
+    });
+    act(() => { api().dismiss(id); });
+
+    act(() => { fireEvent.transitionEnd(screen.getByTestId('content')); });
+    expect(document.querySelector('.toast-slot')).toBeInTheDocument();
+  });
+
+  it('should remove the toast when its own transition ends', () => {
+    const { api } = setup();
+    let id = '';
+    act(() => { id = api().toast({ title: 'Saved' }, { duration: 0 }); });
+    act(() => { api().dismiss(id); });
+
+    act(() => { fireEvent.transitionEnd(document.querySelector('.toast-slot')!); });
+    expect(document.querySelector('.toast-slot')).not.toBeInTheDocument();
   });
 });

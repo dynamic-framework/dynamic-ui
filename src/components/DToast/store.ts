@@ -1,3 +1,32 @@
+/**
+ * The toast store.
+ *
+ * Framework-free on purpose: what is here is the part with decisions in it —
+ * identity, ordering, the timers — and it is testable without rendering
+ * anything. The React layer on top of it is three small components that only
+ * translate this state into markup.
+ *
+ * ## Why not `react-hot-toast`
+ *
+ * The previous `DToastContainer` was its `<Toaster>`, and the wrapper spent
+ * its length undoing the library's choices: every toast went through
+ * `toast.custom()` because the built-in markup was not ours, a `visible` flag
+ * the wrapper translated into rendering `null`, and a container positioned by
+ * inline styles that the stylesheet then had to fight. What was actually used
+ * of the library was a list, six positions and a timer — which is this file.
+ *
+ * Owning it is what lets the region be styled by the same `--#{$prefix}toast-*`
+ * variables as the toast itself, instead of a third party's inline styles.
+ *
+ * ## Timers are the whole problem
+ *
+ * A toast that vanishes while it is being read is the complaint everyone has
+ * about toasts, and WCAG 2.2.1 asks for the same thing. So a timer is
+ * pausable, and `pause` records how much was LEFT rather than when it started
+ * — resuming has to continue, not restart, or a toast hovered three times
+ * never leaves.
+ */
+
 export type ToastPlacement =
   | 'top-start' | 'top-center' | 'top-end'
   | 'bottom-start' | 'bottom-center' | 'bottom-end';
@@ -6,7 +35,19 @@ export type ToastEntry<Content = unknown> = {
   /** Stable. Reusing one updates that toast in place rather than stacking. */
   id: string;
   content: Content;
-  placement: ToastPlacement;
+  /**
+   * Where the caller asked for it, or `undefined` for "wherever the renderer
+   * puts unplaced toasts".
+   *
+   * Deliberately NOT resolved here. The store used to stamp a default onto
+   * every entry at creation time, which meant a toast dispatched before the
+   * container mounted — or before an earlier sibling's effect ran — was
+   * permanently stamped with whatever default happened to be registered at
+   * that instant, and no later registration could move it. Keeping the
+   * distinction lets the renderer resolve it at render time, when the
+   * container's own prop is actually known.
+   */
+  placement?: ToastPlacement;
   /** Milliseconds. `0` keeps it until something dismisses it. */
   duration: number;
   /** Set while it plays its exit transition, so a renderer can animate it. */
@@ -67,6 +108,17 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
   let toasts: ToastEntry<Content>[] = [];
   let sequence = 0;
   const timers = new Map<string, Timer>();
+  /**
+   * The toasts something is currently holding — a pointer over them, or focus
+   * inside them.
+   *
+   * Kept beside the timers rather than inside them because a hold has to
+   * OUTLIVE the timer it applies to: updating a toast in place replaces its
+   * timer, and without this the replacement would start counting down under a
+   * cursor that never left. The renderer sends no new enter event, because the
+   * slot never unmounted.
+   */
+  const holds = new Set<string>();
   const listeners = new Set<(state: ToastState<Content>) => void>();
 
   /*
@@ -82,9 +134,15 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     listeners.forEach((listener) => listener(snapshot));
   };
 
-  const drop = (id: string) => {
+  /** Cancels a toast's timer and forgets it, so no stale closure survives. */
+  const clearTimer = (id: string) => {
     timers.get(id)?.cancel();
     timers.delete(id);
+  };
+
+  const drop = (id: string) => {
+    clearTimer(id);
+    holds.delete(id);
     toasts = toasts.filter((entry) => entry.id !== id);
     publish();
   };
@@ -100,8 +158,7 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     const entry = toasts.find((item) => item.id === id);
     if (!entry || entry.leaving) return;
 
-    timers.get(id)?.cancel();
-    timers.delete(id);
+    clearTimer(id);
     toasts = toasts.map((item) => (item.id === id ? { ...item, leaving: true } : item));
     publish();
 
@@ -113,16 +170,40 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     });
   };
 
-  /** A pausable countdown to dismissal. */
+  /**
+   * A pausable countdown to dismissal.
+   *
+   * Starts held if something is already holding the toast, which is the case
+   * whenever an update replaces the timer of a toast under the cursor.
+   */
   const startTimer = (id: string, duration: number) => {
+    clearTimer(id);
     if (duration <= 0) return;
 
     let remaining = duration;
     let startedAt = clock.now();
-    let handle = clock.setTimeout(() => dismiss(id), remaining);
+    let handle: number | undefined;
+
+    const schedule = () => {
+      startedAt = clock.now();
+      handle = clock.setTimeout(() => dismiss(id), remaining);
+    };
+
+    const cancel = () => {
+      if (handle !== undefined) clock.clearTimeout(handle);
+      handle = undefined;
+    };
 
     const pause = () => {
-      clock.clearTimeout(handle);
+      /*
+       * Only a RUNNING timer can be paused.
+       *
+       * `pause` subtracts the time since `startedAt`, so calling it twice
+       * subtracts the same stretch twice and the toast leaves early — which
+       * is what happened when hover and focus each paused independently.
+       */
+      if (handle === undefined) return;
+      cancel();
       /*
        * What is LEFT, not when it started.
        *
@@ -134,39 +215,25 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     };
 
     const resume = () => {
+      if (handle !== undefined) return;
       if (remaining <= 0) {
         dismiss(id);
         return;
       }
-      startedAt = clock.now();
-      handle = clock.setTimeout(() => dismiss(id), remaining);
+      schedule();
     };
 
-    timers.set(id, { cancel: () => clock.clearTimeout(handle), pause, resume });
+    timers.set(id, { cancel, pause, resume });
+    if (!holds.has(id)) schedule();
   };
 
   let autoId = 0;
-  /*
-   * The container's default, which `show()` falls back to.
-   *
-   * It lives in the store rather than being applied by the container, because
-   * the placement has to be decided when the toast is CREATED: the container
-   * groups by placement, so a toast with no placement would have no region to
-   * go in. The old `position` prop meant the same thing.
-   */
-  let defaultPlacement: ToastPlacement = DEFAULT_PLACEMENT;
-
-  /** Where toasts go when they do not name a placement. */
-  const setDefaultPlacement = (placement: ToastPlacement) => {
-    defaultPlacement = placement;
-  };
 
   /** Adds a toast, or updates the one with this id. Returns the id. */
   const show = (input: ToastInput<Content>): string => {
     autoId += 1;
     const id = input.id ?? `d-toast-${autoId}`;
     const duration = input.duration ?? DEFAULT_DURATION;
-    const placement = input.placement ?? defaultPlacement;
     const existing = toasts.find((entry) => entry.id === id);
 
     if (existing) {
@@ -174,17 +241,30 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
        * Updating keeps the sequence, so a toast that changes its message does
        * not jump to the end of the stack. It restarts the timer, because new
        * content deserves its full reading time.
+       *
+       * The placement is kept too unless the update names one: an update that
+       * passes only an id and new content would otherwise move the toast to
+       * another corner, which remounts its content and loses whatever state
+       * that content was holding.
        */
-      timers.get(id)?.cancel();
       toasts = toasts.map((entry) => (entry.id === id
         ? {
-          ...entry, content: input.content, duration, placement, leaving: false,
+          ...entry,
+          content: input.content,
+          duration,
+          placement: input.placement ?? entry.placement,
+          leaving: false,
         }
         : entry));
     } else {
       sequence += 1;
       toasts = toasts.concat({
-        id, content: input.content, placement, duration, leaving: false, sequence,
+        id,
+        content: input.content,
+        placement: input.placement,
+        duration,
+        leaving: false,
+        sequence,
       });
 
       /* The oldest go, not the newest: the latest message is the one that
@@ -193,14 +273,17 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
       if (toasts.length > MAX_TOASTS) {
         const excess = toasts.slice(0, toasts.length - MAX_TOASTS);
         excess.forEach((entry) => {
-          timers.get(entry.id)?.cancel();
-          timers.delete(entry.id);
+          clearTimer(entry.id);
+          holds.delete(entry.id);
         });
         toasts = toasts.slice(-MAX_TOASTS);
       }
     }
 
     publish();
+    /* Clears the previous timer even when the new duration is `0`, so a toast
+       updated to "stays until dismissed" keeps no timer that a later resume
+       could restart. */
     startTimer(id, duration);
     return id;
   };
@@ -209,9 +292,22 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
     toasts.slice().forEach((entry) => dismiss(entry.id));
   };
 
-  /** Holds the countdown — a pointer over it, or focus inside it. */
-  const pause = (id: string) => { timers.get(id)?.pause(); };
-  const resume = (id: string) => { timers.get(id)?.resume(); };
+  /**
+   * Holds the countdown — a pointer over it, or focus inside it.
+   *
+   * Idempotent, and recorded even for a toast with no timer running, so an
+   * update that gives it one starts that timer held.
+   */
+  const pause = (id: string) => {
+    if (holds.has(id)) return;
+    holds.add(id);
+    timers.get(id)?.pause();
+  };
+
+  const resume = (id: string) => {
+    if (!holds.delete(id)) return;
+    timers.get(id)?.resume();
+  };
 
   const getSnapshot = () => snapshot;
 
@@ -224,8 +320,8 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
   const reset = () => {
     timers.forEach((timer) => timer.cancel());
     timers.clear();
+    holds.clear();
     toasts = [];
-    defaultPlacement = DEFAULT_PLACEMENT;
     publish();
   };
 
@@ -239,7 +335,6 @@ export function createToastStore<Content = unknown>(clock: Clock = systemClock) 
    * says so is right to.
    */
   return {
-    setDefaultPlacement,
     show,
     dismiss,
     /** Drops it with no exit, for a renderer whose transition has finished. */
@@ -258,6 +353,9 @@ export type ToastStore<Content = unknown> = ReturnType<typeof createToastStore<C
 /**
  * The toasts for one placement, in render order.
  *
+ * `fallback` is where entries that named no placement belong — the renderer's
+ * own default, which is only known at render time.
+ *
  * Sorted by sequence rather than trusted to array order: an update keeps its
  * original sequence, so the array can hold an older entry after a newer one.
  */
@@ -265,15 +363,11 @@ export function toastsAt<Content>(
   state: ToastState<Content>,
   placement: ToastPlacement,
   reverseOrder = false,
+  fallback: ToastPlacement = DEFAULT_PLACEMENT,
 ): ToastEntry<Content>[] {
   const matching = state.toasts
-    .filter((entry) => entry.placement === placement)
+    .filter((entry) => (entry.placement ?? fallback) === placement)
     .sort((a, b) => a.sequence - b.sequence);
 
   return reverseOrder ? matching.reverse() : matching;
-}
-
-/** Every placement currently holding a toast, so a renderer makes no empty regions. */
-export function activePlacements<Content>(state: ToastState<Content>): ToastPlacement[] {
-  return [...new Set(state.toasts.map((entry) => entry.placement))];
 }

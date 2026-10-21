@@ -1,5 +1,4 @@
 import {
-  activePlacements,
   createToastStore,
   DEFAULT_DURATION,
   DEFAULT_PLACEMENT,
@@ -72,13 +71,26 @@ describe('showing', () => {
     expect(store.getSnapshot().toasts[0].content).toBe('Saved');
   });
 
-  it('should default the placement and the duration', () => {
+  it('should default the duration', () => {
     const { store } = setup();
     store.show({ content: 'Saved' });
 
-    const [entry] = store.getSnapshot().toasts;
-    expect(entry.placement).toBe(DEFAULT_PLACEMENT);
-    expect(entry.duration).toBe(DEFAULT_DURATION);
+    expect(store.getSnapshot().toasts[0].duration).toBe(DEFAULT_DURATION);
+  });
+
+  /*
+   * Left UNSET, not stamped with a default.
+   *
+   * `toast()` can be called before any renderer mounts. Resolving the
+   * placement here would permanently stamp the entry with whatever default
+   * happened to be registered at that instant, and no container mounting
+   * afterwards could move it. `toastsAt` resolves it at read time instead.
+   */
+  it('should leave an unnamed placement unresolved', () => {
+    const { store } = setup();
+    store.show({ content: 'Saved' });
+
+    expect(store.getSnapshot().toasts[0].placement).toBeUndefined();
   });
 
   it('should stack several', () => {
@@ -130,6 +142,69 @@ describe('updating in place', () => {
     advance(800);
     expect(store.getSnapshot().toasts).toHaveLength(1);
     advance(300);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(true);
+  });
+
+  /*
+   * An update that names no placement must not move the toast.
+   *
+   * Moving it to another corner remounts its content in a different region,
+   * which throws away whatever state that content was holding — and an update
+   * is usually just a new message for the same notification.
+   */
+  it('should keep its placement when the update does not name one', () => {
+    const { store } = setup();
+    store.show({ id: 'save', content: 'Saving…', placement: 'top-end' });
+    store.show({ id: 'save', content: 'Saved' });
+
+    expect(store.getSnapshot().toasts[0].placement).toBe('top-end');
+  });
+
+  it('should move it when the update does name one', () => {
+    const { store } = setup();
+    store.show({ id: 'save', content: 'Saving…', placement: 'top-end' });
+    store.show({ id: 'save', content: 'Saved', placement: 'bottom-start' });
+
+    expect(store.getSnapshot().toasts[0].placement).toBe('bottom-start');
+  });
+
+  /*
+   * Updating to `duration: 0` means "stays until dismissed", so the timer it
+   * replaces has to be forgotten, not merely cancelled: a cancelled timer left
+   * in the map still answers `resume`, and the next pointer-leave would
+   * schedule the dismissal of a toast that is supposed to persist.
+   */
+  it('should leave no timer behind when updated to stay until dismissed', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saving…', duration: 1000 });
+    store.pause(id);
+    store.show({ id, content: 'Saved', duration: 0 });
+
+    store.resume(id);
+    advance(100000);
+    expect(store.getSnapshot().toasts).toHaveLength(1);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+  });
+
+  /*
+   * The slot stays mounted across an update, so the renderer sends no new
+   * enter event — if the replacement timer started running, the toast would
+   * disappear from under a cursor that never moved.
+   */
+  it('should start the new timer held when something is holding the toast', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saving…', duration: 1000 });
+    store.pause(id);
+    store.show({ id, content: 'Saved', duration: 1000 });
+
+    advance(100000);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+
+    /* And the full duration once released — it is new content. */
+    store.resume(id);
+    advance(999);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+    advance(2);
     expect(store.getSnapshot().toasts[0].leaving).toBe(true);
   });
 
@@ -278,17 +353,61 @@ describe('the timer', () => {
     expect(store.getSnapshot().toasts[0].leaving).toBe(true);
   });
 
-  /* Paused past its own deadline, resuming must not schedule a negative wait. */
-  it('should leave at once when resumed after its time was up', () => {
+  /*
+   * Paused on the brink.
+   *
+   * This used to assert that resuming dismissed the toast at once, which only
+   * held because a second `pause` subtracted the paused stretch a second time
+   * and drove `remaining` negative. With the hold counted once, the sliver
+   * that was actually left is the sliver that is honoured.
+   */
+  it('should honour the sliver left when paused on the brink', () => {
     const { store, advance } = setup();
     const id = store.show({ content: 'Saved', duration: 1000 });
 
-    advance(1000 - 1);
+    advance(999);
     store.pause(id);
-    advance(10);
+    advance(10000);
+    store.resume(id);
+
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+    advance(1);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(true);
+  });
+
+  /*
+   * Two reasons for one hold.
+   *
+   * `pause` subtracts the time since the countdown started, so a second
+   * uncounted pause subtracts the same stretch twice and the toast leaves
+   * early. Hover and focus are two such reasons.
+   */
+  it('should ignore a second pause', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saved', duration: 1000 });
+
+    advance(400);
+    store.pause(id);
+    advance(5000);
     store.pause(id);
     store.resume(id);
 
+    advance(599);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+    advance(2);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(true);
+  });
+
+  it('should ignore a resume that matches no hold', () => {
+    const { store, advance } = setup();
+    const id = store.show({ content: 'Saved', duration: 1000 });
+
+    advance(400);
+    store.resume(id);
+
+    advance(599);
+    expect(store.getSnapshot().toasts[0].leaving).toBe(false);
+    advance(2);
     expect(store.getSnapshot().toasts[0].leaving).toBe(true);
   });
 
@@ -346,12 +465,24 @@ describe('placements', () => {
     expect(toastsAt(store.getSnapshot(), 'bottom-center').map((e) => e.content)).toEqual(['Bottom']);
   });
 
-  it('should report only the placements in use', () => {
+  /* An unplaced toast belongs wherever the renderer says, which is only known
+     at render time. */
+  it('should resolve an unplaced toast against the fallback', () => {
+    const { store } = setup();
+    store.show({ content: 'Anywhere' });
+
+    expect(toastsAt(store.getSnapshot(), 'top-start', false, 'top-start')
+      .map((e) => e.content)).toEqual(['Anywhere']);
+    expect(toastsAt(store.getSnapshot(), DEFAULT_PLACEMENT, false, 'top-start'))
+      .toHaveLength(0);
+  });
+
+  it('should leave a named placement alone whatever the fallback is', () => {
     const { store } = setup();
     store.show({ content: 'Top', placement: 'top-end' });
-    store.show({ content: 'Also top', placement: 'top-end' });
 
-    expect(activePlacements(store.getSnapshot())).toEqual(['top-end']);
+    expect(toastsAt(store.getSnapshot(), 'top-end', false, 'bottom-start')
+      .map((e) => e.content)).toEqual(['Top']);
   });
 
   it('should reverse the order when asked', () => {

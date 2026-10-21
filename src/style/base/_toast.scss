@@ -92,8 +92,17 @@
   inset-inline: auto var(--#{$prefix}toast-container-inset);
 }
 
+/*
+ * Physical `left`, deliberately, where every other placement is logical.
+ *
+ * `inset-inline-start: 50%` anchors the START edge, which in RTL is the RIGHT
+ * one — so the region hung from the midpoint rightwards while the physical
+ * `translateX(-50%)` still pulled it left, landing it a full region-width off
+ * centre. The midpoint of the viewport is the same point in both directions,
+ * so the anchor has no business flipping.
+ */
 .toast-container[data-placement$="center"] {
-  inset-inline-start: 50%;
+  left: 50%;
   align-items: center;
   transform: translateX(-50%);
 }
