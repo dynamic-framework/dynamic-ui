@@ -15,15 +15,8 @@ import DAlert from "../../src/components/DAlert/DAlert";
 ![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
 
 The toast pattern combines two pieces: a **`DToastContainer`** component (the render target) and the **`useDToast`** hook (the dispatcher).
-Both are built here. `react-hot-toast` is gone: the wrapper spent its length
-undoing the library's choices — every toast went through `toast.custom()`
-because the built-in markup was not ours, its `visible` flag had to be
-translated into rendering `null`, and its container positioned itself with
-inline styles the stylesheet then fought. What was actually used of it was a
-list, six placements and a timer.
-
-The region is now Bootstrap's own `.toast-container`, so the stack is dressed
-by the same `--bs-toast-*` variables as the toast itself.
+Both are built here, on top of Bootstrap's own `.toast-container`, so the stack
+is dressed by the same `--bs-toast-*` variables as the toast itself.
 
 <br />
 
@@ -92,9 +85,8 @@ It returns a single `toast` function.
 returns, or reuse it in a later `toast()` call to update that toast in place
 rather than stacking a second one.
 
-The hook returns `dismiss` and `dismissAll` alongside `toast`. Closing a toast
-from outside it used to mean importing `react-hot-toast` and calling the
-library's own `dismiss`, so the escape hatch was a third party's API.
+The hook returns `dismiss` and `dismissAll` alongside `toast`, to close a toast
+from outside its own content.
 
 <Source
   code={`const { toast, dismiss, dismissAll } = useDToast();`}
@@ -116,13 +108,10 @@ Fields used when dispatching a toast with the default `DToast` layout.
 | `color` | `ComponentStateColor` | — | Applies the `toast-{color}` CSS modifier class (e.g. `"success"`, `"danger"`, `"warning"`, `"info"`). |
 | `closeLabel` | `string` | — | Accessible name of the close button. Defaults to `"Close"`; pass the text in the app's language. |
 
-`role` is gone. Every `DToast` used to carry `role="alert" aria-live="assertive"`,
-and a live region inserted at the same moment as its content is frequently not
-announced at all — the technology has to be watching the element before the
-change happens, so the announcement came and went depending on timing.
-`DToastRegion` owns it now: one `role="status" aria-live="polite"` region per
-corner, rendered for the container's lifetime and empty between toasts. A toast
-that genuinely must interrupt is a dialog.
+There is no `role` field: a toast declares no live region of its own.
+`DToastContainer` renders one `role="status" aria-live="polite"` region per
+corner for as long as that corner is in use, and every toast in it is announced
+from there. A message that must interrupt the user is a dialog, not a toast.
 
 ## `DToastContainerProps`
 
@@ -134,14 +123,12 @@ Props accepted by `DToastContainer`.
 | `reverseOrder` | `boolean` | `false` | When `true`, new toasts appear at the bottom of the stack instead of the top. |
 | `portal` | `boolean` | `true` | Renders into `document.body`. A region is `position: fixed`, and a fixed element inside an ancestor with a `transform`, a `filter` or `will-change` is positioned against THAT ancestor rather than the viewport — any animated wrapper above the container would pin the toasts to the middle of it. Turn it off for a test or a Storybook frame that needs the markup in place. |
 
-`containerClassName`, `containerStyle`, `toastOptions` and `gutter` are gone:
-they were all ways of reaching into a third party's markup. The region is ours
-now, so it is themed like every other component.
+The region is themed with CSS variables, like every other component.
 
 | Variable | Element | Description |
 |----------|---------|-------------|
 | `--bs-toast-zindex` | `.toast-container` | Stacking order of the region. Bootstrap's own. |
-| `--bs-toast-spacing` | `.toast-container` | Gap between stacked toasts — what `gutter` used to set in pixels. |
+| `--bs-toast-spacing` | `.toast-container` | Gap between stacked toasts. |
 | `--bs-toast-container-inset` | `.toast-container` | Distance from the region to the edge of the viewport. |
 
 ---
@@ -326,13 +313,10 @@ export function App() {
 
 ### Custom content
 
-Pass any `ReactNode` as the first argument for fully custom content.
-
-This used to take a render function and hand it the library's own toast object —
-an `id` and a `visible` flag the component had to translate into rendering
-`null`. Both were bookkeeping leaking into a consumer's component: the container
-decides what is mounted, and a toast that wants to close itself uses
-`<DToastDismiss />`, which reads which toast it is in from context.
+Pass any `ReactNode` as the first argument for fully custom content. The
+container decides when it is mounted and unmounted; a custom toast that wants to
+close itself renders a `<DToastDismiss />`, which reads which toast it is in
+from context.
 
 <Unstyled>
   <div

@@ -113,12 +113,8 @@ export function ExampleFullToastRoot({ type = 'base' }: { type: string }) {
 }
 
 /**
- * A custom toast.
- *
- * It took `{ id, visible }` — `react-hot-toast`'s own toast object — and had
- * to render `null` when not visible. Both were the library's bookkeeping in a
- * consumer's component: the container decides what is mounted, and
- * `DToastDismiss` reads which toast it is in from context.
+ * A custom toast: any `ReactNode`, closing itself with `DToastDismiss`, which
+ * reads which toast it is in from context.
  */
 export function CustomToastExample() {
   return (

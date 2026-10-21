@@ -21,18 +21,13 @@ To understand in more detail the aspects covered by this component, review the f
 
 ## Accessibility: where the live region lives
 
-\`DToast\` is markup, and nothing else. It used to carry
-\`role="alert" aria-live="assertive"\`, which was wrong in a way that passed
-every test: a live region inserted at the same moment as its content is
-frequently not announced at all, because the technology has to be watching the
-element before the change happens. The announcement came and went depending on
-timing.
+\`DToast\` is markup, and nothing else — it declares no live region of its own.
 
-\`DToastContainer\` owns it now — one \`role="status" aria-live="polite"\`
-region per corner, rendered for the container's lifetime and empty between
-toasts. A \`DToast\` placed in the page by hand, as these stories do, is
-therefore not announced, which is correct: static markup is not an event. A
-message that genuinely must interrupt is a dialog.
+The announcement belongs to \`DToastContainer\`, which renders one
+\`role="status" aria-live="polite"\` region per corner for as long as that
+corner is in use. A \`DToast\` placed in the page by hand, as these stories do,
+is therefore not announced: static markup is not an event. A message that must
+interrupt the user is a dialog, not a toast.
 
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Toast CSS Variables](https://getbootstrap.com/docs/5.3/components/toasts/#css)
