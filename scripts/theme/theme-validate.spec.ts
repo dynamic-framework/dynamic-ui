@@ -1608,6 +1608,93 @@ describe('theme-expand — la cabecera del CSS', () => {
   });
 });
 
+describe('theme-expand — un theme con solo roles', () => {
+  const PKG_VERSION = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'),
+  ).version as string;
+
+  it('emite sólo el bloque raíz con la rampa del role, y el validador lo acepta', () => {
+    const css = expandCss({ roles: { primary: '#166e62' } });
+    expect(css).toContain(':root,\n[data-bs-theme="dynamic"] {');
+    expect(css).toContain('--bs-primary-rgb: 22, 110, 98;');
+    expect(css).toContain('--bs-primary-text-bg-color: var(--bs-white);');
+    expect(css).toContain('--bs-primary-500-rgb: var(--bs-primary-rgb);');
+    for (const step of [25, 50, 100, 200, 300, 400, 600, 700, 800, 900]) {
+      expect(css).toMatch(new RegExp(`--bs-primary-${step}-rgb: \\d+, \\d+, \\d+;`));
+    }
+    for (const absent of ['--bs-body-', '--bs-border-', '--bs-font-sans-serif', '--bs-secondary-bg-rgb', '@media']) {
+      expect(css).not.toContain(absent);
+    }
+    // Un único bloque, el raíz.
+    expect(css.match(/\{/g)).toHaveLength(1);
+
+    const result = validate(css);
+    expect(result.stderr).not.toContain('error ');
+    expect(result.stderr).not.toContain('[tipografia');
+    expect(result.stderr).not.toContain('[border-color]');
+    expect(result.status).toBe(0);
+  });
+
+  it('emite un bloque por cada role indicado', () => {
+    const css = expandCss({ roles: { primary: '#166e62', success: '#2e7d32' } });
+    expect(css).toContain('/* Role primary */');
+    expect(css).toContain('/* Role success */');
+    expect(css).toContain('--bs-success-rgb: 46, 125, 50;');
+    expect(css).toContain('--bs-success-900-rgb:');
+    expect(css).not.toContain('--bs-body-');
+    expect(validate(css).status).toBe(0);
+  });
+
+  it('lleva la cabecera neutra más la línea de bloque parcial', () => {
+    const css = expandCss({ name: 'Banco Ejemplo', version: '1.0.0', roles: { primary: '#166e62' } });
+    const expected = [
+      '/*',
+      ' * Theme: Banco Ejemplo 1.0.0',
+      ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+      ' * Bloque parcial para incorporar a una hoja de theme existente.',
+      ' * Se carga después del CSS de Dynamic UI.',
+      ' */',
+      '',
+    ];
+    expect(css.split('\n').slice(0, expected.length)).toEqual(expected);
+  });
+
+  it('con `gray` emite lo mismo que en un theme completo', () => {
+    const partial = expandCss({ gray: '#5b6472' });
+    const full = expandCss({ ...MINIMAL_THEME, roles: {}, gray: '#5b6472' });
+    const grays = (css: string) => css.match(
+      / {2}--bs-(?:gray|secondary|light|dark)(?:-\d+)?-(?:rgb|text-bg-color):[^\n]+/g,
+    );
+    expect(grays(partial)).toEqual(grays(full));
+    expect(partial).not.toContain('--bs-body-');
+  });
+
+  it('un theme completo al que le falta `radius` sigue fallando igual que antes', () => {
+    const { radius, ...withoutRadius } = MINIMAL_THEME;
+    expect(radius).toBeDefined();
+    const result = expand(withoutRadius);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toBe('Theme inválido:\n  - Falta `radius` (radio base, por ejemplo "0.5rem").\n');
+  });
+
+  it('rechaza `components` sin `body`, nombrando la clave', () => {
+    const result = expand({
+      roles: { primary: '#166e62' },
+      components: [{ selector: '.btn', vars: { '--bs-btn-padding-x': '1rem' } }],
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '`components`: un theme con solo roles admite únicamente `roles`, `gray`, `name` y `version`',
+    );
+  });
+
+  it('rechaza también una clave desconocida', () => {
+    const result = expand({ roles: { primary: '#166e62' }, colores: {} });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('`colores`: un theme con solo roles admite únicamente');
+  });
+});
+
 describe('theme-expand — root gana en todos los anchos', () => {
   it('quita del @media la variable que root reemplaza, en vez de duplicarla', () => {
     const result = expand({ ...MINIMAL_THEME, root: { '--bs-rfs-fs-1': '1rem' } });

@@ -9,6 +9,10 @@
 // familia tipográfica y radio base. Salida: todas las variables derivadas en
 // el selector `:root, [data-bs-theme="dynamic"]`, con comentarios por sección.
 //
+// Un theme sin `body`, `typography` ni `radius` es un theme con solo roles:
+// admite `roles`, `gray`, `name` y `version`, y emite sólo las rampas de esos
+// roles en el bloque raíz.
+//
 // Tres secciones opcionales llevan el theme más allá de la paleta:
 //   - `root`       — variables --bs-* que se emiten tal cual en el bloque raíz;
 //   - `components` — un bloque por selector, con sus variables de componente;
@@ -67,6 +71,10 @@ const PKG_VERSION = JSON.parse(
 /** Variables de familia que `typography.fontFamily` no puede referenciar. */
 const FONT_FAMILY_VARS = ['--bs-font-sans-serif', '--bs-body-font-family'];
 
+/** Claves que hacen completo a un theme, y las que admite uno con solo roles. */
+const PARTIAL_EXCLUDED_KEYS = ['body', 'typography', 'radius'];
+const PARTIAL_KEYS = ['name', 'version', 'roles', 'gray'];
+
 // -- Entrada ----------------------------------------------------------------
 
 /**
@@ -111,6 +119,27 @@ export function readTheme(theme) {
 
   if (Object.keys(roles).length === 0 && !gray) {
     push('El theme no toca ningún color: define al menos un role en `roles`, o `gray`.');
+  }
+
+  // Un theme sin `body`, `typography` ni `radius` es un theme con solo roles:
+  // se emiten sus rampas y nada más. Basta con que esté una de las tres para
+  // que el theme sea completo y se exijan las otras.
+  const partial = !PARTIAL_EXCLUDED_KEYS.some((key) => Object.hasOwn(theme, key));
+  if (partial) {
+    for (const key of Object.keys(theme)) {
+      if (PARTIAL_KEYS.includes(key)) continue;
+      push(`\`${key}\`: un theme con solo roles admite únicamente \`roles\`, \`gray\`, \`name\` y \`version\``);
+    }
+    if (errors.length > 0) {
+      throw new Error(`Theme inválido:\n${errors.map((e) => `  - ${e}`).join('\n')}`);
+    }
+    return {
+      partial,
+      name: typeof theme.name === 'string' ? theme.name : null,
+      version: typeof theme.version === 'string' ? theme.version : null,
+      roles,
+      gray,
+    };
   }
 
   const body = theme.body ?? {};
@@ -389,6 +418,7 @@ export function readTheme(theme) {
   }
 
   return {
+    partial,
     name: typeof theme.name === 'string' ? theme.name : null,
     // Opcional, y sólo cosmético: acompaña al nombre en la cabecera del CSS.
     version: typeof theme.version === 'string' ? theme.version : null,
@@ -441,6 +471,25 @@ function generatedTokens({ roles, gray, root }) {
 }
 
 // -- Salida -----------------------------------------------------------------
+
+/**
+ * El CSS es el artefacto que se entrega: dice qué theme es y contra qué
+ * versión de la librería se generó, y nada más. Cómo se generó y qué
+ * decisiones se tomaron por el camino van a las notas, que salen por la
+ * terminal a quien corre el script, no al archivo que recibe el cliente.
+ */
+function cssHeader(theme) {
+  return [
+    '/*',
+    theme.name
+      ? ` * Theme: ${[theme.name, theme.version].filter(Boolean).join(' ')}`
+      : null,
+    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+    theme.partial ? ' * Bloque parcial para incorporar a una hoja de theme existente.' : null,
+    ' * Se carga después del CSS de Dynamic UI.',
+    ' */',
+  ].filter(Boolean).join('\n');
+}
 
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
@@ -527,6 +576,13 @@ export function expandTheme(input) {
     }
   }
 
+  // Un theme con solo roles termina aquí: el bloque raíz con sus rampas, para
+  // incorporarlo a una hoja que ya fija superficies, tipografía y radios.
+  if (theme.partial) {
+    const css = `${cssHeader(theme)}\n\n${THEME_SELECTOR} {${lines.join('\n')}\n}\n`;
+    return { css, notes };
+  }
+
   // Superficies. Siempre presentes, incluso si el theme no cambia el gris.
   lines.push(section('Superficies'));
   lines.push(decl('body-bg-rgb', toTriplet(theme.body.bg)));
@@ -606,19 +662,7 @@ export function expandTheme(input) {
     }
   }
 
-  // El CSS es el artefacto que se entrega: dice qué theme es y contra qué
-  // versión de la librería se generó, y nada más. Cómo se generó y qué
-  // decisiones se tomaron por el camino van a las notas, que salen por la
-  // terminal a quien corre el script, no al archivo que recibe el cliente.
-  const header = [
-    '/*',
-    theme.name
-      ? ` * Theme: ${[theme.name, theme.version].filter(Boolean).join(' ')}`
-      : null,
-    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
-    ' * Se carga después del CSS de Dynamic UI.',
-    ' */',
-  ].filter(Boolean).join('\n');
+  const header = cssHeader(theme);
 
   const root = `${THEME_SELECTOR} {${lines.join('\n')}\n}`;
 

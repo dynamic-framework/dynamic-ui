@@ -92,14 +92,50 @@ color CSS.
 | `version` | no | Cadena; acompaña a `name` en la cabecera del CSS |
 | `roles.<role>` | al menos uno, o `gray` | `primary secondary success info warning danger light dark` |
 | `gray` | no | Deriva la rampa de grises por tinte; ver la advertencia de abajo |
-| `body.bg`, `body.color` | sí | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
+| `body.bg`, `body.color` | en un theme completo | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
 | `body.borderColor` | no | Por defecto `rgb(var(--bs-gray-100-rgb))` |
-| `typography.fontFamily` | sí | Sale como `--bs-font-sans-serif`, que también leen `.tooltip` y `.popover`. `var(--bs-font-sans-serif)` a secas conserva la de Dynamic; dentro de una pila es error |
+| `typography.fontFamily` | en un theme completo | Sale como `--bs-font-sans-serif`, que también leen `.tooltip` y `.popover`. `var(--bs-font-sans-serif)` a secas conserva la de Dynamic; dentro de una pila es error |
 | `typography.scale.N` | no | Pasos `1`..`6`, en `rem` |
-| `radius` | sí | Radio base en `rem`; el resto se deriva |
+| `radius` | en un theme completo | Radio base en `rem`; el resto se deriva |
 | `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
 | `components` | no | Lista de `{ selector, vars?, declarations? }` |
 | `zones` | no | Mapa `<nombre>` → `{ vars, nav?, components? }` |
+
+### Theme de uno o más roles
+
+Un theme sin `body`, `typography` ni `radius` emite solo las rampas de los
+roles indicados, en un bloque para incorporar a una hoja de theme existente.
+Admite `roles`, `gray`, `name` y `version`.
+
+```json
+{ "roles": { "primary": "#166e62" } }
+```
+
+```css
+/*
+ * Para @dynamic-framework/ui-react 2.12.0.
+ * Bloque parcial para incorporar a una hoja de theme existente.
+ * Se carga después del CSS de Dynamic UI.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  /* Role primary */
+  --bs-primary-rgb: 22, 110, 98;
+  --bs-primary-text-bg-color: var(--bs-white);
+  --bs-primary-25-rgb: 243, 248, 247;
+  --bs-primary-50-rgb: 232, 241, 239;
+  --bs-primary-100-rgb: 208, 226, 224;
+  --bs-primary-200-rgb: 162, 197, 192;
+  --bs-primary-300-rgb: 115, 168, 161;
+  --bs-primary-400-rgb: 69, 139, 129;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 18, 88, 78;
+  --bs-primary-700-rgb: 13, 66, 59;
+  --bs-primary-800-rgb: 9, 44, 39;
+  --bs-primary-900-rgb: 4, 22, 20;
+}
+```
 
 ### Las tres secciones extendidas
 
