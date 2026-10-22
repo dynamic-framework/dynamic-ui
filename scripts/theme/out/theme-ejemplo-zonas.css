@@ -111,7 +111,7 @@
   --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
 
   /* Tipografía */
-  --bs-body-font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", sans-serif;
   --bs-rfs-fs-1: calc(1.325rem + .9vw);
   --bs-rfs-fs-2: calc(1.3rem + .6vw);
   --bs-rfs-fs-3: calc(1.275rem + .3vw);

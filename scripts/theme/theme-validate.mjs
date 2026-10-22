@@ -35,6 +35,7 @@ import {
   parseTriplet,
   resolveColorValue,
   resolveInherited,
+  varRefs,
   zoneFromPrelude,
   zoneSelector,
 } from './theme-tokens.mjs';
@@ -259,6 +260,25 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     );
   }
 
+  // R1b — una declaración que se referencia a sí misma. `--x: var(--x)` es un
+  // ciclo: el navegador descarta la variable y todo lo que la lea cae a su
+  // valor inicial, sin ningún error visible. Se comprueba en el raíz y en cada
+  // zona; es formato, no depende de cómo se resuelva el resto del theme.
+  for (const block of blocks) {
+    if (!block.isRoot && !block.zone) continue;
+    const where = block.zone ? ` dentro de [data-bs-theme="${block.zone}"]` : '';
+    for (const [name, { value, line }] of block.decls) {
+      if (!varRefs(value).includes(name)) continue;
+      fail(
+        'ciclo',
+        `${name}${where}: "${value}" se referencia a sí misma. Una custom property que se usa `
+        + 'en su propio valor forma un ciclo y el navegador la descarta: lo que la lee cae a su '
+        + 'valor inicial.',
+        line,
+      );
+    }
+  }
+
   // R2 — no declarar el wrapper de color.
   for (const [name, { value, line }] of root) {
     if (!wrapperName(name)) continue;
@@ -390,6 +410,20 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       + 'raíz. Sin su valor fijo en `@media (min-width: 1200px)` no tiene tope y sigue '
       + 'creciendo en desktop.',
       root.get(`--bs-rfs-fs-${step}`).line,
+    );
+  }
+
+  // R7b — familia tipográfica. --bs-body-font-family es un alias de
+  // --bs-font-sans-serif en el CSS de Dynamic, y .tooltip y .popover leen la
+  // segunda: cambiar sólo el alias deja esos componentes en la fuente anterior.
+  const bodyFont = root.get('--bs-body-font-family');
+  if (bodyFont && !root.has('--bs-font-sans-serif')) {
+    warn(
+      'tipografia-familia',
+      '--bs-body-font-family se declara sin --bs-font-sans-serif: tooltips y popovers leen '
+      + '--bs-font-sans-serif y no siguen al cambio de fuente. Declara la familia en '
+      + '--bs-font-sans-serif; --bs-body-font-family ya apunta a ella.',
+      bodyFont.line,
     );
   }
 

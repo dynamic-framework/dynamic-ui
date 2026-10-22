@@ -64,6 +64,9 @@ const PKG_VERSION = JSON.parse(
   fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
 ).version;
 
+/** Variables de familia que `typography.fontFamily` no puede referenciar. */
+const FONT_FAMILY_VARS = ['--bs-font-sans-serif', '--bs-body-font-family'];
+
 // -- Entrada ----------------------------------------------------------------
 
 /**
@@ -142,8 +145,26 @@ export function readTheme(theme) {
   }
 
   const typography = theme.typography ?? {};
+  // La familia se emite en --bs-font-sans-serif, y --bs-body-font-family apunta
+  // a ella: un valor que referencie cualquiera de las dos haría que la variable
+  // se referenciara a sí misma, y el navegador la descarta entera. Una de ellas
+  // a secas significa conservar la familia de Dynamic, así que no se emite nada.
+  let fontFamily = null;
   if (typeof typography.fontFamily !== 'string' || typography.fontFamily.trim() === '') {
     push('Falta `typography.fontFamily` (por ejemplo "Inter, system-ui, sans-serif").');
+  } else {
+    const raw = typography.fontFamily.trim();
+    const selfRefs = varRefs(raw).filter((ref) => FONT_FAMILY_VARS.includes(ref));
+    if (selfRefs.length === 0) {
+      fontFamily = raw;
+    } else if (!/^var\(\s*--bs-(?:font-sans-serif|body-font-family)\s*\)$/.test(raw)) {
+      push(
+        `\`typography.fontFamily\`: "${raw}" referencia ${selfRefs[0]} dentro de la familia. `
+        + 'La familia se escribe en --bs-font-sans-serif, así que la variable se referenciaría a '
+        + 'sí misma y el navegador la descartaría. Escribe la pila completa (por ejemplo '
+        + '"Inter", "Jost", sans-serif), o var(--bs-font-sans-serif) a secas para conservar la de Dynamic.',
+      );
+    }
   }
   const scale = {};
   const rawScale = typography.scale ?? {};
@@ -374,7 +395,7 @@ export function readTheme(theme) {
     roles,
     gray,
     body: { ...surfaces, borderColor },
-    typography: { fontFamily: typography.fontFamily.trim(), scale },
+    typography: { fontFamily, scale },
     radius,
     root,
     components,
@@ -394,7 +415,7 @@ function generatedTokens({ roles, gray, root }) {
     '--bs-border-color',
     '--bs-secondary-bg-rgb',
     '--bs-tertiary-bg-rgb',
-    '--bs-body-font-family',
+    '--bs-font-sans-serif',
     '--bs-border-radius-2xl',
   ]);
   for (const suffix of Object.keys(RADIUS_FACTORS)) {
@@ -518,12 +539,14 @@ export function expandTheme(input) {
   lines.push(decl('secondary-bg-rgb', 'var(--bs-gray-200-rgb)'));
   lines.push(decl('tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'));
 
-  // Tipografía. Se overridea --bs-rfs-fs-N; --bs-fs-N ya apunta ahí.
-  lines.push(section('Tipografía'));
-  lines.push(decl('body-font-family', theme.typography.fontFamily));
-
+  // Tipografía. La familia va en --bs-font-sans-serif, que es la que leen
+  // .tooltip y .popover; --bs-body-font-family ya apunta a ella en la librería.
+  // Los tamaños se overridean en --bs-rfs-fs-N; --bs-fs-N ya apunta ahí.
   let wide = [];
   const scaleSteps = FONT_SIZE_STEPS.filter((s) => theme.typography.scale[s] !== undefined);
+  if (theme.typography.fontFamily || scaleSteps.length > 0) lines.push(section('Tipografía'));
+  if (theme.typography.fontFamily) lines.push(decl('font-sans-serif', theme.typography.fontFamily));
+
   for (const step of scaleSteps) {
     const rem = theme.typography.scale[step];
     const pair = rfsPair(rem);
@@ -741,7 +764,7 @@ function main(argv) {
   return 0;
 }
 
-// realpath: installed as a package `bin`, argv[1] is the symlink in node_modules/.bin.
+// realpath: instalado como `bin` del paquete, argv[1] es el enlace simbólico de node_modules/.bin.
 if (process.argv[1] && import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href) {
   process.exit(main(process.argv));
 }

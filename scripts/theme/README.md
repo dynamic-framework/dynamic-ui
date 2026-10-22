@@ -94,7 +94,7 @@ color CSS.
 | `gray` | no | Deriva la rampa de grises por tinte; ver la advertencia de abajo |
 | `body.bg`, `body.color` | sí | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
 | `body.borderColor` | no | Por defecto `rgb(var(--bs-gray-100-rgb))` |
-| `typography.fontFamily` | sí | |
+| `typography.fontFamily` | sí | Sale como `--bs-font-sans-serif`, que también leen `.tooltip` y `.popover`. `var(--bs-font-sans-serif)` a secas conserva la de Dynamic; dentro de una pila es error |
 | `typography.scale.N` | no | Pasos `1`..`6`, en `rem` |
 | `radius` | sí | Radio base en `rem`; el resto se deriva |
 | `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
@@ -281,6 +281,9 @@ salida respeta*).
   por canal contra `dist/css/dynamic-ui.css`.
 - `light` y `dark` **no tienen rampa** en la librería: sólo `--bs-light-rgb` y
   `--bs-dark-rgb`. Sus `-text-emphasis` y `-bg-subtle` apuntan a pasos de gris.
+- La familia tipográfica se emite en `--bs-font-sans-serif`. La librería define
+  `--bs-body-font-family: var(--bs-font-sans-serif)`, así que el cuerpo la sigue
+  sin declararla aparte.
 - La tipografía se overridea sobre `--bs-rfs-fs-N`, nunca sobre `--bs-fs-N`, que
   es sólo el alias. Cada paso fluido (con `vw`), y siempre los pasos 1..4, lleva
   además su valor en `@media (min-width: 1200px)`: un valor fluido necesita ahí su
@@ -315,7 +318,7 @@ salida respeta*).
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
-`where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
+`where`, `vacio`, `ciclo`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
 `contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
@@ -339,6 +342,10 @@ correspondería a ningún contexto real.
 - `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
   las superficies se heredan de Dynamic.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
+  sí misma con `var()`: el navegador descarta la variable.
+- `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
+  sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.
 - `contraste-superficie` — `--bs-body-color-rgb` sobre `--bs-secondary-bg-rgb` y
   `--bs-tertiary-bg-rgb`, cuando el theme declara alguna de ellas. Se mide en el
   raíz y en cada zona que redefine el fondo o el texto del cuerpo; dentro de una

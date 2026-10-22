@@ -680,6 +680,83 @@ describe('theme-validate — un theme que sólo toca un role', () => {
   });
 });
 
+describe('la familia tipográfica', () => {
+  it('theme-expand la escribe en --bs-font-sans-serif, que leen también tooltips y popovers', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: '"Inter", sans-serif' },
+    });
+    expect(css).toContain('--bs-font-sans-serif: "Inter", sans-serif;');
+    // --bs-body-font-family ya es un alias de --bs-font-sans-serif en el CSS de Dynamic.
+    expect(css).not.toContain('--bs-body-font-family');
+  });
+
+  it('theme-validate avisa de un theme que sólo declara --bs-body-font-family', () => {
+    const result = validate([
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-font-family: "Inter", sans-serif;',
+      '}',
+      '',
+    ].join('\n'));
+    expect(result.stderr).toMatch(/aviso .*\[tipografia-familia\]/);
+    expect(result.stderr).toContain('tooltips y popovers');
+    expect(result.status).toBe(0);
+  });
+
+  it('theme-validate calla cuando el theme declara también --bs-font-sans-serif', () => {
+    const result = validate([
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-font-sans-serif: "Inter", sans-serif;',
+      '  --bs-body-font-family: var(--bs-font-sans-serif);',
+      '}',
+      '',
+    ].join('\n'));
+    expect(result.stderr).not.toContain('[tipografia-familia]');
+  });
+});
+
+describe('la familia tipográfica que referencia su propia variable', () => {
+  it('no emite la familia cuando el theme pide conservar la de Dynamic', () => {
+    for (const fontFamily of ['var(--bs-font-sans-serif)', 'var(--bs-body-font-family)']) {
+      const css = expandCss({ ...MINIMAL_THEME, typography: { fontFamily } });
+      expect(css).not.toMatch(/--bs-(?:font-sans-serif|body-font-family):/);
+      expect(css).not.toContain('/* Tipografía */');
+      const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+      expect(result.stderr).toBe('');
+      expect(result.status).toBe(0);
+    }
+  });
+
+  it('rechaza una familia compuesta que referencia --bs-font-sans-serif', () => {
+    const result = expand({ ...MINIMAL_THEME, typography: { fontFamily: '"Inter", var(--bs-font-sans-serif)' } });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('`typography.fontFamily`');
+    expect(result.stderr).toContain('se referenciaría a sí misma');
+  });
+
+  it('theme-validate da error de ciclo en el CSS que generaba el caso exacto', () => {
+    // Lo que producía develop con #1288 para "fontFamily": "var(--bs-font-sans-serif)".
+    const css = expandCss(MINIMAL_THEME).replace(
+      '--bs-font-sans-serif: Inter, sans-serif;',
+      '--bs-font-sans-serif: var(--bs-font-sans-serif);',
+    );
+    expect(css).toContain('--bs-font-sans-serif: var(--bs-font-sans-serif);');
+    const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(result.stderr).toMatch(/error .*\[ciclo\]\n {2}--bs-font-sans-serif: "var\(--bs-font-sans-serif\)" se referencia a sí misma/);
+    expect(result.status).toBe(1);
+  });
+
+  it('theme-validate da error de ciclo también dentro de una zona', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-link-color-rgb: var(--bs-link-color-rgb);\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toContain('--bs-link-color-rgb dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('[ciclo]');
+    expect(result.status).toBe(1);
+  });
+});
+
 describe('theme-validate — contraste de las superficies secundarias', () => {
   it('avisa cuando secondary-bg no contrasta con el texto del cuerpo', () => {
     const valid = expandCss(MINIMAL_THEME);
