@@ -538,3 +538,103 @@ describe('hydration', () => {
     expect(screen.getByText('Early')).toBeInTheDocument();
   });
 });
+
+/**
+ * The portal lifecycle, with the default `portal` — which every test above
+ * turns off.
+ *
+ * The regions cannot be portalled on the first render (the server has no
+ * `document`, so hydration would disagree), which means they necessarily move
+ * from the tree into `document.body`. React does not move a subtree across
+ * hosts: it destroys the inline nodes and builds new ones. A toast queued
+ * before the container mounted would therefore be inside those regions the
+ * instant they appeared — a live region arriving with its own message
+ * announces nothing, which is the bug this component exists to avoid.
+ *
+ * These assert the ORDER of the DOM mutations rather than the state of a node
+ * after the fact, because the nodes are live: by the time a test reads one, it
+ * holds the toast either way. A region that turned up with its toast already
+ * inside produces NO "slot added to region" record at all, since the observer
+ * only reports the outermost added node.
+ */
+describe('the portal lifecycle', () => {
+  const isRegion = (node: Node) => node instanceof Element
+    && node.classList.contains('toast-container');
+  const isSlot = (node: Node) => node instanceof Element
+    && node.classList.contains('toast-slot');
+
+  const recordMutations = (run: () => void) => {
+    const observer = new MutationObserver(() => {});
+    observer.observe(document.body, { childList: true, subtree: true });
+    run();
+    const records = observer.takeRecords();
+    observer.disconnect();
+
+    return {
+      /** When the regions reached their final home, `document.body`. */
+      regionsPlaced: records.findIndex(
+        (record) => record.target === document.body
+          && [...record.addedNodes].some(isRegion),
+      ),
+      /** When a toast was inserted INTO one that was already there. */
+      contentInserted: records.findIndex(
+        (record) => isRegion(record.target)
+          && [...record.addedNodes].some(isSlot),
+      ),
+    };
+  };
+
+  const tree = () => (
+    <DContextProvider>
+      <DToastContainer />
+    </DContextProvider>
+  );
+
+  it('should portal the regions to the body', () => {
+    render(tree());
+
+    expect(document.body.querySelectorAll('.toast-container')).toHaveLength(6);
+  });
+
+  it('should place the regions empty before a queued toast goes into them', () => {
+    act(() => { toastStore.show({ content: 'Early' }); });
+
+    const { regionsPlaced, contentInserted } = recordMutations(() => { render(tree()); });
+
+    expect(regionsPlaced).toBeGreaterThanOrEqual(0);
+    expect(contentInserted).toBeGreaterThan(regionsPlaced);
+    expect(screen.getByText('Early')).toBeInTheDocument();
+  });
+
+  it('should insert a later toast into regions that were already there', () => {
+    render(tree());
+
+    const { regionsPlaced, contentInserted } = recordMutations(() => {
+      act(() => { toastStore.show({ content: 'Later' }); });
+    });
+
+    /* The regions never move again, so nothing placed them this time round. */
+    expect(regionsPlaced).toBe(-1);
+    expect(contentInserted).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should place the regions empty before a toast queued ahead of hydration', () => {
+    const html = renderToString(tree());
+    const host = document.createElement('div');
+    host.innerHTML = html;
+    document.body.appendChild(host);
+    act(() => { toastStore.show({ content: 'Early' }); });
+
+    let root!: ReturnType<typeof hydrateRoot>;
+    const { regionsPlaced, contentInserted } = recordMutations(() => {
+      act(() => { root = hydrateRoot(host, tree()); });
+    });
+
+    expect(regionsPlaced).toBeGreaterThanOrEqual(0);
+    expect(contentInserted).toBeGreaterThan(regionsPlaced);
+    expect(screen.getByText('Early')).toBeInTheDocument();
+
+    act(() => { root.unmount(); });
+    host.remove();
+  });
+});

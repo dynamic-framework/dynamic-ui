@@ -64,15 +64,31 @@ export type DToastContainerProps = {
  * An empty region costs an inert element: no size, no pointer events, nothing
  * to announce.
  *
- * ## Server rendering
+ * ## Server rendering, and why it takes three commits
  *
- * The server has no `document`, so it renders the regions in place. The first
- * client render has to produce exactly that — the same six empty regions, in
- * the same position — or hydration reports a mismatch and React throws the
- * server's markup away. So the portal is opened after mounting, not on the
- * first render, and the hydrating render reads an empty snapshot even when a
- * toast was already dispatched. React re-reads the live snapshot as soon as
- * hydration finishes.
+ * The server has no `document` — `createPortal` is a client API — so the
+ * regions render in place. The first client render has to produce exactly
+ * that, the same six empty regions in the same position, or hydration reports
+ * a mismatch and React throws the server's markup away.
+ *
+ * That leaves an unavoidable move: the regions start in the tree and end up in
+ * `document.body`. Moving a React subtree to a different host is not a move at
+ * all — the inline nodes are destroyed and fresh ones are created in the body.
+ * So a toast dispatched before this mounted would be IN those brand-new
+ * regions the moment they appear, and a live region that arrives carrying its
+ * own message announces nothing. That is the bug this component exists to
+ * avoid, reintroduced at the one moment it is hardest to notice.
+ *
+ * Hence three commits, each with a job:
+ *
+ * 1. in place, empty — matches the server, so hydration succeeds;
+ * 2. in the body, still empty — the regions reach their final home with
+ *    nothing in them, which is what assistive technology has to see first;
+ * 3. in the body, with content — anything queued is now INSERTED into regions
+ *    that were already being watched.
+ *
+ * From there the regions never move again, so every later toast is an
+ * insertion into a region that has been sitting there empty.
  *
  * ## Where an unplaced toast goes is decided HERE
  *
@@ -105,14 +121,30 @@ export default function DToastContainer(
   }: DToastContainerProps,
 ) {
   /*
-   * Mounted, not "is there a document".
+   * `placed` — the regions are in their final DOM home.
    *
-   * `typeof document !== 'undefined'` is true on the very first client render
-   * too, so it would open the portal during hydration — against a server tree
-   * that had rendered the regions in place.
+   * Mounted, not "is there a document": `typeof document !== 'undefined'` is
+   * true on the very first client render too, so it would open the portal
+   * during hydration, against a server tree that had rendered the regions in
+   * place.
    */
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [placed, setPlaced] = useState(false);
+  useEffect(() => { setPlaced(true); }, []);
+
+  /*
+   * `ready` — and they were committed there empty.
+   *
+   * This can only turn true in a commit AFTER the one that placed them, which
+   * is the whole point: it buys the empty region its own commit before any
+   * content goes in.
+   *
+   * Deliberately not reset when `portal` changes at runtime. Flipping it would
+   * move the regions again, and unmounting the toasts currently on screen —
+   * losing whatever state a custom toast was holding — is a worse outcome than
+   * one possibly-missed announcement after a prop change nobody makes.
+   */
+  const [ready, setReady] = useState(false);
+  useEffect(() => { if (placed) setReady(true); }, [placed]);
 
   const state = useSyncExternalStore(
     toastStore.subscribe,
@@ -134,7 +166,7 @@ export default function DToastContainer(
         <DToastRegion
           key={corner}
           placement={corner}
-          state={state}
+          state={ready ? state : EMPTY_STATE}
           reverseOrder={reverseOrder}
           fallback={defaultPlacement}
         />
@@ -142,7 +174,7 @@ export default function DToastContainer(
     </>
   );
 
-  return portal && mounted
+  return portal && placed
     ? createPortal(regions, document.body)
     : regions;
 }
