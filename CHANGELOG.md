@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.11.0...v2.12.0) (2026-10-21)
+
+
+### Features
+
+* **DSkeleton:** add loading skeleton component ([#1262](https://github.com/dynamic-framework/dynamic-ui/issues/1262)) ([2e6bba0](https://github.com/dynamic-framework/dynamic-ui/commit/2e6bba0eb5458b4aed7017ad56828eaf6396c657))
+* **theme:** publish theme-expand and theme-validate as package binaries ([#1265](https://github.com/dynamic-framework/dynamic-ui/issues/1265)) ([f5c94e7](https://github.com/dynamic-framework/dynamic-ui/commit/f5c94e7e8e9fdd6680617b7878fcc20263bd0883))
+
+
+### Bug Fixes
+
+* keep framer-motion out of bundles that do not use DModal or DOffcanvas ([#1261](https://github.com/dynamic-framework/dynamic-ui/issues/1261)) ([9e3a5e8](https://github.com/dynamic-framework/dynamic-ui/commit/9e3a5e85924de32f0bed0de9fc126b3c2106ee41))
+* **storybook:** resolve manifest props with react-docgen-typescript ([#1264](https://github.com/dynamic-framework/dynamic-ui/issues/1264)) ([f73350e](https://github.com/dynamic-framework/dynamic-ui/commit/f73350efadd9ed4df006f0f0d602f486d256af43))
+* **types:** restrict DButton and DBadge size to sm and lg ([#1263](https://github.com/dynamic-framework/dynamic-ui/issues/1263)) ([0facb09](https://github.com/dynamic-framework/dynamic-ui/commit/0facb098e2387fb28d2236470580d3a13d46d98b))
+
 ## [2.11.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.10.0...v2.11.0) (2026-10-06)
 
 
