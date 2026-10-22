@@ -1,6 +1,6 @@
 /*
  * Theme: Ejemplo con zonas
- * Para @dynamic-framework/ui-react 2.10.0.
+ * Para @dynamic-framework/ui-react 2.12.0.
  * Se carga después del CSS de Dynamic UI.
  */
 
@@ -187,6 +187,8 @@
   --bs-body-bg: rgb(var(--bs-dark-rgb));
   --bs-body-color-rgb: var(--bs-white-rgb);
   --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);
+  --bs-tertiary-bg-rgb: var(--bs-gray-900-rgb);
   --bs-secondary-color-rgb: var(--bs-white-rgb);
   --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
   --bs-tertiary-color-rgb: var(--bs-white-rgb);

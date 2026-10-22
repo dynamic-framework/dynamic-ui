@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -287,10 +287,10 @@ salida respeta*).
   tope o sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
-- Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
-  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: hasta 2.10.0 la librería las
-  definía apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete
-  (#1191). Se mantiene para que el theme funcione también sobre esas versiones.
+- Se emiten `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
+  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`, el valor que la librería
+  define desde 2.11.0. Hasta 2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`),
+  que no es un triplete (#1191).
 - Sin `:where()`: tiene especificidad cero y la librería le gana.
 - El CSS es un entregable: la cabecera dice qué theme es y para qué versión de
   la librería, y los comentarios de dentro sólo nombran la sección. Lo que haya
@@ -314,12 +314,12 @@ salida respeta*).
 ## Qué comprueba el validador
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
-`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `border-color`,
-`fix-bg`, `where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
-`contraste-boton`, `contraste-nav-pills`, `contraste-zona`,
+`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
+`where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
+`contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
-`--strict` hace fallar también con avisos, y `--min-contrast N` cambia el umbral
+`--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
 
 Cada bloque se mide **en su propio contexto**: sus declaraciones sobre las del
@@ -333,7 +333,20 @@ correspondería a ningún contexto real.
   `--bs-<role>-rgb`. En `outline` ese fondo es el del estado relleno.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren.
+- `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
+  `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
+  `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
+- `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
+  las superficies se heredan de Dynamic.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `contraste-superficie` — `--bs-body-color-rgb` sobre `--bs-secondary-bg-rgb` y
+  `--bs-tertiary-bg-rgb`, cuando el theme declara alguna de ellas. Se mide en el
+  raíz y en cada zona que redefine el fondo o el texto del cuerpo; dentro de una
+  zona, lo que ésta no declara se mide con el valor que hereda del raíz, y varias
+  reglas de la misma zona se miden juntas. Si el theme no declara el color del
+  cuerpo, se mide contra el de Dynamic. Es aviso; una superficie que no se puede
+  resolver se avisa como `contraste-irresoluble`, y una que una zona declara sin
+  formato de triplete es error `triplete`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo

@@ -19,9 +19,11 @@
 // Lo que la herramienta resuelve por ti y es fácil equivocar a mano:
 //   - las 10 hojas de cada rampa, con la receta de tinte de Sass;
 //   - el paso 500, que apunta al base en vez de repetirlo;
-//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`;
-//   - el fix de `--bs-secondary-bg-rgb` / `--bs-tertiary-bg-rgb`, que hasta
-//     2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`) en vez del triplete.
+//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`.
+//
+// `--bs-secondary-bg-rgb` y `--bs-tertiary-bg-rgb` se emiten con el valor que la
+// librería define desde 2.11.0; hasta 2.10.0 apuntaban al wrapper
+// (`var(--bs-gray-200)`) en vez del triplete.
 
 import fs from 'node:fs';
 import path from 'node:path';

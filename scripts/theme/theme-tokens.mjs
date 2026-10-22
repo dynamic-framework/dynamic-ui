@@ -471,6 +471,34 @@ export function resolveColorValue(value, lookup) {
   }
 }
 
+/**
+ * Resuelve una custom property a un triplete tal como la ve un subárbol (una
+ * zona) que redefine algunas variables sobre el bloque raíz.
+ *
+ * Una custom property que referencia otra se sustituye en el elemento donde se
+ * declara y se hereda ya calculada. Una variable que el subárbol no declara vale
+ * lo mismo que en el raíz, aunque el subárbol cambie los tokens a los que
+ * apunta; una que sí declara sigue sus var() con la misma regla en cada salto.
+ *
+ * `own` son las declaraciones del subárbol (Map nombre → { value }) y
+ * `resolveRoot(name)` resuelve en el raíz, con sus valores por defecto.
+ * Devuelve `{ rgb, source }` o `{ rgb: null, reason }`, como `resolveRoot`.
+ */
+export function resolveInherited(name, own, resolveRoot, seen = new Set()) {
+  if (!own.has(name)) return resolveRoot(name);
+  if (seen.has(name)) return { rgb: null, reason: `ciclo de var() en ${name}` };
+  seen.add(name);
+
+  const raw = String(own.get(name).value).trim();
+  const triplet = parseTriplet(raw);
+  if (triplet) return { rgb: triplet, source: 'theme' };
+
+  const ref = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
+  if (ref) return resolveInherited(ref[1], own, resolveRoot, seen);
+
+  return { rgb: null, reason: `${name} vale "${raw}", que no es un triplete ni un var()` };
+}
+
 // -- Pares horneados ---------------------------------------------------------
 
 /**

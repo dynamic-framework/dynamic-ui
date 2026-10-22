@@ -34,6 +34,7 @@ import {
   luminance,
   parseTriplet,
   resolveColorValue,
+  resolveInherited,
   zoneFromPrelude,
   zoneSelector,
 } from './theme-tokens.mjs';
@@ -327,17 +328,24 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // R4 — superficies obligatorias.
+  // R4 — superficies. Un theme que toca el cuerpo tiene que fijarlas todas: si
+  // cambia el fondo y no el borde, el rebrand queda a medias. Uno que no toca
+  // --bs-body-* (el bloque de un role, por ejemplo) se queda con las de Dynamic,
+  // y eso no es un hallazgo: se anota.
+  const touchesBody = root.has('--bs-body-bg-rgb') || root.has('--bs-body-color-rgb');
+  if (!touchesBody) {
+    note('superficie-heredada', 'El theme no declara superficies: se heredan de Dynamic');
+  }
   for (const [name, why] of [
     ['--bs-body-bg-rgb', 'el fondo del documento'],
     ['--bs-body-color-rgb', 'el color de texto base'],
     ['--bs-border-color', 'el color de borde que comparten inputs, tarjetas y tablas'],
   ]) {
-    if (root.has(name)) continue;
+    if (!touchesBody || root.has(name)) continue;
     fail(
       'superficie-faltante',
-      `Falta ${name}. Un theme de Dynamic fija siempre ${why}: sin esta variable el `
-      + 'tema hereda el valor por defecto de la librería y el rebrand queda a medias.',
+      `Falta ${name}. Un theme que toca --bs-body-* fija también ${why}: sin esta `
+      + 'variable el tema hereda el valor por defecto de la librería y el rebrand queda a medias.',
     );
   }
   const border = root.get('--bs-border-color');
@@ -349,40 +357,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       + 'rgb(var(--bs-gray-100-rgb)) o rgb(R, G, B).',
       border.line,
     );
-  }
-
-  // R5 — el fix de secondary-bg / tertiary-bg.
-  for (const [name, expected] of [
-    ['--bs-secondary-bg-rgb', 'var(--bs-gray-200-rgb)'],
-    ['--bs-tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'],
-  ]) {
-    const decl = root.get(name);
-    const wrapper = expected.replace('-rgb)', ')');
-    if (!decl) {
-      fail(
-        'fix-bg',
-        `Falta ${name}: ${expected}. En dist/css/dynamic-ui.css la librería la define `
-        + `como ${wrapper} — el wrapper, no el triplete — así que cualquier RGBA() que la `
-        + 'consuma recibe "rgb(...)" donde espera "R, G, B". Todo theme debe corregirla.',
-      );
-      continue;
-    }
-    // Lo que se exige es que la variable acabe en un triplete, que es lo que la
-    // librería rompe al apuntarla al wrapper. Un theme puede darle su propio
-    // color — un literal "R, G, B" o cualquier otra -rgb — y sigue estando bien;
-    // lo único inaceptable es volver a un valor que no sea triplete.
-    const value = decl.value.trim();
-    const isTriplet = parseTriplet(value) !== null;
-    const isRgbRef = /^var\(\s*--bs-[\w-]+-rgb\s*(?:,[\s\S]*)?\)$/.test(value);
-    if (!isTriplet && !isRgbRef) {
-      fail(
-        'fix-bg',
-        `${name}: "${decl.value}" no corrige el bug de la librería. Tiene que acabar en un `
-        + `triplete: ${expected}, otra variable -rgb o un literal "R, G, B". `
-        + `${wrapper} es precisamente el valor roto.`,
-        decl.line,
-      );
-    }
   }
 
   // R6 — sin :where().
@@ -509,6 +483,78 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
 
   const inContext = (ctx) => (ctx.zone ? ` dentro de [data-bs-theme="${ctx.zone}"]` : '');
+
+  // R5 — contraste de las superficies secundarias. `.bg-body-secondary` y
+  // `.bg-body-tertiary` pintan estos fondos y dejan encima el texto del cuerpo,
+  // así que un theme que los redefine tiene que medirlos contra él: el
+  // --bs-body-color-rgb del contexto o, si nadie lo declara, el de Dynamic.
+  // Se mide en el raíz y en cada zona, porque una zona puede cambiar el fondo o
+  // el texto por separado. Una zona que no declara ninguno de los dos ve el
+  // mismo par que el raíz y no se vuelve a medir. Dentro de una zona, lo que
+  // ésta no declara llega heredado del raíz ya calculado: lo resuelve
+  // resolveInherited. Varias reglas para la misma zona se aplican juntas, así
+  // que sus declaraciones se funden en orden de aparición antes de medir.
+  const zoneScopes = new Map();
+  for (const block of zoneBlocks) {
+    const own = zoneScopes.get(block.zone) ?? new Map();
+    for (const [name, entry] of block.decls) own.set(name, entry);
+    zoneScopes.set(block.zone, own);
+  }
+  const surfaceContexts = [
+    { zone: null, decls: root, own: root },
+    ...[...zoneScopes].map(([zone, own]) => ({ zone, own, decls: new Map([...root, ...own]) })),
+  ];
+  for (const ctx of surfaceContexts) {
+    const lookup = (name) => (ctx.zone
+      ? resolveInherited(name, ctx.own, (inherited) => resolve(inherited, root))
+      : resolve(name, root));
+    const bodyColor = lookup('--bs-body-color-rgb');
+    for (const [name, utility] of [
+      ['--bs-secondary-bg-rgb', '.bg-body-secondary'],
+      ['--bs-tertiary-bg-rgb', '.bg-body-tertiary'],
+    ]) {
+      const decl = ctx.decls.get(name);
+      if (!decl) continue;
+      if (ctx.zone && !ctx.own.has(name) && !ctx.own.has('--bs-body-color-rgb')) continue;
+      // R1 sólo revisa el bloque raíz: un valor que no es triplete declarado en
+      // la zona se rechaza aquí, y uno heredado del raíz ya lo rechazó R1.
+      // Cualquier otro par que no se pueda resolver se avisa: saltarlo en
+      // silencio daría por buena una superficie que nadie midió.
+      if (!isTripletOrRgbVar(decl.value)) {
+        if (ctx.zone && ctx.own.has(name)) {
+          fail(
+            'triplete',
+            `${name}${inContext(ctx)}: "${decl.value}" no es un triplete. Los colores de Dynamic `
+            + 'viajan como "R, G, B" sobre la variable -rgb (o como var(--bs-…-rgb)); '
+            + `${utility} lo consume dentro de RGBA() y con este valor no se pinta.`,
+            decl.line,
+          );
+        }
+        continue;
+      }
+      const bg = lookup(name);
+      const line = ctx.own.get(name)?.line ?? ctx.own.get('--bs-body-color-rgb')?.line ?? decl.line;
+      if (!bodyColor.rgb || !bg.rgb) {
+        warn(
+          'contraste-irresoluble',
+          `No se pudo medir ${name}${inContext(ctx)} contra el texto del cuerpo: `
+          + `${bodyColor.reason ?? bg.reason}.`,
+          line,
+        );
+        continue;
+      }
+      const ratio = contrast(bodyColor.rgb, bg.rgb);
+      if (ratio >= minContrast) continue;
+      warn(
+        'contraste-superficie',
+        `${name}${inContext(ctx)}: ${ratio.toFixed(2)}:1 entre --bs-body-color-rgb`
+        + (ctx.decls.has('--bs-body-color-rgb') ? '' : ' (el de Dynamic, porque el theme no lo declara)')
+        + ` y este fondo, por debajo del ${minContrast}:1 de WCAG 2.x AA. ${utility} pinta esta `
+        + 'superficie con el texto del cuerpo encima.',
+        line,
+      );
+    }
+  }
 
   /**
    * Mide un lado de un par declarado en un bloque. Si el bloque no lo declara,
@@ -950,7 +996,7 @@ function main(argv) {
   return 0;
 }
 
-// realpath: installed as a package `bin`, argv[1] is the symlink in node_modules/.bin.
+// realpath: instalado como `bin` del paquete, argv[1] es el enlace simbólico de node_modules/.bin.
 if (process.argv[1] && import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href) {
   process.exit(main(process.argv));
 }
