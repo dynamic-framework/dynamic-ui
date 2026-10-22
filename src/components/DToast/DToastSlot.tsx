@@ -86,7 +86,10 @@ export default function DToastSlot({ entry }: Props) {
     }
   }, [id, holder]);
 
-  useEffect(() => () => { toastStore.resume(id, holder); }, [id, holder]);
+  useEffect(() => {
+    sync();
+    return () => { toastStore.resume(id, holder); };
+  }, [id, holder, sync]);
 
   const onPointerEnter = useCallback(() => {
     hovered.current = true;
