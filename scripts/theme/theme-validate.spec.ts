@@ -2028,6 +2028,15 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     expect(result.status).toBe(1);
   });
 
+  it('un theme con zonas escrito a mano según el README pasa --strict', () => {
+    const file = path.join(ROOT, 'scripts/theme/fixtures/theme-zona-a-mano.css');
+    const result = run(VALIDATE, [file, '--strict']);
+    expect(findings(result)).toEqual([]);
+    expect(result.stderr).toBe('');
+    expect(result.stdout).toContain('sin errores (0 aviso(s))');
+    expect(result.status).toBe(0);
+  });
+
   it('no acepta un color completo dentro de rgb(): rgb(var(--bs-white)) no se pinta', () => {
     const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n  --bs-btn-color: rgb(var(--bs-white));\n}\n`;
     const result = validateStrict(css);
