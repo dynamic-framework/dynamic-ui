@@ -9,6 +9,10 @@
 // familia tipográfica y radio base. Salida: todas las variables derivadas en
 // el selector `:root, [data-bs-theme="dynamic"]`, con comentarios por sección.
 //
+// Un theme sin `body`, `typography` ni `radius` es un theme con solo roles:
+// admite `roles`, `gray`, `name` y `version`, y emite sólo las rampas de esos
+// roles en el bloque raíz.
+//
 // Tres secciones opcionales llevan el theme más allá de la paleta:
 //   - `root`       — variables --bs-* que se emiten tal cual en el bloque raíz;
 //   - `components` — un bloque por selector, con sus variables de componente;
@@ -19,9 +23,11 @@
 // Lo que la herramienta resuelve por ti y es fácil equivocar a mano:
 //   - las 10 hojas de cada rampa, con la receta de tinte de Sass;
 //   - el paso 500, que apunta al base en vez de repetirlo;
-//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`;
-//   - el fix de `--bs-secondary-bg-rgb` / `--bs-tertiary-bg-rgb`, que hasta
-//     2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`) en vez del triplete.
+//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`.
+//
+// `--bs-secondary-bg-rgb` y `--bs-tertiary-bg-rgb` se emiten con el valor que la
+// librería define desde 2.11.0; hasta 2.10.0 apuntaban al wrapper
+// (`var(--bs-gray-200)`) en vez del triplete.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -61,6 +67,13 @@ import {
 const PKG_VERSION = JSON.parse(
   fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
 ).version;
+
+/** Variables de familia que `typography.fontFamily` no puede referenciar. */
+const FONT_FAMILY_VARS = ['--bs-font-sans-serif', '--bs-body-font-family'];
+
+/** Claves que hacen completo a un theme, y las que admite uno con solo roles. */
+const PARTIAL_EXCLUDED_KEYS = ['body', 'typography', 'radius'];
+const PARTIAL_KEYS = ['name', 'version', 'roles', 'gray'];
 
 // -- Entrada ----------------------------------------------------------------
 
@@ -108,6 +121,27 @@ export function readTheme(theme) {
     push('El theme no toca ningún color: define al menos un role en `roles`, o `gray`.');
   }
 
+  // Un theme sin `body`, `typography` ni `radius` es un theme con solo roles:
+  // se emiten sus rampas y nada más. Basta con que esté una de las tres para
+  // que el theme sea completo y se exijan las otras.
+  const partial = !PARTIAL_EXCLUDED_KEYS.some((key) => Object.hasOwn(theme, key));
+  if (partial) {
+    for (const key of Object.keys(theme)) {
+      if (PARTIAL_KEYS.includes(key)) continue;
+      push(`\`${key}\`: un theme con solo roles admite únicamente \`roles\`, \`gray\`, \`name\` y \`version\``);
+    }
+    if (errors.length > 0) {
+      throw new Error(`Theme inválido:\n${errors.map((e) => `  - ${e}`).join('\n')}`);
+    }
+    return {
+      partial,
+      name: typeof theme.name === 'string' ? theme.name : null,
+      version: typeof theme.version === 'string' ? theme.version : null,
+      roles,
+      gray,
+    };
+  }
+
   const body = theme.body ?? {};
   const surfaces = {};
   for (const key of ['bg', 'color']) {
@@ -140,8 +174,26 @@ export function readTheme(theme) {
   }
 
   const typography = theme.typography ?? {};
+  // La familia se emite en --bs-font-sans-serif, y --bs-body-font-family apunta
+  // a ella: un valor que referencie cualquiera de las dos haría que la variable
+  // se referenciara a sí misma, y el navegador la descarta entera. Una de ellas
+  // a secas significa conservar la familia de Dynamic, así que no se emite nada.
+  let fontFamily = null;
   if (typeof typography.fontFamily !== 'string' || typography.fontFamily.trim() === '') {
     push('Falta `typography.fontFamily` (por ejemplo "Inter, system-ui, sans-serif").');
+  } else {
+    const raw = typography.fontFamily.trim();
+    const selfRefs = varRefs(raw).filter((ref) => FONT_FAMILY_VARS.includes(ref));
+    if (selfRefs.length === 0) {
+      fontFamily = raw;
+    } else if (!/^var\(\s*--bs-(?:font-sans-serif|body-font-family)\s*\)$/.test(raw)) {
+      push(
+        `\`typography.fontFamily\`: "${raw}" referencia ${selfRefs[0]} dentro de la familia. `
+        + 'La familia se escribe en --bs-font-sans-serif, así que la variable se referenciaría a '
+        + 'sí misma y el navegador la descartaría. Escribe la pila completa (por ejemplo '
+        + '"Inter", "Jost", sans-serif), o var(--bs-font-sans-serif) a secas para conservar la de Dynamic.',
+      );
+    }
   }
   const scale = {};
   const rawScale = typography.scale ?? {};
@@ -366,13 +418,14 @@ export function readTheme(theme) {
   }
 
   return {
+    partial,
     name: typeof theme.name === 'string' ? theme.name : null,
     // Opcional, y sólo cosmético: acompaña al nombre en la cabecera del CSS.
     version: typeof theme.version === 'string' ? theme.version : null,
     roles,
     gray,
     body: { ...surfaces, borderColor },
-    typography: { fontFamily: typography.fontFamily.trim(), scale },
+    typography: { fontFamily, scale },
     radius,
     root,
     components,
@@ -392,7 +445,7 @@ function generatedTokens({ roles, gray, root }) {
     '--bs-border-color',
     '--bs-secondary-bg-rgb',
     '--bs-tertiary-bg-rgb',
-    '--bs-body-font-family',
+    '--bs-font-sans-serif',
     '--bs-border-radius-2xl',
   ]);
   for (const suffix of Object.keys(RADIUS_FACTORS)) {
@@ -418,6 +471,25 @@ function generatedTokens({ roles, gray, root }) {
 }
 
 // -- Salida -----------------------------------------------------------------
+
+/**
+ * El CSS es el artefacto que se entrega: dice qué theme es y contra qué
+ * versión de la librería se generó, y nada más. Cómo se generó y qué
+ * decisiones se tomaron por el camino van a las notas, que salen por la
+ * terminal a quien corre el script, no al archivo que recibe el cliente.
+ */
+function cssHeader(theme) {
+  return [
+    '/*',
+    theme.name
+      ? ` * Theme: ${[theme.name, theme.version].filter(Boolean).join(' ')}`
+      : null,
+    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+    theme.partial ? ' * Bloque parcial para incorporar a una hoja de theme existente.' : null,
+    ' * Se carga después del CSS de Dynamic UI.',
+    ' */',
+  ].filter(Boolean).join('\n');
+}
 
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
@@ -504,6 +576,13 @@ export function expandTheme(input) {
     }
   }
 
+  // Un theme con solo roles termina aquí: el bloque raíz con sus rampas, para
+  // incorporarlo a una hoja que ya fija superficies, tipografía y radios.
+  if (theme.partial) {
+    const css = `${cssHeader(theme)}\n\n${THEME_SELECTOR} {${lines.join('\n')}\n}\n`;
+    return { css, notes };
+  }
+
   // Superficies. Siempre presentes, incluso si el theme no cambia el gris.
   lines.push(section('Superficies'));
   lines.push(decl('body-bg-rgb', toTriplet(theme.body.bg)));
@@ -516,12 +595,14 @@ export function expandTheme(input) {
   lines.push(decl('secondary-bg-rgb', 'var(--bs-gray-200-rgb)'));
   lines.push(decl('tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'));
 
-  // Tipografía. Se overridea --bs-rfs-fs-N; --bs-fs-N ya apunta ahí.
-  lines.push(section('Tipografía'));
-  lines.push(decl('body-font-family', theme.typography.fontFamily));
-
+  // Tipografía. La familia va en --bs-font-sans-serif, que es la que leen
+  // .tooltip y .popover; --bs-body-font-family ya apunta a ella en la librería.
+  // Los tamaños se overridean en --bs-rfs-fs-N; --bs-fs-N ya apunta ahí.
   let wide = [];
   const scaleSteps = FONT_SIZE_STEPS.filter((s) => theme.typography.scale[s] !== undefined);
+  if (theme.typography.fontFamily || scaleSteps.length > 0) lines.push(section('Tipografía'));
+  if (theme.typography.fontFamily) lines.push(decl('font-sans-serif', theme.typography.fontFamily));
+
   for (const step of scaleSteps) {
     const rem = theme.typography.scale[step];
     const pair = rfsPair(rem);
@@ -581,19 +662,7 @@ export function expandTheme(input) {
     }
   }
 
-  // El CSS es el artefacto que se entrega: dice qué theme es y contra qué
-  // versión de la librería se generó, y nada más. Cómo se generó y qué
-  // decisiones se tomaron por el camino van a las notas, que salen por la
-  // terminal a quien corre el script, no al archivo que recibe el cliente.
-  const header = [
-    '/*',
-    theme.name
-      ? ` * Theme: ${[theme.name, theme.version].filter(Boolean).join(' ')}`
-      : null,
-    ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
-    ' * Se carga después del CSS de Dynamic UI.',
-    ' */',
-  ].filter(Boolean).join('\n');
+  const header = cssHeader(theme);
 
   const root = `${THEME_SELECTOR} {${lines.join('\n')}\n}`;
 
@@ -739,7 +808,7 @@ function main(argv) {
   return 0;
 }
 
-// realpath: installed as a package `bin`, argv[1] is the symlink in node_modules/.bin.
+// realpath: instalado como `bin` del paquete, argv[1] es el enlace simbólico de node_modules/.bin.
 if (process.argv[1] && import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href) {
   process.exit(main(process.argv));
 }

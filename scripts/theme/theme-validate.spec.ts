@@ -105,7 +105,7 @@ describe('theme-expand', () => {
     expect(css).not.toMatch(/--bs-fs-\d:/);
   });
 
-  it('incluye el fix de secondary-bg y tertiary-bg apuntando al triplete', () => {
+  it('emite secondary-bg y tertiary-bg apuntando al triplete', () => {
     const css = expandCss(MINIMAL_THEME);
     expect(css).toContain('--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);');
     expect(css).toContain('--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);');
@@ -300,7 +300,7 @@ describe('theme-validate rechaza los errores conocidos', () => {
     expect(result.stderr).toContain('no es más oscuro');
   });
 
-  it('el fix de secondary-bg apuntando al wrapper roto', () => {
+  it('secondary-bg apuntando al wrapper, que no es un triplete', () => {
     const valid = expandCss(MINIMAL_THEME);
     const broken = valid.replace(
       '--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);',
@@ -308,17 +308,8 @@ describe('theme-validate rechaza los errores conocidos', () => {
     );
     const result = validate(broken);
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('[fix-bg]');
-    expect(result.stderr).toContain('es precisamente el valor roto');
-  });
-
-  it('el fix de tertiary-bg ausente', () => {
-    const valid = expandCss(MINIMAL_THEME);
-    const broken = valid.replace(/\n\s*--bs-tertiary-bg-rgb: [^;]+;/, '');
-    const result = validate(broken);
-    expect(result.status).toBe(1);
-    expect(result.stderr).toContain('[fix-bg]');
-    expect(result.stderr).toContain('--bs-tertiary-bg-rgb');
+    expect(result.stderr).toContain('[triplete]');
+    expect(result.stderr).toContain('--bs-secondary-bg-rgb');
   });
 
   it('un override envuelto en :where()', () => {
@@ -447,6 +438,10 @@ const SECTIONED_THEME = {
       vars: {
         '--bs-body-bg-rgb': '16, 24, 40',
         '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+        // Una zona oscura redefine también las superficies secundarias: las del
+        // raíz son claras y el texto blanco de la zona no se lee sobre ellas.
+        '--bs-secondary-bg-rgb': 'var(--bs-gray-800-rgb)',
+        '--bs-tertiary-bg-rgb': 'var(--bs-gray-900-rgb)',
       },
       nav: {
         '--bs-nav-link-color': 'rgb(var(--bs-white-rgb))',
@@ -624,6 +619,265 @@ describe('theme-expand — sección zones', () => {
     });
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('sólo van variables --bs-nav-*');
+  });
+});
+
+describe('theme-validate — un theme que sólo toca un role', () => {
+  // El bloque de un role escrito a mano: el base, su texto de .text-bg-<role> y
+  // las 10 hojas. Las superficies, la tipografía y los radios se quedan como
+  // los define Dynamic.
+  const ROLE_ONLY_CSS = [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-primary-rgb: 22, 110, 98;',
+    '  --bs-primary-text-bg-color: var(--bs-white);',
+    '  --bs-primary-25-rgb: 243, 248, 247;',
+    '  --bs-primary-50-rgb: 232, 241, 239;',
+    '  --bs-primary-100-rgb: 208, 226, 224;',
+    '  --bs-primary-200-rgb: 162, 197, 192;',
+    '  --bs-primary-300-rgb: 115, 168, 161;',
+    '  --bs-primary-400-rgb: 69, 139, 129;',
+    '  --bs-primary-500-rgb: var(--bs-primary-rgb);',
+    '  --bs-primary-600-rgb: 18, 88, 78;',
+    '  --bs-primary-700-rgb: 13, 66, 59;',
+    '  --bs-primary-800-rgb: 9, 44, 39;',
+    '  --bs-primary-900-rgb: 4, 22, 20;',
+    '}',
+    '',
+  ].join('\n');
+
+  it('pasa sin errores aunque no declare secondary-bg ni tertiary-bg', () => {
+    const result = validate(ROLE_ONLY_CSS);
+    expect(result.stderr).not.toContain('error ');
+    expect(result.stderr).not.toContain('[fix-bg]');
+    expect(result.status).toBe(0);
+  });
+
+  it('anota una sola vez, sin avisar, que hereda las superficies de Dynamic', () => {
+    const result = validate(ROLE_ONLY_CSS);
+    expect(result.stderr).toBe('');
+    const notes = result.stdout.match(/^nota .*\[superficie-heredada\]\n {2}(.*)$/gm);
+    expect(result.stdout).not.toContain('[superficie-faltante]');
+    expect(notes).toHaveLength(1);
+    expect(result.stdout).toContain('El theme no declara superficies: se heredan de Dynamic');
+    expect(result.status).toBe(0);
+  });
+
+  it('pasa también con --strict, que no cuenta las notas', () => {
+    const result = run(VALIDATE, [write(ROLE_ONLY_CSS, '.css'), '--strict']);
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('sigue exigiendo las superficies a un theme que toca --bs-body-*', () => {
+    const broken = ROLE_ONLY_CSS.replace(
+      '  --bs-primary-rgb',
+      '  --bs-body-bg-rgb: 255, 255, 255;\n  --bs-primary-rgb',
+    );
+    const result = validate(broken);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toMatch(/error .*\[superficie-faltante\]\n {2}Falta --bs-body-color-rgb/);
+  });
+});
+
+describe('la familia tipográfica', () => {
+  it('theme-expand la escribe en --bs-font-sans-serif, que leen también tooltips y popovers', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      typography: { fontFamily: '"Inter", sans-serif' },
+    });
+    expect(css).toContain('--bs-font-sans-serif: "Inter", sans-serif;');
+    // --bs-body-font-family ya es un alias de --bs-font-sans-serif en el CSS de Dynamic.
+    expect(css).not.toContain('--bs-body-font-family');
+  });
+
+  it('theme-validate avisa de un theme que sólo declara --bs-body-font-family', () => {
+    const result = validate([
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-font-family: "Inter", sans-serif;',
+      '}',
+      '',
+    ].join('\n'));
+    expect(result.stderr).toMatch(/aviso .*\[tipografia-familia\]/);
+    expect(result.stderr).toContain('tooltips y popovers');
+    expect(result.status).toBe(0);
+  });
+
+  it('theme-validate calla cuando el theme declara también --bs-font-sans-serif', () => {
+    const result = validate([
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-font-sans-serif: "Inter", sans-serif;',
+      '  --bs-body-font-family: var(--bs-font-sans-serif);',
+      '}',
+      '',
+    ].join('\n'));
+    expect(result.stderr).not.toContain('[tipografia-familia]');
+  });
+});
+
+describe('la familia tipográfica que referencia su propia variable', () => {
+  it('no emite la familia cuando el theme pide conservar la de Dynamic', () => {
+    for (const fontFamily of ['var(--bs-font-sans-serif)', 'var(--bs-body-font-family)']) {
+      const css = expandCss({ ...MINIMAL_THEME, typography: { fontFamily } });
+      expect(css).not.toMatch(/--bs-(?:font-sans-serif|body-font-family):/);
+      expect(css).not.toContain('/* Tipografía */');
+      const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+      expect(result.stderr).toBe('');
+      expect(result.status).toBe(0);
+    }
+  });
+
+  it('rechaza una familia compuesta que referencia --bs-font-sans-serif', () => {
+    const result = expand({ ...MINIMAL_THEME, typography: { fontFamily: '"Inter", var(--bs-font-sans-serif)' } });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('`typography.fontFamily`');
+    expect(result.stderr).toContain('se referenciaría a sí misma');
+  });
+
+  it('theme-validate da error de ciclo en el CSS que generaba el caso exacto', () => {
+    // Lo que producía develop con #1288 para "fontFamily": "var(--bs-font-sans-serif)".
+    const css = expandCss(MINIMAL_THEME).replace(
+      '--bs-font-sans-serif: Inter, sans-serif;',
+      '--bs-font-sans-serif: var(--bs-font-sans-serif);',
+    );
+    expect(css).toContain('--bs-font-sans-serif: var(--bs-font-sans-serif);');
+    const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(result.stderr).toMatch(/error .*\[ciclo\]\n {2}--bs-font-sans-serif: "var\(--bs-font-sans-serif\)" se referencia a sí misma/);
+    expect(result.status).toBe(1);
+  });
+
+  it('theme-validate da error de ciclo también dentro de una zona', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-link-color-rgb: var(--bs-link-color-rgb);\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toContain('--bs-link-color-rgb dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('[ciclo]');
+    expect(result.status).toBe(1);
+  });
+});
+
+describe('theme-validate — contraste de las superficies secundarias', () => {
+  it('avisa cuando secondary-bg no contrasta con el texto del cuerpo', () => {
+    const valid = expandCss(MINIMAL_THEME);
+    // El mismo triplete que body.color: un triplete válido, ilegible debajo del texto.
+    const broken = valid.replace(
+      '--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);',
+      '--bs-secondary-bg-rgb: 16, 24, 40;',
+    );
+    const result = validate(broken);
+    expect(result.stderr).toContain('[contraste-superficie]');
+    expect(result.stderr).toContain('--bs-secondary-bg-rgb');
+    expect(result.stderr).not.toContain('error ');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide contra el color de cuerpo de Dynamic cuando el theme no lo declara', () => {
+    // gray-900 de Dynamic sobre sí mismo: 1:1, sin --bs-body-color-rgb en el theme.
+    const result = validate([
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-secondary-bg-rgb: var(--bs-gray-900-rgb);',
+      '}',
+      '',
+    ].join('\n'));
+    expect(result.stderr).toMatch(/aviso .*\[contraste-superficie\]/);
+    expect(result.stderr).toContain('el de Dynamic, porque el theme no lo declara');
+    expect(result.status).toBe(0);
+  });
+
+  it('calla con los valores que emite theme-expand', () => {
+    const result = validate(expandCss(MINIMAL_THEME));
+    expect(result.stderr).not.toContain('[contraste-superficie]');
+  });
+
+  it('mide una zona que sólo redefine secondary-bg, y --strict lo cuenta', () => {
+    // El raíz está bien; la zona pone el fondo del mismo color que el texto del cuerpo.
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: 16, 24, 40;\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toMatch(
+      /aviso .*\[contraste-superficie\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/,
+    );
+    expect(result.stderr).not.toContain('error ');
+    expect(result.status).toBe(0);
+
+    const strict = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(strict.stderr).toContain('[contraste-superficie]');
+    expect(strict.status).toBe(1);
+  });
+
+  it('mide una zona que sólo cambia el texto del cuerpo sobre el fondo del raíz', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-body-bg-rgb: 16, 24, 40;\n  --bs-body-color-rgb: 240, 242, 245;\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toContain('--bs-secondary-bg-rgb dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('--bs-tertiary-bg-rgb dentro de [data-bs-theme="oscura"]');
+  });
+
+  it('mide en la zona el alias que hereda del raíz, no el que resolvería con la zona', () => {
+    // El raíz declara secondary-bg como alias de su fondo blanco. En la zona el
+    // alias llega ya calculado (blanco), y la zona pone texto blanco: 1:1.
+    const valid = expandCss(MINIMAL_THEME)
+      .replace('--bs-body-bg-rgb: 247, 248, 250;', '--bs-body-bg-rgb: 255, 255, 255;')
+      .replace('--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);', '--bs-secondary-bg-rgb: var(--bs-body-bg-rgb);');
+    const css = `${valid}\n[data-bs-theme="oscura"] {\n  --bs-body-bg-rgb: 0, 0, 0;\n  --bs-body-color-rgb: 255, 255, 255;\n}\n`;
+    const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(result.stderr).toMatch(
+      /\[contraste-superficie\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/,
+    );
+    expect(result.status).toBe(1);
+  });
+
+  it('no avisa por un texto del raíz que la zona sólo cambiaría a través de un token', () => {
+    // El texto del raíz apunta a gray-900. La zona cambia gray-900, pero el
+    // texto ya llegó calculado: sigue oscuro sobre el fondo claro de la zona.
+    // Las otras reglas de zona todavía resuelven con la zona y no se miran aquí.
+    const valid = expandCss(MINIMAL_THEME)
+      .replace('--bs-body-color-rgb: 16, 24, 40;', '--bs-body-color-rgb: var(--bs-gray-900-rgb);');
+    const css = `${valid}\n[data-bs-theme="clara"] {\n  --bs-gray-900-rgb: 250, 250, 250;\n  --bs-secondary-bg-rgb: 235, 235, 235;\n}\n`;
+    expect(validate(css).stderr).not.toContain('[contraste-superficie]');
+  });
+
+  it('funde las reglas repetidas de una misma zona antes de medir', () => {
+    // Por separado, cada regla de la zona contrasta con el otro valor del raíz;
+    // juntas, que es como las aplica el navegador, el par es 1:1.
+    const valid = expandCss(MINIMAL_THEME)
+      .replace('--bs-body-color-rgb: 16, 24, 40;', '--bs-body-color-rgb: 0, 0, 0;')
+      .replace('--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);', '--bs-secondary-bg-rgb: 255, 255, 255;');
+    const css = `${valid}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: 118, 118, 118;\n}\n`
+      + '\n[data-bs-theme="oscura"] {\n  --bs-body-color-rgb: 118, 118, 118;\n}\n';
+    expect(validate(css).stderr).toMatch(
+      /\[contraste-superficie\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/,
+    );
+  });
+
+  it('avisa como irresoluble la superficie que no sabe resolver, en vez de saltarla', () => {
+    // var() con respaldo: el navegador usaría el respaldo, el resolutor todavía no.
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: var(--bs-optional-rgb, 16, 24, 40);\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toMatch(/aviso .*\[contraste-irresoluble\]\n {2}No se pudo medir --bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]/);
+    expect(result.stderr).toContain('--bs-optional-rgb');
+    expect(result.status).toBe(0);
+  });
+
+  it('rechaza una superficie de zona que no es triplete, también con --strict', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: var(--bs-gray-200);\n}\n`;
+    const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(result.stderr).toMatch(
+      /error .*\[triplete\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: "var\(--bs-gray-200\)"/,
+    );
+    // Una sola vez: el raíz no la declara mal, así que R1 no la repite.
+    expect(result.stderr.match(/\[triplete\]/g)).toHaveLength(1);
+    expect(result.status).toBe(1);
+  });
+
+  it('no repite en una zona que no toca el fondo ni el texto el aviso del raíz', () => {
+    const valid = expandCss(MINIMAL_THEME).replace(
+      '--bs-secondary-bg-rgb: var(--bs-gray-200-rgb);',
+      '--bs-secondary-bg-rgb: 16, 24, 40;',
+    );
+    const css = `${valid}\n[data-bs-theme="oscura"] {\n  --bs-link-color-rgb: 11, 107, 83;\n}\n`;
+    const warnings = validate(css).stderr.match(/\[contraste-superficie\]/g);
+    expect(warnings).toHaveLength(1);
   });
 });
 
@@ -1248,14 +1502,14 @@ describe('el ejemplo con zonas que vive en el repo', () => {
     expect(css).toContain('.font-numeric {');
   });
 
-  it('pasa el validador sin errores', () => {
+  it('pasa el validador con --strict, sin errores ni avisos', () => {
     // Este ejemplo es el banco de pruebas de la herramienta: ejercita las tres
     // secciones, los componentes de zona y los pares horneados. Si deja de
     // validar, alguna regla cambió de criterio sin querer.
     const output = path.join(workdir, 'ejemplo-zonas-2.css');
     run(EXPAND, [themePath, '-o', output]);
-    const result = run(VALIDATE, [output]);
-    expect(result.stderr).not.toContain('error ');
+    const result = run(VALIDATE, [output, '--strict']);
+    expect(result.stderr).toBe('');
     expect(result.status).toBe(0);
   });
 
@@ -1351,6 +1605,93 @@ describe('theme-expand — la cabecera del CSS', () => {
     for (const leak of ['Generado por', 'no editar a mano', 'derivad']) {
       expect(css).not.toContain(leak);
     }
+  });
+});
+
+describe('theme-expand — un theme con solo roles', () => {
+  const PKG_VERSION = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'),
+  ).version as string;
+
+  it('emite sólo el bloque raíz con la rampa del role, y el validador lo acepta', () => {
+    const css = expandCss({ roles: { primary: '#166e62' } });
+    expect(css).toContain(':root,\n[data-bs-theme="dynamic"] {');
+    expect(css).toContain('--bs-primary-rgb: 22, 110, 98;');
+    expect(css).toContain('--bs-primary-text-bg-color: var(--bs-white);');
+    expect(css).toContain('--bs-primary-500-rgb: var(--bs-primary-rgb);');
+    for (const step of [25, 50, 100, 200, 300, 400, 600, 700, 800, 900]) {
+      expect(css).toMatch(new RegExp(`--bs-primary-${step}-rgb: \\d+, \\d+, \\d+;`));
+    }
+    for (const absent of ['--bs-body-', '--bs-border-', '--bs-font-sans-serif', '--bs-secondary-bg-rgb', '@media']) {
+      expect(css).not.toContain(absent);
+    }
+    // Un único bloque, el raíz.
+    expect(css.match(/\{/g)).toHaveLength(1);
+
+    const result = validate(css);
+    expect(result.stderr).not.toContain('error ');
+    expect(result.stderr).not.toContain('[tipografia');
+    expect(result.stderr).not.toContain('[border-color]');
+    expect(result.status).toBe(0);
+  });
+
+  it('emite un bloque por cada role indicado', () => {
+    const css = expandCss({ roles: { primary: '#166e62', success: '#2e7d32' } });
+    expect(css).toContain('/* Role primary */');
+    expect(css).toContain('/* Role success */');
+    expect(css).toContain('--bs-success-rgb: 46, 125, 50;');
+    expect(css).toContain('--bs-success-900-rgb:');
+    expect(css).not.toContain('--bs-body-');
+    expect(validate(css).status).toBe(0);
+  });
+
+  it('lleva la cabecera neutra más la línea de bloque parcial', () => {
+    const css = expandCss({ name: 'Banco Ejemplo', version: '1.0.0', roles: { primary: '#166e62' } });
+    const expected = [
+      '/*',
+      ' * Theme: Banco Ejemplo 1.0.0',
+      ` * Para @dynamic-framework/ui-react ${PKG_VERSION}.`,
+      ' * Bloque parcial para incorporar a una hoja de theme existente.',
+      ' * Se carga después del CSS de Dynamic UI.',
+      ' */',
+      '',
+    ];
+    expect(css.split('\n').slice(0, expected.length)).toEqual(expected);
+  });
+
+  it('con `gray` emite lo mismo que en un theme completo', () => {
+    const partial = expandCss({ gray: '#5b6472' });
+    const full = expandCss({ ...MINIMAL_THEME, roles: {}, gray: '#5b6472' });
+    const grays = (css: string) => css.match(
+      / {2}--bs-(?:gray|secondary|light|dark)(?:-\d+)?-(?:rgb|text-bg-color):[^\n]+/g,
+    );
+    expect(grays(partial)).toEqual(grays(full));
+    expect(partial).not.toContain('--bs-body-');
+  });
+
+  it('un theme completo al que le falta `radius` sigue fallando igual que antes', () => {
+    const { radius, ...withoutRadius } = MINIMAL_THEME;
+    expect(radius).toBeDefined();
+    const result = expand(withoutRadius);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toBe('Theme inválido:\n  - Falta `radius` (radio base, por ejemplo "0.5rem").\n');
+  });
+
+  it('rechaza `components` sin `body`, nombrando la clave', () => {
+    const result = expand({
+      roles: { primary: '#166e62' },
+      components: [{ selector: '.btn', vars: { '--bs-btn-padding-x': '1rem' } }],
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '`components`: un theme con solo roles admite únicamente `roles`, `gray`, `name` y `version`',
+    );
+  });
+
+  it('rechaza también una clave desconocida', () => {
+    const result = expand({ roles: { primary: '#166e62' }, colores: {} });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('`colores`: un theme con solo roles admite únicamente');
   });
 });
 

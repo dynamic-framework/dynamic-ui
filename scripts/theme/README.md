@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -92,14 +92,50 @@ color CSS.
 | `version` | no | Cadena; acompaña a `name` en la cabecera del CSS |
 | `roles.<role>` | al menos uno, o `gray` | `primary secondary success info warning danger light dark` |
 | `gray` | no | Deriva la rampa de grises por tinte; ver la advertencia de abajo |
-| `body.bg`, `body.color` | sí | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
+| `body.bg`, `body.color` | en un theme completo | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
 | `body.borderColor` | no | Por defecto `rgb(var(--bs-gray-100-rgb))` |
-| `typography.fontFamily` | sí | |
+| `typography.fontFamily` | en un theme completo | Sale como `--bs-font-sans-serif`, que también leen `.tooltip` y `.popover`. `var(--bs-font-sans-serif)` a secas conserva la de Dynamic; dentro de una pila es error |
 | `typography.scale.N` | no | Pasos `1`..`6`, en `rem` |
-| `radius` | sí | Radio base en `rem`; el resto se deriva |
+| `radius` | en un theme completo | Radio base en `rem`; el resto se deriva |
 | `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
 | `components` | no | Lista de `{ selector, vars?, declarations? }` |
 | `zones` | no | Mapa `<nombre>` → `{ vars, nav?, components? }` |
+
+### Theme de uno o más roles
+
+Un theme sin `body`, `typography` ni `radius` emite solo las rampas de los
+roles indicados, en un bloque para incorporar a una hoja de theme existente.
+Admite `roles`, `gray`, `name` y `version`.
+
+```json
+{ "roles": { "primary": "#166e62" } }
+```
+
+```css
+/*
+ * Para @dynamic-framework/ui-react 2.12.0.
+ * Bloque parcial para incorporar a una hoja de theme existente.
+ * Se carga después del CSS de Dynamic UI.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  /* Role primary */
+  --bs-primary-rgb: 22, 110, 98;
+  --bs-primary-text-bg-color: var(--bs-white);
+  --bs-primary-25-rgb: 243, 248, 247;
+  --bs-primary-50-rgb: 232, 241, 239;
+  --bs-primary-100-rgb: 208, 226, 224;
+  --bs-primary-200-rgb: 162, 197, 192;
+  --bs-primary-300-rgb: 115, 168, 161;
+  --bs-primary-400-rgb: 69, 139, 129;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 18, 88, 78;
+  --bs-primary-700-rgb: 13, 66, 59;
+  --bs-primary-800-rgb: 9, 44, 39;
+  --bs-primary-900-rgb: 4, 22, 20;
+}
+```
 
 ### Las tres secciones extendidas
 
@@ -281,16 +317,19 @@ salida respeta*).
   por canal contra `dist/css/dynamic-ui.css`.
 - `light` y `dark` **no tienen rampa** en la librería: sólo `--bs-light-rgb` y
   `--bs-dark-rgb`. Sus `-text-emphasis` y `-bg-subtle` apuntan a pasos de gris.
+- La familia tipográfica se emite en `--bs-font-sans-serif`. La librería define
+  `--bs-body-font-family: var(--bs-font-sans-serif)`, así que el cuerpo la sigue
+  sin declararla aparte.
 - La tipografía se overridea sobre `--bs-rfs-fs-N`, nunca sobre `--bs-fs-N`, que
   es sólo el alias. Cada paso fluido (con `vw`), y siempre los pasos 1..4, lleva
   además su valor en `@media (min-width: 1200px)`: un valor fluido necesita ahí su
   tope o sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
-- Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
-  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: hasta 2.10.0 la librería las
-  definía apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete
-  (#1191). Se mantiene para que el theme funcione también sobre esas versiones.
+- Se emiten `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
+  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`, el valor que la librería
+  define desde 2.11.0. Hasta 2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`),
+  que no es un triplete (#1191).
 - Sin `:where()`: tiene especificidad cero y la librería le gana.
 - El CSS es un entregable: la cabecera dice qué theme es y para qué versión de
   la librería, y los comentarios de dentro sólo nombran la sección. Lo que haya
@@ -314,12 +353,12 @@ salida respeta*).
 ## Qué comprueba el validador
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
-`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `border-color`,
-`fix-bg`, `where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
-`contraste-boton`, `contraste-nav-pills`, `contraste-zona`,
+`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
+`where`, `vacio`, `ciclo`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
-`--strict` hace fallar también con avisos, y `--min-contrast N` cambia el umbral
+`--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
 
 Cada bloque se mide **en su propio contexto**: sus declaraciones sobre las del
@@ -333,7 +372,24 @@ correspondería a ningún contexto real.
   `--bs-<role>-rgb`. En `outline` ese fondo es el del estado relleno.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren.
+- `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
+  `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
+  `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
+- `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
+  las superficies se heredan de Dynamic.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
+  sí misma con `var()`: el navegador descarta la variable.
+- `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
+  sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.
+- `contraste-superficie` — `--bs-body-color-rgb` sobre `--bs-secondary-bg-rgb` y
+  `--bs-tertiary-bg-rgb`, cuando el theme declara alguna de ellas. Se mide en el
+  raíz y en cada zona que redefine el fondo o el texto del cuerpo; dentro de una
+  zona, lo que ésta no declara se mide con el valor que hereda del raíz, y varias
+  reglas de la misma zona se miden juntas. Si el theme no declara el color del
+  cuerpo, se mide contra el de Dynamic. Es aviso; una superficie que no se puede
+  resolver se avisa como `contraste-irresoluble`, y una que una zona declara sin
+  formato de triplete es error `triplete`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo
