@@ -16,23 +16,18 @@ import {
   AA_NORMAL_TEXT,
   BAKED_PAIRS,
   BUTTON_DEFAULT_FG,
-  DEFAULT_BLACK,
-  DEFAULT_BODY_BG,
-  DEFAULT_BODY_COLOR,
-  DEFAULT_GRAYS,
-  DEFAULT_ROLE_BASES,
-  DEFAULT_ROLE_RAMPS,
-  DEFAULT_WHITE,
   FONT_SIZE_STEPS,
   GRAY_STEPS,
   RAMPED_ROLES,
   RAMP_STEPS,
   ROLES,
   bakedRolePairs,
+  buildContexts,
   contrast,
   isRootPrelude,
   luminance,
   parseTriplet,
+  resolve,
   resolveColorValue,
   resolveInherited,
   varRefs,
@@ -125,50 +120,9 @@ export function readCss(css) {
 
 // -- Resolución de tripletes ------------------------------------------------
 
-const DEFAULT_TRIPLETS = (() => {
-  const map = new Map([
-    ['--bs-white-rgb', DEFAULT_WHITE],
-    ['--bs-black-rgb', DEFAULT_BLACK],
-    ['--bs-body-bg-rgb', DEFAULT_BODY_BG],
-    ['--bs-body-color-rgb', DEFAULT_BODY_COLOR],
-    ['--bs-gray-rgb', DEFAULT_GRAYS[500]],
-  ]);
-  for (const step of GRAY_STEPS) map.set(`--bs-gray-${step}-rgb`, DEFAULT_GRAYS[step]);
-  for (const role of ROLES) map.set(`--bs-${role}-rgb`, DEFAULT_ROLE_BASES[role]);
-  for (const role of RAMPED_ROLES) {
-    map.set(`--bs-${role}-500-rgb`, DEFAULT_ROLE_BASES[role]);
-    for (const step of RAMP_STEPS) {
-      map.set(`--bs-${role}-${step}-rgb`, DEFAULT_ROLE_RAMPS[role][step]);
-    }
-  }
-  return map;
-})();
-
-/**
- * Resuelve una custom property a un triplete, siguiendo cadenas de `var()`
- * dentro del archivo y cayendo al valor por defecto de 2.8.0 cuando el theme
- * no la toca. Devuelve `{ rgb, source }`, o `{ rgb: null, reason }`.
- */
-export function resolve(name, decls, seen = new Set()) {
-  if (seen.has(name)) {
-    return { rgb: null, reason: `ciclo de var() en ${name}` };
-  }
-  seen.add(name);
-
-  const declared = decls.get(name);
-  const raw = declared ? declared.value : DEFAULT_TRIPLETS.get(name);
-  if (raw === undefined) {
-    return { rgb: null, reason: `${name} no está en el theme ni en los valores por defecto` };
-  }
-
-  const triplet = parseTriplet(raw);
-  if (triplet) return { rgb: triplet, source: declared ? 'theme' : 'defecto' };
-
-  const ref = String(raw).trim().match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
-  if (ref) return resolve(ref[1], decls, seen);
-
-  return { rgb: null, reason: `${name} vale "${raw}", que no es un triplete ni un var()` };
-}
+// `resolve` vive en theme-tokens.mjs junto con los valores por defecto y los
+// contextos por zona; se reexporta para quien lo importaba desde aquí.
+export { resolve };
 
 // -- Reglas -----------------------------------------------------------------
 
@@ -524,30 +478,18 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // --bs-body-color-rgb del contexto o, si nadie lo declara, el de Dynamic.
   // Se mide en el raíz y en cada zona, porque una zona puede cambiar el fondo o
   // el texto por separado. Una zona que no declara ninguno de los dos ve el
-  // mismo par que el raíz y no se vuelve a medir. Dentro de una zona, lo que
-  // ésta no declara llega heredado del raíz ya calculado: lo resuelve
-  // resolveInherited. Varias reglas para la misma zona se aplican juntas, así
-  // que sus declaraciones se funden en orden de aparición antes de medir.
-  const zoneScopes = new Map();
-  for (const block of zoneBlocks) {
-    const own = zoneScopes.get(block.zone) ?? new Map();
-    for (const [name, entry] of block.decls) own.set(name, entry);
-    zoneScopes.set(block.zone, own);
-  }
-  const surfaceContexts = [
-    { zone: null, decls: root, own: root },
-    ...[...zoneScopes].map(([zone, own]) => ({ zone, own, decls: new Map([...root, ...own]) })),
-  ];
-  for (const ctx of surfaceContexts) {
-    const lookup = (name) => (ctx.zone
-      ? resolveInherited(name, ctx.own, (inherited) => resolve(inherited, root))
-      : resolve(name, root));
+  // mismo par que el raíz y no se vuelve a medir. Los contextos salen de
+  // buildContexts: dentro de una zona, lo que ésta no declara llega heredado del
+  // raíz ya calculado, y varias reglas para la misma zona se miden juntas.
+  const sharedContexts = buildContexts(blocks, root);
+  for (const ctx of sharedContexts) {
+    const { lookup } = ctx;
     const bodyColor = lookup('--bs-body-color-rgb');
     for (const [name, utility] of [
       ['--bs-secondary-bg-rgb', '.bg-body-secondary'],
       ['--bs-tertiary-bg-rgb', '.bg-body-tertiary'],
     ]) {
-      const decl = ctx.decls.get(name);
+      const decl = ctx.own.get(name) ?? root.get(name);
       if (!decl) continue;
       if (ctx.zone && !ctx.own.has(name) && !ctx.own.has('--bs-body-color-rgb')) continue;
       // R1 sólo revisa el bloque raíz: un valor que no es triplete declarado en
@@ -582,7 +524,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       warn(
         'contraste-superficie',
         `${name}${inContext(ctx)}: ${ratio.toFixed(2)}:1 entre --bs-body-color-rgb`
-        + (ctx.decls.has('--bs-body-color-rgb') ? '' : ' (el de Dynamic, porque el theme no lo declara)')
+        + (ctx.own.has('--bs-body-color-rgb') || root.has('--bs-body-color-rgb')
+          ? '' : ' (el de Dynamic, porque el theme no lo declara)')
         + ` y este fondo, por debajo del ${minContrast}:1 de WCAG 2.x AA. ${utility} pinta esta `
         + 'superficie con el texto del cuerpo encima.',
         line,

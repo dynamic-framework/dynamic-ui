@@ -472,31 +472,239 @@ export function resolveColorValue(value, lookup) {
 }
 
 /**
- * Resuelve una custom property a un triplete tal como la ve un subárbol (una
- * zona) que redefine algunas variables sobre el bloque raíz.
+ * `var(--x)` o `var(--x, respaldo)` que ocupa todo el valor. Devuelve
+ * `{ name, fallback }`, con `fallback` undefined si no hay coma, o null si el
+ * valor no es una sola llamada a var(). Se recorren los paréntesis porque el
+ * respaldo puede llevar otros var() dentro.
+ */
+function parseVarCall(raw) {
+  const head = raw.match(/^var\(\s*(--[\w-]+)\s*([,)])/);
+  if (!head) return null;
+  let depth = 0;
+  let close = -1;
+  for (let i = 3; i < raw.length; i += 1) {
+    if (raw[i] === '(') depth += 1;
+    if (raw[i] === ')') {
+      depth -= 1;
+      if (depth === 0) {
+        close = i;
+        break;
+      }
+    }
+  }
+  if (close !== raw.length - 1) return null;
+  return {
+    name: head[1],
+    fallback: head[2] === ',' ? raw.slice(head[0].length, close).trim() : undefined,
+  };
+}
+
+/**
+ * El wrapper `rgb(var(--x))` o `rgba(var(--x), α)`: devuelve la llamada a var()
+ * de su primer argumento, o null. El alfa no cuenta para el contraste, igual que
+ * en `resolveColorValue`.
+ */
+function parseWrapper(raw) {
+  const match = raw.match(/^rgba?\(([\s\S]*)\)$/);
+  if (!match) return null;
+  const inner = match[1];
+  let depth = 0;
+  let end = inner.length;
+  for (let i = 0; i < inner.length; i += 1) {
+    if (inner[i] === '(') depth += 1;
+    if (inner[i] === ')') depth -= 1;
+    if (depth === 0 && (inner[i] === ',' || inner[i] === '/')) {
+      end = i;
+      break;
+    }
+  }
+  return parseVarCall(inner.slice(0, end).trim());
+}
+
+/**
+ * Resuelve una custom property a un color tal como la ve un subárbol (una zona,
+ * o un componente dentro de ella) que redefine algunas variables sobre su padre.
  *
  * Una custom property que referencia otra se sustituye en el elemento donde se
  * declara y se hereda ya calculada. Una variable que el subárbol no declara vale
- * lo mismo que en el raíz, aunque el subárbol cambie los tokens a los que
+ * lo mismo que en el padre, aunque el subárbol cambie los tokens a los que
  * apunta; una que sí declara sigue sus var() con la misma regla en cada salto.
  *
- * `own` son las declaraciones del subárbol (Map nombre → { value }) y
- * `resolveRoot(name)` resuelve en el raíz, con sus valores por defecto.
- * Devuelve `{ rgb, source }` o `{ rgb: null, reason }`, como `resolveRoot`.
+ * `var(--x, respaldo)` usa el respaldo sólo cuando `--x` no existe en ninguna
+ * capa, vale `initial` o forma parte de un ciclo (`inherit`, `unset` y
+ * `revert` toman el valor del padre): es lo que hace el navegador con una variable
+ * sin valor. Si `--x` existe pero no es un color, el resultado es inválido y el
+ * respaldo no entra. El respaldo puede llevar a su vez otro var(), y un ciclo
+ * que pase por él se detecta igual que uno directo. Las variables del propio
+ * ciclo siguen siendo inválidas aunque tengan respaldo. Un respaldo que no se
+ * elige no crea dependencia: Chromium no lo cuenta para los ciclos.
+ *
+ * Una variable `-rgb` sólo admite un triplete o un var(). Las demás admiten
+ * también el wrapper `rgb(var(--x))` y un color literal, que es como la librería
+ * y los themes escriben las variables de color.
+ *
+ * `own` son las declaraciones del subárbol (Map nombre → { value, source? }) y
+ * `resolveParent(name)` resuelve en el padre. Devuelve `{ rgb, source }` o
+ * `{ rgb: null, reason }`; `undefined: true` marca una variable que no existe,
+ * e `invalidFormat` nombra la variable `-rgb` cuyo valor no es un triplete.
  */
-export function resolveInherited(name, own, resolveRoot, seen = new Set()) {
-  if (!own.has(name)) return resolveRoot(name);
-  if (seen.has(name)) return { rgb: null, reason: `ciclo de var() en ${name}` };
-  seen.add(name);
+export function resolveInherited(name, own, resolveParent, seen = new Set()) {
+  if (!own.has(name)) return resolveParent(name);
+  // `inherit`, `unset` y `revert` en una custom property sin registrar toman el
+  // valor ya calculado del padre, como si esta capa no la declarara.
+  if (/^\s*(?:inherit|unset|revert|revert-layer)\s*$/i.test(own.get(name).value)) return resolveParent(name);
+  // `cycle` nombra la variable donde se cierra el ciclo: mientras se vuelve
+  // hacia ella, cada variable del camino es parte del ciclo.
+  if (seen.has(name)) return { rgb: null, reason: `ciclo de var() en ${name}`, cycle: name };
+  const path = new Set(seen).add(name);
+  const result = resolveOwn(name, own, resolveParent, path);
+  if (result.cycle !== name) return result;
+  // Al salir del ciclo, la variable es inválida para quien la lea desde fuera,
+  // como una que no existe: su respaldo, si lo tiene, sí entra.
+  const { cycle, ...invalid } = result;
+  return { ...invalid, guaranteedInvalid: true };
+}
 
-  const raw = String(own.get(name).value).trim();
-  const triplet = parseTriplet(raw);
-  if (triplet) return { rgb: triplet, source: 'theme' };
+function resolveOwn(name, own, resolveParent, path) {
+  const entry = own.get(name);
+  // `initial` en una custom property la deja sin valor, como si no existiera:
+  // quien la lea con var(--x, respaldo) usa el respaldo.
+  if (/^\s*initial\s*$/i.test(entry.value)) {
+    return { rgb: null, reason: `${name} vale "initial", que la deja sin valor`, guaranteedInvalid: true };
+  }
+  const source = entry.source ?? 'theme';
+  const isTriplet = name.endsWith('-rgb');
 
-  const ref = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
-  if (ref) return resolveInherited(ref[1], own, resolveRoot, seen);
+  const follow = (call) => {
+    const resolved = resolveInherited(call.name, own, resolveParent, path);
+    const absent = resolved.undefined || resolved.guaranteedInvalid;
+    if (absent && call.fallback !== undefined) return resolveValue(call.fallback);
+    return resolved;
+  };
 
-  return { rgb: null, reason: `${name} vale "${raw}", que no es un triplete ni un var()` };
+  function resolveValue(value) {
+    const raw = String(value).trim();
+    const triplet = parseTriplet(raw);
+    if (triplet) return { rgb: triplet, source };
+
+    const call = parseVarCall(raw);
+    if (call) return follow(call);
+
+    if (!isTriplet) {
+      const wrapped = parseWrapper(raw);
+      if (wrapped) return follow(wrapped);
+      try {
+        return { rgb: parseColor(raw, name), source: 'literal' };
+      } catch {
+        return { rgb: null, reason: `${name} vale "${raw}", que no es un color ni un var()` };
+      }
+    }
+
+    return {
+      rgb: null,
+      reason: `${name} vale "${raw}", que no es un triplete ni un var()`,
+      invalidFormat: name,
+    };
+  }
+
+  return resolveValue(entry.value);
+}
+
+// -- Valores por defecto y contextos -----------------------------------------
+
+/**
+ * Valores que la librería declara en `:root` para las variables `-rgb` que miden
+ * las reglas de contraste. Un theme que no declara una de ellas se queda con
+ * este valor, resuelto en el raíz junto con lo que el theme sí declara.
+ */
+export const DEFAULT_TRIPLETS = (() => {
+  const map = new Map([
+    ['--bs-white-rgb', DEFAULT_WHITE],
+    ['--bs-black-rgb', DEFAULT_BLACK],
+    ['--bs-body-bg-rgb', DEFAULT_BODY_BG],
+    ['--bs-body-color-rgb', DEFAULT_BODY_COLOR],
+    ['--bs-gray-rgb', DEFAULT_GRAYS[500]],
+  ]);
+  for (const step of GRAY_STEPS) map.set(`--bs-gray-${step}-rgb`, DEFAULT_GRAYS[step]);
+  for (const role of ROLES) map.set(`--bs-${role}-rgb`, DEFAULT_ROLE_BASES[role]);
+  for (const role of RAMPED_ROLES) {
+    map.set(`--bs-${role}-500-rgb`, DEFAULT_ROLE_BASES[role]);
+    for (const step of RAMP_STEPS) {
+      map.set(`--bs-${role}-${step}-rgb`, DEFAULT_ROLE_RAMPS[role][step]);
+    }
+  }
+  return map;
+})();
+
+/**
+ * El bloque raíz tal como lo ve el navegador: las declaraciones del theme sobre
+ * los valores por defecto de la librería, en el mismo elemento. Un alias de la
+ * librería se resuelve con lo que el theme declare en el raíz.
+ */
+const rootView = (decls) => ({
+  has: (name) => decls.has(name) || DEFAULT_TRIPLETS.has(name),
+  get: (name) => decls.get(name) ?? { value: DEFAULT_TRIPLETS.get(name), source: 'defecto' },
+});
+
+/**
+ * Una variable que el theme no declara y que no tiene valor por defecto aquí.
+ * Si la librería la define (está en known-tokens.json), existe en el navegador
+ * aunque el validador no conozca su valor: no se puede medir, pero un
+ * `var(--x, respaldo)` no usaría el respaldo. Sólo una que no existe en ningún
+ * sitio es `undefined`.
+ */
+const undeclared = (name) => (KNOWN_TOKENS.has(name)
+  ? { rgb: null, reason: `${name} es de la librería, pero el validador no conoce su valor` }
+  : { rgb: null, undefined: true, reason: `${name} no está en el theme ni en los valores por defecto` });
+
+/**
+ * Resuelve una custom property en el bloque raíz, siguiendo cadenas de `var()`
+ * y cayendo al valor por defecto de la librería cuando el theme no la toca.
+ * Devuelve `{ rgb, source }`, o `{ rgb: null, reason }`.
+ */
+export function resolve(name, decls) {
+  return resolveInherited(name, rootView(decls), undeclared);
+}
+
+/**
+ * Contextos en los que se mide un theme: el raíz y una entrada por zona. Varias
+ * reglas `[data-bs-theme="<zona>"]` se aplican juntas, así que sus
+ * declaraciones se funden en orden de aparición. Cada contexto lleva:
+ *
+ *   - `zone`: el nombre de la zona, o null en el raíz;
+ *   - `own`: lo que declara el contexto (en el raíz, el propio bloque raíz);
+ *   - `line`: la línea del primer bloque de la zona;
+ *   - `lookup(name, element?)`: resuelve como el navegador. Lo que la zona no
+ *     declara llega del raíz ya calculado; con `element` (un Map de lo que se
+ *     declara en el propio componente) se añade una capa más por debajo.
+ *
+ * Todas las reglas que miden contraste leen de aquí; ninguna vuelve a recorrer
+ * los bloques por su cuenta.
+ */
+export function buildContexts(blocks, root) {
+  const inRoot = (name) => resolve(name, root);
+  const zones = new Map();
+  for (const block of blocks) {
+    if (!block.zone) continue;
+    const zone = zones.get(block.zone) ?? { zone: block.zone, own: new Map(), line: block.line };
+    for (const [name, entry] of block.decls) zone.own.set(name, entry);
+    zones.set(block.zone, zone);
+  }
+
+  const withLookup = (ctx, resolveHere) => ({
+    ...ctx,
+    lookup: (name, element) => (element
+      ? resolveInherited(name, element, resolveHere)
+      : resolveHere(name)),
+  });
+
+  return [
+    withLookup({ zone: null, own: root, line: null }, inRoot),
+    ...[...zones.values()].map((zone) => withLookup(
+      zone,
+      (name) => resolveInherited(name, zone.own, inRoot),
+    )),
+  ];
 }
 
 // -- Pares horneados ---------------------------------------------------------

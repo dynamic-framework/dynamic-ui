@@ -851,11 +851,22 @@ describe('theme-validate — contraste de las superficies secundarias', () => {
   });
 
   it('avisa como irresoluble la superficie que no sabe resolver, en vez de saltarla', () => {
-    // var() con respaldo: el navegador usaría el respaldo, el resolutor todavía no.
-    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: var(--bs-optional-rgb, 16, 24, 40);\n}\n`;
+    // var() a una variable que no existe y sin respaldo: el navegador no pinta nada.
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: var(--bs-optional-rgb);\n}\n`;
     const result = validate(css);
     expect(result.stderr).toMatch(/aviso .*\[contraste-irresoluble\]\n {2}No se pudo medir --bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]/);
     expect(result.stderr).toContain('--bs-optional-rgb');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide la superficie con el respaldo de var() cuando la variable no existe', () => {
+    // El navegador usa el respaldo: el mismo color que el texto del cuerpo, 1:1.
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n  --bs-secondary-bg-rgb: var(--bs-optional-rgb, 16, 24, 40);\n}\n`;
+    const result = validate(css);
+    expect(result.stderr).toMatch(
+      /aviso .*\[contraste-superficie\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/,
+    );
+    expect(result.stderr).not.toContain('[contraste-irresoluble]');
     expect(result.status).toBe(0);
   });
 
