@@ -830,11 +830,13 @@ describe('theme-validate — contraste de las superficies secundarias', () => {
   it('no avisa por un texto del raíz que la zona sólo cambiaría a través de un token', () => {
     // El texto del raíz apunta a gray-900. La zona cambia gray-900, pero el
     // texto ya llegó calculado: sigue oscuro sobre el fondo claro de la zona.
-    // Las otras reglas de zona todavía resuelven con la zona y no se miran aquí.
+    // Las demás reglas de zona lo resuelven igual, así que --strict pasa.
     const valid = expandCss(MINIMAL_THEME)
       .replace('--bs-body-color-rgb: 16, 24, 40;', '--bs-body-color-rgb: var(--bs-gray-900-rgb);');
     const css = `${valid}\n[data-bs-theme="clara"] {\n  --bs-gray-900-rgb: 250, 250, 250;\n  --bs-secondary-bg-rgb: 235, 235, 235;\n}\n`;
-    expect(validate(css).stderr).not.toContain('[contraste-superficie]');
+    const result = run(VALIDATE, [write(css, '.css'), '--strict']);
+    expect(result.stderr).not.toContain('[contraste-superficie]');
+    expect(result.status).toBe(0);
   });
 
   it('funde las reglas repetidas de una misma zona antes de medir', () => {
@@ -1813,5 +1815,585 @@ describe('theme-expand — body.borderColor conserva el alfa', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('body.borderColor');
     expect(result.stderr).toContain('se esperaba un string con un color');
+  });
+});
+
+/**
+ * Los fixtures de la issue #1295: themes con zonas que el validador medía con
+ * las declaraciones del raíz y de la zona mezcladas, cuando el navegador
+ * resuelve cada variable donde se declara y hereda el valor ya calculado.
+ */
+const ZONE_FIXTURES = {
+  aliasFalso: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: var(--bs-gray-900-rgb);',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '  --bs-secondary-bg-rgb: 240, 240, 240;',
+    '}',
+    '',
+    '[data-bs-theme="clara"] {',
+    '  --bs-gray-900-rgb: 250, 250, 250;',
+    '  --bs-secondary-bg-rgb: 235, 235, 235;',
+    '}',
+    '',
+  ].join('\n'),
+  aliasPerdido: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: 16, 24, 40;',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '  --bs-secondary-bg-rgb: var(--bs-body-bg-rgb);',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 0, 0, 0;',
+    '  --bs-body-color-rgb: 255, 255, 255;',
+    '}',
+    '',
+  ].join('\n'),
+  respaldo: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: 16, 24, 40;',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 16, 24, 40;',
+    '  --bs-body-color-rgb: var(--bs-optional-rgb, 255, 255, 255);',
+    '}',
+    '',
+  ].join('\n'),
+  zonaRepartida: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: 16, 24, 40;',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 16, 24, 40;',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-color-rgb: 255, 255, 255;',
+    '}',
+    '',
+  ].join('\n'),
+};
+
+/** Cada error y aviso de una salida, como `<tipo> <regla>: <primera línea>`. */
+function findings(result: Run): string[] {
+  return [...result.stderr.matchAll(/^(error|aviso)\s+\S+\s+\[([\w-]+)\]\n {2}(.*)$/gm)]
+    .map((m) => `${m[1]} ${m[2]}: ${m[3]}`);
+}
+
+function validateStrict(css: string): Run {
+  return run(VALIDATE, [write(css, '.css'), '--strict']);
+}
+
+describe('theme-validate — las zonas se resuelven como en el navegador (#1295)', () => {
+  it('alias-falso: el texto del raíz no sigue al token que sólo cambia la zona', () => {
+    // --bs-body-color-rgb, --bs-list-group-action-color y --bs-dark-rgb se
+    // calculan en :root con el gray-900 del raíz; la zona no los mueve.
+    const result = validateStrict(ZONE_FIXTURES.aliasFalso);
+    expect(findings(result)).toEqual([]);
+    expect(result.stderr).toBe('');
+    expect(result.stdout).toContain('sin errores (0 aviso(s))');
+    expect(result.status).toBe(0);
+  });
+
+  it('alias-perdido: sigue detectando los pares rotos de la zona', () => {
+    const result = validateStrict(ZONE_FIXTURES.aliasPerdido);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^aviso contraste-superficie: --bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.15:1 entre --bs-list-group-color \(--bs-dark-rgb\)/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.15:1 entre --bs-list-group-action-color \(--bs-gray-900-rgb\)/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('i1-respaldo: mide el cuerpo de la zona con el respaldo de var()', () => {
+    const result = validateStrict(ZONE_FIXTURES.respaldo);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
+    ]);
+    expect(result.stderr).toContain('2 error(es), 0 aviso(s)');
+    expect(result.status).toBe(1);
+  });
+
+  it('i2-zona-repartida: funde los bloques de la zona antes de medir el cuerpo', () => {
+    const result = validateStrict(ZONE_FIXTURES.zonaRepartida);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
+    ]);
+    expect(result.stderr).toContain('2 error(es), 0 aviso(s)');
+    expect(result.status).toBe(1);
+  });
+
+  it('no acepta un color completo dentro de rgb(): rgb(var(--bs-white)) no se pinta', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n  --bs-btn-color: rgb(var(--bs-white));\n}\n`;
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^aviso contraste-irresoluble: No se pudo medir "\.btn-primary": --bs-btn-color envuelve en rgb\(\) a --bs-white, que ya vale un color completo/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('un texto transparente no se mide contra la superficie: no se ve', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n  --bs-btn-color: transparent;\n  --bs-btn-bg: rgb(var(--bs-black-rgb));\n}\n`;
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^aviso contraste-irresoluble: No se pudo medir "\.btn-primary": --bs-btn-color es transparente: el texto no se ve/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('mide cada alternativa de una lista de selectores por separado', () => {
+    // `.other` cambia después su fondo a negro; eso no llega a `.nav-pills`,
+    // que sigue con texto blanco sobre fondo blanco.
+    const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills,\n.other {\n`
+      + '  --bs-nav-pills-link-active-color: rgb(var(--bs-white-rgb));\n'
+      + '  --bs-nav-pills-link-active-bg: rgb(var(--bs-white-rgb));\n}\n'
+      + '\n.other {\n  --bs-nav-pills-link-active-bg: rgb(var(--bs-black-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('lo que declara el ítem no cambia lo que .list-group ya resolvió', () => {
+    // --bs-list-group-color y --bs-list-group-action-color se calculan en
+    // .list-group con sus wrappers: redefinir --bs-gray-900 o --bs-dark en el
+    // ítem no los mueve. Comprobado en Chromium: el texto sigue en 21, 21, 26.
+    const css = `${expandCss(MINIMAL_THEME)}\n.list-group-item {\n`
+      + '  --bs-gray-900: rgb(var(--bs-white-rgb));\n  --bs-dark: rgb(var(--bs-white-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('lo que declara el ítem sobre su propia variable sí cuenta', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n.list-group-item {\n`
+      + '  --bs-list-group-color: rgb(var(--bs-white-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item": 1\.\d\d:1 entre --bs-list-group-color \(--bs-white-rgb\)/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it.each(['inherit', 'unset', 'revert'])('una variable que el componente pone a %s toma el valor del padre', (keyword) => {
+    // Chromium pinta el --bs-white heredado, blanco, sobre negro.
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '.btn-primary',
+        vars: {
+          '--bs-white': keyword,
+          '--bs-btn-color': 'var(--bs-white)',
+          '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+        },
+      }],
+    });
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('usa el respaldo de quien lee una variable que el componente pone a initial', () => {
+    // Chromium pinta negro sobre gray-50: el respaldo de var() entra.
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '.btn-primary',
+        vars: {
+          '--bs-white-rgb': 'initial',
+          '--bs-btn-color': 'rgb(var(--bs-white-rgb, 0, 0, 0))',
+          '--bs-btn-bg': 'rgb(var(--bs-gray-50-rgb))',
+        },
+      }],
+    });
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('usa el respaldo de quien lee una variable en ciclo, como el navegador', () => {
+    // Chromium pinta blanco sobre negro: --bs-optional-rgb queda inválida por el
+    // ciclo y --bs-btn-color usa su respaldo.
+    const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n`
+      + '  --bs-optional-rgb: var(--bs-optional-rgb);\n'
+      + '  --bs-btn-color: rgb(var(--bs-optional-rgb, 255, 255, 255));\n'
+      + '  --bs-btn-bg: rgb(var(--bs-black-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('un botón global no cambia dentro de una zona que sólo cambia los tripletes de su role', () => {
+    // --bs-btn-primary-bg es var(--bs-primary-500), un wrapper calculado en
+    // :root: el triplete de la zona no llega al botón. Comprobado en Chromium.
+    const css = `${expandCss(MINIMAL_THEME)}\n[data-bs-theme="oscura"] {\n`
+      + '  --bs-body-bg-rgb: 16, 24, 40;\n  --bs-body-color-rgb: 255, 255, 255;\n'
+      + '  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);\n  --bs-tertiary-bg-rgb: var(--bs-gray-900-rgb);\n'
+      + '  --bs-primary-500-rgb: 250, 250, 250;\n  --bs-white-rgb: 250, 250, 250;\n}\n'
+      + '\n[data-bs-theme="oscura"] .list-group {\n  --bs-list-group-color: rgb(var(--bs-body-color-rgb));\n'
+      + '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('un .btn-secondary con fondo propio lleva el texto de la librería, --bs-secondary-700', () => {
+    // La librería pone var(--bs-btn-secondary-color) = var(--bs-secondary-700)
+    // en .btn-secondary. Sobre gray-800, el blanco contrastaría; el 700, no.
+    const css = `${expandCss(MINIMAL_THEME)}\n.btn-secondary {\n  --bs-btn-bg: rgb(var(--bs-gray-800-rgb));\n}\n`;
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-boton: "\.btn-secondary": 1\.\d\d:1 entre el texto --bs-btn-color \(--bs-secondary-700-rgb\) y el fondo --bs-btn-bg \(--bs-gray-800-rgb\)/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('una pastilla activa sin fondo propio se mide sobre el de la librería, --bs-gray-50', () => {
+    // .nav-pills pone --bs-nav-pills-link-active-bg: var(--bs-gray-50). Un texto
+    // casi blanco contrastaría con --bs-primary; con gray-50, no.
+    const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n  --bs-nav-pills-link-active-color: rgb(var(--bs-gray-25-rgb));\n}\n`;
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.\d\d:1 entre --bs-nav-pills-link-active-color \(--bs-gray-25-rgb\) y --bs-nav-pills-link-active-bg \(--bs-gray-50-rgb\)/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('lo que declara el enlace activo no cambia lo que .nav-pills ya resolvió', () => {
+    // El contenedor calcula el fondo como negro y el enlace lo hereda así,
+    // aunque redefina --bs-black. Chromium: negro sobre negro, y blanco sobre
+    // negro si el enlace pone el texto blanco.
+    const pills = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+      + '  --bs-nav-pills-link-active-color: var(--bs-white);\n'
+      + '  --bs-nav-pills-link-active-bg: var(--bs-black);\n}\n';
+    const link = (color: string) => `${pills}\n.nav-pills .nav-link.active {\n`
+      + `  --bs-black: rgb(var(--bs-white-rgb));\n  --bs-nav-pills-link-active-color: ${color};\n}\n`;
+
+    const roto = validateStrict(link('rgb(var(--bs-black-rgb))'));
+    expect(findings(roto)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+    ]);
+    expect(roto.status).toBe(1);
+
+    const bien = validateStrict(link('rgb(var(--bs-white-rgb))'));
+    expect(findings(bien)).toEqual([]);
+    expect(bien.status).toBe(0);
+  });
+
+  it('en la capa de un elemento gana la declaración más específica, no la última', () => {
+    // `.sidebar .nav-pills` gana a un `.nav-pills` posterior. Chromium: blanco
+    // sobre blanco en el primer caso, y blanco sobre negro en el segundo.
+    const W = 'rgb(var(--bs-white-rgb))';
+    const B = 'rgb(var(--bs-black-rgb))';
+    const pill = (sel: string, color: string, bg: string) => `${sel} {\n`
+      + `  --bs-nav-pills-link-active-color: ${color};\n  --bs-nav-pills-link-active-bg: ${bg};\n}\n`;
+
+    const oculto = validateStrict(`${expandCss(MINIMAL_THEME)}\n${pill('.sidebar .nav-pills', W, W)}\n${pill('.nav-pills', B, W)}`);
+    expect(findings(oculto)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar \.nav-pills": 1\.00:1/),
+    ]);
+    expect(oculto.status).toBe(1);
+
+    // Aquí el único par roto es el de `.nav-pills` fuera de `.sidebar`.
+    const falso = validateStrict(`${expandCss(MINIMAL_THEME)}\n${pill('.sidebar .nav-pills', W, B)}\n${pill('.nav-pills', W, W)}`);
+    expect(findings(falso)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+    ]);
+    expect(falso.status).toBe(1);
+  });
+
+  it('conserva el combinador del ancestro de una pastilla descendiente', () => {
+    // El contenedor es `.sidebar > .nav-pills`: el enlace hereda su fondo negro
+    // y pone el texto negro. Chromium: negro sobre negro, 1:1.
+    const css = `${expandCss(MINIMAL_THEME)}\n.sidebar > .nav-pills {\n`
+      + '  --bs-nav-pills-link-active-color: rgb(var(--bs-white-rgb));\n'
+      + '  --bs-nav-pills-link-active-bg: rgb(var(--bs-black-rgb));\n}\n'
+      + '\n.sidebar > .nav-pills .nav-link.active {\n'
+      + '  --bs-nav-pills-link-active-color: rgb(var(--bs-black-rgb));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar > \.nav-pills \.nav-link\.active": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  describe('la cascada dentro de la capa de un elemento', () => {
+    const W = 'rgb(var(--bs-white-rgb))';
+    const B = 'rgb(var(--bs-black-rgb))';
+    const ZONA = '[data-bs-theme="oscura"] {\n  --bs-body-bg-rgb: 16, 24, 40;\n  --bs-body-color-rgb: 255, 255, 255;\n'
+      + '  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);\n  --bs-tertiary-bg-rgb: var(--bs-gray-900-rgb);\n}\n'
+      + '\n[data-bs-theme="oscura"] .list-group {\n  --bs-list-group-color: rgb(var(--bs-body-color-rgb));\n'
+      + '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));\n}\n';
+    const rule = (sel: string, decls: Record<string, string>) => `${sel} {\n${Object.entries(decls)
+      .map(([k, v]) => `  ${k}: ${v};\n`).join('')}}\n`;
+    const color = '--bs-nav-pills-link-active-color';
+    const bg = '--bs-nav-pills-link-active-bg';
+
+    it('una declaración normal posterior no reemplaza a una !important', () => {
+      // Chromium conserva el fondo blanco importante: blanco sobre blanco.
+      const css = `${expandCss(MINIMAL_THEME)}\n${rule('.nav-pills', { [color]: W, [bg]: `${W} !important` })}`
+        + `\n${rule('.nav-pills', { [bg]: B })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un triplete con !important sigue siendo un triplete', () => {
+      const css = `${expandCss(MINIMAL_THEME)}\n:root,\n[data-bs-theme="dynamic"] {\n  --bs-primary-rgb: 11, 107, 83 !important;\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it(':not() vale lo que su argumento más específico', () => {
+      // `.nav-pills:not(.disabled.foo)` (3 clases) gana a
+      // `[data-bs-theme="oscura"] .nav-pills` (2). Chromium: blanco sobre negro.
+      const valido = `${expandCss(MINIMAL_THEME)}\n${ZONA}\n${rule('.nav-pills:not(.disabled.foo)', { [color]: W, [bg]: B })}`
+        + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
+      const bien = validateStrict(valido);
+      expect(findings(bien)).toEqual([]);
+      expect(bien.status).toBe(0);
+
+      // Y al revés: blanco sobre blanco gana dentro de la zona, aunque el
+      // bloque de zona venga después con texto negro.
+      const roto = `${expandCss(MINIMAL_THEME)}\n${ZONA}\n${rule('.nav-pills:not(.disabled.foo)', { [color]: W, [bg]: W })}`
+        + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
+      const mal = validateStrict(roto);
+      expect(findings(mal)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+      ]);
+      expect(mal.status).toBe(1);
+    });
+
+    it('cada alternativa de la lista lleva su propio prefijo de zona', () => {
+      // Dentro de `.sidebar` gana el bloque más específico: blanco sobre blanco.
+      const css = `${expandCss(MINIMAL_THEME)}\n${ZONA}\n`
+        + rule('[data-bs-theme="oscura"] .nav-pills, [data-bs-theme="oscura"] .sidebar .nav-pills', { [color]: W, [bg]: W })
+        + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\[data-bs-theme="oscura"\] \.sidebar \.nav-pills dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('el contenido de un atributo no suma a la especificidad', () => {
+      // `.nav-pills[data-target="#panel"]` empata con el bloque de zona, que va
+      // después y gana: negro sobre negro en Chromium.
+      const css = `${expandCss(MINIMAL_THEME)}\n${ZONA}\n${rule('.nav-pills[data-target="#panel"]', { [color]: W, [bg]: B })}`
+        + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills\[data-target="#panel"\] dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('una regla compartida por :root y un componente declara sobre el componente', () => {
+      const css = `${expandCss(MINIMAL_THEME)}\n${rule(':root,\n.nav-pills', { [color]: W, [bg]: W })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('una lista dentro de :not() no parte el selector', () => {
+      // Blanco sobre blanco gana también dentro de la zona: :not() pesa más.
+      const css = `${expandCss(MINIMAL_THEME)}\n${ZONA}\n${rule('.nav-pills:not(.disabled, .foo.bar)', { [color]: W, [bg]: W })}`
+        + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un espacio dentro de :has() no es un combinador', () => {
+      // Un solo elemento: el gray-50 que redefine es el que pinta la pastilla.
+      const css = `${expandCss(MINIMAL_THEME)}\n${rule('.nav-pills:has(.icon .label)', { '--bs-gray-50': B, [color]: B })}`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:has\(\.icon \.label\)": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un .nav-pills dentro de :not() no hace del enlace el contenedor', () => {
+      // Theme generado por theme-expand. El enlace hereda el fondo negro que
+      // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: 'var(--bs-white)', [bg]: 'var(--bs-black)' } },
+          {
+            selector: '.nav-pills .nav-link.active:not(.nav-pills)',
+            vars: { '--bs-black': W, [color]: W },
+          },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un combinador tras el prefijo de zona no desplaza el contenedor de la pastilla', () => {
+      // Theme generado por theme-expand. El enlace hereda el fondo negro que
+      // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: 'var(--bs-black)' } },
+          { selector: '[data-bs-theme="oscura"] > .nav-pills .nav-link.active', vars: { '--bs-black': W, [color]: W } },
+        ],
+        zones: { oscura: { vars: { '--bs-heading-color': 'rgb(var(--bs-black-rgb))' } } },
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('los pares horneados cuentan los bloques con la zona pegada al componente', () => {
+      // Theme generado por theme-expand: `[data-bs-theme="clara"].list-group`
+      // pone texto y fondo blancos. Chromium: 1:1 en los dos tipos de ítem. Se
+      // miden como en develop, con la zona como ancestro, y se avisa la forma.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [{
+          selector: '[data-bs-theme="clara"].list-group',
+          vars: { '--bs-list-group-color': W, '--bs-list-group-action-color': W, '--bs-list-group-bg': W },
+        }],
+        zones: { clara: { vars: { '--bs-heading-color': 'rgb(var(--bs-black-rgb))' } } },
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="clara"\]\.list-group: el prefijo de zona va pegado al selector/),
+        expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('una comilla escapada en un atributo no esconde el combinador que sigue', () => {
+      // Theme generado por theme-expand. El enlace hereda el fondo negro que
+      // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: 'var(--bs-black)' } },
+          { selector: '.nav-pills[data-label="a\\"b"] .nav-link.active', vars: { '--bs-black': W, [color]: W } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('la zona pegada al selector se avisa y se mide como si la zona fuera un ancestro', () => {
+      // `[data-bs-theme="oscura"].btn-primary` pone la zona en el botón. El
+      // validador no modela ese caso: lo mide como `[data-bs-theme="oscura"]
+      // .btn-primary`, igual que develop, y pide revisarlo en la preview.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': 'var(--bs-black)' } }],
+        zones: { oscura: { vars: { '--bs-btn-bg': 'var(--bs-white)' } } },
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.btn-primary: el prefijo de zona va pegado al selector.*revisa este caso en la preview\./),
+        expect.stringMatching(/^error contraste-boton: "\.btn-primary dentro de \[data-bs-theme="oscura"\]"/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un corchete entre comillas no hace del enlace el contenedor', () => {
+      // Theme generado por theme-expand. El `.nav-pills` del atributo no es una
+      // clase: el enlace hereda el fondo negro del contenedor. Chromium: 21:1.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: 'var(--bs-black)' } },
+          { selector: '.nav-pills .nav-link.active[data-label="].nav-pills"]', vars: { '--bs-black': W, [color]: W } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un contenedor anidado hereda lo que el exterior ya resolvió', () => {
+      // Theme generado por theme-expand. El `.nav-pills` interior hereda el
+      // --bs-gray-50 negro del exterior, y su fondo activo de la librería
+      // (var(--bs-gray-50)) es negro. Chromium: 21:1 en los dos.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills.outer', vars: { '--bs-gray-50': B, [bg]: B, [color]: W } },
+          { selector: '.nav-pills.outer .nav-pills', vars: { [color]: W } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it.each(['+', '~'])('un .nav-pills hermano (%s) no es el contenedor padre', (combinator) => {
+      // Theme generado por theme-expand. La segunda pastilla no hereda nada de
+      // su hermana: negro sobre el gris claro de la librería. Chromium: 18.45:1.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills.outer', vars: { '--bs-gray-50': B, [bg]: B, [color]: W } },
+          { selector: `.nav-pills.outer ${combinator} .nav-pills`, vars: { [color]: B } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('dos atributos con valores distintos son selectores distintos, aunque difieran en espacios', () => {
+      // Theme generado por theme-expand. En Chromium las dos pastillas se ven
+      // bien: blanco sobre negro y negro sobre gray-50. Tratar `a+b` y `a + b`
+      // como el mismo selector mezclaba sus declaraciones y daba dos errores
+      // falsos de 1:1.
+      const pills = (first: Record<string, string>, second: Record<string, string>) => expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills[data-label="a+b"]', vars: first },
+          { selector: '.nav-pills[data-label="a + b"]', vars: second },
+        ],
+      });
+      const correcto = validateStrict(pills({ [color]: W, [bg]: B }, { [color]: B }));
+      expect(findings(correcto)).toEqual([]);
+      expect(correcto.status).toBe(0);
+
+      // Y el fallo real de uno de los dos no se esconde detrás del otro.
+      const roto = validateStrict(pills({ [color]: W, [bg]: W }, { [color]: B, [bg]: W }));
+      expect(findings(roto)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills\[data-label="a\+b"\]": 1\.00:1/),
+      ]);
+      expect(roto.status).toBe(1);
+    });
   });
 });
