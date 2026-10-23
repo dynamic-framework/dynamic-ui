@@ -53,3 +53,137 @@
     }
   }
 }
+
+/**
+ * The region toasts stack in.
+ *
+ * It is Bootstrap's `.toast-container`, so the z-index and the gap between
+ * stacked toasts stay on `--#{$prefix}toast-zindex` and
+ * `--#{$prefix}toast-spacing`. What is added here is the placement, which
+ * `react-hot-toast` used to apply as inline styles on an element the
+ * stylesheet then had to fight.
+ *
+ * Scoped to `[data-placement]` on purpose: that attribute is only ever on a
+ * region `DToastContainer` renders, so hand-written `.toast-container` markup
+ * keeps Bootstrap's `position: absolute` behaviour untouched.
+ */
+.toast-container[data-placement] {
+  --#{$prefix}toast-container-inset: #{$toast-container-inset};
+  --#{$prefix}toast-spacing: #{$toast-container-gap};
+
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-container[data-placement^="top"] {
+  inset-block: var(--#{$prefix}toast-container-inset) auto;
+}
+
+.toast-container[data-placement^="bottom"] {
+  inset-block: auto var(--#{$prefix}toast-container-inset);
+}
+
+.toast-container[data-placement$="start"] {
+  inset-inline: var(--#{$prefix}toast-container-inset) auto;
+}
+
+.toast-container[data-placement$="end"] {
+  inset-inline: auto var(--#{$prefix}toast-container-inset);
+}
+
+/*
+ * Physical `left`, deliberately, where every other placement is logical.
+ *
+ * `inset-inline-start: 50%` anchors the START edge, which in RTL is the RIGHT
+ * one — so the region hung from the midpoint rightwards while the physical
+ * `translateX(-50%)` still pulled it left, landing it a full region-width off
+ * centre. The midpoint of the viewport is the same point in both directions,
+ * so the anchor has no business flipping.
+ */
+.toast-container[data-placement$="center"] {
+  left: 50%;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+/**
+ * One toast's slot: the state and the motion, so the toast itself stays pure
+ * markup a consumer can place anywhere.
+ *
+ * It wraps rather than decorating the toast because the content of a custom
+ * toast is any `ReactNode` — not necessarily a `.toast` — and it has to enter,
+ * leave and hold its timer exactly like the default layout does.
+ *
+ * An `animation` on entry rather than a `transition`: a transition needs a
+ * starting value the element was already at, and an element that has just been
+ * inserted has no previous state to transition FROM.
+ */
+.toast-slot {
+  // The region is `pointer-events: none` so it does not cover a strip of the
+  // page; the slot is what takes the hover that holds the timer.
+  pointer-events: auto;
+  transition: $toast-slot-transition;
+  animation: d-toast-enter $toast-slot-transition-duration ease-out both;
+
+  // Bootstrap hides a toast that is not `.show`. Inside a slot the container
+  // decides what is mounted, so there is no second flag to keep in sync —
+  // the `show` class the old `useDToast` added to every toast was exactly
+  // that duplicated state.
+  .toast {
+    display: block;
+  }
+}
+
+/**
+ * The exit.
+ *
+ * `data-leaving` is what `DToastSlot` sets, and `onTransitionEnd` is what
+ * removes the entry — so a toast styled with no transition at all would fall
+ * back to the store's grace timer and linger.
+ */
+.toast-slot[data-leaving] {
+  opacity: 0;
+  transform: translateY(-#{$toast-slot-travel});
+}
+
+@keyframes d-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-#{$toast-slot-travel});
+  }
+}
+
+/**
+ * A region at the bottom slides the other way, or the toast appears to come
+ * from inside the page rather than from the edge it sits on.
+ */
+.toast-container[data-placement^="bottom"] .toast-slot {
+  animation-name: d-toast-enter-up;
+}
+
+.toast-container[data-placement^="bottom"] .toast-slot[data-leaving] {
+  transform: translateY($toast-slot-travel);
+}
+
+@keyframes d-toast-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY($toast-slot-travel);
+  }
+}
+
+/**
+ * No movement, but still a transition.
+ *
+ * Zeroing the duration instead of removing the transition keeps
+ * `transitionend` firing, which is what `DToastSlot` uses to know the exit is
+ * over. With no transition at all it falls back to the grace timer and the
+ * toast lingers for the whole of it.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .toast-slot {
+    transition-duration: 1ms;
+    animation: none;
+  }
+}
