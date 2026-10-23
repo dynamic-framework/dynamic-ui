@@ -133,8 +133,9 @@ export { resolve };
 // -- Reglas -----------------------------------------------------------------
 
 /**
- * Lo que puede valer una variable `-rgb`: tres canales de 0 a 255, o una
- * referencia a otra variable que también sea `-rgb`.
+ * Lo que puede valer una variable `-rgb`: tres canales de 0 a 255, una
+ * referencia a otra variable que también sea `-rgb`, o `inherit`, `unset` o
+ * `revert`, que la dejan con el valor del padre.
  *
  * Un `var(--bs-primary)` no sirve aunque exista: el wrapper vale `rgb(...)`,
  * y dentro de `rgb(var(--bs-primary))` queda `rgb(rgb(...))`, que no computa.
@@ -142,6 +143,8 @@ export { resolve };
  */
 const isTripletOrRgbVar = (value) => {
   const raw = String(value).trim();
+  // Volver al valor heredado es válido: la variable vale lo que en el padre.
+  if (/^(?:inherit|unset|revert|revert-layer)$/i.test(raw)) return true;
   const ref = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
   if (ref) return ref[1].endsWith('-rgb');
   const channels = raw.match(/^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$/);
@@ -211,18 +214,51 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     return `--bs-${role}-${spec.step}`;
   };
 
-  // R1 — formato de triplete.
-  for (const [name, { value, line }] of root) {
-    if (!name.endsWith('-rgb')) continue;
-    if (isTripletOrRgbVar(value)) continue;
-    fail(
-      'triplete',
-      `${name}: "${value}" no es un triplete. Los colores de Dynamic viajan como `
-      + '"R, G, B" sobre la variable -rgb (o como var(--bs-…-rgb)); ni hex, ni rgb(), '
-      + 'ni hsl(), porque la librería los consume dentro de rgb()/RGBA().',
-      line,
-    );
+  // Contextos en los que se mide el theme: el bloque raíz y cada zona, con
+  // todas sus reglas fundidas (buildContexts). Las reglas de formato y las de
+  // contraste leen de aquí.
+  const contexts = buildContexts(blocks, root);
+  const zoneContexts = contexts.filter((ctx) => ctx.zone);
+  const inContext = (ctx) => (ctx.zone ? ` dentro de [data-bs-theme="${ctx.zone}"]` : '');
+
+  /** Cada alternativa del selector de un bloque, con su propio prefijo de zona. */
+  const alternatives = (block) => splitSelectorList(block.prelude)
+    .map((alt) => splitZone(alt))
+    .filter((alt) => alt.bare);
+
+  // R1 — formato de triplete, en el raíz y en cada zona. Una variable -rgb que
+  // la zona declara mal deja de pintarse en todo lo que la consume dentro de
+  // ella; lo que la zona no declara ya se revisó en el raíz. Una zona repartida
+  // en varias reglas se revisa una sola vez por variable, con el valor que gana.
+  for (const ctx of contexts) {
+    for (const [name, { value, line }] of ctx.own) {
+      if (!name.endsWith('-rgb')) continue;
+      if (isTripletOrRgbVar(value)) continue;
+      fail(
+        'triplete',
+        `${name}${inContext(ctx)}: "${value}" no es un triplete. Los colores de Dynamic viajan como `
+        + '"R, G, B" sobre la variable -rgb (o como var(--bs-…-rgb)); ni hex, ni rgb(), '
+        + 'ni hsl(), porque la librería los consume dentro de rgb()/RGBA().',
+        line,
+      );
+    }
   }
+
+  /**
+   * ¿Ya explicó R1 por qué no se puede medir este par? Es así cuando lo que
+   * falla es una variable -rgb mal escrita en el raíz o en la zona: avisar
+   * además de que el contraste es irresoluble repetiría el síntoma sin la causa.
+   * Una declarada en el bloque de un componente no la revisa R1, y se avisa.
+   */
+  const explainedByR1 = (ctx, element, ...sides) => sides.some((side) => {
+    const name = side.invalidFormat;
+    if (!name || element?.has(name)) return false;
+    // La declaración que ve el contexto: la de la zona o, si no la tiene, la
+    // del raíz. Sólo cuenta si R1 la rechazó; un valor con formato válido que
+    // falla al resolverse (un respaldo que no es triplete) se sigue avisando.
+    const decl = ctx.own.get(name) ?? root.get(name);
+    return Boolean(decl) && !isTripletOrRgbVar(decl.value);
+  });
 
   // R1b — una declaración que se referencia a sí misma. `--x: var(--x)` es un
   // ciclo: el navegador descarta la variable y todo lo que la lea cae a su
@@ -443,10 +479,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `.btn-primary` escrito una sola vez se ve distinto dentro de
   // `[data-bs-theme="oscura"]` si la zona mueve alguna de las variables de las
   // que depende — y ese caso es justo el que se escapa al leer el CSS de arriba
-  // abajo. Los arma buildContexts: varias reglas de la misma zona se funden, y
-  // cada variable se resuelve donde se declara, como en el navegador.
-  const contexts = buildContexts(blocks, root);
-  const zoneContexts = contexts.filter((ctx) => ctx.zone);
+  // abajo. Varias reglas de la misma zona se funden, y cada variable se
+  // resuelve donde se declara, como en el navegador.
 
   /**
    * Contextos que hay que medir para un bloque. Uno escrito dentro de una zona
@@ -465,13 +499,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       return !overridden;
     });
   };
-
-  const inContext = (ctx) => (ctx.zone ? ` dentro de [data-bs-theme="${ctx.zone}"]` : '');
-
-  /** Cada alternativa del selector de un bloque, con su propio prefijo de zona. */
-  const alternatives = (block) => splitSelectorList(block.prelude)
-    .map((alt) => splitZone(alt))
-    .filter((alt) => alt.bare);
 
   /** Nombre con el que un lado aparece en el mensaje: la variable y su token. */
   const describe = (variable, resolved) => (
@@ -530,25 +557,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const decl = ctx.own.get(name) ?? root.get(name);
       if (!decl) continue;
       if (ctx.zone && !ctx.own.has(name) && !ctx.own.has('--bs-body-color-rgb')) continue;
-      // R1 sólo revisa el bloque raíz: un valor que no es triplete declarado en
-      // la zona se rechaza aquí, y uno heredado del raíz ya lo rechazó R1.
+      // Un valor que no es triplete, en el raíz o en la zona, lo rechaza R1.
       // Cualquier otro par que no se pueda resolver se avisa: saltarlo en
       // silencio daría por buena una superficie que nadie midió.
-      if (!isTripletOrRgbVar(decl.value)) {
-        if (ctx.zone && ctx.own.has(name)) {
-          fail(
-            'triplete',
-            `${name}${inContext(ctx)}: "${decl.value}" no es un triplete. Los colores de Dynamic `
-            + 'viajan como "R, G, B" sobre la variable -rgb (o como var(--bs-…-rgb)); '
-            + `${utility} lo consume dentro de RGBA() y con este valor no se pinta.`,
-            decl.line,
-          );
-        }
-        continue;
-      }
+      if (!isTripletOrRgbVar(decl.value)) continue;
       const bg = lookup(name);
       const line = ctx.own.get(name)?.line ?? ctx.own.get('--bs-body-color-rgb')?.line ?? decl.line;
       if (!bodyColor.rgb || !bg.rgb) {
+        if (explainedByR1(ctx, null, bodyColor, bg)) continue;
         warn(
           'contraste-irresoluble',
           `No se pudo medir ${name}${inContext(ctx)} contra el texto del cuerpo: `
@@ -664,6 +680,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
           noteLiteral(element, fg, `${where} color de texto`);
           noteLiteral(element, bg, `${where} fondo`);
           if (!fg.rgb || !bg.rgb) {
+            if (explainedByR1(ctx, element, fg, bg)) continue;
             warn(
               'contraste-irresoluble',
               `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
@@ -764,6 +781,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         noteLiteral(element, fg, `${where} --bs-nav-pills-link-active-color`);
         noteLiteral(element, bg, `${where} --bs-nav-pills-link-active-bg`);
         if (!fg.rgb || !bg.rgb) {
+          if (explainedByR1(ctx, element, fg, bg)) continue;
           warn(
             'contraste-irresoluble',
             `No se pudo medir la pastilla activa de "${where}": ${fg.reason ?? bg.reason}.`,
@@ -795,11 +813,13 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     const where = zoneSelector(ctx.zone);
 
     if (!fg.rgb || !bg.rgb) {
-      warn(
-        'contraste-irresoluble',
-        `No se pudo medir el cuerpo de la zona "${ctx.zone}": ${fg.reason ?? bg.reason}.`,
-        ctx.line,
-      );
+      if (!explainedByR1(ctx, null, fg, bg)) {
+        warn(
+          'contraste-irresoluble',
+            `No se pudo medir el cuerpo de la zona "${ctx.zone}": ${fg.reason ?? bg.reason}.`,
+          ctx.line,
+        );
+      }
     } else {
       const ratio = contrast(fg.rgb, bg.rgb);
       if (ratio < minContrast) {
@@ -817,6 +837,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     if (!linkDecl || !bg.rgb) continue;
     const link = ctx.lookup('--bs-link-color-rgb');
     if (!link.rgb) {
+      if (explainedByR1(ctx, null, link)) continue;
       warn(
         'contraste-irresoluble',
         `No se pudo medir el enlace de la zona "${ctx.zone}": ${link.reason}.`,
@@ -891,6 +912,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const where = `${pair.component}${inContext(ctx)}`;
 
       if (!fg.rgb || !bg.rgb) {
+        if (explainedByR1(ctx, element, fg, bg)) continue;
         warn(
           'contraste-irresoluble',
           `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,

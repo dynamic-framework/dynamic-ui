@@ -423,8 +423,12 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   reglas de la misma zona se miden juntas. Si el theme no declara el color del
   cuerpo, se mide contra el de Dynamic, `var(--bs-gray-900-rgb)`: sigue a la
   rampa de grises del theme. Es aviso; una superficie que no se puede
-  resolver se avisa como `contraste-irresoluble`, y una que una zona declara sin
-  formato de triplete es error `triplete`.
+  resolver se avisa como `contraste-irresoluble`.
+- `triplete` — error en cada variable `-rgb` que no sea un triplete ni un
+  `var()` a otra `-rgb`, en el raíz y en cada zona (una vez por variable, con
+  el valor que gana si la zona se reparte en varias reglas). Las reglas de
+  contraste que no pueden medir un par por esa causa no añaden
+  `contraste-irresoluble`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo

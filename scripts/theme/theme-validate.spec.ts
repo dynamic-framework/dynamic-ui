@@ -878,7 +878,7 @@ describe('theme-validate — contraste de las superficies secundarias', () => {
     expect(result.stderr).toMatch(
       /error .*\[triplete\]\n {2}--bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: "var\(--bs-gray-200\)"/,
     );
-    // Una sola vez: el raíz no la declara mal, así que R1 no la repite.
+    // Una sola vez: la reporta R1 en la zona y contraste-superficie no la repite.
     expect(result.stderr.match(/\[triplete\]/g)).toHaveLength(1);
     expect(result.status).toBe(1);
   });
@@ -1824,6 +1824,19 @@ describe('theme-expand — body.borderColor conserva el alfa', () => {
  * resuelve cada variable donde se declara y hereda el valor ya calculado.
  */
 const ZONE_FIXTURES = {
+  zonaWrapper: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: 16, 24, 40;',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-link-color-rgb: var(--bs-primary);',
+    '}',
+    '',
+  ].join('\n'),
   aliasLibreria: [
     ':root,',
     '[data-bs-theme="dynamic"] {',
@@ -1969,11 +1982,68 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     expect(result.status).toBe(1);
   });
 
+  it('i4-zona-wrapper: da triplete en la variable -rgb de la zona, una sola vez, y no el síntoma', () => {
+    const result = validateStrict(ZONE_FIXTURES.zonaWrapper);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error triplete: --bs-link-color-rgb dentro de \[data-bs-theme="oscura"\]: "var\(--bs-primary\)" no es un triplete/),
+    ]);
+    expect(result.stderr).toContain('1 error(es), 0 aviso(s)');
+    expect(result.status).toBe(1);
+  });
+
+  it.each(['inherit', 'unset', 'revert'])('acepta %s en una variable -rgb de una zona, y mide el valor heredado', (keyword) => {
+    // Theme generado por theme-expand: la zona vuelve al texto del raíz.
+    // Chromium: el mismo par que el raíz, 17.75:1.
+    const bien = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      zones: { clara: { vars: { '--bs-body-color-rgb': keyword } } },
+    }));
+    expect(findings(bien)).toEqual([]);
+    expect(bien.status).toBe(0);
+
+    // Una superficie que vuelve al valor del raíz se mide contra el texto de la
+    // zona, en vez de saltarse: aquí el texto casi blanco sobre gray-200.
+    const medido = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      zones: { clara: { vars: { '--bs-body-color-rgb': '240, 240, 240', '--bs-secondary-bg-rgb': keyword } } },
+    }));
+    expect(findings(medido)).toEqual(expect.arrayContaining([
+      expect.stringMatching(/^aviso contraste-superficie: --bs-secondary-bg-rgb dentro de \[data-bs-theme="clara"\]: /),
+    ]));
+    expect(findings(medido).filter((f) => f.includes('[triplete]') || f.startsWith('error triplete'))).toEqual([]);
+  });
+
+  it('revisa una vez la variable de una zona repartida en dos reglas, con el valor que gana', () => {
+    // La primera regla la declara mal y la segunda bien: el navegador usa la
+    // segunda, así que no hay nada que reportar. Al revés, un solo error.
+    const zona = (primero: string, segundo: string) => `${ZONE_FIXTURES.zonaWrapper.replace(
+      '  --bs-link-color-rgb: var(--bs-primary);\n',
+      `  --bs-link-color-rgb: ${primero};\n`,
+    )}\n[data-bs-theme="oscura"] {\n  --bs-link-color-rgb: ${segundo};\n}\n`;
+    expect(findings(validateStrict(zona('var(--bs-primary)', '11, 107, 83')))).toEqual([]);
+    const result = validateStrict(zona('11, 107, 83', '#0b6b53'));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error triplete: --bs-link-color-rgb dentro de \[data-bs-theme="oscura"\]: "#0b6b53"/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
   it('no acepta un color completo dentro de rgb(): rgb(var(--bs-white)) no se pinta', () => {
     const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n  --bs-btn-color: rgb(var(--bs-white));\n}\n`;
     const result = validateStrict(css);
     expect(findings(result)).toEqual([
       expect.stringMatching(/^aviso contraste-irresoluble: No se pudo medir "\.btn-primary": --bs-btn-color envuelve en rgb\(\) a --bs-white, que ya vale un color completo/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('avisa del enlace irresoluble cuando R1 no rechazó la declaración', () => {
+    // El formato es válido (un var() a una -rgb), pero el respaldo no es un
+    // triplete: R1 no dice nada, así que el aviso no se puede callar.
+    const css = ZONE_FIXTURES.zonaWrapper.replace('var(--bs-primary)', 'var(--bs-optional-rgb, #fff)');
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^aviso contraste-irresoluble: No se pudo medir el enlace de la zona "oscura": --bs-link-color-rgb vale "#fff"/),
     ]);
     expect(result.status).toBe(1);
   });
