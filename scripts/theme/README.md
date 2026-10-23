@@ -421,7 +421,8 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   raíz y en cada zona que redefine el fondo o el texto del cuerpo; dentro de una
   zona, lo que ésta no declara se mide con el valor que hereda del raíz, y varias
   reglas de la misma zona se miden juntas. Si el theme no declara el color del
-  cuerpo, se mide contra el de Dynamic. Es aviso; una superficie que no se puede
+  cuerpo, se mide contra el de Dynamic, `var(--bs-gray-900-rgb)`: sigue a la
+  rampa de grises del theme. Es aviso; una superficie que no se puede
   resolver se avisa como `contraste-irresoluble`, y una que una zona declara sin
   formato de triplete es error `triplete`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que

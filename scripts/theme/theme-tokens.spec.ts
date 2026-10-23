@@ -7,6 +7,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -261,5 +262,65 @@ describe('buildContexts', () => {
       [['clara', '--bs-body-color-rgb']],
     );
     expect(result.resolved).toEqual([{ r: 21, g: 21, b: 26 }]);
+  });
+});
+
+/**
+ * Las declaraciones de un selector exacto en el CSS compilado, como Map.
+ * El primer bloque con ese selector es el que cuenta: el de `:root` va al
+ * principio del archivo, y los de componente no se repiten con las mismas
+ * variables.
+ */
+function compiledBlock(css: string, selector: string): Map<string, string> {
+  const re = /([^{}]+)\{([^{}]*)\}/g;
+  let match = re.exec(css);
+  while (match) {
+    const prelude = match[1].replace(/@charset "UTF-8";/, '').trim().replace(/\s+/g, ' ');
+    if (prelude === selector) {
+      return new Map([...match[2].matchAll(/(--bs-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+    }
+    match = re.exec(css);
+  }
+  return new Map();
+}
+
+describe('los valores por defecto contra el CSS compilado', () => {
+  const compiled = path.resolve(__dirname, '../../dist/css/dynamic-ui.css');
+  const itIfBuilt = fs.existsSync(compiled) ? it : it.skip;
+
+  // dist/ es build output y está gitignoreado: en CI este caso se salta.
+  itIfBuilt('cada entrada vale lo mismo que en la librería, literal o alias', () => {
+    const css = fs.readFileSync(compiled, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    const root = compiledBlock(css, ':root, [data-bs-theme=dynamic]');
+    expect(root.size).toBeGreaterThan(0);
+
+    const tables = runTokens(`
+      const wrappers = [...tokens.KNOWN_TOKENS]
+        .map((name) => [name, tokens.libraryWrapper(name)])
+        .filter(([, value]) => value !== undefined);
+      process.stdout.write(JSON.stringify({
+        triplets: [...tokens.DEFAULT_TRIPLETS],
+        rootColors: [...tokens.LIBRARY_ROOT_COLORS],
+        wrappers,
+        elements: [...tokens.LIBRARY_ELEMENT_VARS].map(([selector, decls]) => [selector, [...decls]]),
+      }));
+    `, null) as {
+      triplets: Array<[string, string]>;
+      rootColors: Array<[string, string]>;
+      wrappers: Array<[string, string]>;
+      elements: Array<[string, Array<[string, string]>]>;
+    };
+
+    const fromLibrary = (decls: Map<string, string>, entries: Array<[string, string]>) => entries
+      .map(([name]) => [name, decls.get(name)]);
+
+    expect(tables.triplets).toHaveLength(101);
+    expect(fromLibrary(root, tables.triplets)).toEqual(tables.triplets);
+    expect(fromLibrary(root, tables.rootColors)).toEqual(tables.rootColors);
+    expect(tables.wrappers.length).toBeGreaterThan(200);
+    expect(fromLibrary(root, tables.wrappers)).toEqual(tables.wrappers);
+    for (const [selector, decls] of tables.elements) {
+      expect([selector, fromLibrary(compiledBlock(css, selector), decls)]).toEqual([selector, decls]);
+    }
   });
 });

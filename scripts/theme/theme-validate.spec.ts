@@ -1824,6 +1824,25 @@ describe('theme-expand — body.borderColor conserva el alfa', () => {
  * resuelve cada variable donde se declara y hereda el valor ya calculado.
  */
 const ZONE_FIXTURES = {
+  aliasLibreria: [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-gray-rgb: 140, 140, 140;',
+    '  --bs-gray-25-rgb: 250, 250, 250;',
+    '  --bs-gray-50-rgb: 245, 245, 245;',
+    '  --bs-gray-100-rgb: 235, 235, 235;',
+    '  --bs-gray-200-rgb: 220, 220, 220;',
+    '  --bs-gray-300-rgb: 200, 200, 200;',
+    '  --bs-gray-400-rgb: 170, 170, 170;',
+    '  --bs-gray-500-rgb: 140, 140, 140;',
+    '  --bs-gray-600-rgb: 110, 110, 110;',
+    '  --bs-gray-700-rgb: 85, 85, 85;',
+    '  --bs-gray-800-rgb: 64, 64, 64;',
+    '  --bs-gray-900-rgb: 48, 48, 48;',
+    '  --bs-secondary-bg-rgb: 128, 128, 128;',
+    '}',
+    '',
+  ].join('\n'),
   aliasFalso: [
     ':root,',
     '[data-bs-theme="dynamic"] {',
@@ -1912,7 +1931,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     const result = validateStrict(ZONE_FIXTURES.aliasPerdido);
     expect(findings(result)).toEqual([
       expect.stringMatching(/^aviso contraste-superficie: --bs-secondary-bg-rgb dentro de \[data-bs-theme="oscura"\]: 1\.00:1/),
-      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.15:1 entre --bs-list-group-color \(--bs-dark-rgb\)/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.15:1 entre --bs-list-group-color \(--bs-gray-900-rgb\)/),
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.15:1 entre --bs-list-group-action-color \(--bs-gray-900-rgb\)/),
     ]);
     expect(result.status).toBe(1);
@@ -1935,6 +1954,18 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
     ]);
     expect(result.stderr).toContain('2 error(es), 0 aviso(s)');
+    expect(result.status).toBe(1);
+  });
+
+  it('i3-alias-libreria: el texto del cuerpo por defecto sigue a la rampa de grises del theme', () => {
+    // En la librería --bs-body-color-rgb es var(--bs-gray-900-rgb): con el
+    // gray-900 del theme (48, 48, 48) sobre secondary-bg (128, 128, 128), 3.34:1.
+    const result = validateStrict(ZONE_FIXTURES.aliasLibreria);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^aviso contraste-superficie: --bs-secondary-bg-rgb: 3\.34:1 entre --bs-body-color-rgb \(el de Dynamic, porque el theme no lo declara\)/),
+      expect.stringMatching(/^error contraste-horneado: "\.text-bg-warning": 4\.15:1 entre --bs-warning-text-bg-color \(--bs-gray-700-rgb\)/),
+    ]);
+    expect(result.stdout).toContain('[superficie-heredada]');
     expect(result.status).toBe(1);
   });
 
@@ -2051,6 +2082,18 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     const result = validateStrict(css);
     expect(findings(result)).toEqual([]);
     expect(result.status).toBe(0);
+  });
+
+  it('no usa el respaldo de un token que la librería define: --bs-link-color-rgb es el primary', () => {
+    // En la librería --bs-link-color-rgb es var(--bs-primary-rgb): el texto del
+    // botón es el mismo primary que su fondo. Chromium lo pinta así, 1:1.
+    const css = `${expandCss(MINIMAL_THEME)}\n.btn-primary {\n`
+      + '  --bs-btn-color: rgb(var(--bs-link-color-rgb, var(--bs-white-rgb)));\n}\n';
+    const result = validateStrict(css);
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-boton: "\.btn-primary": 1\.00:1 entre el texto --bs-btn-color \(--bs-primary-rgb\)/),
+    ]);
+    expect(result.status).toBe(1);
   });
 
   it('un .btn-secondary con fondo propio lleva el texto de la librería, --bs-secondary-700', () => {

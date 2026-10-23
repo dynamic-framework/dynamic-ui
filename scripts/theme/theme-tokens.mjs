@@ -607,22 +607,52 @@ function resolveOwn(name, own, resolveParent, path) {
 // -- Valores por defecto y contextos -----------------------------------------
 
 /**
+ * Familias cromáticas a las que apuntan los roles en `$theme-colors-mapping`
+ * (`--bs-primary-rgb: var(--bs-blue-rgb)`), con su triplete por defecto.
+ */
+export const ROLE_FAMILIES = {
+  primary: 'blue', info: 'blue', success: 'green', warning: 'yellow', danger: 'red',
+};
+export const DEFAULT_FAMILIES = {
+  blue: DEFAULT_ROLE_BASES.primary,
+  green: DEFAULT_ROLE_BASES.success,
+  yellow: DEFAULT_ROLE_BASES.warning,
+  red: DEFAULT_ROLE_BASES.danger,
+};
+
+/**
  * Valores que la librería declara en `:root` para las variables `-rgb` que miden
- * las reglas de contraste. Un theme que no declara una de ellas se queda con
- * este valor, resuelto en el raíz junto con lo que el theme sí declara.
+ * las reglas de contraste, tal como los escribe: literal donde la librería pone
+ * un literal y alias donde pone un alias. Un theme que no declara una de ellas
+ * se queda con este valor, resuelto en el raíz junto con lo que el theme sí
+ * declara: si cambia la rampa de grises, el texto del cuerpo
+ * (`var(--bs-gray-900-rgb)`) y los roles respaldados por grises la siguen.
  */
 export const DEFAULT_TRIPLETS = (() => {
   const map = new Map([
     ['--bs-white-rgb', DEFAULT_WHITE],
     ['--bs-black-rgb', DEFAULT_BLACK],
     ['--bs-body-bg-rgb', DEFAULT_BODY_BG],
-    ['--bs-body-color-rgb', DEFAULT_BODY_COLOR],
+    ['--bs-body-color-rgb', 'var(--bs-gray-900-rgb)'],
     ['--bs-gray-rgb', DEFAULT_GRAYS[500]],
+    // Superficies, textos y enlace del cuerpo: alias en :root.
+    ['--bs-emphasis-color-rgb', 'var(--bs-black-rgb)'],
+    ['--bs-secondary-color-rgb', 'var(--bs-body-color-rgb)'],
+    ['--bs-secondary-bg-rgb', 'var(--bs-gray-200-rgb)'],
+    ['--bs-tertiary-color-rgb', 'var(--bs-body-color-rgb)'],
+    ['--bs-tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'],
+    ['--bs-link-color-rgb', 'var(--bs-primary-rgb)'],
+    ['--bs-link-hover-color-rgb', 'var(--bs-primary-700-rgb)'],
   ]);
   for (const step of GRAY_STEPS) map.set(`--bs-gray-${step}-rgb`, DEFAULT_GRAYS[step]);
-  for (const role of ROLES) map.set(`--bs-${role}-rgb`, DEFAULT_ROLE_BASES[role]);
+  for (const [family, triplet] of Object.entries(DEFAULT_FAMILIES)) map.set(`--bs-${family}-rgb`, triplet);
+  for (const role of ROLES) {
+    map.set(`--bs-${role}-rgb`, ROLE_FAMILIES[role]
+      ? `var(--bs-${ROLE_FAMILIES[role]}-rgb)`
+      : `var(--bs-gray-${GRAY_BACKED_ROLES[role]}-rgb)`);
+  }
   for (const role of RAMPED_ROLES) {
-    map.set(`--bs-${role}-500-rgb`, DEFAULT_ROLE_BASES[role]);
+    map.set(`--bs-${role}-500-rgb`, `var(--bs-${role}-rgb)`);
     for (const step of RAMP_STEPS) {
       map.set(`--bs-${role}-${step}-rgb`, DEFAULT_ROLE_RAMPS[role][step]);
     }
