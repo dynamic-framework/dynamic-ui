@@ -143,23 +143,12 @@
     color: var(--#{$prefix}body-color);
     margin: auto;
 
-    .input-group {
-      border: 0;
-    }
-
-    .d-select__indicator-separator {
-      display: none;
-    }
-
-    .d-select__control {
+    .d-combobox-control {
       background-color: var(--#{$prefix}datepicker-top-header-bg);
-      padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-1);
+      padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-1);
       flex-wrap: nowrap;
       color: var(--#{$prefix}white);
       border: 0;
-    }
-    .d-select__menu-list {
-      max-height: 10lh;
     }
   }
 
@@ -168,33 +157,9 @@
     align-items: center;
     gap: var(--#{$prefix}ref-spacer-1);
 
-    .d-select {
-      --#{$prefix}select-option-selected-bg: var(--#{$prefix}datepicker-bg);
-
-      .d-select__control {
-        padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
-        flex-wrap: nowrap;
-      }
-
-      .d-select__menu-list {
-        border: var(--#{$prefix}datepicker-border);
-        line-height: var(--#{$prefix}ref-spacer-8);
-        max-height: 7lh;
-      }
-
-      .d-select__option {
-        padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
-        line-height: var(--#{$prefix}ref-spacer-8);
-        text-align: start;
-
-        &--is-selected {
-          font-weight: bold;
-
-          &:hover {
-            background-color: var(--#{$prefix}datepicker-day-hover-bg);
-          }
-        }
-      }
+    .d-combobox-control {
+      padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
+      flex-wrap: nowrap;
     }
 
     p {
@@ -225,7 +190,7 @@
     margin-bottom: var(--#{$prefix}ref-spacer-4);
 
     .custom-month-selector {
-      .d-select__single-value {
+      .d-combobox-input {
         text-align: start;
         min-width: 10ch;
       }
@@ -633,3 +598,33 @@ react-datepicker__navigation
 }
 
 // stylelint-enable
+
+// The header's year and month menus.
+//
+// `DSelect` portals its menu, so it is no longer a descendant of
+// `.react-datepicker` and cannot be reached by nesting — the component hands
+// it this class instead (`menuClassName`).
+.d-combobox-menu.d-combobox-menu-datepicker {
+  --#{$prefix}datepicker-bg: #{$datepicker-bg};
+  --#{$prefix}datepicker-border: 0px solid #{$datepicker-border-color};
+  --#{$prefix}datepicker-day-hover-bg: #{$datepicker-day-hover-bg};
+
+  --#{$prefix}combobox-option-selected-bg: var(--#{$prefix}datepicker-bg);
+  --#{$prefix}combobox-option-padding-y: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}combobox-option-padding-x: var(--#{$prefix}ref-spacer-2);
+
+  line-height: var(--#{$prefix}ref-spacer-8);
+  border: var(--#{$prefix}datepicker-border);
+
+  .d-combobox-option {
+    text-align: start;
+
+    &[aria-selected="true"] {
+      font-weight: #{$font-weight-bold};
+
+      &:hover {
+        background-color: var(--#{$prefix}datepicker-day-hover-bg);
+      }
+    }
+  }
+}

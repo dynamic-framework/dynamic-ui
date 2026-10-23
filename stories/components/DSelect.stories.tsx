@@ -1,778 +1,960 @@
+import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import DSelect from '../../src/components/DSelect';
-
-import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-import type { OptionEmoji, OptionIcon } from '../../src/components/DSelect';
-import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
+import type { DSelectOption, DSelectRenderOption } from '../../src/components/DSelect';
 
-const meta = {
+const config: Meta<typeof DSelect> = {
   title: 'Design System/Components/Select',
   component: DSelect,
   parameters: {
     docs: {
       description: {
         component: `
-![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+A combobox: a box you can type in that filters a list, taking one answer or
+several.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
+## Why it is not \`react-select\` any more
 
-+ [React Select](https://react-select.com/home)
+It used to wrap it, and the wrapper was mostly an adapter — an \`Omit\` of six
+props so they could be renamed, a \`styles\` object overriding the library's
+inline CSS back out again, and **eleven exported sub-components** whose only job
+was to let an option carry an icon or an emoji. The markup belonged to the
+library, so the design system could decide what an option was painted with but
+not what it was made of.
+
+\`\`\`tsx
+// Before — a component swap to put an icon next to a label
+<DSelect components={{ Option: DSelect.OptionIcon, SingleValue: DSelect.SingleValueIconText }} />
+
+// Now — the option says it has an icon
+<DSelect options={[{ value: 'es', label: 'Spain', icon: 'Flag' }]} />
+\`\`\`
+
+An option can carry an \`icon\`, an \`emoji\` and a \`description\`, and
+\`renderOption\` is still there for anything genuinely bespoke.
+
+## It is a combobox, and the class names say so
+
+The \`.d-select__*\` elements the old stylesheet targeted were react-select's
+own and no longer exist, so reusing the block would leave an override applying
+to half a control. This one is named for its ARIA pattern — \`.d-combobox-*\` —
+which also keeps it clear of \`DInputSelect\`, the native \`<select>\`.
+
+## The accessibility is the design
+
+Focus never leaves the text box. The highlighted option is a separate thing the
+box points at with \`aria-activedescendant\`, which is the ARIA 1.2 combobox
+pattern — and the reason you can type and arrow at the same time.
+
+- **Type** to filter. Accent-insensitive, so "mexico" finds "México".
+- **↑ ↓** move the highlight, stepping over disabled options.
+- **Home / End** jump to the ends.
+- **Enter** chooses; **Escape** closes without choosing.
+- **Backspace** removes the last tag when the box is empty.
+
+## Clearing
+
+\`clearable\` adds a cross that empties the control, shown only when there is
+something to clear. It is **off by default**: a required field should not offer
+a way to put itself back into an invalid state, so it is opt-in per field.
+
+With \`multi\`, every tag also has its own remove button — the cross clears all
+of them at once.
+
+## Migrating
+
+| Before                                | Now                                      |
+|---------------------------------------|------------------------------------------|
+| \`value={option}\`                    | \`value={option.value}\`                 |
+| \`onChange={(opt) => opt.value}\`     | \`onChange={(value, option) => …}\`      |
+| \`defaultValue={option}\`             | \`defaultValue={option.value}\`          |
+| \`components={{ Option: … }}\`        | \`renderOption\`                         |
+| \`DSelect.OptionIcon\`                | \`option.icon\`                          |
+| \`DSelect.OptionEmoji\`               | \`option.emoji\`                         |
+| \`DSelect.OptionCheck\`               | automatic when \`multi\`                 |
+| \`defaultMenuIsOpen\`                 | \`defaultOpen\`                          |
+| \`inputId\`                           | \`id\` — the input is ours now           |
+| \`hideSelectedOptions\`               | — selected options stay, ticked          |
+| \`iconStart\` / \`iconEnd\`           | — the control is no longer an input group |
+
+The value is the VALUE now, not the option object — the same shape a native
+\`<select>\` has, and one less thing to unwrap at every call site.
 
 ## CSS Variables
-| Variable                                            | Class         | Type            | Description                                  |
-|-----------------------------------------------------|---------------|-----------------|----------------------------------------------|
-| --${PREFIX_BS}label-color                           | :root         | css color unit  | Label color                                  |
-| --${PREFIX_BS}label-font-weight                     | :root         | css font weight | Label font weight                            |
-| --${PREFIX_BS}label-font-size                       | :root         | css length unit | Label font size                              |
-| --${PREFIX_BS}label-padding-x                       | :root         | css length unit | Label horizontal padding                     |
-| --${PREFIX_BS}label-padding-y                       | :root         | css length unit | Label vertical padding                       |
-| --${PREFIX_BS}form-text-padding                     | .form-text    | css length unit | Hint padding                                 |
-| --${PREFIX_BS}form-text-gap                         | .form-text    | css length unit | Space between hint elements                  |
-| --${PREFIX_BS}form-text-color                       | .form-text    | css color unit  | Hint color                                   |
-| --${PREFIX_BS}form-control-text-align               | .form-control | css text align  | Input text align                             |
-| --${PREFIX_BS}select-gap                            | .d-select     | css length unit | Space between layout elements                |
-| --${PREFIX_BS}select-menu-shadow                    | .d-select     | css shadow      | Input menu shadow                            |
-| --${PREFIX_BS}select-option-focus-bg                | .d-select     | css color unit  | Input menu option focus background           |
-| --${PREFIX_BS}select-option-selected-color          | .d-select     | css color unit  | Input menu selected option text color        |
-| --${PREFIX_BS}select-option-selected-bg             | .d-select     | css color unit  | Input menu selected option background color  |
-| --${PREFIX_BS}select-option-is-checkbox-font-size   | .d-select     | css length unit | Input menu option checkbox label font size   |
-| --${PREFIX_BS}select-option-is-checkbox-font-weight | .d-select     | css length unit | Input menu option checkbox label font weight |
-| --${PREFIX_BS}select-option-is-checkbox-color       | .d-select     | css color unit  | Input menu option checkbox text color        |
-| --${PREFIX_BS}select-option-has-icon-icon-size      | .d-select     | css length unit | Input menu option icon size                  |
-| --${PREFIX_BS}select-multi-value-padding-x          | .d-select     | css length unit | Input multi value padding x                  |
-| --${PREFIX_BS}select-multi-value-padding-y          | .d-select     | css length unit | Input multi value padding y                  |
-| --${PREFIX_BS}select-multi-value-margin-right       | .d-select     | css length unit | Input multi value margin right               |
-| --${PREFIX_BS}select-multi-value-background         | .d-select     | css color unit  | Input multi value background color           |
-| --${PREFIX_BS}select-multi-value-border-radius      | .d-select     | css length unit | Input multi value border radius              |
-| --${PREFIX_BS}select-multi-value-label-color        | .d-select     | css color unit  | Input multi value label color                |
-| --${PREFIX_BS}select-indicator-width                | .d-select     | css length unit | Input indicator width                        |
-| --${PREFIX_BS}select-indicator-height               | .d-select     | css length unit | Input indicator height                       |
+
+Every value resolves through a Bootstrap form variable, so a combobox sits in
+the same form beside a \`DInput\` and nothing about it says it came from
+somewhere else: change \`$input-padding-y\` and both move.
+
+The menu is portalled out of the control, so its variables are declared on
+\`.d-combobox-menu\` rather than inherited from \`.d-combobox\`.
+
+| Variable                                            | Class            | Type            | Description                                 |
+|-----------------------------------------------------|------------------|-----------------|---------------------------------------------|
+| --${PREFIX_BS}combobox-gap                          | .d-combobox      | css length unit | Space between tags, input and indicators    |
+| --${PREFIX_BS}combobox-padding-y                    | .d-combobox      | css length unit | Control vertical padding                    |
+| --${PREFIX_BS}combobox-padding-x                    | .d-combobox      | css length unit | Control horizontal padding                  |
+| --${PREFIX_BS}combobox-min-height                   | .d-combobox      | css length unit | Control minimum height                      |
+| --${PREFIX_BS}combobox-font-size                    | .d-combobox      | css length unit | Control font size                           |
+| --${PREFIX_BS}combobox-color                        | .d-combobox      | css color unit  | Control text color                          |
+| --${PREFIX_BS}combobox-bg                           | .d-combobox      | css color unit  | Control background color                    |
+| --${PREFIX_BS}combobox-placeholder-color            | .d-combobox      | css color unit  | Placeholder color                           |
+| --${PREFIX_BS}combobox-border-width                 | .d-combobox      | css length unit | Control border width                        |
+| --${PREFIX_BS}combobox-border-color                 | .d-combobox      | css color unit  | Control border color                        |
+| --${PREFIX_BS}combobox-border-radius                | .d-combobox      | css length unit | Control border radius                       |
+| --${PREFIX_BS}combobox-hover-border-color           | .d-combobox      | css color unit  | Control border color on hover               |
+| --${PREFIX_BS}combobox-focus-border-color           | .d-combobox      | css color unit  | Control border color on focus               |
+| --${PREFIX_BS}combobox-focus-box-shadow             | .d-combobox      | css shadow      | Control shadow on focus                     |
+| --${PREFIX_BS}combobox-transition                   | .d-combobox      | css transition  | Control transition                          |
+| --${PREFIX_BS}combobox-disabled-color               | .d-combobox      | css color unit  | Disabled text color                         |
+| --${PREFIX_BS}combobox-disabled-bg                  | .d-combobox      | css color unit  | Disabled background color                   |
+| --${PREFIX_BS}combobox-disabled-border-color        | .d-combobox      | css color unit  | Disabled border color                       |
+| --${PREFIX_BS}combobox-indicator-color              | .d-combobox      | css color unit  | Chevron color                               |
+| --${PREFIX_BS}combobox-indicator-size               | .d-combobox      | css length unit | Chevron size                                |
+| --${PREFIX_BS}combobox-clear-color                  | .d-combobox      | css color unit  | Clear button color                          |
+| --${PREFIX_BS}combobox-clear-hover-color            | .d-combobox      | css color unit  | Clear button color on hover                 |
+| --${PREFIX_BS}combobox-clear-size                   | .d-combobox      | css length unit | Clear button icon size                      |
+| --${PREFIX_BS}combobox-tag-gap                      | .d-combobox      | css length unit | Space inside a tag                          |
+| --${PREFIX_BS}combobox-tag-padding-y                | .d-combobox      | css length unit | Tag vertical padding                        |
+| --${PREFIX_BS}combobox-tag-padding-x                | .d-combobox      | css length unit | Tag horizontal padding                      |
+| --${PREFIX_BS}combobox-tag-font-size                | .d-combobox      | css length unit | Tag font size                               |
+| --${PREFIX_BS}combobox-tag-color                    | .d-combobox      | css color unit  | Tag text color                              |
+| --${PREFIX_BS}combobox-tag-bg                       | .d-combobox      | css color unit  | Tag background color                        |
+| --${PREFIX_BS}combobox-tag-border-radius            | .d-combobox      | css length unit | Tag border radius                           |
+| --${PREFIX_BS}combobox-tag-remove-color             | .d-combobox      | css color unit  | Tag remove button color                     |
+| --${PREFIX_BS}combobox-tag-remove-hover-color       | .d-combobox      | css color unit  | Tag remove button color on hover            |
+| --${PREFIX_BS}combobox-tag-remove-hover-bg          | .d-combobox      | css color unit  | Tag remove button background on hover       |
+| --${PREFIX_BS}combobox-floating-label-color         | .d-combobox      | css color unit  | Floating label color                        |
+| --${PREFIX_BS}combobox-floating-label-opacity       | .d-combobox      | number          | Floating label opacity once floated         |
+| --${PREFIX_BS}combobox-menu-z-index                 | .d-combobox-menu | number          | Menu stacking order                         |
+| --${PREFIX_BS}combobox-menu-padding                 | .d-combobox-menu | css length unit | Menu padding                                |
+| --${PREFIX_BS}combobox-menu-color                   | .d-combobox-menu | css color unit  | Menu text color                             |
+| --${PREFIX_BS}combobox-menu-bg                      | .d-combobox-menu | css color unit  | Menu background color                       |
+| --${PREFIX_BS}combobox-menu-border-width            | .d-combobox-menu | css length unit | Menu border width                           |
+| --${PREFIX_BS}combobox-menu-border-color            | .d-combobox-menu | css color unit  | Menu border color                           |
+| --${PREFIX_BS}combobox-menu-border-radius           | .d-combobox-menu | css length unit | Menu border radius                          |
+| --${PREFIX_BS}combobox-menu-shadow                  | .d-combobox-menu | css shadow      | Menu shadow                                 |
+| --${PREFIX_BS}combobox-option-gap                   | .d-combobox-menu | css length unit | Space between an option's parts             |
+| --${PREFIX_BS}combobox-option-padding-y             | .d-combobox-menu | css length unit | Option vertical padding                     |
+| --${PREFIX_BS}combobox-option-padding-x             | .d-combobox-menu | css length unit | Option horizontal padding                   |
+| --${PREFIX_BS}combobox-option-border-radius         | .d-combobox-menu | css length unit | Option border radius                        |
+| --${PREFIX_BS}combobox-option-color                 | .d-combobox-menu | css color unit  | Option text color                           |
+| --${PREFIX_BS}combobox-option-description-color     | .d-combobox-menu | css color unit  | Option description color                    |
+| --${PREFIX_BS}combobox-option-active-bg             | .d-combobox-menu | css color unit  | Highlighted option background               |
+| --${PREFIX_BS}combobox-option-selected-color        | .d-combobox-menu | css color unit  | Selected option text color                  |
+| --${PREFIX_BS}combobox-option-selected-bg           | .d-combobox-menu | css color unit  | Selected option background                  |
+| --${PREFIX_BS}combobox-option-selected-font-weight  | .d-combobox-menu | css font weight | Selected option font weight                 |
+| --${PREFIX_BS}combobox-option-disabled-color        | .d-combobox-menu | css color unit  | Disabled option text color                  |
+| --${PREFIX_BS}combobox-option-icon-size             | .d-combobox-menu | css length unit | Option icon size                            |
+| --${PREFIX_BS}combobox-group-label-color            | .d-combobox-menu | css color unit  | Group heading color                         |
+| --${PREFIX_BS}combobox-group-label-font-size        | .d-combobox-menu | css length unit | Group heading font size                     |
+| --${PREFIX_BS}combobox-empty-color                  | .d-combobox-menu | css color unit  | "No options" text color                     |
         `,
       },
     },
   },
-  args: {
-    menuPlacement: 'bottom',
-  },
   argTypes: {
-    id: {
-      control: 'text',
-      type: 'string',
-      description: 'The ID of the input',
-      table: { category: 'HTML Attributes' },
-    },
-    name: {
-      control: 'text',
-      type: 'string',
-      description: 'The name of the input',
-      table: { category: 'HTML Attributes' },
-    },
-    className: {
-      control: 'text',
-      type: 'string',
-      description: 'The CSS class for the component',
-      table: { category: 'Appearance' },
-    },
-    style: {
-      control: 'object',
-      description: 'The CSS style for the component',
-      table: { category: 'Appearance' },
-    },
+    options: { control: 'object', table: { category: 'Content' } },
+    value: { control: false, table: { category: 'Content' } },
+    defaultValue: { control: false, table: { category: 'Content' } },
+    onChange: { action: 'change', table: { category: 'Events' } },
+    onSearch: { action: 'search', table: { category: 'Events' } },
+    multi: { control: 'boolean', table: { category: 'Behavior' } },
+    searchable: { control: 'boolean', table: { category: 'Behavior' } },
+    clearable: { control: 'boolean', table: { category: 'Behavior' } },
+    closeOnSelect: { control: 'boolean', table: { category: 'Behavior' } },
+    defaultOpen: { control: 'boolean', table: { category: 'Behavior' } },
+    loading: { control: 'boolean', table: { category: 'State' } },
+    disabled: { control: 'boolean', table: { category: 'State' } },
+    invalid: { control: 'boolean', table: { category: 'State' } },
+    valid: { control: 'boolean', table: { category: 'State' } },
+    id: { control: 'text', table: { category: 'HTML Attributes' } },
+    name: { control: 'text', table: { category: 'HTML Attributes' } },
     label: {
       control: 'text',
-      description: 'Label of the control; accepts any ReactNode. A text label is also the accessible name; a non-text label needs ariaLabel or aria-labelledby.',
+      description: 'Label of the control; accepts any ReactNode. A text label is also the accessible name; a non-text label needs ariaLabel or ariaLabelledBy.',
       table: { category: 'Content', type: { summary: 'ReactNode' } },
     },
-    ariaLabel: {
-      control: 'text',
-      type: 'string',
-      description: 'Accessible name of the control. Overrides the name given by label. A non-text label needs it, or aria-labelledby. Falls back to "Search for an option" only when there is neither label nor aria-labelledby.',
-      table: { category: 'Content' },
-    },
-    floatingLabel: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the label should float above the input',
+    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },
+    ariaLabelledBy: { control: 'text', table: { category: 'Accessibility' } },
+    hint: { control: 'text', table: { category: 'Content' } },
+    placeholder: { control: 'text', table: { category: 'Content' } },
+    floatingLabel: { control: 'boolean', table: { category: 'Appearance' } },
+    size: {
+      control: 'inline-radio',
+      options: [undefined, 'sm', 'lg'],
       table: { category: 'Appearance' },
     },
-    iconFamilyClass: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family class for the icons',
-      table: { category: 'Icon' },
-    },
-    iconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family prefix for the icons',
-      table: { category: 'Icon' },
-    },
-    iconStart: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-      description: 'The icon at the start of the input',
-      table: { category: 'Icon' },
-    },
-    iconStartDisabled: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the start icon is disabled',
-      table: { category: 'Behavior' },
-    },
-    iconStartAriaLabel: {
-      control: 'text',
-      type: 'string',
-      description: 'The ARIA label for the start icon',
-      table: { category: 'Content' },
-    },
-    iconStartTabIndex: {
-      control: 'number',
-      type: 'number',
-      description: 'The tabindex for the start icon',
-      table: { category: 'HTML Attributes' },
-    },
-    iconStartFamilyClass: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family class for the start icon',
-      table: { category: 'Icon' },
-    },
-    iconStartFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family prefix for the start icon',
-      table: { category: 'Icon' },
-    },
-    iconEnd: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-      description: 'The icon at the end of the input',
-      table: { category: 'Icon' },
-    },
-    iconEndDisabled: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the end icon is disabled',
-      table: { category: 'Behavior' },
-    },
-    iconEndAriaLabel: {
-      control: 'text',
-      type: 'string',
-      description: 'The ARIA label for the end icon',
-      table: { category: 'Content' },
-    },
-    iconEndFamilyClass: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family class for the end icon',
-      table: { category: 'Icon' },
-    },
-    iconEndFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family prefix for the end icon',
-      table: { category: 'Icon' },
-    },
-    iconEndTabIndex: {
-      control: 'number',
-      type: 'number',
-      description: 'The tabindex for the end icon',
-      table: { category: 'HTML Attributes' },
-    },
-    hint: {
-      control: 'text',
-      type: 'string',
-      description: 'The hint to display, also used for validity feedback',
-      table: { category: 'Content' },
-    },
-    invalid: {
-      control: 'boolean',
-      type: 'boolean',
-      table: {
-        defaultValue: { summary: 'false' },
-        category: 'Behavior',
-      },
-      description: 'Determines if the input is invalid',
-    },
-    valid: {
-      control: 'boolean',
-      type: 'boolean',
-      table: {
-        defaultValue: { summary: 'false' },
-        category: 'Behavior',
-      },
-      description: 'Determines if the input is valid',
-    },
-    menuWithMaxContent: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the menu should have maximum content height',
-      table: { category: 'Appearance' },
-    },
-    disabled: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input is disabled',
-      table: { category: 'Behavior' },
-    },
-    clearable: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input can be cleared',
-      table: { category: 'Behavior' },
-    },
-    loading: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input is in a loading state',
-      table: { category: 'Behavior' },
-    },
-    rtl: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input is right-to-left',
-      table: { category: 'Appearance' },
-    },
-    searchable: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input is searchable',
-      table: { category: 'Behavior' },
-    },
-    multi: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the input is multi-select',
-      table: { category: 'Behavior' },
-    },
-    defaultInputValue: {
-      control: 'text',
-      type: 'string',
-      description: 'The default value for the input',
-      table: { category: 'Content' },
-    },
-    defaultMenuIsOpen: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Determines if the menu should be open by default',
-      table: { category: 'Behavior' },
-    },
-    defaultValue: {
-      control: 'object',
-      description: 'The default selected value(s) for the input',
-      table: { category: 'Content' },
-    },
-    classNamePrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The prefix for the CSS class names',
-      table: { category: 'Appearance' },
-    },
-    options: {
-      control: 'object',
-      description: 'The options for the select input',
-      table: { category: 'Content' },
-    },
-    value: {
-      control: 'object',
-      description: 'The selected value(s) for the input',
-      table: { category: 'Content' },
-    },
-    onFocus: {
-      action: 'focused',
-      description: 'Event fired when the input is focused',
-      table: { category: 'Events' },
-    },
-    onBlur: {
-      action: 'blurred',
-      description: 'Event fired when the input is blurred',
-      table: { category: 'Events' },
-    },
-    onKeyDown: {
-      action: 'keyDowned',
-      description: 'Event fired when a key is pressed down',
-      table: { category: 'Events' },
-    },
-    menuIsOpen: {
-      control: 'boolean',
-      description: 'Determines if the menu is open',
-      table: { category: 'Behavior' },
-    },
-    hideSelectedOptions: {
-      control: 'boolean',
-      description: 'Determines if selected options should be hidden',
-      table: { category: 'Behavior' },
-    },
-    closeMenuOnSelect: {
-      control: 'boolean',
-      description: 'Determines if the menu should close on selection',
-      table: { category: 'Behavior' },
-    },
-    blurInputOnSelect: {
-      control: 'boolean',
-      description: 'Determines if the input should be blurred on selection',
-      table: { category: 'Behavior' },
-    },
-    isOptionDisabled: {
-      control: 'boolean',
-      description: 'Determines if an option is disabled',
-      table: { category: 'Behavior' },
-    },
-    loadingMessage: {
-      control: 'text',
-      description: 'The loading message to display',
-      table: { category: 'Content' },
-    },
-    noOptionsMessage: {
-      control: 'text',
-      description: 'The message to display when no options are available',
-      table: { category: 'Content' },
-    },
-    menuPortalTarget: {
-      control: 'text',
-      description: 'The DOM element to append the menu to',
-      table: { category: 'Behavior' },
-    },
-    menuPlacement: {
-      control: { type: 'select' },
-      options: ['auto', 'top', 'bottom'],
-      description: 'Placement of the menu in relation to the control',
-      table: {
-        type: { summary: '"bottom" | "auto" | "top"' },
-        defaultValue: { summary: 'bottom' },
-        category: 'Appearance',
-      },
-    },
-    menuPosition: {
-      control: 'text',
-      description: 'The position of the menu',
-      table: { category: 'Appearance' },
-    },
-    menuShouldBlockScroll: {
-      control: 'boolean',
-      description: 'Determines if scrolling should be blocked when the menu is open',
-      table: { category: 'Behavior' },
-    },
-    menuShouldScrollIntoView: {
-      control: 'boolean',
-      description: 'Determines if the menu should scroll into view when opened',
-      table: { category: 'Behavior' },
-    },
-    formatGroupLabel: {
-      type: 'function',
-      description: 'Function to format group labels',
-      table: { category: 'Content' },
-    },
-    formatOptionLabel: {
-      type: 'function',
-      description: 'Function to format option labels',
-      table: { category: 'Content' },
-    },
-    getOptionLabel: {
-      type: 'function',
-      description: 'Function to get the label of an option',
-      table: { category: 'Behavior' },
-    },
-    getOptionValue: {
-      type: 'function',
-      description: 'Function to get the value of an option',
-      table: { category: 'Behavior' },
-    },
-    inputId: {
-      control: 'text',
-      description: 'The ID of the input element',
-      table: { category: 'HTML Attributes' },
-    },
-    inputValue: {
-      control: 'text',
-      description: 'The value of the input element',
-      table: { category: 'Content' },
-    },
-    instanceId: {
-      control: 'text',
-      description: 'The instance ID of the component',
-      table: { category: 'HTML Attributes' },
-    },
-    styles: {
-      control: 'object',
-      description: 'Custom styles for the component',
-      table: { category: 'Appearance' },
-    },
-    'aria-label': {
-      control: 'text',
-      description: 'ARIA label for the component',
-      table: { category: 'HTML Attributes' },
-    },
-    tabIndex: {
-      control: 'number',
-      description: 'The tab index of the component',
-      table: { category: 'HTML Attributes' },
-    },
-    autoFocus: {
-      control: 'boolean',
-      description: 'Determines if the component should autofocus',
-      table: { category: 'Behavior' },
-    },
-    components: {
-      control: 'object',
-      description: 'Custom components for the input',
-      table: { category: 'Behavior' },
-    },
-    placeholder: {
-      control: 'text',
-      description: 'Placeholder text for the input',
-      table: { category: 'Content' },
-    },
-    escapeClearsValue: {
-      control: 'boolean',
-      description: 'Determines if pressing escape clears the value',
-      table: { category: 'Behavior' },
-    },
-    filterOption: {
-      type: 'function',
-      description: 'Function to filter options',
-      table: { category: 'Behavior' },
-    },
-    openMenuOnClick: {
-      control: 'boolean',
-      description: 'Determines if the menu should open on click',
-      table: { category: 'Behavior' },
-    },
-    closeMenuOnScroll: {
-      control: 'boolean',
-      description: 'Determines if the menu should close on scroll',
-      table: { category: 'Behavior' },
-    },
-    onMenuScrollToBottom: {
-      action: 'scrolledToBottom',
-      description: 'Event fired when the menu is scrolled to the bottom',
-      table: { category: 'Events' },
-    },
-    onMenuScrollToTop: {
-      action: 'scrolledToTop',
-      description: 'Event fired when the menu is scrolled to the top',
-      table: { category: 'Events' },
-    },
-    tabSelectsValue: {
-      control: 'boolean',
-      description: 'Determines if pressing tab selects the value',
-      table: { category: 'Behavior' },
-    },
-    backspaceRemovesValue: {
-      control: 'boolean',
-      description: 'Determines if pressing backspace removes the value',
-      table: { category: 'Behavior' },
-    },
-    maxMenuHeight: {
-      control: 'number',
-      description: 'The maximum height of the menu',
-      table: { category: 'Appearance' },
-    },
-    minMenuHeight: {
-      control: 'number',
-      description: 'The minimum height of the menu',
-      table: { category: 'Appearance' },
-    },
-    openMenuOnFocus: {
-      control: 'boolean',
-      description: 'Determines if the menu should open on focus',
-      table: { category: 'Behavior' },
-    },
-    onIconStartClick: {
-      action: 'onIconStartClick',
-      description: 'Event fired when the start icon is clicked',
-      table: { category: 'Events' },
-    },
-    onIconEndClick: {
-      action: 'onIconEndClick',
-      description: 'Event fired when the end icon is clicked',
-      table: { category: 'Events' },
-    },
-    onChange: {
-      action: 'onChange',
-      description: 'Event fired when the value changes',
-      table: { category: 'Events' },
-    },
-    onInputChange: {
-      action: 'onInputChange',
-      description: 'Event fired when the input value changes',
-      table: { category: 'Events' },
-    },
+    className: { control: 'text', table: { category: 'Appearance' } },
+    menuClassName: { control: 'text', table: { category: 'Appearance' } },
+    style: { control: 'object', table: { category: 'Appearance' } },
+    maxMenuHeight: { control: 'number', table: { category: 'Appearance' } },
+    renderOption: { control: false, table: { category: 'Appearance' } },
+    filterOption: { control: false, table: { category: 'Behavior' } },
+    i18n: { control: 'object', table: { category: 'Accessibility' } },
   },
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
-        <div className="position-relative">
-          <Story />
-        </div>
+      <div style={{ minWidth: 320, minHeight: 360 }}>
+        <Story />
       </div>
     ),
   ],
-  tags: ['autodocs'],
-} satisfies Meta<typeof DSelect>;
+};
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default config;
 
-const OPTIONS = [
-  { label: 'Option 1', value: '1' },
-  { label: 'Option 2', value: '2' },
-  { label: 'Option 3', value: '3' },
+// Bound to `string` so the stories' args carry the value type a consumer's
+// options would give them. Left open, Storybook widens `Value` to the whole
+// `string | number` constraint, and `renderAccountOption` below — typed the
+// way a consumer would type it — stops fitting.
+type Story = StoryObj<typeof DSelect<string>>;
+
+/* --- the data the examples use ------------------------------------------- */
+
+const COUNTRIES: Array<DSelectOption> = [
+  { value: 'ar', label: 'Argentina' },
+  { value: 'br', label: 'Brasil' },
+  { value: 'cl', label: 'Chile' },
+  { value: 'co', label: 'Colombia' },
+  { value: 'es', label: 'España' },
+  { value: 'mx', label: 'México' },
+  { value: 'pe', label: 'Perú' },
+  { value: 'uy', label: 'Uruguay' },
 ];
 
-const OPTIONS_WITH_ICON = [
-  { label: 'Option 1', value: '1', icon: 'Flame' },
-  { label: 'Option 2', value: '2', icon: 'Calendar' },
-  { label: 'Option 3', value: '3', icon: 'Camera' },
+const ACCOUNTS: Array<DSelectOption> = [
+  {
+    value: 'checking', label: 'Checking', description: '•••• 4821 · $12,430.55', icon: 'Wallet',
+  },
+  {
+    value: 'savings', label: 'Savings', description: '•••• 9043 · $48,900.00', icon: 'PiggyBank',
+  },
+  {
+    value: 'credit', label: 'Credit card', description: '•••• 1127 · $1,204.30 due', icon: 'CreditCard',
+  },
+  {
+    value: 'closed', label: 'Closed account', description: 'No longer available', icon: 'Ban', disabled: true,
+  },
 ];
 
-const OPTIONS_WITH_EMOJI = [
-  { label: 'Option 1', value: '1', emoji: '😀' },
-  { label: 'Option 2', value: '2', emoji: '🥶' },
-  { label: 'Option 3', value: '3', emoji: '👾' },
+const LANGUAGES: Array<DSelectOption> = [
+  { value: 'es', label: 'Español', emoji: '🇪🇸' },
+  { value: 'en', label: 'English', emoji: '🇬🇧' },
+  { value: 'pt', label: 'Português', emoji: '🇧🇷' },
+  { value: 'fr', label: 'Français', emoji: '🇫🇷' },
 ];
+
+/**
+ * Cities per country, for the dependent pair below. A plain lookup, because
+ * the point of that example is the parent swapping one list for another.
+ */
+const CITIES: Record<string, Array<DSelectOption>> = {
+  cl: [
+    { value: 'scl', label: 'Santiago' },
+    { value: 'vap', label: 'Valparaíso' },
+    { value: 'ccp', label: 'Concepción' },
+  ],
+  es: [
+    { value: 'mad', label: 'Madrid' },
+    { value: 'bcn', label: 'Barcelona' },
+    { value: 'svq', label: 'Sevilla' },
+  ],
+  mx: [
+    { value: 'cmx', label: 'Ciudad de México' },
+    { value: 'gdl', label: 'Guadalajara' },
+    { value: 'mty', label: 'Monterrey' },
+  ],
+};
+
+const COUNTRIES_WITH_CITIES = COUNTRIES.filter((country) => country.value in CITIES);
+
+const GROUPED = [
+  {
+    label: 'South America',
+    options: COUNTRIES.filter((c) => ['ar', 'br', 'cl', 'co', 'pe', 'uy'].includes(c.value)),
+  },
+  { label: 'Europe', options: COUNTRIES.filter((c) => c.value === 'es') },
+  { label: 'North America', options: COUNTRIES.filter((c) => c.value === 'mx') },
+];
+
+/**
+ * A bespoke option: an initial in a circle, then the name over the balance.
+ *
+ * Declared here rather than inline in the story's `renderOption` prop because
+ * the function IS the example — it is what a consumer copies when the `icon`,
+ * `emoji` and `description` fields are not enough. Buried in a prop it reads
+ * as the story's plumbing instead of the thing being shown.
+ */
+const renderAccountOption: DSelectRenderOption = (option, state) => (
+  <span className="d-flex align-items-center gap-3 w-100">
+    <span
+      className="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary fw-semibold"
+      style={{ width: 32, height: 32 }}
+    >
+      {option.label.charAt(0)}
+    </span>
+    <span className="d-flex flex-column">
+      <span className={state.selected ? 'fw-semibold' : undefined}>{option.label}</span>
+      <span className="small text-secondary">{option.description}</span>
+    </span>
+  </span>
+);
+
+/* --- docs source ----------------------------------------------------------
+ *
+ * Storybook writes a story's snippet from what it renders, which for these is
+ * `<DSelect {...args} />` with the data serialised into it and every function
+ * prop reduced to `() => {}`. The docs page is what a consumer reads to learn
+ * the component, so each story states its own source in full — including the
+ * constant it selects over, which otherwise appears from nowhere.
+ */
+
+const COUNTRIES_SOURCE = `const COUNTRIES = [
+  { value: 'ar', label: 'Argentina' },
+  { value: 'br', label: 'Brasil' },
+  { value: 'cl', label: 'Chile' },
+  { value: 'co', label: 'Colombia' },
+  { value: 'es', label: 'España' },
+  { value: 'mx', label: 'México' },
+  { value: 'pe', label: 'Perú' },
+  { value: 'uy', label: 'Uruguay' },
+];`;
+
+const ACCOUNTS_SOURCE = `const ACCOUNTS = [
+  { value: 'checking', label: 'Checking', description: '•••• 4821 · $12,430.55', icon: 'Wallet' },
+  { value: 'savings', label: 'Savings', description: '•••• 9043 · $48,900.00', icon: 'PiggyBank' },
+  { value: 'credit', label: 'Credit card', description: '•••• 1127 · $1,204.30 due', icon: 'CreditCard' },
+  { value: 'closed', label: 'Closed account', description: 'No longer available', icon: 'Ban', disabled: true },
+];`;
+
+const LANGUAGES_SOURCE = `const LANGUAGES = [
+  { value: 'es', label: 'Español', emoji: '🇪🇸' },
+  { value: 'en', label: 'English', emoji: '🇬🇧' },
+  { value: 'pt', label: 'Português', emoji: '🇧🇷' },
+  { value: 'fr', label: 'Français', emoji: '🇫🇷' },
+];`;
+
+const GROUPED_SOURCE = `const GROUPED = [
+  {
+    label: 'South America',
+    options: [
+      { value: 'ar', label: 'Argentina' },
+      { value: 'br', label: 'Brasil' },
+      { value: 'cl', label: 'Chile' },
+      { value: 'co', label: 'Colombia' },
+      { value: 'pe', label: 'Perú' },
+      { value: 'uy', label: 'Uruguay' },
+    ],
+  },
+  { label: 'Europe', options: [{ value: 'es', label: 'España' }] },
+  { label: 'North America', options: [{ value: 'mx', label: 'México' }] },
+];`;
+
+const CITIES_SOURCE = `const CITIES: Record<string, Array<DSelectOption>> = {
+  cl: [
+    { value: 'scl', label: 'Santiago' },
+    { value: 'vap', label: 'Valparaíso' },
+    { value: 'ccp', label: 'Concepción' },
+  ],
+  es: [
+    { value: 'mad', label: 'Madrid' },
+    { value: 'bcn', label: 'Barcelona' },
+    { value: 'svq', label: 'Sevilla' },
+  ],
+  mx: [
+    { value: 'cmx', label: 'Ciudad de México' },
+    { value: 'gdl', label: 'Guadalajara' },
+    { value: 'mty', label: 'Monterrey' },
+  ],
+};
+
+const COUNTRIES_WITH_CITIES = COUNTRIES.filter((country) => country.value in CITIES);`;
+
+const RENDER_ACCOUNT_OPTION_SOURCE = `import type { DSelectRenderOption } from '@dynamic-framework/ui-react';
+
+const renderAccountOption: DSelectRenderOption = (option, state) => (
+  <span className="d-flex align-items-center gap-3 w-100">
+    <span
+      className="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary fw-semibold"
+      style={{ width: 32, height: 32 }}
+    >
+      {option.label.charAt(0)}
+    </span>
+    <span className="d-flex flex-column">
+      <span className={state.selected ? 'fw-semibold' : undefined}>{option.label}</span>
+      <span className="small text-secondary">{option.description}</span>
+    </span>
+  </span>
+);`;
+
+/**
+ * Builds a story's `parameters`, with the full example as its source.
+ *
+ * `type: 'code'` is what stops the docs addon from replacing the snippet with
+ * its own render of the story.
+ */
+function docs(code: string, story?: string) {
+  return {
+    docs: {
+      ...story && { description: { story } },
+      source: { code: code.trim(), language: 'tsx', type: 'code' },
+    },
+  };
+}
+
+/* --- stories -------------------------------------------------------------- */
 
 export const Default: Story = {
-  args: {
-    id: 'componentId1',
-    options: OPTIONS,
-    style: {
-      minWidth: '200px',
-    },
-  },
+  args: { label: 'Country', options: COUNTRIES, placeholder: 'Search a country…' },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  placeholder="Search a country…"
+/>
+  `),
 };
 
 export const Selected: Story = {
   args: {
-    id: 'componentId2',
-    defaultValue: OPTIONS[0],
-    options: OPTIONS,
-    style: {
-      minWidth: '200px',
-    },
+    label: 'Country', options: COUNTRIES, defaultValue: 'cl', clearable: true,
   },
-};
+  parameters: docs(`
+${COUNTRIES_SOURCE}
 
-export const Floating: Story = {
-  args: {
-    id: 'componentId14',
-    defaultValue: OPTIONS[0],
-    options: OPTIONS,
-    floatingLabel: true,
-    label: 'Floating Label',
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const SelectedWithMenuOpen: Story = {
-  args: {
-    id: 'componentId3',
-    defaultValue: OPTIONS[0],
-    options: OPTIONS,
-    defaultMenuIsOpen: true,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const Multi: Story = {
-  args: {
-    id: 'componentId4',
-    defaultValue: [OPTIONS[1], OPTIONS[2]],
-    options: OPTIONS,
-    multi: true,
-    defaultMenuIsOpen: true,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const MultiCheckOption: Story = {
-  render: (args) => (
-    <DSelect
-      {...args}
-      components={{
-        Option: DSelect.OptionCheck,
-      }}
-    />
-  ),
-  args: {
-    id: 'componentId5',
-    defaultValue: [OPTIONS[1], OPTIONS[2]],
-    options: OPTIONS,
-    multi: true,
-    defaultMenuIsOpen: true,
-    hideSelectedOptions: false,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const IconOption: StoryObj<typeof DSelect<OptionIcon>> = {
-  render: (args) => (
-    <DSelect<OptionIcon>
-      {...args}
-      components={{
-        Option: DSelect.OptionIcon,
-        SingleValue: DSelect.SingleValueIconText,
-      }}
-    />
-  ),
-  args: {
-    id: 'componentId6',
-    defaultValue: OPTIONS_WITH_ICON[2],
-    options: OPTIONS_WITH_ICON,
-    defaultMenuIsOpen: true,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const EmojiOption: StoryObj<typeof DSelect<OptionEmoji>> = {
-  render: (args) => (
-    <DSelect<OptionEmoji>
-      {...args}
-      components={{
-        Option: DSelect.OptionEmoji,
-        SingleValue: DSelect.SingleValueEmoji,
-      }}
-    />
-  ),
-  args: {
-    id: 'componentId15',
-    defaultValue: OPTIONS_WITH_EMOJI[2],
-    options: OPTIONS_WITH_EMOJI,
-    defaultMenuIsOpen: true,
-    menuWithMaxContent: true,
-  },
-};
-
-export const EmojiTextOption: StoryObj<typeof DSelect<OptionEmoji>> = {
-  render: (args) => (
-    <DSelect<OptionEmoji>
-      {...args}
-      components={{
-        Option: DSelect.OptionEmoji,
-        SingleValue: DSelect.SingleValueEmojiText,
-      }}
-    />
-  ),
-  args: {
-    id: 'componentId7',
-    defaultValue: OPTIONS_WITH_EMOJI[2],
-    options: OPTIONS_WITH_EMOJI,
-    defaultMenuIsOpen: true,
-  },
-};
-
-export const Loading: Story = {
-  args: {
-    id: 'componentId8',
-    defaultValue: OPTIONS[2],
-    options: OPTIONS,
-    loading: true,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const Layout: Story = {
-  args: {
-    id: 'componentId9',
-    options: OPTIONS,
-    label: 'Label',
-    hint: 'Assistive text',
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    id: 'componentId10',
-    defaultValue: OPTIONS[2],
-    options: OPTIONS,
-    disabled: true,
-    style: {
-      minWidth: '200px',
-    },
-  },
-};
-
-export const Invalid: Story = {
-  args: {
-    id: 'componentId11',
-    defaultValue: OPTIONS[0],
-    options: OPTIONS,
-    style: {
-      minWidth: '200px',
-    },
-    invalid: true,
-  },
-};
-
-export const Valid: Story = {
-  args: {
-    id: 'componentId12',
-    defaultValue: OPTIONS[0],
-    options: OPTIONS,
-    style: {
-      minWidth: '200px',
-    },
-    valid: true,
-  },
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="cl"
+  clearable
+/>
+  `),
 };
 
 /**
- * To use material symbols or any other material symbols style icon suite you can
- * use a `DContextProvider` to achieve global configuration
+ * The reason a combobox exists rather than a `<select>`: eight countries do not
+ * need a search box, eighty do.
  */
-export const MaterialStyleIcons: Story = {
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
-  },
-  render: (args) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DSelect {...args} />
-    </DContextProvider>
+export const Searching: Story = {
+  args: { label: 'Country', options: COUNTRIES, defaultOpen: true },
+  parameters: docs(
+    `
+${COUNTRIES_SOURCE}
+
+// \`defaultOpen\` is for documentation and tests — a page should not open a
+// menu nobody asked for.
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultOpen
+/>
+    `,
+    'Type `mexico` without the accent — the filter folds accents, which in a Spanish-language product is most of the searches people actually make.',
   ),
+};
+
+export const WithoutSearch: Story = {
   args: {
-    id: 'componentId13',
-    defaultValue: [OPTIONS[0]],
-    options: OPTIONS,
-    defaultMenuIsOpen: true,
-    multi: true,
-    style: {
-      minWidth: '200px',
-    },
+    label: 'Country', options: COUNTRIES, searchable: false, defaultValue: 'es',
   },
+  parameters: docs(
+    `
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="es"
+  searchable={false}
+/>
+    `,
+    'The box takes no text and a mobile keyboard will not open, but typing still jumps by prefix the way a native `<select>` does.',
+  ),
+};
+
+/**
+ * Several answers, shown as removable tags. Backspace on an empty box removes
+ * the last one.
+ */
+export const Multiple: Story = {
+  args: {
+    label: 'Countries',
+    options: COUNTRIES,
+    multi: true,
+    defaultValue: ['cl', 'mx'],
+    clearable: true,
+  },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Countries"
+  options={COUNTRIES}
+  defaultValue={['cl', 'mx']}
+  multi
+  clearable
+/>
+  `),
+};
+
+export const MultipleOpen: Story = {
+  args: {
+    label: 'Countries',
+    options: COUNTRIES,
+    multi: true,
+    defaultValue: ['cl', 'mx'],
+    defaultOpen: true,
+  },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Countries"
+  options={COUNTRIES}
+  defaultValue={['cl', 'mx']}
+  multi
+  defaultOpen
+/>
+  `),
+};
+
+/**
+ * An option describes itself. No sub-component swap, no render prop — `icon`
+ * and `description` are fields.
+ */
+export const RichOptions: Story = {
+  args: {
+    label: 'Account', options: ACCOUNTS, defaultValue: 'checking', defaultOpen: true,
+  },
+  parameters: docs(`
+${ACCOUNTS_SOURCE}
+
+<DSelect
+  label="Account"
+  options={ACCOUNTS}
+  defaultValue="checking"
+  defaultOpen
+/>
+  `),
+};
+
+export const EmojiOptions: Story = {
+  args: {
+    label: 'Language', options: LANGUAGES, defaultValue: 'es', searchable: false,
+  },
+  parameters: docs(`
+${LANGUAGES_SOURCE}
+
+<DSelect
+  label="Language"
+  options={LANGUAGES}
+  defaultValue="es"
+  searchable={false}
+/>
+  `),
+};
+
+export const Grouped: Story = {
+  args: { label: 'Country', options: GROUPED, defaultOpen: true },
+  parameters: docs(
+    `
+${GROUPED_SOURCE}
+
+<DSelect
+  label="Country"
+  options={GROUPED}
+  defaultOpen
+/>
+    `,
+    'A group whose options are all filtered out disappears with them, rather than leaving a heading over nothing.',
+  ),
+};
+
+/**
+ * `renderOption` for the cases the fields do not cover. It receives the option
+ * and whether it is selected, highlighted or disabled.
+ */
+export const CustomOption: Story = {
+  args: {
+    label: 'Account',
+    options: ACCOUNTS,
+    defaultValue: 'savings',
+    defaultOpen: true,
+    renderOption: renderAccountOption,
+  },
+  parameters: docs(`
+${RENDER_ACCOUNT_OPTION_SOURCE}
+
+${ACCOUNTS_SOURCE}
+
+<DSelect
+  label="Account"
+  options={ACCOUNTS}
+  defaultValue="savings"
+  renderOption={renderAccountOption}
+  defaultOpen
+/>
+  `),
+};
+
+export const Clearable: Story = {
+  args: {
+    label: 'Country', options: COUNTRIES, defaultValue: 'br', clearable: true,
+  },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="br"
+  clearable
+/>
+  `),
+};
+
+export const FloatingLabel: Story = {
+  args: {
+    label: 'Country', options: COUNTRIES, floatingLabel: true, defaultValue: 'uy',
+  },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<DSelect
+  label="Country"
+  options={COUNTRIES}
+  defaultValue="uy"
+  floatingLabel
+/>
+  `),
+};
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="d-flex flex-column gap-4">
+      <DSelect {...args} size="sm" label="Small" />
+      <DSelect {...args} label="Default" />
+      <DSelect {...args} size="lg" label="Large" />
+    </div>
+  ),
+  args: { options: COUNTRIES, defaultValue: 'cl' },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<div className="d-flex flex-column gap-4">
+  <DSelect label="Small" options={COUNTRIES} defaultValue="cl" size="sm" />
+  <DSelect label="Default" options={COUNTRIES} defaultValue="cl" />
+  <DSelect label="Large" options={COUNTRIES} defaultValue="cl" size="lg" />
+</div>
+  `),
+};
+
+export const States: Story = {
+  render: (args) => (
+    <div className="d-flex flex-column gap-4">
+      <DSelect {...args} label="Invalid" invalid hint="Pick a country to continue" />
+      <DSelect {...args} label="Valid" valid defaultValue="cl" />
+      <DSelect {...args} label="Disabled" disabled defaultValue="es" />
+      <DSelect {...args} label="Loading" loading />
+    </div>
+  ),
+  args: { options: COUNTRIES },
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+<div className="d-flex flex-column gap-4">
+  <DSelect label="Invalid" options={COUNTRIES} invalid hint="Pick a country to continue" />
+  <DSelect label="Valid" options={COUNTRIES} defaultValue="cl" valid />
+  <DSelect label="Disabled" options={COUNTRIES} defaultValue="es" disabled />
+  <DSelect label="Loading" options={COUNTRIES} loading />
+</div>
+  `),
+};
+
+/**
+ * `onSearch` fires on every keystroke, which is the hook for fetching options
+ * from a server. The component does no debouncing — that belongs to whatever is
+ * doing the fetching, which is the only thing that knows what it costs.
+ */
+export const AsyncSearch: Story = {
+  render: function Render() {
+    const [options, setOptions] = useState<Array<DSelectOption>>([]);
+    const [loading, setLoading] = useState(false);
+
+    return (
+      <DSelect
+        label="Country"
+        options={options}
+        loading={loading}
+        placeholder="Type to search…"
+        onSearch={(query) => {
+          if (!query) { setOptions([]); return; }
+          setLoading(true);
+          // Stands in for a request.
+          window.setTimeout(() => {
+            const needle = query.toLowerCase();
+            setOptions(COUNTRIES.filter((c) => c.label.toLowerCase().includes(needle)));
+            setLoading(false);
+          }, 400);
+        }}
+        // The list is already filtered by the server; filtering it again would
+        // hide results that matched for a reason the client cannot see.
+        filterOption={() => true}
+      />
+    );
+  },
+  parameters: docs(`
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+import type { DSelectOption } from '@dynamic-framework/ui-react';
+
+function CountrySearch() {
+  const [options, setOptions] = useState<Array<DSelectOption>>([]);
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <DSelect
+      label="Country"
+      options={options}
+      loading={loading}
+      placeholder="Type to search…"
+      onSearch={async (query) => {
+        if (!query) { setOptions([]); return; }
+        setLoading(true);
+        setOptions(await searchCountries(query));
+        setLoading(false);
+      }}
+      // The list is already filtered by the server; filtering it again would
+      // hide results that matched for a reason the client cannot see.
+      filterOption={() => true}
+    />
+  );
+}
+  `),
+};
+
+/**
+ * Controlled, which is how a form library will drive it.
+ */
+export const Controlled: Story = {
+  render: function Render() {
+    const [value, setValue] = useState<string | null>('cl');
+    return (
+      <div className="d-flex flex-column gap-3">
+        <DSelect
+          label="Country"
+          options={COUNTRIES}
+          value={value}
+          onChange={(next) => setValue(next as string | null)}
+          clearable
+        />
+        <output className="small text-secondary">{`value: ${value ?? 'null'}`}</output>
+      </div>
+    );
+  },
+  parameters: docs(`
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+
+${COUNTRIES_SOURCE}
+
+function CountryField() {
+  const [value, setValue] = useState<string | null>('cl');
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <DSelect
+        label="Country"
+        options={COUNTRIES}
+        value={value}
+        onChange={(next) => setValue(next as string | null)}
+        clearable
+      />
+      <output className="small text-secondary">{\`value: \${value ?? 'null'}\`}</output>
+    </div>
+  );
+}
+  `),
+};
+
+/**
+ * Both halves owned by the parent: the `value` AND the `options`.
+ *
+ * Picking a country swaps the city list and drops the city that belonged to
+ * the old one. The buttons go further and set both selects at once — country,
+ * city list and city in a single update — which is the same thing a form
+ * loading a saved record does.
+ *
+ * Nothing about this is opt-in. A controlled `DSelect` holds no copy of the
+ * list or of the choice: it reads what it is given on every render, so the
+ * text in the box follows a value whose option only arrives later, and empties
+ * itself when the parent swaps a list the value is not in.
+ */
+export const DrivenByAParent: Story = {
+  render: function Render() {
+    const [country, setCountry] = useState<string | null>('cl');
+    const [city, setCity] = useState<string | null>('scl');
+
+    const cities = country ? CITIES[country] : [];
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <DSelect
+          label="Country"
+          options={COUNTRIES_WITH_CITIES}
+          value={country}
+          onChange={(next) => {
+            setCountry(next as string | null);
+            // The chosen city belongs to the country that no longer is.
+            setCity(null);
+          }}
+          clearable
+        />
+        <DSelect
+          label="City"
+          options={cities}
+          value={city}
+          onChange={(next) => setCity(next as string | null)}
+          disabled={!country}
+          placeholder={country ? 'Choose a city' : 'Choose a country first'}
+        />
+        <div className="d-flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => { setCountry('es'); setCity('bcn'); }}
+          >
+            Jump to Barcelona
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => { setCountry('mx'); setCity('mty'); }}
+          >
+            Jump to Monterrey
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => { setCountry(null); setCity(null); }}
+          >
+            Clear both
+          </button>
+        </div>
+        <output className="small text-secondary">
+          {`country: ${country ?? 'null'} · city: ${city ?? 'null'}`}
+        </output>
+      </div>
+    );
+  },
+  parameters: docs(
+    `
+import { useState } from 'react';
+import { DSelect } from '@dynamic-framework/ui-react';
+import type { DSelectOption } from '@dynamic-framework/ui-react';
+
+${COUNTRIES_SOURCE}
+
+${CITIES_SOURCE}
+
+function Destination() {
+  const [country, setCountry] = useState<string | null>('cl');
+  const [city, setCity] = useState<string | null>('scl');
+
+  const cities = country ? CITIES[country] : [];
+
+  return (
+    <div className="d-flex flex-column gap-3">
+      <DSelect
+        label="Country"
+        options={COUNTRIES_WITH_CITIES}
+        value={country}
+        onChange={(next) => {
+          setCountry(next as string | null);
+          // The chosen city belongs to the country that no longer is.
+          setCity(null);
+        }}
+        clearable
+      />
+      <DSelect
+        label="City"
+        options={cities}
+        value={city}
+        onChange={(next) => setCity(next as string | null)}
+        disabled={!country}
+        placeholder={country ? 'Choose a city' : 'Choose a country first'}
+      />
+
+      {/* Country, city list and city, all replaced in one update. */}
+      <button type="button" onClick={() => { setCountry('es'); setCity('bcn'); }}>
+        Jump to Barcelona
+      </button>
+    </div>
+  );
+}
+    `,
+    'Pick a country and the city list below is replaced. The buttons set the country, its city list and the city together, in one update.',
+  ),
+};
+
+/**
+ * With a `name`, the control writes hidden inputs so a plain HTML form posts
+ * what it shows — one entry per value when `multi`.
+ */
+export const InAForm: Story = {
+  render: () => (
+    <form
+      className="d-flex flex-column gap-4"
+      onSubmit={(event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const entries: Record<string, string> = {};
+        data.forEach((value, key) => { entries[key] = String(value); });
+        // eslint-disable-next-line no-alert
+        window.alert(JSON.stringify(entries, null, 2));
+      }}
+    >
+      <DSelect label="Country" name="country" options={COUNTRIES} defaultValue="es" />
+      <DSelect
+        label="Languages"
+        name="languages"
+        options={LANGUAGES}
+        multi
+        defaultValue={['es', 'en']}
+      />
+      <button type="submit" className="btn btn-primary">Submit</button>
+    </form>
+  ),
+  parameters: docs(`
+${COUNTRIES_SOURCE}
+
+${LANGUAGES_SOURCE}
+
+<form
+  className="d-flex flex-column gap-4"
+  onSubmit={(event) => {
+    event.preventDefault();
+    // country: 'es', 'languages[]': ['es', 'en']
+    const data = new FormData(event.currentTarget);
+  }}
+>
+  <DSelect label="Country" name="country" options={COUNTRIES} defaultValue="es" />
+  <DSelect
+    label="Languages"
+    name="languages"
+    options={LANGUAGES}
+    defaultValue={['es', 'en']}
+    multi
+  />
+  <button type="submit" className="btn btn-primary">Submit</button>
+</form>
+  `),
 };

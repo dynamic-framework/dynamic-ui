@@ -1,0 +1,492 @@
+// Combobox.
+//
+// The searchable select, with tags when it takes more than one answer. Styled
+// from scratch because the component no longer wraps `react-select`, whose
+// markup and inline styles were the library's — the old `_d-select.scss` spent
+// most of its length overriding them back out again.
+//
+// `.d-combobox` and not `.d-select`, because the `.d-select__*` elements that
+// block used to style were react-select's own and no longer exist. Naming this
+// one for its ARIA pattern also keeps it clear of `DInputSelect`, which wraps
+// the native `<select>`.
+//
+// Every value here resolves through a Bootstrap form variable, so a combobox
+// sits in the same form beside a `DInput` and nothing about it says it came
+// from somewhere else: change `$input-padding-y` and both move.
+//
+// The menu is rendered into a portal, so it is NOT a descendant of
+// `.d-combobox` — its rules are top level and declare their own custom
+// properties, since nothing cascades into it from the control.
+
+.d-combobox {
+  // layout
+  --#{$prefix}combobox-gap: #{$spacer-2};
+  --#{$prefix}combobox-padding-y: #{$input-padding-y};
+  --#{$prefix}combobox-padding-x: #{$input-padding-x};
+  --#{$prefix}combobox-min-height: #{$input-height};
+  --#{$prefix}combobox-font-size: #{$input-font-size};
+
+  // box
+  --#{$prefix}combobox-color: #{$input-color};
+  --#{$prefix}combobox-bg: #{$input-bg};
+  --#{$prefix}combobox-placeholder-color: #{$input-placeholder-color};
+  --#{$prefix}combobox-border-width: #{$input-border-width};
+  --#{$prefix}combobox-border-color: #{$input-border-color};
+  --#{$prefix}combobox-border-radius: #{$input-border-radius};
+  --#{$prefix}combobox-hover-border-color: var(--#{$prefix}gray-200);
+  --#{$prefix}combobox-focus-border-color: #{$input-focus-border-color};
+  --#{$prefix}combobox-focus-box-shadow: #{$input-focus-box-shadow};
+  --#{$prefix}combobox-transition: #{$input-transition};
+
+  // disabled
+  --#{$prefix}combobox-disabled-color: #{$input-disabled-color};
+  --#{$prefix}combobox-disabled-bg: #{$input-disabled-bg};
+  --#{$prefix}combobox-disabled-border-color: #{$input-disabled-border-color};
+
+  // indicators
+  --#{$prefix}combobox-indicator-color: #{$form-select-indicator-color};
+  --#{$prefix}combobox-indicator-size: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}combobox-clear-color: #{$form-select-indicator-color};
+  --#{$prefix}combobox-clear-hover-color: var(--#{$prefix}body-color);
+  --#{$prefix}combobox-clear-size: var(--#{$prefix}ref-spacer-4);
+
+  // tags, the multi-value chips
+  --#{$prefix}combobox-tag-gap: #{$spacer-1};
+  --#{$prefix}combobox-tag-padding-y: 0;
+  --#{$prefix}combobox-tag-padding-x: #{$spacer-2};
+  --#{$prefix}combobox-tag-font-size: #{$font-size-sm};
+  --#{$prefix}combobox-tag-color: var(--#{$prefix}secondary);
+  --#{$prefix}combobox-tag-bg: var(--#{$prefix}secondary-100);
+  --#{$prefix}combobox-tag-border-radius: #{$border-radius-sm};
+  --#{$prefix}combobox-tag-remove-color: var(--#{$prefix}secondary);
+  --#{$prefix}combobox-tag-remove-hover-color: var(--#{$prefix}white);
+  --#{$prefix}combobox-tag-remove-hover-bg: var(--#{$prefix}primary);
+
+  // floating label
+  --#{$prefix}combobox-floating-label-color: #{$form-floating-label-disabled-color};
+  --#{$prefix}combobox-floating-label-opacity: #{$form-floating-label-opacity};
+
+  display: flex;
+  flex-direction: column;
+
+  // The box itself: tags, the search box and the indicators, wrapping onto new
+  // lines as tags accumulate.
+  //
+  // `min-height` rather than `height`, because a multi-select with six tags is
+  // taller than one with none and should not clip them.
+  .d-combobox-control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--#{$prefix}combobox-gap);
+    align-items: center;
+    min-height: var(--#{$prefix}combobox-min-height);
+    padding: var(--#{$prefix}combobox-padding-y) var(--#{$prefix}combobox-padding-x);
+    font-family: $input-font-family;
+    font-size: var(--#{$prefix}combobox-font-size);
+    font-weight: $input-font-weight;
+    line-height: $input-line-height;
+    color: var(--#{$prefix}combobox-color);
+    cursor: text;
+    background-color: var(--#{$prefix}combobox-bg);
+    background-clip: padding-box;
+    border: var(--#{$prefix}combobox-border-width) solid var(--#{$prefix}combobox-border-color);
+
+    @include border-radius(var(--#{$prefix}combobox-border-radius), 0);
+    @include transition(var(--#{$prefix}combobox-transition));
+
+    &:hover {
+      border-color: var(--#{$prefix}combobox-hover-border-color);
+    }
+  }
+
+  // The ring is drawn on the CONTROL, not on the input inside it. The input is
+  // the focusable element, but it is one part of something that reads as a
+  // single box, so `:focus-within` moves the state out to the edge of the thing
+  // that actually looks focused — the same shape `.input-group` uses.
+  &:focus-within .d-combobox-control {
+    border-color: var(--#{$prefix}combobox-focus-border-color);
+    box-shadow: var(--#{$prefix}combobox-focus-box-shadow);
+  }
+
+  // The search box.
+  //
+  // `field-sizing: content` is a progressive enhancement: where it is supported
+  // the box shrinks to what has been typed, so the caret sits right after the
+  // last tag instead of at the end of a full-width field. Everywhere else the
+  // `min-width` keeps it usable.
+  .d-combobox-input {
+    flex: 1 1 4rem;
+    min-width: #{$spacer-16};
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    field-sizing: content;
+
+    // The focus ring is not being removed — it is being MOVED. `:focus-within`
+    // above puts it on the whole control, which is the box a user sees as
+    // focused; leaving the browser's ring here would draw a second one inside
+    // the first.
+    &:focus {
+      outline: 0;
+    }
+
+    &::placeholder {
+      color: var(--#{$prefix}combobox-placeholder-color);
+      // Override Firefox's unusual default opacity.
+      opacity: 1;
+    }
+
+    // A control with no search box still takes the keyboard, so it keeps the
+    // caret off rather than pretending to be a text field.
+    &:read-only {
+      cursor: pointer;
+      caret-color: transparent;
+    }
+  }
+
+  // indicators
+  .d-combobox-indicator,
+  .d-combobox-clear {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--#{$prefix}combobox-indicator-color);
+    background: none;
+    border: 0;
+  }
+
+  .d-combobox-indicator {
+    @include transition(transform .15s ease-in-out);
+
+    .d-icon {
+      --#{$prefix}icon-component-size: var(--#{$prefix}combobox-indicator-size);
+      --#{$prefix}icon-component-color: var(--#{$prefix}combobox-indicator-color);
+    }
+  }
+
+  // The chevron points the way the menu will open.
+  &:focus-within .d-combobox-indicator {
+    transform: rotateX(180deg);
+  }
+
+  // The clear button is deliberately a size down from the chevron and quieter
+  // until hovered: the chevron is what the control does, clearing is what you
+  // can also do. Two glyphs of equal weight read as two equal choices.
+  .d-combobox-clear {
+    color: var(--#{$prefix}combobox-clear-color);
+    cursor: pointer;
+
+    .d-icon {
+      --#{$prefix}icon-component-size: var(--#{$prefix}combobox-clear-size);
+      --#{$prefix}icon-component-color: inherit;
+    }
+
+    &:hover {
+      color: var(--#{$prefix}combobox-clear-hover-color);
+    }
+
+    &:focus-visible {
+      @include border-radius(var(--#{$prefix}combobox-border-radius), 0);
+
+      outline: 0;
+      box-shadow: #{$input-btn-focus-box-shadow};
+    }
+  }
+
+  .d-combobox-spinner {
+    flex: none;
+  }
+
+  // tags
+  .d-combobox-tag {
+    display: inline-flex;
+    flex: none;
+    gap: var(--#{$prefix}combobox-tag-gap);
+    align-items: center;
+    max-width: 100%;
+    padding: var(--#{$prefix}combobox-tag-padding-y) var(--#{$prefix}combobox-tag-padding-x);
+    overflow: hidden;
+    font-size: var(--#{$prefix}combobox-tag-font-size);
+    color: var(--#{$prefix}combobox-tag-color);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--#{$prefix}combobox-tag-bg);
+
+    @include border-radius(var(--#{$prefix}combobox-tag-border-radius), 0);
+
+    .d-icon {
+      --#{$prefix}icon-component-size: var(--#{$prefix}combobox-tag-font-size);
+    }
+  }
+
+  .d-combobox-tag-remove {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    padding: 0;
+    color: var(--#{$prefix}combobox-tag-remove-color);
+    cursor: pointer;
+    background: none;
+    border: 0;
+
+    .d-icon {
+      --#{$prefix}icon-component-size: var(--#{$prefix}combobox-tag-font-size);
+      --#{$prefix}icon-component-color: inherit;
+    }
+
+    &:hover {
+      color: var(--#{$prefix}combobox-tag-remove-hover-color);
+      background-color: var(--#{$prefix}combobox-tag-remove-hover-bg);
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    &:focus-visible {
+      outline: 0;
+      box-shadow: #{$input-btn-focus-box-shadow};
+    }
+  }
+
+  // sizes
+  &.d-combobox-sm {
+    --#{$prefix}combobox-padding-y: #{$input-padding-y-sm};
+    --#{$prefix}combobox-padding-x: #{$input-padding-x-sm};
+    --#{$prefix}combobox-font-size: #{$input-font-size-sm};
+    --#{$prefix}combobox-min-height: #{$input-height-sm};
+    --#{$prefix}combobox-border-radius: #{$input-border-radius-sm};
+  }
+
+  &.d-combobox-lg {
+    --#{$prefix}combobox-padding-y: #{$input-padding-y-lg};
+    --#{$prefix}combobox-padding-x: #{$input-padding-x-lg};
+    --#{$prefix}combobox-font-size: #{$input-font-size-lg};
+    --#{$prefix}combobox-min-height: #{$input-height-lg};
+    --#{$prefix}combobox-border-radius: #{$input-border-radius-lg};
+  }
+
+  // validation states, driven by the same map every other form control reads,
+  // so a combobox and an input in one form turn the same colour.
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+    $color: map-get($data, "color");
+    $box-shadow: map-get($data, "focus-box-shadow");
+
+    &.is-#{$state} {
+      .d-combobox-control {
+        border-color: $border-color;
+      }
+
+      &:focus-within .d-combobox-control {
+        box-shadow: $box-shadow;
+      }
+
+      .form-text {
+        color: $color;
+      }
+    }
+  }
+
+  // disabled
+  &.disabled {
+    .d-combobox-control {
+      color: var(--#{$prefix}combobox-disabled-color);
+      cursor: not-allowed;
+      background-color: var(--#{$prefix}combobox-disabled-bg);
+      border-color: var(--#{$prefix}combobox-disabled-border-color);
+    }
+
+    .d-icon {
+      --#{$prefix}icon-component-color: var(--#{$prefix}combobox-disabled-color);
+    }
+  }
+
+  // floating label
+  //
+  // The same movement a `DInput` makes, because it reads the same
+  // `$form-floating-*` variables Bootstrap's `.form-floating` does — a
+  // combobox and an input side by side in one form float their labels to the
+  // same height.
+  &.d-combobox-floating {
+    .d-combobox-control {
+      position: relative;
+      min-height: #{$form-floating-height};
+      padding: #{$form-floating-input-padding-t} #{$form-floating-padding-x} #{$form-floating-input-padding-b};
+    }
+
+    label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      height: 100%;
+      padding: #{$form-floating-padding-y} #{$form-floating-padding-x};
+      margin: 0;
+      overflow: hidden;
+      color: var(--#{$prefix}combobox-floating-label-color);
+      text-align: start;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none;
+      border: #{$input-border-width} solid transparent;
+      transform-origin: 0 0;
+
+      @include transition($form-floating-transition);
+    }
+
+    // Floated when there is a value, or while the control has focus. The
+    // combobox knows both without `:placeholder-shown`, which is what a text
+    // input has to lean on.
+    &.d-combobox-filled label,
+    &:focus-within label {
+      opacity: var(--#{$prefix}combobox-floating-label-opacity);
+      transform: #{$form-floating-label-transform};
+    }
+  }
+}
+
+// The menu.
+//
+// In a portal, so it escapes any `overflow: hidden` between the control and
+// the document — a select inside a scrolling panel or a modal would otherwise
+// have its menu clipped by the panel. Nothing cascades into it from
+// `.d-combobox`, so it carries its own custom properties.
+//
+// Width and height come from floating-ui's `size` middleware at runtime; what
+// is here is everything that does not depend on where it ended up.
+.d-combobox-menu {
+  --#{$prefix}combobox-menu-z-index: #{$zindex-dropdown};
+  --#{$prefix}combobox-menu-padding: #{$spacer-1};
+  --#{$prefix}combobox-menu-color: #{$dropdown-color};
+  --#{$prefix}combobox-menu-bg: #{$dropdown-bg};
+  --#{$prefix}combobox-menu-border-width: #{$input-border-width};
+  --#{$prefix}combobox-menu-border-color: #{$dropdown-border-color};
+  --#{$prefix}combobox-menu-border-radius: #{$dropdown-border-radius};
+  --#{$prefix}combobox-menu-shadow: #{$dropdown-box-shadow};
+
+  --#{$prefix}combobox-option-gap: #{$spacer-2};
+  --#{$prefix}combobox-option-padding-y: #{$dropdown-item-padding-y};
+  --#{$prefix}combobox-option-padding-x: #{$dropdown-item-padding-x};
+  --#{$prefix}combobox-option-border-radius: #{$dropdown-item-border-radius};
+  --#{$prefix}combobox-option-color: #{$dropdown-link-color};
+  --#{$prefix}combobox-option-description-color: var(--#{$prefix}gray-500);
+  --#{$prefix}combobox-option-active-bg: #{$dropdown-link-hover-bg};
+  --#{$prefix}combobox-option-selected-color: var(--#{$prefix}secondary);
+  --#{$prefix}combobox-option-selected-bg: #{$dropdown-link-active-bg};
+  --#{$prefix}combobox-option-selected-font-weight: #{$font-weight-bold};
+  --#{$prefix}combobox-option-disabled-color: #{$dropdown-link-disabled-color};
+  --#{$prefix}combobox-option-icon-size: var(--#{$prefix}ref-spacer-5);
+
+  --#{$prefix}combobox-group-label-color: #{$dropdown-header-color};
+  --#{$prefix}combobox-group-label-font-size: #{$font-size-sm};
+  --#{$prefix}combobox-empty-color: var(--#{$prefix}gray-500);
+
+  z-index: var(--#{$prefix}combobox-menu-z-index);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--#{$prefix}combobox-menu-color);
+  background-color: var(--#{$prefix}combobox-menu-bg);
+  border: var(--#{$prefix}combobox-menu-border-width) solid var(--#{$prefix}combobox-menu-border-color);
+  box-shadow: var(--#{$prefix}combobox-menu-shadow);
+
+  @include border-radius(var(--#{$prefix}combobox-menu-border-radius), 0);
+}
+
+.d-combobox-list,
+.d-combobox-group {
+  padding: var(--#{$prefix}combobox-menu-padding);
+  margin: 0;
+  list-style: none;
+}
+
+.d-combobox-group {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.d-combobox-group-label {
+  display: block;
+  padding: #{$spacer-1} var(--#{$prefix}combobox-option-padding-x);
+  font-size: var(--#{$prefix}combobox-group-label-font-size);
+  font-weight: #{$font-weight-semibold};
+  color: var(--#{$prefix}combobox-group-label-color);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.d-combobox-option {
+  display: flex;
+  gap: var(--#{$prefix}combobox-option-gap);
+  align-items: center;
+  padding: var(--#{$prefix}combobox-option-padding-y) var(--#{$prefix}combobox-option-padding-x);
+  color: var(--#{$prefix}combobox-option-color);
+  cursor: pointer;
+
+  @include border-radius(var(--#{$prefix}combobox-option-border-radius), 0);
+}
+
+// An option's leading glyph, whichever kind it is. `flex: none` so a long label
+// never squeezes it, and the two share a rule because they occupy the same slot.
+.d-combobox-option-icon,
+.d-combobox-option-emoji {
+  flex: none;
+  line-height: 1;
+}
+
+.d-combobox-option-icon,
+.d-combobox-option-check {
+  --#{$prefix}icon-component-size: var(--#{$prefix}combobox-option-icon-size);
+}
+
+.d-combobox-option-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.d-combobox-option-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-combobox-option-description {
+  font-size: #{$font-size-sm};
+  color: var(--#{$prefix}combobox-option-description-color);
+}
+
+.d-combobox-option-check {
+  flex: none;
+  margin-left: auto;
+}
+
+.d-combobox-empty {
+  padding: var(--#{$prefix}combobox-option-padding-y) var(--#{$prefix}combobox-option-padding-x);
+  color: var(--#{$prefix}combobox-empty-color);
+}
+
+// Highlighted by the keyboard cursor.
+//
+// Driven by `data-active` and not by `:hover`, because the cursor and the
+// pointer are different things: arrowing down the list has to move the
+// highlight even when the mouse is sitting still over option four. Pointer
+// movement sets `data-active` too, so the two never both light up.
+.d-combobox-option[data-active] {
+  background-color: var(--#{$prefix}combobox-option-active-bg);
+}
+
+.d-combobox-option[aria-selected="true"] {
+  font-weight: var(--#{$prefix}combobox-option-selected-font-weight);
+  color: var(--#{$prefix}combobox-option-selected-color);
+  background-color: var(--#{$prefix}combobox-option-selected-bg);
+}
+
+.d-combobox-option[aria-disabled="true"] {
+  color: var(--#{$prefix}combobox-option-disabled-color);
+  cursor: default;
+  background: none;
+}
