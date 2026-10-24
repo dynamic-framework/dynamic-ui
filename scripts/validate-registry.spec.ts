@@ -15,6 +15,9 @@ import path from 'node:path';
 const ROOT = path.resolve(__dirname, '..');
 const VALIDATE = path.join(ROOT, 'scripts/validate-registry.mjs');
 const FIXTURE = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-api.json');
+// api.json de develop antes de #1282, #1283 y #1281, con 8 componentes y los
+// 25 hooks (sin types).
+const FIXTURE_B = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-b-api.json');
 
 // El validador arma un programa de TypeScript sobre src/index.ts.
 jest.setTimeout(120000);
@@ -100,5 +103,19 @@ describe('validate-registry', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('no cumple el schema');
     expect(result.stderr).toContain('/hooks/useDToast/returnType');
+  });
+
+  test('el api.json de develop falla por los defaults que no llegan a defaultValue (#1282)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).not.toContain('no cumple el schema');
+    expect(result.stderr).not.toContain('hooks sin entrada');
+    expect(result.stderr).toContain('defaults declarados en el código que no llegan a defaultValue');
+    [
+      'DButton.variant: "solid" en el código, null en api.json',
+      'DBadge.color: "primary" en el código, null en api.json',
+      'DSkeleton.ariaLabel: "Loading..." en el código, null en api.json',
+      'DInputRange.filledValue: true en el código, null en api.json',
+    ].forEach((line) => expect(result.stderr).toContain(line));
   });
 });

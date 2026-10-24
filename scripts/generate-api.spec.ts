@@ -18,7 +18,10 @@ jest.setTimeout(180000);
 
 type Param = { name: string; required: boolean };
 
+type ComponentProp = { type: string; required: boolean; defaultValue: unknown; description: string };
+
 type Api = {
+  components: Record<string, { props: Record<string, ComponentProp> }>;
   contexts: Record<string, { props: Record<string, { description: string; required: boolean }> }>;
   hooks: Record<string, {
     signature: string;
@@ -93,5 +96,36 @@ describe('generate-api', () => {
       type: 'object',
       fields: { id: { type: 'string | number', required: true } },
     });
+  });
+
+  // Tabla de #1282: forwardRef, Object.assign y destructuring en el cuerpo.
+  test.each([
+    ['DButton', { color: 'primary', variant: 'solid', loading: false }],
+    ['DInput', {
+      label: '', loading: false, invalid: false, valid: false, floatingLabel: false,
+    }],
+    ['DInputPhone', {
+      label: '', loading: false, invalid: false, valid: false, floatingLabel: false, defaultCountry: 'cl',
+    }],
+    ['DInputCounter', { iconStartAriaLabel: 'decrease action', iconEndAriaLabel: 'increase action' }],
+    ['DInputCurrency', { clamp: true }],
+    ['DInputPassword', { iconEndAriaLabel: 'show/hide password' }],
+    ['DInputRange', { filledValue: true }],
+    ['DSkeleton', { ariaLabel: 'Loading...', direction: 'vertical' }],
+    ['DTabs', { variant: 'underline' }],
+    ['DSelect', { menuWithMaxContent: false, floatingLabel: false }],
+    ['DOffcanvas', { openFrom: 'end' }],
+    ['DToast', { role: 'alert' }],
+    ['DListGroup', { as: 'ul' }],
+    ['DBadge', { soft: false, color: 'primary' }],
+  ])('%s recupera sus defaultValue', (component, defaults) => {
+    Object.entries(defaults).forEach(([prop, value]) => {
+      expect(api.components[component].props[prop].defaultValue).toBe(value);
+    });
+  });
+
+  test('los componentes con defaults en el parámetro no cambian', () => {
+    expect(api.components.DAlert.props.color.defaultValue).toBe('success');
+    expect(api.components.DSkeletonCircle.props.size.defaultValue).toBe(40);
   });
 });

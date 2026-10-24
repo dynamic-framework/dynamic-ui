@@ -4,7 +4,7 @@
  * Genera registry/api.json, el descriptor unificado de la API pública de
  * Dynamic UI. Incluye:
  *   - las props de los componentes, leídas del código TypeScript con
- *     react-docgen-typescript;
+ *     react-docgen-typescript (scripts/component-docgen.mjs);
  *   - la firma de cada hook que exporta `src/index.ts` y la de los providers
  *     de contexto, extraídas con la Compiler API de TypeScript.
  *
@@ -20,11 +20,11 @@ import {
 } from 'fs';
 import { resolve, dirname, basename, relative } from 'path';
 import { createRequire } from 'module';
-import * as docgen from 'react-docgen-typescript';
 
 import {
   ROOT, TSCONFIG_PATH, createIndexProgram, listPublicHooks,
 } from './public-hooks.mjs';
+import { parseComponentFile } from './component-docgen.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -636,14 +636,6 @@ const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
   })
   .filter(Boolean);
 
-const propsParser = docgen.withCustomConfig(TSCONFIG_PATH, {
-  shouldExtractLiteralValuesFromEnum: true,
-  propFilter: (prop) => {
-    if (prop.parent) return !/node_modules/.test(prop.parent.fileName);
-    return true;
-  },
-});
-
 const componentsSection = {};
 let componentsFailed = 0;
 
@@ -683,7 +675,7 @@ function subcomponentFiles(filePath) {
 
 for (const filePath of componentFiles) {
   try {
-    const docs = propsParser.parse(filePath);
+    const docs = parseComponentFile(filePath);
     const parent = basename(filePath, '.tsx');
     for (const doc of docs) {
       if (!doc.displayName) continue;
@@ -691,7 +683,7 @@ for (const filePath of componentFiles) {
     }
     for (const { key, ident, file } of subcomponentFiles(filePath)) {
       if (!file || !existsSync(file)) throw new Error(`no se puede resolver ${parent}.${key} (${ident})`);
-      const subDocs = propsParser.parse(file);
+      const subDocs = parseComponentFile(file);
       const doc = subDocs.find((d) => d.displayName === ident) ?? subDocs[0];
       if (!doc) throw new Error(`no hay componente para ${parent}.${key} en ${relative(ROOT, file)}`);
       componentsSection[ident] = {
