@@ -110,16 +110,28 @@ export type BreakpointProps = {
   xxl: string;
 };
 
-type Props = {
+type ConfigProps = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
   iconRegistry?: Record<string, IconComponent>;
   iconMap: IconMapProps;
+};
+
+type Props = ConfigProps & {
   breakpoints: BreakpointProps;
 };
 
-type DContextProviderProps<T extends Record<string, unknown>> = Props & PortalContextProps<T>;
+// `breakpoints` sigue en el valor del contexto, que la rellena desde el CSS;
+// como prop del provider se ignora y solo se conserva para no romper a quien
+// la pase.
+type DContextProviderProps<T extends Record<string, unknown>> = ConfigProps & {
+  /**
+   * @deprecated No effect since 2.11.0: breakpoints are read from the
+   * --bs-breakpoint-* custom properties
+   */
+  breakpoints: BreakpointProps;
+} & PortalContextProps<T>;
 
 type Context = Props & {
   setContext: (value: Partial<Props>) => void;

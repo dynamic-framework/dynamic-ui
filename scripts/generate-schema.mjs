@@ -1,11 +1,11 @@
 /**
  * generate-schema.mjs
  *
- * Generates registry/schema/v1.json — the JSON Schema for registry/api.json.
- * This schema is referenced by the $schema field in api.json and allows
- * consumers and tools to validate the contract structure.
+ * Genera registry/schema/v1.json, el JSON Schema de registry/api.json.
+ * El campo $schema de api.json apunta a este schema, con el que consumidores
+ * y herramientas validan la estructura del contrato.
  *
- * Usage: node scripts/generate-schema.mjs
+ * Uso: node scripts/generate-schema.mjs
  */
 
 import { mkdirSync, writeFileSync, existsSync } from 'fs';
@@ -138,6 +138,16 @@ const schema = {
                   description: 'TypeScript type string, or "function" for callable values.',
                 },
                 description: { type: 'string' },
+                fields: {
+                  type: 'object',
+                  description: 'Properties of the value when type is "object" (e.g. `current` of a RefObject), with the same shape as in `types`.',
+                  additionalProperties: { type: 'object' },
+                },
+                values: {
+                  type: 'array',
+                  description: 'Accepted values when the type is a union of string literals.',
+                  items: { type: 'string' },
+                },
                 parameters: {
                   type: 'array',
                   description: 'Present when type is "function".',
@@ -164,6 +174,10 @@ const schema = {
                 },
               },
             },
+          },
+          returnType: {
+            type: 'string',
+            description: 'Full return type of the hook as a TypeScript string. `returns` lists its properties when it is an object and is empty otherwise (boolean, void, tuples).',
           },
           types: {
             type: 'object',
@@ -255,4 +269,4 @@ mkdirSync(SCHEMA_DIR, { recursive: true });
 
 const SCHEMA_PATH = resolve(SCHEMA_DIR, 'v1.json');
 writeFileSync(SCHEMA_PATH, JSON.stringify(schema, null, 2));
-process.stdout.write('Generated registry/schema/v1.json\n');
+process.stdout.write('Generado registry/schema/v1.json\n');
