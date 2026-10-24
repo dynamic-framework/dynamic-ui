@@ -89,7 +89,11 @@ export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
       reactDocgen.actualName = doc.displayName;
     }
 
-    const props = reactDocgen.props ?? {};
+    // Las props de babel que el filtro descarta no se conservan: components.json
+    // tiene que listar las mismas props que api.json.
+    const props = Object.fromEntries(
+      Object.entries(reactDocgen.props ?? {}).filter(([name]) => doc.props[name]),
+    );
     Object.entries(doc.props).forEach(([name, prop]) => {
       // Lo que babel ya resolvió prevalece, para que ningún componente pierda metadatos.
       props[name] = { ...toDocgenProp(prop), ...props[name] };

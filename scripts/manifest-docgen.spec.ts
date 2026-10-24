@@ -3,8 +3,8 @@
  *
  * El manifest de Storybook (`components.json`) y `api.json` tienen que salir
  * con el mismo criterio. Se carga el módulo real con Node (strip-types), como
- * lo carga Storybook, y se le pasa un manifest sin props de babel, para que
- * todo lo que devuelve venga de scripts/component-docgen.mjs.
+ * lo carga Storybook, con un manifest casi sin props de babel, para que lo
+ * que devuelve venga de scripts/component-docgen.mjs.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -31,12 +31,27 @@ const COMPONENTS = {
 
 let props: Record<string, Record<string, DocgenProp>>;
 
+// Props que trae babel para DBadge: una propia, con metadatos que deben
+// prevalecer, y un atributo de @types/react que el filtro descarta.
+const BABEL_PROPS: Record<string, Record<string, DocgenProp>> = {
+  DBadge: {
+    text: { required: false, tsType: { name: 'string' }, defaultValue: { value: "'from babel'" } },
+    tabIndex: { required: false, tsType: { name: 'number' } },
+  },
+};
+
 beforeAll(() => {
   const manifests = {
     components: {
       components: Object.fromEntries(Object.entries(COMPONENTS).map(([name, file]) => [
         name,
-        { reactDocgen: { displayName: name, definedInFile: path.join(ROOT, file), props: {} } },
+        {
+          reactDocgen: {
+            displayName: name,
+            definedInFile: path.join(ROOT, file),
+            props: BABEL_PROPS[name] ?? {},
+          },
+        },
       ])),
     },
   };
@@ -70,5 +85,10 @@ describe('manifest-docgen', () => {
     expect(props.DButton).toHaveProperty('className');
     expect(props.DInputRange.min.defaultValue?.value).toBe('0');
     expect(props.DBadge).not.toHaveProperty('tabIndex');
+  });
+
+  test('descarta las props de babel que el filtro rechaza y conserva las demás (#1283)', () => {
+    expect(props.DBadge).not.toHaveProperty('tabIndex');
+    expect(props.DBadge.text.defaultValue?.value).toBe("'from babel'");
   });
 });
