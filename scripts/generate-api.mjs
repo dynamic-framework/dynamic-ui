@@ -336,6 +336,38 @@ function getFileContext(sourceFile) {
 }
 
 /**
+ * Tipos del proyecto (declarados en `src/`) que se nombran en las anotaciones
+ * de los parámetros de un hook, aunque no tengan JSDoc o se importen de otro
+ * archivo. Sin ellos, un parámetro como `config: UseConfirmModalConfig` queda
+ * sin definición en `api.json`. Se expanden por completo, como en `types`.
+ */
+function parameterTypes(node) {
+  const types = {};
+  const visit = (typeNode) => {
+    if (ts.isTypeReferenceNode(typeNode)) {
+      let symbol = checker.getSymbolAtLocation(typeNode.typeName);
+      // eslint-disable-next-line no-bitwise
+      if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
+      const decl = symbol?.declarations?.find(
+        (d) => ts.isTypeAliasDeclaration(d) || ts.isInterfaceDeclaration(d),
+      );
+      const file = decl?.getSourceFile().fileName ?? '';
+      if (decl && !types[symbol.name] && !/node_modules/.test(file) && file.startsWith(ROOT)) {
+        types[symbol.name] = {
+          description: getNodeJsDoc(decl),
+          ...resolveTypeInfo(checker.getDeclaredTypeOfSymbol(symbol), checker, decl, 0, true),
+        };
+      }
+    }
+    ts.forEachChild(typeNode, visit);
+  };
+  (node.parameters ?? []).forEach((param) => {
+    if (param.type) visit(param.type);
+  });
+  return types;
+}
+
+/**
  * Construye la entrada de un hook a partir de su declaración:
  * { name, source, kind:'hook', description, requires, throws?, signature,
  *   parameters, returns, returnType, types }
@@ -556,7 +588,8 @@ const hooksSection = {};
 const contextsSection = {};
 let failed = 0;
 
-listPublicHooks(program).forEach((hook) => {
+const publicHooks = listPublicHooks(program);
+publicHooks.forEach((hook) => {
   try {
     hooksSection[hook.name] = hookEntry(hook);
     process.stdout.write(`  ok ${hook.name} [hook]\n`);
@@ -564,6 +597,14 @@ listPublicHooks(program).forEach((hook) => {
     process.stderr.write(`  FALLO ${hook.name}: ${err.message}\n`);
     failed += 1;
   }
+});
+
+// Los tipos de los parámetros se resuelven después de todas las entradas: el
+// checker ordena los miembros de una unión según el orden en que crea sus
+// tipos, y resolverlos antes cambiaría el orden de `values` en otros hooks.
+publicHooks.forEach(({ name, declaration, external }) => {
+  if (external || !hooksSection[name]) return;
+  hooksSection[name].types = { ...parameterTypes(declaration), ...hooksSection[name].types };
 });
 
 CONTEXT_FILES.forEach((relPath) => {

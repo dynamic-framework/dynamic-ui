@@ -74,4 +74,16 @@ describe('generate-api', () => {
       { name: 'toastProps', required: false },
     ]);
   });
+
+  test('types incluye los tipos del proyecto que usan los parámetros', () => {
+    expect(api.hooks.useOtp.types.UseOtpConfig).toMatchObject({
+      type: 'object',
+      fields: { action: { required: true } },
+    });
+    // Importado de DConfirmModal/types y reexportado desde useConfirmModal.tsx.
+    expect(api.hooks.useConfirmModal.types.UseConfirmModalConfig).toMatchObject({
+      type: 'object',
+      fields: { onConfirm: { required: true } },
+    });
+  });
 });
