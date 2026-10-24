@@ -830,13 +830,15 @@ describe('theme-validate — contraste de las superficies secundarias', () => {
   it('no avisa por un texto del raíz que la zona sólo cambiaría a través de un token', () => {
     // El texto del raíz apunta a gray-900. La zona cambia gray-900, pero el
     // texto ya llegó calculado: sigue oscuro sobre el fondo claro de la zona.
-    // Las demás reglas de zona lo resuelven igual, así que --strict pasa.
+    // Las demás reglas de zona lo resuelven igual: sólo quedan los avisos de
+    // los wrappers que la zona omite a propósito.
     const valid = expandCss(MINIMAL_THEME)
       .replace('--bs-body-color-rgb: 16, 24, 40;', '--bs-body-color-rgb: var(--bs-gray-900-rgb);');
     const css = `${valid}\n[data-bs-theme="clara"] {\n  --bs-gray-900-rgb: 250, 250, 250;\n  --bs-secondary-bg-rgb: 235, 235, 235;\n}\n`;
     const result = run(VALIDATE, [write(css, '.css'), '--strict']);
     expect(result.stderr).not.toContain('[contraste-superficie]');
-    expect(result.status).toBe(0);
+    expect(findings(result)).toEqual([]);
+    expect(missingWrappers(result)).toEqual(['--bs-gray-900-rgb', '--bs-secondary-bg-rgb']);
   });
 
   it('funde las reglas repetidas de una misma zona antes de medir', () => {
@@ -1115,6 +1117,72 @@ describe('theme-expand — el wrapper de cada triplete fuera del raíz', () => {
     expect(css).toContain(
       '[data-bs-theme="oscura"] .form-control {\n  --bs-body-color-rgb: var(--bs-dark-rgb);\n'
       + '  --bs-body-color: rgb(var(--bs-body-color-rgb));\n}',
+    );
+  });
+});
+
+describe('theme-validate — wrapper-faltante-zona', () => {
+  const base = () => expandCss(MINIMAL_THEME);
+  const zona = (body: string, selector = '[data-bs-theme="oscura"]') => `\n${selector} {\n${body}\n}\n`;
+  const avisos = (css: string) => validate(css).stderr.match(/\[wrapper-faltante-zona\]/g)?.length ?? 0;
+
+  it('avisa de un triplete de zona sin su wrapper, y --strict lo cuenta', () => {
+    const css = base() + zona([
+      '  --bs-secondary-bg-rgb: var(--bs-gray-100-rgb);',
+      '  --bs-link-color-rgb: var(--bs-primary-700-rgb);',
+    ].join('\n'));
+    const result = validate(css);
+    expect(result.status).toBe(0);
+    expect(avisos(css)).toBe(2);
+    expect(result.stderr).toContain(
+      '--bs-secondary-bg-rgb dentro de [data-bs-theme="oscura"]: se redefine sin --bs-secondary-bg.',
+    );
+    expect(result.stderr).toContain('los componentes que leen var(--bs-link-color) conservan aquí el valor del raíz');
+    expect(run(VALIDATE, [write(css, '.css'), '--strict']).status).toBe(1);
+  });
+
+  it('calla con la misma zona generada por theme-expand', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-secondary-bg-rgb': 'var(--bs-gray-100-rgb)',
+            '--bs-link-color-rgb': 'var(--bs-primary-700-rgb)',
+          },
+        },
+      },
+    });
+    expect(avisos(css)).toBe(0);
+  });
+
+  it('reconoce el wrapper declarado en otra regla de la misma zona', () => {
+    const css = base()
+      + zona('  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);')
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));');
+    expect(avisos(css)).toBe(0);
+  });
+
+  it('no repite lo que R1 ya rechaza ni avisa de un triplete que vuelve al del padre', () => {
+    const css = base() + zona([
+      '  --bs-secondary-bg-rgb: #333;',
+      '  --bs-tertiary-bg-rgb: inherit;',
+    ].join('\n'));
+    const result = validate(css);
+    expect(result.stderr).toContain('[triplete]');
+    expect(avisos(css)).toBe(0);
+  });
+
+  it('exige el wrapper en el propio bloque de componente de la zona', () => {
+    // El wrapper de la zona se calcula con el triplete de la zona, no con el
+    // que el componente redefine debajo.
+    const css = base()
+      + zona('  --bs-body-color-rgb: var(--bs-white-rgb);\n  --bs-body-color: rgb(var(--bs-body-color-rgb));')
+      + zona('  --bs-body-color-rgb: var(--bs-dark-rgb);', '[data-bs-theme="oscura"] .form-control');
+    const result = validate(css);
+    expect(avisos(css)).toBe(1);
+    expect(result.stderr).toContain(
+      '--bs-body-color-rgb en "[data-bs-theme="oscura"] .form-control": se redefine sin --bs-body-color.',
     );
   });
 });
@@ -2018,10 +2086,24 @@ const ZONE_FIXTURES = {
   ].join('\n'),
 };
 
-/** Cada error y aviso de una salida, como `<tipo> <regla>: <primera línea>`. */
+/**
+ * Cada error y aviso de una salida, como `<tipo> <regla>: <primera línea>`,
+ * salvo `wrapper-faltante-zona`. Estos fixtures
+ * redefinen tripletes en la zona sin su wrapper a propósito, porque miden lo
+ * que el navegador hace en ese caso; ese aviso tiene sus propios casos.
+ */
 function findings(result: Run): string[] {
   return [...result.stderr.matchAll(/^(error|aviso)\s+\S+\s+\[([\w-]+)\]\n {2}(.*)$/gm)]
+    .filter((m) => m[2] !== 'wrapper-faltante-zona')
     .map((m) => `${m[1]} ${m[2]}: ${m[3]}`);
+}
+
+/**
+ * Los tripletes que nombra `wrapper-faltante-zona`, en orden. Con ellos, --strict
+ * sale con 1 aunque `findings` esté vacío.
+ */
+function missingWrappers(result: Run): string[] {
+  return [...result.stderr.matchAll(/\[wrapper-faltante-zona\]\n {2}(--bs-[\w-]+-rgb)/g)].map((m) => m[1]);
 }
 
 function validateStrict(css: string): Run {
@@ -2034,9 +2116,10 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     // calculan en :root con el gray-900 del raíz; la zona no los mueve.
     const result = validateStrict(ZONE_FIXTURES.aliasFalso);
     expect(findings(result)).toEqual([]);
-    expect(result.stderr).toBe('');
-    expect(result.stdout).toContain('sin errores (0 aviso(s))');
-    expect(result.status).toBe(0);
+    // --strict sale con 1 sólo por los wrappers que la zona omite a propósito.
+    expect(missingWrappers(result)).toEqual(['--bs-gray-900-rgb', '--bs-secondary-bg-rgb']);
+    expect(result.stderr).toContain('0 errores, 2 aviso(s)');
+    expect(result.status).toBe(1);
   });
 
   it('alias-perdido: sigue detectando los pares rotos de la zona', () => {
@@ -2055,7 +2138,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
     ]);
-    expect(result.stderr).toContain('2 error(es), 0 aviso(s)');
+    expect(missingWrappers(result)).toEqual(['--bs-body-bg-rgb', '--bs-body-color-rgb']);
+    expect(result.stderr).toContain('2 error(es), 2 aviso(s)');
     expect(result.status).toBe(1);
   });
 
@@ -2065,7 +2149,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.03:1/),
     ]);
-    expect(result.stderr).toContain('2 error(es), 0 aviso(s)');
+    expect(missingWrappers(result)).toEqual(['--bs-body-bg-rgb', '--bs-body-color-rgb']);
+    expect(result.stderr).toContain('2 error(es), 2 aviso(s)');
     expect(result.status).toBe(1);
   });
 
@@ -2259,7 +2344,12 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       + '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));\n}\n';
     const result = validateStrict(css);
     expect(findings(result)).toEqual([]);
-    expect(result.status).toBe(0);
+    // --strict sale con 1 sólo por los wrappers que la zona omite a propósito.
+    expect(missingWrappers(result)).toEqual([
+      '--bs-body-bg-rgb', '--bs-body-color-rgb', '--bs-secondary-bg-rgb',
+      '--bs-tertiary-bg-rgb', '--bs-primary-500-rgb', '--bs-white-rgb',
+    ]);
+    expect(result.status).toBe(1);
   });
 
   it('no usa el respaldo de un token que la librería define: --bs-link-color-rgb es el primary', () => {
@@ -2391,7 +2481,11 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const bien = validateStrict(valido);
       expect(findings(bien)).toEqual([]);
-      expect(bien.status).toBe(0);
+      // --strict sale con 1 sólo por los wrappers que ZONA omite a propósito.
+      expect(missingWrappers(bien)).toEqual([
+        '--bs-body-bg-rgb', '--bs-body-color-rgb', '--bs-secondary-bg-rgb', '--bs-tertiary-bg-rgb',
+      ]);
+      expect(bien.status).toBe(1);
 
       // Y al revés: blanco sobre blanco gana dentro de la zona, aunque el
       // bloque de zona venga después con texto negro.

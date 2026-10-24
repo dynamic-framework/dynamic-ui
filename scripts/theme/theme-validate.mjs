@@ -26,6 +26,7 @@ import {
   cascadeSet,
   contrast,
   isRootPrelude,
+  libraryWrapper,
   luminance,
   normalizeSelector,
   parseTriplet,
@@ -277,6 +278,38 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         line,
       );
     }
+  }
+
+  // R1c — el wrapper de cada triplete que redefine una zona. La librería
+  // declara `--bs-X: rgb(var(--bs-X-rgb))` en `:root`, donde se calcula con el
+  // triplete del raíz y se hereda ya resuelto: dentro de la zona, lo que lee
+  // `var(--bs-X)` no ve el triplete nuevo. Se revisa cada zona con todas sus
+  // reglas fundidas y cada bloque de componente dentro de una zona, que
+  // necesita el wrapper en el propio bloque. Un triplete con formato inválido
+  // en la zona ya lo rechaza R1, y uno que vuelve al valor del padre
+  // (`inherit`, `unset`…) no cambia nada que el wrapper tenga que seguir.
+  const checkWrappers = (decls, where, { skipInvalid }) => {
+    for (const [name, { value, line }] of decls) {
+      if (!name.endsWith('-rgb')) continue;
+      const wrapper = name.slice(0, -'-rgb'.length);
+      const expected = libraryWrapper(wrapper);
+      if (!expected || decls.has(wrapper)) continue;
+      if (/^(?:inherit|unset|revert|revert-layer)$/i.test(String(value).trim())) continue;
+      if (skipInvalid && !isTripletOrRgbVar(value)) continue;
+      warn(
+        'wrapper-faltante-zona',
+        `${name}${where}: se redefine sin ${wrapper}. La librería declara ${wrapper}: ${expected} `
+        + 'en :root, donde se calcula con el triplete del raíz y se hereda ya resuelto, así que '
+        + `los componentes que leen var(${wrapper}) conservan aquí el valor del raíz. Declara el `
+        + 'wrapper junto al triplete, con ese mismo valor (theme-expand lo emite por ti).',
+        line,
+      );
+    }
+  };
+  for (const ctx of zoneContexts) checkWrappers(ctx.own, inContext(ctx), { skipInvalid: true });
+  for (const block of blocks) {
+    if (block.zone || !alternatives(block).some((alt) => alt.zone)) continue;
+    checkWrappers(block.decls, ` en "${block.prelude}"`, { skipInvalid: false });
   }
 
   // R2 — no declarar el wrapper de color.

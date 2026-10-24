@@ -191,27 +191,49 @@ cosas que no hereda solas.
 queda resuelto **con el triplete del raíz** y se hereda ya calculado. Una zona
 que sólo cambie `--bs-body-color-rgb` no lo mueve: todo lo que lea
 `var(--bs-body-color)` —`.form-control`, `.modal`, `.text-body-secondary`—
-seguirá pintando el color del tema claro. Por eso una zona declara el triplete
-**y** el wrapper:
+seguirá pintando el color del tema claro. Lo mismo pasa con
+`--bs-secondary-bg`, que pinta `.popover-header`, o con `--bs-link-color`, que
+lee `.btn-link`.
+
+Por eso una zona emite, por cada triplete que redefine, su wrapper justo
+después, con el valor que le da la librería. En `vars` basta con los tripletes:
 
 ```json
 "vars": {
+  "--bs-body-bg-rgb": "var(--bs-dark-rgb)",
   "--bs-body-color-rgb": "var(--bs-white-rgb)",
-  "--bs-body-color": "rgb(var(--bs-white-rgb))",
-  "--bs-secondary-color-rgb": "var(--bs-white-rgb)",
-  "--bs-secondary-color": "rgba(var(--bs-white-rgb), .75)",
-  "--bs-tertiary-color-rgb": "var(--bs-white-rgb)",
-  "--bs-tertiary-color": "rgba(var(--bs-white-rgb), .5)",
-  "--bs-emphasis-color-rgb": "var(--bs-white-rgb)",
-  "--bs-emphasis-color": "rgb(var(--bs-white-rgb))"
+  "--bs-secondary-bg-rgb": "var(--bs-gray-800-rgb)",
+  "--bs-secondary-color-rgb": "var(--bs-white-rgb)"
 }
 ```
 
+```css
+[data-bs-theme="oscura"] {
+  --bs-body-bg-rgb: var(--bs-dark-rgb);
+  --bs-body-bg: rgb(var(--bs-body-bg-rgb));
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-body-color-rgb));
+  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);
+  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));
+  --bs-secondary-color-rgb: var(--bs-white-rgb);
+  --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+```
+
+La lista de wrappers es la del CSS compilado (`known-tokens.json`): cualquier
+`--bs-X-rgb` que tenga su `--bs-X` en `:root`, incluidas las rampas de los roles
+y de grises. Un wrapper que la zona declara en `vars` se emite con su valor, en
+su sitio, y el generador no lo repite. Los bloques de `components`, globales o de
+la zona, siguen la misma regla: un triplete redefinido en `.card` lleva su
+wrapper en `.card`.
+
 **Y la zona tiene que pintarse.** `--bs-body-bg` y `--bs-body-color` las aplica
 la librería sobre `body`; un subárbol a media página nunca pasa por esa regla.
-Cuando una zona declara cualquiera de las dos, el generador emite `color` y
-`background-color` en su selector, para que el consumidor no acabe repitiéndolas
-a mano en su CSS.
+Cuando la zona emite cualquiera de las dos —basta con que redefina su
+triplete—, el generador emite también `color` y `background-color` en su
+selector.
 
 **Cuidado con el efecto en las superficies claras.** Declarar el wrapper cambia
 el color heredado de *todo* el subárbol, incluidos los componentes que llevan su
@@ -326,6 +348,9 @@ salida respeta*).
   tope o sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
+- Fuera del bloque raíz (zonas y bloques de componente), cada triplete
+  redefinido lleva detrás su wrapper, `--bs-<x>: rgb(var(--bs-<x>-rgb))`, salvo
+  que el bloque ya lo declare: el de `:root` se calcula con el triplete del raíz.
 - Se emiten `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
   `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`, el valor que la librería
   define desde 2.11.0. Hasta 2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`),
@@ -354,7 +379,7 @@ salida respeta*).
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
-`where`, `vacio`, `ciclo`, `zona-pegada`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
 `contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
@@ -414,6 +439,13 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   hay que revisarlo en la preview.
 - `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
   sí misma con `var()`: el navegador descarta la variable.
+- `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona
+  redefine sin declarar `--bs-X`, cuando la librería tiene ese wrapper en
+  `:root`: los componentes que leen `var(--bs-X)` conservan dentro de la zona el
+  valor del raíz. Una zona repartida en varias reglas se revisa entera; un bloque
+  de componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita
+  el wrapper en el propio bloque. Un triplete que rechaza `triplete`, o que vuelve
+  al valor del padre (`inherit`, `unset`…), no da este aviso.
 - `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
   sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.
 - `contraste-superficie` — `--bs-body-color-rgb` sobre `--bs-secondary-bg-rgb` y
