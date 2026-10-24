@@ -29,6 +29,11 @@ jobs:
           fi
       - name: Build packages
         run: npm run build
+      - name: Validate api.json
+        # El build genera registry/api.json; el schema se genera aquí.
+        run: |
+          node scripts/generate-schema.mjs
+          npm run validate:registry
       - name: Lint packages
         run: |
           npm run eslint
