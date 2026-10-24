@@ -1,0 +1,1718 @@
+{
+  "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
+  "schemaVersion": "1.1.0",
+  "packageVersion": "2.12.0",
+  "repository": "https://github.com/dynamic-framework/dynamic-ui",
+  "generatedAt": "2026-01-01T00:00:00.000Z",
+  "components": {
+    "DBadge": {
+      "description": "",
+      "sourcePath": "src/components/DBadge/DBadge.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "text": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "soft": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "size": {
+          "type": "ComponentSize | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", ComponentSize>> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "rounded": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "color": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "id": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStart": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEnd": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      }
+    },
+    "DButton": {
+      "description": "",
+      "sourcePath": "src/components/DButton/DButton.tsx",
+      "props": {
+        "href": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "target": {
+          "type": "HTMLAttributeAnchorTarget | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "rel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "color": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "size": {
+          "type": "ComponentSize | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", ComponentSize>> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "variant": {
+          "type": "undefined | \"solid\" | \"outline\" | \"link\" | \"soft\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "text": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loading": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loadingText": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loadingAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStart": {
+          "type": "IconValue | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartDisabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartTabIndex": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEnd": {
+          "type": "IconValue | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndDisabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndTabIndex": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      }
+    },
+    "DButtonIcon": {
+      "description": "",
+      "sourcePath": "src/components/DButtonIcon/DButtonIcon.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "icon": {
+          "type": "string",
+          "required": true,
+          "defaultValue": null,
+          "description": ""
+        },
+        "size": {
+          "type": "undefined | \"sm\" | \"lg\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconSize": {
+          "type": "string | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", string>> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Size of the icon glyph, forwarded to `DIcon` (e.g. `\"1.5rem\"`, or a\nresponsive object such as `{ xs: '1rem', lg: '2rem' }`, which follows\nviewport changes). Without it the glyph follows the button's font size,\nwhich changes with `size`."
+        },
+        "variant": {
+          "type": "undefined | \"link\" | \"solid\" | \"outline\" | \"soft\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "state": {
+          "type": "undefined | \"disabled\" | \"focus-visible\" | \"hover\" | \"active\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loading": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "loadingAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "stopPropagationEnabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": true,
+          "description": ""
+        },
+        "href": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "target": {
+          "type": "HTMLAttributeAnchorTarget | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      }
+    },
+    "DCarousel": {
+      "description": "",
+      "sourcePath": "src/components/DCarousel/DCarousel.tsx",
+      "props": {
+        "onMounted": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onReady": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onMove": {
+          "type": "((splide: Splide, index: number, prev: number, dest: number) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onMoved": {
+          "type": "((splide: Splide, index: number, prev: number, dest: number) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onClick": {
+          "type": "((splide: Splide, Slide: SlideComponent, e: MouseEvent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onActive": {
+          "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onInactive": {
+          "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onVisible": {
+          "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onHidden": {
+          "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onRefresh": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onUpdated": {
+          "type": "((splide: Splide, options: Options) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onResize": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onResized": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onDrag": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onDragging": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onDragged": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onScroll": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onScrolled": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onDestroy": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onArrowsMounted": {
+          "type": "((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onArrowsUpdated": {
+          "type": "((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement, prevIndex: number, nextIndex: number) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onPaginationMounted": {
+          "type": "((splide: Splide, data: PaginationData, item: PaginationItem) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onPaginationUpdated": {
+          "type": "((splide: Splide, data: PaginationData, prev: PaginationItem, curr: PaginationItem) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onNavigationMounted": {
+          "type": "((splide: Splide, splides: Splide[]) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onAutoplayPlay": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onAutoplayPlaying": {
+          "type": "((splide: Splide, rate: number) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onAutoplayPause": {
+          "type": "((splide: Splide) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onLazyLoadLoaded": {
+          "type": "((splide: Splide, img: HTMLImageElement, Slide: SlideComponent) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconArrowLeft": {
+          "type": "(BaseProps & { icon: IconValue; color?: string | undefined; size?: string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined; ... 7 more ...; ariaLabel?: string | undefined; }) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "DIcon props used to render the \"previous\" arrow icon."
+        },
+        "iconArrowRight": {
+          "type": "(BaseProps & { icon: IconValue; color?: string | undefined; size?: string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined; ... 7 more ...; ariaLabel?: string | undefined; }) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "DIcon props used to render the \"next\" arrow icon."
+        }
+      }
+    },
+    "DInputCheck": {
+      "description": "",
+      "sourcePath": "src/components/DInputCheck/DInputCheck.tsx",
+      "props": {
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "label": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "The label of the control. Any node is accepted, so it can carry a link, an\ninfo trigger or other markup — the terms-and-conditions pattern.\n\nText doubles as the control's accessible name. A richer label does not, so\npass `ariaLabel` alongside it; a development-only warning says so when it\nis missing."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Accessible name of the control, needed when `label` is not plain text.\nWithout it the name becomes whatever the label subtree computes to, which\nfor a label carrying a link or an icon reads as the wrong name or as none."
+        },
+        "inputClassName": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "invalid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "valid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "hint": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "indeterminate": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Only applies when `type` is `checkbox`; ignored for `radio`."
+        }
+      }
+    },
+    "DInputRange": {
+      "description": "",
+      "sourcePath": "src/components/DInputRange/DInputRange.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "label": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "The label of the control. Any node is accepted, so it can carry a link, an\ninfo trigger or other markup.\n\nText doubles as the control's accessible name. A richer label does not, so\npass `ariaLabel` alongside it; a development-only warning says so when it\nis missing."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Accessible name of the control, needed when `label` is not plain text.\nWithout it the name becomes whatever the label subtree computes to, which\nfor a label carrying a link or an icon reads as the wrong name or as none."
+        },
+        "filledValue": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      }
+    },
+    "DSkeleton": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/DSkeleton.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "animation": {
+          "type": "undefined | \"glow\" | \"wave\" | \"none\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Animation applied to every skeleton item inside. Nested skeletons inherit\nthe animation of the closest skeleton that sets one, so a nested skeleton\ncan replace it or turn it off with `none`."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Text announced by screen readers while loading. The skeleton shapes are\nhidden from assistive technology, so this is the only thing announced.\nIgnored by nested skeletons."
+        },
+        "color": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Theme color for the skeleton items (`primary`, `secondary`, `info`, ...)."
+        },
+        "gap": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Space between items, and between the shapes of every item. Numbers are\npixels."
+        },
+        "direction": {
+          "type": "undefined | \"vertical\" | \"horizontal\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Axis the items and their shapes are laid out on."
+        },
+        "items": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Number of times the item is repeated. Setting it turns the skeleton into an\niterator: every repetition is wrapped in its own `.d-skeleton-slot`.\nCapped at 100."
+        },
+        "itemClassName": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Class applied to the wrapper of every item."
+        },
+        "children": {
+          "type": "ReactNode | ((index: number) => ReactNode)",
+          "required": false,
+          "defaultValue": null,
+          "description": "Template of each item, as a node or as a function receiving the index.\nWithout `items` and without a function, children render as-is."
+        }
+      }
+    },
+    "DSkeletonBlock": {
+      "description": "",
+      "sourcePath": "src/components/DSkeleton/components/DSkeletonBlock.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "width": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": "100%",
+          "description": "Width of the block. Numbers are pixels."
+        },
+        "height": {
+          "type": "SkeletonDimension | undefined",
+          "required": false,
+          "defaultValue": "1em",
+          "description": "Height of the block. Numbers are pixels."
+        },
+        "rounded": {
+          "type": "SkeletonRounded | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Border radius as a Bootstrap `rounded-*` utility. `true` maps to `rounded`,\n`false` to `rounded-0`. When omitted, `--bs-skeleton-border-radius` applies."
+        }
+      },
+      "parent": "DSkeleton",
+      "accessor": "DSkeleton.Block"
+    }
+  },
+  "hooks": {
+    "useConfirmModal": {
+      "source": "src/hooks/useConfirmModal.tsx",
+      "kind": "hook",
+      "description": "Hook to display a confirmation modal.\n\nRenders into the portal node specified by `DConfirmModalContainer` (typically `#d-portal`).\nThe confirm modal floats above the portal stack and handles its own Escape key,\npreventing interference with underlying modals.\n\nRequires both `DContextProvider` wrapping your application AND an explicit\n`<DConfirmModalContainer nodeId=\"d-portal\" />` mounted in your app.",
+      "requires": [],
+      "signature": "useConfirmModal(config: UseConfirmModalConfig) => { open }",
+      "parameters": [
+        {
+          "name": "config",
+          "type": "UseConfirmModalConfig",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "open": {
+          "type": "function",
+          "description": "",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "UseConfirmModalReturn",
+      "name": "useConfirmModal"
+    },
+    "useCountdown": {
+      "source": "src/hooks/useCountdown.tsx",
+      "kind": "hook",
+      "description": "Generic seconds-based countdown hook.\n\nStarts counting down from `seconds` to `0` and exposes `restartCountdown`\nto reset and restart the timer (e.g. for \"resend code in Xs\" patterns,\nsession-expiry banners, or any other cooldown/throttle UI).",
+      "requires": [],
+      "signature": "useCountdown(seconds: number) => { secondsLeft, restartCountdown }",
+      "parameters": [
+        {
+          "name": "seconds",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "secondsLeft": {
+          "description": "",
+          "type": "number"
+        },
+        "restartCountdown": {
+          "type": "function",
+          "description": "",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ secondsLeft: number; restartCountdown: () => void; }",
+      "name": "useCountdown"
+    },
+    "useDContext": {
+      "source": "src/contexts/DContext.tsx",
+      "kind": "hook",
+      "description": "Returns the Dynamic UI context value set by `DContextProvider`.\nFalls back to the library's built-in defaults when no `DContextProvider`\nis present in the tree — wrap your application with `DContextProvider`\nto customise icons, currency, language, and portal settings.",
+      "requires": [],
+      "signature": "useDContext() => { language, currency, icon, iconRegistry, iconMap, breakpoints, setContext }",
+      "parameters": [],
+      "returns": {
+        "language": {
+          "description": "",
+          "type": "string"
+        },
+        "currency": {
+          "description": "",
+          "type": "CurrencyProps"
+        },
+        "icon": {
+          "description": "",
+          "type": "IconProps"
+        },
+        "iconRegistry": {
+          "description": "",
+          "type": "Record<string, IconComponent>"
+        },
+        "iconMap": {
+          "description": "",
+          "type": "IconMapProps"
+        },
+        "breakpoints": {
+          "description": "",
+          "type": "BreakpointProps"
+        },
+        "setContext": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "Partial<Props>",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "Context",
+      "name": "useDContext"
+    },
+    "useDisableBodyScrollEffect": {
+      "source": "src/hooks/useDisableBodyScrollEffect.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useDisableBodyScrollEffect(disable: boolean) => void",
+      "parameters": [
+        {
+          "name": "disable",
+          "type": "boolean",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "void",
+      "name": "useDisableBodyScrollEffect"
+    },
+    "useDisableInputWheel": {
+      "source": "src/hooks/useDisableInputWheel.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useDisableInputWheel(ref?: ForwardedRef<HTMLInputElement>) => { handleOnWheel }",
+      "parameters": [
+        {
+          "name": "ref",
+          "type": "ForwardedRef<HTMLInputElement>",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "handleOnWheel": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "event",
+              "type": "WheelEvent<HTMLInputElement>",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ handleOnWheel: (event: WheelEvent<HTMLInputElement>) => void; }",
+      "name": "useDisableInputWheel"
+    },
+    "useDPortalContext": {
+      "source": "src/contexts/DPortalContext.tsx",
+      "kind": "hook",
+      "description": "Hook to open/close registered portals (modals, offcanvas, etc.).\n\n**Prerequisite**: must be called inside a `DContextProvider` configured with\n`portalName` and `availablePortals`. `DContextProvider` mounts\n`DPortalContextProvider` internally — consumers never use\n`DPortalContextProvider` directly.",
+      "requires": [
+        "DContextProvider"
+      ],
+      "signature": "useDPortalContext<T extends Record<string, unknown>>() => { stack, openPortal, closePortal }",
+      "parameters": [],
+      "returns": {
+        "stack": {
+          "description": "Currently open portals, ordered from oldest (bottom) to newest (top).",
+          "type": "PortalStackEntry<T>[]"
+        },
+        "openPortal": {
+          "type": "function",
+          "description": "Pushes a named portal onto the stack, rendering its registered component\nwith the given payload.",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "K",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "payload",
+              "type": "T[K]",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "closePortal": {
+          "type": "function",
+          "description": "Pops the topmost portal off the stack, closing it.",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "throws": [
+        "If called outside of `DContextProvider` / `DPortalContextProvider`."
+      ],
+      "returnType": "PortalContextType<T>",
+      "name": "useDPortalContext"
+    },
+    "useDToast": {
+      "source": "src/components/DToastContainer/useDToast.tsx",
+      "kind": "hook",
+      "description": "Hook that provides a `toast` function to dispatch DToast notifications.\n\nPrerequisites:\n- The calling component must be inside `DContextProvider` (provides icon context).\n- `DToastContainer` must be present somewhere in the component tree as a render target.",
+      "requires": [
+        "DContextProvider",
+        "DToastContainer"
+      ],
+      "signature": "useDToast() => { toast }",
+      "parameters": [],
+      "returns": {
+        "toast": {
+          "type": "function",
+          "description": "Dispatches a toast notification rendered as a `DToast` component.\nWhen `data` is a `ToastData` object, the default DToast layout is used.\nWhen `data` is a render function, full custom content is rendered instead.\nReturns the toast ID, which can be passed to `reactHotToast.dismiss(id)`.",
+          "parameters": [
+            {
+              "name": "data",
+              "type": "ToastData | ValueFunction<Renderable, Toast>",
+              "required": true,
+              "description": "Toast content as `ToastData` or a render function for custom layouts."
+            },
+            {
+              "name": "toastProps",
+              "type": "DToastOptions | undefined",
+              "required": false,
+              "description": "Optional per-toast overrides: id, duration, position."
+            }
+          ],
+          "returns": {
+            "type": "string"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ toast: (data: ToastData | ValueFunction<Renderable, Toast>, toastProps?: DToastOptions) => string; }",
+      "name": "useDToast"
+    },
+    "useErrorBoundary": {
+      "source": "react-error-boundary",
+      "kind": "hook",
+      "description": "Re-exported unchanged from `react-error-boundary`; see its documentation.\n\nConvenience hook for imperatively showing or dismissing error boundaries.\r\n\r\n⚠️ This hook must only be used within an `ErrorBoundary` subtree.",
+      "requires": [],
+      "signature": "useErrorBoundary() => { error, resetBoundary, showBoundary }",
+      "parameters": [],
+      "returns": {
+        "error": {
+          "description": "The currently visible `Error` (if one has been thrown).",
+          "type": "unknown"
+        },
+        "resetBoundary": {
+          "type": "function",
+          "description": "Method to reset and retry the nearest active error boundary (if one is active).",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "showBoundary": {
+          "type": "function",
+          "description": "Trigger the nearest error boundary to display the error provided.\r\n\r\nℹ️ React handles errors thrown while rendering.\r\nErrors thrown in event handlers, or after async code has run, will not be caught automatically.\r\nThis method is a way to imperatively show the nearest error boundary for those errors.",
+          "parameters": [
+            {
+              "name": "error",
+              "type": "unknown",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ error: unknown | null; resetBoundary: () => void; showBoundary: (error: unknown) => void; }",
+      "name": "useErrorBoundary"
+    },
+    "useFormatCurrency": {
+      "source": "src/hooks/useFormatCurrency.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useFormatCurrency(...args: Array<number>) => { format, values }",
+      "parameters": [
+        {
+          "name": "...args",
+          "type": "Array<number>",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "format": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "currencyOptions",
+              "type": "CurrencyProps | undefined",
+              "required": false,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "string"
+          }
+        },
+        "values": {
+          "description": "",
+          "type": "string[]"
+        }
+      },
+      "types": {},
+      "returnType": "{ format: (value: number, currencyOptions?: CurrencyProps) => string; values: string[]; }",
+      "name": "useFormatCurrency"
+    },
+    "useInputCurrency": {
+      "source": "src/hooks/useInputCurrency.ts",
+      "kind": "hook",
+      "description": "State and handlers for a currency input: a formatted string while the field\nis idle and the raw number while it is being edited.\n\n`minValue`/`maxValue` bound the value. With `clamp` (default `true`) an\nout-of-range value is brought into range whenever it is not being typed:\non mount, when `value` or the bounds change, and on blur. Every time the\nclamp changes the value, `onChange` receives the clamped number, so the\ninput and the consumer's state never disagree. While the field is focused\nthe typed number is reported as is, so a partial entry is not rewritten.\n\nWith `clamp: false` the value is never changed: the bounds only feed\n`isOverMax` / `isUnderMin`, so the consumer can show its own message (e.g.\n\"You exceeded the limit\") and keep the entered amount.\n\nControlled usage follows the same contract as a native controlled input:\nreflect `onChange` into `value` in the same event (`setState` in the\nhandler). The hook keeps showing `value` whenever it isn't being edited, so\na consumer can reject a change by keeping `value` as it was. Deferring the\nupdate (a timer, awaiting a request) makes the hook see a stale `value` in\nbetween: the field can flash the previous amount and a clamp can be\nreported again when the deferred value arrives.",
+      "requires": [],
+      "signature": "useInputCurrency(currencyOptions: Options, value?: number, onFocus?: (event: FocusEvent<HTMLInputElement>) => void, onChange?: (value?: number) => void, onBlur?: (event: FocusEvent<HTMLInputElement>) => void, ref?: ForwardedRef<HTMLInputElement>, minValue?: number, maxValue?: number, clamp?: boolean) => { inputRef, innerValue, innerType, isOverMax, isUnderMin, handleOnFocus, handleOnChange, handleOnBlur }",
+      "parameters": [
+        {
+          "name": "currencyOptions",
+          "type": "Options",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "onFocus",
+          "type": "(event: FocusEvent<HTMLInputElement>) => void",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "onChange",
+          "type": "(value?: number) => void",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "onBlur",
+          "type": "(event: FocusEvent<HTMLInputElement>) => void",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "ref",
+          "type": "ForwardedRef<HTMLInputElement>",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minValue",
+          "type": "number",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxValue",
+          "type": "number",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "clamp",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "inputRef": {
+          "description": "",
+          "type": "object",
+          "fields": {
+            "current": {
+              "type": "HTMLInputElement | null",
+              "required": true,
+              "description": "The current value of the ref."
+            }
+          }
+        },
+        "innerValue": {
+          "description": "",
+          "type": "string"
+        },
+        "innerType": {
+          "description": "",
+          "type": "string"
+        },
+        "isOverMax": {
+          "description": "",
+          "type": "boolean"
+        },
+        "isUnderMin": {
+          "description": "",
+          "type": "boolean"
+        },
+        "handleOnFocus": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "event",
+              "type": "FocusEvent<HTMLInputElement, Element>",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "handleOnChange": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "newValue",
+              "type": "string | undefined",
+              "required": false,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "handleOnBlur": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "event",
+              "type": "FocusEvent<HTMLInputElement, Element>",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ inputRef: RefObject<HTMLInputElement | null>; innerValue: string; innerType: string; isOverMax: boolean; isUnderMin: boolean; handleOnFocus: (event: FocusEvent<HTMLInputElement>) => void; handleOnChange: (newValue?: string) => void; handleOnBlur: (event: FocusEvent<HTMLInputElement>) => void; }",
+      "name": "useInputCurrency"
+    },
+    "useItemSelection": {
+      "source": "src/hooks/useItemSelection.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useItemSelection<T extends Identifiable>({ getItemIdentifier: getItemIdentifierProp, previousSelected = [] }?: Props<T>) => { selectedItems, isSelectedItem, toggleSelectedItem, resetSelectedItems, setSelectedItems }",
+      "parameters": [
+        {
+          "name": "{ getItemIdentifier: getItemIdentifierProp, previousSelected = [] }",
+          "type": "Props<T>",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "selectedItems": {
+          "description": "",
+          "type": "T[]"
+        },
+        "isSelectedItem": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "item",
+              "type": "T",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "boolean"
+          }
+        },
+        "toggleSelectedItem": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "item",
+              "type": "T",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "resetSelectedItems": {
+          "type": "function",
+          "description": "",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "setSelectedItems": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "items",
+              "type": "T[]",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "ItemSelection<T>",
+      "name": "useItemSelection"
+    },
+    "useMediaBreakpointUpLg": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpLg(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpLg"
+    },
+    "useMediaBreakpointUpMd": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpMd(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpMd"
+    },
+    "useMediaBreakpointUpSm": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpSm(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpSm"
+    },
+    "useMediaBreakpointUpXl": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpXl(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpXl"
+    },
+    "useMediaBreakpointUpXs": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpXs(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpXs"
+    },
+    "useMediaBreakpointUpXxl": {
+      "source": "src/hooks/useMediaBreakpointUp.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaBreakpointUpXxl(useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaBreakpointUpXxl"
+    },
+    "useMediaQuery": {
+      "source": "src/hooks/useMediaQuery.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useMediaQuery(mediaQuery: string, useListener?: boolean) => boolean",
+      "parameters": [
+        {
+          "name": "mediaQuery",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "useListener",
+          "type": "boolean",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "boolean",
+      "name": "useMediaQuery"
+    },
+    "useOtp": {
+      "source": "src/hooks/useOtp.tsx",
+      "kind": "hook",
+      "description": "Headless hook exposing the same OTP logic used internally by `DOtp`\n(code state, length + correctness validation, submit action and resend\ncountdown), without any bundled markup/styles.\n\nUse this when the default `DOtp` component doesn't match your design and\nyou need to build a fully custom UI while reusing the same behavior.\n\nInternally composes `useCountdown` for the resend timer and re-exposes\n`secondsLeft`/`restartCountdown`, so there is no need to call\n`useCountdown` separately.\n\n`invalid` becomes `true` both when the OTP is shorter than `otpSize` and\nwhen `action` throws/rejects (e.g. the backend rejected the entered code\nas incorrect). In the latter case, the thrown value is exposed as `error`\nso custom UIs can render an appropriate message (e.g. \"Invalid code\" vs.\n\"Enter all digits\"). `invalid`/`error` are cleared automatically as soon\nas the user edits the code via `setOtp`.",
+      "requires": [],
+      "signature": "useOtp({ action, otpSize = 6, seconds = 15 }: UseOtpConfig) => { otp, setOtp, invalid, error, submit, isLoading, secondsLeft, restartCountdown }",
+      "parameters": [
+        {
+          "name": "{ action, otpSize = 6, seconds = 15 }",
+          "type": "UseOtpConfig",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "otp": {
+          "description": "Current OTP value.",
+          "type": "string"
+        },
+        "setOtp": {
+          "type": "function",
+          "description": "Updates the OTP value (wire this to your custom pin input's `onChange`).\nAlso clears `invalid`/`error` as soon as the value actually changes, so\nthe error state disappears once the user edits the code (a no-op call\nwith the same value, e.g. from an uncontrolled input re-notifying its\ncurrent value, does not reset `invalid`/`error`).",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "invalid": {
+          "description": "`true` when `submit()` is called with an OTP shorter than `otpSize`, or\nwhen `action` throws/rejects (e.g. the backend rejected the entered\ncode as incorrect).",
+          "type": "boolean"
+        },
+        "error": {
+          "description": "The value thrown/rejected by `action`, or `null` otherwise. Use it to\nrender a specific message for a wrong code, as opposed to a too-short\none.",
+          "type": "unknown"
+        },
+        "submit": {
+          "type": "function",
+          "description": "Validates the OTP length; if valid, calls `action`. If `action`\nrejects, the returned promise rejects too (so callers can still\n`.catch()` it for logging), and `invalid`/`error` are set beforehand.",
+          "parameters": [],
+          "returns": {
+            "type": "Promise<void>"
+          }
+        },
+        "isLoading": {
+          "description": "`true` while `action` is being awaited inside `submit()` (i.e. the OTP\npassed the length check and the async action hasn't settled yet). Wire\nit to your submit button's loading/disabled state. It's `false` while\nidle and immediately after `action` settles (whether it resolves or\nrejects), and it's never set to `true` for the too-short/length\nvalidation failure since `action` isn't called in that case.",
+          "type": "boolean"
+        },
+        "secondsLeft": {
+          "description": "Seconds remaining until resend is available.",
+          "type": "number"
+        },
+        "restartCountdown": {
+          "type": "function",
+          "description": "Restarts the resend countdown (call it from your \"Resend\" action).",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "UseOtpReturn",
+      "name": "useOtp"
+    },
+    "useProvidedRefOrCreate": {
+      "source": "src/hooks/useProvidedRefOrCreate.ts",
+      "kind": "hook",
+      "description": "There are some situations where we only want to create a new ref if one is not provided to a component\nor hook as a prop. However, due to the `rules-of-hooks`, we cannot conditionally make a call to `React.useRef`\nonly in the situations where the ref is not provided as a prop.\nThis hook aims to encapsulate that logic, so the consumer doesn't need to be concerned with violating `rules-of-hooks`.",
+      "requires": [],
+      "signature": "useProvidedRefOrCreate<TRef>(providedRef?: React.RefObject<TRef | null>) => { current }",
+      "parameters": [
+        {
+          "name": "providedRef",
+          "type": "React.RefObject<TRef | null>",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {
+        "current": {
+          "description": "The current value of the ref.",
+          "type": "TRef | null"
+        }
+      },
+      "types": {},
+      "returnType": "React.RefObject<TRef | null>",
+      "name": "useProvidedRefOrCreate"
+    },
+    "useScreenshot": {
+      "source": "src/components/DVoucher/hooks/useScreenshot.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useScreenshot() => { clipRef, takeBlob }",
+      "parameters": [],
+      "returns": {
+        "clipRef": {
+          "description": "",
+          "type": "object",
+          "fields": {
+            "current": {
+              "type": "HTMLDivElement | null",
+              "required": true,
+              "description": "The current value of the ref."
+            }
+          }
+        },
+        "takeBlob": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "type",
+              "type": "string | undefined",
+              "required": false,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "Promise<Blob>"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ clipRef: RefObject<HTMLDivElement | null>; takeBlob: (type?: string) => Promise<Blob>; }",
+      "name": "useScreenshot"
+    },
+    "useScreenshotDownload": {
+      "source": "src/components/DVoucher/hooks/useScreenshotDownload.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useScreenshotDownload() => { download, downloadRef }",
+      "parameters": [],
+      "returns": {
+        "download": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "fileName",
+              "type": "string",
+              "required": false,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "Promise<void>"
+          }
+        },
+        "downloadRef": {
+          "description": "",
+          "type": "object",
+          "fields": {
+            "current": {
+              "type": "HTMLDivElement | null",
+              "required": true,
+              "description": "The current value of the ref."
+            }
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ download: (fileName?: string) => Promise<void>; downloadRef: RefObject<HTMLDivElement | null>; }",
+      "name": "useScreenshotDownload"
+    },
+    "useScreenshotWebShare": {
+      "source": "src/components/DVoucher/hooks/useScreenshotWebShare.ts",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useScreenshotWebShare() => { share, shareRef }",
+      "parameters": [],
+      "returns": {
+        "share": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "fileName",
+              "type": "string",
+              "required": false,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "Promise<void>"
+          }
+        },
+        "shareRef": {
+          "description": "",
+          "type": "object",
+          "fields": {
+            "current": {
+              "type": "HTMLDivElement | null",
+              "required": true,
+              "description": "The current value of the ref."
+            }
+          }
+        }
+      },
+      "types": {},
+      "returnType": "{ share: (fileName?: string) => Promise<void>; shareRef: RefObject<HTMLDivElement | null>; }",
+      "name": "useScreenshotWebShare"
+    },
+    "useStackState": {
+      "source": "src/hooks/useStackState.ts",
+      "kind": "hook",
+      "description": "useStackState inspired from rooks",
+      "requires": [],
+      "signature": "useStackState<T>(initialList?: T[]) => [T[], { clear: () => void; isEmpty: () => boolean; length: number; peek: () => T | undefined; pop: () => void; push: (item: T) => void; }]",
+      "parameters": [
+        {
+          "name": "initialList",
+          "type": "T[]",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": {},
+      "types": {},
+      "returnType": "[T[], { clear: () => void; isEmpty: () => boolean; length: number; peek: () => T | undefined; pop: () => void; push: (item: T) => void; }]",
+      "name": "useStackState"
+    },
+    "useTabContext": {
+      "source": "src/components/DTabs/TabContext.tsx",
+      "kind": "hook",
+      "description": "",
+      "requires": [],
+      "signature": "useTabContext() => { isSelected }",
+      "parameters": [],
+      "returns": {
+        "isSelected": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "tab",
+              "type": "string",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "boolean"
+          }
+        }
+      },
+      "types": {},
+      "returnType": "TabContextState",
+      "name": "useTabContext"
+    }
+  },
+  "contexts": {}
+}

@@ -1,19 +1,19 @@
 import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { withCustomConfig } from 'react-docgen-typescript';
-import type { ComponentDoc, FileParser, PropItem } from 'react-docgen-typescript';
+import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
+
+import { parseComponentFile, propFilter as sharedPropFilter } from '../scripts/component-docgen.mjs';
 
 /**
- * The components manifest (`features.componentsManifest`) always parses with
- * babel `react-docgen` and ignores `typescript.reactDocgen`. It can't resolve
- * props typed through `forwardRef` or mapped types (`Merge`, `Omit`, …), so
- * this completes each entry with react-docgen-typescript, the same parser
- * `scripts/generate-api.mjs` uses for `api.json`.
+ * El manifest de componentes (`features.componentsManifest`) siempre parsea
+ * con `react-docgen` de babel e ignora `typescript.reactDocgen`. No resuelve
+ * las props tipadas a través de `forwardRef` ni de tipos mapeados (`Merge`,
+ * `Omit`…), así que aquí se completa cada entrada con
+ * `scripts/component-docgen.mjs`, el mismo módulo que usa
+ * `scripts/generate-api.mjs` para `api.json`: los dos artefactos aplican el
+ * mismo filtro y recuperan los mismos defaults.
  */
 
-export const propFilter = (prop: PropItem) => (
-  prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
-);
+export const propFilter: (prop: PropItem) => boolean = sharedPropFilter;
 
 type DocgenTsType = {
   name: string;
@@ -40,16 +40,6 @@ type ManifestComponent = {
 type Manifests = {
   components?: { components?: Record<string, ManifestComponent> };
 };
-
-let parser: FileParser | undefined;
-
-function getParser() {
-  parser ??= withCustomConfig(resolve(process.cwd(), 'tsconfig.json'), {
-    shouldExtractLiteralValuesFromEnum: true,
-    propFilter,
-  });
-  return parser;
-}
 
 function toTsType({ type }: PropItem): DocgenTsType {
   if (type.name === 'enum' && Array.isArray(type.value)) {
@@ -88,7 +78,7 @@ export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
     const file = reactDocgen.definedInFile;
     let docs = docsByFile.get(file);
     if (!docs) {
-      docs = getParser().parse(file);
+      docs = parseComponentFile(file) as ComponentDoc[];
       docsByFile.set(file, docs);
     }
 
@@ -99,9 +89,13 @@ export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
       reactDocgen.actualName = doc.displayName;
     }
 
-    const props = reactDocgen.props ?? {};
+    // Las props de babel que el filtro descarta no se conservan: components.json
+    // tiene que listar las mismas props que api.json.
+    const props = Object.fromEntries(
+      Object.entries(reactDocgen.props ?? {}).filter(([name]) => doc.props[name]),
+    );
     Object.entries(doc.props).forEach(([name, prop]) => {
-      // Fields babel already resolved win, so no component loses metadata.
+      // Lo que babel ya resolvió prevalece, para que ningún componente pierda metadatos.
       props[name] = { ...toDocgenProp(prop), ...props[name] };
       if (!props[name].description && prop.description) {
         props[name].description = prop.description;

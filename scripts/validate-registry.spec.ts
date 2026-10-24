@@ -15,6 +15,9 @@ import path from 'node:path';
 const ROOT = path.resolve(__dirname, '..');
 const VALIDATE = path.join(ROOT, 'scripts/validate-registry.mjs');
 const FIXTURE = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-api.json');
+// api.json de develop antes de #1282, #1283 y #1281, con 8 componentes y los
+// 25 hooks (sin types).
+const FIXTURE_B = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-b-api.json');
 
 // El validador arma un programa de TypeScript sobre src/index.ts.
 jest.setTimeout(120000);
@@ -100,5 +103,84 @@ describe('validate-registry', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('no cumple el schema');
     expect(result.stderr).toContain('/hooks/useDToast/returnType');
+  });
+
+  test('el api.json de develop falla por los defaults que no llegan a defaultValue (#1282)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).not.toContain('no cumple el schema');
+    expect(result.stderr).not.toContain('hooks sin entrada');
+    expect(result.stderr).toContain('defaults declarados en el código que no llegan a defaultValue');
+    [
+      'DButton.variant: "solid" en el código, null en api.json',
+      'DBadge.color: "primary" en el código, null en api.json',
+      'DSkeleton.ariaLabel: "Loading..." en el código, null en api.json',
+      'DInputRange.filledValue: true en el código, null en api.json',
+    ].forEach((line) => expect(result.stderr).toContain(line));
+  });
+
+  test('el api.json de develop falla por las props propias y desestructuradas que faltan (#1283)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('props propias o desestructuradas por el componente que faltan en api.json');
+    [
+      'DButtonIcon.color',
+      'DButton.className',
+      'DButton.type',
+      'DInputCheck.style',
+      'DCarousel.className',
+      'DInputRange.min',
+      'DInputRange.max',
+    ].forEach((prop) => expect(result.stderr).toContain(`  - ${prop}\n`));
+  });
+
+  test('falla si api.json lista un atributo de node_modules que el componente no maneja (#1283)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    api.components.DBadge.props.tabIndex = {
+      type: 'number | undefined', required: false, defaultValue: null, description: '',
+    };
+    const file = path.join(workdir, 'api-extra-prop.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    const result = run(file);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('props en api.json que el filtro descarta');
+    expect(result.stderr).toContain('  - DBadge.tabIndex\n');
+  });
+
+  test('el api.json de develop falla por los alias de tipo sin definición (#1281)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('alias de tipo del proyecto sin definición en el componente');
+    [
+      'DButton: ComponentSize',
+      'DBadge: ComponentSize',
+      'DSkeletonBlock: SkeletonRounded',
+      'DButton: IconValue',
+      'DCarousel: BaseProps',
+    ].forEach((line) => expect(result.stderr).toContain(`  - ${line}\n`));
+  });
+
+  // Parten del fixture versionado: el resto de su contenido no valida, así que
+  // se comprueba la línea concreta y no el código de salida.
+  test('una descripción que nombra un alias no cuenta como referencia (#1281)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    api.components = { DButton: api.components.DButton };
+    api.components.DButton.props.size.type = '"sm" | "lg" | undefined';
+    api.components.DButton.props.size.description = 'Accepts a ComponentSize.';
+    const file = path.join(workdir, 'api-description.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    expect(run(file).stderr).not.toContain('  - DButton: ComponentSize\n');
+  });
+
+  test('un alias del proyecto que solo aparece dentro de types también se exige (#1281)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    api.components = { DButton: api.components.DButton };
+    api.components.DButton.types = { IconValue: { description: '', type: 'string | ValidationMessages' } };
+    const file = path.join(workdir, 'api-nested-alias.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    expect(run(file).stderr).toContain('  - DButton: ValidationMessages\n');
   });
 });

@@ -88,6 +88,27 @@ const schema = {
             type: 'string',
             description: 'How the subcomponent is used in JSX (e.g. DListGroup.Item).',
           },
+          types: {
+            type: 'object',
+            description: 'Project type aliases referenced by the props that are not expanded inline in `type` (objects and non-literal unions), with the same shape as in `hooks`. Aliases whose members are primitives or literals (e.g. `ComponentSize`) are expanded inline instead.',
+            additionalProperties: { type: 'object' },
+          },
+          forwardedProps: {
+            type: 'object',
+            description: 'Present when the component forwards the props it does not list (`...rest`) to another element. Those props are accepted but not listed one by one in `props`.',
+            required: ['target', 'type'],
+            additionalProperties: false,
+            properties: {
+              target: {
+                type: 'string',
+                description: 'Final element or library component that receives the forwarded props (e.g. `button`, `input`, `Splide`). Project components in between are skipped.',
+              },
+              type: {
+                type: 'string',
+                description: 'TypeScript type of the props the target accepts (e.g. `ButtonHTMLAttributes<HTMLButtonElement>`).',
+              },
+            },
+          },
           props: {
             type: 'object',
             additionalProperties: propSchema,
