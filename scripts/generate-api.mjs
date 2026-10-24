@@ -264,11 +264,12 @@ function hasObjectReturn(type, checker) {
 
 /**
  * Devuelve la lista de parámetros de tipo genérico de un nodo al estilo
- * TypeScript, p. ej. `<T, U>`, o '' si no tiene.
+ * TypeScript, con sus restricciones y valores por defecto, p. ej.
+ * `<T extends Identifiable, U = string>`, o '' si no tiene.
  */
 function getTypeParamsStr(node) {
   if (!node.typeParameters?.length) return '';
-  return `<${node.typeParameters.map((tp) => tp.name.text).join(', ')}>`;
+  return `<${node.typeParameters.map((tp) => tp.getText().replace(/\s+/g, ' ')).join(', ')}>`;
 }
 
 /**
@@ -337,9 +338,10 @@ function getFileContext(sourceFile) {
 
 /**
  * Tipos del proyecto (declarados en `src/`) que se nombran en las anotaciones
- * de los parámetros de un hook, aunque no tengan JSDoc o se importen de otro
- * archivo. Sin ellos, un parámetro como `config: UseConfirmModalConfig` queda
- * sin definición en `api.json`. Se expanden por completo, como en `types`.
+ * de los parámetros de un hook o en las restricciones de sus genéricos, aunque
+ * no tengan JSDoc o se importen de otro archivo. Sin ellos, un parámetro como
+ * `config: UseConfirmModalConfig` queda sin definición en `api.json`. Se
+ * expanden por completo, como en `types`.
  */
 function parameterTypes(node) {
   const types = {};
@@ -361,6 +363,10 @@ function parameterTypes(node) {
     }
     ts.forEachChild(typeNode, visit);
   };
+  (node.typeParameters ?? []).forEach((tp) => {
+    if (tp.constraint) visit(tp.constraint);
+    if (tp.default) visit(tp.default);
+  });
   (node.parameters ?? []).forEach((param) => {
     if (param.type) visit(param.type);
   });

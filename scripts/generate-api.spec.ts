@@ -86,4 +86,12 @@ describe('generate-api', () => {
       fields: { onConfirm: { required: true } },
     });
   });
+
+  test('la firma conserva las restricciones genéricas y types las define', () => {
+    expect(api.hooks.useItemSelection.signature).toMatch(/^useItemSelection<T extends Identifiable>\(/);
+    expect(api.hooks.useItemSelection.types.Identifiable).toMatchObject({
+      type: 'object',
+      fields: { id: { type: 'string | number', required: true } },
+    });
+  });
 });
