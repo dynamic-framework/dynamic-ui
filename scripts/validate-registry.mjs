@@ -7,8 +7,9 @@
  *   - contra los exports del paquete: cada export `use*` de `src/index.ts`
  *     tiene que tener su entrada en `hooks`;
  *   - contra el código de cada componente (scripts/component-docgen.mjs): la
- *     función que lo implementa se localiza y cada default que declara llega
- *     a `defaultValue`.
+ *     función que lo implementa se localiza, cada default que declara llega
+ *     a `defaultValue` y sus props son exactamente las que deja el filtro
+ *     (props propias y atributos que el componente desestructura).
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -91,6 +92,8 @@ function report(problems, header) {
 // usa generate-api.mjs y se compara con lo que dice api.json.
 const notFound = [];
 const lostDefaults = [];
+const missingProps = [];
+const extraProps = [];
 const componentsBySource = new Map();
 Object.entries(data.components ?? {}).forEach(([name, entry]) => {
   if (!entry.sourcePath) return;
@@ -109,8 +112,15 @@ componentsBySource.forEach((names, sourcePath) => {
     if (!doc.implementationFound) {
       notFound.push(`${name} (${sourcePath}): no se localiza la función que lo implementa`);
     }
+    const documentedProps = data.components[name].props;
+    Object.keys(doc.props)
+      .filter((propName) => !documentedProps[propName])
+      .forEach((propName) => missingProps.push(`${name}.${propName}`));
+    Object.keys(documentedProps)
+      .filter((propName) => !doc.props[propName])
+      .forEach((propName) => extraProps.push(`${name}.${propName}`));
     Object.entries(doc.props).forEach(([propName, prop]) => {
-      const documentedProp = data.components[name].props[propName];
+      const documentedProp = documentedProps[propName];
       const declared = prop.defaultValue?.value;
       if (documentedProp && declared !== undefined && documentedProp.defaultValue !== declared) {
         lostDefaults.push(
@@ -124,6 +134,8 @@ componentsBySource.forEach((names, sourcePath) => {
 
 report(notFound, 'componentes cuyo código no se puede analizar');
 report(lostDefaults, 'defaults declarados en el código que no llegan a defaultValue');
+report(missingProps, 'props propias o desestructuradas por el componente que faltan en api.json');
+report(extraProps, 'props en api.json que el filtro descarta (atributos de node_modules que el componente no maneja)');
 
 if (invalid) {
   process.exit(1);

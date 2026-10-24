@@ -643,6 +643,7 @@ function componentEntry(doc, filePath) {
   return {
     description: doc.description ?? '',
     sourcePath: relative(ROOT, filePath),
+    ...(doc.forwardedProps ? { forwardedProps: doc.forwardedProps } : {}),
     props: Object.fromEntries(
       Object.entries(doc.props).map(([name, prop]) => [
         name,

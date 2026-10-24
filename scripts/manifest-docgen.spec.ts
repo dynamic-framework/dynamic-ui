@@ -26,6 +26,7 @@ const COMPONENTS = {
   DSkeleton: 'src/components/DSkeleton/DSkeleton.tsx',
   DInputRange: 'src/components/DInputRange/DInputRange.tsx',
   DBadge: 'src/components/DBadge/DBadge.tsx',
+  DButtonIcon: 'src/components/DButtonIcon/DButtonIcon.tsx',
 };
 
 let props: Record<string, Record<string, DocgenProp>>;
@@ -60,5 +61,14 @@ describe('manifest-docgen', () => {
     expect(props.DSkeleton.ariaLabel.defaultValue?.value).toBe('Loading...');
     expect(props.DInputRange.filledValue.defaultValue?.value).toBe('true');
     expect(props.DBadge.color.defaultValue?.value).toBe('primary');
+  });
+
+  test('aplica el mismo filtro de props que api.json (#1283)', () => {
+    expect(props.DButtonIcon).toHaveProperty('color');
+    expect(props.DButtonIcon).toHaveProperty('onClick');
+    expect(props.DButton.type.defaultValue?.value).toBe('button');
+    expect(props.DButton).toHaveProperty('className');
+    expect(props.DInputRange.min.defaultValue?.value).toBe('0');
+    expect(props.DBadge).not.toHaveProperty('tabIndex');
   });
 });

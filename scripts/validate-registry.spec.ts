@@ -118,4 +118,33 @@ describe('validate-registry', () => {
       'DInputRange.filledValue: true en el código, null en api.json',
     ].forEach((line) => expect(result.stderr).toContain(line));
   });
+
+  test('el api.json de develop falla por las props propias y desestructuradas que faltan (#1283)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('props propias o desestructuradas por el componente que faltan en api.json');
+    [
+      'DButtonIcon.color',
+      'DButton.className',
+      'DButton.type',
+      'DInputCheck.style',
+      'DCarousel.className',
+      'DInputRange.min',
+      'DInputRange.max',
+    ].forEach((prop) => expect(result.stderr).toContain(`  - ${prop}\n`));
+  });
+
+  test('falla si api.json lista un atributo de node_modules que el componente no maneja (#1283)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    api.components.DBadge.props.tabIndex = {
+      type: 'number | undefined', required: false, defaultValue: null, description: '',
+    };
+    const file = path.join(workdir, 'api-extra-prop.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    const result = run(file);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('props en api.json que el filtro descarta');
+    expect(result.stderr).toContain('  - DBadge.tabIndex\n');
+  });
 });
