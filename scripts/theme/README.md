@@ -225,7 +225,9 @@ después, con el valor que le da la librería. En `vars` basta con los tripletes
 La lista de wrappers es la del CSS compilado (`known-tokens.json`): cualquier
 `--bs-X-rgb` que tenga su `--bs-X` en `:root`, incluidas las rampas de los roles
 y de grises. Un wrapper que la zona declara en `vars` se emite con su valor, en
-su sitio, y el generador no lo repite. Los bloques de `components`, globales o de
+su sitio, y el generador no lo repite. Un triplete que vuelve al del padre
+(`inherit`, `unset`, `revert`, `revert-layer`) no lleva wrapper: el heredado ya
+es el que corresponde. Los bloques de `components`, globales o de
 la zona, siguen la misma regla: un triplete redefinido en `.card` lleva su
 wrapper en `.card`.
 
@@ -442,9 +444,10 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
 - `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona
   redefine sin declarar `--bs-X`, cuando la librería tiene ese wrapper en
   `:root`: los componentes que leen `var(--bs-X)` conservan dentro de la zona el
-  valor del raíz. Una zona repartida en varias reglas se revisa entera; un bloque
-  de componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita
-  el wrapper en el propio bloque. Un triplete que rechaza `triplete`, o que vuelve
+  valor del raíz. Una zona repartida en varias reglas se revisa entera; un
+  componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita el
+  wrapper en su propia regla, y las reglas con el mismo selector se revisan
+  juntas. Un triplete que rechaza `triplete`, o que vuelve
   al valor del padre (`inherit`, `unset`…), no da este aviso.
 - `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
   sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.

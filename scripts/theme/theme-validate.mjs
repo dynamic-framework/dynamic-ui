@@ -25,6 +25,7 @@ import {
   buildContexts,
   cascadeSet,
   contrast,
+  inheritsParent,
   isRootPrelude,
   libraryWrapper,
   luminance,
@@ -145,7 +146,7 @@ export { resolve };
 const isTripletOrRgbVar = (value) => {
   const raw = String(value).trim();
   // Volver al valor heredado es válido: la variable vale lo que en el padre.
-  if (/^(?:inherit|unset|revert|revert-layer)$/i.test(raw)) return true;
+  if (inheritsParent(raw)) return true;
   const ref = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
   if (ref) return ref[1].endsWith('-rgb');
   const channels = raw.match(/^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$/);
@@ -284,8 +285,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // declara `--bs-X: rgb(var(--bs-X-rgb))` en `:root`, donde se calcula con el
   // triplete del raíz y se hereda ya resuelto: dentro de la zona, lo que lee
   // `var(--bs-X)` no ve el triplete nuevo. Se revisa cada zona con todas sus
-  // reglas fundidas y cada bloque de componente dentro de una zona, que
-  // necesita el wrapper en el propio bloque. Un triplete con formato inválido
+  // reglas fundidas y cada componente dentro de una zona, que necesita el
+  // wrapper en su propia regla: las reglas con el mismo selector se funden,
+  // pero el wrapper que el componente hereda de la zona no cuenta, porque se
+  // calcula con el triplete de la zona. Un triplete con formato inválido
   // en la zona ya lo rechaza R1, y uno que vuelve al valor del padre
   // (`inherit`, `unset`…) no cambia nada que el wrapper tenga que seguir.
   const checkWrappers = (decls, where, { skipInvalid }) => {
@@ -294,7 +297,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const wrapper = name.slice(0, -'-rgb'.length);
       const expected = libraryWrapper(wrapper);
       if (!expected || decls.has(wrapper)) continue;
-      if (/^(?:inherit|unset|revert|revert-layer)$/i.test(String(value).trim())) continue;
+      if (inheritsParent(value)) continue;
       if (skipInvalid && !isTripletOrRgbVar(value)) continue;
       warn(
         'wrapper-faltante-zona',
@@ -307,9 +310,16 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   };
   for (const ctx of zoneContexts) checkWrappers(ctx.own, inContext(ctx), { skipInvalid: true });
+  const zoneComponents = new Map();
   for (const block of blocks) {
     if (block.zone || !alternatives(block).some((alt) => alt.zone)) continue;
-    checkWrappers(block.decls, ` en "${block.prelude}"`, { skipInvalid: false });
+    const key = splitSelectorList(block.prelude).map(normalizeSelector).join(',');
+    const rule = zoneComponents.get(key) ?? { prelude: block.prelude, decls: new Map() };
+    for (const [name, entry] of block.decls) cascadeSet(rule.decls, name, entry);
+    zoneComponents.set(key, rule);
+  }
+  for (const { prelude, decls } of zoneComponents.values()) {
+    checkWrappers(decls, ` en "${prelude}"`, { skipInvalid: false });
   }
 
   // R2 — no declarar el wrapper de color.

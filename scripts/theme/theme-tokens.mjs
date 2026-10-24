@@ -431,6 +431,12 @@ export function zoneFromPrelude(prelude) {
   return match[1];
 }
 
+/**
+ * ¿El valor devuelve la variable al del padre? `inherit`, `unset`, `revert` y
+ * `revert-layer` sobre una custom property la dejan con lo que hereda.
+ */
+export const inheritsParent = (value) => /^\s*(?:inherit|unset|revert|revert-layer)\s*$/i.test(String(value));
+
 /** Todos los `--bs-*` que un valor referencia dentro de un `var()`. */
 export function varRefs(value) {
   return [...String(value).matchAll(/var\(\s*(--[\w-]+)/g)].map((m) => m[1]);
@@ -519,7 +525,7 @@ export function resolveInherited(name, own, resolveParent, seen = new Set()) {
   if (!own.has(name)) return resolveParent(name);
   // `inherit`, `unset` y `revert` en una custom property sin registrar toman el
   // valor ya calculado del padre, como si esta capa no la declarara.
-  if (/^\s*(?:inherit|unset|revert|revert-layer)\s*$/i.test(own.get(name).value)) return resolveParent(name);
+  if (inheritsParent(own.get(name).value)) return resolveParent(name);
   // `cycle` nombra la variable donde se cierra el ciclo: mientras se vuelve
   // hacia ella, cada variable del camino es parte del ciclo.
   if (seen.has(name)) return { rgb: null, reason: `ciclo de var() en ${name}`, cycle: name };

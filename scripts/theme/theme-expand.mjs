@@ -55,6 +55,7 @@ import {
   colorAlpha,
   deriveRamp,
   formatRem,
+  inheritsParent,
   libraryWrapper,
   normalizeCssValue,
   parseColor,
@@ -500,12 +501,16 @@ function cssHeader(theme) {
  * que redefinen justo detrás. La librería declara `--bs-X: rgb(var(--bs-X-rgb))`
  * en `:root`, así que se calcula allí y se hereda ya resuelto: dentro del
  * bloque, lo que lee `var(--bs-X)` vería el triplete del raíz. Si el bloque ya
- * declara el wrapper, manda el suyo y no se añade nada.
+ * declara el wrapper, manda el suyo y no se añade nada. Un triplete que vuelve
+ * al del padre (`inherit`, `unset`…) tampoco lo lleva: el wrapper heredado ya
+ * es el que corresponde, y uno nuevo pisaría el que el padre declare.
  */
 function withWrappers(vars) {
   const declared = new Set(vars.map(({ name }) => name));
   return vars.flatMap((entry) => {
-    const wrapper = entry.name.endsWith('-rgb') ? entry.name.slice(0, -'-rgb'.length) : null;
+    const wrapper = entry.name.endsWith('-rgb') && !inheritsParent(entry.value)
+      ? entry.name.slice(0, -'-rgb'.length)
+      : null;
     const value = wrapper && libraryWrapper(wrapper);
     if (!value || declared.has(wrapper)) return [entry];
     return [entry, { name: wrapper, value }];

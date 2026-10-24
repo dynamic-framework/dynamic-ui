@@ -1100,6 +1100,25 @@ describe('theme-expand — el wrapper de cada triplete fuera del raíz', () => {
     ]);
   });
 
+  it('no emite wrapper para un triplete que vuelve al del padre', () => {
+    // El wrapper heredado ya es el que corresponde; uno nuevo pisaría el que la
+    // zona declara con su propio alfa.
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-secondary-color': 'rgba(var(--bs-white-rgb), .2)',
+            '--bs-tertiary-bg-rgb': 'unset',
+          },
+          components: [{ selector: '.card', vars: { '--bs-secondary-color-rgb': 'inherit' } }],
+        },
+      },
+    });
+    expect(css).toContain('[data-bs-theme="oscura"] .card {\n  --bs-secondary-color-rgb: inherit;\n}');
+    expect(css).not.toContain('--bs-tertiary-bg:');
+  });
+
   it('emite el wrapper también en los bloques de componente, de la zona y globales', () => {
     const css = expandCss({
       ...MINIMAL_THEME,
@@ -1170,6 +1189,13 @@ describe('theme-validate — wrapper-faltante-zona', () => {
     ].join('\n'));
     const result = validate(css);
     expect(result.stderr).toContain('[triplete]');
+    expect(avisos(css)).toBe(0);
+  });
+
+  it('funde las reglas de componente con el mismo selector', () => {
+    const css = base()
+      + zona('  --bs-body-color-rgb: var(--bs-gray-700-rgb);', '[data-bs-theme="oscura"] .card')
+      + zona('  --bs-body-color: rgb(var(--bs-body-color-rgb));', '[data-bs-theme="oscura"]  .card');
     expect(avisos(css)).toBe(0);
   });
 
