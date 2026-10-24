@@ -89,6 +89,7 @@
   $focus-text-color: var(--#{$prefix}#{$color-name}-600),
   $active-text-color: var(--#{$prefix}#{$color-name}-700),
   $active-bg-color: var(--#{$prefix}#{$color-name}-200),
+  $hover-bg-color: rgba(var(--#{$prefix}black-rgb), .03),
   $disabled-opacity: $btn-disabled-opacity,
   $box-shadow: $btn-box-shadow,
   $active-box-shadow: $btn-active-box-shadow,
@@ -99,7 +100,7 @@
   --#{$prefix}btn-link-#{$color-name}-color: #{$default-color};
   --#{$prefix}btn-link-#{$color-name}-box-shadow: #{$box-shadow};
 
-  --#{$prefix}btn-link-#{$color-name}-hover-bg: transparent;
+  --#{$prefix}btn-link-#{$color-name}-hover-bg: #{$hover-bg-color};
   --#{$prefix}btn-link-#{$color-name}-hover-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-hover-color: #{$hover-text-color};
 
