@@ -168,6 +168,8 @@ describe('generate-api', () => {
     expect(api.components.DCarousel.forwardedProps).toEqual({ target: 'Splide', type: 'SplideProps' });
     expect(api.components.DDatePicker.forwardedProps?.target).toBe('DatePicker');
     expect(api.components.DAlert.forwardedProps).toBeUndefined();
+    // Sin ...rest: reenvía las props enteras (`{...props}`).
+    expect(api.components.DInputMask.forwardedProps?.target).toBe('InputMask');
   });
 
   test('los componentes sin ...rest no ganan atributos de @types/react', () => {

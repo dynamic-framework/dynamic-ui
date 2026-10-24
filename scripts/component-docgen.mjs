@@ -240,13 +240,17 @@ function libraryComponentBehind(tagName, checker) {
 }
 
 /**
- * Destino final de `...rest`: el elemento JSX al que la función reenvía el
- * resto de sus props. Si es un componente del proyecto que a su vez reenvía
+ * Destino final de `...rest` (o de las props enteras, si la función no las
+ * desestructura): el elemento JSX al que la función reenvía el resto de sus
+ * props. Si es un componente del proyecto que a su vez reenvía
  * su resto, se sigue la cadena (DInputCounter → DInput → `input`).
  * Devuelve `{ target, type }` o `null` si el resto no llega a JSX.
  */
 function forwardedPropsOf(fn, checker, depth = 0) {
-  const rest = restName(propsBindingPatterns(fn));
+  // Sin `...rest`, el primer parámetro entero (`function DX(props) { <X {...props} /> }`).
+  const [first] = fn.parameters;
+  const rest = restName(propsBindingPatterns(fn))
+    ?? (first && ts.isIdentifier(first.name) ? first.name.text : null);
   if (!rest || depth > 5) return null;
 
   let spread = null;
