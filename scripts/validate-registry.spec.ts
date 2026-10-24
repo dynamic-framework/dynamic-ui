@@ -161,16 +161,26 @@ describe('validate-registry', () => {
     ].forEach((line) => expect(result.stderr).toContain(`  - ${line}\n`));
   });
 
-  // Parte del registry/api.json actual, que genera `npm run build` (en CI, antes de los tests).
+  // Parten del fixture versionado: el resto de su contenido no valida, así que
+  // se comprueba la línea concreta y no el código de salida.
   test('una descripción que nombra un alias no cuenta como referencia (#1281)', () => {
-    const api = JSON.parse(fs.readFileSync(path.join(ROOT, 'registry/api.json'), 'utf8'));
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
     api.components = { DButton: api.components.DButton };
+    api.components.DButton.props.size.type = '"sm" | "lg" | undefined';
     api.components.DButton.props.size.description = 'Accepts a ComponentSize.';
     const file = path.join(workdir, 'api-description.json');
     fs.writeFileSync(file, JSON.stringify(api));
 
-    const result = run(file);
-    expect(result.stderr).not.toContain('DButton: ComponentSize');
-    expect(result.status).toBe(0);
+    expect(run(file).stderr).not.toContain('  - DButton: ComponentSize\n');
+  });
+
+  test('un alias del proyecto que solo aparece dentro de types también se exige (#1281)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    api.components = { DButton: api.components.DButton };
+    api.components.DButton.types = { IconValue: { description: '', type: 'string | ValidationMessages' } };
+    const file = path.join(workdir, 'api-nested-alias.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    expect(run(file).stderr).toContain('  - DButton: ValidationMessages\n');
   });
 });

@@ -149,13 +149,13 @@ componentsBySource.forEach((names, sourcePath) => {
     // los `type`: una descripción que nombre un alias no es una referencia.
     // Los nombres salen del análisis por símbolo, así que un tipo de
     // librería con el mismo nombre no cuenta.
-    const propTypes = Object.values(documentedProps).map((p) => p.type).join('\n');
-    const mentioned = [propTypes, ...typeStrings(definedTypes)].join('\n');
+    const mentioned = [
+      ...Object.values(documentedProps).map((p) => p.type),
+      ...typeStrings(definedTypes),
+    ].join('\n');
     [...new Set([...doc.projectTypeNames, ...unambiguousProjectNames])]
       .filter((typeName) => !definedTypes[typeName])
-      .filter((typeName) => new RegExp(`\\b${typeName}\\b`).test(
-        doc.projectTypeNames.includes(typeName) ? mentioned : propTypes,
-      ))
+      .filter((typeName) => new RegExp(`\\b${typeName}\\b`).test(mentioned))
       .forEach((typeName) => unresolvedTypes.push(`${name}: ${typeName}`));
     Object.keys(doc.props)
       .filter((propName) => !documentedProps[propName])
