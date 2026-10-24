@@ -1042,6 +1042,83 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
   });
 });
 
+describe('theme-expand — el wrapper de cada triplete fuera del raíz', () => {
+  /** El bloque `[data-bs-theme="oscura"]` de un theme con esa zona, sin la llave. */
+  const zoneBlock = (vars: Record<string, string>) => {
+    const css = expandCss({ ...MINIMAL_THEME, zones: { oscura: { vars } } });
+    const start = css.indexOf('[data-bs-theme="oscura"] {\n') + '[data-bs-theme="oscura"] {\n'.length;
+    return css.slice(start, css.indexOf('\n}', start)).split('\n');
+  };
+
+  it('emite --bs-secondary-bg justo después de --bs-secondary-bg-rgb', () => {
+    expect(zoneBlock({
+      '--bs-secondary-bg-rgb': 'var(--bs-gray-800-rgb)',
+      '--bs-heading-color': 'rgb(var(--bs-white-rgb))',
+    })).toEqual([
+      '  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);',
+      '  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));',
+      '  --bs-heading-color: rgb(var(--bs-white-rgb));',
+    ]);
+  });
+
+  it('emite --bs-link-color cuando la zona redefine --bs-link-color-rgb', () => {
+    expect(zoneBlock({ '--bs-link-color-rgb': 'var(--bs-primary-300-rgb)' })).toEqual([
+      '  --bs-link-color-rgb: var(--bs-primary-300-rgb);',
+      '  --bs-link-color: rgb(var(--bs-link-color-rgb));',
+    ]);
+  });
+
+  it('emite con su alfa los wrappers que la librería define con rgba()', () => {
+    expect(zoneBlock({ '--bs-secondary-color-rgb': 'var(--bs-white-rgb)' })).toEqual([
+      '  --bs-secondary-color-rgb: var(--bs-white-rgb);',
+      '  --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);',
+    ]);
+  });
+
+  it('no añade nada a una zona que no redefine ningún triplete con wrapper', () => {
+    // Ni `--bs-heading-color` ni `--bs-border-color` tienen triplete en la
+    // librería: no hay wrapper que emitir.
+    const vars = {
+      '--bs-heading-color': 'rgb(var(--bs-white-rgb))',
+      '--bs-border-color': 'rgba(var(--bs-white-rgb), .15)',
+    };
+    expect(zoneBlock(vars)).toEqual([
+      '  --bs-heading-color: rgb(var(--bs-white-rgb));',
+      '  --bs-border-color: rgba(var(--bs-white-rgb), .15);',
+    ]);
+  });
+
+  it('respeta el wrapper que la zona ya declara, esté donde esté', () => {
+    expect(zoneBlock({
+      '--bs-secondary-bg': 'rgb(var(--bs-gray-700-rgb))',
+      '--bs-secondary-bg-rgb': 'var(--bs-gray-800-rgb)',
+    })).toEqual([
+      '  --bs-secondary-bg: rgb(var(--bs-gray-700-rgb));',
+      '  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);',
+    ]);
+  });
+
+  it('emite el wrapper también en los bloques de componente, de la zona y globales', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '.card', vars: { '--bs-body-color-rgb': 'var(--bs-gray-700-rgb)' } }],
+      zones: {
+        oscura: {
+          vars: { '--bs-body-bg-rgb': '16, 24, 40' },
+          components: [{ selector: '.form-control', vars: { '--bs-body-color-rgb': 'var(--bs-dark-rgb)' } }],
+        },
+      },
+    });
+    expect(css).toContain(
+      '.card {\n  --bs-body-color-rgb: var(--bs-gray-700-rgb);\n  --bs-body-color: rgb(var(--bs-body-color-rgb));\n}',
+    );
+    expect(css).toContain(
+      '[data-bs-theme="oscura"] .form-control {\n  --bs-body-color-rgb: var(--bs-dark-rgb);\n'
+      + '  --bs-body-color: rgb(var(--bs-body-color-rgb));\n}',
+    );
+  });
+});
+
 describe('componentes propios de una zona', () => {
   it('emite el bloque con el selector de la zona por delante', () => {
     const css = expandCss({
@@ -1083,12 +1160,22 @@ describe('componentes propios de una zona', () => {
     expect(css).toContain('  color: var(--bs-body-color);\n  background-color: var(--bs-body-bg);\n}');
   });
 
-  it('no pinta nada si la zona sólo toca los tripletes', () => {
-    // Sin los wrappers no hay nada que aplicar: `--bs-body-color-rgb` por sí
-    // solo no es un color que ninguna regla lea.
+  it('pinta la zona cuando sólo redefine los tripletes del cuerpo', () => {
+    // El generador emite los wrappers del cuerpo junto a sus tripletes, y con
+    // ellos la zona ya tiene colores que aplicar.
     const css = expandCss(SECTIONED_THEME);
     const bloque = css.slice(css.indexOf('[data-bs-theme="oscura"] {'));
-    expect(bloque.slice(0, bloque.indexOf('}'))).not.toContain('color: var(--bs-body-color);');
+    expect(bloque.slice(0, bloque.indexOf('}')))
+      .toContain('  color: var(--bs-body-color);\n  background-color: var(--bs-body-bg);\n');
+  });
+
+  it('no pinta nada si la zona no toca el cuerpo', () => {
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      zones: { oscura: { vars: { '--bs-secondary-bg-rgb': 'var(--bs-gray-800-rgb)' } } },
+    });
+    const bloque = css.slice(css.indexOf('[data-bs-theme="oscura"] {'));
+    expect(bloque.slice(0, bloque.indexOf('}'))).not.toMatch(/^\s*(?:background-)?color:/m);
   });
 
   it('los emite después de las variables y del nav de la zona', () => {
@@ -1348,10 +1435,8 @@ describe('theme-validate — pares horneados', () => {
     expect(result.stderr).toContain('".text-bg-warning"');
   });
 
-  it('no culpa a una zona que sólo cambia la rampa de secondary', () => {
-    // .text-bg-secondary lee los wrappers --bs-secondary-700/-50, que se
-    // resuelven en :root y se heredan: el navegador sigue pintando el raíz.
-    const result = validate(expandCss({
+  describe('una zona que sólo cambia la rampa de secondary', () => {
+    const css = () => expandCss({
       ...SECTIONED_THEME,
       zones: {
         oscura: {
@@ -1359,8 +1444,22 @@ describe('theme-validate — pares horneados', () => {
           vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-secondary-700-rgb': '240, 240, 242' },
         },
       },
-    }));
-    expect(result.stderr).not.toContain('.text-bg-secondary');
+    });
+
+    it('no se culpa si la zona no declara el wrapper', () => {
+      // .text-bg-secondary lee los wrappers --bs-secondary-700/-50, que se
+      // resuelven en :root y se heredan: el navegador sigue pintando el raíz.
+      const sinWrapper = css().replace('  --bs-secondary-700: rgb(var(--bs-secondary-700-rgb));\n', '');
+      expect(sinWrapper).not.toContain('--bs-secondary-700:');
+      expect(validate(sinWrapper).stderr).not.toContain('.text-bg-secondary');
+    });
+
+    it('se mide con el wrapper que emite theme-expand, que sí la mueve', () => {
+      // Con el wrapper en la zona, Chromium pinta 240, 240, 242 sobre el
+      // --bs-secondary-50 del raíz: 1.00:1.
+      expect(validate(css()).stderr)
+        .toContain('".text-bg-secondary dentro de [data-bs-theme="oscura"]": 1.00:1');
+    });
   });
 
   it('da prioridad al bloque de zona sobre el global aunque venga antes en el CSS', () => {

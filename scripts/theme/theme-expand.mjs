@@ -23,7 +23,10 @@
 // Lo que la herramienta resuelve por ti y es fácil equivocar a mano:
 //   - las 10 hojas de cada rampa, con la receta de tinte de Sass;
 //   - el paso 500, que apunta al base en vez de repetirlo;
-//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`.
+//   - el par `--bs-rfs-fs-N` + su override en `@media (min-width: 1200px)`;
+//   - el wrapper de cada triplete que redefine un bloque fuera del raíz
+//     (`--bs-secondary-bg` junto a `--bs-secondary-bg-rgb`), que la librería
+//     calcula en `:root` y no seguiría al triplete nuevo.
 //
 // `--bs-secondary-bg-rgb` y `--bs-tertiary-bg-rgb` se emiten con el valor que la
 // librería define desde 2.11.0; hasta 2.10.0 apuntaban al wrapper
@@ -52,6 +55,7 @@ import {
   colorAlpha,
   deriveRamp,
   formatRem,
+  libraryWrapper,
   normalizeCssValue,
   parseColor,
   parseRem,
@@ -491,6 +495,23 @@ function cssHeader(theme) {
   ].filter(Boolean).join('\n');
 }
 
+/**
+ * Las variables de un bloque que no es el raíz, con el wrapper de cada triplete
+ * que redefinen justo detrás. La librería declara `--bs-X: rgb(var(--bs-X-rgb))`
+ * en `:root`, así que se calcula allí y se hereda ya resuelto: dentro del
+ * bloque, lo que lee `var(--bs-X)` vería el triplete del raíz. Si el bloque ya
+ * declara el wrapper, manda el suyo y no se añade nada.
+ */
+function withWrappers(vars) {
+  const declared = new Set(vars.map(({ name }) => name));
+  return vars.flatMap((entry) => {
+    const wrapper = entry.name.endsWith('-rgb') ? entry.name.slice(0, -'-rgb'.length) : null;
+    const value = wrapper && libraryWrapper(wrapper);
+    if (!value || declared.has(wrapper)) return [entry];
+    return [entry, { name: wrapper, value }];
+  });
+}
+
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
 
@@ -681,6 +702,7 @@ export function expandTheme(input) {
 
   // Componentes. Un bloque por selector, después del raíz y antes de las zonas:
   // así una zona puede pisar lo que el componente fija sin subir especificidad.
+  // Un triplete redefinido en el bloque lleva su wrapper, igual que en una zona.
   /**
    * Un bloque de componente. `prefix` antepone el selector de la zona a cada
    * selector de la lista, para que `.btn, .card` dentro de una zona salga como
@@ -694,7 +716,7 @@ export function expandTheme(input) {
       (a, b) => ALLOWED_DECLARATIONS.indexOf(a.property) - ALLOWED_DECLARATIONS.indexOf(b.property),
     );
     const body = [
-      ...vars.map(({ name, value }) => `  ${name}: ${normalizeCssValue(value)};`),
+      ...withWrappers(vars).map(({ name, value }) => `  ${name}: ${normalizeCssValue(value)};`),
       ...ordered.map(({ property, value }) => `  ${property}: ${normalizeCssValue(value)};`),
     ];
     const prelude = selector
@@ -711,9 +733,10 @@ export function expandTheme(input) {
   // dos bloques porque .nav y .nav-pills leen variables distintas y montar las
   // de pills sobre .nav no las alcanza.
   const zoneBlocks = theme.zones.flatMap(({
-    name, vars, nav, components,
+    name, vars: declaredVars, nav, components,
   }) => {
     const selector = zoneSelector(name);
+    const vars = withWrappers(declaredVars);
     const emit = (entries) => entries
       .map((v) => `  ${v.name}: ${normalizeCssValue(v.value)};`)
       .join('\n');
@@ -723,7 +746,8 @@ export function expandTheme(input) {
      * solas no bastan: `--bs-body-bg` y `--bs-body-color` las aplica la
      * librería en `body`, y un subárbol a media página nunca pasa por esa
      * regla. Sin estas dos declaraciones la zona define colores que no usa
-     * nadie, y el consumidor acaba repitiéndolas a mano en su CSS.
+     * nadie, y el consumidor acaba repitiéndolas a mano en su CSS. Cuenta lo
+     * que se emite: basta con que la zona redefina el triplete del cuerpo.
      */
     const declares = (name) => vars.some((v) => v.name === name);
     const paint = [
