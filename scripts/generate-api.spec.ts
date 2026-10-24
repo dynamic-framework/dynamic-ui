@@ -24,6 +24,7 @@ type Api = {
   components: Record<string, {
     props: Record<string, ComponentProp>;
     forwardedProps?: { target: string; type: string };
+    types?: Record<string, { type: string; fields?: Record<string, { type: string }> }>;
   }>;
   contexts: Record<string, { props: Record<string, { description: string; required: boolean }> }>;
   hooks: Record<string, {
@@ -185,5 +186,32 @@ describe('generate-api', () => {
     expect(api.components.DDatePicker.props).not.toHaveProperty('children');
     // Lo desestructura para apartarlo y renderiza el emoji.
     expect(api.components.DSelectSingleValueEmoji.props).not.toHaveProperty('children');
+  });
+
+  // #1281: alias de tipo del proyecto.
+  test('los alias de miembros literales se expanden en type', () => {
+    ['DButton', 'DBadge'].forEach((component) => {
+      const { type } = api.components[component].props.size;
+      expect(type).toMatch(/^"sm" \| "lg" \|/);
+      expect(type).not.toContain('ComponentSize');
+    });
+    expect(api.components.DSkeletonBlock.props.rounded.type).toBe(
+      'boolean | 0 | 1 | 2 | 3 | 4 | 5 | "circle" | "pill" | undefined',
+    );
+    expect(api.components.DSkeletonBlock.props.width.type).toBe('string | number | undefined');
+    expect(api.components.DSkeletonText.props.widths.type).toBe('(string | number)[] | undefined');
+  });
+
+  test('los alias de objeto se definen en types y type conserva el nombre', () => {
+    const { DButton, DStepper, DBoxFile } = api.components;
+    expect(DButton.props.iconStart.type).toContain('IconValue');
+    expect(DButton.types?.IconValue.type).toBe('string | IconComponent');
+    expect(DButton.types).toHaveProperty('IconComponent');
+    expect(DStepper.types?.Step).toMatchObject({ type: 'object', fields: { label: { type: 'string' } } });
+    expect(DBoxFile.types).toHaveProperty('RejectedFile');
+  });
+
+  test('los tipos de librerías quedan por su nombre en las definiciones', () => {
+    expect(api.components.DCarousel.types?.BaseProps.fields?.style.type).toBe('CSSProperties');
   });
 });

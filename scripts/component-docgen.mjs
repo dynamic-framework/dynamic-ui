@@ -28,6 +28,7 @@ import { createRequire } from 'module';
 import * as docgen from 'react-docgen-typescript';
 
 import { TSCONFIG_PATH } from './public-hooks.mjs';
+import { resolveTypeInfo } from './type-info.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -282,6 +283,185 @@ function forwardedPropsOf(fn, checker, depth = 0) {
   return { target: tagName.getText(), type };
 }
 
+// --- Alias de tipo del proyecto ---
+
+/** Declaración de un alias o interfaz del proyecto (fuera de `node_modules`), o `null`. */
+function projectTypeDeclaration(symbol) {
+  const declaration = symbol?.declarations?.find(
+    (d) => ts.isTypeAliasDeclaration(d) || ts.isInterfaceDeclaration(d),
+  );
+  return declaration && !inNodeModules(declaration.getSourceFile().fileName) ? declaration : null;
+}
+
+/**
+ * Añade a `found` los alias e interfaces del proyecto que aparecen en un tipo.
+ * Se resuelven por símbolo y no por nombre: `ForwardRefExoticComponent`
+ * existe en el proyecto y en React, y `Step` se declara tres veces.
+ * `origin` es donde el checker guarda la unión tal como se escribió
+ * (`ComponentSize | undefined`) cuando la aplana.
+ */
+function collectProjectTypes(type, checker, found, seen = new Set()) {
+  if (!type || seen.has(type)) return;
+  seen.add(type);
+  const visit = (t) => collectProjectTypes(t, checker, found, seen);
+
+  // eslint-disable-next-line no-bitwise
+  const isObject = (type.flags & ts.TypeFlags.Object) !== 0;
+  const interfaceSymbol = isObject && type.symbol?.declarations?.some(ts.isInterfaceDeclaration)
+    ? type.symbol
+    : null;
+  const named = type.aliasSymbol ?? interfaceSymbol;
+  if (named && projectTypeDeclaration(named)) found.add(named);
+
+  (type.aliasTypeArguments ?? []).forEach(visit);
+  if (type.origin) visit(type.origin);
+  if (type.isUnionOrIntersection()) type.types.forEach(visit);
+  // eslint-disable-next-line no-bitwise
+  if (isObject && type.objectFlags & ts.ObjectFlags.Reference) {
+    checker.getTypeArguments(type).forEach(visit);
+  }
+  // Objetos anónimos del proyecto (`BaseProps & { icon: IconValue }`): sus propiedades.
+  const anonymousSource = type.symbol?.declarations?.[0]?.getSourceFile().fileName;
+  // eslint-disable-next-line no-bitwise
+  if (isObject && type.objectFlags & ts.ObjectFlags.Anonymous
+    && anonymousSource && !inNodeModules(anonymousSource)) {
+    checker.getPropertiesOfType(type).forEach((property) => {
+      if (property.valueDeclaration) {
+        visit(checker.getTypeOfSymbolAtLocation(property, property.valueDeclaration));
+      }
+    });
+  }
+  // Parámetros y retorno de las funciones (`onDrop(files, rejected: RejectedFile[])`).
+  type.getCallSignatures().forEach((signature) => {
+    signature.getParameters().forEach((parameter) => {
+      if (parameter.valueDeclaration) {
+        visit(checker.getTypeOfSymbolAtLocation(parameter, parameter.valueDeclaration));
+      }
+    });
+    visit(signature.getReturnType());
+  });
+}
+
+/* eslint-disable no-bitwise */
+const PRIMITIVE_OR_LITERAL = ts.TypeFlags.StringLike | ts.TypeFlags.NumberLike
+  | ts.TypeFlags.BooleanLike | ts.TypeFlags.BigIntLike | ts.TypeFlags.Null | ts.TypeFlags.Undefined;
+
+const ALIAS_FORMAT = ts.TypeFormatFlags.InTypeAlias | ts.TypeFormatFlags.NoTruncation;
+/* eslint-enable no-bitwise */
+
+/**
+ * Texto con el que se sustituye un alias de miembros primitivos o literales
+ * (`ComponentSize` → `"sm" | "lg"`), o `null` si el alias es de otro tipo y
+ * va a la sección `types`.
+ */
+function inlineText(symbol, checker) {
+  const declaration = projectTypeDeclaration(symbol);
+  if (!ts.isTypeAliasDeclaration(declaration) || declaration.typeParameters) return null;
+  const declared = checker.getDeclaredTypeOfSymbol(symbol);
+  const members = declared.isUnion() ? declared.types : [declared];
+  // eslint-disable-next-line no-bitwise
+  if (!members.every((t) => t.flags & PRIMITIVE_OR_LITERAL)) return null;
+  return checker.typeToString(declared, undefined, ALIAS_FORMAT);
+}
+
+/** Sustituye en `text` cada alias por sus miembros, con paréntesis si hace falta. */
+function inlineAliases(text, replacements) {
+  return replacements.reduce((result, [name, members]) => result.replace(
+    new RegExp(`(&\\s*)?\\b${name}\\b(\\[\\])?(\\s*&)?`, 'g'),
+    (match, before = '', array = '', after = '') => (
+      members.includes('|') && (before || array || after)
+        ? `${before}(${members})${array}${after}`
+        : `${before}${members}${array}${after}`
+    ),
+  ), text);
+}
+
+/**
+ * Definición de un alias o interfaz para la sección `types`, con la misma
+ * forma que en `hooks`: los objetos con `fields`, el resto con su tipo
+ * expandido.
+ */
+function typeDefinition(symbol, checker, knownTypeNames) {
+  const declaration = projectTypeDeclaration(symbol);
+  const declared = checker.getDeclaredTypeOfSymbol(symbol);
+  // Los tipos de librerías (CSSProperties, ReactNode…) quedan por su nombre.
+  const ownType = (t) => {
+    const source = (t.aliasSymbol ?? t.symbol)?.declarations?.[0]?.getSourceFile().fileName;
+    return !source || !inNodeModules(source);
+  };
+  const info = resolveTypeInfo(declared, checker, declaration, 0, true, knownTypeNames, ownType);
+  if (info.type !== 'object') {
+    info.type = checker.typeToString(declared, declaration, ALIAS_FORMAT);
+  }
+  const description = ts.displayPartsToString(symbol.getDocumentationComment(checker)).trim();
+  return { description, ...info };
+}
+
+/**
+ * Resuelve los alias del proyecto que usan las props de un componente:
+ * expande los de miembros literales en `type` y define el resto en `types`,
+ * junto con los alias que aparecen dentro de esas definiciones.
+ * Devuelve `{ props, types, projectTypeNames }`.
+ */
+function resolveProjectTypes(fn, props, checker) {
+  const propsType = fn.parameters[0] && checker.getTypeAtLocation(fn.parameters[0]);
+  if (!propsType) return { props, types: {}, projectTypeNames: [] };
+
+  const pending = new Set();
+  const all = new Set();
+  const resolvedProps = Object.fromEntries(Object.entries(props).map(([name, prop]) => {
+    const symbol = propsType.getProperty(name);
+    if (!symbol) return [name, prop];
+    const found = new Set();
+    collectProjectTypes(checker.getTypeOfSymbolAtLocation(symbol, fn), checker, found);
+    const replacements = [];
+    found.forEach((alias) => {
+      all.add(alias);
+      const members = inlineText(alias, checker);
+      if (members) replacements.push([alias.name, members]);
+      else pending.add(alias);
+    });
+    if (!replacements.length) return [name, prop];
+    const type = { ...prop.type, name: inlineAliases(prop.type.name, replacements) };
+    if (Array.isArray(prop.type.value)) {
+      type.value = prop.type.value.map((v) => ({
+        ...v,
+        value: inlineAliases(v.value, replacements),
+      }));
+    }
+    return [name, { ...prop, type }];
+  }));
+
+  // Los alias que aparecen dentro de una definición también se definen.
+  const definitions = new Map();
+  while (pending.size) {
+    const [alias] = pending;
+    pending.delete(alias);
+    if (!definitions.has(alias.name)) {
+      definitions.set(alias.name, alias);
+      const declaration = projectTypeDeclaration(alias);
+      const declared = checker.getDeclaredTypeOfSymbol(alias);
+      const nested = new Set();
+      collectProjectTypes(declared, checker, nested);
+      checker.getPropertiesOfType(declared).forEach((property) => {
+        const propertyType = checker.getTypeOfSymbolAtLocation(property, declaration);
+        collectProjectTypes(propertyType, checker, nested);
+      });
+      nested.forEach((n) => {
+        all.add(n);
+        if (n !== alias && !definitions.has(n.name)) pending.add(n);
+      });
+    }
+  }
+
+  const knownTypeNames = new Set(definitions.keys());
+  const types = Object.fromEntries([...definitions].map(([name, alias]) => [
+    name, typeDefinition(alias, checker, knownTypeNames),
+  ]));
+  const projectTypeNames = [...new Set([...all].map((a) => a.name))];
+  return { props: resolvedProps, types, projectTypeNames };
+}
+
 /**
  * Parsea un archivo de componente y devuelve sus ComponentDoc:
  *   - con las props filtradas: `propFilter` más los atributos que la función
@@ -289,6 +469,8 @@ function forwardedPropsOf(fn, checker, depth = 0) {
  *   - con los defaults que el parser no encuentra;
  *   - con `forwardedProps` (`{ target, type }`) cuando la función reenvía
  *     `...rest` a un elemento JSX;
+ *   - con los alias del proyecto resueltos: inline en `type` o definidos en
+ *     `types`; `projectTypeNames` lista todos los que se encontraron;
  *   - con `implementationFound`, que indica si se localizó la función.
  */
 export function parseComponentFile(filePath) {
@@ -325,11 +507,16 @@ export function parseComponentFile(filePath) {
     );
 
     const forwardedProps = fn ? forwardedPropsOf(fn, checker) : null;
+    const resolved = fn
+      ? resolveProjectTypes(fn, props, checker)
+      : { props, types: {}, projectTypeNames: [] };
     const { expression, rootExpression, ...rest } = doc;
     return {
       ...rest,
-      props,
+      props: resolved.props,
       ...(forwardedProps ? { forwardedProps } : {}),
+      types: resolved.types,
+      projectTypeNames: resolved.projectTypeNames,
       implementationFound: fn !== null,
     };
   });

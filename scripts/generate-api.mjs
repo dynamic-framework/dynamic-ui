@@ -25,6 +25,7 @@ import {
   ROOT, TSCONFIG_PATH, createIndexProgram, listPublicHooks,
 } from './public-hooks.mjs';
 import { parseComponentFile } from './component-docgen.mjs';
+import { resolveTypeInfo } from './type-info.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -69,89 +70,6 @@ function getNodeJsDoc(node) {
 function typeNodeText(typeNode, sourceFile) {
   if (!typeNode) return 'unknown';
   return typeNode.getText(sourceFile).replace(/\s+/g, ' ').trim();
-}
-
-/**
- * Resuelve un Type de TypeScript a un descriptor serializable y autocontenido.
- *
- * - Unión de literales string → { type: 'string', values: ['a', 'b', ...] }
- * - Objeto / tipo mapeado → { type: 'object', fields: { prop: { type, required, description } } }
- * - Escalar / otro            → { type: '<texto del checker>' }
- *
- * Los miembros `undefined` de una unión se quitan para que las propiedades
- * opcionales queden limpias (el flag `required` del campo padre ya indica la
- * opcionalidad). La recursión se corta en profundidad 3 para no expandir el
- * interior de las librerías.
- *
- * @param {boolean} [expand=false] Si es true, expande siempre los objetos
- *   aunque tengan un alias con nombre (se usa en la sección `types`).
- * @param {Set<string>} [knownTypeNames] Nombres de los tipos documentados en
- *   `sharedTypes`. Solo estos se emiten como referencia por nombre; el resto
- *   de los alias (de librerías, no exportados, etc.) se expanden o se pasan a
- *   texto, para que el consumidor siempre reciba una definición utilizable.
- */
-function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false, knownTypeNames = new Set()) {
-  if (depth > 3) return { type: checker.typeToString(type) };
-
-  // Los primitivos se atienden antes de getPropertiesOfType, que si no
-  // devolvería los métodos de las interfaces String/Number.
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.String) return { type: 'string' };
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.Number) return { type: 'number' };
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.Boolean) return { type: 'boolean' };
-
-  if (type.isUnion()) {
-    // eslint-disable-next-line no-bitwise
-    const nonUndefined = type.types.filter((t) => !(t.flags & ts.TypeFlags.Undefined));
-
-    if (nonUndefined.length > 0 && nonUndefined.every((t) => t.isStringLiteral())) {
-      return { type: 'string', values: nonUndefined.map((t) => t.value) };
-    }
-    if (nonUndefined.length === 1) {
-      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand, knownTypeNames);
-    }
-    return { type: checker.typeToString(type) };
-  }
-
-  // Arrays: se emite `ElementType[]` en vez de expandir todos los métodos de
-  // Array.prototype (push, pop, splice, sort…), que son ruido en la documentación.
-  if (checker.isArrayType(type)) {
-    const [elemType] = checker.getTypeArguments(type) ?? [];
-    const elemStr = elemType ? checker.typeToString(elemType) : 'unknown';
-    return { type: `${elemStr}[]` };
-  }
-
-  // Alias con nombre: solo se emite el nombre cuando es un tipo *documentado*
-  // presente en sharedTypes (p. ej. CurrencyProps, BreakpointProps). Los tipos
-  // de librerías (ReactNode, Partial<...>) y los alias no exportados no están
-  // en knownTypeNames, así que se expanden o se pasan a texto.
-  if (!expand && type.aliasSymbol && knownTypeNames.has(type.aliasSymbol.name)) {
-    return { type: checker.typeToString(type) };
-  }
-
-  // Objeto / tipo mapeado (TypeLiteral, interface, Partial<Pick<...>>, etc.)
-  const props = checker.getPropertiesOfType(type);
-  if (props.length > 0) {
-    const fields = {};
-    props.forEach((prop) => {
-      const propType = checker.getTypeOfSymbolAtLocation(prop, locationNode);
-      // eslint-disable-next-line no-bitwise
-      const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
-      const desc = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim();
-      fields[prop.name] = {
-        // Los campos anidados de un tipo expandido nunca reciben expand=true,
-        // para no entrar en recursión infinita con tipos autorreferenciados.
-        ...resolveTypeInfo(propType, checker, locationNode, depth + 1, false, knownTypeNames),
-        required: !isOptional,
-        ...(desc ? { description: desc } : {}),
-      };
-    });
-    return { type: 'object', fields };
-  }
-
-  return { type: checker.typeToString(type) };
 }
 
 /**
@@ -657,6 +575,7 @@ function componentEntry(doc, filePath) {
         },
       ]),
     ),
+    ...(Object.keys(doc.types ?? {}).length ? { types: doc.types } : {}),
   };
 }
 

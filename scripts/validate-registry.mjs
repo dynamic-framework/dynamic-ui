@@ -8,8 +8,9 @@
  *     tiene que tener su entrada en `hooks`;
  *   - contra el código de cada componente (scripts/component-docgen.mjs): la
  *     función que lo implementa se localiza, cada default que declara llega
- *     a `defaultValue` y sus props son exactamente las que deja el filtro
- *     (props propias y atributos que el componente desestructura).
+ *     a `defaultValue`, sus props son exactamente las que deja el filtro
+ *     (props propias y atributos que el componente desestructura) y ningún
+ *     alias de tipo del proyecto queda sin expandir ni definir.
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -20,10 +21,11 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { createRequire } from 'module';
 
-import { ROOT, listPublicHooks } from './public-hooks.mjs';
+import { ROOT, createIndexProgram, listPublicHooks } from './public-hooks.mjs';
 import { parseComponentFile } from './component-docgen.mjs';
 
 const require = createRequire(import.meta.url);
+const ts = require('typescript');
 const Ajv = require('ajv/dist/2020');
 const addFormats = require('ajv-formats');
 
@@ -90,10 +92,30 @@ function report(problems, header) {
 
 // Componentes: se vuelve a leer el código de cada uno con el mismo módulo que
 // usa generate-api.mjs y se compara con lo que dice api.json.
+// Red de seguridad independiente del análisis por símbolo: nombres de los
+// alias e interfaces declarados en src/ que no coinciden con ningún tipo de
+// node_modules. Si uno aparece en un `type` sin definición, algo no se
+// resolvió.
+const indexProgram = createIndexProgram();
+const projectNames = new Set();
+const libraryNames = new Set();
+indexProgram.getSourceFiles().forEach((sourceFile) => {
+  const names = /node_modules/.test(sourceFile.fileName) ? libraryNames : projectNames;
+  const visit = (node) => {
+    if (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node)) {
+      names.add(node.name.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+});
+const unambiguousProjectNames = [...projectNames].filter((n) => !libraryNames.has(n));
+
 const notFound = [];
 const lostDefaults = [];
 const missingProps = [];
 const extraProps = [];
+const unresolvedTypes = [];
 const componentsBySource = new Map();
 Object.entries(data.components ?? {}).forEach(([name, entry]) => {
   if (!entry.sourcePath) return;
@@ -113,6 +135,18 @@ componentsBySource.forEach((names, sourcePath) => {
       notFound.push(`${name} (${sourcePath}): no se localiza la función que lo implementa`);
     }
     const documentedProps = data.components[name].props;
+    const definedTypes = data.components[name].types ?? {};
+    // Un alias del proyecto que se nombra en props o en types tiene que
+    // estar definido en types. Los nombres salen del análisis por símbolo,
+    // así que un tipo de librería con el mismo nombre no cuenta.
+    const mentioned = JSON.stringify({ props: documentedProps, types: definedTypes });
+    const propTypes = Object.values(documentedProps).map((p) => p.type).join('\n');
+    [...new Set([...doc.projectTypeNames, ...unambiguousProjectNames])]
+      .filter((typeName) => !definedTypes[typeName])
+      .filter((typeName) => new RegExp(`\\b${typeName}\\b`).test(
+        doc.projectTypeNames.includes(typeName) ? mentioned : propTypes,
+      ))
+      .forEach((typeName) => unresolvedTypes.push(`${name}: ${typeName}`));
     Object.keys(doc.props)
       .filter((propName) => !documentedProps[propName])
       .forEach((propName) => missingProps.push(`${name}.${propName}`));
@@ -136,6 +170,7 @@ report(notFound, 'componentes cuyo código no se puede analizar');
 report(lostDefaults, 'defaults declarados en el código que no llegan a defaultValue');
 report(missingProps, 'props propias o desestructuradas por el componente que faltan en api.json');
 report(extraProps, 'props en api.json que el filtro descarta (atributos de node_modules que el componente no maneja)');
+report(unresolvedTypes, 'alias de tipo del proyecto sin definición en el componente');
 
 if (invalid) {
   process.exit(1);

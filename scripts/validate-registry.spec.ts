@@ -147,4 +147,17 @@ describe('validate-registry', () => {
     expect(result.stderr).toContain('props en api.json que el filtro descarta');
     expect(result.stderr).toContain('  - DBadge.tabIndex\n');
   });
+
+  test('el api.json de develop falla por los alias de tipo sin definición (#1281)', () => {
+    const result = run(FIXTURE_B);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('alias de tipo del proyecto sin definición en el componente');
+    [
+      'DButton: ComponentSize',
+      'DBadge: ComponentSize',
+      'DSkeletonBlock: SkeletonRounded',
+      'DButton: IconValue',
+      'DCarousel: BaseProps',
+    ].forEach((line) => expect(result.stderr).toContain(`  - ${line}\n`));
+  });
 });
