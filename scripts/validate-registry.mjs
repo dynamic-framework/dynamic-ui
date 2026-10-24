@@ -83,6 +83,14 @@ if (missingHooks.length > 0) {
   );
 }
 
+/** Todos los valores de las claves `type` de un objeto, a cualquier profundidad. */
+function typeStrings(value) {
+  if (!value || typeof value !== 'object') return [];
+  return Object.entries(value).flatMap(([key, nested]) => (
+    key === 'type' && typeof nested === 'string' ? [nested] : typeStrings(nested)
+  ));
+}
+
 /** Escribe una lista de problemas con su cabecera y marca el registro inválido. */
 function report(problems, header) {
   if (problems.length === 0) return;
@@ -136,11 +144,13 @@ componentsBySource.forEach((names, sourcePath) => {
     }
     const documentedProps = data.components[name].props;
     const definedTypes = data.components[name].types ?? {};
-    // Un alias del proyecto que se nombra en props o en types tiene que
-    // estar definido en types. Los nombres salen del análisis por símbolo,
-    // así que un tipo de librería con el mismo nombre no cuenta.
-    const mentioned = JSON.stringify({ props: documentedProps, types: definedTypes });
+    // Un alias del proyecto que se nombra en el `type` de una prop o de una
+    // definición de types tiene que estar definido en types. Solo se miran
+    // los `type`: una descripción que nombre un alias no es una referencia.
+    // Los nombres salen del análisis por símbolo, así que un tipo de
+    // librería con el mismo nombre no cuenta.
     const propTypes = Object.values(documentedProps).map((p) => p.type).join('\n');
+    const mentioned = [propTypes, ...typeStrings(definedTypes)].join('\n');
     [...new Set([...doc.projectTypeNames, ...unambiguousProjectNames])]
       .filter((typeName) => !definedTypes[typeName])
       .filter((typeName) => new RegExp(`\\b${typeName}\\b`).test(

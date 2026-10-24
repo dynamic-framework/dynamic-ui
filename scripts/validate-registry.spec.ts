@@ -160,4 +160,17 @@ describe('validate-registry', () => {
       'DCarousel: BaseProps',
     ].forEach((line) => expect(result.stderr).toContain(`  - ${line}\n`));
   });
+
+  // Parte del registry/api.json actual, que genera `npm run build` (en CI, antes de los tests).
+  test('una descripción que nombra un alias no cuenta como referencia (#1281)', () => {
+    const api = JSON.parse(fs.readFileSync(path.join(ROOT, 'registry/api.json'), 'utf8'));
+    api.components = { DButton: api.components.DButton };
+    api.components.DButton.props.size.description = 'Accepts a ComponentSize.';
+    const file = path.join(workdir, 'api-description.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    const result = run(file);
+    expect(result.stderr).not.toContain('DButton: ComponentSize');
+    expect(result.status).toBe(0);
+  });
 });
