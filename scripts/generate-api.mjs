@@ -197,6 +197,18 @@ function getJsDocThrows(node) {
 }
 
 /**
+ * Devuelve el texto de la etiqueta `@deprecated` de un símbolo, con el mismo
+ * formato que react-docgen-typescript usa en `description`
+ * (`@deprecated <texto>`), o '' si no está deprecado.
+ */
+function getDeprecatedNote(symbol, checker) {
+  const tag = symbol.getJsDocTags(checker).find((t) => t.name === 'deprecated');
+  if (!tag) return '';
+  const text = ts.displayPartsToString(tag.text).replace(/\s+/g, ' ').trim();
+  return text ? `@deprecated ${text}` : '@deprecated';
+}
+
+/**
  * Extrae los parámetros de llamada de un símbolo de tipo función con el type checker.
  * Devuelve [{ name, type, required, description }].
  */
@@ -484,11 +496,14 @@ function contextEntry(node, sourceFile, relPath) {
       const symbolDoc = ts.displayPartsToString(
         prop.getDocumentationComment(checker),
       ).trim();
+      // getDocumentationComment no incluye las etiquetas: la deprecación se
+      // antepone a la descripción, como hace react-docgen-typescript.
+      const deprecated = getDeprecatedNote(prop, checker);
       const propType = checker.getTypeOfSymbolAtLocation(prop, node);
       // eslint-disable-next-line no-bitwise
       const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
       doc.props[prop.name] = {
-        description: symbolDoc,
+        description: [deprecated, symbolDoc].filter(Boolean).join('\n'),
         required: !isOptional,
         ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
       };
