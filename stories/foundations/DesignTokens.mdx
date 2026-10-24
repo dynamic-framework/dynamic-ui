@@ -263,7 +263,7 @@ A zone is a subtree with its own palette: `[data-bs-theme="<name>"]` on any elem
 }
 ```
 
-**A minimal zone.** The zone declares the body and surface colors as triplet and wrapper, the variables that have no triplet (`--bs-border-color`, `--bs-heading-color`), and the link triplets, which links read directly. The library applies `--bs-body-bg` and `--bs-body-color` on `body`, so the zone paints itself with `color` and `background-color`. Components with their own colors get a block in the zone:
+**A minimal zone.** The zone declares the body and surface colors as triplet and wrapper, the variables that have no triplet (`--bs-border-color`, `--bs-heading-color`), and the link colors as triplet and wrapper: plain links read the triplet, `.btn-link` reads the wrapper. The library applies `--bs-body-bg` and `--bs-body-color` on `body`, so the zone paints itself with `color` and `background-color`. Components with their own colors get a block in the zone:
 
 ```css
 :root {
@@ -292,7 +292,9 @@ A zone is a subtree with its own palette: `[data-bs-theme="<name>"]` on any elem
   --bs-heading-color: rgb(var(--bs-white-rgb));
   --bs-border-color: rgba(var(--bs-white-rgb), .15);
   --bs-link-color-rgb: var(--bs-primary-300-rgb);
+  --bs-link-color: rgb(var(--bs-primary-300-rgb));
   --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
+  --bs-link-hover-color: rgb(var(--bs-primary-200-rgb));
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
 }

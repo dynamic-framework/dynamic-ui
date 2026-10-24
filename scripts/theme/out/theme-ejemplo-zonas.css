@@ -184,20 +184,24 @@
 /* Zona oscura */
 [data-bs-theme="oscura"] {
   --bs-body-bg-rgb: var(--bs-dark-rgb);
-  --bs-body-bg: rgb(var(--bs-dark-rgb));
+  --bs-body-bg: rgb(var(--bs-body-bg-rgb));
   --bs-body-color-rgb: var(--bs-white-rgb);
-  --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-body-color: rgb(var(--bs-body-color-rgb));
   --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);
+  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));
   --bs-tertiary-bg-rgb: var(--bs-gray-900-rgb);
+  --bs-tertiary-bg: rgb(var(--bs-tertiary-bg-rgb));
   --bs-secondary-color-rgb: var(--bs-white-rgb);
-  --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);
   --bs-tertiary-color-rgb: var(--bs-white-rgb);
-  --bs-tertiary-color: rgba(var(--bs-white-rgb), .5);
+  --bs-tertiary-color: rgba(var(--bs-tertiary-color-rgb), .5);
   --bs-emphasis-color-rgb: var(--bs-white-rgb);
-  --bs-emphasis-color: rgb(var(--bs-white-rgb));
+  --bs-emphasis-color: rgb(var(--bs-emphasis-color-rgb));
   --bs-heading-color: rgb(var(--bs-white-rgb));
   --bs-link-color-rgb: var(--bs-primary-300-rgb);
+  --bs-link-color: rgb(var(--bs-link-color-rgb));
   --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
+  --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
   --bs-border-color: rgba(var(--bs-white-rgb), .15);
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);

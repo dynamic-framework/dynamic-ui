@@ -319,6 +319,13 @@ describe('los valores por defecto contra el CSS compilado', () => {
     expect(fromLibrary(root, tables.rootColors)).toEqual(tables.rootColors);
     expect(tables.wrappers.length).toBeGreaterThan(200);
     expect(fromLibrary(root, tables.wrappers)).toEqual(tables.wrappers);
+    // Y en la otra dirección: todo wrapper del raíz compilado sale de
+    // libraryWrapper, que es de donde theme-expand toma los que emite en una zona.
+    const compiledWrappers = [...root]
+      .filter(([name, value]) => new RegExp(`^rgba?\\(var\\(${name}-rgb\\)(?:,[^)]*)?\\)$`).test(value))
+      .map(([name]) => name)
+      .sort();
+    expect(tables.wrappers.map(([name]) => name).sort()).toEqual(compiledWrappers);
     for (const [selector, decls] of tables.elements) {
       expect([selector, fromLibrary(compiledBlock(css, selector), decls)]).toEqual([selector, decls]);
     }
