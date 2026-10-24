@@ -16,10 +16,22 @@ const OUTPUT = path.join(ROOT, 'registry/api.json');
 // El generador recorre todos los componentes con react-docgen-typescript.
 jest.setTimeout(180000);
 
+type Param = { name: string; required: boolean };
+
 type Api = {
   contexts: Record<string, { props: Record<string, { description: string; required: boolean }> }>;
-  hooks: Record<string, { signature: string; returns: object; returnType: string }>;
+  hooks: Record<string, {
+    signature: string;
+    returns: Record<string, { parameters?: Param[] }>;
+    returnType: string;
+    types: Record<string, unknown>;
+  }>;
 };
+
+function callParams(hook: string, fn: string) {
+  return (api.hooks[hook].returns[fn].parameters ?? [])
+    .map(({ name, required }) => ({ name, required }));
+}
 
 let api: Api;
 
@@ -51,5 +63,15 @@ describe('generate-api', () => {
       returns: {},
       returnType: 'boolean',
     });
+  });
+
+  test('los parámetros opcionales de las funciones devueltas no son obligatorios', () => {
+    expect(callParams('useScreenshotDownload', 'download')).toEqual([{ name: 'fileName', required: false }]);
+    expect(callParams('useScreenshotWebShare', 'share')).toEqual([{ name: 'fileName', required: false }]);
+    expect(callParams('useScreenshot', 'takeBlob')).toEqual([{ name: 'type', required: false }]);
+    expect(callParams('useDToast', 'toast')).toEqual([
+      { name: 'data', required: true },
+      { name: 'toastProps', required: false },
+    ]);
   });
 });

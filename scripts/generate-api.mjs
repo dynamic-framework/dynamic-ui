@@ -221,8 +221,13 @@ function extractCallParams(symbol, checker, locationNode) {
     type: checker.typeToString(
       checker.getTypeOfSymbolAtLocation(param, locationNode),
     ),
-    required: /* eslint-disable-next-line no-bitwise */
-      !(Number(param.flags) & Number(ts.SymbolFlags.Optional)),
+    // SymbolFlags.Optional no marca los parámetros de función: un parámetro
+    // es opcional si lleva `?`, tiene valor por defecto o es rest.
+    required: !(
+      param.valueDeclaration
+      && ts.isParameter(param.valueDeclaration)
+      && checker.isOptionalParameter(param.valueDeclaration)
+    ),
     description: ts.displayPartsToString(
       param.getDocumentationComment(checker),
     ).trim(),
