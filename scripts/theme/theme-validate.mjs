@@ -285,18 +285,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // declara `--bs-X: rgb(var(--bs-X-rgb))` en `:root`, donde se calcula con el
   // triplete del raíz y se hereda ya resuelto: dentro de la zona, lo que lee
   // `var(--bs-X)` no ve el triplete nuevo. Se revisa cada zona con todas sus
-  // reglas fundidas y cada componente dentro de una zona, que necesita el
-  // wrapper en su propia regla: las reglas con el mismo selector se funden,
-  // pero el wrapper que el componente hereda de la zona no cuenta, porque se
-  // calcula con el triplete de la zona. Un triplete con formato inválido
+  // reglas fundidas y cada componente dentro de una zona, alternativa por
+  // alternativa del selector. El componente necesita el wrapper sobre sí
+  // mismo: cuenta el de cualquier regla con su selector, dentro de la zona o
+  // global, pero no el que hereda de la zona, que se calcula con el triplete
+  // de la zona. Un triplete con formato inválido
   // en la zona ya lo rechaza R1, y uno que vuelve al valor del padre
   // (`inherit`, `unset`…) no cambia nada que el wrapper tenga que seguir.
-  const checkWrappers = (decls, where, { skipInvalid }) => {
+  const checkWrappers = (decls, where, { skipInvalid, declared = decls }) => {
     for (const [name, { value, line }] of decls) {
       if (!name.endsWith('-rgb')) continue;
       const wrapper = name.slice(0, -'-rgb'.length);
       const expected = libraryWrapper(wrapper);
-      if (!expected || decls.has(wrapper)) continue;
+      if (!expected || declared.has(wrapper)) continue;
       if (inheritsParent(value)) continue;
       if (skipInvalid && !isTripletOrRgbVar(value)) continue;
       warn(
@@ -311,15 +312,30 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
   for (const ctx of zoneContexts) checkWrappers(ctx.own, inContext(ctx), { skipInvalid: true });
   const zoneComponents = new Map();
+  const globalNames = new Map();
   for (const block of blocks) {
-    if (block.zone || !alternatives(block).some((alt) => alt.zone)) continue;
-    const key = splitSelectorList(block.prelude).map(normalizeSelector).join(',');
-    const rule = zoneComponents.get(key) ?? { prelude: block.prelude, decls: new Map() };
-    for (const [name, entry] of block.decls) cascadeSet(rule.decls, name, entry);
-    zoneComponents.set(key, rule);
+    if (block.zone || block.isRoot) continue;
+    for (const alt of alternatives(block)) {
+      const bare = normalizeSelector(alt.bare);
+      if (!alt.zone) {
+        const names = globalNames.get(bare) ?? new Set();
+        for (const name of block.decls.keys()) names.add(name);
+        globalNames.set(bare, names);
+        continue;
+      }
+      const key = `${alt.zone} ${bare}`;
+      const rule = zoneComponents.get(key) ?? {
+        label: `${zoneSelector(alt.zone)}${alt.sameElement ? '' : ' '}${alt.bare}`,
+        bare,
+        decls: new Map(),
+      };
+      for (const [name, entry] of block.decls) cascadeSet(rule.decls, name, entry);
+      zoneComponents.set(key, rule);
+    }
   }
-  for (const { prelude, decls } of zoneComponents.values()) {
-    checkWrappers(decls, ` en "${prelude}"`, { skipInvalid: false });
+  for (const { label, bare, decls } of zoneComponents.values()) {
+    const declared = new Set([...decls.keys(), ...(globalNames.get(bare) ?? [])]);
+    checkWrappers(decls, ` en "${label}"`, { skipInvalid: false, declared });
   }
 
   // R2 — no declarar el wrapper de color.

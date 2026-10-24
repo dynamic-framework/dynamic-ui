@@ -446,8 +446,10 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `:root`: los componentes que leen `var(--bs-X)` conservan dentro de la zona el
   valor del raíz. Una zona repartida en varias reglas se revisa entera; un
   componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita el
-  wrapper en su propia regla, y las reglas con el mismo selector se revisan
-  juntas. Un triplete que rechaza `triplete`, o que vuelve
+  wrapper sobre sí mismo. Cada alternativa de una lista de selectores se revisa
+  por separado, y cuenta el wrapper de cualquier regla con el mismo selector,
+  de la zona o global (`.form-control`); el que el componente hereda de la zona
+  no cuenta. Un triplete que rechaza `triplete`, o que vuelve
   al valor del padre (`inherit`, `unset`…), no da este aviso.
 - `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
   sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.

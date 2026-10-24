@@ -1199,6 +1199,29 @@ describe('theme-validate — wrapper-faltante-zona', () => {
     expect(avisos(css)).toBe(0);
   });
 
+  it('revisa cada alternativa de una lista de selectores por separado', () => {
+    const css = base()
+      + zona('  --bs-secondary-bg-rgb: 10, 20, 30;', '[data-bs-theme="oscura"] .card,\n[data-bs-theme="oscura"] .modal')
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));', '[data-bs-theme="oscura"] .card')
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));', '[data-bs-theme="oscura"] .modal');
+    expect(avisos(css)).toBe(0);
+    // Sin el de .modal, sólo falta el suyo.
+    const sinModal = base()
+      + zona('  --bs-secondary-bg-rgb: 10, 20, 30;', '[data-bs-theme="oscura"] .card,\n[data-bs-theme="oscura"] .modal')
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));', '[data-bs-theme="oscura"] .card');
+    expect(avisos(sinModal)).toBe(1);
+    expect(validate(sinModal).stderr).toContain('en "[data-bs-theme="oscura"] .modal": se redefine sin --bs-secondary-bg.');
+  });
+
+  it('cuenta el wrapper de una regla global sobre el mismo componente', () => {
+    // Las dos reglas caen sobre la propia .card: el wrapper global se calcula
+    // allí con el triplete de la zona.
+    const css = base()
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));', '.card')
+      + zona('  --bs-secondary-bg-rgb: 10, 20, 30;', '[data-bs-theme="oscura"] .card');
+    expect(avisos(css)).toBe(0);
+  });
+
   it('exige el wrapper en el propio bloque de componente de la zona', () => {
     // El wrapper de la zona se calcula con el triplete de la zona, no con el
     // que el componente redefine debajo.
