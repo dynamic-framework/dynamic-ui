@@ -52,7 +52,7 @@ field points to the repository root instead of the release tag and
 ```jsonc
 {
   "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
-  "schemaVersion": "1.1.0",   // version of this JSON structure (not the package)
+  "schemaVersion": "1.2.0",   // version of this JSON structure (not the package)
   "packageVersion": "2.4.0",  // npm package version
   "repository": "https://github.com/dynamic-framework/dynamic-ui/releases/tag/v2.4.0",
   "generatedAt": "2025-01-01T00:00:00.000Z",
@@ -114,9 +114,86 @@ with two extra fields:
 
 `parent` and `accessor` are only present on subcomponents. Since 1.1.0.
 
+#### Which props are listed
+
+`props` lists every prop declared in the project (including the ones that share
+a name with an HTML attribute, such as `DButtonIcon.color`) and every attribute
+the component destructures, with its default when it has one (for example
+`DButton.type` = `"button"` or `DInputRange.min` = `"0"`). The rest of the
+attributes from `@types/react` are not listed one by one: when the component
+forwards them, `forwardedProps` says where (see below). `children` is listed
+only when the component declares or reads it.
+
+`defaultValue` is read from the function that implements the component, also
+when it is wrapped in `forwardRef` or `Object.assign`, or when the props are
+destructured in its body.
+
+#### `forwardedProps` (optional, since 1.2.0)
+
+Present when the component forwards the props it does not list (`...rest`) to
+another element:
+
+```jsonc
+{
+  "DInputCounter": {
+    "forwardedProps": {
+      "target": "input",                                   // final element or library component
+      "type": "InputHTMLAttributes<HTMLInputElement>"      // props it accepts
+    },
+    "props": { ... }
+  }
+}
+```
+
+`target` is the end of the chain: `DInputCounter` forwards to `DInput`, which
+forwards to `input`, so `target` is `input`. Library components are targets
+too (`Splide`, `Select`, `DatePicker`).
+
+#### `types` (optional, since 1.2.0)
+
+Project type aliases referenced by the props:
+
+- Aliases whose members are primitives or literals are expanded inline in
+  `type`: `DButton.size.type` is `"sm" | "lg" | Partial<Record<…, "sm" | "lg">> | undefined`,
+  not `ComponentSize | …`. An alias of a single primitive, such as
+  `ComponentColor = string`, already appears as `string`.
+- Any other alias (objects, unions with functions or components, records)
+  keeps its name in `type` and is defined in the component's `types`, with the
+  same shape as in `hooks`. Aliases used inside a definition are defined too.
+- Types from libraries (`ReactNode`, `CSSProperties`, …) keep their name and
+  are not defined.
+
+```jsonc
+{
+  "DStepper": {
+    "props": {
+      "options": { "type": "Step[]", "required": true, "defaultValue": null, "description": "" }
+    },
+    "types": {
+      "Step": {
+        "description": "",
+        "type": "object",
+        "fields": {
+          "label": { "type": "string", "required": true },
+          "value": { "type": "number", "required": true },
+          "description": { "type": "string", "required": false }
+        }
+      }
+    }
+  }
+}
+```
+
+#### Deprecated props
+
+A deprecated prop keeps its entry and its `description` starts with
+`@deprecated` followed by the reason.
+
 ### `hooks[name]`
 
-Each hook entry has this shape:
+`hooks` has one entry per `use*` export of the package, including the ones it
+re-exports from a dependency (`useErrorBoundary`, whose `source` is
+`react-error-boundary`). Each hook entry has this shape:
 
 ```jsonc
 {
@@ -136,12 +213,23 @@ Each hook entry has this shape:
         "returns": { "type": "string" }
       }
     },
+    "returnType": "{ toast: (data: ToastData | ValueFunction<Renderable, Toast>, toastProps?: DToastOptions) => string; }",
     "types": {
       "ToastData": { "description": "...", "type": "object", "fields": { ... } }
     }
   }
 }
 ```
+
+- `returnType` (since 1.2.0) is the full return type. `returns` lists its
+  properties when it is an object and is empty otherwise (`boolean`, `void`,
+  tuples): `useMediaBreakpointUpMd` has `"returns": {}` and
+  `"returnType": "boolean"`.
+- A value in `returns` that is an object carries its `fields`, and a union of
+  string literals its `values`, with the same shape as in `types` (since 1.2.0).
+- `types` includes the project types used by the parameters and by the
+  generic constraints (`useItemSelection<T extends Identifiable>` defines
+  `Identifiable`).
 
 ### `contexts[name]`
 
@@ -316,5 +404,7 @@ RELEASE_TAG=v0.0.0 node scripts/generate-manifest.mjs
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) — development workflow
 - [`scripts/generate-api.mjs`](scripts/generate-api.mjs) — source of truth for `api.json`
+- [`scripts/component-docgen.mjs`](scripts/component-docgen.mjs) — component props, defaults, `forwardedProps` and `types`; shared with the Storybook component manifest
+- [`scripts/validate-registry.mjs`](scripts/validate-registry.mjs) — validates `api.json` against the schema and against the source code
 - [`scripts/generate-schema.mjs`](scripts/generate-schema.mjs) — JSON Schema generator
 - [`scripts/generate-manifest.mjs`](scripts/generate-manifest.mjs) — manifest generator

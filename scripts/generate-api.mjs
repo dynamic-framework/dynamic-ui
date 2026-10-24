@@ -631,7 +631,7 @@ const CDN_BASE_URL = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.
 
 const apiOutput = {
   $schema: `${CDN_BASE_URL}/schema/v1.json`,
-  schemaVersion: '1.1.0',
+  schemaVersion: '1.2.0',
   packageVersion,
   repository: repositoryUrl,
   generatedAt: process.env.RELEASE_PUBLISHED_AT ?? new Date().toISOString(),
