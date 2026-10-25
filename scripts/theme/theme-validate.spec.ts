@@ -1639,64 +1639,107 @@ describe('theme-validate — pares horneados', () => {
     const result = validate(expandCss(SECTIONED_THEME));
     expect(result.stderr).not.toContain('error ');
   });
+});
 
-  it('distingue el botón con contorno en reposo del relleno', () => {
-    // En reposo el texto va sobre la superficie; sólo al rellenarse cae sobre
-    // el color del role, y ahí manda --bs-btn-hover-color. Este theme pone
-    // blanco en reposo sobre fondo oscuro y oscuro al rellenar: los dos pares
-    // contrastan, aunque medir el de reposo contra el role diría lo contrario.
-    const css = expandCss({
-      ...SECTIONED_THEME,
-      roles: { primary: '#7fd4d0' },
-      zones: {
-        oscura: {
-          ...SECTIONED_THEME.zones.oscura,
-          vars: {
-            '--bs-body-bg-rgb': '32, 44, 62',
-            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
-          },
-          components: [
-            ...SECTIONED_THEME.zones.oscura.components,
-            {
-              selector: '.btn-outline-primary',
-              vars: {
-                '--bs-btn-color': 'rgb(var(--bs-white-rgb))',
-                '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
-              },
-            },
-          ],
-        },
-      },
-    });
-    expect(validate(css).stderr).not.toContain('[contraste-boton]');
+describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)', () => {
+  const EJEMPLO = JSON.parse(fs.readFileSync(
+    path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json'),
+    'utf8',
+  ));
 
-    // Y si el relleno se deja en blanco, sí se reporta, nombrando el estado.
-    const roto = expandCss({
-      ...SECTIONED_THEME,
-      roles: { primary: '#7fd4d0' },
-      zones: {
-        oscura: {
-          ...SECTIONED_THEME.zones.oscura,
-          vars: {
-            '--bs-body-bg-rgb': '32, 44, 62',
-            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
-          },
-          components: [
-            ...SECTIONED_THEME.zones.oscura.components,
-            {
-              selector: '.btn-outline-primary',
-              vars: {
-                '--bs-btn-color': 'rgb(var(--bs-white-rgb))',
-                '--bs-btn-hover-color': 'rgb(var(--bs-white-rgb))',
-              },
-            },
-          ],
-        },
+  /**
+   * El ejemplo con un primary claro, sus dos pares reales corregidos y un
+   * .btn-outline-primary legible en los tres estados: primary-900 en el raíz y
+   * blanco en la zona oscura. Ninguno declara fondo de hover ni de active, así
+   * que el botón no se rellena. Chromium: 13.91:1 en el raíz y 14.69:1 en la
+   * zona, en los tres estados.
+   */
+  const outlineTheme = (
+    zoneOutline: Record<string, string>,
+    rootOutline: string[] = ['color', 'border-color', 'hover-color', 'hover-border-color', 'active-color', 'active-border-color'],
+  ) => ({
+    ...EJEMPLO,
+    roles: { ...EJEMPLO.roles, primary: '#7fd4d0' },
+    root: { ...EJEMPLO.root, '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-900-rgb))' },
+    components: [
+      ...EJEMPLO.components.map((c: { selector: string; vars?: Record<string, string> }) => (
+        c.selector === '.nav-pills'
+          ? { ...c, vars: { ...c.vars, '--bs-nav-pills-link-active-color': 'rgb(var(--bs-dark-rgb))' } }
+          : c)),
+      {
+        selector: '.btn-outline-primary',
+        vars: Object.fromEntries(rootOutline.map((v) => [`--bs-btn-${v}`, 'rgb(var(--bs-primary-900-rgb))'])),
       },
-    });
-    const result = validate(roto);
+    ],
+    zones: {
+      oscura: {
+        ...EJEMPLO.zones.oscura,
+        components: [
+          ...EJEMPLO.zones.oscura.components
+            .filter((c: { selector: string }) => c.selector !== '.btn-outline-primary'),
+          { selector: '.btn-outline-primary', vars: zoneOutline },
+        ],
+      },
+    },
+  });
+  const blanco = Object.fromEntries(['color', 'border-color', 'hover-color', 'hover-border-color', 'active-color', 'active-border-color']
+    .map((v) => [`--bs-btn-${v}`, 'rgb(var(--bs-white-rgb))']));
+
+  it('pasa --strict con un outline que no se rellena, medido contra la superficie', () => {
+    // Antes, el hover se medía contra --bs-primary, que el botón no pinta nunca:
+    // 1.72:1 entre el blanco y el primary claro.
+    const result = validateStrict(expandCss(outlineTheme(blanco)));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide contra el relleno que fija el theme, y da error si no contrasta', () => {
+    const css = expandCss(outlineTheme({
+      ...blanco,
+      '--bs-btn-hover-bg': 'rgb(var(--bs-primary-rgb))',
+    }));
+    const result = validateStrict(css);
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('relleno (hover/active)');
+    expect(result.stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en hover": 1.72:1 entre el texto '
+      + '--bs-btn-hover-color (--bs-white-rgb) y el fondo --bs-btn-hover-bg',
+    );
+    expect(result.stderr).not.toContain('en active');
+  });
+
+  it('mide el texto que la librería pone en cada estado si el theme no lo fija', () => {
+    // Sin --bs-btn-active-color, el botón pulsado del raíz lleva el
+    // --bs-primary-700 de la librería sobre la superficie clara. Chromium: 4.22:1.
+    const css = expandCss(outlineTheme(blanco, ['color', 'border-color', 'hover-color', 'hover-border-color']));
+    const result = validateStrict(css);
+    expect(result.stderr).toContain(
+      '".btn-outline-primary, en active": 4.22:1 entre el texto --bs-btn-active-color '
+      + '(--bs-primary-700-rgb) y el fondo --bs-body-bg-rgb',
+    );
+    expect(result.stderr).toContain('así que el botón conserva el que Bootstrap horneó para "primary"');
+    expect(result.status).toBe(1);
+  });
+
+  it('atribuye al theme el texto que hereda de un bloque global', () => {
+    // La zona no fija el active, pero el bloque global sí (primary-900): es lo
+    // que pinta el botón pulsado en la zona, y es el theme quien lo pone.
+    const { '--bs-btn-active-color': omitido, ...sinActive } = blanco;
+    expect(omitido).toBeDefined();
+    const result = validateStrict(expandCss(outlineTheme(sinActive)));
+    expect(result.stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en active": 1.02:1',
+    );
+    expect(result.stderr).toContain('El theme fija ese color de texto');
+  });
+
+  it('no cuenta --bs-btn-outline-<role>-hover-bg, que no lee ningún selector', () => {
+    // La librería lo declara en :root, pero el hover pinta var(--bs-btn-hover-bg).
+    const theme = outlineTheme(blanco);
+    const css = expandCss({
+      ...theme,
+      root: { ...theme.root, '--bs-btn-outline-primary-hover-bg': 'rgb(var(--bs-primary-rgb))' },
+    });
+    expect(validateStrict(css).status).toBe(0);
   });
 });
 

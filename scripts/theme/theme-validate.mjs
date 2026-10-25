@@ -15,7 +15,6 @@ import { pathToFileURL } from 'node:url';
 import {
   AA_NORMAL_TEXT,
   BAKED_PAIRS,
-  BUTTON_DEFAULT_FG,
   FONT_SIZE_STEPS,
   GRAY_STEPS,
   RAMPED_ROLES,
@@ -204,17 +203,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     fail('vacio', 'El archivo no declara ninguna custom property --bs-*.');
     return { errors, warnings, notes };
   }
-
-  /**
-   * Wrapper de la librería para un lado de un par. Se nombra el wrapper y no su
-   * triplete porque se calcula en el raíz: es lo que ve un componente dentro de
-   * una zona que sólo cambia el triplete.
-   */
-  const pick = (spec, role) => {
-    if (spec.kind === 'white') return '--bs-white';
-    if (spec.kind === 'gray') return `--bs-gray-${spec.step}`;
-    return `--bs-${role}-${spec.step}`;
-  };
 
   // Contextos en los que se mide el theme: el bloque raíz y cada zona, con
   // todas sus reglas fundidas (buildContexts). Las reglas de formato y las de
@@ -667,15 +655,17 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
-  // calculó. En `.btn-outline-<role>` el fondo del role es el del estado
-  // relleno (hover/active), que es donde el par puede romperse.
+  // calculó. `.btn-outline-<role>` se mide en reposo, en hover y en active, cada
+  // uno con su texto y sobre el fondo que de verdad se pinta.
   const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-btn-color');
     const hoverDecl = block.decls.get('--bs-btn-hover-color');
     const bgDecl = block.decls.get('--bs-btn-bg');
     const hoverBgDecl = block.decls.get('--bs-btn-hover-bg');
-    if (!fgDecl && !hoverDecl && !bgDecl && !hoverBgDecl) continue;
+    const activeDecl = block.decls.get('--bs-btn-active-color');
+    const activeBgDecl = block.decls.get('--bs-btn-active-bg');
+    if (!fgDecl && !hoverDecl && !bgDecl && !hoverBgDecl && !activeDecl && !activeBgDecl) continue;
 
     for (const { zone: altZone, bare: part } of alternatives(block)) {
       const match = part.trim().match(BUTTON_SELECTOR);
@@ -692,35 +682,46 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
 
         /*
          * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña dos, y son distintos: en reposo el fondo es
-         * transparente y lo que hay detrás es la superficie del contexto; sólo
-         * al rellenarse (hover/active) el texto cae sobre el color del role, y
-         * ahí el color que manda es --bs-btn-hover-color. Medir el par de
-         * reposo contra el fondo del role daría por roto un botón que se ve
-         * perfectamente. Sin declaración, el sólido lee lo que la librería pone
-         * en `.btn-<role>`; el de contorno cae a los wrappers del role, que se
-         * calculan en el raíz.
+         * Uno con contorno enseña tres, uno por estado, y en Dynamic no se
+         * rellena en ninguno: la librería no declara --bs-btn-hover-bg ni
+         * --bs-btn-active-bg en `.btn-outline-<role>`, así que
+         * `background-color: var(--bs-btn-hover-bg)` queda transparente y lo
+         * que se ve detrás es la superficie del contexto. Sólo hay relleno si
+         * el theme declara esas variables, sobre el botón o en un ancestro
+         * (la zona o el raíz), y entonces se mide contra ellas. El texto de
+         * cada estado es el que declara la librería en el botón
+         * (`--bs-btn-outline-<role>-hover-color`…), salvo que el theme lo pise.
          */
+        const surface = () => measureSide(ctx, element, '--bs-body-bg-rgb', { background: true });
+        const fill = (variable) => (element.has(variable) || ctx.own.has(variable)
+          ? measureSide(ctx, element, variable, { background: true })
+          : surface());
+        // ¿El texto que gana sobre el botón lo pone el theme, en este bloque o
+        // en otro con el mismo selector, o es el de la librería?
+        const fromTheme = (variable) => element.has(variable)
+          && element.get(variable).source !== 'defecto';
         const cases = outline
           ? [
             {
               estado: 'en reposo',
               decl: fgDecl ?? bgDecl,
-              fg: measureSide(ctx, element, '--bs-btn-color', { fallback: `--bs-${role}` }),
-              bg: measureSide(ctx, element, '--bs-body-bg-rgb', { background: true }),
-              themeFg: Boolean(fgDecl),
+              fg: measureSide(ctx, element, '--bs-btn-color'),
+              bg: surface(),
+              themeFg: fromTheme('--bs-btn-color'),
             },
             {
-              // Al rellenarse, el fondo lo pone --bs-btn-hover-bg, que en
-              // Bootstrap vale var(--bs-<role>); --bs-btn-bg se queda en
-              // transparent y no llega a verse nunca.
-              estado: 'relleno (hover/active)',
-              decl: hoverDecl ?? fgDecl ?? hoverBgDecl,
-              fg: element.has('--bs-btn-hover-color')
-                ? measureSide(ctx, element, '--bs-btn-hover-color')
-                : measureSide(ctx, element, '--bs-btn-color', { fallback: pick(BUTTON_DEFAULT_FG[role], role) }),
-              bg: measureSide(ctx, element, '--bs-btn-hover-bg', { fallback: `--bs-${role}`, background: true }),
-              themeFg: Boolean(hoverDecl ?? fgDecl),
+              estado: 'en hover',
+              decl: hoverDecl ?? hoverBgDecl ?? fgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-hover-color'),
+              bg: fill('--bs-btn-hover-bg'),
+              themeFg: fromTheme('--bs-btn-hover-color'),
+            },
+            {
+              estado: 'en active',
+              decl: activeDecl ?? activeBgDecl ?? fgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-active-color'),
+              bg: fill('--bs-btn-active-bg'),
+              themeFg: fromTheme('--bs-btn-active-color'),
             },
           ]
           : [
