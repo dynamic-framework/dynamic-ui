@@ -1,6 +1,6 @@
 /*
  * Theme con zonas escrito a mano siguiendo scripts/theme/README.md: superficies
- * en el raíz y, en la zona, tripletes y variables directas, `color` y
+ * en el raíz y, en la zona, cada triplete con su wrapper, `color` y
  * `background-color` sobre el elemento, y bloques propios para .nav y .btn-*.
  * Lo usa theme-validate.spec.ts: pasa --strict con salida 0.
  */
@@ -29,7 +29,9 @@
   --bs-emphasis-color: rgb(var(--bs-white-rgb));
   --bs-heading-color: rgb(var(--bs-white-rgb));
   --bs-link-color-rgb: var(--bs-primary-300-rgb);
+  --bs-link-color: rgb(var(--bs-link-color-rgb));
   --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
+  --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
   --bs-border-color: rgba(var(--bs-white-rgb), .15);
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
