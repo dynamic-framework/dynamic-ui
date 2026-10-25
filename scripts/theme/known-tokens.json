@@ -1,6 +1,6 @@
 {
-  "dynamicUi": "2.10.0",
-  "count": 1902,
+  "dynamicUi": "2.12.0",
+  "count": 1908,
   "tokens": [
     "--bs-accordion-active-bg",
     "--bs-accordion-active-color",
@@ -1675,6 +1675,12 @@
     "--bs-select-option-selected-color",
     "--bs-select-option-selected-font-weight",
     "--bs-shadow-confirm-modal",
+    "--bs-skeleton-animation",
+    "--bs-skeleton-bg",
+    "--bs-skeleton-border-radius",
+    "--bs-skeleton-gap",
+    "--bs-skeleton-line-gap",
+    "--bs-skeleton-mask-image",
     "--bs-spinner-animation-name",
     "--bs-spinner-animation-speed",
     "--bs-spinner-border-width",

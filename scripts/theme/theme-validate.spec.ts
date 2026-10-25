@@ -2825,3 +2825,113 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     });
   });
 });
+
+describe('known-tokens.json al día con el CSS compilado (#1311)', () => {
+  const THEME_DIR = path.join(ROOT, 'scripts/theme');
+  const INVENTORY = path.join(THEME_DIR, 'known-tokens.json');
+  const BUILD = path.join(THEME_DIR, 'build-known-tokens.mjs');
+  const SKELETON = [
+    '--bs-skeleton-animation', '--bs-skeleton-bg', '--bs-skeleton-border-radius',
+    '--bs-skeleton-gap', '--bs-skeleton-line-gap', '--bs-skeleton-mask-image',
+  ];
+
+  // Los scripts leen el inventario desde su propio directorio, resuelven sus
+  // dependencias desde node_modules y theme-expand lee ../../package.json: la
+  // copia vive dos niveles por debajo de la raíz, dentro de scripts/. Se borra
+  // en afterAll, que corre aunque falle algún caso.
+  let oldDir: string;
+  beforeAll(() => {
+    oldDir = fs.mkdtempSync(path.join(ROOT, 'scripts', '.known-tokens-'));
+    for (const file of ['theme-expand.mjs', 'theme-validate.mjs', 'theme-tokens.mjs']) {
+      fs.copyFileSync(path.join(THEME_DIR, file), path.join(oldDir, file));
+    }
+    const current = JSON.parse(fs.readFileSync(INVENTORY, 'utf8'));
+    const tokens = current.tokens.filter((token: string) => !SKELETON.includes(token));
+    fs.writeFileSync(
+      path.join(oldDir, 'known-tokens.json'),
+      `${JSON.stringify({ dynamicUi: '2.10.0', count: tokens.length, tokens }, null, 2)}\n`,
+    );
+  });
+  afterAll(() => {
+    fs.rmSync(oldDir, { recursive: true, force: true });
+  });
+
+  const EJEMPLO = path.join(THEME_DIR, 'themes/theme-ejemplo-zonas.json');
+  const skeletonTheme = () => {
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    theme.components.push({ selector: '.card', vars: { '--bs-card-cap-bg': 'var(--bs-skeleton-bg)' } });
+    return write(JSON.stringify(theme), '.json');
+  };
+  // El navegador pinta --bs-skeleton-bg; el respaldo sólo se usaría si el token
+  // no existiera.
+  const skeletonCss = () => write(
+    `${fs.readFileSync(path.join(THEME_DIR, 'out/theme-ejemplo-zonas.css'), 'utf8')}\n`
+    + '.btn-primary {\n  --bs-btn-color: var(--bs-skeleton-bg, rgb(var(--bs-primary-rgb)));\n}\n',
+    '.css',
+  );
+
+  it('el inventario anterior rechaza en theme-expand un token de skeleton que existe', () => {
+    const input = skeletonTheme();
+    const result = run(path.join(oldDir, 'theme-expand.mjs'), [input, '-o', `${input}.css`]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      'referencia --bs-skeleton-bg, que no existe: ni lo genera este theme ni está en el CSS de Dynamic UI 2.10.0.',
+    );
+  });
+
+  it('el inventario versionado lo acepta', () => {
+    const input = skeletonTheme();
+    const result = run(EXPAND, [input, '-o', `${input}.css`]);
+    expect(result.status).toBe(0);
+  });
+
+  it('el inventario anterior mide en theme-validate el respaldo de un token que existe', () => {
+    const result = run(path.join(oldDir, 'theme-validate.mjs'), [skeletonCss()]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[contraste-boton]');
+    expect(result.stderr).toContain('".btn-primary": 1.00:1');
+  });
+
+  it('el inventario versionado no lo da por roto: no conoce su valor y lo avisa', () => {
+    const result = run(VALIDATE, [skeletonCss()]);
+    expect(result.status).toBe(0);
+    expect(result.stderr).not.toContain('[contraste-boton]');
+    expect(result.stderr).toContain('--bs-skeleton-bg es de la librería, pero el validador no conoce su valor');
+  });
+
+  describe('build-known-tokens --check', () => {
+    const versioned = () => JSON.parse(fs.readFileSync(INVENTORY, 'utf8')).tokens as string[];
+    /** Un CSS con la cabecera de versión y una declaración por token. */
+    const cssWith = (tokens: string[], version = '9.9.9') => write(
+      `/*!\n * dynamic-framework ${version}\n */\n:root {\n${tokens.map((t) => `  ${t}: 0;`).join('\n')}\n}\n`,
+      '.css',
+    );
+
+    it('sale con 0 si los tokens coinciden, aunque la versión no', () => {
+      const result = run(BUILD, ['--check', cssWith(versioned())]);
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain('known-tokens.json coincide con el CSS');
+    });
+
+    it('sale con 1 y lista lo que entra y lo que sale', () => {
+      const [first, ...rest] = versioned();
+      const result = run(BUILD, ['--check', cssWith([...rest, '--bs-token-nuevo'])]);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain('  + --bs-token-nuevo\n');
+      expect(result.stderr).toContain(`  - ${first}\n`);
+    });
+
+    it('no escribe el inventario', () => {
+      const before = fs.readFileSync(INVENTORY, 'utf8');
+      run(BUILD, ['--check', cssWith(['--bs-solo-uno'])]);
+      expect(fs.readFileSync(INVENTORY, 'utf8')).toBe(before);
+    });
+
+    const compiled = path.join(ROOT, 'dist/css/dynamic-ui.css');
+    // dist/ es build output: aquí se salta si no está compilado; en CI lo
+    // comprueba el paso «Check known-tokens.json» después del build.
+    (fs.existsSync(compiled) ? it : it.skip)('el inventario versionado coincide con dist/css/dynamic-ui.css', () => {
+      expect(run(BUILD, ['--check', compiled]).status).toBe(0);
+    });
+  });
+});

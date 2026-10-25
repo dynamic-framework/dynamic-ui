@@ -29,6 +29,10 @@ jobs:
           fi
       - name: Build packages
         run: npm run build
+      - name: Check known-tokens.json
+        # theme-expand y theme-validate leen este inventario: tiene que tener los
+        # mismos tokens que el CSS que acaba de compilarse. No compara la versión.
+        run: node scripts/theme/build-known-tokens.mjs --check
       - name: Validate api.json
         # El build genera registry/api.json; el schema se genera aquí.
         run: |
