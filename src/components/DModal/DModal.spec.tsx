@@ -9,6 +9,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DModal from '.';
+import DBoxFile from '../DBoxFile';
+import DTabs from '../DTabs';
 import { DContextProvider } from '../../contexts/DContext';
 import { useDPortalContext } from '../../contexts/DPortalContext';
 
@@ -372,7 +374,58 @@ describe('<DModal />', () => {
         );
       }
 
-      type Portals = { example: undefined; empty: undefined };
+      function HiddenInputExample() {
+        return (
+          <DModal name="exampleModalHiddenInput">
+            <DModal.Header>Con input oculto</DModal.Header>
+            <DModal.Body>
+              <button type="button">Primero</button>
+              <button type="button">Último</button>
+              <input type="hidden" name="token" value="abc" />
+            </DModal.Body>
+          </DModal>
+        );
+      }
+
+      function BoxFileExample() {
+        return (
+          <DModal name="exampleModalBoxFile">
+            <DModal.Header>Con DBoxFile</DModal.Header>
+            <DModal.Body>
+              <button type="button">Primero</button>
+              <DBoxFile accept={{ 'image/*': [] }}>Arrastra un archivo</DBoxFile>
+            </DModal.Body>
+          </DModal>
+        );
+      }
+
+      // Solo la pestaña activa lleva tabindex="0": las inactivas no pueden ser
+      // ni el primer ni el último candidato del bucle.
+      function TabsExample() {
+        return (
+          <DModal name="exampleModalTabs">
+            <DModal.Header>Con DTabs</DModal.Header>
+            <DModal.Body>
+              <DTabs
+                options={[
+                  { label: 'Tab 1', tab: 'tab1' },
+                  { label: 'Tab 2', tab: 'tab2' },
+                  { label: 'Tab 3', tab: 'tab3' },
+                ]}
+                defaultSelected="tab2"
+              />
+            </DModal.Body>
+          </DModal>
+        );
+      }
+
+      type Portals = {
+        example: undefined;
+        empty: undefined;
+        hiddenInput: undefined;
+        boxFile: undefined;
+        tabs: undefined;
+      };
 
       function Opener({ portal = 'example' }: { portal?: keyof Portals }) {
         const { openPortal } = useDPortalContext<Portals>();
@@ -382,7 +435,15 @@ describe('<DModal />', () => {
       async function openModal(portal: keyof Portals = 'example') {
         const user = userEvent.setup();
         render(
-          <DContextProvider availablePortals={{ example: ExampleModal, empty: EmptyExample }}>
+          <DContextProvider
+            availablePortals={{
+              example: ExampleModal,
+              empty: EmptyExample,
+              hiddenInput: HiddenInputExample,
+              boxFile: BoxFileExample,
+              tabs: TabsExample,
+            }}
+          >
             <Opener portal={portal} />
           </DContextProvider>,
         );
@@ -422,6 +483,50 @@ describe('<DModal />', () => {
         expect(first).toHaveFocus();
         await user.tab({ shift: true });
         expect(last).toHaveFocus();
+      });
+
+      describe.each([
+        [
+          'un input type="hidden" al final',
+          'hiddenInput' as const,
+          () => screen.getByRole('button', { name: 'Primero' }),
+          () => screen.getByRole('button', { name: 'Último' }),
+        ],
+        [
+          'un DBoxFile al final',
+          'boxFile' as const,
+          () => screen.getByRole('button', { name: 'Primero' }),
+          () => document.querySelector<HTMLElement>('.d-box-file-dropzone') as HTMLElement,
+        ],
+        [
+          'un DTabs con la pestaña del medio activa',
+          'tabs' as const,
+          () => screen.getByRole('tab', { name: 'Tab 2' }),
+          () => screen.getByRole('tab', { name: 'Tab 2' }),
+        ],
+      ])('con %s', (_, portal, getFirst, getLast) => {
+        it('al abrir, Tab va al primero y Shift+Tab al último enfocable', async () => {
+          const { user, dialog } = await openModal(portal);
+
+          await user.tab();
+          expect(getFirst()).toHaveFocus();
+          dialog.focus();
+          await user.tab({ shift: true });
+          expect(getLast()).toHaveFocus();
+        });
+
+        it('el bucle va del último al primero y del primero al último', async () => {
+          const { user, dialog } = await openModal(portal);
+          const first = getFirst();
+          const last = getLast();
+
+          last.focus();
+          await user.tab();
+          expect(first).toHaveFocus();
+          await user.tab({ shift: true });
+          expect(last).toHaveFocus();
+          expect(dialog).toContainElement(document.activeElement as HTMLElement);
+        });
       });
 
       it('un diálogo sin enfocables conserva el foco con Tab y con Shift+Tab', async () => {
