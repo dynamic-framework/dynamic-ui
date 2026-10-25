@@ -183,4 +183,24 @@ describe('validate-registry', () => {
 
     expect(run(file).stderr).toContain('  - DButton: ValidationMessages\n');
   });
+
+  // api.json de develop antes de #1308: DErrorBoundary.tsx reexporta
+  // useErrorBoundary y getErrorMessage de react-error-boundary.
+  test('falla si components incluye exports que no son componentes (#1308)', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE_B, 'utf8'));
+    const sourcePath = 'src/components/DErrorBoundary/DErrorBoundary.tsx';
+    api.components = {
+      DButton: api.components.DButton,
+      useErrorBoundary: { description: '', sourcePath, props: {} },
+      getErrorMessage: { description: '', sourcePath, props: {} },
+    };
+    const file = path.join(workdir, 'api-lowercase.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    const result = run(file);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('2 claves de components que no empiezan por mayúscula');
+    expect(result.stderr).toContain('  - useErrorBoundary\n');
+    expect(result.stderr).toContain('  - getErrorMessage\n');
+  });
 });

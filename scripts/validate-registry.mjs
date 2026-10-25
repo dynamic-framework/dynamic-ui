@@ -10,7 +10,8 @@
  *     función que lo implementa se localiza, cada default que declara llega
  *     a `defaultValue`, sus props son exactamente las que deja el filtro
  *     (props propias y atributos que el componente desestructura) y ningún
- *     alias de tipo del proyecto queda sin expandir ni definir.
+ *     alias de tipo del proyecto queda sin expandir ni definir;
+ *   - las claves de `components` son componentes: empiezan por mayúscula.
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -176,6 +177,12 @@ componentsBySource.forEach((names, sourcePath) => {
   });
 });
 
+// Un hook o una función que un archivo de componente reexporta de una
+// librería (`useErrorBoundary`) no es un componente.
+report(
+  Object.keys(data.components ?? {}).filter((name) => !/^[A-Z]/.test(name)),
+  'claves de components que no empiezan por mayúscula (no son componentes)',
+);
 report(notFound, 'componentes cuyo código no se puede analizar');
 report(lostDefaults, 'defaults declarados en el código que no llegan a defaultValue');
 report(missingProps, 'props propias o desestructuradas por el componente que faltan en api.json');

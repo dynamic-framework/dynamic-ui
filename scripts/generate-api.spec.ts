@@ -216,4 +216,18 @@ describe('generate-api', () => {
   test('los tipos de librerías quedan por su nombre en las definiciones', () => {
     expect(api.components.DCarousel.types?.BaseProps.fields?.style.type).toBe('CSSProperties');
   });
+
+  // #1308: DErrorBoundary.tsx reexporta useErrorBoundary y getErrorMessage
+  // de react-error-boundary.
+  test('components solo enumera los componentes del proyecto', () => {
+    expect(Object.keys(api.components).filter((name) => !/^[A-Z]/.test(name))).toEqual([]);
+    expect(api.components).toHaveProperty('DErrorBoundary');
+    expect(api.hooks).toHaveProperty('useErrorBoundary');
+  });
+
+  test('los componentes con forwardRef siguen en components', () => {
+    ['DButton', 'DInput', 'DInputCounter', 'DInputSearch'].forEach((name) => {
+      expect(api.components).toHaveProperty(name);
+    });
+  });
 });
