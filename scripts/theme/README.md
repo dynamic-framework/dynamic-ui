@@ -421,12 +421,18 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
 `ul.nav-pills`) no entra en su capa: ese caso hay que mirarlo en la preview.
 
 - `contraste-boton` — todo bloque `.btn-<role>` o `.btn-outline-<role>` que fije
-  `--bs-btn-color` o `--bs-btn-bg`. En un botón sólido, lo que falte se toma de
-  lo que la librería pone en `.btn-<role>` (`--bs-btn-<role>-color` y
+  alguna de sus variables de texto o de fondo. En un botón sólido, lo que falte
+  se toma de lo que la librería pone en `.btn-<role>` (`--bs-btn-<role>-color` y
   `--bs-btn-<role>-bg`: en `secondary`, `--bs-secondary-700` sobre
-  `--bs-secondary-50`). En `outline` el texto que falte es el del role, o blanco
-  (gris 700 en `warning` y `light`) en el estado relleno, y el fondo de ese
-  estado es `--bs-<role>`.
+  `--bs-secondary-50`). Un `outline` se mide en reposo, en hover y en active.
+  El texto de cada estado es el que gana sobre el botón: el del theme o, si
+  no lo fija, el que pone la librería (`--bs-btn-outline-<role>-color`,
+  `-hover-color` y `-active-color`). El botón con contorno no se rellena: la
+  librería no declara `--bs-btn-hover-bg` ni `--bs-btn-active-bg` en él, así que
+  los tres estados se miden contra la superficie del contexto. Si el theme
+  declara alguna de esas dos variables, sobre el botón o en un ancestro, ese
+  estado se mide contra ella. `--bs-btn-outline-<role>-hover-bg` existe en
+  `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren. Sin fondo
   propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
@@ -446,8 +452,10 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `:root`: los componentes que leen `var(--bs-X)` conservan dentro de la zona el
   valor del raíz. Una zona repartida en varias reglas se revisa entera; un
   componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita el
-  wrapper en su propia regla, y las reglas con el mismo selector se revisan
-  juntas. Un triplete que rechaza `triplete`, o que vuelve
+  wrapper sobre sí mismo. Cada alternativa de una lista de selectores se revisa
+  por separado, y cuenta el wrapper de cualquier regla con el mismo selector,
+  de la zona o global (`.form-control`); el que el componente hereda de la zona
+  no cuenta. Un triplete que rechaza `triplete`, o que vuelve
   al valor del padre (`inherit`, `unset`…), no da este aviso.
 - `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
   sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.

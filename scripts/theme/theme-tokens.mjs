@@ -388,20 +388,30 @@ export const normalizeCssValue = (value) => String(value)
   .replace(/#[0-9a-fA-F]{3,8}\b/g, (hex) => hex.toLowerCase());
 
 /**
- * Color de texto del estado relleno (hover/active) de `.btn-outline-<role>`
- * cuando el theme no lo declara: el que `color-contrast()` calcula en Sass
- * sobre el role. Los botones sólidos no lo usan: leen lo que la librería pone
- * en `.btn-<role>` (LIBRARY_ELEMENT_VARS).
+ * Texto de `.btn-outline-<role>` en reposo, en hover y en active, tal como lo
+ * declara la librería en `--bs-btn-outline-<role>-{color,hover-color,active-color}`.
+ * El fondo no está aquí: el botón con contorno no se rellena, y en los tres
+ * estados deja ver lo que tiene detrás.
  */
-export const BUTTON_DEFAULT_FG = {
-  primary: { kind: 'white' },
-  secondary: { kind: 'white' },
-  success: { kind: 'white' },
-  info: { kind: 'white' },
-  danger: { kind: 'white' },
-  dark: { kind: 'white' },
-  warning: { kind: 'gray', step: 700 },
-  light: { kind: 'gray', step: 700 },
+const rampOutline = (rest, hover, active) => ({
+  color: { kind: 'role', step: rest },
+  'hover-color': { kind: 'role', step: hover },
+  'active-color': { kind: 'role', step: active },
+});
+const grayOutline = (rest, hover, active) => ({
+  color: { kind: 'gray', step: rest },
+  'hover-color': { kind: 'gray', step: hover },
+  'active-color': { kind: 'gray', step: active },
+});
+export const OUTLINE_COLORS = {
+  primary: rampOutline(500, 600, 700),
+  secondary: rampOutline(500, 700, 700),
+  success: rampOutline(500, 600, 700),
+  info: rampOutline(500, 600, 700),
+  warning: rampOutline(700, 800, 900),
+  danger: rampOutline(500, 600, 700),
+  light: grayOutline(100, 200, 300),
+  dark: grayOutline(900, 800, 700),
 };
 
 /** `[data-bs-theme="<zona>"]`, el selector con el que se monta una zona. */
@@ -676,7 +686,8 @@ const specVar = (spec, role) => {
 /**
  * Variables de color que la librería declara en `:root` y que leen los pares
  * horneados: el texto y el fondo de `.alert-<role>`, el texto de
- * `.text-bg-<role>` y los de `.btn-<role>`. Todas son alias de un wrapper, y por
+ * `.text-bg-<role>`, los de `.btn-<role>` y los textos de `.btn-outline-<role>`.
+ * Todas son alias de un wrapper, y por
  * eso se calculan en el raíz: una zona que sólo cambia el triplete al que
  * apuntan no las mueve.
  */
@@ -689,6 +700,9 @@ export const LIBRARY_ROOT_COLORS = (() => {
     if (role !== 'secondary') map.set(`--bs-${role}-text-bg-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-bg`, specVar(SOLID_PAIRS[role].bg, role));
+    for (const [state, spec] of Object.entries(OUTLINE_COLORS[role])) {
+      map.set(`--bs-btn-outline-${role}-${state}`, specVar(spec, role));
+    }
   }
   return map;
 })();
@@ -729,6 +743,16 @@ export const LIBRARY_ELEMENT_VARS = new Map([
     ['--bs-btn-color', `var(--bs-btn-${role}-color)`],
     ['--bs-btn-bg', `var(--bs-btn-${role}-bg)`],
   ])]),
+  // Sin --bs-btn-hover-bg ni --bs-btn-active-bg: la librería no los declara en
+  // el botón con contorno, y `background-color: var(--bs-btn-hover-bg)` queda
+  // transparente. `--bs-btn-outline-<role>-hover-bg` existe en :root, pero no
+  // lo lee ningún selector.
+  ...ROLES.map((role) => [`.btn-outline-${role}`, new Map(
+    Object.keys(OUTLINE_COLORS[role]).map((state) => [
+      `--bs-btn-${state}`,
+      `var(--bs-btn-outline-${role}-${state})`,
+    ]),
+  )]),
 ]);
 
 /** Valor por defecto de la librería en `:root` para un nombre, o undefined. */
