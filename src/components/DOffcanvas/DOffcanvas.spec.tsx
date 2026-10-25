@@ -9,6 +9,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DOffcanvas from '.';
+import DBoxFile from '../DBoxFile';
+import DTabs from '../DTabs';
 import { DContextProvider } from '../../contexts/DContext';
 import { useDPortalContext } from '../../contexts/DPortalContext';
 
@@ -451,7 +453,58 @@ describe('<DOffcanvas />', () => {
         );
       }
 
-      type Portals = { example: undefined; empty: undefined };
+      function HiddenInputExample() {
+        return (
+          <DOffcanvas name="exampleOffcanvasHiddenInput">
+            <DOffcanvas.Header>Con input oculto</DOffcanvas.Header>
+            <DOffcanvas.Body>
+              <button type="button">Primero</button>
+              <button type="button">Último</button>
+              <input type="hidden" name="token" value="abc" />
+            </DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+
+      function BoxFileExample() {
+        return (
+          <DOffcanvas name="exampleOffcanvasBoxFile">
+            <DOffcanvas.Header>Con DBoxFile</DOffcanvas.Header>
+            <DOffcanvas.Body>
+              <button type="button">Primero</button>
+              <DBoxFile accept={{ 'image/*': [] }}>Arrastra un archivo</DBoxFile>
+            </DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+
+      // Solo la pestaña activa lleva tabindex="0": las inactivas no pueden ser
+      // ni el primer ni el último candidato del bucle.
+      function TabsExample() {
+        return (
+          <DOffcanvas name="exampleOffcanvasTabs">
+            <DOffcanvas.Header>Con DTabs</DOffcanvas.Header>
+            <DOffcanvas.Body>
+              <DTabs
+                options={[
+                  { label: 'Tab 1', tab: 'tab1' },
+                  { label: 'Tab 2', tab: 'tab2' },
+                  { label: 'Tab 3', tab: 'tab3' },
+                ]}
+                defaultSelected="tab2"
+              />
+            </DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+
+      type Portals = {
+        example: undefined;
+        empty: undefined;
+        hiddenInput: undefined;
+        boxFile: undefined;
+        tabs: undefined;
+      };
 
       function Opener({ portal = 'example' }: { portal?: keyof Portals }) {
         const { openPortal } = useDPortalContext<Portals>();
@@ -461,7 +514,15 @@ describe('<DOffcanvas />', () => {
       async function openOffcanvas(portal: keyof Portals = 'example') {
         const user = userEvent.setup();
         render(
-          <DContextProvider availablePortals={{ example: ExampleOffcanvas, empty: EmptyExample }}>
+          <DContextProvider
+            availablePortals={{
+              example: ExampleOffcanvas,
+              empty: EmptyExample,
+              hiddenInput: HiddenInputExample,
+              boxFile: BoxFileExample,
+              tabs: TabsExample,
+            }}
+          >
             <Opener portal={portal} />
           </DContextProvider>,
         );
@@ -501,6 +562,50 @@ describe('<DOffcanvas />', () => {
         expect(first).toHaveFocus();
         await user.tab({ shift: true });
         expect(last).toHaveFocus();
+      });
+
+      describe.each([
+        [
+          'un input type="hidden" al final',
+          'hiddenInput' as const,
+          () => screen.getByRole('button', { name: 'Primero' }),
+          () => screen.getByRole('button', { name: 'Último' }),
+        ],
+        [
+          'un DBoxFile al final',
+          'boxFile' as const,
+          () => screen.getByRole('button', { name: 'Primero' }),
+          () => document.querySelector<HTMLElement>('.d-box-file-dropzone') as HTMLElement,
+        ],
+        [
+          'un DTabs con la pestaña del medio activa',
+          'tabs' as const,
+          () => screen.getByRole('tab', { name: 'Tab 2' }),
+          () => screen.getByRole('tab', { name: 'Tab 2' }),
+        ],
+      ])('con %s', (_, portal, getFirst, getLast) => {
+        it('al abrir, Tab va al primero y Shift+Tab al último enfocable', async () => {
+          const { user, dialog } = await openOffcanvas(portal);
+
+          await user.tab();
+          expect(getFirst()).toHaveFocus();
+          dialog.focus();
+          await user.tab({ shift: true });
+          expect(getLast()).toHaveFocus();
+        });
+
+        it('el bucle va del último al primero y del primero al último', async () => {
+          const { user, dialog } = await openOffcanvas(portal);
+          const first = getFirst();
+          const last = getLast();
+
+          last.focus();
+          await user.tab();
+          expect(first).toHaveFocus();
+          await user.tab({ shift: true });
+          expect(last).toHaveFocus();
+          expect(dialog).toContainElement(document.activeElement as HTMLElement);
+        });
       });
 
       it('un diálogo sin enfocables conserva el foco con Tab y con Shift+Tab', async () => {
