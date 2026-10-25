@@ -6,6 +6,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DModal from '.';
+import { DContextProvider } from '../../contexts/DContext';
+import { useDPortalContext } from '../../contexts/DPortalContext';
 
 const mockUseDContext = jest.fn(() => ({
   iconMap: {
@@ -38,8 +40,10 @@ describe('<DModal />', () => {
           <div
             aria-hidden="false"
             aria-labelledby="myModalLabel"
+            aria-modal="true"
             class="modal portal show"
             id="myModal"
+            role="dialog"
             style="opacity: 0; transform: scale(0.95);"
             tabindex="-1"
           >
@@ -52,7 +56,9 @@ describe('<DModal />', () => {
                 <div
                   class="modal-header"
                 >
-                  <div>
+                  <div
+                    id="myModalLabel"
+                  >
                     Test Header
                   </div>
                 </div>
@@ -243,6 +249,157 @@ describe('<DModal />', () => {
 
       const footer = container.querySelector('.modal-footer');
       expect(footer).toHaveClass('d-modal-action-end');
+    });
+  });
+  describe('diálogo modal', () => {
+    it('se anuncia como diálogo modal con el nombre del header', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Test Header' });
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
+      expect(dialog).toHaveAttribute('aria-labelledby', 'myModalLabel');
+    });
+
+    it('respeta el id que el consumidor ya puso en el título, sin duplicarlo', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>
+            <span id="myModalLabel">Test Header</span>
+          </DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
+      expect(document.getElementById('myModalLabel')?.tagName).toBe('SPAN');
+    });
+
+    it('usa ariaLabel como nombre cuando no hay título', () => {
+      render(
+        <DModal name="myModal" ariaLabel="Confirmación">
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Confirmación' });
+      expect(dialog).toHaveAttribute('aria-label', 'Confirmación');
+      expect(dialog).not.toHaveAttribute('aria-labelledby');
+    });
+
+    it('enfoca el contenedor al abrir', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      expect(screen.getByRole('dialog')).toHaveFocus();
+    });
+
+    it('no quita el foco a un hijo con autoFocus', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>
+            {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+            <input aria-label="Nombre" autoFocus />
+          </DModal.Body>
+        </DModal>,
+      );
+
+      expect(screen.getByRole('textbox', { name: 'Nombre' })).toHaveFocus();
+    });
+
+    describe('dentro de DContextProvider', () => {
+      function ExampleModal() {
+        const { closePortal } = useDPortalContext();
+        return (
+          <DModal name="exampleModal">
+            <DModal.Header showCloseButton onClose={closePortal}>Test Header</DModal.Header>
+            <DModal.Body>
+              <button type="button">Primero</button>
+              <button type="button">Último</button>
+            </DModal.Body>
+          </DModal>
+        );
+      }
+
+      function EmptyExample() {
+        return (
+          <DModal name="exampleModalEmpty">
+            <DModal.Header>Sin enfocables</DModal.Header>
+            <DModal.Body>Solo texto</DModal.Body>
+          </DModal>
+        );
+      }
+
+      type Portals = { example: undefined; empty: undefined };
+
+      function Opener({ portal = 'example' }: { portal?: keyof Portals }) {
+        const { openPortal } = useDPortalContext<Portals>();
+        return <button type="button" onClick={() => openPortal(portal, undefined)}>Abrir</button>;
+      }
+
+      async function openModal(portal: keyof Portals = 'example') {
+        const user = userEvent.setup();
+        render(
+          <DContextProvider availablePortals={{ example: ExampleModal, empty: EmptyExample }}>
+            <Opener portal={portal} />
+          </DContextProvider>,
+        );
+        await user.click(screen.getByRole('button', { name: 'Abrir' }));
+        const dialog = await screen.findByRole('dialog');
+        return { user, dialog };
+      }
+
+      it('al abrir, el foco está dentro del diálogo', async () => {
+        const { dialog } = await openModal();
+
+        expect(dialog).toHaveFocus();
+        expect(dialog).toContainElement(document.activeElement as HTMLElement);
+      });
+
+      it('al abrir, Tab va al primer enfocable', async () => {
+        const { user } = await openModal();
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
+      });
+
+      it('al abrir, Shift+Tab va al último enfocable', async () => {
+        const { user } = await openModal();
+
+        await user.tab({ shift: true });
+        expect(screen.getByRole('button', { name: 'Último' })).toHaveFocus();
+      });
+
+      it('el bucle de Tab vuelve del último al primero y del primero al último', async () => {
+        const { user } = await openModal();
+        const first = screen.getByRole('button', { name: 'Close' });
+        const last = screen.getByRole('button', { name: 'Último' });
+
+        last.focus();
+        await user.tab();
+        expect(first).toHaveFocus();
+        await user.tab({ shift: true });
+        expect(last).toHaveFocus();
+      });
+
+      it('un diálogo sin enfocables no lanza errores con Tab ni con Shift+Tab', async () => {
+        const { user, dialog } = await openModal('empty');
+
+        expect(dialog).toHaveFocus();
+        await expect(user.tab()).resolves.toBeUndefined();
+        dialog.focus();
+        await expect(user.tab({ shift: true })).resolves.toBeUndefined();
+      });
     });
   });
 });

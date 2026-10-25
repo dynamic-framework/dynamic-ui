@@ -1,13 +1,20 @@
-import { useMemo } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 import { motion, type Transition } from 'framer-motion';
 
-import type { PropsWithChildren } from 'react';
+import type { KeyboardEvent, PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
+import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
 import DModalHeader from './components/DModalHeader';
+import DModalLabelContext from './components/DModalLabelContext';
 import DModalBody from './components/DModalBody';
 import DModalFooter from './components/DModalFooter';
 
@@ -22,6 +29,11 @@ type Props = BaseProps & PropsWithChildren<{
   fullScreenFrom?: ModalFullScreenFrom;
   size?: ModalSize;
   transition?: Transition;
+  /**
+   * Accessible name for the dialog when it has no visible title. When set,
+   * the dialog uses `aria-label` instead of `aria-labelledby`.
+   */
+  ariaLabel?: string;
 }>;
 
 const defaultTransition: Transition = {
@@ -29,8 +41,8 @@ const defaultTransition: Transition = {
   duration: 0.3,
 };
 
-// Portals rendered through DContextProvider animate their exit only when this
-// module is part of the bundle.
+// Los portales que se renderizan con DContextProvider solo animan su salida
+// cuando este módulo forma parte del bundle.
 registerPortalStack(DPortalStack);
 
 function DModal(
@@ -47,8 +59,37 @@ function DModal(
     transition,
     children,
     dataAttributes,
+    ariaLabel,
   }: Props,
 ) {
+  const labelId = `${name}Label`;
+
+  // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
+  // dentro (un hijo con autoFocus).
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.contains(document.activeElement)) {
+      dialog.focus();
+    }
+  }, []);
+
+  // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
+  // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
+  // último enfocable. Tab desde el contenedor ya va al primero.
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    const dialog = dialogRef.current;
+    if (event.key !== 'Tab' || !event.shiftKey || !dialog || document.activeElement !== dialog) {
+      return;
+    }
+    const focusableElements = getKeyboardFocusableElements(dialog);
+    const lastElement = focusableElements[focusableElements.length - 1];
+    if (lastElement) {
+      event.preventDefault();
+      lastElement.focus();
+    }
+  }, []);
+
   const fullScreenClass = useMemo(() => {
     if (fullScreen) {
       if (fullScreenFrom) {
@@ -69,10 +110,15 @@ function DModal(
 
   return (
     <motion.div
+      ref={dialogRef}
       className={classNames('modal portal show', className)}
       id={name}
       tabIndex={-1}
-      aria-labelledby={`${name}Label`}
+      onKeyDown={handleKeyDown}
+      role="dialog"
+      aria-modal="true"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabel ? undefined : labelId}
       aria-hidden="false"
       style={style}
       initial={{ opacity: 0, scale: 0.95 }}
@@ -90,7 +136,9 @@ function DModal(
     >
       <div className={classNames(generateModalDialogClasses)}>
         <div className="modal-content">
-          {children}
+          <DModalLabelContext.Provider value={labelId}>
+            {children}
+          </DModalLabelContext.Provider>
         </div>
       </div>
     </motion.div>

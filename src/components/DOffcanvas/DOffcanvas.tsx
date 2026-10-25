@@ -1,15 +1,24 @@
 import classNames from 'classnames';
 import { motion, type Transition, type Variants } from 'framer-motion';
 
-import { useMemo, type PropsWithChildren } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  type KeyboardEvent,
+  type PropsWithChildren,
+} from 'react';
 
 import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
+import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
 import DOffcanvasHeader from './components/DOffcanvasHeader';
+import DOffcanvasLabelContext from './components/DOffcanvasLabelContext';
 import DOffcanvasBody from './components/DOffcanvasBody';
 import DOffcanvasFooter from './components/DOffcanvasFooter';
 
@@ -33,6 +42,11 @@ type Props = BaseProps & PropsWithChildren<{
    */
   height?: string | ResponsiveProp;
   transition?: Transition;
+  /**
+   * Accessible name for the dialog when it has no visible title. When set,
+   * the dialog uses `aria-label` instead of `aria-labelledby`.
+   */
+  ariaLabel?: string;
 }>;
 
 const variants: Variants = {
@@ -66,8 +80,8 @@ const defaultTransition: Transition = {
   duration: 0.3,
 };
 
-// Portals rendered through DContextProvider animate their exit only when this
-// module is part of the bundle.
+// Los portales que se renderizan con DContextProvider solo animan su salida
+// cuando este módulo forma parte del bundle.
 registerPortalStack(DPortalStack);
 
 function DOffcanvas(
@@ -83,11 +97,40 @@ function DOffcanvas(
     transition,
     children,
     dataAttributes,
+    ariaLabel,
   }: Props,
 ) {
-  // Only subscribe to breakpoint-change listeners when a responsive object is
-  // actually provided, avoiding unnecessary matchMedia subscriptions for the
-  // common case of plain string values.
+  const labelId = `${name}Label`;
+
+  // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
+  // dentro (un hijo con autoFocus).
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.contains(document.activeElement)) {
+      dialog.focus();
+    }
+  }, []);
+
+  // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
+  // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
+  // último enfocable. Tab desde el contenedor ya va al primero.
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    const dialog = dialogRef.current;
+    if (event.key !== 'Tab' || !event.shiftKey || !dialog || document.activeElement !== dialog) {
+      return;
+    }
+    const focusableElements = getKeyboardFocusableElements(dialog);
+    const lastElement = focusableElements[focusableElements.length - 1];
+    if (lastElement) {
+      event.preventDefault();
+      lastElement.focus();
+    }
+  }, []);
+
+  // Solo se suscribe a los cambios de breakpoint cuando llega un objeto
+  // responsive, para no crear suscripciones de matchMedia innecesarias en el
+  // caso habitual de valores string.
   const hasResponsiveProp = typeof openFrom === 'object'
     || typeof width === 'object'
     || typeof height === 'object';
@@ -109,6 +152,7 @@ function DOffcanvas(
 
   return (
     <motion.div
+      ref={dialogRef}
       className={classNames(
         'offcanvas portal show',
         {
@@ -124,7 +168,11 @@ function DOffcanvas(
       }}
       id={name}
       tabIndex={-1}
-      aria-labelledby={`${name}Label`}
+      onKeyDown={handleKeyDown}
+      role="dialog"
+      aria-modal="true"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabel ? undefined : labelId}
       aria-hidden="false"
       custom={resolvedOpenFrom}
       variants={variants}
@@ -145,7 +193,9 @@ function DOffcanvas(
       })}
       {...dataAttributes}
     >
-      {children}
+      <DOffcanvasLabelContext.Provider value={labelId}>
+        {children}
+      </DOffcanvasLabelContext.Provider>
     </motion.div>
   );
 }

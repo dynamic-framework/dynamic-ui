@@ -1,10 +1,18 @@
-import { type PropsWithChildren, useMemo } from 'react';
+import {
+  type PropsWithChildren,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import classNames from 'classnames';
 import DIcon from '../../DIcon';
 
 import type { BaseProps, FamilyIconProps } from '../../interface';
 import { useDContext } from '../../../contexts';
+import DOffcanvasLabelContext from './DOffcanvasLabelContext';
 
 type Props =
 & BaseProps
@@ -46,13 +54,26 @@ export default function DOffcanvasHeader(
   } = useDContext();
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
+  // El contenedor de children toma el id del título salvo que el consumidor ya
+  // lo haya puesto en un descendiente; así no hay ids duplicados.
+  const labelId = useContext(DOffcanvasLabelContext);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [labelOnWrapper, setLabelOnWrapper] = useState(false);
+  useLayoutEffect(() => {
+    const descendants = Array.from(titleRef.current?.querySelectorAll('[id]') ?? []);
+    setLabelOnWrapper(!!labelId && !descendants.some((element) => element.id === labelId));
+  }, [labelId, children]);
+
   return (
     <>
       <div
         className={classNames('offcanvas-header', className)}
         style={style}
       >
-        <div>
+        <div
+          ref={titleRef}
+          id={labelOnWrapper ? labelId : undefined}
+        >
           {children}
         </div>
         {showCloseButton && (
