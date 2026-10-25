@@ -467,7 +467,28 @@ function resolveProjectTypes(fn, props, checker) {
 }
 
 /**
- * Parsea un archivo de componente y devuelve sus ComponentDoc:
+ * Indica si un ComponentDoc es un componente del proyecto. El parser devuelve
+ * un doc por cada export del archivo que parece una función, también los
+ * hooks y funciones que se reexportan de librerías
+ * (`export { useErrorBoundary } from 'react-error-boundary'`). Se exige:
+ *   - un nombre en mayúscula, la convención de React para componentes;
+ *   - que el símbolo exportado se declare fuera de `node_modules`.
+ * Se mira `rootExpression`, el símbolo del export, y no `expression`: en los
+ * componentes con `forwardRef` `expression` apunta a la declaración de
+ * `ForwardRefExoticComponent` en `@types/react`.
+ */
+function isProjectComponent(doc, checker) {
+  if (!/^[A-Z]/.test(doc.displayName ?? '')) return false;
+  let symbol = doc.rootExpression ?? doc.expression;
+  // eslint-disable-next-line no-bitwise
+  if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
+  return (symbol?.declarations ?? [])
+    .some((d) => !inNodeModules(d.getSourceFile().fileName));
+}
+
+/**
+ * Parsea un archivo de componente y devuelve sus ComponentDoc, solo los de
+ * los componentes del proyecto (`isProjectComponent`):
  *   - con las props filtradas: `propFilter` más los atributos que la función
  *     del componente desestructura;
  *   - con los defaults que el parser no encuentra;
@@ -482,7 +503,9 @@ export function parseComponentFile(filePath) {
   const checker = program.getTypeChecker();
   const helper = new docgen.Parser(program, PARSER_OPTIONS);
 
-  return fileParser.parseWithProgramProvider(filePath, () => program).map((doc) => {
+  const docs = fileParser.parseWithProgramProvider(filePath, () => program)
+    .filter((doc) => isProjectComponent(doc, checker));
+  return docs.map((doc) => {
     const fn = componentImplementation(doc, checker);
     const patterns = fn ? propsBindingPatterns(fn) : [];
     // `children` solo cuenta si la función lo usa: hay componentes que lo
