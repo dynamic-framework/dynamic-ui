@@ -91,7 +91,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
 | --${PREFIX_BS}btn-box-shadow         | .btn  | css box shadow  | Button box shadow               |
 | --${PREFIX_BS}btn-disabled-opacity   | .btn  | css length unit | Button link padding vertical    |
 | --${PREFIX_BS}btn-focus-box-shadow   | .btn  | css box shadow  | Button focus box shadow         |
-| --${PREFIX_BS}btn–text-decoration    | .btn  | text decoration | Button text decoration          |
+| --${PREFIX_BS}btn-text-decoration    | .btn  | text decoration | Button text decoration          |
 | --${PREFIX_BS}btn-lg-padding-x       | .btn  | css length unit | Button large padding horizontal |
 | --${PREFIX_BS}btn-lg-padding-y       | .btn  | css length unit | Button large padding vertical   |
 | --${PREFIX_BS}btn-lg-font-size       | .btn  | css length unit | Button large font size          |

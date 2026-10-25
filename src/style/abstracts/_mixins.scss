@@ -93,13 +93,14 @@
   $box-shadow: $btn-box-shadow,
   $active-box-shadow: $btn-active-box-shadow,
   $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
+  $hover-bg-color: rgba(var(--#{$prefix}black-rgb), .03),
 ) {
   --#{$prefix}btn-link-#{$color-name}-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-color: #{$default-color};
   --#{$prefix}btn-link-#{$color-name}-box-shadow: #{$box-shadow};
 
-  --#{$prefix}btn-link-#{$color-name}-hover-bg: transparent;
+  --#{$prefix}btn-link-#{$color-name}-hover-bg: #{$hover-bg-color};
   --#{$prefix}btn-link-#{$color-name}-hover-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-hover-color: #{$hover-text-color};
 
