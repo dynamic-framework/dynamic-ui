@@ -1,12 +1,16 @@
 /// <reference types="@testing-library/jest-dom" />
 
+import { useState } from 'react';
 import {
+  act,
   render,
   screen,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DOffcanvas from '.';
 import { DContextProvider } from '../../contexts/DContext';
+import { useDPortalContext } from '../../contexts/DPortalContext';
 
 const mockUseDContext = jest.fn(() => ({
   iconMap: {
@@ -85,15 +89,19 @@ describe('<DOffcanvas />', () => {
           <div
             aria-hidden="false"
             aria-labelledby="myOffcanvasLabel"
+            aria-modal="true"
             class="offcanvas portal show offcanvas-end"
             id="myOffcanvas"
+            role="dialog"
             style="transition: none; transform: translateX(100%);"
             tabindex="-1"
           >
             <div
               class="offcanvas-header"
             >
-              <div>
+              <div
+                id="myOffcanvasLabel"
+              >
                 Test Header
               </div>
             </div>
@@ -323,6 +331,187 @@ describe('<DOffcanvas />', () => {
 
       const footer = container.querySelector('.d-offcanvas-footer');
       expect(footer).toHaveClass('d-offcanvas-action-start');
+    });
+  });
+  describe('diálogo modal', () => {
+    it('se anuncia como diálogo modal con el nombre del header', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Test Header' });
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
+      expect(dialog).toHaveAttribute('aria-labelledby', 'myOffcanvasLabel');
+    });
+
+    it('respeta el id que el consumidor ya puso en el título, sin duplicarlo', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>
+            <span id="myOffcanvasLabel">Test Header</span>
+          </DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+      expect(document.querySelectorAll('[id="myOffcanvasLabel"]')).toHaveLength(1);
+      expect(document.getElementById('myOffcanvasLabel')?.tagName).toBe('SPAN');
+    });
+
+    it('sigue al título cuando este pone o quita el id por su propio estado', async () => {
+      const control: { setOwnLabel?: (value: boolean) => void } = {};
+      function Title() {
+        const [ownLabel, setOwnLabel] = useState(false);
+        control.setOwnLabel = setOwnLabel;
+        return <span id={ownLabel ? 'myOffcanvasLabel' : undefined}>Test Header</span>;
+      }
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header><Title /></DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+      const labels = () => document.querySelectorAll('[id="myOffcanvasLabel"]');
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('DIV');
+
+      act(() => control.setOwnLabel?.(true));
+      await waitFor(() => expect(labels()[0].tagName).toBe('SPAN'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+
+      act(() => control.setOwnLabel?.(false));
+      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+    });
+
+    it('usa ariaLabel como nombre cuando no hay título', () => {
+      render(
+        <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Filtros' });
+      expect(dialog).toHaveAttribute('aria-label', 'Filtros');
+      expect(dialog).not.toHaveAttribute('aria-labelledby');
+    });
+
+    it('enfoca el contenedor al abrir', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      expect(screen.getByRole('dialog')).toHaveFocus();
+    });
+
+    it('no quita el foco a un hijo con autoFocus', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>
+            {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+            <input aria-label="Buscar" autoFocus />
+          </DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      expect(screen.getByRole('textbox', { name: 'Buscar' })).toHaveFocus();
+    });
+
+    describe('dentro de DContextProvider', () => {
+      function ExampleOffcanvas() {
+        const { closePortal } = useDPortalContext();
+        return (
+          <DOffcanvas name="exampleOffcanvas">
+            <DOffcanvas.Header showCloseButton onClose={closePortal}>Test Header</DOffcanvas.Header>
+            <DOffcanvas.Body>
+              <button type="button">Primero</button>
+              <button type="button">Último</button>
+            </DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+
+      function EmptyExample() {
+        return (
+          <DOffcanvas name="exampleOffcanvasEmpty">
+            <DOffcanvas.Header>Sin enfocables</DOffcanvas.Header>
+            <DOffcanvas.Body>Solo texto</DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+
+      type Portals = { example: undefined; empty: undefined };
+
+      function Opener({ portal = 'example' }: { portal?: keyof Portals }) {
+        const { openPortal } = useDPortalContext<Portals>();
+        return <button type="button" onClick={() => openPortal(portal, undefined)}>Abrir</button>;
+      }
+
+      async function openOffcanvas(portal: keyof Portals = 'example') {
+        const user = userEvent.setup();
+        render(
+          <DContextProvider availablePortals={{ example: ExampleOffcanvas, empty: EmptyExample }}>
+            <Opener portal={portal} />
+          </DContextProvider>,
+        );
+        await user.click(screen.getByRole('button', { name: 'Abrir' }));
+        const dialog = await screen.findByRole('dialog');
+        return { user, dialog };
+      }
+
+      it('al abrir, el foco está dentro del diálogo', async () => {
+        const { dialog } = await openOffcanvas();
+
+        expect(dialog).toHaveFocus();
+        expect(dialog).toContainElement(document.activeElement as HTMLElement);
+      });
+
+      it('al abrir, Tab va al primer enfocable', async () => {
+        const { user } = await openOffcanvas();
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
+      });
+
+      it('al abrir, Shift+Tab va al último enfocable', async () => {
+        const { user } = await openOffcanvas();
+
+        await user.tab({ shift: true });
+        expect(screen.getByRole('button', { name: 'Último' })).toHaveFocus();
+      });
+
+      it('el bucle de Tab vuelve del último al primero y del primero al último', async () => {
+        const { user } = await openOffcanvas();
+        const first = screen.getByRole('button', { name: 'Close' });
+        const last = screen.getByRole('button', { name: 'Último' });
+
+        last.focus();
+        await user.tab();
+        expect(first).toHaveFocus();
+        await user.tab({ shift: true });
+        expect(last).toHaveFocus();
+      });
+
+      it('un diálogo sin enfocables conserva el foco con Tab y con Shift+Tab', async () => {
+        const { user, dialog } = await openOffcanvas('empty');
+
+        expect(dialog).toHaveFocus();
+        await expect(user.tab()).resolves.toBeUndefined();
+        expect(dialog).toHaveFocus();
+        await expect(user.tab({ shift: true })).resolves.toBeUndefined();
+        expect(dialog).toHaveFocus();
+      });
     });
   });
 });

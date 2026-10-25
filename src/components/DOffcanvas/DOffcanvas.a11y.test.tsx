@@ -72,4 +72,45 @@ describe('<DOffcanvas /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+  it('no tiene violaciones cuando el header no lleva id y el diálogo toma su nombre', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas">
+        <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+        <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
+
+  it('no duplica el id cuando el consumidor ya lo puso en el título', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas">
+        <DOffcanvas.Header>
+          <span id="myOffcanvasLabel">Test Header</span>
+        </DOffcanvas.Header>
+        <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
+  it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">
+        <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
 });
