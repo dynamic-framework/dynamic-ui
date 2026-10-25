@@ -119,7 +119,10 @@
             "--bs-btn-color": "rgb(var(--bs-white-rgb))",
             "--bs-btn-hover-color": "rgb(var(--bs-dark-rgb))",
             "--bs-btn-hover-bg": "rgb(var(--bs-primary-200-rgb))",
-            "--bs-btn-hover-border-color": "rgb(var(--bs-primary-200-rgb))"
+            "--bs-btn-hover-border-color": "rgb(var(--bs-primary-200-rgb))",
+            "--bs-btn-active-color": "rgb(var(--bs-dark-rgb))",
+            "--bs-btn-active-bg": "rgb(var(--bs-primary-300-rgb))",
+            "--bs-btn-active-border-color": "rgb(var(--bs-primary-300-rgb))"
           }
         },
         {
