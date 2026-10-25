@@ -1213,6 +1213,13 @@ describe('theme-validate — wrapper-faltante-zona', () => {
     expect(validate(sinModal).stderr).toContain('en "[data-bs-theme="oscura"] .modal": se redefine sin --bs-secondary-bg.');
   });
 
+  it('cuenta el wrapper de un bloque raíz con más alternativas', () => {
+    const css = base()
+      + zona('  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));', ':root,\n.card')
+      + zona('  --bs-secondary-bg-rgb: 10, 20, 30;', '[data-bs-theme="oscura"] .card');
+    expect(avisos(css)).toBe(0);
+  });
+
   it('cuenta el wrapper de una regla global sobre el mismo componente', () => {
     // Las dos reglas caen sobre la propia .card: el wrapper global se calcula
     // allí con el triplete de la zona.
@@ -1730,6 +1737,20 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
       '".btn-outline-primary dentro de [data-bs-theme="oscura"], en active": 1.02:1',
     );
     expect(result.stderr).toContain('El theme fija ese color de texto');
+  });
+
+  it('mide el relleno que la zona hereda del raíz', () => {
+    // --bs-btn-hover-bg negro en :root llega a la zona ya calculado: el texto
+    // negro del hover cae sobre él, 1:1, aunque la superficie de la zona sea clara.
+    const theme = outlineTheme({ ...blanco, '--bs-btn-hover-color': 'rgb(var(--bs-black-rgb))' });
+    const css = expandCss({
+      ...theme,
+      root: { ...theme.root, '--bs-btn-hover-bg': 'rgb(var(--bs-black-rgb))' },
+    });
+    expect(validateStrict(css).stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre el texto '
+      + '--bs-btn-hover-color (--bs-black-rgb) y el fondo --bs-btn-hover-bg',
+    );
   });
 
   it('no cuenta --bs-btn-outline-<role>-hover-bg, que no lee ningún selector', () => {

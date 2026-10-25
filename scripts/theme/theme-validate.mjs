@@ -301,8 +301,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   for (const ctx of zoneContexts) checkWrappers(ctx.own, inContext(ctx), { skipInvalid: true });
   const zoneComponents = new Map();
   const globalNames = new Map();
+  // Un bloque raíz con más alternativas (`:root, .card`) también declara sobre
+  // el componente: se recorre alternativa por alternativa, como los demás.
   for (const block of blocks) {
-    if (block.zone || block.isRoot) continue;
+    if (block.zone) continue;
     for (const alt of alternatives(block)) {
       const bare = normalizeSelector(alt.bare);
       if (!alt.zone) {
@@ -693,7 +695,9 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
          * (`--bs-btn-outline-<role>-hover-color`…), salvo que el theme lo pise.
          */
         const surface = () => measureSide(ctx, element, '--bs-body-bg-rgb', { background: true });
-        const fill = (variable) => (element.has(variable) || ctx.own.has(variable)
+        // El relleno puede venir del botón o heredado de un ancestro: la zona o
+        // el raíz, que llega a la zona ya calculado.
+        const fill = (variable) => (element.has(variable) || ctx.own.has(variable) || root.has(variable)
           ? measureSide(ctx, element, variable, { background: true })
           : surface());
         // ¿El texto que gana sobre el botón lo pone el theme, en este bloque o
