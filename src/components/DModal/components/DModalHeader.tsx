@@ -55,14 +55,31 @@ export default function DModalHeader(
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
   // El contenedor de children toma el id del título salvo que el consumidor ya
-  // lo haya puesto en un descendiente; así no hay ids duplicados.
+  // lo haya puesto en un descendiente; así no hay ids duplicados. El observer
+  // cubre los títulos que añaden o quitan ese id por su propio estado.
   const labelId = useContext(DModalLabelContext);
   const titleRef = useRef<HTMLDivElement>(null);
   const [labelOnWrapper, setLabelOnWrapper] = useState(false);
   useLayoutEffect(() => {
-    const descendants = Array.from(titleRef.current?.querySelectorAll('[id]') ?? []);
-    setLabelOnWrapper(!!labelId && !descendants.some((element) => element.id === labelId));
-  }, [labelId, children]);
+    const title = titleRef.current;
+    if (!labelId || !title) {
+      setLabelOnWrapper(false);
+      return undefined;
+    }
+    const update = () => {
+      const descendants = Array.from(title.querySelectorAll('[id]'));
+      setLabelOnWrapper(!descendants.some((element) => element.id === labelId));
+    };
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(title, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ['id'],
+    });
+    return () => observer.disconnect();
+  }, [labelId]);
 
   return (
     <>

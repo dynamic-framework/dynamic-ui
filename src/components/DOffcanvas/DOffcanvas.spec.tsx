@@ -1,8 +1,11 @@
 /// <reference types="@testing-library/jest-dom" />
 
+import { useState } from 'react';
 import {
+  act,
   render,
   screen,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DOffcanvas from '.';
@@ -359,6 +362,35 @@ describe('<DOffcanvas />', () => {
       expect(document.getElementById('myOffcanvasLabel')?.tagName).toBe('SPAN');
     });
 
+    it('sigue al título cuando este pone o quita el id por su propio estado', async () => {
+      const control: { setOwnLabel?: (value: boolean) => void } = {};
+      function Title() {
+        const [ownLabel, setOwnLabel] = useState(false);
+        control.setOwnLabel = setOwnLabel;
+        return <span id={ownLabel ? 'myOffcanvasLabel' : undefined}>Test Header</span>;
+      }
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header><Title /></DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+      const labels = () => document.querySelectorAll('[id="myOffcanvasLabel"]');
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('DIV');
+
+      act(() => control.setOwnLabel?.(true));
+      await waitFor(() => expect(labels()[0].tagName).toBe('SPAN'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+
+      act(() => control.setOwnLabel?.(false));
+      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
+    });
+
     it('usa ariaLabel como nombre cuando no hay título', () => {
       render(
         <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">
@@ -471,13 +503,14 @@ describe('<DOffcanvas />', () => {
         expect(last).toHaveFocus();
       });
 
-      it('un diálogo sin enfocables no lanza errores con Tab ni con Shift+Tab', async () => {
+      it('un diálogo sin enfocables conserva el foco con Tab y con Shift+Tab', async () => {
         const { user, dialog } = await openOffcanvas('empty');
 
         expect(dialog).toHaveFocus();
         await expect(user.tab()).resolves.toBeUndefined();
-        dialog.focus();
+        expect(dialog).toHaveFocus();
         await expect(user.tab({ shift: true })).resolves.toBeUndefined();
+        expect(dialog).toHaveFocus();
       });
     });
   });

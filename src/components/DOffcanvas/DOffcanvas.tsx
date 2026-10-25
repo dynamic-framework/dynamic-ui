@@ -114,17 +114,21 @@ function DOffcanvas(
 
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
-  // último enfocable. Tab desde el contenedor ya va al primero.
+  // último enfocable. Tab desde el contenedor ya va al primero. Sin
+  // enfocables, ninguna de las dos teclas saca el foco del contenedor.
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     const dialog = dialogRef.current;
-    if (event.key !== 'Tab' || !event.shiftKey || !dialog || document.activeElement !== dialog) {
+    if (event.key !== 'Tab' || !dialog || document.activeElement !== dialog) {
       return;
     }
     const focusableElements = getKeyboardFocusableElements(dialog);
-    const lastElement = focusableElements[focusableElements.length - 1];
-    if (lastElement) {
+    if (focusableElements.length === 0) {
       event.preventDefault();
-      lastElement.focus();
+      return;
+    }
+    if (event.shiftKey) {
+      event.preventDefault();
+      focusableElements[focusableElements.length - 1].focus();
     }
   }, []);
 
