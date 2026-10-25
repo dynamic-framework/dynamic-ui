@@ -11,7 +11,9 @@
  *     a `defaultValue`, sus props son exactamente las que deja el filtro
  *     (props propias y atributos que el componente desestructura) y ningún
  *     alias de tipo del proyecto queda sin expandir ni definir;
- *   - las claves de `components` son componentes: empiezan por mayúscula.
+ *   - las claves de `components` son componentes: empiezan por mayúscula;
+ *   - ninguna clave contiene `__@`, el nombre interno que TypeScript da a los
+ *     símbolos conocidos (`[Symbol.iterator]` → `__@iterator@N`).
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -90,6 +92,18 @@ function typeStrings(value) {
   return Object.entries(value).flatMap(([key, nested]) => (
     key === 'type' && typeof nested === 'string' ? [nested] : typeStrings(nested)
   ));
+}
+
+/**
+ * Rutas (`a.b.c`) de las claves que contienen `__@`. No se baja dentro de una
+ * clave que ya cuenta: basta con nombrar la más externa.
+ */
+function symbolKeyPaths(value, prefix = []) {
+  if (!value || typeof value !== 'object') return [];
+  return Object.entries(value).flatMap(([key, nested]) => {
+    const keyPath = [...prefix, key];
+    return key.includes('__@') ? [keyPath.join('.')] : symbolKeyPaths(nested, keyPath);
+  });
 }
 
 /** Escribe una lista de problemas con su cabecera y marca el registro inválido. */
@@ -177,6 +191,8 @@ componentsBySource.forEach((names, sourcePath) => {
   });
 });
 
+// El id de `__@iterator@N` depende del programa de TypeScript, no del tipo.
+report(symbolKeyPaths(data), 'claves con nombre de símbolo interno de TypeScript (__@)');
 // Un hook o una función que un archivo de componente reexporta de una
 // librería (`useErrorBoundary`) no es un componente.
 report(

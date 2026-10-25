@@ -12,9 +12,26 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
 
+/* eslint-disable no-bitwise */
+/**
+ * Indica si un tipo se describe como `string`: string, literales de string,
+ * template literals y string mappings (`Uppercase<…>`), o una intersección
+ * con alguno de ellos (`K & string`, `string & {}`). Las intersecciones
+ * tienen la flag Intersection y no StringLike, así que sin esto llegarían a
+ * getPropertiesOfType. Las uniones se tratan aparte, en resolveTypeInfo.
+ * La comprobación es estructural: `checker.isTypeAssignableTo` no es API
+ * pública en TypeScript 5.2.
+ */
+function isStringLike(type) {
+  if (type.flags & ts.TypeFlags.StringLike) return true;
+  return type.isIntersection() && type.types.some((t) => (t.flags & ts.TypeFlags.StringLike) !== 0);
+}
+/* eslint-enable no-bitwise */
+
 /**
  * Resuelve un Type de TypeScript a un descriptor serializable y autocontenido.
  *
+ * - String, literal string o intersección con string → { type: 'string' }
  * - Unión de literales string → { type: 'string', values: ['a', 'b', ...] }
  * - Objeto / tipo mapeado → { type: 'object', fields: { prop: { type, required, description } } }
  * - Escalar / otro            → { type: '<texto del checker>' }
@@ -48,8 +65,7 @@ export function resolveTypeInfo(
 
   // Los primitivos se atienden antes de getPropertiesOfType, que si no
   // devolvería los métodos de las interfaces String/Number.
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.String) return { type: 'string' };
+  if (isStringLike(type)) return { type: 'string' };
   // eslint-disable-next-line no-bitwise
   if (type.flags & ts.TypeFlags.Number) return { type: 'number' };
   // eslint-disable-next-line no-bitwise
@@ -95,7 +111,10 @@ export function resolveTypeInfo(
 
   // Objeto / tipo mapeado (TypeLiteral, interface, Partial<Pick<...>>, etc.)
   if (!canExpand(type)) return { type: checker.typeToString(type) };
-  const props = checker.getPropertiesOfType(type);
+  // Las propiedades con nombre de símbolo conocido (`[Symbol.iterator]` es
+  // `__@iterator@N`) llevan un id interno del checker que cambia con el
+  // programa: no se pueden serializar de forma estable.
+  const props = checker.getPropertiesOfType(type).filter((prop) => !prop.name.startsWith('__@'));
   if (props.length > 0) {
     const fields = {};
     props.forEach((prop) => {
