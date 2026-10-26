@@ -24,7 +24,7 @@ type SwipeListItem = {
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
   {
     id: 'tx-1',
-    title: 'Netflix subscription',
+    title: 'Streaming subscription',
     subtitle: 'Today, 9:45 AM',
     amount: '-$17.99',
   },
@@ -238,7 +238,7 @@ type SwipeListItem = {
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
   {
     id: 'tx-1',
-    title: 'Netflix subscription',
+    title: 'Streaming subscription',
     subtitle: 'Today, 9:45 AM',
     amount: '-$17.99',
   },
@@ -428,7 +428,7 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
 }
 
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
-  { id: 'tx-1', title: 'Netflix subscription', subtitle: 'Today, 9:45 AM', amount: '-$17.99' },
+  { id: 'tx-1', title: 'Streaming subscription', subtitle: 'Today, 9:45 AM', amount: '-$17.99' },
   { id: 'tx-2', title: 'Coffee Store', subtitle: 'Today, 8:02 AM', amount: '-$4.50' },
   { id: 'tx-3', title: 'Incoming transfer', subtitle: 'Yesterday, 7:31 PM', amount: '+$1,250.00' },
   { id: 'tx-4', title: 'Electric bill', subtitle: 'Yesterday, 12:14 PM', amount: '-$86.30' },
@@ -613,7 +613,7 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
 }
 
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
-  { id: 'tx-1', title: 'Netflix subscription', subtitle: 'Today, 9:45 AM', amount: '-$17.99' },
+  { id: 'tx-1', title: 'Streaming subscription', subtitle: 'Today, 9:45 AM', amount: '-$17.99' },
   { id: 'tx-2', title: 'Coffee Store', subtitle: 'Today, 8:02 AM', amount: '-$4.50' },
   { id: 'tx-3', title: 'Incoming transfer', subtitle: 'Yesterday, 7:31 PM', amount: '+$1,250.00' },
   { id: 'tx-4', title: 'Electric bill', subtitle: 'Yesterday, 12:14 PM', amount: '-$86.30' },

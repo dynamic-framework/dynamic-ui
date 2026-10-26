@@ -127,15 +127,15 @@ export const InvestmentPortfolio: Story = {
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-            <span>Apple Inc. (AAPL)</span>
+            <span>Orchard Devices Inc. (ORDV)</span>
             <span className="text-success">+2.34%</span>
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center  px-0">
-            <span>Microsoft Corp. (MSFT)</span>
+            <span>Bluefield Software Corp. (BFSW)</span>
             <span className="text-danger">-0.12%</span>
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center  px-0">
-            <span>Amazon.com, Inc. (AMZN)</span>
+            <span>Marketline Retail Inc. (MKLR)</span>
             <span className="text-success">+1.89%</span>
           </li>
         </ul>
