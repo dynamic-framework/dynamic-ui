@@ -6,7 +6,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Design Tokens
 
-Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variables and Sass tokens to craft brand themes. Prefer overriding CSS variables at runtime for theming, and use Sass variables for build-time defaults when shipping a custom bundle. Official documentation is available at https://docs.modyo.com.
+Dynamic Framework builds on Bootstrap 5 and exposes CSS variables and Sass tokens for brand themes. Prefer overriding CSS variables at runtime for theming, and use Sass variables for build-time defaults when shipping a custom bundle. Official documentation is available at https://docs.modyo.com.
 
 <br />
 
@@ -80,7 +80,7 @@ Components read the `--bs-fs-*` aliases; the value lives in the RFS variable eac
 Dynamic’s palettes expose base tokens and extended shades.
 - Base semantic tokens: `--bs-primary`, `--bs-success`, `--bs-warning`, `--bs-danger`, `--bs-info`, `--bs-secondary`, `--bs-light`, `--bs-dark`
 - Extended shades by state: e.g., `--bs-primary-25`, `--bs-primary-50`, …, `--bs-primary-900`
-- Text/background/border subtles: `--bs/{token}-text-emphasis`, `--bs/{token}-bg-subtle`, `--bs/{token}-border-subtle`
+- Text/background/border subtles: `--bs-{token}-text-emphasis`, `--bs-{token}-bg-subtle`, `--bs-{token}-border-subtle`
 - Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
 
 Override the **triplets**, not the wrappers. The library declares every role and body color twice: the triplet that holds the value (`--bs-primary-rgb: 32, 104, 213`) and a wrapper computed from it (`--bs-primary: rgb(var(--bs-primary-rgb))`). Buttons, utilities such as `.bg-primary` and `.text-bg-primary`, and anything with opacity read the triplet; a hex value on `--bs-primary` changes only what reads the wrapper, so the brand shows up halfway.
@@ -346,7 +346,7 @@ A zone is a subtree with its own palette: `[data-bs-theme="<name>"]` on any elem
 ## Bootstrapping a theme (copy-paste starter)
 There are two ways to start, and they don't mix: copying both would duplicate declarations.
 
-- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the ramp of the roles that have one (25 to 900, with 500 as an alias of the base; all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family and radius, which the theme file requires, and only the type scale steps the file lists (`typography.scale` is optional). Global additions (spacing, shadows) go in the file's `root` section, which is emitted in the root block at every width. A subtree with its own palette goes in `zones` (see [Zones](#zones)). See `scripts/theme/README.md`.
+- **Generated:** `npm run theme:expand` writes a complete stylesheet from a theme file. From one color per role it writes the base triplet, the ramp of the roles that have one (25 to 900, with 500 as an alias of the base; all but `light` and `dark`) and `--bs-<role>-text-bg-color` for every role but `secondary`, which reads its ramp; it also writes body colors, font family and radius, which a complete theme file requires (a roles-only file emits only the role blocks), and only the type scale steps the file lists (`typography.scale` is optional). Global additions (spacing, shadows) go in the file's `root` section, which is emitted in the root block at every width. A subtree with its own palette goes in `zones` (see [Zones](#zones)). See `scripts/theme/README.md`.
 - **Hand-written:** the starter below. It has no role colors; copy each role's full block (as in [Color system](#color-system)) or take it from the `theme:expand` output.
 ```css
 /* Global theme */

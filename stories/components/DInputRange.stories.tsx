@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component: `
-Use our custom range inputs for consistent cross-browser styling and built-in customization.
+Custom range inputs with consistent cross-browser styling.
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
