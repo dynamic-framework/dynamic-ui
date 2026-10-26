@@ -1,7 +1,9 @@
 import { existsSync } from 'node:fs';
+import { isAbsolute, relative } from 'node:path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 
 import { parseComponentFile, propFilter as sharedPropFilter } from '../scripts/component-docgen.mjs';
+import { ROOT } from '../scripts/public-hooks.mjs';
 
 /**
  * El manifest de componentes (`features.componentsManifest`) siempre parsea
@@ -73,9 +75,14 @@ export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
   const docsByFile = new Map<string, ComponentDoc[]>();
 
   Object.values(components).forEach(({ reactDocgen }) => {
-    if (!reactDocgen?.definedInFile || !existsSync(reactDocgen.definedInFile)) return;
+    if (!reactDocgen?.definedInFile) return;
 
     const file = reactDocgen.definedInFile;
+    // Babel da la ruta absoluta de la máquina que construye; se publica
+    // relativa a la raíz del repo, como `sourcePath` en api.json.
+    if (isAbsolute(file)) reactDocgen.definedInFile = relative(ROOT, file);
+    if (!existsSync(file)) return;
+
     let docs = docsByFile.get(file);
     if (!docs) {
       docs = parseComponentFile(file) as ComponentDoc[];

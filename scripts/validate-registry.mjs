@@ -13,7 +13,9 @@
  *     alias de tipo del proyecto queda sin expandir ni definir;
  *   - las claves de `components` son componentes: empiezan por mayúscula;
  *   - ninguna clave contiene `__@`, el nombre interno que TypeScript da a los
- *     símbolos conocidos (`[Symbol.iterator]` → `__@iterator@N`).
+ *     símbolos conocidos (`[Symbol.iterator]` → `__@iterator@N`);
+ *   - ninguna clave ni cadena contiene una ruta absoluta de la máquina que lo
+ *     construye (scripts/absolute-paths.mjs).
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -26,6 +28,7 @@ import { createRequire } from 'module';
 
 import { ROOT, createIndexProgram, listPublicHooks } from './public-hooks.mjs';
 import { parseComponentFile } from './component-docgen.mjs';
+import { findAbsolutePaths } from './absolute-paths.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -193,6 +196,11 @@ componentsBySource.forEach((names, sourcePath) => {
 
 // El id de `__@iterator@N` depende del programa de TypeScript, no del tipo.
 report(symbolKeyPaths(data), 'claves con nombre de símbolo interno de TypeScript (__@)');
+// api.json se publica en npm, en el CDN y en Storybook.
+report(
+  findAbsolutePaths(data).map(({ path, value }) => `${path}: ${JSON.stringify(value)}`),
+  'cadenas con una ruta absoluta de la máquina de build',
+);
 // Un hook o una función que un archivo de componente reexporta de una
 // librería (`useErrorBoundary`) no es un componente.
 report(

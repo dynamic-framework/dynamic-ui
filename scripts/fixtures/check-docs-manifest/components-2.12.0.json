@@ -1,0 +1,109 @@
+{
+  "v": 0,
+  "components": {
+    "design-system-components-box": {
+      "id": "design-system-components-box",
+      "name": "DBox",
+      "path": "./stories/components/DBox.stories.tsx",
+      "stories": [
+        {
+          "id": "design-system-components-box--default",
+          "name": "Default",
+          "snippet": "const Default = () => <DBox>(<>\n      <h4>Hello world</h4>\n      <p className=\"m-0\">Loren ipsum dolor</p>\n    </>)</DBox>;"
+        },
+        {
+          "id": "design-system-components-box--custom-padding",
+          "name": "Custom Padding",
+          "snippet": "const CustomPadding = () => <DBox className=\"p-8\">(<>\n      <h4>Hello world</h4>\n      <p className=\"m-0\">Lorem ipsum dolor</p>\n    </>)</DBox>;"
+        }
+      ],
+      "import": "import { DBox } from \"@dynamic-framework/ui-react\";",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "DBox",
+        "definedInFile": "/home/runner/work/dynamic-ui/dynamic-ui/src/components/DBox/DBox.tsx",
+        "actualName": "DBox",
+        "exportName": "default",
+        "props": {
+          "style": {
+            "required": false,
+            "tsType": {
+              "name": "CSSProperties | undefined"
+            }
+          },
+          "className": {
+            "required": false,
+            "tsType": {
+              "name": "string | undefined"
+            }
+          },
+          "dataAttributes": {
+            "required": false,
+            "tsType": {
+              "name": "DataAttributes | undefined"
+            }
+          }
+        }
+      }
+    },
+    "patterns-otp": {
+      "id": "patterns-otp",
+      "name": "DBox",
+      "path": "./stories/patterns/OtpPatterns.stories.tsx",
+      "stories": [
+        {
+          "id": "patterns-otp--login-otp-modal-story",
+          "name": "OTP in a Modal (Login / Transaction)",
+          "snippet": "const LoginOtpModalStory = () => (\n  <DContextProvider<LoginOtpPayloads>\n    portalName=\"otpLoginModal\"\n    availablePortals={{ loginOtp: LoginOtpModal }}\n  >\n    <LoginOtpModalContent />\n  </DContextProvider>\n);"
+        },
+        {
+          "id": "patterns-otp--inline-registration-step",
+          "name": "OTP Inline in a Registration Wizard",
+          "snippet": "const InlineRegistrationStep = () => <InlineRegistrationOtpContent />;"
+        },
+        {
+          "id": "patterns-otp--multi-channel-resend",
+          "name": "OTP with Multi-Channel Resend (SMS / Email)",
+          "snippet": "const MultiChannelResend = () => <MultiChannelOtpContent />;"
+        },
+        {
+          "id": "patterns-otp--quick-action-card-confirm",
+          "name": "OTP as a Quick Action Card Confirmation",
+          "snippet": "const QuickActionCardConfirm = () => <QuickActionOtpConfirmContent />;"
+        }
+      ],
+      "import": "import {\n    DAlert,\n    DBadge,\n    DBox,\n    DButton,\n    DCard,\n    DContextProvider,\n    DInputPin,\n    DListGroup,\n    DModal,\n    DTabs,\n} from \"@dynamic-framework/ui-react\";",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "DBox",
+        "definedInFile": "/home/runner/work/dynamic-ui/dynamic-ui/src/components/DBox/DBox.tsx",
+        "actualName": "DBox",
+        "exportName": "default",
+        "props": {
+          "style": {
+            "required": false,
+            "tsType": {
+              "name": "CSSProperties | undefined"
+            }
+          },
+          "className": {
+            "required": false,
+            "tsType": {
+              "name": "string | undefined"
+            }
+          },
+          "dataAttributes": {
+            "required": false,
+            "tsType": {
+              "name": "DataAttributes | undefined"
+            }
+          }
+        }
+      }
+    }
+  }
+}
