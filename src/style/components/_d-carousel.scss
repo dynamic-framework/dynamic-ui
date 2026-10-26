@@ -94,10 +94,4 @@
   &.splide.is-focus-in .d-carousel-pagination-page:focus {
     outline-color: var(--#{$prefix}carousel-focus-outline-color);
   }
-
-  .d-carousel-slide.is-active.is-visible {
-    > * {
-      // TODO: ASK. Exist active state on slide(?)
-    }
-  }
 }
