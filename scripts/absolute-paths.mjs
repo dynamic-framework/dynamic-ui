@@ -6,11 +6,14 @@
  * `/home/runner/…` en CI, `C:\…` en Windows, o el `import("/…")` con que el
  * type checker califica los tipos que no están en el ámbito del archivo.
  *
- * Los directorios se reconocen solo al principio de una ruta: en una URL
- * (`https://example.com/home/`) o en una ruta relativa (`src/home/`) van
- * precedidos de otro carácter y no cuentan. La letra de unidad tampoco cuenta
- * detrás de otra letra (`https://`).
+ * Las URL `http(s)://` se descartan enteras antes de buscar, con su query y su
+ * hash (`?path=/home/docs`, `#/home/docs`); el texto de alrededor se sigue
+ * mirando. Fuera de ellas, los directorios se reconocen solo al principio de
+ * una ruta: en una ruta relativa (`src/home/`) van precedidos de otro carácter
+ * y no cuentan. La letra de unidad tampoco cuenta detrás de otra letra.
  */
+
+const HTTP_URL = /\bhttps?:\/\/[^\s"'`<>]*/gi;
 
 const ABSOLUTE_PATH = new RegExp([
   '(?<![\\w.:/~-])/(?:Users|home|private|tmp|var|root|opt|mnt|Volumes)/',
@@ -21,7 +24,7 @@ const ABSOLUTE_PATH = new RegExp([
 
 /** Si `text` contiene una ruta absoluta de la máquina de build. */
 export function hasAbsolutePath(text) {
-  return ABSOLUTE_PATH.test(text);
+  return ABSOLUTE_PATH.test(text.replace(HTTP_URL, ' '));
 }
 
 /**

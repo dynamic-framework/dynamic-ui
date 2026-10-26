@@ -263,13 +263,20 @@ describe('check-docs-manifest: rutas absolutas', () => {
       'Built from /private/var/folders/x/src.',
       'Built from C:\\work\\dynamic-ui\\src.',
       'type: import("/x/node_modules/@types/react/index").FC',
+      'See https://example.com/docs, built from /home/runner/work/dynamic-ui/dynamic-ui/src.',
+      'See https://example.com/?path=/home/docs file:///home/runner/x',
     ].forEach((content, i) => {
       const result = run([manifestWith(`docs-bad-${i}.json`, page(content))]);
       expect(result.status).toBe(1);
       expect(result.stderr).toContain("$.docs.page--docs.content  [ruta-absoluta]");
     });
 
-    const ok = 'See https://example.com/home/docs and src/components/home/Home.tsx. Use https://cdn.dynamicframework.dev/assets/.';
+    const ok = [
+      'See https://example.com/home/docs and src/components/home/Home.tsx.',
+      'Use https://cdn.dynamicframework.dev/assets/.',
+      'Query: https://example.com/?path=/home/docs&dir=/Users/x. Hash route: http://example.com/#/home/docs.',
+      'Link: [docs](https://example.com/?p=C:/x).',
+    ].join(' ');
     const result = run([manifestWith('docs-ok.json', page(ok))]);
     expect(result.stderr).toBe('');
     expect(result.status).toBe(0);
