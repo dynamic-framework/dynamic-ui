@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -92,14 +92,50 @@ color CSS.
 | `version` | no | Cadena; acompaña a `name` en la cabecera del CSS |
 | `roles.<role>` | al menos uno, o `gray` | `primary secondary success info warning danger light dark` |
 | `gray` | no | Deriva la rampa de grises por tinte; ver la advertencia de abajo |
-| `body.bg`, `body.color` | sí | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
+| `body.bg`, `body.color` | en un theme completo | Salen como `--bs-body-bg-rgb` / `--bs-body-color-rgb` |
 | `body.borderColor` | no | Por defecto `rgb(var(--bs-gray-100-rgb))` |
-| `typography.fontFamily` | sí | |
+| `typography.fontFamily` | en un theme completo | Sale como `--bs-font-sans-serif`, que también leen `.tooltip` y `.popover`. `var(--bs-font-sans-serif)` a secas conserva la de Dynamic; dentro de una pila es error |
 | `typography.scale.N` | no | Pasos `1`..`6`, en `rem` |
-| `radius` | sí | Radio base en `rem`; el resto se deriva |
+| `radius` | en un theme completo | Radio base en `rem`; el resto se deriva |
 | `root` | no | Mapa `--bs-*` → valor, emitido tal cual al final del bloque raíz |
 | `components` | no | Lista de `{ selector, vars?, declarations? }` |
 | `zones` | no | Mapa `<nombre>` → `{ vars, nav?, components? }` |
+
+### Theme de uno o más roles
+
+Un theme sin `body`, `typography` ni `radius` emite solo las rampas de los
+roles indicados, en un bloque para incorporar a una hoja de theme existente.
+Admite `roles`, `gray`, `name` y `version`.
+
+```json
+{ "roles": { "primary": "#166e62" } }
+```
+
+```css
+/*
+ * Para @dynamic-framework/ui-react X.Y.Z.
+ * Bloque parcial para incorporar a una hoja de theme existente.
+ * Se carga después del CSS de Dynamic UI.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  /* Role primary */
+  --bs-primary-rgb: 22, 110, 98;
+  --bs-primary-text-bg-color: var(--bs-white);
+  --bs-primary-25-rgb: 243, 248, 247;
+  --bs-primary-50-rgb: 232, 241, 239;
+  --bs-primary-100-rgb: 208, 226, 224;
+  --bs-primary-200-rgb: 162, 197, 192;
+  --bs-primary-300-rgb: 115, 168, 161;
+  --bs-primary-400-rgb: 69, 139, 129;
+  --bs-primary-500-rgb: var(--bs-primary-rgb);
+  --bs-primary-600-rgb: 18, 88, 78;
+  --bs-primary-700-rgb: 13, 66, 59;
+  --bs-primary-800-rgb: 9, 44, 39;
+  --bs-primary-900-rgb: 4, 22, 20;
+}
+```
 
 ### Las tres secciones extendidas
 
@@ -155,27 +191,51 @@ cosas que no hereda solas.
 queda resuelto **con el triplete del raíz** y se hereda ya calculado. Una zona
 que sólo cambie `--bs-body-color-rgb` no lo mueve: todo lo que lea
 `var(--bs-body-color)` —`.form-control`, `.modal`, `.text-body-secondary`—
-seguirá pintando el color del tema claro. Por eso una zona declara el triplete
-**y** el wrapper:
+seguirá pintando el color del tema claro. Lo mismo pasa con
+`--bs-secondary-bg`, que pinta `.popover-header`, o con `--bs-link-color`, que
+lee `.btn-link`.
+
+Por eso una zona emite, por cada triplete que redefine, su wrapper justo
+después, con el valor que le da la librería. En `vars` basta con los tripletes:
 
 ```json
 "vars": {
+  "--bs-body-bg-rgb": "var(--bs-dark-rgb)",
   "--bs-body-color-rgb": "var(--bs-white-rgb)",
-  "--bs-body-color": "rgb(var(--bs-white-rgb))",
-  "--bs-secondary-color-rgb": "var(--bs-white-rgb)",
-  "--bs-secondary-color": "rgba(var(--bs-white-rgb), .75)",
-  "--bs-tertiary-color-rgb": "var(--bs-white-rgb)",
-  "--bs-tertiary-color": "rgba(var(--bs-white-rgb), .5)",
-  "--bs-emphasis-color-rgb": "var(--bs-white-rgb)",
-  "--bs-emphasis-color": "rgb(var(--bs-white-rgb))"
+  "--bs-secondary-bg-rgb": "var(--bs-gray-800-rgb)",
+  "--bs-secondary-color-rgb": "var(--bs-white-rgb)"
 }
 ```
 
+```css
+[data-bs-theme="oscura"] {
+  --bs-body-bg-rgb: var(--bs-dark-rgb);
+  --bs-body-bg: rgb(var(--bs-body-bg-rgb));
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-body-color-rgb));
+  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);
+  --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));
+  --bs-secondary-color-rgb: var(--bs-white-rgb);
+  --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+```
+
+La lista de wrappers es la del CSS compilado (`known-tokens.json`): cualquier
+`--bs-X-rgb` que tenga su `--bs-X` en `:root`, incluidas las rampas de los roles
+y de grises. Un wrapper que la zona declara en `vars` se emite con su valor, en
+su sitio, y el generador no lo repite. Un triplete que vuelve al del padre
+(`inherit`, `unset`, `revert`, `revert-layer`) no lleva wrapper: el heredado ya
+es el que corresponde. Los bloques de `components`, globales o de
+la zona, siguen la misma regla: un triplete redefinido en `.card` lleva su
+wrapper en `.card`.
+
 **Y la zona tiene que pintarse.** `--bs-body-bg` y `--bs-body-color` las aplica
 la librería sobre `body`; un subárbol a media página nunca pasa por esa regla.
-Cuando una zona declara cualquiera de las dos, el generador emite `color` y
-`background-color` en su selector, para que el consumidor no acabe repitiéndolas
-a mano en su CSS.
+Cuando la zona emite cualquiera de las dos —basta con que redefina su
+triplete—, el generador emite también `color` y `background-color` en su
+selector.
 
 **Cuidado con el efecto en las superficies claras.** Declarar el wrapper cambia
 el color heredado de *todo* el subárbol, incluidos los componentes que llevan su
@@ -197,6 +257,12 @@ está gitignoreado, así que el JSON se versiona y el script se corre a mano tra
 un build o contra el CSS de un tarball publicado. `npm pack` y `npm publish` lo
 regeneran solos vía `prepack`, así que el paquete siempre lleva el inventario
 del CSS que publica.
+
+Con `--check` el script no escribe nada: compara los tokens del CSS con los del
+JSON versionado, lista los que entran (`+`) y los que salen (`-`), y sale con 1
+si no coinciden. No compara `dynamicUi`. CI lo corre después del build, así que
+un cambio de estilos que añade o quita un token lleva en la misma PR el
+inventario regenerado.
 
 ### Qué no va en un theme
 
@@ -281,16 +347,22 @@ salida respeta*).
   por canal contra `dist/css/dynamic-ui.css`.
 - `light` y `dark` **no tienen rampa** en la librería: sólo `--bs-light-rgb` y
   `--bs-dark-rgb`. Sus `-text-emphasis` y `-bg-subtle` apuntan a pasos de gris.
+- La familia tipográfica se emite en `--bs-font-sans-serif`. La librería define
+  `--bs-body-font-family: var(--bs-font-sans-serif)`, así que el cuerpo la sigue
+  sin declararla aparte.
 - La tipografía se overridea sobre `--bs-rfs-fs-N`, nunca sobre `--bs-fs-N`, que
   es sólo el alias. Cada paso fluido (con `vw`), y siempre los pasos 1..4, lleva
   además su valor en `@media (min-width: 1200px)`: un valor fluido necesita ahí su
   tope o sigue creciendo en desktop.
 - Siempre se emiten `--bs-body-bg-rgb`, `--bs-body-color-rgb` y
   `--bs-border-color`.
-- Siempre se emite el fix `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
-  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`: hasta 2.10.0 la librería las
-  definía apuntando al wrapper (`var(--bs-gray-200)`), que no es un triplete
-  (#1191). Se mantiene para que el theme funcione también sobre esas versiones.
+- Fuera del bloque raíz (zonas y bloques de componente), cada triplete
+  redefinido lleva detrás su wrapper, `--bs-<x>: rgb(var(--bs-<x>-rgb))`, salvo
+  que el bloque ya lo declare: el de `:root` se calcula con el triplete del raíz.
+- Se emiten `--bs-secondary-bg-rgb: var(--bs-gray-200-rgb)` y
+  `--bs-tertiary-bg-rgb: var(--bs-gray-100-rgb)`, el valor que la librería
+  define desde 2.11.0. Hasta 2.10.0 apuntaban al wrapper (`var(--bs-gray-200)`),
+  que no es un triplete (#1191).
 - Sin `:where()`: tiene especificidad cero y la librería le gana.
 - El CSS es un entregable: la cabecera dice qué theme es y para qué versión de
   la librería, y los comentarios de dentro sólo nombran la sección. Lo que haya
@@ -314,26 +386,98 @@ salida respeta*).
 ## Qué comprueba el validador
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
-`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `border-color`,
-`fix-bg`, `where`, `vacio`, `tipografia`, `tipografia-breakpoint`, `monotonia`,
-`contraste-boton`, `contraste-nav-pills`, `contraste-zona`,
+`rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
+`where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
-`--strict` hace fallar también con avisos, y `--min-contrast N` cambia el umbral
+`--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
 
-Cada bloque se mide **en su propio contexto**: sus declaraciones sobre las del
-bloque raíz, como lo resuelve el navegador. Sin eso, una zona que redefine
-`--bs-body-bg-rgb` se evaluaría contra el fondo del raíz y la medición no
-correspondería a ningún contexto real.
+Cada componente se mide **en su propio contexto**, el raíz o una zona, como lo
+resuelve el navegador:
+
+- Varias reglas `[data-bs-theme="<zona>"]` se aplican juntas: sus declaraciones
+  se funden en orden de aparición antes de medir.
+- Una custom property se resuelve donde se declara y se hereda ya calculada. Lo
+  que la zona no declara vale dentro de ella lo mismo que en el raíz, aunque la
+  zona cambie el token al que apunta. Eso incluye los wrappers de la librería:
+  `--bs-primary`, `--bs-white` o `--bs-gray-900` se calculan en `:root`, así que
+  un componente que los lee no cambia porque la zona cambie su triplete.
+- Lo que se declara sobre el propio componente (en la librería, en un bloque
+  global o en uno de la zona) se resuelve en el componente, dentro de la zona.
+- `var(--x, respaldo)` usa el respaldo cuando `--x` no existe en ningún sitio o
+  forma parte de un ciclo, igual que el navegador. Una variable que la librería
+  define cuenta como existente aunque el validador no conozca su valor: el
+  respaldo no entra y el par se avisa como `contraste-irresoluble`.
+- Entre las declaraciones que caen sobre un mismo componente gana la
+  `!important`, luego la de más especificidad (con el prefijo de zona) y, a
+  igualdad, la última, como en la cascada.
+- Un prefijo de zona pegado al selector (`[data-bs-theme="oscura"].btn-primary`)
+  pone la zona en el mismo elemento que el componente. El validador no modela
+  ese caso: lo mide como si la zona fuera un ancestro
+  (`[data-bs-theme="oscura"] .btn-primary`) y da el aviso `zona-pegada` para que
+  se revise en la preview.
+
+El validador no ve el HTML: no sabe qué elementos casan con un selector. Un
+bloque se aplica a un componente cuando su selector, sin el prefijo de zona, es
+uno de los selectores del componente (`.nav-pills`, `.sidebar .nav-pills`), o el
+de su ancestro en un selector descendiente (`.nav-pills .nav-link.active`). Un
+selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`,
+`ul.nav-pills`) no entra en su capa: ese caso hay que mirarlo en la preview.
 
 - `contraste-boton` — todo bloque `.btn-<role>` o `.btn-outline-<role>` que fije
-  `--bs-btn-color` o `--bs-btn-bg`. El texto que falte se toma del que Bootstrap
-  hornea (blanco, o gris 700 en `warning` y `light`) y el fondo, de
-  `--bs-<role>-rgb`. En `outline` ese fondo es el del estado relleno.
+  alguna de sus variables de texto o de fondo. En un botón sólido, lo que falte
+  se toma de lo que la librería pone en `.btn-<role>` (`--bs-btn-<role>-color` y
+  `--bs-btn-<role>-bg`: en `secondary`, `--bs-secondary-700` sobre
+  `--bs-secondary-50`). Un `outline` se mide en reposo, en hover y en active.
+  El texto de cada estado es el que gana sobre el botón: el del theme o, si
+  no lo fija, el que pone la librería (`--bs-btn-outline-<role>-color`,
+  `-hover-color` y `-active-color`). El botón con contorno no se rellena: la
+  librería no declara `--bs-btn-hover-bg` ni `--bs-btn-active-bg` en él, así que
+  los tres estados se miden contra la superficie del contexto. Si el theme
+  declara alguna de esas dos variables, sobre el botón o en un ancestro, ese
+  estado se mide contra ella. `--bs-btn-outline-<role>-hover-bg` existe en
+  `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
-  `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren.
+  `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren. Sin fondo
+  propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
+- `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
+  `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
+  `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
+- `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
+  las superficies se heredan de Dynamic.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `zona-pegada` — aviso por cada selector con el prefijo de zona pegado
+  (`[data-bs-theme="x"].clase`): se mide como si la zona fuera un ancestro, y
+  hay que revisarlo en la preview.
+- `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
+  sí misma con `var()`: el navegador descarta la variable.
+- `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona
+  redefine sin declarar `--bs-X`, cuando la librería tiene ese wrapper en
+  `:root`: los componentes que leen `var(--bs-X)` conservan dentro de la zona el
+  valor del raíz. Una zona repartida en varias reglas se revisa entera; un
+  componente dentro de la zona (`[data-bs-theme="x"] .form-control`) necesita el
+  wrapper sobre sí mismo. Cada alternativa de una lista de selectores se revisa
+  por separado, y cuenta el wrapper de cualquier regla con el mismo selector,
+  de la zona o global (`.form-control`); el que el componente hereda de la zona
+  no cuenta. Un triplete que rechaza `triplete`, o que vuelve
+  al valor del padre (`inherit`, `unset`…), no da este aviso.
+- `tipografia-familia` — aviso cuando el theme declara `--bs-body-font-family`
+  sin `--bs-font-sans-serif`: tooltips y popovers leen la segunda.
+- `contraste-superficie` — `--bs-body-color-rgb` sobre `--bs-secondary-bg-rgb` y
+  `--bs-tertiary-bg-rgb`, cuando el theme declara alguna de ellas. Se mide en el
+  raíz y en cada zona que redefine el fondo o el texto del cuerpo; dentro de una
+  zona, lo que ésta no declara se mide con el valor que hereda del raíz, y varias
+  reglas de la misma zona se miden juntas. Si el theme no declara el color del
+  cuerpo, se mide contra el de Dynamic, `var(--bs-gray-900-rgb)`: sigue a la
+  rampa de grises del theme. Es aviso; una superficie que no se puede
+  resolver se avisa como `contraste-irresoluble`.
+- `triplete` — error en cada variable `-rgb` que no sea un triplete ni un
+  `var()` a otra `-rgb`, en el raíz y en cada zona (una vez por variable, con
+  el valor que gana si la zona se reparte en varias reglas). Las reglas de
+  contraste que no pueden medir un par por esa causa no añaden
+  `contraste-irresoluble`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo
@@ -351,12 +495,20 @@ valor al que cae cuando nadie la toca.
 
 | Componente | Texto | Fondo |
 | --- | --- | --- |
-| `.list-group-item` | `--bs-list-group-color` (→ role `dark`) | `--bs-list-group-bg` (→ transparente: la superficie del contexto) |
-| `.list-group-item-action` | `--bs-list-group-action-color` (→ `gray-900`) | `--bs-list-group-bg` |
+| `.list-group-item` | `--bs-list-group-color` (→ `var(--bs-dark)` en `.list-group`) | `--bs-list-group-bg` (→ transparente: la superficie del contexto) |
+| `.list-group-item-action` | `--bs-list-group-action-color` (→ `var(--bs-gray-900)` en `.list-group`) | `--bs-list-group-bg` |
 | `.alert-<role>` | `--bs-<role>-text-emphasis` | `--bs-<role>-bg-subtle` |
 | `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
 | `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
 | `.btn-<role>` sin override | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+
+El valor por defecto de cada variable es el que declara la librería, y se
+resuelve donde ella lo declara: en `:root` las variables del role y del botón,
+en `.list-group` las de la lista. Casi todos apuntan a un wrapper
+(`var(--bs-gray-900)`, `var(--bs-white)`), que se calcula en `:root`; por eso
+una zona que sólo cambia `--bs-gray-900-rgb` no mueve el texto de la lista. El
+fondo de `.text-bg-<role>` es la excepción: la clase lee `--bs-<role>-rgb` en el
+propio elemento, y ahí sí cuenta el triplete de la zona.
 
 Dos detalles que importan al leer un informe:
 
@@ -387,5 +539,6 @@ Un color escrito literal (`#fff`) donde se esperaba una referencia se acepta y s
 anota como `literal`: se mide tal cual, pero queda fuera del theme y cambiar el
 token no lo mueve. Las notas van a stdout, no a stderr — no son hallazgos.
 
-Un par que ya falla con la paleta por defecto se reporta como aviso
-`contraste-preexistente`, no como error: el defecto es de la librería.
+Un par que ya está por debajo del umbral con la paleta por defecto de Dynamic se
+reporta como aviso `contraste-preexistente`, no como error: no lo introduce el
+theme.

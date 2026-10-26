@@ -388,20 +388,30 @@ export const normalizeCssValue = (value) => String(value)
   .replace(/#[0-9a-fA-F]{3,8}\b/g, (hex) => hex.toLowerCase());
 
 /**
- * Color de texto que Bootstrap hornea en `.btn-<role>` con `color-contrast()`.
- * Igual que en SOLID_PAIRS: corre en Sass, así que cambiar `--bs-<role>-rgb`
- * en runtime no lo recalcula. `secondary` va con blanco porque su base es
- * gray-800, no el paso 50 que usa `.text-bg-secondary`.
+ * Texto de `.btn-outline-<role>` en reposo, en hover y en active, tal como lo
+ * declara la librería en `--bs-btn-outline-<role>-{color,hover-color,active-color}`.
+ * El fondo no está aquí: el botón con contorno no se rellena, y en los tres
+ * estados deja ver lo que tiene detrás.
  */
-export const BUTTON_DEFAULT_FG = {
-  primary: { kind: 'white' },
-  secondary: { kind: 'white' },
-  success: { kind: 'white' },
-  info: { kind: 'white' },
-  danger: { kind: 'white' },
-  dark: { kind: 'white' },
-  warning: { kind: 'gray', step: 700 },
-  light: { kind: 'gray', step: 700 },
+const rampOutline = (rest, hover, active) => ({
+  color: { kind: 'role', step: rest },
+  'hover-color': { kind: 'role', step: hover },
+  'active-color': { kind: 'role', step: active },
+});
+const grayOutline = (rest, hover, active) => ({
+  color: { kind: 'gray', step: rest },
+  'hover-color': { kind: 'gray', step: hover },
+  'active-color': { kind: 'gray', step: active },
+});
+export const OUTLINE_COLORS = {
+  primary: rampOutline(500, 600, 700),
+  secondary: rampOutline(500, 700, 700),
+  success: rampOutline(500, 600, 700),
+  info: rampOutline(500, 600, 700),
+  warning: rampOutline(700, 800, 900),
+  danger: rampOutline(500, 600, 700),
+  light: grayOutline(100, 200, 300),
+  dark: grayOutline(900, 800, 700),
 };
 
 /** `[data-bs-theme="<zona>"]`, el selector con el que se monta una zona. */
@@ -418,7 +428,7 @@ export const ZONE_NAME_RE = /^[a-zA-Z][\w-]*$/;
  */
 export function isRootPrelude(prelude) {
   const bare = String(prelude).replace(/:where\(([^)]*)\)/g, '$1');
-  return bare.split(',').some((part) => {
+  return splitSelectorList(bare).some((part) => {
     const sel = part.trim();
     return sel === ':root' || /^\[data-bs-theme=["']?dynamic["']?\]$/.test(sel);
   });
@@ -431,44 +441,585 @@ export function zoneFromPrelude(prelude) {
   return match[1];
 }
 
+/**
+ * ¿El valor devuelve la variable al del padre? `inherit`, `unset`, `revert` y
+ * `revert-layer` sobre una custom property la dejan con lo que hereda.
+ */
+export const inheritsParent = (value) => /^\s*(?:inherit|unset|revert|revert-layer)\s*$/i.test(String(value));
+
 /** Todos los `--bs-*` que un valor referencia dentro de un `var()`. */
 export function varRefs(value) {
   return [...String(value).matchAll(/var\(\s*(--[\w-]+)/g)].map((m) => m[1]);
 }
 
 /**
- * Resuelve el valor de una declaración a un color, para poder medir contraste.
- *
- * Entiende las tres formas en que un theme escribe un color:
- *   - `rgb(var(--bs-x-rgb))` y `var(--bs-x)`  → se sigue la indirección;
- *   - `var(--bs-x-rgb)` a secas               → idem, es un triplete;
- *   - un literal (`#fff`, `rgb(0 0 0)`, …)    → se acepta y se marca `literal`.
- *
- * `lookup(name)` devuelve `{ rgb }` o `{ rgb: null, reason }`; es quien conoce
- * el contexto (el bloque raíz, una zona, los valores por defecto).
+ * `var(--x)` o `var(--x, respaldo)` que ocupa todo el valor. Devuelve
+ * `{ name, fallback }`, con `fallback` undefined si no hay coma, o null si el
+ * valor no es una sola llamada a var(). Se recorren los paréntesis porque el
+ * respaldo puede llevar otros var() dentro.
  */
-export function resolveColorValue(value, lookup) {
-  const raw = String(value).trim();
+function parseVarCall(raw) {
+  const head = raw.match(/^var\(\s*(--[\w-]+)\s*([,)])/);
+  if (!head) return null;
+  let depth = 0;
+  let close = -1;
+  for (let i = 3; i < raw.length; i += 1) {
+    if (raw[i] === '(') depth += 1;
+    if (raw[i] === ')') {
+      depth -= 1;
+      if (depth === 0) {
+        close = i;
+        break;
+      }
+    }
+  }
+  if (close !== raw.length - 1) return null;
+  return {
+    name: head[1],
+    fallback: head[2] === ',' ? raw.slice(head[0].length, close).trim() : undefined,
+  };
+}
 
-  const wrapped = raw.match(/^rgba?\(\s*var\(\s*(--[\w-]+)\s*(?:,[\s\S]*?)?\)\s*(?:[,/][\s\S]*)?\)$/);
-  if (wrapped) return { ...lookup(wrapped[1]), via: wrapped[1] };
+/**
+ * El wrapper `rgb(var(--x))` o `rgba(var(--x), α)`: devuelve la llamada a var()
+ * de su primer argumento, o null. El alfa no cuenta para el contraste, igual que
+ * en las reglas de contraste.
+ */
+function parseWrapper(raw) {
+  const match = raw.match(/^rgba?\(([\s\S]*)\)$/);
+  if (!match) return null;
+  const inner = match[1];
+  let depth = 0;
+  let end = inner.length;
+  for (let i = 0; i < inner.length; i += 1) {
+    if (inner[i] === '(') depth += 1;
+    if (inner[i] === ')') depth -= 1;
+    if (depth === 0 && (inner[i] === ',' || inner[i] === '/')) {
+      end = i;
+      break;
+    }
+  }
+  return parseVarCall(inner.slice(0, end).trim());
+}
 
-  const direct = raw.match(/^var\(\s*(--[\w-]+)\s*(?:,[\s\S]*)?\)$/);
-  if (direct) {
-    const name = direct[1];
-    // El wrapper de color (`--bs-primary`) es `rgb(var(--bs-primary-rgb))` en
-    // la librería: se mide sobre su triplete, que es donde vive el valor.
-    const viaTriplet = name.endsWith('-rgb') ? name : `${name}-rgb`;
-    const resolved = lookup(viaTriplet);
-    if (resolved.rgb) return { ...resolved, via: viaTriplet };
-    return { ...lookup(name), via: name };
+/**
+ * Resuelve una custom property a un color tal como la ve un subárbol (una zona,
+ * o un componente dentro de ella) que redefine algunas variables sobre su padre.
+ *
+ * Una custom property que referencia otra se sustituye en el elemento donde se
+ * declara y se hereda ya calculada. Una variable que el subárbol no declara vale
+ * lo mismo que en el padre, aunque el subárbol cambie los tokens a los que
+ * apunta; una que sí declara sigue sus var() con la misma regla en cada salto.
+ *
+ * `var(--x, respaldo)` usa el respaldo sólo cuando `--x` no existe en ninguna
+ * capa, vale `initial` o forma parte de un ciclo (`inherit`, `unset` y
+ * `revert` toman el valor del padre): es lo que hace el navegador con una variable
+ * sin valor. Si `--x` existe pero no es un color, el resultado es inválido y el
+ * respaldo no entra. El respaldo puede llevar a su vez otro var(), y un ciclo
+ * que pase por él se detecta igual que uno directo. Las variables del propio
+ * ciclo siguen siendo inválidas aunque tengan respaldo. Un respaldo que no se
+ * elige no crea dependencia: Chromium no lo cuenta para los ciclos.
+ *
+ * Una variable `-rgb` sólo admite un triplete o un var(). Las demás admiten
+ * también el wrapper `rgb(var(--x))` y un color literal, que es como la librería
+ * y los themes escriben las variables de color.
+ *
+ * `own` son las declaraciones del subárbol (Map nombre → { value, source? }) y
+ * `resolveParent(name)` resuelve en el padre. Devuelve `{ rgb, source }` o
+ * `{ rgb: null, reason }`; `undefined: true` marca una variable que no existe,
+ * e `invalidFormat` nombra la variable `-rgb` cuyo valor no es un triplete. Un
+ * resultado lleva `kind`: 'triplet' si sale de un triplete y 'color' si sale de
+ * un wrapper o un literal.
+ */
+export function resolveInherited(name, own, resolveParent, seen = new Set()) {
+  if (!own.has(name)) return resolveParent(name);
+  // `inherit`, `unset` y `revert` en una custom property sin registrar toman el
+  // valor ya calculado del padre, como si esta capa no la declarara.
+  if (inheritsParent(own.get(name).value)) return resolveParent(name);
+  // `cycle` nombra la variable donde se cierra el ciclo: mientras se vuelve
+  // hacia ella, cada variable del camino es parte del ciclo.
+  if (seen.has(name)) return { rgb: null, reason: `ciclo de var() en ${name}`, cycle: name };
+  const path = new Set(seen).add(name);
+  const result = resolveOwn(name, own, resolveParent, path);
+  if (result.cycle !== name) return result;
+  // Al salir del ciclo, la variable es inválida para quien la lea desde fuera,
+  // como una que no existe: su respaldo, si lo tiene, sí entra.
+  const { cycle, ...invalid } = result;
+  return { ...invalid, guaranteedInvalid: true };
+}
+
+function resolveOwn(name, own, resolveParent, path) {
+  const entry = own.get(name);
+  // `initial` en una custom property la deja sin valor, como si no existiera:
+  // quien la lea con var(--x, respaldo) usa el respaldo.
+  if (/^\s*initial\s*$/i.test(entry.value)) {
+    return { rgb: null, reason: `${name} vale "initial", que la deja sin valor`, guaranteedInvalid: true };
+  }
+  const source = entry.source ?? 'theme';
+  const isTriplet = name.endsWith('-rgb');
+
+  const follow = (call) => {
+    const resolved = resolveInherited(call.name, own, resolveParent, path);
+    const absent = resolved.undefined || resolved.guaranteedInvalid;
+    if (absent && call.fallback !== undefined) return resolveValue(call.fallback);
+    // Una variable `-rgb` se consume dentro de rgb()/RGBA(): si lo que referencia
+    // vale un color completo (un wrapper o un literal), queda `rgb(rgb(…))` y no
+    // se pinta.
+    if (isTriplet && resolved.rgb && resolved.kind === 'color') {
+      return {
+        rgb: null,
+        reason: `${name} apunta a ${call.name}, que vale un color y no un triplete`,
+        invalidFormat: name,
+      };
+    }
+    return resolved;
+  };
+
+  function resolveValue(value) {
+    const raw = String(value).trim();
+    const triplet = parseTriplet(raw);
+    if (triplet) return { rgb: triplet, source, token: name, kind: 'triplet' };
+
+    const call = parseVarCall(raw);
+    if (call) return follow(call);
+
+    if (!isTriplet) {
+      const wrapped = parseWrapper(raw);
+      if (wrapped) {
+        const resolved = follow(wrapped);
+        if (!resolved.rgb) return resolved;
+        // Dentro de rgb()/rgba() sólo cabe un triplete: `rgb(var(--bs-white))`
+        // queda `rgb(rgb(…))` y el navegador descarta el color.
+        if (resolved.kind === 'color') {
+          return {
+            rgb: null,
+            reason: `${name} envuelve en rgb() a ${wrapped.name}, que ya vale un color completo`,
+          };
+        }
+        return { ...resolved, kind: 'color' };
+      }
+      // `transparent` no es un color sobre el que medir: lo que se ve es lo que
+      // haya detrás, y eso lo decide quien mide.
+      if (colorAlpha(raw) === 0) return { rgb: null, transparent: true, reason: `${name} es transparente` };
+      try {
+        return {
+          rgb: parseColor(raw, name), source: 'literal', token: name, kind: 'color',
+        };
+      } catch {
+        return { rgb: null, reason: `${name} vale "${raw}", que no es un color ni un var()` };
+      }
+    }
+
+    return {
+      rgb: null,
+      reason: `${name} vale "${raw}", que no es un triplete ni un var()`,
+      invalidFormat: name,
+    };
   }
 
-  try {
-    return { rgb: parseColor(raw, 'valor'), source: 'literal' };
-  } catch {
-    return { rgb: null, reason: `"${raw}" no es un color ni una referencia var(--bs-…)` };
+  return resolveValue(entry.value);
+}
+
+// -- Valores por defecto y contextos -----------------------------------------
+
+/**
+ * Familias cromáticas a las que apuntan los roles en `$theme-colors-mapping`
+ * (`--bs-primary-rgb: var(--bs-blue-rgb)`), con su triplete por defecto.
+ */
+export const ROLE_FAMILIES = {
+  primary: 'blue', info: 'blue', success: 'green', warning: 'yellow', danger: 'red',
+};
+export const DEFAULT_FAMILIES = {
+  blue: DEFAULT_ROLE_BASES.primary,
+  green: DEFAULT_ROLE_BASES.success,
+  yellow: DEFAULT_ROLE_BASES.warning,
+  red: DEFAULT_ROLE_BASES.danger,
+};
+
+/**
+ * Valores que la librería declara en `:root` para las variables `-rgb` que miden
+ * las reglas de contraste, tal como los escribe: literal donde la librería pone
+ * un literal y alias donde pone un alias. Un theme que no declara una de ellas
+ * se queda con este valor, resuelto en el raíz junto con lo que el theme sí
+ * declara: si cambia la rampa de grises, el texto del cuerpo
+ * (`var(--bs-gray-900-rgb)`) y los roles respaldados por grises la siguen.
+ */
+export const DEFAULT_TRIPLETS = (() => {
+  const map = new Map([
+    ['--bs-white-rgb', DEFAULT_WHITE],
+    ['--bs-black-rgb', DEFAULT_BLACK],
+    ['--bs-body-bg-rgb', DEFAULT_BODY_BG],
+    ['--bs-body-color-rgb', 'var(--bs-gray-900-rgb)'],
+    ['--bs-gray-rgb', DEFAULT_GRAYS[500]],
+    // Superficies, textos y enlace del cuerpo: alias en :root.
+    ['--bs-emphasis-color-rgb', 'var(--bs-black-rgb)'],
+    ['--bs-secondary-color-rgb', 'var(--bs-body-color-rgb)'],
+    ['--bs-secondary-bg-rgb', 'var(--bs-gray-200-rgb)'],
+    ['--bs-tertiary-color-rgb', 'var(--bs-body-color-rgb)'],
+    ['--bs-tertiary-bg-rgb', 'var(--bs-gray-100-rgb)'],
+    ['--bs-link-color-rgb', 'var(--bs-primary-rgb)'],
+    ['--bs-link-hover-color-rgb', 'var(--bs-primary-700-rgb)'],
+  ]);
+  for (const step of GRAY_STEPS) map.set(`--bs-gray-${step}-rgb`, DEFAULT_GRAYS[step]);
+  for (const [family, triplet] of Object.entries(DEFAULT_FAMILIES)) map.set(`--bs-${family}-rgb`, triplet);
+  for (const role of ROLES) {
+    map.set(`--bs-${role}-rgb`, ROLE_FAMILIES[role]
+      ? `var(--bs-${ROLE_FAMILIES[role]}-rgb)`
+      : `var(--bs-gray-${GRAY_BACKED_ROLES[role]}-rgb)`);
   }
+  for (const role of RAMPED_ROLES) {
+    map.set(`--bs-${role}-500-rgb`, `var(--bs-${role}-rgb)`);
+    for (const step of RAMP_STEPS) {
+      map.set(`--bs-${role}-${step}-rgb`, DEFAULT_ROLE_RAMPS[role][step]);
+    }
+  }
+  return map;
+})();
+
+/** Una referencia de un par a la variable que lo resuelve: `var(--bs-gray-700)`. */
+const specVar = (spec, role) => {
+  if (spec.kind === 'white') return 'var(--bs-white)';
+  if (spec.kind === 'gray') return `var(--bs-gray-${spec.step})`;
+  return `var(--bs-${role}-${spec.step})`;
+};
+
+/**
+ * Variables de color que la librería declara en `:root` y que leen los pares
+ * horneados: el texto y el fondo de `.alert-<role>`, el texto de
+ * `.text-bg-<role>`, los de `.btn-<role>` y los textos de `.btn-outline-<role>`.
+ * Todas son alias de un wrapper, y por
+ * eso se calculan en el raíz: una zona que sólo cambia el triplete al que
+ * apuntan no las mueve.
+ */
+export const LIBRARY_ROOT_COLORS = (() => {
+  const map = new Map();
+  for (const role of ROLES) {
+    map.set(`--bs-${role}-text-emphasis`, specVar(SUBTLE_PAIRS[role].fg, role));
+    map.set(`--bs-${role}-bg-subtle`, specVar(SUBTLE_PAIRS[role].bg, role));
+    // `.text-bg-secondary` no tiene variable de texto: lee su rampa.
+    if (role !== 'secondary') map.set(`--bs-${role}-text-bg-color`, specVar(SOLID_PAIRS[role].fg, role));
+    map.set(`--bs-btn-${role}-color`, specVar(SOLID_PAIRS[role].fg, role));
+    map.set(`--bs-btn-${role}-bg`, specVar(SOLID_PAIRS[role].bg, role));
+    for (const [state, spec] of Object.entries(OUTLINE_COLORS[role])) {
+      map.set(`--bs-btn-outline-${role}-${state}`, specVar(spec, role));
+    }
+  }
+  return map;
+})();
+
+/** Wrappers de la librería que llevan alfa en vez de `rgb(var(--bs-X-rgb))`. */
+const WRAPPER_ALPHA = { '--bs-secondary-color': '.75', '--bs-tertiary-color': '.5' };
+
+/**
+ * El wrapper de color que la librería declara en `:root` para un nombre, o
+ * undefined si no hay ninguno. La librería tiene uno por cada variable `-rgb`
+ * suya, `--bs-X: rgb(var(--bs-X-rgb))`, y se calcula en el raíz: lo que lea
+ * `var(--bs-X)` dentro de una zona ve el triplete del raíz, no el de la zona.
+ */
+export function libraryWrapper(name) {
+  if (name.endsWith('-rgb') || !KNOWN_TOKENS.has(name) || !KNOWN_TOKENS.has(`${name}-rgb`)) {
+    return undefined;
+  }
+  const alpha = WRAPPER_ALPHA[name];
+  return alpha ? `rgba(var(${name}-rgb), ${alpha})` : `rgb(var(${name}-rgb))`;
+}
+
+/**
+ * Lo que la librería declara en el propio selector de un componente, y que se
+ * resuelve allí, dentro de la zona donde esté el componente. Es la capa más
+ * baja del elemento: un bloque del theme sobre el mismo selector la pisa.
+ */
+export const LIBRARY_ELEMENT_VARS = new Map([
+  ['.list-group', new Map([
+    ['--bs-list-group-color', 'var(--bs-dark)'],
+    ['--bs-list-group-action-color', 'var(--bs-gray-900)'],
+    ['--bs-list-group-bg', 'transparent'],
+  ])],
+  ['.nav-pills', new Map([
+    ['--bs-nav-pills-link-active-color', 'var(--bs-primary-500)'],
+    ['--bs-nav-pills-link-active-bg', 'var(--bs-gray-50)'],
+  ])],
+  ...ROLES.map((role) => [`.btn-${role}`, new Map([
+    ['--bs-btn-color', `var(--bs-btn-${role}-color)`],
+    ['--bs-btn-bg', `var(--bs-btn-${role}-bg)`],
+  ])]),
+  // Sin --bs-btn-hover-bg ni --bs-btn-active-bg: la librería no los declara en
+  // el botón con contorno, y `background-color: var(--bs-btn-hover-bg)` queda
+  // transparente. `--bs-btn-outline-<role>-hover-bg` existe en :root, pero no
+  // lo lee ningún selector.
+  ...ROLES.map((role) => [`.btn-outline-${role}`, new Map(
+    Object.keys(OUTLINE_COLORS[role]).map((state) => [
+      `--bs-btn-${state}`,
+      `var(--bs-btn-outline-${role}-${state})`,
+    ]),
+  )]),
+]);
+
+/** Valor por defecto de la librería en `:root` para un nombre, o undefined. */
+const libraryRootValue = (name) => DEFAULT_TRIPLETS.get(name)
+  ?? LIBRARY_ROOT_COLORS.get(name)
+  ?? libraryWrapper(name);
+
+/**
+ * El bloque raíz tal como lo ve el navegador: las declaraciones del theme sobre
+ * los valores por defecto de la librería, en el mismo elemento. Un alias de la
+ * librería se resuelve con lo que el theme declare en el raíz.
+ */
+const rootView = (decls) => ({
+  has: (name) => decls.has(name) || libraryRootValue(name) !== undefined,
+  get: (name) => decls.get(name) ?? { value: libraryRootValue(name), source: 'defecto' },
+});
+
+/**
+ * Una variable que el theme no declara y que no tiene valor por defecto aquí.
+ * Si la librería la define (está en known-tokens.json), existe en el navegador
+ * aunque el validador no conozca su valor: no se puede medir, pero un
+ * `var(--x, respaldo)` no usaría el respaldo. Sólo una que no existe en ningún
+ * sitio es `undefined`.
+ */
+const undeclared = (name) => (KNOWN_TOKENS.has(name)
+  ? { rgb: null, reason: `${name} es de la librería, pero el validador no conoce su valor` }
+  : { rgb: null, undefined: true, reason: `${name} no está en el theme ni en los valores por defecto` });
+
+/**
+ * Resuelve una custom property en el bloque raíz, siguiendo cadenas de `var()`
+ * y cayendo al valor por defecto de la librería cuando el theme no la toca.
+ * Devuelve `{ rgb, source }`, o `{ rgb: null, reason }`.
+ */
+export function resolve(name, decls) {
+  return resolveInherited(name, rootView(decls), undeclared);
+}
+
+const SPECIFICITY_ID = 1e6;
+const SPECIFICITY_CLASS = 1e3;
+
+/**
+ * Recorre un selector y devuelve los trozos separados por `isSeparator` en el
+ * primer nivel: fuera de paréntesis (`:not(.a, .b)`, `:has(.a .b)`), de
+ * corchetes y de comillas.
+ */
+const splitOutside = (selector, isSeparator) => {
+  const text = String(selector);
+  const parts = [];
+  let depth = 0;
+  let quote = null;
+  let start = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    if (char === '\\') {
+      // Un carácter escapado (`\"`, `\:`) no abre ni cierra nada.
+      i += 1;
+    } else if (quote) {
+      if (char === quote) quote = null;
+    } else if (char === '"' || char === "'") {
+      quote = char;
+    } else if (char === '(' || char === '[') {
+      depth += 1;
+    } else if (char === ')' || char === ']') {
+      depth -= 1;
+    } else if (depth === 0) {
+      const length = isSeparator(text, i);
+      if (length > 0) {
+        parts.push(text.slice(start, i), text.slice(i, i + length));
+        start = i + length;
+        i += length - 1;
+      }
+    }
+  }
+  parts.push(text.slice(start));
+  return parts;
+};
+
+/** Las alternativas de una lista de selectores, partida por sus comas de primer nivel. */
+export const splitSelectorList = (list) => splitOutside(list, (text, i) => (text[i] === ',' ? 1 : 0))
+  .filter((_, i) => i % 2 === 0)
+  .map((part) => part.trim())
+  .filter(Boolean);
+
+/**
+ * Los compuestos de un selector y los combinadores que los unen, en primer
+ * nivel: `.a > .b:has(.c .d)` da `['.a', ' > ', '.b:has(.c .d)']`. Los
+ * compuestos quedan siempre en las posiciones pares: un selector que empieza
+ * por un combinador (`> .a`) empieza por un compuesto vacío.
+ */
+export const splitCompounds = (selector) => splitOutside(
+  String(selector).trim(),
+  (text, i) => text.slice(i).match(/^\s*[>+~]\s*|^\s+/)?.[0].length ?? 0,
+);
+
+/**
+ * Especificidad de un selector como un solo número (ids, clases y atributos,
+ * tipos), suficiente para los selectores de un theme. `:where()` no suma;
+ * `:is()`, `:not()` y `:has()` valen lo que su argumento más específico;
+ * `:nth-child(… of S)` suma una clase más lo que valga `S`; el resto de
+ * pseudoclases cuenta como una clase.
+ */
+export function specificity(selector) {
+  // El contenido de un atributo (`[data-target="#panel"]`) no es selector: un
+  // `#` o un `.` dentro de él no suman.
+  let rest = String(selector).replace(/\[[^\]]*\]/g, '[]');
+  let nested = 0;
+  const functional = /(?<!:):([\w-]+)\(/g;
+  let match = functional.exec(rest);
+  while (match) {
+    let depth = 1;
+    let close = match.index + match[0].length;
+    for (; close < rest.length && depth > 0; close += 1) {
+      if (rest[close] === '(') depth += 1;
+      if (rest[close] === ')') depth -= 1;
+    }
+    const name = match[1].toLowerCase();
+    const argument = rest.slice(match.index + match[0].length, close - 1);
+    const most = (list) => Math.max(0, ...splitSelectorList(list).map(specificity));
+    if (['is', 'not', 'has', 'matches', '-webkit-any'].includes(name)) nested += most(argument);
+    else if (name.startsWith('nth-')) {
+      const of = argument.match(/\bof\s+([\s\S]+)$/);
+      nested += SPECIFICITY_CLASS + (of ? most(of[1]) : 0);
+    } else if (name !== 'where') nested += SPECIFICITY_CLASS;
+    rest = `${rest.slice(0, match.index)} ${rest.slice(close)}`;
+    functional.lastIndex = match.index;
+    match = functional.exec(rest);
+  }
+  const ids = (rest.match(/#[\w-]+/g) ?? []).length;
+  const classes = (rest.match(/\.[\w-]+|\[[^\]]*\]|(?<!:):(?!:)[\w-]+/g) ?? []).length;
+  const types = (rest.replace(/\[[^\]]*\]/g, '').match(/(?:^|[\s>+~])[a-zA-Z][\w-]*/g) ?? []).length
+    + (rest.match(/::[\w-]+/g) ?? []).length;
+  return nested + ids * SPECIFICITY_ID + classes * SPECIFICITY_CLASS + types;
+}
+
+/**
+ * Un selector con los espacios alrededor de sus combinadores de primer nivel
+ * normalizados. Lo que va entre comillas, corchetes o paréntesis no se toca:
+ * `[data-label="a+b"]` y `[data-label="a + b"]` son selectores distintos.
+ */
+export const normalizeSelector = (selector) => splitCompounds(selector)
+  .map((part, i) => (i % 2 === 0 ? part : ` ${part.trim()} `.replace(/^ {2}$/, ' ')))
+  .join('');
+
+/**
+ * Guarda una declaración en un Map como lo haría la cascada entre reglas de la
+ * misma especificidad: la posterior gana, salvo que la anterior sea
+ * `!important` y ésta no.
+ */
+export function cascadeSet(map, name, entry) {
+  if (map.get(name)?.important && !entry.important) return;
+  map.set(name, entry);
+}
+
+/**
+ * Zona a la que pertenece un bloque por su selector, el selector sin ella y si
+ * la zona va en el mismo elemento (`sameElement`) o en un ancestro.
+ */
+export function splitZone(prelude) {
+  const match = String(prelude).match(/^\[data-bs-theme=["']?([\w-]+)["']?\]([\s\S]*)$/);
+  if (!match) return { zone: null, bare: String(prelude).trim(), sameElement: false };
+  // `[data-bs-theme="x"].btn` pega la zona al compuesto: es el mismo elemento.
+  // `[data-bs-theme="x"] .btn` (o `> .btn`) es un descendiente de la zona.
+  const sameElement = /^[^\s>+~]/.test(match[2]);
+  return { zone: match[1], bare: match[2].trim(), sameElement };
+}
+
+/**
+ * Contextos en los que se mide un theme: el raíz y una entrada por zona. Varias
+ * reglas `[data-bs-theme="<zona>"]` se aplican juntas, así que sus
+ * declaraciones se funden en orden de aparición. Cada contexto lleva:
+ *
+ *   - `zone`: el nombre de la zona, o null en el raíz;
+ *   - `own`: lo que declara el contexto (en el raíz, el propio bloque raíz);
+ *   - `line`: la línea del primer bloque de la zona;
+ *   - `element(...groups)`: lo que se declara sobre un componente dentro del
+ *     contexto. Cada grupo es un elemento, del ancestro al propio componente
+ *     (`['.list-group'], ['.list-group-item']`), y en cada uno, de menos a más
+ *     prioridad: lo que pone la librería en el selector, los bloques globales
+ *     del theme y los de la zona (`[data-bs-theme="<zona>"] .x`), que tienen más
+ *     especificidad;
+ *   - `lookup(name, element?)`: resuelve como el navegador. Lo que la zona no
+ *     declara llega del raíz ya calculado, y con `element` se añade debajo la
+ *     capa del componente.
+ *
+ * Todas las reglas que miden contraste leen de aquí; ninguna vuelve a recorrer
+ * los bloques por su cuenta.
+ */
+export function buildContexts(blocks, root) {
+  const inRoot = (name) => resolve(name, root);
+  const zones = new Map();
+  for (const block of blocks) {
+    if (!block.zone) continue;
+    const zone = zones.get(block.zone) ?? { zone: block.zone, own: new Map(), line: block.line };
+    for (const [name, entry] of block.decls) cascadeSet(zone.own, name, entry);
+    zones.set(block.zone, zone);
+  }
+
+  /**
+   * Lo que se declara sobre un elemento que casa con alguno de `selectors`. Como
+   * en la cascada, una declaración `!important` gana a las normales; entre las
+   * del mismo tipo gana la de más especificidad (la de la alternativa que casa,
+   * con el prefijo de zona si lo lleva) y, a igualdad, la que aparece después.
+   * La librería va antes que el theme en el orden.
+   */
+  const layerFor = (zone, selectors) => {
+    const wanted = new Set(selectors.map(normalizeSelector));
+    const candidates = [];
+    for (const selector of selectors) {
+      for (const [name, value] of LIBRARY_ELEMENT_VARS.get(selector) ?? []) {
+        candidates.push({ name, entry: { value, source: 'defecto' }, weight: specificity(selector) });
+      }
+    }
+    for (const block of blocks) {
+      if (block.zone) continue;
+      // Los bloques raíz también cuentan: una regla `:root, .nav-pills` declara
+      // sobre el componente. Es la alternativa que casa la que decide. Una
+      // alternativa con la zona pegada (`[data-bs-theme="z"].x`) se trata como
+      // si la zona fuera un ancestro; la regla `zona-pegada` lo avisa.
+      let weight = -1;
+      for (const alternative of splitSelectorList(block.prelude)) {
+        const { zone: altZone, bare } = splitZone(alternative);
+        if (altZone && altZone !== zone) continue;
+        if (!wanted.has(normalizeSelector(bare))) continue;
+        // `[data-bs-theme="<zona>"]` suma un atributo a la especificidad.
+        weight = Math.max(weight, specificity(bare) + (altZone ? SPECIFICITY_CLASS : 0));
+      }
+      if (weight < 0) continue;
+      for (const [name, entry] of block.decls) candidates.push({ name, entry, weight });
+    }
+    // sort es estable: a igual peso se conserva el orden de aparición.
+    candidates.sort((a, b) => (Number(Boolean(a.entry.important)) - Number(Boolean(b.entry.important)))
+      || (a.weight - b.weight));
+    return new Map(candidates.map(({ name, entry }) => [name, entry]));
+  };
+
+  // Cada grupo de selectores es un elemento: los del mismo grupo se funden, y
+  // cada grupo hereda del anterior, que es su ancestro (`.list-group` y luego
+  // `.list-group-item`). Una variable se resuelve en el elemento que la declara.
+  const elementIn = (zone) => (...groups) => {
+    const layers = groups.map((selectors) => layerFor(zone, selectors));
+    return {
+      layers,
+      has: (name) => layers.some((layer) => layer.has(name)),
+      get: (name) => [...layers].reverse().find((layer) => layer.has(name))?.get(name),
+    };
+  };
+
+  const withLookup = (ctx, resolveHere) => ({
+    ...ctx,
+    element: elementIn(ctx.zone),
+    lookup: (name, element) => {
+      if (!element) return resolveHere(name);
+      const resolveInElement = element.layers.reduce(
+        (parent, layer) => (inherited) => resolveInherited(inherited, layer, parent),
+        resolveHere,
+      );
+      return resolveInElement(name);
+    },
+  });
+
+  return [
+    withLookup({ zone: null, own: root, line: null }, inRoot),
+    ...[...zones.values()].map((zone) => withLookup(
+      zone,
+      (name) => resolveInherited(name, zone.own, inRoot),
+    )),
+  ];
 }
 
 // -- Pares horneados ---------------------------------------------------------
@@ -476,18 +1027,16 @@ export function resolveColorValue(value, lookup) {
 /**
  * Pares texto/fondo que la librería resuelve por su cuenta y que un theme no
  * declara: se quedan como estaban aunque el rebrand cambie todo lo demás. Cada
- * lado es la variable que el componente lee, con el valor al que cae cuando el
- * theme no la toca — tomado del CSS compilado de Dynamic.
+ * lado es la variable que el componente lee. Si el theme no la declara, vale lo
+ * que la librería pone en `:root` (LIBRARY_ROOT_COLORS, los wrappers) o en el
+ * selector del componente (LIBRARY_ELEMENT_VARS), y se resuelve donde se
+ * declara: el mismo par da un resultado en el bloque raíz y otro dentro de una
+ * zona sólo si la zona redefine algo que el par lea en ella.
  *
- * `fallback` habla en tokens, no en colores, para que se resuelva en el
- * contexto que toque: el mismo par da un resultado en el bloque raíz y otro
- * dentro de una zona que mueve la superficie.
- *
- *   { kind: 'white' }                -> --bs-white-rgb
- *   { kind: 'gray', step: 900 }      -> --bs-gray-900-rgb
- *   { kind: 'role', step: 500 }      -> --bs-<role>-500-rgb
- *   { kind: 'roleBase', role: 'dark' } -> --bs-dark-rgb
- *   { kind: 'surface' }              -> --bs-body-bg-rgb del contexto
+ * `owners` son los elementos del componente, del ancestro al propio
+ * componente, y en cada uno los selectores que casan con él: lo que se declara
+ * sobre ellos, en la librería o en el theme, forma la capa de ese elemento. Lo
+ * que declara el ítem no cambia lo que su ancestro ya resolvió.
  *
  * `noCorregible` marca los pares que ninguna declaración del theme puede
  * cambiar, porque el color no viaja por una variable. Esos se reportan como
@@ -497,9 +1046,9 @@ export const BAKED_PAIRS = [
   {
     component: '.list-group-item',
     why: 'la lista hereda el texto de --bs-list-group-color, que apunta al role dark',
-    owners: ['.list-group', '.list-group-item'],
-    fg: { variable: '--bs-list-group-color', fallback: { kind: 'roleBase', role: 'dark' } },
-    bg: { variable: '--bs-list-group-bg', fallback: { kind: 'surface' } },
+    owners: [['.list-group'], ['.list-group-item']],
+    fg: { variable: '--bs-list-group-color' },
+    bg: { variable: '--bs-list-group-bg' },
   },
   {
     // El estado normal de un ítem de acción no lee --bs-list-group-color sino
@@ -507,9 +1056,9 @@ export const BAKED_PAIRS = [
     // una lista de acciones dentro de una zona oscura.
     component: '.list-group-item-action',
     why: 'un ítem de acción lee --bs-list-group-action-color, no --bs-list-group-color',
-    owners: ['.list-group', '.list-group-item', '.list-group-item-action'],
-    fg: { variable: '--bs-list-group-action-color', fallback: { kind: 'gray', step: 900 } },
-    bg: { variable: '--bs-list-group-bg', fallback: { kind: 'surface' } },
+    owners: [['.list-group'], ['.list-group-item', '.list-group-item-action']],
+    fg: { variable: '--bs-list-group-action-color' },
+    bg: { variable: '--bs-list-group-bg' },
   },
 ];
 
@@ -519,22 +1068,20 @@ export const BAKED_PAIRS = [
  * sobre -bg-subtle; `.text-bg-<role>` y `.btn-<role>` van sobre el base.
  */
 export function bakedRolePairs(role) {
-  const subtle = SUBTLE_PAIRS[role];
-  const solid = SOLID_PAIRS[role];
   const pairs = [];
 
-  if (subtle) {
+  if (SUBTLE_PAIRS[role]) {
     pairs.push({
       component: `.alert-${role}`,
       why: 'la alerta usa --bs-<role>-text-emphasis sobre --bs-<role>-bg-subtle',
-      owners: ['.alert', `.alert-${role}`],
-      fg: { variable: `--bs-${role}-text-emphasis`, fallback: subtle.fg },
-      bg: { variable: `--bs-${role}-bg-subtle`, fallback: subtle.bg },
+      owners: [['.alert', `.alert-${role}`]],
+      fg: { variable: `--bs-${role}-text-emphasis` },
+      bg: { variable: `--bs-${role}-bg-subtle` },
       role,
     });
   }
 
-  if (solid) {
+  if (SOLID_PAIRS[role]) {
     pairs.push(role === 'secondary'
       ? {
         // `.text-bg-secondary` se pinta con los wrappers de su rampa
@@ -542,9 +1089,9 @@ export function bakedRolePairs(role) {
         // texto propia. Los wrappers se resuelven en :root y se heredan.
         component: `.text-bg-${role}`,
         why: 'el color sale de la rampa de secondary, no de una variable propia',
-        owners: [`.text-bg-${role}`],
-        fg: { variable: '--bs-secondary-700', fallback: solid.fg, resolvesWhereDeclared: true },
-        bg: { variable: '--bs-secondary-50', fallback: solid.bg, resolvesWhereDeclared: true },
+        owners: [[`.text-bg-${role}`]],
+        fg: { variable: '--bs-secondary-700' },
+        bg: { variable: '--bs-secondary-50' },
         role,
         noCorregible: true,
       }
@@ -555,21 +1102,19 @@ export function bakedRolePairs(role) {
         component: `.text-bg-${role}`,
         why: 'la clase lee --bs-<role>-text-bg-color, que por defecto conserva el color resuelto para el role de la librería',
         // Un bloque sobre la propia clase puede redefinir las dos variables.
-        owners: [`.text-bg-${role}`],
-        // Declarada en :root, la variable se resuelve allí y se hereda ya
-        // calculada: una zona que sólo cambia el token al que apunta no la mueve.
-        fg: { variable: `--bs-${role}-text-bg-color`, fallback: solid.fg, resolvesWhereDeclared: true },
-        // The class paints `--bs-<role>-rgb`, so that is what gets measured;
-        // the step only applies when the theme doesn't declare the role.
-        bg: { variable: `--bs-${role}-rgb`, fallback: solid.bg },
+        owners: [[`.text-bg-${role}`]],
+        fg: { variable: `--bs-${role}-text-bg-color` },
+        // La clase pinta `RGBA(var(--bs-<role>-rgb))` en el propio elemento:
+        // aquí sí cuenta el triplete de la zona.
+        bg: { variable: `--bs-${role}-rgb` },
         role,
       });
     pairs.push({
       component: `.btn-${role}`,
       why: 'sin override, el botón conserva el color que color-contrast() calculó en Sass',
-      owners: ['.btn', `.btn-${role}`],
-      fg: { variable: `--bs-btn-${role}-color`, fallback: solid.fg },
-      bg: { variable: `--bs-btn-${role}-bg`, fallback: solid.bg },
+      owners: [['.btn', `.btn-${role}`]],
+      fg: { variable: `--bs-btn-${role}-color` },
+      bg: { variable: `--bs-btn-${role}-bg` },
       role,
       onlyWithoutOverride: true,
     });

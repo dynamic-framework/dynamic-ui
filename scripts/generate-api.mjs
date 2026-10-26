@@ -1,69 +1,62 @@
 /**
  * generate-api.mjs
  *
- * Generates registry/api.json — a unified public API descriptor for Dynamic UI.
- * Includes:
- *   - component props parsed directly from TypeScript source (react-docgen-typescript)
- *   - hook signatures extracted via TypeScript Compiler API
+ * Genera registry/api.json, el descriptor unificado de la API pública de
+ * Dynamic UI. Incluye:
+ *   - las props de los componentes, leídas del código TypeScript con
+ *     react-docgen-typescript (scripts/component-docgen.mjs);
+ *   - la firma de cada hook que exporta `src/index.ts` y la de los providers
+ *     de contexto, extraídas con la Compiler API de TypeScript.
  *
- * Hook extraction covers exported types, JSDoc (description, @requires, @param),
- * and call signatures — information that react-docgen-typescript cannot provide
- * because it only processes React components, not plain functions.
+ * Los hooks se extraen con la Compiler API porque react-docgen-typescript solo
+ * procesa componentes de React, no funciones: de ella salen los tipos
+ * exportados, el JSDoc (descripción, @requires, @param) y las firmas.
  *
- * Usage: node scripts/generate-api.mjs
+ * Uso: node scripts/generate-api.mjs
  */
 
 import {
   readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync,
 } from 'fs';
 import { resolve, dirname, basename, relative } from 'path';
-import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
-import * as docgen from 'react-docgen-typescript';
+
+import {
+  ROOT, TSCONFIG_PATH, createIndexProgram, listPublicHooks,
+} from './public-hooks.mjs';
+import { parseComponentFile } from './component-docgen.mjs';
+import { resolveTypeInfo } from './type-info.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
 
-const dirPath = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(dirPath, '..');
-
-// --- Validation ---
+// --- Validación ---
 const OUTPUT_DIR = resolve(ROOT, 'registry');
 if (!existsSync(OUTPUT_DIR)) {
   mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-const TSCONFIG_PATH = resolve(ROOT, 'tsconfig.json');
 if (!existsSync(TSCONFIG_PATH)) {
-  process.stderr.write('tsconfig.json not found at project root.\n');
+  process.stderr.write('No se encontró tsconfig.json en la raíz del proyecto.\n');
   process.exit(1);
 }
 
-// --- Public hook/context files to document (relative to project root) ---
-const HOOK_FILES = [
-  'src/components/DToastContainer/useDToast.tsx',
+// --- Archivos con providers de contexto documentados (relativos a la raíz) ---
+const CONTEXT_FILES = [
   'src/contexts/DPortalContext.tsx',
   'src/contexts/DContext.tsx',
 ];
 
-// --- Load tsconfig ---
-const tsConfigFile = ts.readConfigFile(TSCONFIG_PATH, ts.sys.readFile);
-const { options: compilerOptions } = ts.parseJsonConfigFileContent(
-  tsConfigFile.config,
-  ts.sys,
-  dirname(TSCONFIG_PATH),
-);
+// --- Utilidades ---
 
-// --- Helpers ---
-
-/** Extracts plain text from a JSDoc comment (string or NodeArray). */
+/** Extrae el texto plano de un comentario JSDoc (string o NodeArray). */
 function jsDocCommentToString(comment) {
   if (!comment) return '';
   if (typeof comment === 'string') return comment.trim();
   return ts.displayPartsToString(comment).trim();
 }
 
-/** Reads the main JSDoc description text attached to a node, excluding tag comments. */
+/** Lee la descripción principal del JSDoc de un nodo, sin el texto de las etiquetas. */
 function getNodeJsDoc(node) {
   return ts.getJSDocCommentsAndTags(node)
     .filter((d) => ts.isJSDoc(d))
@@ -73,98 +66,17 @@ function getNodeJsDoc(node) {
     .trim();
 }
 
-/** Returns the raw source text of a TypeNode (best-effort inline type display). */
+/** Devuelve el texto fuente de un TypeNode en una línea (para mostrar el tipo tal cual). */
 function typeNodeText(typeNode, sourceFile) {
   if (!typeNode) return 'unknown';
   return typeNode.getText(sourceFile).replace(/\s+/g, ' ').trim();
 }
 
 /**
- * Resolves a TypeScript Type to a self-contained serializable descriptor.
- *
- * - String-literal union  → { type: 'string', values: ['a', 'b', ...] }
- * - Object / mapped type  → { type: 'object', fields: { prop: { type, required, description } } }
- * - Scalar / other        → { type: '<checker string>' }
- *
- * Union members that are `undefined` are stripped so optional properties stay clean
- * (the `required` flag on the parent field already captures optionality).
- * Recursion is capped at depth 3 to avoid expanding deep library internals.
- *
- * @param {boolean} [expand=false] When true, always expand object types inline
- *   even when they have a named alias (used for the top-level `types` section).
- * @param {Set<string>} [knownTypeNames] Set of type names that are documented in
- *   `sharedTypes`. Only types in this set are emitted as named references; all
- *   other aliased types (library types, unexported aliases, etc.) fall through to
- *   the expand / typeToString path so consumers always get a usable definition.
- */
-function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false, knownTypeNames = new Set()) {
-  if (depth > 3) return { type: checker.typeToString(type) };
-
-  // Guard primitive types before getPropertiesOfType, which would otherwise
-  // return String/Number interface methods for primitive string/number.
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.String) return { type: 'string' };
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.Number) return { type: 'number' };
-  // eslint-disable-next-line no-bitwise
-  if (type.flags & ts.TypeFlags.Boolean) return { type: 'boolean' };
-
-  if (type.isUnion()) {
-    // eslint-disable-next-line no-bitwise
-    const nonUndefined = type.types.filter((t) => !(t.flags & ts.TypeFlags.Undefined));
-
-    if (nonUndefined.length > 0 && nonUndefined.every((t) => t.isStringLiteral())) {
-      return { type: 'string', values: nonUndefined.map((t) => t.value) };
-    }
-    if (nonUndefined.length === 1) {
-      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand, knownTypeNames);
-    }
-    return { type: checker.typeToString(type) };
-  }
-
-  // Array types — emit `ElementType[]` rather than expanding all Array.prototype
-  // methods (push, pop, splice, sort, …) which are noise in documentation.
-  if (checker.isArrayType(type)) {
-    const [elemType] = checker.getTypeArguments(type) ?? [];
-    const elemStr = elemType ? checker.typeToString(elemType) : 'unknown';
-    return { type: `${elemStr}[]` };
-  }
-
-  // Named type aliases — only emit the alias name when it is a *documented*
-  // type present in sharedTypes (e.g. CurrencyProps, BreakpointProps).
-  // Library types (ReactNode, Partial<...>) and unexported aliases are NOT in
-  // knownTypeNames so they fall through to expand / typeToString instead.
-  if (!expand && type.aliasSymbol && knownTypeNames.has(type.aliasSymbol.name)) {
-    return { type: checker.typeToString(type) };
-  }
-
-  // Object / mapped type (TypeLiteral, interface, Partial<Pick<...>>, etc.)
-  const props = checker.getPropertiesOfType(type);
-  if (props.length > 0) {
-    const fields = {};
-    props.forEach((prop) => {
-      const propType = checker.getTypeOfSymbolAtLocation(prop, locationNode);
-      // eslint-disable-next-line no-bitwise
-      const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
-      const desc = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim();
-      fields[prop.name] = {
-        // Nested fields within an explicitly expanded type never get further
-        // expand=true to avoid infinite recursion on self-referential types.
-        ...resolveTypeInfo(propType, checker, locationNode, depth + 1, false, knownTypeNames),
-        required: !isOptional,
-        ...(desc ? { description: desc } : {}),
-      };
-    });
-    return { type: 'object', fields };
-  }
-
-  return { type: checker.typeToString(type) };
-}
-
-/**
- * Reads `@param` JSDoc tags from a node and returns name → description map.
- * This handles inline-documented parameters (e.g. on `useCallback` wrappers)
- * that are not accessible via the type checker's documentation comments.
+ * Lee las etiquetas `@param` del JSDoc de un nodo y devuelve un mapa
+ * nombre → descripción. Cubre los parámetros documentados en línea (p. ej. en
+ * envoltorios de `useCallback`), a los que no se llega por los comentarios de
+ * documentación del type checker.
  */
 function getJsDocParamDescriptions(node) {
   return ts.getJSDocTags(node).reduce((result, tag) => {
@@ -179,8 +91,9 @@ function getJsDocParamDescriptions(node) {
 }
 
 /**
- * Reads `@requires` JSDoc tags from a node and returns an ordered string array.
- * Used to document prerequisites (context providers, companion components) for a hook.
+ * Lee las etiquetas `@requires` del JSDoc de un nodo y devuelve un array
+ * ordenado. Documenta los requisitos de un hook (providers de contexto,
+ * componentes que deben estar montados).
  */
 function getJsDocRequires(node) {
   return ts.getJSDocTags(node)
@@ -190,8 +103,8 @@ function getJsDocRequires(node) {
 }
 
 /**
- * Reads `@throws` JSDoc tags from a node and returns all descriptions found
- * as an array, or `undefined` if no `@throws` tag is present.
+ * Lee las etiquetas `@throws` del JSDoc de un nodo y devuelve sus
+ * descripciones, o `undefined` si no hay ninguna.
  */
 function getJsDocThrows(node) {
   const tags = ts.getJSDocTags(node).filter(
@@ -202,8 +115,20 @@ function getJsDocThrows(node) {
 }
 
 /**
- * Extracts the call parameters of a function-typed symbol using the type checker.
- * Returns [{ name, type, required, description }].
+ * Devuelve el texto de la etiqueta `@deprecated` de un símbolo, con el mismo
+ * formato que react-docgen-typescript usa en `description`
+ * (`@deprecated <texto>`), o '' si no está deprecado.
+ */
+function getDeprecatedNote(symbol, checker) {
+  const tag = symbol.getJsDocTags(checker).find((t) => t.name === 'deprecated');
+  if (!tag) return '';
+  const text = ts.displayPartsToString(tag.text).replace(/\s+/g, ' ').trim();
+  return text ? `@deprecated ${text}` : '@deprecated';
+}
+
+/**
+ * Extrae los parámetros de llamada de un símbolo de tipo función con el type checker.
+ * Devuelve [{ name, type, required, description }].
  */
 function extractCallParams(symbol, checker, locationNode) {
   const type = checker.getTypeOfSymbolAtLocation(symbol, locationNode);
@@ -214,8 +139,13 @@ function extractCallParams(symbol, checker, locationNode) {
     type: checker.typeToString(
       checker.getTypeOfSymbolAtLocation(param, locationNode),
     ),
-    required: /* eslint-disable-next-line no-bitwise */
-      !(Number(param.flags) & Number(ts.SymbolFlags.Optional)),
+    // SymbolFlags.Optional no marca los parámetros de función: un parámetro
+    // es opcional si lleva `?`, tiene valor por defecto o es rest.
+    required: !(
+      param.valueDeclaration
+      && ts.isParameter(param.valueDeclaration)
+      && checker.isOptionalParameter(param.valueDeclaration)
+    ),
     description: ts.displayPartsToString(
       param.getDocumentationComment(checker),
     ).trim(),
@@ -223,7 +153,7 @@ function extractCallParams(symbol, checker, locationNode) {
 }
 
 /**
- * Returns the string representation of the return type of a function-typed symbol.
+ * Devuelve el texto del tipo de retorno de un símbolo de tipo función.
  */
 function extractReturnTypeString(symbol, checker, locationNode) {
   const type = checker.getTypeOfSymbolAtLocation(symbol, locationNode);
@@ -233,307 +163,387 @@ function extractReturnTypeString(symbol, checker, locationNode) {
 }
 
 /**
- * Returns a TypeScript-style generic type parameter string for a node, e.g. `<T, U>`.
- * Returns an empty string when the node has no type parameters.
+ * Indica si el retorno de un hook es un objeto cuyas propiedades se listan en
+ * `returns`. Los primitivos, `void`, los arrays y las tuplas no lo son: para
+ * ellos `returns` queda vacío y el tipo se lee en `returnType`.
+ */
+function hasObjectReturn(type, checker) {
+  if (type.isUnion()) {
+    const members = type.types.filter(
+      // eslint-disable-next-line no-bitwise
+      (t) => !(t.flags & (ts.TypeFlags.Undefined | ts.TypeFlags.Null)),
+    );
+    return members.length > 0 && members.every((t) => hasObjectReturn(t, checker));
+  }
+  if (checker.isArrayType(type) || checker.isTupleType(type)) return false;
+  // eslint-disable-next-line no-bitwise
+  return (type.flags & (ts.TypeFlags.Object | ts.TypeFlags.Intersection)) !== 0;
+}
+
+/**
+ * Devuelve la lista de parámetros de tipo genérico de un nodo al estilo
+ * TypeScript, con sus restricciones y valores por defecto, p. ej.
+ * `<T extends Identifiable, U = string>`, o '' si no tiene.
  */
 function getTypeParamsStr(node) {
   if (!node.typeParameters?.length) return '';
-  return `<${node.typeParameters.map((tp) => tp.name.text).join(', ')}>`;
+  return `<${node.typeParameters.map((tp) => tp.getText().replace(/\s+/g, ' ')).join(', ')}>`;
 }
 
 /**
- * Builds a TypeScript-style signature string for a hook.
- * Example: `useDToast() => { toast }`
+ * Construye la firma de un hook al estilo TypeScript.
+ * Ejemplos: `useDToast() => { toast }`,
+ * `useMediaQuery(mediaQuery: string, useListener?: boolean) => boolean`.
  */
-function buildSignature(hookName, parameters, returnKeys) {
+function buildSignature(hookName, parameters, returnKeys, returnType) {
   const params = parameters
-    .map((p) => `${p.name}${p.required ? '' : '?'}: ${p.type}`)
+    .map((p) => `${p.name}${p.required || p.name.startsWith('...') ? '' : '?'}: ${p.type}`)
     .join(', ');
-  const ret = returnKeys.length ? `{ ${returnKeys.join(', ')} }` : 'void';
+  const ret = returnKeys.length ? `{ ${returnKeys.join(', ')} }` : returnType;
   return `${hookName}(${params}) => ${ret}`;
 }
 
-// --- Core extraction ---
+// --- Extracción ---
+
+const program = createIndexProgram();
+const checker = program.getTypeChecker();
 
 /**
- * Parses a source file and returns an array of API descriptor objects, one per
- * exported hook (`use*`) or documented provider component found in the file.
- *
- * Each hook entry:
- * { source, kind:'hook', description, requires, throws?, signature, parameters, returns, types }
- *
- * Each component entry:
- * { source, kind:'component', description, requires, signature, props, types }
+ * Datos compartidos por todas las entradas de un mismo archivo: los nombres
+ * de los tipos exportados con JSDoc (`knownTypeNames`) y su definición
+ * resuelta (`sharedTypes`). Se calculan una vez por archivo.
  */
-function extractFileDocs(relPath) {
-  const filePath = resolve(ROOT, relPath);
-  if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`);
+const fileContexts = new Map();
 
-  const program = ts.createProgram([filePath], { ...compilerOptions, noEmit: true });
-  const checker = program.getTypeChecker();
-  const sourceFile = program.getSourceFile(filePath);
-  if (!sourceFile) throw new Error(`Could not load source file: ${filePath}`);
+function getFileContext(sourceFile) {
+  const cached = fileContexts.get(sourceFile.fileName);
+  if (cached) return cached;
 
-  // Pre-scan: collect names of exported type aliases / interfaces that have JSDoc.
-  // Only these names will be emitted as references in props/returns; library types
-  // and unexported aliases will be expanded or stringified instead.
+  // Pre-escaneo: nombres de los alias e interfaces exportados que tienen JSDoc.
+  // Solo estos se emiten como referencia en props y retornos; los tipos de
+  // librerías y los alias no exportados se expanden o se pasan a texto.
   const knownTypeNames = new Set();
+  const exportedTypes = [];
   ts.forEachChild(sourceFile, (node) => {
     // eslint-disable-next-line no-bitwise
     const isExported = !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export);
     if (isExported && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node))) {
-      if (getNodeJsDoc(node)) knownTypeNames.add(node.name.text);
+      if (getNodeJsDoc(node)) {
+        knownTypeNames.add(node.name.text);
+        exportedTypes.push(node);
+      }
     }
   });
 
-  // Exported types with JSDoc — shared across all entries from this file.
+  // Tipos exportados con JSDoc, resueltos con el type checker para que los
+  // tipos referenciados (p. ej. ComponentStateColor) se expandan. Los que no
+  // tienen JSDoc son detalles internos y no se incluyen.
   const sharedTypes = {};
-
-  // Collected doc entries (one per exported hook or documented component).
-  const entries = [];
-
-  /**
-   * Processes an exported hook function (`use*`) and pushes a hook entry.
-   */
-  function processHookNode(node, name) {
-    const doc = {
-      source: relPath,
-      kind: 'hook',
-      description: '',
-      requires: [],
-      signature: '',
-      parameters: [],
-      returns: {},
-      types: {},
+  exportedTypes.forEach((node) => {
+    const declType = checker.getTypeAtLocation(node.name);
+    sharedTypes[node.name.text] = {
+      description: getNodeJsDoc(node),
+      // expand=true: en la sección types los campos se expanden siempre,
+      // aunque el tipo tenga alias (p. ej. CurrencyProps).
+      ...resolveTypeInfo(declType, checker, node, 0, true, knownTypeNames),
     };
+  });
 
-    doc.description = getNodeJsDoc(node);
-    doc.requires = getJsDocRequires(node);
-    const hookThrows = getJsDocThrows(node);
-    if (hookThrows) doc.throws = hookThrows;
+  const context = { knownTypeNames, sharedTypes };
+  fileContexts.set(sourceFile.fileName, context);
+  return context;
+}
 
-    // Hook-level parameters (typically none for React hooks)
-    doc.parameters = (node.parameters ?? []).map((param) => ({
-      name: param.name.getText(sourceFile),
-      // For generic hooks the type annotation may reference a type parameter (e.g. T).
-      // We preserve it as a readable string rather than trying to expand it.
-      type: typeNodeText(param.type, sourceFile),
-      required: !param.questionToken && !param.initializer,
-      description: getNodeJsDoc(param),
-    }));
+/**
+ * Tipos del proyecto (declarados en `src/`) que se nombran en las anotaciones
+ * de los parámetros de un hook o en las restricciones de sus genéricos, aunque
+ * no tengan JSDoc o se importen de otro archivo. Sin ellos, un parámetro como
+ * `config: UseConfirmModalConfig` queda sin definición en `api.json`. Se
+ * expanden por completo, como en `types`.
+ */
+function parameterTypes(node) {
+  const types = {};
+  const visit = (typeNode) => {
+    if (ts.isTypeReferenceNode(typeNode)) {
+      let symbol = checker.getSymbolAtLocation(typeNode.typeName);
+      // eslint-disable-next-line no-bitwise
+      if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
+      const decl = symbol?.declarations?.find(
+        (d) => ts.isTypeAliasDeclaration(d) || ts.isInterfaceDeclaration(d),
+      );
+      const file = decl?.getSourceFile().fileName ?? '';
+      if (decl && !types[symbol.name] && !/node_modules/.test(file) && file.startsWith(ROOT)) {
+        types[symbol.name] = {
+          description: getNodeJsDoc(decl),
+          ...resolveTypeInfo(checker.getDeclaredTypeOfSymbol(symbol), checker, decl, 0, true),
+        };
+      }
+    }
+    ts.forEachChild(typeNode, visit);
+  };
+  (node.typeParameters ?? []).forEach((tp) => {
+    if (tp.constraint) visit(tp.constraint);
+    if (tp.default) visit(tp.default);
+  });
+  (node.parameters ?? []).forEach((param) => {
+    if (param.type) visit(param.type);
+  });
+  return types;
+}
 
-    // Collect JSDoc from `const x = useCallback(...)` declarations inside the body.
-    // TypeScript attaches doc comments to variable declarations, not return symbols,
-    // so we pre-build maps of variable name → { description, paramDescriptions }
-    // for the return enrichment step.
-    const innerJsDoc = {};
-    const innerParamDescriptions = {};
-    if (node.body) {
-      ts.forEachChild(node.body, (stmt) => {
-        if (
-          ts.isVariableStatement(stmt)
-          && stmt.declarationList
-          && stmt.declarationList.declarations.length
-        ) {
-          const decl = stmt.declarationList.declarations[0];
-          if (decl.name && ts.isIdentifier(decl.name)) {
-            const jsDoc = getNodeJsDoc(stmt);
-            if (jsDoc) innerJsDoc[decl.name.text] = jsDoc;
-            const paramMap = getJsDocParamDescriptions(stmt);
-            if (Object.keys(paramMap).length) {
-              innerParamDescriptions[decl.name.text] = paramMap;
-            }
+/**
+ * Construye la entrada de un hook a partir de su declaración:
+ * { name, source, kind:'hook', description, requires, throws?, signature,
+ *   parameters, returns, returnType, types }
+ *
+ * Para un hook reexportado desde una dependencia (`external`), `source` es el
+ * nombre del paquete, `types` queda vacío y la descripción lo indica.
+ */
+function hookEntry({
+  name: hookName, declaration: node, sourceFile, source, external,
+}) {
+  const { knownTypeNames, sharedTypes } = external
+    ? { knownTypeNames: new Set(), sharedTypes: {} }
+    : getFileContext(sourceFile);
+
+  const doc = {
+    source,
+    kind: 'hook',
+    description: '',
+    requires: [],
+    signature: '',
+    parameters: [],
+    returns: {},
+    types: {},
+  };
+
+  const ownDescription = getNodeJsDoc(node);
+  doc.description = external
+    ? [`Re-exported unchanged from \`${source}\`; see its documentation.`, ownDescription]
+      .filter(Boolean).join('\n\n')
+    : ownDescription;
+  doc.requires = getJsDocRequires(node);
+  const hookThrows = getJsDocThrows(node);
+  if (hookThrows) doc.throws = hookThrows;
+
+  // Parámetros del hook. En los hooks genéricos la anotación puede referirse a
+  // un parámetro de tipo (p. ej. T): se conserva como texto en vez de expandirla.
+  // Sin anotación, el tipo sale del checker.
+  doc.parameters = (node.parameters ?? []).map((param) => ({
+    name: `${param.dotDotDotToken ? '...' : ''}${param.name.getText(sourceFile)
+      .replace(/\s+/g, ' ')
+      .replace(/,\s*}$/, ' }')}`,
+    type: param.type
+      ? typeNodeText(param.type, sourceFile)
+      : checker.typeToString(checker.getTypeAtLocation(param)),
+    required: !param.questionToken && !param.initializer && !param.dotDotDotToken,
+    description: getNodeJsDoc(param),
+  }));
+
+  // JSDoc de las declaraciones `const x = useCallback(...)` del cuerpo.
+  // TypeScript asocia esos comentarios a la declaración de la variable, no al
+  // símbolo que se devuelve, así que se arma un mapa nombre de variable →
+  // { descripción, descripciones de parámetros } para completar `returns`.
+  const innerJsDoc = {};
+  const innerParamDescriptions = {};
+  if (node.body) {
+    ts.forEachChild(node.body, (stmt) => {
+      if (
+        ts.isVariableStatement(stmt)
+        && stmt.declarationList
+        && stmt.declarationList.declarations.length
+      ) {
+        const decl = stmt.declarationList.declarations[0];
+        if (decl.name && ts.isIdentifier(decl.name)) {
+          const jsDoc = getNodeJsDoc(stmt);
+          if (jsDoc) innerJsDoc[decl.name.text] = jsDoc;
+          const paramMap = getJsDocParamDescriptions(stmt);
+          if (Object.keys(paramMap).length) {
+            innerParamDescriptions[decl.name.text] = paramMap;
           }
         }
-      });
-    }
-
-    // Use the type checker to inspect the hook's return type.
-    // For generic hooks (e.g. useDPortalContext<T>()) the checker resolves the
-    // instantiated return type at the declaration site, which gives us the
-    // property names we need even if their types reference type parameters.
-    if (name) {
-      const hookSymbol = checker.getSymbolAtLocation(name);
-      if (hookSymbol) {
-        const hookType = checker.getTypeOfSymbolAtLocation(hookSymbol, node);
-        const sigs = checker.getSignaturesOfType(hookType, ts.SignatureKind.Call);
-        if (sigs.length) {
-          const returnType = checker.getReturnTypeOfSignature(sigs[0]);
-          checker.getPropertiesOfType(returnType).forEach((prop) => {
-            const symbolDoc = ts.displayPartsToString(
-              prop.getDocumentationComment(checker),
-            ).trim();
-            const propType = checker.getTypeOfSymbolAtLocation(prop, node);
-            const propSigs = checker.getSignaturesOfType(propType, ts.SignatureKind.Call);
-            const description = symbolDoc || innerJsDoc[prop.name] || '';
-
-            if (propSigs.length > 0) {
-              // Function-typed return value — emit callable descriptor.
-              doc.returns[prop.name] = {
-                type: 'function',
-                description,
-                parameters: extractCallParams(prop, checker, node).map((p) => ({
-                  ...p,
-                  description:
-                    p.description
-                    || (innerParamDescriptions[prop.name] ?? {})[p.name]
-                    || '',
-                })),
-                returns: {
-                  type: extractReturnTypeString(prop, checker, node),
-                },
-              };
-            } else {
-              // Non-callable return value (plain data property) — emit type info.
-              doc.returns[prop.name] = {
-                description,
-                ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
-              };
-            }
-          });
-        }
       }
-    }
-
-    const funcName = name ? name.getText(sourceFile) : relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
-    const typeParams = getTypeParamsStr(node);
-    doc.name = funcName;
-    doc.signature = buildSignature(`${funcName}${typeParams}`, doc.parameters, Object.keys(doc.returns));
-    entries.push(doc);
+    });
   }
 
-  /**
-   * Processes an exported provider component (non-`use*` function with JSDoc)
-   * and pushes a component entry. Props are extracted from the first parameter type.
-   */
-  function processComponentNode(node, name) {
-    const doc = {
-      source: relPath,
-      kind: 'component',
-      description: '',
-      requires: [],
-      signature: '',
-      props: {},
-      types: {},
-    };
+  // El tipo de retorno sale del type checker. En los hooks genéricos (p. ej.
+  // useDPortalContext<T>()) el checker resuelve el retorno instanciado en la
+  // declaración, lo que da los nombres de las propiedades aunque sus tipos
+  // dependan de parámetros de tipo.
+  const hookSymbol = checker.getSymbolAtLocation(node.name);
+  const hookType = checker.getTypeOfSymbolAtLocation(hookSymbol, node);
+  const [signature] = checker.getSignaturesOfType(hookType, ts.SignatureKind.Call);
+  const returnType = checker.getReturnTypeOfSignature(signature);
+  // Sin truncar y sin los `import("/ruta/absoluta")` que el checker antepone a
+  // los tipos que no están en el ámbito del archivo.
+  doc.returnType = checker.typeToString(returnType, node, ts.TypeFormatFlags.NoTruncation)
+    .replace(/import\("[^"]*"\)\./g, '');
 
-    doc.description = getNodeJsDoc(node);
-    doc.requires = getJsDocRequires(node);
+  if (hasObjectReturn(returnType, checker)) {
+    checker.getPropertiesOfType(returnType).forEach((prop) => {
+      const symbolDoc = ts.displayPartsToString(
+        prop.getDocumentationComment(checker),
+      ).trim();
+      const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+      const propSigs = checker.getSignaturesOfType(propType, ts.SignatureKind.Call);
+      const description = symbolDoc || innerJsDoc[prop.name] || '';
 
-    // Extract props by inspecting the first parameter's resolved type.
-    // For generic components (e.g. DContextProvider<T>) the checker resolves
-    // Partial<Props<T>> at the declaration site, enumerating all prop names.
-    if (node.parameters?.length > 0) {
-      const firstParam = node.parameters[0];
-      const paramType = checker.getTypeAtLocation(firstParam);
-      checker.getPropertiesOfType(paramType).forEach((prop) => {
-        const symbolDoc = ts.displayPartsToString(
-          prop.getDocumentationComment(checker),
-        ).trim();
-        const propType = checker.getTypeOfSymbolAtLocation(prop, node);
-        // eslint-disable-next-line no-bitwise
-        const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
-        doc.props[prop.name] = {
-          description: symbolDoc,
-          required: !isOptional,
+      if (propSigs.length > 0) {
+        // Valor de retorno que es una función: se emite un descriptor invocable.
+        doc.returns[prop.name] = {
+          type: 'function',
+          description,
+          parameters: extractCallParams(prop, checker, node).map((p) => ({
+            ...p,
+            description:
+              p.description
+              || (innerParamDescriptions[prop.name] ?? {})[p.name]
+              || '',
+          })),
+          returns: {
+            type: extractReturnTypeString(prop, checker, node),
+          },
+        };
+      } else {
+        // Valor de retorno que no es invocable (dato): se emite su tipo.
+        doc.returns[prop.name] = {
+          description,
           ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
         };
-      });
-    }
-
-    const funcName = name ? name.getText(sourceFile) : 'Component';
-    const typeParams = getTypeParamsStr(node);
-    doc.name = funcName;
-    const propList = Object.entries(doc.props)
-      .filter(([, p]) => p.required)
-      .map(([n]) => n)
-      .concat(
-        Object.entries(doc.props)
-          .filter(([, p]) => !p.required)
-          .map(([n]) => `${n}?`),
-      )
-      .join(', ');
-    doc.signature = `${funcName}${typeParams}({ ${propList} }) => JSX.Element`;
-    entries.push(doc);
+      }
+    });
   }
 
+  const typeParams = getTypeParamsStr(node);
+  doc.name = hookName;
+  doc.signature = buildSignature(
+    `${hookName}${typeParams}`,
+    doc.parameters,
+    Object.keys(doc.returns),
+    doc.returnType,
+  );
+  doc.types = { ...sharedTypes };
+  return doc;
+}
+
+/**
+ * Construye la entrada de un provider de contexto (función exportada que no
+ * empieza por `use` y tiene JSDoc). Las props salen del tipo del primer
+ * parámetro.
+ * { name, source, kind:'component', description, requires, signature, props, types }
+ */
+function contextEntry(node, sourceFile, relPath) {
+  const { knownTypeNames, sharedTypes } = getFileContext(sourceFile);
+  const doc = {
+    source: relPath,
+    kind: 'component',
+    description: '',
+    requires: [],
+    signature: '',
+    props: {},
+    types: {},
+  };
+
+  doc.description = getNodeJsDoc(node);
+  doc.requires = getJsDocRequires(node);
+
+  // Las props se leen del tipo resuelto del primer parámetro. En los
+  // componentes genéricos (p. ej. DContextProvider<T>) el checker resuelve
+  // Partial<Props<T>> en la declaración y enumera todas las props.
+  if (node.parameters?.length > 0) {
+    const firstParam = node.parameters[0];
+    const paramType = checker.getTypeAtLocation(firstParam);
+    checker.getPropertiesOfType(paramType).forEach((prop) => {
+      const symbolDoc = ts.displayPartsToString(
+        prop.getDocumentationComment(checker),
+      ).trim();
+      // getDocumentationComment no incluye las etiquetas: la deprecación se
+      // antepone a la descripción, como hace react-docgen-typescript.
+      const deprecated = getDeprecatedNote(prop, checker);
+      const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+      // eslint-disable-next-line no-bitwise
+      const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
+      doc.props[prop.name] = {
+        description: [deprecated, symbolDoc].filter(Boolean).join('\n'),
+        required: !isOptional,
+        ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
+      };
+    });
+  }
+
+  const funcName = node.name.getText(sourceFile);
+  const typeParams = getTypeParamsStr(node);
+  doc.name = funcName;
+  const propList = Object.entries(doc.props)
+    .filter(([, p]) => p.required)
+    .map(([n]) => n)
+    .concat(
+      Object.entries(doc.props)
+        .filter(([, p]) => !p.required)
+        .map(([n]) => `${n}?`),
+    )
+    .join(', ');
+  doc.signature = `${funcName}${typeParams}({ ${propList} }) => JSX.Element`;
+  doc.types = { ...sharedTypes };
+  return doc;
+}
+
+/** Providers de contexto documentados de un archivo. */
+function extractContexts(relPath) {
+  const sourceFile = program.getSourceFile(resolve(ROOT, relPath));
+  if (!sourceFile) throw new Error(`no se pudo cargar ${relPath}`);
+  const entries = [];
   ts.forEachChild(sourceFile, (node) => {
     // eslint-disable-next-line no-bitwise
-    const flags = ts.getCombinedModifierFlags(node);
-    // eslint-disable-next-line no-bitwise
-    const isExported = (flags & ts.ModifierFlags.Export) !== 0;
-    // eslint-disable-next-line no-bitwise
-    const isDefault = (flags & ts.ModifierFlags.Default) !== 0;
-
-    // Collect exported type aliases and interfaces — fully resolved via the type checker
-    // so referenced types (e.g. ComponentStateColor) are expanded inline.
-    // Skip types that are purely internal implementation details (no JSDoc description).
-    const isExportedTypeOrInterface = isExported
-      && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node));
-    if (isExportedTypeOrInterface) {
-      const nodeDescription = getNodeJsDoc(node);
-      // Only include types that have JSDoc documentation (public API surface).
-      if (nodeDescription) {
-        const declType = checker.getTypeAtLocation(node.name);
-        sharedTypes[node.name.text] = {
-          description: nodeDescription,
-          // expand=true: always expand fields in the types section even when
-          // the type has a named alias (e.g. CurrencyProps itself).
-          ...resolveTypeInfo(declType, checker, node, 0, true, knownTypeNames),
-        };
-      }
-    }
-
-    if (ts.isFunctionDeclaration(node) && isExported) {
-      if (isDefault) {
-        // `export default function useXxx()` — original pattern (e.g. useDToast)
-        processHookNode(node, node.name ?? null);
-      } else if (node.name && node.name.text.startsWith('use')) {
-        // `export function useXxx()` — named export hook (e.g. useDPortalContext)
-        processHookNode(node, node.name);
-      } else if (node.name && getNodeJsDoc(node)) {
-        // `export function XxxProvider()` with JSDoc — documented provider component
-        processComponentNode(node, node.name);
-      }
+    const isExported = (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0;
+    if (
+      ts.isFunctionDeclaration(node) && isExported && node.name
+      && !node.name.text.startsWith('use') && getNodeJsDoc(node)
+    ) {
+      entries.push(contextEntry(node, sourceFile, relPath));
     }
   });
-
-  // Attach shared types to every entry from this file.
-  entries.forEach((entry) => {
-    entry.types = { ...sharedTypes };
-  });
-
   return entries;
 }
 
-// --- Run ---
-process.stdout.write('Generating registry/api.json...\n');
+// --- Ejecución ---
+process.stdout.write('Generando registry/api.json...\n');
 const hooksSection = {};
 const contextsSection = {};
 let failed = 0;
 
-HOOK_FILES.forEach((relPath) => {
-  const fileBaseName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+const publicHooks = listPublicHooks(program);
+publicHooks.forEach((hook) => {
   try {
-    const docs = extractFileDocs(relPath);
-    docs.forEach((doc) => {
-      // Use the dedicated `name` field as the JSON key (the signature may include generics).
-      const key = doc.name;
-      if (doc.kind === 'component') {
-        // Provider components go into the dedicated `contexts` section.
-        contextsSection[key] = doc;
-      } else {
-        hooksSection[key] = doc;
-      }
-      process.stdout.write(`  ok ${key} [${doc.kind}]\n`);
-    });
+    hooksSection[hook.name] = hookEntry(hook);
+    process.stdout.write(`  ok ${hook.name} [hook]\n`);
   } catch (err) {
-    process.stderr.write(`  FAIL ${fileBaseName}: ${err.message}\n`);
+    process.stderr.write(`  FALLO ${hook.name}: ${err.message}\n`);
     failed += 1;
   }
 });
 
-// --- Parse component props directly from TypeScript source ---
+// Los tipos de los parámetros se resuelven después de todas las entradas: el
+// checker ordena los miembros de una unión según el orden en que crea sus
+// tipos, y resolverlos antes cambiaría el orden de `values` en otros hooks.
+publicHooks.forEach(({ name, declaration, external }) => {
+  if (external || !hooksSection[name]) return;
+  hooksSection[name].types = { ...parameterTypes(declaration), ...hooksSection[name].types };
+});
+
+CONTEXT_FILES.forEach((relPath) => {
+  try {
+    extractContexts(relPath).forEach((doc) => {
+      contextsSection[doc.name] = doc;
+      process.stdout.write(`  ok ${doc.name} [${doc.kind}]\n`);
+    });
+  } catch (err) {
+    process.stderr.write(`  FALLO ${basename(relPath)}: ${err.message}\n`);
+    failed += 1;
+  }
+});
+
+// --- Props de los componentes, leídas del código TypeScript ---
 const COMPONENTS_DIR = resolve(ROOT, 'src/components');
 const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && entry.name.startsWith('D'))
@@ -544,14 +554,6 @@ const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
   })
   .filter(Boolean);
 
-const propsParser = docgen.withCustomConfig(TSCONFIG_PATH, {
-  shouldExtractLiteralValuesFromEnum: true,
-  propFilter: (prop) => {
-    if (prop.parent) return !/node_modules/.test(prop.parent.fileName);
-    return true;
-  },
-});
-
 const componentsSection = {};
 let componentsFailed = 0;
 
@@ -559,6 +561,7 @@ function componentEntry(doc, filePath) {
   return {
     description: doc.description ?? '',
     sourcePath: relative(ROOT, filePath),
+    ...(doc.forwardedProps ? { forwardedProps: doc.forwardedProps } : {}),
     props: Object.fromEntries(
       Object.entries(doc.props).map(([name, prop]) => [
         name,
@@ -572,12 +575,13 @@ function componentEntry(doc, filePath) {
         },
       ]),
     ),
+    ...(Object.keys(doc.types ?? {}).length ? { types: doc.types } : {}),
   };
 }
 
 /**
- * Subcomponents attached with `export default Object.assign(DX, { Key: Ident })`,
- * resolved to the file of their default import.
+ * Subcomponentes que se adjuntan con `export default Object.assign(DX, { Key: Ident })`,
+ * resueltos al archivo de su import por defecto.
  */
 function subcomponentFiles(filePath) {
   const source = readFileSync(filePath, 'utf8');
@@ -591,17 +595,17 @@ function subcomponentFiles(filePath) {
 
 for (const filePath of componentFiles) {
   try {
-    const docs = propsParser.parse(filePath);
+    const docs = parseComponentFile(filePath);
     const parent = basename(filePath, '.tsx');
     for (const doc of docs) {
       if (!doc.displayName) continue;
       componentsSection[doc.displayName] = componentEntry(doc, filePath);
     }
     for (const { key, ident, file } of subcomponentFiles(filePath)) {
-      if (!file || !existsSync(file)) throw new Error(`cannot resolve ${parent}.${key} (${ident})`);
-      const subDocs = propsParser.parse(file);
+      if (!file || !existsSync(file)) throw new Error(`no se puede resolver ${parent}.${key} (${ident})`);
+      const subDocs = parseComponentFile(file);
       const doc = subDocs.find((d) => d.displayName === ident) ?? subDocs[0];
-      if (!doc) throw new Error(`no component found for ${parent}.${key} in ${relative(ROOT, file)}`);
+      if (!doc) throw new Error(`no hay componente para ${parent}.${key} en ${relative(ROOT, file)}`);
       componentsSection[ident] = {
         ...componentEntry(doc, file),
         parent,
@@ -609,12 +613,12 @@ for (const filePath of componentFiles) {
       };
     }
   } catch (err) {
-    process.stderr.write(`  ⚠️  Failed: ${basename(filePath, '.tsx')} — ${err instanceof Error ? err.message : String(err)}\n`);
+    process.stderr.write(`  ⚠️  Falló: ${basename(filePath, '.tsx')} — ${err instanceof Error ? err.message : String(err)}\n`);
     componentsFailed++;
   }
 }
 
-process.stdout.write(`  Components: ${Object.keys(componentsSection).length} parsed (${componentsFailed} failed)\n`);
+process.stdout.write(`  Componentes: ${Object.keys(componentsSection).length} parseados (${componentsFailed} con fallo)\n`);
 
 const { version: packageVersion, repository } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
 const repoBase = repository?.url?.replace(/^git\+/, '').replace(/\.git$/, '') ?? null;
@@ -627,7 +631,7 @@ const CDN_BASE_URL = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.
 
 const apiOutput = {
   $schema: `${CDN_BASE_URL}/schema/v1.json`,
-  schemaVersion: '1.1.0',
+  schemaVersion: '1.2.0',
   packageVersion,
   repository: repositoryUrl,
   generatedAt: process.env.RELEASE_PUBLISHED_AT ?? new Date().toISOString(),
@@ -641,13 +645,13 @@ const output = JSON.stringify(apiOutput, null, 2);
 writeFileSync(OUTPUT_PATH, output);
 
 const sizeKB = (Buffer.byteLength(output) / 1024).toFixed(1);
-process.stdout.write('\nGenerated registry/api.json\n');
-process.stdout.write(`  Hooks: ${Object.keys(hooksSection).length} documented, ${failed} failed\n`);
-process.stdout.write(`  Contexts: ${Object.keys(contextsSection).length} documented\n`);
-process.stdout.write(`  Components: ${Object.keys(componentsSection).length} included\n`);
-process.stdout.write(`  Size: ${sizeKB} KB\n`);
+process.stdout.write('\nGenerado registry/api.json\n');
+process.stdout.write(`  Hooks: ${Object.keys(hooksSection).length} documentados, ${failed} con fallo\n`);
+process.stdout.write(`  Contextos: ${Object.keys(contextsSection).length} documentados\n`);
+process.stdout.write(`  Componentes: ${Object.keys(componentsSection).length} incluidos\n`);
+process.stdout.write(`  Tamaño: ${sizeKB} KB\n`);
 
 if (failed > 0 || componentsFailed > 0) {
-  process.stderr.write(`\n${failed} hooks failed, ${componentsFailed} components failed\n`);
+  process.stderr.write(`\n${failed} hooks o contextos con fallo, ${componentsFailed} componentes con fallo\n`);
   process.exit(1);
 }

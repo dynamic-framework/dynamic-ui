@@ -1,11 +1,11 @@
 /**
  * generate-schema.mjs
  *
- * Generates registry/schema/v1.json — the JSON Schema for registry/api.json.
- * This schema is referenced by the $schema field in api.json and allows
- * consumers and tools to validate the contract structure.
+ * Genera registry/schema/v1.json, el JSON Schema de registry/api.json.
+ * El campo $schema de api.json apunta a este schema, con el que consumidores
+ * y herramientas validan la estructura del contrato.
  *
- * Usage: node scripts/generate-schema.mjs
+ * Uso: node scripts/generate-schema.mjs
  */
 
 import { mkdirSync, writeFileSync, existsSync } from 'fs';
@@ -88,6 +88,27 @@ const schema = {
             type: 'string',
             description: 'How the subcomponent is used in JSX (e.g. DListGroup.Item).',
           },
+          types: {
+            type: 'object',
+            description: 'Project type aliases referenced by the props that are not expanded inline in `type` (objects and non-literal unions), with the same shape as in `hooks`. Aliases whose members are primitives or literals (e.g. `ComponentSize`) are expanded inline instead.',
+            additionalProperties: { type: 'object' },
+          },
+          forwardedProps: {
+            type: 'object',
+            description: 'Present when the component forwards the props it does not list (`...rest`) to another element. Those props are accepted but not listed one by one in `props`.',
+            required: ['target', 'type'],
+            additionalProperties: false,
+            properties: {
+              target: {
+                type: 'string',
+                description: 'Final element or library component that receives the forwarded props (e.g. `button`, `input`, `Splide`). Project components in between are skipped.',
+              },
+              type: {
+                type: 'string',
+                description: 'TypeScript type of the props the target accepts (e.g. `ButtonHTMLAttributes<HTMLButtonElement>`).',
+              },
+            },
+          },
           props: {
             type: 'object',
             additionalProperties: propSchema,
@@ -138,6 +159,16 @@ const schema = {
                   description: 'TypeScript type string, or "function" for callable values.',
                 },
                 description: { type: 'string' },
+                fields: {
+                  type: 'object',
+                  description: 'Properties of the value when type is "object" (e.g. `current` of a RefObject), with the same shape as in `types`.',
+                  additionalProperties: { type: 'object' },
+                },
+                values: {
+                  type: 'array',
+                  description: 'Accepted values when the type is a union of string literals.',
+                  items: { type: 'string' },
+                },
                 parameters: {
                   type: 'array',
                   description: 'Present when type is "function".',
@@ -164,6 +195,10 @@ const schema = {
                 },
               },
             },
+          },
+          returnType: {
+            type: 'string',
+            description: 'Full return type of the hook as a TypeScript string. `returns` lists its properties when it is an object and is empty otherwise (boolean, void, tuples).',
           },
           types: {
             type: 'object',
@@ -255,4 +290,4 @@ mkdirSync(SCHEMA_DIR, { recursive: true });
 
 const SCHEMA_PATH = resolve(SCHEMA_DIR, 'v1.json');
 writeFileSync(SCHEMA_PATH, JSON.stringify(schema, null, 2));
-process.stdout.write('Generated registry/schema/v1.json\n');
+process.stdout.write('Generado registry/schema/v1.json\n');

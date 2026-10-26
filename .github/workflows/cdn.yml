@@ -30,6 +30,10 @@ jobs:
         run: npm run build
       - name: Build Storybook (for versioned manifests)
         run: npm run build:storybook
+      - name: Check docs and components manifests
+        run: |
+          node scripts/check-docs-manifest.mjs docs/manifests/docs.json
+          node scripts/check-docs-manifest.mjs docs/manifests/components.json
       - name: Generate registry assets
         run: |
           node scripts/generate-api.mjs
