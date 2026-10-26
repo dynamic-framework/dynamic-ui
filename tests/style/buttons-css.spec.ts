@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const CSS_PATH = path.resolve(__dirname, '../../../dist/css/dynamic-ui.css');
+const CSS_PATH = path.resolve(__dirname, '../../dist/css/dynamic-ui.css');
 
 /** Cuerpo de la primera regla cuyo selector es exactamente `selector`. */
 function ruleBody(css: string, selector: string): string {
