@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // theme-expand — convierte un theme.json reducido en el CSS completo que
-// Dynamic UI 2.8.0 necesita para un rebrand.
+// Dynamic UI necesita para un rebrand.
 //
 //   node scripts/theme/theme-expand.mjs <theme.json> [-o <theme.css>]
 //
@@ -544,7 +544,7 @@ export function expandTheme(input) {
 
   if (grayRamp) {
     notes.push(
-      'La rampa de grises de Dynamic 2.8.0 está escrita a mano en '
+      'La rampa de grises de Dynamic está definida a mano en '
       + '_colors.scss; aquí se deriva por tinte desde `gray`, así que los pasos '
       + 'no coinciden con los del tema por defecto.',
     );
@@ -643,7 +643,7 @@ export function expandTheme(input) {
     }
   }
 
-  // Radios, derivados del base con los múltiplos de 2.8.0.
+  // Radios, derivados del base con los múltiplos de la librería.
   lines.push(section('Radios'));
   for (const [suffix, factor] of Object.entries(RADIUS_FACTORS)) {
     const name = suffix ? `border-radius-${suffix}` : 'border-radius';

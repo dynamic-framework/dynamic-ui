@@ -1,6 +1,6 @@
 {
   "name": "Ejemplo con zonas",
-  "dynamicUi": "2.10.0",
+  "dynamicUi": "2.12.0",
   "roles": {
     "primary": "#3b5f8a",
     "secondary": "#5a6570",

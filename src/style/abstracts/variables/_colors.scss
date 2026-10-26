@@ -388,7 +388,6 @@ $theme-colors-extra: (
 $theme-colors: map-merge($theme-colors-base, $theme-colors-extra) !default;
 // scss-docs-end theme-colors-map
 
-// TODO: check this.
 $state-colors: (
   "success": $success,
   "info": $info,
