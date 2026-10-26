@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component: `
-Create consistent cross-browser and cross-device radios with our completely rewritten checks component.
+Consistent cross-browser and cross-device radios built on Bootstrap's checks component.
 
 **Radio:** It is a type of graphical interface widget that allows the user to choose an option from a predefined set of options.
 
