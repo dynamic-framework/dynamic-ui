@@ -184,6 +184,33 @@ describe('validate-registry', () => {
     expect(run(file).stderr).toContain('  - DButton: ValidationMessages\n');
   });
 
+  // api.json de develop tras #1307: el checker califica con import("<ruta>")
+  // los tipos de @types/react que no están en el ámbito del archivo.
+  test('falla si una cadena contiene una ruta absoluta de la máquina de build', () => {
+    const api = JSON.parse(fs.readFileSync(FIXTURE, 'utf8'));
+    missingHooks(run(FIXTURE).stderr).forEach((name) => {
+      api.hooks[name] = stubHook(name);
+    });
+    const react = 'import("/home/runner/work/dynamic-ui/dynamic-ui/node_modules/@types/react/index")';
+    api.hooks.useDToast.returnType = `${react}.ComponentClass<SVGProps<SVGSVGElement>, any> | ${react}.FunctionComponent<SVGProps<SVGSVGElement>>`;
+    api.hooks.useDToast.description = 'Definido en /Users/dev/dynamic-ui/src/hooks/useDToast.tsx; ver https://example.com/home/docs.';
+    const file = path.join(workdir, 'api-absolute-paths.json');
+    fs.writeFileSync(file, JSON.stringify(api));
+
+    const result = run(file);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('2 cadenas con una ruta absoluta de la máquina de build');
+    expect(result.stderr).toContain('  - $.hooks.useDToast.returnType: "import(\\"/home/runner/');
+    expect(result.stderr).toContain('  - $.hooks.useDToast.description: ');
+
+    api.hooks.useDToast.returnType = 'ComponentClass<SVGProps<SVGSVGElement>, any> | FunctionComponent<SVGProps<SVGSVGElement>>';
+    api.hooks.useDToast.description = 'Definido en src/hooks/useDToast.tsx; ver https://example.com/home/docs.';
+    fs.writeFileSync(file, JSON.stringify(api));
+    const fixed = run(file);
+    expect(fixed.stderr).toBe('');
+    expect(fixed.status).toBe(0);
+  });
+
   // api.json de develop antes de #1308: DErrorBoundary.tsx reexporta
   // useErrorBoundary y getErrorMessage de react-error-boundary.
   test('falla si components incluye exports que no son componentes (#1308)', () => {

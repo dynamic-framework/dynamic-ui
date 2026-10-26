@@ -30,6 +30,7 @@ const COMPONENTS = {
 };
 
 let props: Record<string, Record<string, DocgenProp>>;
+let definedInFiles: Record<string, string>;
 
 // Props que trae babel para DBadge: una propia, con metadatos que deben
 // prevalecer, y un atributo de @types/react que el filtro descarta.
@@ -58,16 +59,18 @@ beforeAll(() => {
   const script = `
     const { enrichComponentsManifest } = await import(${JSON.stringify(MANIFEST_DOCGEN)});
     const result = enrichComponentsManifest(${JSON.stringify(manifests)});
-    const out = Object.fromEntries(Object.entries(result.components.components)
-      .map(([name, { reactDocgen }]) => [name, reactDocgen.props]));
-    process.stdout.write(JSON.stringify(out));
+    const entries = Object.entries(result.components.components);
+    process.stdout.write(JSON.stringify({
+      props: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen.props])),
+      files: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen.definedInFile])),
+    }));
   `;
   const run = spawnSync('node', ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', script], {
     cwd: ROOT,
     encoding: 'utf8',
   });
   if (run.status !== 0) throw new Error(run.stderr);
-  props = JSON.parse(run.stdout);
+  ({ props, files: definedInFiles } = JSON.parse(run.stdout));
 });
 
 describe('manifest-docgen', () => {
@@ -90,5 +93,9 @@ describe('manifest-docgen', () => {
   test('descarta las props de babel que el filtro rechaza y conserva las demás (#1283)', () => {
     expect(props.DBadge).not.toHaveProperty('tabIndex');
     expect(props.DBadge.text.defaultValue?.value).toBe("'from babel'");
+  });
+
+  test('publica definedInFile relativo a la raíz del repo, sin la ruta de la máquina de build', () => {
+    expect(definedInFiles).toEqual(COMPONENTS);
   });
 });

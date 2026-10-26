@@ -15,6 +15,9 @@ import path from 'node:path';
 const ROOT = path.resolve(__dirname, '..');
 const CHECK = path.join(ROOT, 'scripts/check-docs-manifest.mjs');
 const FIXTURE_DEVELOP = path.join(ROOT, 'scripts/fixtures/check-docs-manifest/develop');
+// Dos entradas del components.json de 2.12.0 publicado en el CDN, sin cambios:
+// definedInFile lleva la ruta del runner de CI.
+const FIXTURE_COMPONENTS = path.join(ROOT, 'scripts/fixtures/check-docs-manifest/components-2.12.0.json');
 
 let workdir: string;
 
@@ -222,5 +225,66 @@ describe('check-docs-manifest', () => {
 
     const ok = '```css\n:root {\n  --bs-danger-rgb: 211, 47, 47;\n  --bs-focus-ring-border-color: #0b74ff;\n}\n```';
     expect(run(['--stories', storiesWith('Design System/Foundations/Colors', ok)]).status).toBe(0);
+  });
+});
+
+describe('check-docs-manifest: rutas absolutas', () => {
+  function manifestWith(name: string, manifest: unknown): string {
+    const file = path.join(workdir, name);
+    fs.writeFileSync(file, JSON.stringify(manifest));
+    return file;
+  }
+
+  test('el components.json de 2.12.0 falla por definedInFile', () => {
+    const result = run([FIXTURE_COMPONENTS]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('$.components.design-system-components-box.reactDocgen.definedInFile  [ruta-absoluta]');
+    expect(result.stderr).toContain('/home/runner/work/dynamic-ui/dynamic-ui/src/components/DBox/DBox.tsx');
+    expect(result.stderr).toContain('2 problema(s) en 2 componente(s).');
+  });
+
+  test('con definedInFile relativo a la raíz pasa', () => {
+    const manifest = JSON.parse(fs.readFileSync(FIXTURE_COMPONENTS, 'utf8'));
+    Object.values(manifest.components).forEach((entry) => {
+      const { reactDocgen } = entry as { reactDocgen: { definedInFile: string } };
+      reactDocgen.definedInFile = reactDocgen.definedInFile.replace('/home/runner/work/dynamic-ui/dynamic-ui/', '');
+    });
+    const result = run([manifestWith('components.json', manifest)]);
+    expect(result.stderr).toBe('');
+    expect(result.stdout).toBe('2 componente(s) sin problemas.\n');
+    expect(result.status).toBe(0);
+  });
+
+  test('detecta rutas de macOS, Linux, Windows e import() en docs.json; no las URLs ni las rutas relativas', () => {
+    const page = (content: string) => ({ docs: { 'page--docs': { content } } });
+    [
+      'Built from /Users/dev/dynamic-ui/src.',
+      'Built from /home/runner/work/dynamic-ui/dynamic-ui/src.',
+      'Built from /private/var/folders/x/src.',
+      'Built from C:\\work\\dynamic-ui\\src.',
+      'type: import("/x/node_modules/@types/react/index").FC',
+      'See https://example.com/docs, built from /home/runner/work/dynamic-ui/dynamic-ui/src.',
+      'See https://example.com/?path=/home/docs file:///home/runner/x',
+    ].forEach((content, i) => {
+      const result = run([manifestWith(`docs-bad-${i}.json`, page(content))]);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain("$.docs.page--docs.content  [ruta-absoluta]");
+    });
+
+    const ok = [
+      'See https://example.com/home/docs and src/components/home/Home.tsx.',
+      'Use https://cdn.dynamicframework.dev/assets/.',
+      'Query: https://example.com/?path=/home/docs&dir=/Users/x. Hash route: http://example.com/#/home/docs.',
+      'Link: [docs](https://example.com/?p=C:/x).',
+    ].join(' ');
+    const result = run([manifestWith('docs-ok.json', page(ok))]);
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  test('rechaza un JSON que no es docs.json ni components.json', () => {
+    const result = run([manifestWith('other.json', { v: 0 })]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('no tiene la forma { v, docs } ni { v, components }');
   });
 });

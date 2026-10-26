@@ -395,7 +395,10 @@ function typeDefinition(symbol, checker, knownTypeNames) {
   };
   const info = resolveTypeInfo(declared, checker, declaration, 0, true, knownTypeNames, ownType);
   if (info.type !== 'object') {
-    info.type = checker.typeToString(declared, declaration, ALIAS_FORMAT);
+    // Sin los `import("/ruta/absoluta")` que el checker antepone a los tipos
+    // que no están en el ámbito del archivo, como en el returnType de los hooks.
+    info.type = checker.typeToString(declared, declaration, ALIAS_FORMAT)
+      .replace(/import\("[^"]*"\)\./g, '');
   }
   const description = ts.displayPartsToString(symbol.getDocumentationComment(checker)).trim();
   return { description, ...info };

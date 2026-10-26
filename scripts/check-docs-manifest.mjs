@@ -13,19 +13,27 @@
  * - Ningún role (`--bs-primary`, `--bs-danger`…) recibe un hex: los colores se
  *   sobrescriben en el triplete `-rgb`.
  *
+ * Con un manifiesto, `docs.json` o `components.json`, comprueba además que
+ * ninguna clave ni cadena contiene una ruta absoluta de la máquina que lo
+ * construye (scripts/absolute-paths.mjs).
+ *
  * Uso:
  *   node scripts/check-docs-manifest.mjs [docs/manifests/docs.json]
+ *   node scripts/check-docs-manifest.mjs docs/manifests/components.json
  *   node scripts/check-docs-manifest.mjs --stories [stories]
  *
- * El primer modo lee el manifiesto que genera `npm run build:storybook`. El
- * segundo lee los MDX de `stories/`, que son el `content` publicado, sin
- * compilar Storybook. Los dos aplican la misma función, `checkDocs`. Sale con
- * 1 si alguna página incumple una regla.
+ * Los dos primeros modos leen los manifiestos que genera
+ * `npm run build:storybook`. El tercero lee los MDX de `stories/`, que son el
+ * `content` publicado, sin compilar Storybook; aplica la misma función que el
+ * primero, `checkDocs`. Sale con 1 si alguna página o entrada incumple una
+ * regla.
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+
+import { findAbsolutePaths } from './absolute-paths.mjs';
 
 // Páginas que documentan los utilitarios `dark:`, generados con
 // `@media (prefers-color-scheme: dark)` en src/style/abstracts/_utilities-dark.scss.
@@ -334,19 +342,39 @@ export function docsFromStories(dir) {
   }));
 }
 
+const isObject = (value) => Boolean(value) && typeof value === 'object';
+
+/**
+ * Claves y cadenas del manifiesto con una ruta absoluta de la máquina de build.
+ * @returns {{ path: string, rule: string, message: string }[]}
+ */
+export function checkManifestPaths(manifest) {
+  return findAbsolutePaths(manifest).map(({ path: jsonPath, value }) => ({
+    path: jsonPath,
+    rule: 'ruta-absoluta',
+    message: `contiene una ruta absoluta de la máquina de build: ${JSON.stringify(value)}`,
+  }));
+}
+
 function main(argv) {
   const args = argv.slice(2);
-  let docs;
+  let docs = {};
+  let summary = () => `${Object.keys(docs).length} página(s)`;
+  let pathProblems = [];
   if (args[0] === '--stories') {
     docs = docsFromStories(path.resolve(args[1] ?? 'stories'));
   } else {
     const manifestPath = path.resolve(args[0] ?? 'docs/manifests/docs.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-    if (!manifest?.docs || typeof manifest.docs !== 'object') {
-      process.stderr.write(`${manifestPath}: no tiene la forma { v, docs }.\n`);
+    if (isObject(manifest?.docs)) {
+      docs = manifest.docs;
+    } else if (isObject(manifest?.components)) {
+      summary = () => `${Object.keys(manifest.components).length} componente(s)`;
+    } else {
+      process.stderr.write(`${manifestPath}: no tiene la forma { v, docs } ni { v, components }.\n`);
       return 1;
     }
-    docs = manifest.docs;
+    pathProblems = checkManifestPaths(manifest);
   }
 
   const problems = checkDocs(docs);
@@ -355,12 +383,15 @@ function main(argv) {
   }) => {
     process.stderr.write(`${docId}:${line}  [${rule}]  ${message}\n`);
   });
-  const total = Object.keys(docs).length;
-  if (problems.length) {
-    process.stderr.write(`\n${problems.length} problema(s) en ${total} página(s).\n`);
+  pathProblems.forEach(({ path: jsonPath, rule, message }) => {
+    process.stderr.write(`${jsonPath}  [${rule}]  ${message}\n`);
+  });
+  const count = problems.length + pathProblems.length;
+  if (count) {
+    process.stderr.write(`\n${count} problema(s) en ${summary()}.\n`);
     return 1;
   }
-  process.stdout.write(`${total} página(s) sin problemas.\n`);
+  process.stdout.write(`${summary()} sin problemas.\n`);
   return 0;
 }
 
