@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.12.0...v2.12.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **api:** artefactos sin rutas absolutas de la máquina de build ([#1326](https://github.com/dynamic-framework/dynamic-ui/issues/1326)) ([15f099f](https://github.com/dynamic-framework/dynamic-ui/commit/15f099f87180ed624df0a9466e9626d629f559a5))
+* **api:** componentes reales y tipos de string en api.json ([#1323](https://github.com/dynamic-framework/dynamic-ui/issues/1323)) ([f58d68c](https://github.com/dynamic-framework/dynamic-ui/commit/f58d68c3be90de4e4f903797237c3fada550d069))
+* **api:** defaults, props HTML y alias de tipo en api.json ([#1307](https://github.com/dynamic-framework/dynamic-ui/issues/1307)) ([9028b98](https://github.com/dynamic-framework/dynamic-ui/commit/9028b987f4ad7a9dd8b84b0dfb41acc0d319db6c))
+* **api:** todos los hooks en api.json y breakpoints de DContextProvider marcada sin efecto ([#1304](https://github.com/dynamic-framework/dynamic-ui/issues/1304)) ([3f6abfc](https://github.com/dynamic-framework/dynamic-ui/commit/3f6abfc890121ff4cc83493934f6b7fc7d32d000))
+* **buttons:** box-shadow válido, text-decoration tematizable y hover de btn-link por token ([#1310](https://github.com/dynamic-framework/dynamic-ui/issues/1310)) ([729f77e](https://github.com/dynamic-framework/dynamic-ui/commit/729f77e72c66d3102e2a097e30dc4081e23ec9d7))
+* **docs:** el MDX Design Tokens enseña zonas en lugar de prefers-color-scheme ([#1302](https://github.com/dynamic-framework/dynamic-ui/issues/1302)) ([bfab5f0](https://github.com/dynamic-framework/dynamic-ui/commit/bfab5f04586d7cb8281bfeb8dae6e1787001940b))
+* **docs:** Storybook y README sin afirmaciones falsas ni datos de terceros ([#1329](https://github.com/dynamic-framework/dynamic-ui/issues/1329)) ([847de19](https://github.com/dynamic-framework/dynamic-ui/commit/847de19fcc73f00f78ea5e1ae8ea1cb55b242c66))
+* **modal:** anunciar DModal y DOffcanvas como diálogo modal con nombre y foco inicial ([#1317](https://github.com/dynamic-framework/dynamic-ui/issues/1317)) ([236312a](https://github.com/dynamic-framework/dynamic-ui/commit/236312a7c60594998d0ce0b5520d8bd2628f81f8))
+* **modal:** excluir los elementos no enfocables del ciclo de foco de los diálogos ([#1319](https://github.com/dynamic-framework/dynamic-ui/issues/1319)) ([7887240](https://github.com/dynamic-framework/dynamic-ui/commit/78872407cd5065f3d544e3c0d962e85c96300e2c))
+* **package:** sin tests ni comentarios internos en el paquete y textos de theme descriptivos ([#1327](https://github.com/dynamic-framework/dynamic-ui/issues/1327)) ([4251378](https://github.com/dynamic-framework/dynamic-ui/commit/425137892b527532e137b06cbb5482e44a4b7010))
+* **theme-validate:** avisos de wrapper en zonas y hover de .btn-outline-* ([#1315](https://github.com/dynamic-framework/dynamic-ui/issues/1315)) ([6e9fda3](https://github.com/dynamic-framework/dynamic-ui/commit/6e9fda36885611b98fdbd84b657d44d8e92a4582))
+* **theme-validate:** resolver las zonas como el navegador ([#1297](https://github.com/dynamic-framework/dynamic-ui/issues/1297)) ([e32dad9](https://github.com/dynamic-framework/dynamic-ui/commit/e32dad96bae1246a0082fa4b6ddcb4a7bf72e43c))
+* **theme:** inventario de tokens al día con el CSS compilado y comprobación en CI ([#1321](https://github.com/dynamic-framework/dynamic-ui/issues/1321)) ([dec2eb8](https://github.com/dynamic-framework/dynamic-ui/commit/dec2eb8f99f8b2981684a30f456ff79e7d2d644e))
+* **theme:** themes parciales, familia tipográfica y regla fix-bg ([#1294](https://github.com/dynamic-framework/dynamic-ui/issues/1294)) ([29338d5](https://github.com/dynamic-framework/dynamic-ui/commit/29338d5f352276a44bc2ca6ca8057c7fdec63228))
+* **theme:** wrappers de triplete en las zonas generadas y aviso del validador ([#1312](https://github.com/dynamic-framework/dynamic-ui/issues/1312)) ([53b2447](https://github.com/dynamic-framework/dynamic-ui/commit/53b244729570f5ea24fd4e8fb7f4339939dd903b))
+
 ## [2.12.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.11.0...v2.12.0) (2026-10-21)
 
 
