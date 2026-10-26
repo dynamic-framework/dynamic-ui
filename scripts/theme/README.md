@@ -113,7 +113,7 @@ Admite `roles`, `gray`, `name` y `version`.
 
 ```css
 /*
- * Para @dynamic-framework/ui-react 2.12.0.
+ * Para @dynamic-framework/ui-react X.Y.Z.
  * Bloque parcial para incorporar a una hoja de theme existente.
  * Se carga después del CSS de Dynamic UI.
  */
@@ -539,5 +539,6 @@ Un color escrito literal (`#fff`) donde se esperaba una referencia se acepta y s
 anota como `literal`: se mide tal cual, pero queda fuera del theme y cambiar el
 token no lo mueve. Las notas van a stdout, no a stderr — no son hallazgos.
 
-Un par que ya falla con la paleta por defecto se reporta como aviso
-`contraste-preexistente`, no como error: el defecto es de la librería.
+Un par que ya está por debajo del umbral con la paleta por defecto de Dynamic se
+reporta como aviso `contraste-preexistente`, no como error: no lo introduce el
+theme.

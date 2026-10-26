@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// theme-validate — valida un theme.css de Dynamic UI 2.8.0 contra las reglas
+// theme-validate — valida un theme.css de Dynamic UI contra las reglas
 // que el CSS compilado impone y que ningún linter del repo comprueba.
 //
 //   node scripts/theme/theme-validate.mjs <theme.css> [--min-contrast 4.5] [--strict]
@@ -336,7 +336,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       `${name}: no overridees el wrapper de color. La librería lo define como `
       + `rgb(var(${name}-rgb)) en _root.scss, así que un rebrand se hace sobre `
       + `${name}-rgb con un triplete "R, G, B". Escribir "${value}" aquí gana sobre `
-      + 'la indirección y deja las variantes con opacidad (RGBA) rotas.',
+      + 'la indirección y las variantes con opacidad (RGBA) dejan de seguir el color.',
       line,
     );
   }
@@ -956,7 +956,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
-  // para saber si un par roto ya venía roto en la librería.
+  // para saber si un par por debajo del umbral ya lo estaba sin el theme.
   const [libraryContext] = buildContexts([], new Map());
 
   for (const pair of bakedPairs) {
@@ -969,7 +969,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // componente (`.list-group` para una lista, `.alert-<role>` para una
       // alerta…), en la librería y en el theme, globales o propios de la zona.
       // Sin esto, un theme que arregla el par en un bloque de componente
-      // seguiría apareciendo como roto.
+      // seguiría apareciendo por debajo del umbral.
       const element = ctx.element(...pair.owners);
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
@@ -997,19 +997,18 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         ?? root.get(pair.fg.variable)?.line
         ?? null;
 
-      // Si el par ya falla con la paleta por defecto y aquí no empeora de forma
-      // apreciable, el defecto es de la librería y no del theme. La tolerancia
-      // es relativa porque estos pares rotos se mueven unas décimas al cambiar
-      // el color y esa diferencia no es información para nadie. Los pares no
+      // Si el par ya está por debajo del umbral con la paleta por defecto y aquí
+      // no empeora de forma apreciable, no lo introduce el theme. La tolerancia
+      // es relativa porque estos pares se mueven unas décimas al cambiar el
+      // color y esa diferencia no es información para nadie. Los pares no
       // corregibles se saltan esto: su aviso explica mejor qué hacer.
       if (!pair.noCorregible && baseline !== null && baseline < minContrast
         && ratio >= baseline * 0.9) {
         warn(
           'contraste-preexistente',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, bajo el `
-          + `${minContrast}:1 de WCAG 2.x AA — pero el tema por defecto de Dynamic ya da `
-          + `${baseline.toFixed(2)}:1 en este mismo par, así que el defecto es de la librería `
-          + 'y no de tu theme.',
+          + `${minContrast}:1 de WCAG 2.x AA, pero con la paleta por defecto de Dynamic este `
+          + `par ya da ${baseline.toFixed(2)}:1; no lo introduce el theme.`,
           line,
         );
         continue;
