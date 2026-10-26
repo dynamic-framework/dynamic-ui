@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.12.0
+ * dynamic-framework 2.12.1
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -595,7 +595,7 @@
   --bs-btn-link-primary-border-color: transparent;
   --bs-btn-link-primary-color: var(--bs-primary-500);
   --bs-btn-link-primary-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-primary-hover-bg: transparent;
+  --bs-btn-link-primary-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-primary-hover-border-color: transparent;
   --bs-btn-link-primary-hover-color: var(--bs-primary-600);
   --bs-btn-link-primary-focus-bg: transparent;
@@ -671,7 +671,7 @@
   --bs-btn-link-secondary-border-color: transparent;
   --bs-btn-link-secondary-color: var(--bs-secondary-500);
   --bs-btn-link-secondary-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-secondary-hover-bg: transparent;
+  --bs-btn-link-secondary-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-secondary-hover-border-color: transparent;
   --bs-btn-link-secondary-hover-color: var(--bs-secondary-600);
   --bs-btn-link-secondary-focus-bg: transparent;
@@ -747,7 +747,7 @@
   --bs-btn-link-success-border-color: transparent;
   --bs-btn-link-success-color: var(--bs-success-500);
   --bs-btn-link-success-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-success-hover-bg: transparent;
+  --bs-btn-link-success-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-success-hover-border-color: transparent;
   --bs-btn-link-success-hover-color: var(--bs-success-600);
   --bs-btn-link-success-focus-bg: transparent;
@@ -823,7 +823,7 @@
   --bs-btn-link-info-border-color: transparent;
   --bs-btn-link-info-color: var(--bs-info-500);
   --bs-btn-link-info-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-info-hover-bg: transparent;
+  --bs-btn-link-info-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-info-hover-border-color: transparent;
   --bs-btn-link-info-hover-color: var(--bs-info-600);
   --bs-btn-link-info-focus-bg: transparent;
@@ -899,7 +899,7 @@
   --bs-btn-link-warning-border-color: transparent;
   --bs-btn-link-warning-color: var(--bs-warning-700);
   --bs-btn-link-warning-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-warning-hover-bg: transparent;
+  --bs-btn-link-warning-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-warning-hover-border-color: transparent;
   --bs-btn-link-warning-hover-color: var(--bs-warning-600);
   --bs-btn-link-warning-focus-bg: transparent;
@@ -975,7 +975,7 @@
   --bs-btn-link-danger-border-color: transparent;
   --bs-btn-link-danger-color: var(--bs-danger-500);
   --bs-btn-link-danger-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-danger-hover-bg: transparent;
+  --bs-btn-link-danger-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-danger-hover-border-color: transparent;
   --bs-btn-link-danger-hover-color: var(--bs-danger-600);
   --bs-btn-link-danger-focus-bg: transparent;
@@ -1051,7 +1051,7 @@
   --bs-btn-link-light-border-color: transparent;
   --bs-btn-link-light-color: var(--bs-gray-100);
   --bs-btn-link-light-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-light-hover-bg: transparent;
+  --bs-btn-link-light-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-light-hover-border-color: transparent;
   --bs-btn-link-light-hover-color: var(--bs-gray-200);
   --bs-btn-link-light-focus-bg: transparent;
@@ -1127,7 +1127,7 @@
   --bs-btn-link-dark-border-color: transparent;
   --bs-btn-link-dark-color: var(--bs-gray-900);
   --bs-btn-link-dark-box-shadow: 0 0 0 transparent;
-  --bs-btn-link-dark-hover-bg: transparent;
+  --bs-btn-link-dark-hover-bg: rgba(var(--bs-black-rgb), 0.03);
   --bs-btn-link-dark-hover-border-color: transparent;
   --bs-btn-link-dark-hover-color: var(--bs-gray-800);
   --bs-btn-link-dark-focus-bg: transparent;
@@ -9685,14 +9685,13 @@ body {
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-disabled-opacity: 0.65;
   --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
-  --bs-btn–text-decoration: ;
+  --bs-btn-text-decoration: none;
   --bs-btn-lg-padding-y: 0.75rem;
   --bs-btn-lg-padding-x: 1.25rem;
   --bs-btn-lg-font-size: 1.15rem;
   --bs-btn-sm-padding-y: 0.25rem;
   --bs-btn-sm-padding-x: 0.75rem;
   --bs-btn-sm-font-size: var(--bs-fs-small);
-  --bs-btn-box-shadow: btn-box-shadow;
   --bs-btn-loading-gap: var(--bs-ref-spacer-2);
   position: relative;
   display: inline-flex;
@@ -9706,7 +9705,8 @@ body {
   line-height: var(--bs-btn-line-height);
   color: var(--bs-btn-color);
   text-align: center;
-  text-decoration: none;
+  -webkit-text-decoration: var(--bs-btn-text-decoration);
+          text-decoration: var(--bs-btn-text-decoration);
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
@@ -9727,7 +9727,8 @@ body {
 }
 .btn.hover, .btn:hover {
   color: var(--bs-btn-hover-color);
-  text-decoration: none;
+  -webkit-text-decoration: var(--bs-btn-text-decoration);
+          text-decoration: var(--bs-btn-text-decoration);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
 }
@@ -10437,9 +10438,6 @@ body {
 
 [class*=btn-link-] {
   --bs-btn-text-decoration: var(--bs-link-decoration);
-}
-[class*=btn-link-].hover, [class*=btn-link-]:hover {
-  background: rgba(0, 0, 0, 0.03);
 }
 
 .btn-link {
@@ -12951,6 +12949,7 @@ react-datepicker__navigation
 .d-carousel.splide.is-focus-in .d-carousel-arrow:focus, .d-carousel.splide.is-focus-in .d-carousel-pagination-page:focus {
   outline-color: var(--bs-carousel-focus-outline-color);
 }
+
 .d-stepper-desktop {
   /* Icon container */
   --bs-step-icon-container-color: var(--bs-gray-500);

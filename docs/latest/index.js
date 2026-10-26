@@ -162,13 +162,39 @@ function useStackState(initialList = []) {
     return [list, controls];
 }
 
+const CANDIDATES = 'a, button, input, textarea, select, details, [tabindex]';
+/**
+ * Indica si un elemento entra en la secuencia de Tab. Solo usa atributos y
+ * getComputedStyle: jsdom no tiene layout, así que getClientRects u
+ * offsetParent descartarían todo en los tests.
+ */
+function isKeyboardFocusable(element, container) {
+    if (element.hasAttribute('disabled')
+        || element.getAttribute('tabindex') === '-1'
+        || (element instanceof HTMLInputElement && element.type === 'hidden')
+        || element.closest('[hidden], [inert]')) {
+        return false;
+    }
+    // visibility se hereda, así que basta el valor computado del propio
+    // elemento; display: none no, y hay que recorrer los ancestros.
+    if (getComputedStyle(element).visibility === 'hidden') {
+        return false;
+    }
+    let node = element;
+    while (node && node !== container) {
+        if (getComputedStyle(node).display === 'none') {
+            return false;
+        }
+        node = node.parentElement;
+    }
+    return true;
+}
 function getKeyboardFocusableElements(container) {
     if (!container) {
         return [];
     }
-    return [
-        ...container.querySelectorAll('a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'),
-    ].filter((element) => !element.hasAttribute('disabled'));
+    return [...container.querySelectorAll(CANDIDATES)]
+        .filter((element) => isKeyboardFocusable(element, container));
 }
 
 /**
@@ -3320,11 +3346,43 @@ function DPortalStack({ stack }) {
         ]) }));
 }
 
+/**
+ * Id que el `aria-labelledby` de DModal espera en el título (`${name}Label`).
+ * Lo provee DModal; fuera de un DModal no hay id.
+ */
+const DModalLabelContext = React.createContext(undefined);
+
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, iconMaterialStyle, materialStyle: materialStyleProp, }) {
     var _a;
     const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-modal-separator" })] }));
+    // El contenedor de children toma el id del título salvo que el consumidor ya
+    // lo haya puesto en un descendiente; así no hay ids duplicados. El observer
+    // cubre los títulos que añaden o quitan ese id por su propio estado.
+    const labelId = React.useContext(DModalLabelContext);
+    const titleRef = React.useRef(null);
+    const [labelOnWrapper, setLabelOnWrapper] = React.useState(false);
+    React.useLayoutEffect(() => {
+        const title = titleRef.current;
+        if (!labelId || !title) {
+            setLabelOnWrapper(false);
+            return undefined;
+        }
+        const update = () => {
+            const descendants = Array.from(title.querySelectorAll('[id]'));
+            setLabelOnWrapper(!descendants.some((element) => element.id === labelId));
+        };
+        update();
+        const observer = new MutationObserver(update);
+        observer.observe(title, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            attributeFilter: ['id'],
+        });
+        return () => observer.disconnect();
+    }, [labelId]);
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { ref: titleRef, id: labelOnWrapper ? labelId : undefined, children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-modal-separator" })] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -3343,10 +3401,39 @@ const defaultTransition$1 = {
     ease: 'easeInOut',
     duration: 0.3,
 };
-// Portals rendered through DContextProvider animate their exit only when this
-// module is part of the bundle.
+// Los portales que se renderizan con DContextProvider solo animan su salida
+// cuando este módulo forma parte del bundle.
 registerPortalStack(DPortalStack);
-function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }) {
+function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, ariaLabel, }) {
+    const labelId = `${name}Label`;
+    // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
+    // dentro (un hijo con autoFocus).
+    const dialogRef = React.useRef(null);
+    React.useEffect(() => {
+        const dialog = dialogRef.current;
+        if (dialog && !dialog.contains(document.activeElement)) {
+            dialog.focus();
+        }
+    }, []);
+    // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
+    // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
+    // último enfocable. Tab desde el contenedor ya va al primero. Sin
+    // enfocables, ninguna de las dos teclas saca el foco del contenedor.
+    const handleKeyDown = React.useCallback((event) => {
+        const dialog = dialogRef.current;
+        if (event.key !== 'Tab' || !dialog || document.activeElement !== dialog) {
+            return;
+        }
+        const focusableElements = getKeyboardFocusableElements(dialog);
+        if (focusableElements.length === 0) {
+            event.preventDefault();
+            return;
+        }
+        if (event.shiftKey) {
+            event.preventDefault();
+            focusableElements[focusableElements.length - 1].focus();
+        }
+    }, []);
     const fullScreenClass = React.useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -3357,10 +3444,10 @@ function DModal$1({ name, className, style, staticBackdrop, scrollable, centered
         return '';
     }, [fullScreenFrom, fullScreen]);
     const generateModalDialogClasses = React.useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
-    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ className: classNames('modal portal show', className), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style, initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 }, transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition$1)), { delay: 0.15 }) }, staticBackdrop && ({
+    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ ref: dialogRef, className: classNames('modal portal show', className), id: name, tabIndex: -1, onKeyDown: handleKeyDown, role: "dialog", "aria-modal": "true", "aria-label": ariaLabel, "aria-labelledby": ariaLabel ? undefined : labelId, "aria-hidden": "false", style: style, initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 }, transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition$1)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateModalDialogClasses), children: jsxRuntime.jsx("div", { className: "modal-content", children: children }) }) })));
+    }), dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateModalDialogClasses), children: jsxRuntime.jsx("div", { className: "modal-content", children: jsxRuntime.jsx(DModalLabelContext.Provider, { value: labelId, children: children }) }) }) })));
 }
 var DModal = Object.assign(DModal$1, {
     Header: DModalHeader,
@@ -3368,11 +3455,43 @@ var DModal = Object.assign(DModal$1, {
     Footer: DModalFooter,
 });
 
+/**
+ * Id que el `aria-labelledby` de DOffcanvas espera en el título
+ * (`${name}Label`). Lo provee DOffcanvas; fuera de un DOffcanvas no hay id.
+ */
+const DOffcanvasLabelContext = React.createContext(undefined);
+
 function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, iconMaterialStyle, materialStyle: materialStyleProp, }) {
     var _a;
     const { icon: { familyClass, familyPrefix, materialStyle, }, iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-offcanvas-separator" })] }));
+    // El contenedor de children toma el id del título salvo que el consumidor ya
+    // lo haya puesto en un descendiente; así no hay ids duplicados. El observer
+    // cubre los títulos que añaden o quitan ese id por su propio estado.
+    const labelId = React.useContext(DOffcanvasLabelContext);
+    const titleRef = React.useRef(null);
+    const [labelOnWrapper, setLabelOnWrapper] = React.useState(false);
+    React.useLayoutEffect(() => {
+        const title = titleRef.current;
+        if (!labelId || !title) {
+            setLabelOnWrapper(false);
+            return undefined;
+        }
+        const update = () => {
+            const descendants = Array.from(title.querySelectorAll('[id]'));
+            setLabelOnWrapper(!descendants.some((element) => element.id === labelId));
+        };
+        update();
+        const observer = new MutationObserver(update);
+        observer.observe(title, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            attributeFilter: ['id'],
+        });
+        return () => observer.disconnect();
+    }, [labelId]);
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { ref: titleRef, id: labelOnWrapper ? labelId : undefined, children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass !== null && iconFamilyClass !== void 0 ? iconFamilyClass : familyClass, familyPrefix: iconFamilyPrefix !== null && iconFamilyPrefix !== void 0 ? iconFamilyPrefix : familyPrefix, materialStyle: (_a = iconMaterialStyle !== null && iconMaterialStyle !== void 0 ? iconMaterialStyle : materialStyleProp) !== null && _a !== void 0 ? _a : materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-offcanvas-separator" })] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
@@ -3413,13 +3532,42 @@ const defaultTransition = {
     ease: 'easeInOut',
     duration: 0.3,
 };
-// Portals rendered through DContextProvider animate their exit only when this
-// module is part of the bundle.
+// Los portales que se renderizan con DContextProvider solo animan su salida
+// cuando este módulo forma parte del bundle.
 registerPortalStack(DPortalStack);
-function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', width, height, transition, children, dataAttributes, }) {
-    // Only subscribe to breakpoint-change listeners when a responsive object is
-    // actually provided, avoiding unnecessary matchMedia subscriptions for the
-    // common case of plain string values.
+function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', width, height, transition, children, dataAttributes, ariaLabel, }) {
+    const labelId = `${name}Label`;
+    // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
+    // dentro (un hijo con autoFocus).
+    const dialogRef = React.useRef(null);
+    React.useEffect(() => {
+        const dialog = dialogRef.current;
+        if (dialog && !dialog.contains(document.activeElement)) {
+            dialog.focus();
+        }
+    }, []);
+    // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
+    // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
+    // último enfocable. Tab desde el contenedor ya va al primero. Sin
+    // enfocables, ninguna de las dos teclas saca el foco del contenedor.
+    const handleKeyDown = React.useCallback((event) => {
+        const dialog = dialogRef.current;
+        if (event.key !== 'Tab' || !dialog || document.activeElement !== dialog) {
+            return;
+        }
+        const focusableElements = getKeyboardFocusableElements(dialog);
+        if (focusableElements.length === 0) {
+            event.preventDefault();
+            return;
+        }
+        if (event.shiftKey) {
+            event.preventDefault();
+            focusableElements[focusableElements.length - 1].focus();
+        }
+    }, []);
+    // Solo se suscribe a los cambios de breakpoint cuando llega un objeto
+    // responsive, para no crear suscripciones de matchMedia innecesarias en el
+    // caso habitual de valores string.
     const hasResponsiveProp = typeof openFrom === 'object'
         || typeof width === 'object'
         || typeof height === 'object';
@@ -3444,15 +3592,15 @@ function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, open
             return height;
         return responsivePropValue(height);
     }, [responsivePropValue, height]);
-    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ className: classNames('offcanvas portal show', {
+    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ ref: dialogRef, className: classNames('offcanvas portal show', {
             [`offcanvas-${resolvedOpenFrom}`]: resolvedOpenFrom,
-        }, className), style: Object.assign(Object.assign(Object.assign(Object.assign({}, style), { transition: 'none' }), (resolvedWidth && { [`--${PREFIX_BS}offcanvas-width`]: resolvedWidth })), (resolvedHeight && { [`--${PREFIX_BS}offcanvas-height`]: resolvedHeight })), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", custom: resolvedOpenFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
+        }, className), style: Object.assign(Object.assign(Object.assign(Object.assign({}, style), { transition: 'none' }), (resolvedWidth && { [`--${PREFIX_BS}offcanvas-width`]: resolvedWidth })), (resolvedHeight && { [`--${PREFIX_BS}offcanvas-height`]: resolvedHeight })), id: name, tabIndex: -1, onKeyDown: handleKeyDown, role: "dialog", "aria-modal": "true", "aria-label": ariaLabel, "aria-labelledby": ariaLabel ? undefined : labelId, "aria-hidden": "false", custom: resolvedOpenFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), scrollable && ({
         [`data-${PREFIX_BS}scroll`]: 'true',
         [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), dataAttributes, { children: children })));
+    }), dataAttributes, { children: jsxRuntime.jsx(DOffcanvasLabelContext.Provider, { value: labelId, children: children }) })));
 }
 var DOffcanvas = Object.assign(DOffcanvas$1, {
     Header: DOffcanvasHeader,

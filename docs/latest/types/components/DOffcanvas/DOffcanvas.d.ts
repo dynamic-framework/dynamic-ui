@@ -22,8 +22,13 @@ type Props = BaseProps & PropsWithChildren<{
      */
     height?: string | ResponsiveProp;
     transition?: Transition;
+    /**
+     * Accessible name for the dialog when it has no visible title. When set,
+     * the dialog uses `aria-label` instead of `aria-labelledby`.
+     */
+    ariaLabel?: string;
 }>;
-declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, width, height, transition, children, dataAttributes, }: Props): import("react").JSX.Element;
+declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, width, height, transition, children, dataAttributes, ariaLabel, }: Props): import("react").JSX.Element;
 declare const _default: typeof DOffcanvas & {
     Header: typeof DOffcanvasHeader;
     Body: typeof DOffcanvasBody;

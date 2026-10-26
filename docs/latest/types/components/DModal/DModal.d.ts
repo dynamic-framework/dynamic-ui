@@ -13,8 +13,13 @@ type Props = BaseProps & PropsWithChildren<{
     fullScreenFrom?: ModalFullScreenFrom;
     size?: ModalSize;
     transition?: Transition;
+    /**
+     * Accessible name for the dialog when it has no visible title. When set,
+     * the dialog uses `aria-label` instead of `aria-labelledby`.
+     */
+    ariaLabel?: string;
 }>;
-declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }: Props): import("react").JSX.Element;
+declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, ariaLabel, }: Props): import("react").JSX.Element;
 declare const _default: typeof DModal & {
     Header: typeof DModalHeader;
     Body: typeof DModalBody;

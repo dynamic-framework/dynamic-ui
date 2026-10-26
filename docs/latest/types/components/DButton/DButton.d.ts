@@ -13,5 +13,5 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>, 
     loadingText?: string;
     loadingAriaLabel?: string;
 }
-declare const DButton: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<HTMLButtonElement | HTMLAnchorElement>>;
+declare const DButton: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<HTMLAnchorElement | HTMLButtonElement>>;
 export default DButton;
