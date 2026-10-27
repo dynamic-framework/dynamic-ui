@@ -90,7 +90,7 @@ const newEntry = {
 const { [semver]: _replaced, ...rest } = existingManifest.versions;
 const versions = { [semver]: newEntry, ...rest };
 
-// Advance `latest` only for stable releases higher than the current one (never for prereleases)
+// `latest` solo avanza con una versión estable mayor que la actual (nunca con un prerelease)
 const currentLatest = existingManifest.latest ?? null;
 if (isPrerelease && !currentLatest) {
   process.stderr.write(
@@ -99,8 +99,8 @@ if (isPrerelease && !currentLatest) {
   );
   process.exit(1);
 }
-// `latest` never moves backwards: a patch of an older line (e.g. 2.11.1 after
-// 2.12.0) is indexed but leaves the higher stable version as latest.
+// `latest` nunca retrocede: un parche de una línea anterior (p. ej. 2.11.1 después
+// de 2.12.0) se agrega al índice, pero latest sigue siendo la versión estable mayor.
 const compareStable = (a, b) => {
   const pa = a.split('.').map(Number);
   const pb = b.split('.').map(Number);
