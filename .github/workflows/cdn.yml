@@ -47,24 +47,6 @@ jobs:
         run: npm run validate:registry
       - name: Validate token-overrides.json against token-overrides.v1.json
         run: npm run validate:token-overrides
-      - name: Fetch existing manifest from CDN
-        run: |
-          HTTP_STATUS=$(curl -s -o /tmp/manifest-prev.json -w "%{http_code}" \
-            ${{ env.CDN_BASE_URL }}/manifest.json)
-          if [ "$HTTP_STATUS" = "200" ]; then
-            echo "Manifest fetched (200)."
-          elif [ "$HTTP_STATUS" = "404" ] || [ "$HTTP_STATUS" = "403" ]; then
-            echo "Manifest not found ($HTTP_STATUS) — first publish, starting fresh."
-            echo '{"versions":{}}' > /tmp/manifest-prev.json
-          else
-            echo "::error::Unexpected HTTP status $HTTP_STATUS fetching manifest. Aborting to protect version history."
-            exit 1
-          fi
-      - name: Generate manifest
-        run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
-        env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
       - name: Extract semver from package.json
         id: version
         run: echo "semver=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
@@ -82,6 +64,20 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: Fetch existing manifest from S3
+        run: |
+          # Se lee del bucket, no del CDN: una copia cacheada en Cloudflare
+          # haría que el índice nuevo perdiera las versiones publicadas después.
+          if ! aws s3 cp s3://dynamicframework-cdn/assets/manifest.json /tmp/manifest-prev.json; then
+            echo "::error::Could not read s3://dynamicframework-cdn/assets/manifest.json. The index exists since 2.5.1 and must never be rebuilt from scratch; aborting before publishing anything."
+            exit 1
+          fi
+          echo "Manifest fetched from S3 ($(jq '.versions | length' /tmp/manifest-prev.json) version(s), latest $(jq -r '.latest' /tmp/manifest-prev.json))."
+      - name: Generate manifest
+        run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
       - name: Publish to CDN
         run: |
           if [[ "${{ steps.version.outputs.semver }}" == *"-"* ]]; then
@@ -212,3 +208,13 @@ jobs:
               fi
             done
           done
+      - name: Remind Cloudflare cache invalidation
+        run: |
+          MSG="Invalidar la caché de Cloudflare de cdn.dynamicframework.dev/assets/ (todo lo que está debajo)"
+          CHECK='curl -s https://cdn.dynamicframework.dev/assets/manifest.json | jq -r .latest'
+          echo "::notice::$MSG. Comprobación: $CHECK"
+          {
+            echo "$MSG"
+            echo ""
+            echo "Comprobación: \`$CHECK\`"
+          } >> "$GITHUB_STEP_SUMMARY"

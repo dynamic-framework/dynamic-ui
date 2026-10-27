@@ -90,7 +90,7 @@ const newEntry = {
 const { [semver]: _replaced, ...rest } = existingManifest.versions;
 const versions = { [semver]: newEntry, ...rest };
 
-// Advance `latest` only for stable releases (never for prereleases)
+// Advance `latest` only for stable releases higher than the current one (never for prereleases)
 const currentLatest = existingManifest.latest ?? null;
 if (isPrerelease && !currentLatest) {
   process.stderr.write(
@@ -99,7 +99,20 @@ if (isPrerelease && !currentLatest) {
   );
   process.exit(1);
 }
-const latest = isPrerelease ? currentLatest : semver;
+// `latest` never moves backwards: a patch of an older line (e.g. 2.11.1 after
+// 2.12.0) is indexed but leaves the higher stable version as latest.
+const compareStable = (a, b) => {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < 3; i += 1) {
+    if (pa[i] !== pb[i]) return pa[i] - pb[i];
+  }
+  return 0;
+};
+let latest = semver;
+if (isPrerelease || (currentLatest && compareStable(currentLatest, semver) > 0)) {
+  latest = currentLatest;
+}
 
 const manifest = {
   updatedAt: new Date().toISOString(),
