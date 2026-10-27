@@ -102,6 +102,24 @@ describe('<DOffcanvas /> a11y', () => {
     );
   });
 
+  it('no duplica el id cuando el título está fuera del header', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas">
+        <DOffcanvas.Header showCloseButton onClose={() => {}} />
+        <DOffcanvas.Body>
+          <h2 id="myOffcanvasLabel">Operación exitosa</h2>
+          <p>Test Body</p>
+        </DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
     const { container } = render(
       <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">

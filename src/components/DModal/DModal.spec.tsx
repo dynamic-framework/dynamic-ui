@@ -314,6 +314,67 @@ describe('<DModal />', () => {
       expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
     });
 
+    it('respeta el id cuando el título está fuera del header', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header showCloseButton onClose={() => {}} />
+          <DModal.Body>
+            <h2 id="myModalLabel">Operación exitosa</h2>
+            <p>Test Body</p>
+          </DModal.Body>
+        </DModal>,
+      );
+
+      // El header no puede quedarse con el id: sería el primero en orden de
+      // documento y el diálogo se quedaría sin nombre.
+      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
+      expect(document.getElementById('myModalLabel')?.tagName).toBe('H2');
+    });
+
+    it('cede el id al título de fuera del header aunque el header tenga contenido', () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Cabecera sin id</DModal.Header>
+          <DModal.Body>
+            <h2 id="myModalLabel">Operación exitosa</h2>
+          </DModal.Body>
+        </DModal>,
+      );
+
+      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Operación exitosa' })).toBeInTheDocument();
+    });
+
+    it('suelta y recupera el id cuando el título de fuera del header monta y desmonta', async () => {
+      const control: { setShowTitle?: (value: boolean) => void } = {};
+      function Example() {
+        const [showTitle, setShowTitle] = useState(false);
+        control.setShowTitle = setShowTitle;
+        return (
+          <DModal name="myModal">
+            <DModal.Header>Cabecera</DModal.Header>
+            <DModal.Body>
+              {showTitle && <h2 id="myModalLabel">Operación exitosa</h2>}
+            </DModal.Body>
+          </DModal>
+        );
+      }
+      render(<Example />);
+      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('DIV');
+
+      act(() => control.setShowTitle?.(true));
+      await waitFor(() => expect(labels()[0].tagName).toBe('H2'));
+      expect(labels()).toHaveLength(1);
+
+      act(() => control.setShowTitle?.(false));
+      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Cabecera' })).toBeInTheDocument();
+    });
+
     it('usa ariaLabel como nombre cuando no hay título', () => {
       render(
         <DModal name="myModal" ariaLabel="Confirmación">

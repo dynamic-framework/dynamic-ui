@@ -393,6 +393,67 @@ describe('<DOffcanvas />', () => {
       expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
     });
 
+    it('respeta el id cuando el título está fuera del header', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header showCloseButton onClose={() => {}} />
+          <DOffcanvas.Body>
+            <h2 id="myOffcanvasLabel">Operación exitosa</h2>
+            <p>Test Body</p>
+          </DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      // El header no puede quedarse con el id: sería el primero en orden de
+      // documento y el diálogo se quedaría sin nombre.
+      expect(document.querySelectorAll('[id="myOffcanvasLabel"]')).toHaveLength(1);
+      expect(document.getElementById('myOffcanvasLabel')?.tagName).toBe('H2');
+    });
+
+    it('cede el id al título de fuera del header aunque el header tenga contenido', () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Cabecera sin id</DOffcanvas.Header>
+          <DOffcanvas.Body>
+            <h2 id="myOffcanvasLabel">Operación exitosa</h2>
+          </DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      expect(document.querySelectorAll('[id="myOffcanvasLabel"]')).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Operación exitosa' })).toBeInTheDocument();
+    });
+
+    it('suelta y recupera el id cuando el título de fuera del header monta y desmonta', async () => {
+      const control: { setShowTitle?: (value: boolean) => void } = {};
+      function Example() {
+        const [showTitle, setShowTitle] = useState(false);
+        control.setShowTitle = setShowTitle;
+        return (
+          <DOffcanvas name="myOffcanvas">
+            <DOffcanvas.Header>Cabecera</DOffcanvas.Header>
+            <DOffcanvas.Body>
+              {showTitle && <h2 id="myOffcanvasLabel">Operación exitosa</h2>}
+            </DOffcanvas.Body>
+          </DOffcanvas>
+        );
+      }
+      render(<Example />);
+      const labels = () => document.querySelectorAll('[id="myOffcanvasLabel"]');
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('DIV');
+
+      act(() => control.setShowTitle?.(true));
+      await waitFor(() => expect(labels()[0].tagName).toBe('H2'));
+      expect(labels()).toHaveLength(1);
+
+      act(() => control.setShowTitle?.(false));
+      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
+      expect(labels()).toHaveLength(1);
+      expect(screen.getByRole('dialog', { name: 'Cabecera' })).toBeInTheDocument();
+    });
+
     it('usa ariaLabel como nombre cuando no hay título', () => {
       render(
         <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">

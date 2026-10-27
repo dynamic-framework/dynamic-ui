@@ -102,6 +102,24 @@ describe('<DModal /> a11y', () => {
     );
   });
 
+  it('no duplica el id cuando el título está fuera del header', async () => {
+    const { container } = render(
+      <DModal name="myModal">
+        <DModal.Header showCloseButton onClose={() => {}} />
+        <DModal.Body>
+          <h2 id="myModalLabel">Operación exitosa</h2>
+          <p>Test Body</p>
+        </DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
     const { container } = render(
       <DModal name="myModal" ariaLabel="Confirmación">

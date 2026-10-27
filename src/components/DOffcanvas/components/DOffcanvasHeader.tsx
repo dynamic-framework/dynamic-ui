@@ -55,24 +55,31 @@ export default function DOffcanvasHeader(
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
   // El contenedor de children toma el id del título salvo que el consumidor ya
-  // lo haya puesto en un descendiente; así no hay ids duplicados. El observer
-  // cubre los títulos que añaden o quitan ese id por su propio estado.
+  // lo haya puesto en cualquier punto del offcanvas: el título puede vivir
+  // fuera del header. Así no hay ids duplicados. El observer cubre los títulos
+  // que añaden o quitan ese id por su propio estado.
   const labelId = useContext(DOffcanvasLabelContext);
   const titleRef = useRef<HTMLDivElement>(null);
   const [labelOnWrapper, setLabelOnWrapper] = useState(false);
   useLayoutEffect(() => {
     const title = titleRef.current;
-    if (!labelId || !title) {
+    // El offcanvas ya está en el DOM cuando corre este efecto, pero su ref aún
+    // no está asignada: se busca la raíz desde el propio header.
+    const dialog = title?.closest('.offcanvas');
+    if (!labelId || !title || !dialog) {
       setLabelOnWrapper(false);
       return undefined;
     }
     const update = () => {
-      const descendants = Array.from(title.querySelectorAll('[id]'));
-      setLabelOnWrapper(!descendants.some((element) => element.id === labelId));
+      // El propio contenedor se excluye: si no, al tomar el id lo encontraría
+      // y se lo quitaría de inmediato, entrando en bucle.
+      const owners = Array.from(dialog.querySelectorAll(`[id="${labelId}"]`))
+        .filter((element) => element !== title);
+      setLabelOnWrapper(owners.length === 0);
     };
     update();
     const observer = new MutationObserver(update);
-    observer.observe(title, {
+    observer.observe(dialog, {
       subtree: true,
       childList: true,
       attributes: true,
