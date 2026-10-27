@@ -120,6 +120,22 @@ describe('<DModal /> a11y', () => {
     );
   });
 
+  it('no duplica el id con dos headers montados', async () => {
+    const { container } = render(
+      <DModal name="myModal">
+        <DModal.Header>Primero</DModal.Header>
+        <DModal.Header>Segundo</DModal.Header>
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
     const { container } = render(
       <DModal name="myModal" ariaLabel="Confirmación">

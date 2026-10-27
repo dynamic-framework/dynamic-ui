@@ -62,6 +62,7 @@ describe('<DModal />', () => {
                   class="modal-header"
                 >
                   <div
+                    data-d-label-slot=""
                     id="myModalLabel"
                   >
                     Test Header
@@ -87,7 +88,7 @@ describe('<DModal />', () => {
             </div>
           </div>
         </div>
-      `);
+`);
     });
 
     it('should render a centered and large modal', () => {
@@ -373,6 +374,56 @@ describe('<DModal />', () => {
       await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
       expect(labels()).toHaveLength(1);
       expect(screen.getByRole('dialog', { name: 'Cabecera' })).toBeInTheDocument();
+    });
+
+    it('monta con un name que no es un selector CSS válido', () => {
+      // Interpolar el id en el selector lanzaría SyntaxError y el diálogo no
+      // llegaría a montar.
+      expect(() => render(
+        <DModal name={'account"edit'}>
+          <DModal.Header>Editar</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      )).not.toThrow();
+
+      expect(screen.getByRole('dialog', { name: 'Editar' })).toBeInTheDocument();
+      expect(document.querySelectorAll('[id=\'account"editLabel\']')).toHaveLength(1);
+    });
+
+    it('con dos headers montados, solo el primero adopta el id', async () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Primero</DModal.Header>
+          <DModal.Header>Segundo</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+
+      // Sin un criterio estable los dos se lo quitarían y lo reclamarían en
+      // bucle: este await no llegaría a resolverse.
+      await act(async () => { await Promise.resolve(); });
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0]).toHaveTextContent('Primero');
+      expect(screen.getByRole('dialog', { name: 'Primero' })).toBeInTheDocument();
+    });
+
+    it('con dos headers, un id explícito del consumidor manda sobre ambos', async () => {
+      render(
+        <DModal name="myModal">
+          <DModal.Header>Primero</DModal.Header>
+          <DModal.Header><span id="myModalLabel">Segundo</span></DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+
+      await act(async () => { await Promise.resolve(); });
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('SPAN');
+      expect(screen.getByRole('dialog', { name: 'Segundo' })).toBeInTheDocument();
     });
 
     it('usa ariaLabel como nombre cuando no hay título', () => {

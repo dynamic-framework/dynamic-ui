@@ -120,6 +120,22 @@ describe('<DOffcanvas /> a11y', () => {
     );
   });
 
+  it('no duplica el id con dos headers montados', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas">
+        <DOffcanvas.Header>Primero</DOffcanvas.Header>
+        <DOffcanvas.Header>Segundo</DOffcanvas.Header>
+        <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
     const { container } = render(
       <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">

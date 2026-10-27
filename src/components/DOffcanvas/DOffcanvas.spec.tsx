@@ -102,6 +102,7 @@ describe('<DOffcanvas />', () => {
               class="offcanvas-header"
             >
               <div
+                data-d-label-slot=""
                 id="myOffcanvasLabel"
               >
                 Test Header
@@ -125,7 +126,7 @@ describe('<DOffcanvas />', () => {
             </div>
           </div>
         </div>
-      `);
+`);
     });
 
     it.each([
@@ -452,6 +453,56 @@ describe('<DOffcanvas />', () => {
       await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
       expect(labels()).toHaveLength(1);
       expect(screen.getByRole('dialog', { name: 'Cabecera' })).toBeInTheDocument();
+    });
+
+    it('monta con un name que no es un selector CSS válido', () => {
+      // Interpolar el id en el selector lanzaría SyntaxError y el diálogo no
+      // llegaría a montar.
+      expect(() => render(
+        <DOffcanvas name={'account"edit'}>
+          <DOffcanvas.Header>Editar</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      )).not.toThrow();
+
+      expect(screen.getByRole('dialog', { name: 'Editar' })).toBeInTheDocument();
+      expect(document.querySelectorAll('[id=\'account"editLabel\']')).toHaveLength(1);
+    });
+
+    it('con dos headers montados, solo el primero adopta el id', async () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Primero</DOffcanvas.Header>
+          <DOffcanvas.Header>Segundo</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+      const labels = () => document.querySelectorAll('[id="myOffcanvasLabel"]');
+
+      // Sin un criterio estable los dos se lo quitarían y lo reclamarían en
+      // bucle: este await no llegaría a resolverse.
+      await act(async () => { await Promise.resolve(); });
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0]).toHaveTextContent('Primero');
+      expect(screen.getByRole('dialog', { name: 'Primero' })).toBeInTheDocument();
+    });
+
+    it('con dos headers, un id explícito del consumidor manda sobre ambos', async () => {
+      render(
+        <DOffcanvas name="myOffcanvas">
+          <DOffcanvas.Header>Primero</DOffcanvas.Header>
+          <DOffcanvas.Header><span id="myOffcanvasLabel">Segundo</span></DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+      const labels = () => document.querySelectorAll('[id="myOffcanvasLabel"]');
+
+      await act(async () => { await Promise.resolve(); });
+
+      expect(labels()).toHaveLength(1);
+      expect(labels()[0].tagName).toBe('SPAN');
+      expect(screen.getByRole('dialog', { name: 'Segundo' })).toBeInTheDocument();
     });
 
     it('usa ariaLabel como nombre cuando no hay título', () => {
