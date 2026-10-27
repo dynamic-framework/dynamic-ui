@@ -78,6 +78,12 @@ describe('generate-manifest', () => {
     expect(generate('v2.10.0', previous).latest).toBe('2.10.0');
   });
 
+  test('los metadatos de build no hacen retroceder latest', () => {
+    const previous = { ...PREVIOUS, latest: '2.12.2', versions: { '2.12.2': entry('2.12.2', '2026-10-27T00:00:00Z') } };
+    expect(generate('v2.12.1+build.1', previous).latest).toBe('2.12.2');
+    expect(generate('v2.12.3+build.1', previous).latest).toBe('2.12.3+build.1');
+  });
+
   test('un prerelease no mueve latest', () => {
     const manifest = generate('v2.13.0-rc.1');
     expect(manifest.latest).toBe('2.12.0');

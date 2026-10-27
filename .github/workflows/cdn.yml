@@ -65,7 +65,20 @@ jobs:
           fi
           echo "Índice anterior leído desde S3: $(jq '.versions | length' /tmp/manifest-prev.json) versiones, latest $(jq -r '.latest' /tmp/manifest-prev.json)."
       - name: Generate manifest
-        run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
+        id: manifest
+        run: |
+          node scripts/generate-manifest.mjs /tmp/manifest-prev.json
+          # Las rutas latest/ solo se publican si esta versión es el latest del
+          # índice: un backport (p. ej. 2.11.1 después de 2.12.0) o un prerelease
+          # se publican solo en su ruta versionada.
+          LATEST=$(jq -r '.latest' registry/manifest.json)
+          if [ "$LATEST" = "${RELEASE_TAG#v}" ]; then
+            echo "is_latest=true" >> "$GITHUB_OUTPUT"
+            echo "Esta versión es el latest del índice: se publican también las rutas latest/."
+          else
+            echo "is_latest=false" >> "$GITHUB_OUTPUT"
+            echo "El latest del índice sigue siendo $LATEST: no se tocan las rutas latest/."
+          fi
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
@@ -88,10 +101,10 @@ jobs:
           aws-region: us-east-1
       - name: Publish to CDN
         run: |
-          if [[ "${{ steps.version.outputs.semver }}" == *"-"* ]]; then
-            npm run publish:cdn-version
-          else
+          if [ "${{ steps.manifest.outputs.is_latest }}" = "true" ]; then
             npm run publish:cdn
+          else
+            npm run publish:cdn-version
           fi
       - name: Upload api.json to CDN (versioned)
         run: |
@@ -111,22 +124,22 @@ jobs:
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/manifests/docs.json \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"
-      - name: Upload api.json to CDN (latest — stable releases only)
-        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+      - name: Upload api.json to CDN (latest — manifest latest only)
+        if: ${{ steps.manifest.outputs.is_latest == 'true' }}
         run: |
           aws s3 cp registry/api.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/api.json \
             --acl public-read \
             --cache-control "public, max-age=300, must-revalidate"
-      - name: Upload Storybook components manifest to CDN (latest — stable releases only)
-        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+      - name: Upload Storybook components manifest to CDN (latest — manifest latest only)
+        if: ${{ steps.manifest.outputs.is_latest == 'true' }}
         run: |
           aws s3 cp docs/manifests/components.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/manifests/components.json \
             --acl public-read \
             --cache-control "public, max-age=300, must-revalidate"
-      - name: Upload Storybook docs manifest to CDN (latest — stable releases only)
-        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+      - name: Upload Storybook docs manifest to CDN (latest — manifest latest only)
+        if: ${{ steps.manifest.outputs.is_latest == 'true' }}
         run: |
           aws s3 cp docs/manifests/docs.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/manifests/docs.json \
@@ -138,8 +151,8 @@ jobs:
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/icons-core.json \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"
-      - name: Upload icons-core.json to CDN (latest — stable releases only)
-        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+      - name: Upload icons-core.json to CDN (latest — manifest latest only)
+        if: ${{ steps.manifest.outputs.is_latest == 'true' }}
         run: |
           aws s3 cp dist/icons-core.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/icons-core.json \
@@ -157,8 +170,8 @@ jobs:
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/tokens/token-overrides.json \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"
-      - name: Upload token-overrides.json to CDN (latest — stable releases only)
-        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+      - name: Upload token-overrides.json to CDN (latest — manifest latest only)
+        if: ${{ steps.manifest.outputs.is_latest == 'true' }}
         run: |
           aws s3 cp registry/token-overrides.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/tokens/token-overrides.json \
@@ -180,7 +193,7 @@ jobs:
         run: |
           PATHS=("api.json" "manifests/components.json" "manifests/docs.json" "tokens/token-overrides.json" "icons-core.json")
           BASES=("${{ env.CDN_BASE_URL }}/${{ steps.version.outputs.semver }}/ui-react")
-          if [[ "${{ steps.version.outputs.semver }}" != *"-"* ]]; then
+          if [ "${{ steps.manifest.outputs.is_latest }}" = "true" ]; then
             BASES+=("${{ env.CDN_BASE_URL }}/latest/ui-react")
           fi
           for BASE in "${BASES[@]}"; do
