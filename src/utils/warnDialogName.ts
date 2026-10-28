@@ -10,18 +10,68 @@ type WarnDialogNameOptions = {
   component: 'DModal' | 'DOffcanvas';
   /** The dialog's `name` prop, its stable identity across mounts. */
   name: string;
-  /** Id the dialog points to with `aria-labelledby`, or undefined when it uses `aria-label`. */
-  labelledById?: string;
+  /**
+   * Value of the dialog's `aria-labelledby`, or undefined when it uses
+   * `aria-label`. May reference several ids, separated by whitespace.
+   */
+  labelledBy?: string;
   /** Whether the consumer passed an explicit `ariaLabelledby`. */
   hasAriaLabelledby: boolean;
 };
 
 /**
+ * Text a descendant contributes to the name of the element being named.
+ *
+ * Descendants hidden from assistive technology contribute nothing, and one
+ * carrying its own `aria-label` contributes that instead of its subtree.
+ * Only `aria-hidden` and the `hidden` attribute are considered: CSS-hidden
+ * content is deliberately not excluded, since the `visually-hidden` pattern —
+ * off-screen but exposed to a screen reader — is a legitimate way to title a
+ * dialog.
+ */
+function descendantText(node: Node): string {
+  if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? '';
+  if (node.nodeType !== Node.ELEMENT_NODE) return '';
+
+  const element = node as Element;
+  if (element.getAttribute('aria-hidden') === 'true' || element.hasAttribute('hidden')) {
+    return '';
+  }
+
+  const ariaLabel = element.getAttribute('aria-label')?.trim();
+  if (ariaLabel) return ` ${ariaLabel} `;
+
+  return Array.from(element.childNodes).map(descendantText).join('');
+}
+
+/**
+ * Approximates the accessible name an element referenced by `aria-labelledby`
+ * contributes.
+ *
+ * It is an approximation, enough for a development warning rather than a
+ * reimplementation of the accessible name computation. It follows the parts
+ * that decide whether a dialog ends up named at all:
+ *
+ * - `aria-label` on the element wins over its content.
+ * - `aria-labelledby` on the element is *not* followed: the computation does
+ *   not chain references, so a title that only carries one leaves the dialog
+ *   unnamed, and warning is the right call.
+ * - The element itself contributes even when hidden — a node referenced
+ *   directly by `aria-labelledby` is exempt — while hidden descendants do not.
+ */
+function referencedName(element: Element): string {
+  const ariaLabel = element.getAttribute('aria-label')?.trim();
+  if (ariaLabel) return ariaLabel;
+
+  return Array.from(element.childNodes).map(descendantText).join('').trim();
+}
+
+/**
  * Warns, only outside production builds, when a dialog ends up with no
  * accessible name.
  *
- * A dialog takes its name from the element `aria-labelledby` points to. If that
- * element is missing or has no text, the name is the empty string: there is no
+ * A dialog takes its name from the elements `aria-labelledby` points to. If
+ * none of them resolves to any text, the name is the empty string: there is no
  * fallback to the dialog's own content. A screen reader then announces the
  * dialog without saying what it is, and the user is left inside a focus trap
  * they cannot identify. It fails WCAG 4.1.2 and axe reports it as
@@ -44,18 +94,29 @@ type WarnDialogNameOptions = {
 export default function warnDialogName({
   component,
   name,
-  labelledById,
+  labelledBy,
   hasAriaLabelledby,
 }: WarnDialogNameOptions): void {
-  if (!labelledById) return;
-  if (document.getElementById(labelledById)?.textContent?.trim()) return;
+  if (!labelledBy) return;
+
+  // `aria-labelledby` takes a whitespace-separated list of ids, and the name is
+  // what all of them contribute together: one with text is enough to name the
+  // dialog. Ids that match nothing are skipped.
+  const named = labelledBy
+    .trim()
+    .split(/\s+/)
+    .some((id) => {
+      const element = id && document.getElementById(id);
+      return !!element && !!referencedName(element);
+    });
+  if (named) return;
 
   const key = `${component}:${name}`;
   if (warnedDialogs.has(key)) return;
   warnedDialogs.add(key);
 
   const advice = hasAriaLabelledby
-    ? `its ariaLabelledby points to id="${labelledById}", and no element with that id has any text.`
+    ? `its ariaLabelledby points to "${labelledBy}", and nothing with that id has an accessible name.`
     : 'give it a title in '
       + `${component}.Header, or pass ariaLabelledby with the id of a title elsewhere in the `
       + 'dialog, or pass ariaLabel with its plain-text name.';

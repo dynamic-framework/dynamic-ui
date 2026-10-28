@@ -97,7 +97,7 @@ function DModal(
       warnDialogName({
         component: 'DModal',
         name,
-        labelledById,
+        labelledBy: labelledById,
         hasAriaLabelledby: !!ariaLabelledby,
       });
     }

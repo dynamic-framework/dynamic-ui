@@ -403,6 +403,92 @@ describe('<DModal />', () => {
         expect(warn).not.toHaveBeenCalled();
       });
 
+      it('no avisa cuando ariaLabelledby referencia varios ids', () => {
+        // `aria-labelledby` admite una lista separada por espacios y el nombre
+        // es lo que aportan todos juntos.
+        render(
+          <DModal name="warnMultiRef" ariaLabelledby="warnPart1 warnPart2">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>
+              <h2 id="warnPart1">Trans</h2>
+              <span id="warnPart2">ferencia</span>
+            </DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando ariaLabelledby lleva espacios alrededor', () => {
+        render(
+          <DModal name="warnPadded" ariaLabelledby=" warnPaddedTitle ">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>
+              <h2 id="warnPaddedTitle">Operación exitosa</h2>
+            </DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado se nombra con su propio aria-label', () => {
+        // El nombre de un elemento referenciado sale de su `aria-label` antes
+        // que de su contenido: sin texto, pero nombrado.
+        render(
+          <DModal name="warnAuthorLabel" ariaLabelledby="warnAuthorLabelTitle">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>
+              {/* El aria-label le da nombre aunque no tenga contenido: es justo
+                  el caso que se comprueba. */}
+              {/* eslint-disable-next-line jsx-a11y/heading-has-content */}
+              <h2 id="warnAuthorLabelTitle" aria-label="Transfer complete" />
+            </DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente aria-hidden', () => {
+        // `textContent` lo daría por nombrado, pero un lector de pantalla no ve
+        // ese texto y el diálogo se queda sin nombre.
+        render(
+          <DModal name="warnHiddenText">
+            <DModal.Header><span aria-hidden="true">Invisible</span></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente con hidden', () => {
+        render(
+          <DModal name="warnHiddenAttr">
+            <DModal.Header><span hidden>Invisible</span></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el texto del header viene del aria-label de un hijo', () => {
+        render(
+          <DModal name="warnChildLabel">
+            <DModal.Header><span aria-label="Desde el hijo" /></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
       it('avisa cuando ariaLabelledby apunta a un id que no existe', () => {
         render(
           <DModal name="warnBadRef" ariaLabelledby="noSuchTitle">
@@ -412,7 +498,7 @@ describe('<DModal />', () => {
         );
 
         expect(warn).toHaveBeenCalledWith(
-          expect.stringContaining('its ariaLabelledby points to id="noSuchTitle"'),
+          expect.stringContaining('its ariaLabelledby points to "noSuchTitle"'),
         );
       });
 

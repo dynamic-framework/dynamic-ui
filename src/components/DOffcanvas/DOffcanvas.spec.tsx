@@ -482,6 +482,92 @@ describe('<DOffcanvas />', () => {
         expect(warn).not.toHaveBeenCalled();
       });
 
+      it('no avisa cuando ariaLabelledby referencia varios ids', () => {
+        // `aria-labelledby` admite una lista separada por espacios y el nombre
+        // es lo que aportan todos juntos.
+        render(
+          <DOffcanvas name="warnMultiRef" ariaLabelledby="warnPart1 warnPart2">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnPart1">Trans</h2>
+              <span id="warnPart2">ferencia</span>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando ariaLabelledby lleva espacios alrededor', () => {
+        render(
+          <DOffcanvas name="warnPadded" ariaLabelledby=" warnPaddedTitle ">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnPaddedTitle">Operación exitosa</h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado se nombra con su propio aria-label', () => {
+        // El nombre de un elemento referenciado sale de su `aria-label` antes
+        // que de su contenido: sin texto, pero nombrado.
+        render(
+          <DOffcanvas name="warnAuthorLabel" ariaLabelledby="warnAuthorLabelTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              {/* El aria-label le da nombre aunque no tenga contenido: es justo
+                  el caso que se comprueba. */}
+              {/* eslint-disable-next-line jsx-a11y/heading-has-content */}
+              <h2 id="warnAuthorLabelTitle" aria-label="Transfer complete" />
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente aria-hidden', () => {
+        // `textContent` lo daría por nombrado, pero un lector de pantalla no ve
+        // ese texto y el diálogo se queda sin nombre.
+        render(
+          <DOffcanvas name="warnHiddenText">
+            <DOffcanvas.Header><span aria-hidden="true">Invisible</span></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente con hidden', () => {
+        render(
+          <DOffcanvas name="warnHiddenAttr">
+            <DOffcanvas.Header><span hidden>Invisible</span></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el texto del header viene del aria-label de un hijo', () => {
+        render(
+          <DOffcanvas name="warnChildLabel">
+            <DOffcanvas.Header><span aria-label="Desde el hijo" /></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
       it('avisa cuando ariaLabelledby apunta a un id que no existe', () => {
         render(
           <DOffcanvas name="warnBadRef" ariaLabelledby="noSuchTitle">
@@ -491,7 +577,7 @@ describe('<DOffcanvas />', () => {
         );
 
         expect(warn).toHaveBeenCalledWith(
-          expect.stringContaining('its ariaLabelledby points to id="noSuchTitle"'),
+          expect.stringContaining('its ariaLabelledby points to "noSuchTitle"'),
         );
       });
 

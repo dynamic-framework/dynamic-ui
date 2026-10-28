@@ -135,7 +135,7 @@ function DOffcanvas(
       warnDialogName({
         component: 'DOffcanvas',
         name,
-        labelledById,
+        labelledBy: labelledById,
         hasAriaLabelledby: !!ariaLabelledby,
       });
     }
