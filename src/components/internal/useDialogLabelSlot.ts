@@ -53,7 +53,8 @@ export default function useDialogLabelSlot(
       // decisión no mira quién tiene el id ahora mismo: si lo hiciera, con dos
       // headers montados cada uno se lo quitaría al ver al otro y lo volvería a
       // reclamar al verlo libre, en bucle.
-      const slots = Array.from(dialog.querySelectorAll(`[${LABEL_SLOT_ATTRIBUTE}]`));
+      const slots = Array.from(dialog.querySelectorAll(`[${LABEL_SLOT_ATTRIBUTE}]`))
+        .filter((slot) => slot.closest('.modal, .offcanvas') === dialog);
       setLabelOnSlot(slots[0] === title);
     };
 
