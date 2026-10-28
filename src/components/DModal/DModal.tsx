@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
 } from 'react';
@@ -13,6 +14,7 @@ import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
+import warnDialogName from '../../utils/warnDialogName';
 import DModalHeader from './components/DModalHeader';
 import DModalLabelContext from './components/DModalLabelContext';
 import DModalBody from './components/DModalBody';
@@ -30,10 +32,16 @@ type Props = BaseProps & PropsWithChildren<{
   size?: ModalSize;
   transition?: Transition;
   /**
-   * Accessible name for the dialog when it has no visible title. When set,
-   * the dialog uses `aria-label` instead of `aria-labelledby`.
+   * Accessible name for the dialog when it has no title anywhere. When set,
+   * the dialog uses `aria-label` and ignores every title.
    */
   ariaLabel?: string;
+  /**
+   * Id of the element that names the dialog, for a title that lives outside
+   * `Header` — hidden in the body, for instance. Takes precedence over a title
+   * in `Header`; `ariaLabel` takes precedence over both.
+   */
+  ariaLabelledby?: string;
 }>;
 
 const defaultTransition: Transition = {
@@ -60,9 +68,15 @@ function DModal(
     children,
     dataAttributes,
     ariaLabel,
+    ariaLabelledby,
   }: Props,
 ) {
-  const labelId = `${name}Label`;
+  // Id propio del contenedor del título del header. `useId` lo hace único, así
+  // que no puede chocar con ningún id del consumidor.
+  const headerLabelId = useId();
+  // Precedencia: `ariaLabel` manda sobre todo; si no, un título declarado con
+  // `ariaLabelledby`; si no, el título del header.
+  const labelledById = ariaLabel ? undefined : (ariaLabelledby ?? headerLabelId);
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
@@ -73,6 +87,21 @@ function DModal(
       dialog.focus();
     }
   }, []);
+
+  // Un diálogo sin nombre accesible se anuncia sin decir qué es. El componente
+  // no puede inventarlo, así que se avisa al desarrollador. El contenedor del
+  // título lleva su id desde el primer render, sin estado de por medio, así
+  // que aquí el DOM ya está asentado.
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      warnDialogName({
+        component: 'DModal',
+        name,
+        labelledById,
+        hasAriaLabelledby: !!ariaLabelledby,
+      });
+    }
+  }, [ariaLabelledby, labelledById, name]);
 
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
@@ -122,7 +151,7 @@ function DModal(
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
-      aria-labelledby={ariaLabel ? undefined : labelId}
+      aria-labelledby={labelledById}
       aria-hidden="false"
       style={style}
       initial={{ opacity: 0, scale: 0.95 }}
@@ -140,7 +169,7 @@ function DModal(
     >
       <div className={classNames(generateModalDialogClasses)}>
         <div className="modal-content">
-          <DModalLabelContext.Provider value={labelId}>
+          <DModalLabelContext.Provider value={headerLabelId}>
             {children}
           </DModalLabelContext.Provider>
         </div>

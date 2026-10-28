@@ -6,7 +6,6 @@ import DIcon from '../../DIcon';
 import type { BaseProps, FamilyIconProps } from '../../interface';
 import { useDContext } from '../../../contexts';
 import DOffcanvasLabelContext from './DOffcanvasLabelContext';
-import useDialogLabelSlot, { LABEL_SLOT_ATTRIBUTE } from '../../internal/useDialogLabelSlot';
 
 type Props =
 & BaseProps
@@ -48,11 +47,10 @@ export default function DOffcanvasHeader(
   } = useDContext();
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
-  // El contenedor de children adopta el id del título salvo que el consumidor
-  // ya lo haya puesto en cualquier punto del diálogo: el título puede vivir
-  // fuera del header.
+  // El contenedor del título lleva el id al que DOffcanvas apunta con
+  // `aria-labelledby`. Lo genera DOffcanvas con `useId`: es único, así que se
+  // pone siempre, sin mirar el resto del DOM.
   const labelId = useContext(DOffcanvasLabelContext);
-  const [titleRef, labelOnSlot] = useDialogLabelSlot(labelId, '.offcanvas');
 
   return (
     <>
@@ -60,11 +58,7 @@ export default function DOffcanvasHeader(
         className={classNames('offcanvas-header', className)}
         style={style}
       >
-        <div
-          ref={titleRef}
-          id={labelOnSlot ? labelId : undefined}
-          {...{ [LABEL_SLOT_ATTRIBUTE]: '' }}
-        >
+        <div id={labelId}>
           {children}
         </div>
         {showCloseButton && (

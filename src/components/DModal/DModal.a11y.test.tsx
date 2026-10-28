@@ -85,29 +85,12 @@ describe('<DModal /> a11y', () => {
     expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
 
-  it('no duplica el id cuando el consumidor ya lo puso en el título', async () => {
+  it('no tiene violaciones con el título fuera del header y ariaLabelledby', async () => {
     const { container } = render(
-      <DModal name="myModal">
-        <DModal.Header>
-          <span id="myModalLabel">Test Header</span>
-        </DModal.Header>
-        <DModal.Body>Test Body</DModal.Body>
-      </DModal>,
-    );
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-    expect(results.passes.map(({ id }) => id)).toEqual(
-      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
-    );
-  });
-
-  it('no duplica el id cuando el título está fuera del header', async () => {
-    const { container } = render(
-      <DModal name="myModal">
+      <DModal name="myDModal" ariaLabelledby="successTitle">
         <DModal.Header showCloseButton onClose={() => {}} />
         <DModal.Body>
-          <h2 id="myModalLabel">Operación exitosa</h2>
+          <h2 id="successTitle">Operación exitosa</h2>
           <p>Test Body</p>
         </DModal.Body>
       </DModal>,
@@ -120,20 +103,63 @@ describe('<DModal /> a11y', () => {
     );
   });
 
-  it('no duplica el id con dos headers montados', async () => {
+  it('el id del título es único, aunque dos diálogos compartan name', async () => {
     const { container } = render(
-      <DModal name="myModal">
-        <DModal.Header>Primero</DModal.Header>
-        <DModal.Header>Segundo</DModal.Header>
+      <>
+        <DModal name="dup">
+          <DModal.Header>Primero</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>
+        <DModal name="dup">
+          <DModal.Header>Segundo</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>
+      </>,
+    );
+
+    const results = await axe(container);
+    expect(results.violations.map(({ id }) => id)).not.toContain('duplicate-id-aria');
+  });
+
+  it('avisa que falta el nombre cuando el header está vacío y no hay ariaLabel', async () => {
+    const { container } = render(
+      <DModal name="dmodalNoName">
+        <DModal.Header showCloseButton onClose={() => {}} />
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    // El contenedor del header adopta el id pero está vacío: el diálogo se
+    // queda sin nombre. No lo puede resolver el componente, hace falta un
+    // título o `ariaLabel`.
+    const results = await axe(container);
+    expect(results.violations.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
+
+  it('avisa que falta el nombre cuando no hay header ni ariaLabel', async () => {
+    const { container } = render(
+      <DModal name="dmodalNoHeader">
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    // Sin header nadie adopta el id y el `aria-labelledby` apunta a un id
+    // inexistente: mismo resultado que con el header vacío.
+    const results = await axe(container);
+    expect(results.violations.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
+
+  it('con ariaLabel, el header vacío ya no deja al diálogo sin nombre', async () => {
+    const { container } = render(
+      <DModal name="dmodalNamed" ariaLabel="Advanced filters">
+        <DModal.Header showCloseButton onClose={() => {}} />
         <DModal.Body>Test Body</DModal.Body>
       </DModal>,
     );
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-    expect(results.passes.map(({ id }) => id)).toEqual(
-      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
-    );
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
 
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {

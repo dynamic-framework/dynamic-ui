@@ -6,7 +6,6 @@ import DIcon from '../../DIcon';
 import type { BaseProps, FamilyIconProps } from '../../interface';
 import { useDContext } from '../../../contexts';
 import DModalLabelContext from './DModalLabelContext';
-import useDialogLabelSlot, { LABEL_SLOT_ATTRIBUTE } from '../../internal/useDialogLabelSlot';
 
 type Props =
 & BaseProps
@@ -48,11 +47,10 @@ export default function DModalHeader(
   } = useDContext();
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
-  // El contenedor de children adopta el id del título salvo que el consumidor
-  // ya lo haya puesto en cualquier punto del diálogo: el título puede vivir
-  // fuera del header.
+  // El contenedor del título lleva el id al que DModal apunta con
+  // `aria-labelledby`. Lo genera DModal con `useId`: es único, así que se pone
+  // siempre, sin mirar el resto del DOM.
   const labelId = useContext(DModalLabelContext);
-  const [titleRef, labelOnSlot] = useDialogLabelSlot(labelId, '.modal');
 
   return (
     <>
@@ -60,11 +58,7 @@ export default function DModalHeader(
         className={classNames('modal-header', className)}
         style={style}
       >
-        <div
-          ref={titleRef}
-          id={labelOnSlot ? labelId : undefined}
-          {...{ [LABEL_SLOT_ATTRIBUTE]: '' }}
-        >
+        <div id={labelId}>
           {children}
         </div>
         {showCloseButton && (

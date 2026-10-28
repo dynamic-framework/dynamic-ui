@@ -40,6 +40,24 @@ const meta = {
       type: { name: 'string', required: true },
       table: { category: 'HTML Attributes' },
     },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Accessibility' },
+      description:
+        'Accessible name for the dialog when it has no title anywhere. Takes precedence over '
+        + 'every title: the dialog uses `aria-label` and ignores `ariaLabelledby` and the header.',
+    },
+    ariaLabelledby: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Accessibility' },
+      description:
+        'Id of the element that names the dialog, for a title that lives outside `Header` — '
+        + 'hidden in the body, for instance. A title inside `Header` needs nothing: the dialog '
+        + 'points at it on its own. With no title and no `ariaLabel`, a screen reader announces '
+        + 'the dialog without saying what it is.',
+    },
     staticBackdrop: {
       control: 'boolean',
       type: 'boolean',
@@ -391,6 +409,14 @@ export const ActionsPlacementEnd: Story = {
 };
 
 export const WithoutHeader: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The header carries only the close button, so there is no title to name the dialog. `ariaLabel` supplies the accessible name — without it the dialog is announced with no name at all and axe reports `aria-dialog-name`.',
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div style={{ height: '400px' }} className="position-relative">
@@ -416,6 +442,7 @@ export const WithoutHeader: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
+    ariaLabel: 'Advanced filters',
     staticBackdrop: false,
     scrollable: false,
     openFrom: 'end',
@@ -449,6 +476,14 @@ export const WithoutActions: Story = {
 };
 
 export const OnlyBody: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Same as `WithoutHeader`: with no title anywhere in the offcanvas, `ariaLabel` is what gives the dialog its accessible name.',
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div style={{ height: '400px' }} className="position-relative">
@@ -466,6 +501,7 @@ export const OnlyBody: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
+    ariaLabel: 'Advanced filters',
     staticBackdrop: false,
     scrollable: false,
     openFrom: 'end',
@@ -1057,6 +1093,56 @@ export const MaterialStyleCloseIcon: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
+    staticBackdrop: false,
+    scrollable: false,
+    openFrom: 'end',
+  },
+};
+
+/**
+ * A success sheet with no visible title: the header only carries the close
+ * button and the dialog takes its accessible name from a `<h2>` hidden in the
+ * body, which is where it makes sense for a screen reader.
+ *
+ * `ariaLabelledby` is what connects the two. A title inside `Header` needs
+ * nothing — the dialog points at it on its own — but a title anywhere else has
+ * to be declared, so the component never has to guess where it is.
+ */
+export const TitleOutsideHeader: Story = {
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DOffcanvas {...args}>
+      <DOffcanvas.Header showCloseButton />
+      <DOffcanvas.Body>
+        <h2 id="successSheetTitle" className="visually-hidden">
+          Transferencia exitosa
+        </h2>
+        <div className="text-center">
+          <p className="fw-bold fs-4">¡Listo!</p>
+          <p>Tu transferencia se realizó correctamente.</p>
+        </div>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="Entendido" />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  ),
+  args: {
+    name: 'successSheet',
+    ariaLabelledby: 'successSheetTitle',
     staticBackdrop: false,
     scrollable: false,
     openFrom: 'end',

@@ -1,12 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import { useState } from 'react';
-import {
-  act,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DModal from '.';
 import DBoxFile from '../DBoxFile';
@@ -44,7 +38,7 @@ describe('<DModal />', () => {
         <div>
           <div
             aria-hidden="false"
-            aria-labelledby="myModalLabel"
+            aria-labelledby="_r_0_"
             aria-modal="true"
             class="modal portal show"
             id="myModal"
@@ -62,8 +56,7 @@ describe('<DModal />', () => {
                   class="modal-header"
                 >
                   <div
-                    data-d-label-slot=""
-                    id="myModalLabel"
+                    id="_r_0_"
                   >
                     Test Header
                   </div>
@@ -268,117 +261,79 @@ describe('<DModal />', () => {
 
       const dialog = screen.getByRole('dialog', { name: 'Test Header' });
       expect(dialog).toHaveAttribute('aria-modal', 'true');
-      expect(dialog).toHaveAttribute('aria-labelledby', 'myModalLabel');
+      // El id lo genera el diálogo con `useId`, no se deriva de `name`.
+      const labelId = dialog.getAttribute('aria-labelledby');
+      expect(labelId).toBeTruthy();
+      expect(document.getElementById(labelId as string)).toHaveTextContent('Test Header');
     });
 
-    it('respeta el id que el consumidor ya puso en el título, sin duplicarlo', () => {
+    it('usa ariaLabelledby cuando el título vive fuera del header', () => {
       render(
-        <DModal name="myModal">
-          <DModal.Header>
-            <span id="myModalLabel">Test Header</span>
-          </DModal.Header>
-          <DModal.Body>Test Body</DModal.Body>
-        </DModal>,
-      );
-
-      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
-      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
-      expect(document.getElementById('myModalLabel')?.tagName).toBe('SPAN');
-    });
-
-    it('sigue al título cuando este pone o quita el id por su propio estado', async () => {
-      const control: { setOwnLabel?: (value: boolean) => void } = {};
-      function Title() {
-        const [ownLabel, setOwnLabel] = useState(false);
-        control.setOwnLabel = setOwnLabel;
-        return <span id={ownLabel ? 'myModalLabel' : undefined}>Test Header</span>;
-      }
-      render(
-        <DModal name="myModal">
-          <DModal.Header><Title /></DModal.Header>
-          <DModal.Body>Test Body</DModal.Body>
-        </DModal>,
-      );
-      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
-
-      expect(labels()).toHaveLength(1);
-      expect(labels()[0].tagName).toBe('DIV');
-
-      act(() => control.setOwnLabel?.(true));
-      await waitFor(() => expect(labels()[0].tagName).toBe('SPAN'));
-      expect(labels()).toHaveLength(1);
-      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
-
-      act(() => control.setOwnLabel?.(false));
-      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
-      expect(labels()).toHaveLength(1);
-      expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
-    });
-
-    it('respeta el id cuando el título está fuera del header', () => {
-      render(
-        <DModal name="myModal">
+        <DModal name="myModal" ariaLabelledby="successTitle">
           <DModal.Header showCloseButton onClose={() => {}} />
           <DModal.Body>
-            <h2 id="myModalLabel">Operación exitosa</h2>
-            <p>Test Body</p>
+            <h2 id="successTitle">Operación exitosa</h2>
           </DModal.Body>
         </DModal>,
       );
 
-      // El header no puede quedarse con el id: sería el primero en orden de
-      // documento y el diálogo se quedaría sin nombre.
-      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
-      expect(document.getElementById('myModalLabel')?.tagName).toBe('H2');
+      const dialog = screen.getByRole('dialog', { name: 'Operación exitosa' });
+      expect(dialog).toHaveAttribute('aria-labelledby', 'successTitle');
     });
 
-    it('cede el id al título de fuera del header aunque el header tenga contenido', () => {
+    it('ariaLabelledby manda sobre el título del header', () => {
       render(
-        <DModal name="myModal">
-          <DModal.Header>Cabecera sin id</DModal.Header>
+        <DModal name="myModal" ariaLabelledby="realTitle">
+          <DModal.Header>Cabecera</DModal.Header>
           <DModal.Body>
-            <h2 id="myModalLabel">Operación exitosa</h2>
+            <h2 id="realTitle">Operación exitosa</h2>
           </DModal.Body>
         </DModal>,
       );
 
-      expect(document.querySelectorAll('[id="myModalLabel"]')).toHaveLength(1);
       expect(screen.getByRole('dialog', { name: 'Operación exitosa' })).toBeInTheDocument();
     });
 
-    it('suelta y recupera el id cuando el título de fuera del header monta y desmonta', async () => {
-      const control: { setShowTitle?: (value: boolean) => void } = {};
-      function Example() {
-        const [showTitle, setShowTitle] = useState(false);
-        control.setShowTitle = setShowTitle;
-        return (
-          <DModal name="myModal">
-            <DModal.Header>Cabecera</DModal.Header>
-            <DModal.Body>
-              {showTitle && <h2 id="myModalLabel">Operación exitosa</h2>}
-            </DModal.Body>
+    it('ariaLabel manda sobre ariaLabelledby y sobre el título del header', () => {
+      render(
+        <DModal name="myModal" ariaLabel="Filtros" ariaLabelledby="realTitle">
+          <DModal.Header>Cabecera</DModal.Header>
+          <DModal.Body>
+            <h2 id="realTitle">Operación exitosa</h2>
+          </DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Filtros' });
+      expect(dialog).toHaveAttribute('aria-label', 'Filtros');
+      expect(dialog).not.toHaveAttribute('aria-labelledby');
+    });
+
+    it('el id del título no se deriva de name: dos diálogos con el mismo name no chocan', () => {
+      render(
+        <>
+          <DModal name="dup">
+            <DModal.Header>Primero</DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
           </DModal>
-        );
-      }
-      render(<Example />);
-      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+          <DModal name="dup">
+            <DModal.Header>Segundo</DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>
+        </>,
+      );
 
-      expect(labels()).toHaveLength(1);
-      expect(labels()[0].tagName).toBe('DIV');
-
-      act(() => control.setShowTitle?.(true));
-      await waitFor(() => expect(labels()[0].tagName).toBe('H2'));
-      expect(labels()).toHaveLength(1);
-
-      act(() => control.setShowTitle?.(false));
-      await waitFor(() => expect(labels()[0]?.tagName).toBe('DIV'));
-      expect(labels()).toHaveLength(1);
-      expect(screen.getByRole('dialog', { name: 'Cabecera' })).toBeInTheDocument();
+      const [first, second] = screen.getAllByRole('dialog');
+      const firstLabel = first.getAttribute('aria-labelledby');
+      const secondLabel = second.getAttribute('aria-labelledby');
+      expect(firstLabel).not.toBe(secondLabel);
+      expect(screen.getByRole('dialog', { name: 'Primero' })).toBeInTheDocument();
+      expect(screen.getByRole('dialog', { name: 'Segundo' })).toBeInTheDocument();
     });
 
     it('monta con un name que no es un selector CSS válido', () => {
-      // Interpolar el id en el selector lanzaría SyntaxError y el diálogo no
-      // llegaría a montar.
+      // No se interpola ningún id dentro de un selector, así que un `name` con
+      // comillas no puede producir un selector inválido.
       expect(() => render(
         <DModal name={'account"edit'}>
           <DModal.Header>Editar</DModal.Header>
@@ -387,43 +342,107 @@ describe('<DModal />', () => {
       )).not.toThrow();
 
       expect(screen.getByRole('dialog', { name: 'Editar' })).toBeInTheDocument();
-      expect(document.querySelectorAll('[id=\'account"editLabel\']')).toHaveLength(1);
     });
 
-    it('con dos headers montados, solo el primero adopta el id', async () => {
-      render(
-        <DModal name="myModal">
-          <DModal.Header>Primero</DModal.Header>
-          <DModal.Header>Segundo</DModal.Header>
-          <DModal.Body>Test Body</DModal.Body>
-        </DModal>,
-      );
-      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+    describe('aviso de diálogo sin nombre', () => {
+      let warn: jest.SpyInstance;
 
-      // Sin un criterio estable los dos se lo quitarían y lo reclamarían en
-      // bucle: este await no llegaría a resolverse.
-      await act(async () => { await Promise.resolve(); });
+      beforeEach(() => {
+        warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      });
+      afterEach(() => {
+        warn.mockRestore();
+      });
 
-      expect(labels()).toHaveLength(1);
-      expect(labels()[0]).toHaveTextContent('Primero');
-      expect(screen.getByRole('dialog', { name: 'Primero' })).toBeInTheDocument();
-    });
+      it('avisa cuando el header está vacío y no hay ariaLabel', () => {
+        render(
+          <DModal name="warnEmptyHeader">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
 
-    it('con dos headers, un id explícito del consumidor manda sobre ambos', async () => {
-      render(
-        <DModal name="myModal">
-          <DModal.Header>Primero</DModal.Header>
-          <DModal.Header><span id="myModalLabel">Segundo</span></DModal.Header>
-          <DModal.Body>Test Body</DModal.Body>
-        </DModal>,
-      );
-      const labels = () => document.querySelectorAll('[id="myModalLabel"]');
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
 
-      await act(async () => { await Promise.resolve(); });
+      it('avisa cuando no hay header ni ariaLabel', () => {
+        render(
+          <DModal name="warnNoHeader">
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
 
-      expect(labels()).toHaveLength(1);
-      expect(labels()[0].tagName).toBe('SPAN');
-      expect(screen.getByRole('dialog', { name: 'Segundo' })).toBeInTheDocument();
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el título está en el header', () => {
+        render(
+          <DModal name="warnTitled">
+            <DModal.Header>Test Header</DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título de fuera del header se declara con ariaLabelledby', () => {
+        render(
+          <DModal name="warnTitleOutside" ariaLabelledby="warnTitleOutsideTitle">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>
+              <h2 id="warnTitleOutsideTitle">Operación exitosa</h2>
+            </DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando ariaLabelledby apunta a un id que no existe', () => {
+        render(
+          <DModal name="warnBadRef" ariaLabelledby="noSuchTitle">
+            <DModal.Header>Cabecera</DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('its ariaLabelledby points to id="noSuchTitle"'),
+        );
+      });
+
+      it('no avisa cuando lleva ariaLabel', () => {
+        render(
+          <DModal name="warnAriaLabel" ariaLabel="Filtros">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('solo avisa una vez por diálogo', () => {
+        const { unmount } = render(
+          <DModal name="warnOnce">
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+        unmount();
+
+        render(
+          <DModal name="warnOnce">
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('usa ariaLabel como nombre cuando no hay título', () => {
