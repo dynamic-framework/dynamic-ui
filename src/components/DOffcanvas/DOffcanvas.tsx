@@ -14,6 +14,7 @@ import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
+import warnDialogName from '../../utils/warnDialogName';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
@@ -43,10 +44,17 @@ type Props = BaseProps & PropsWithChildren<{
   height?: string | ResponsiveProp;
   transition?: Transition;
   /**
-   * Accessible name for the dialog when it has no visible title. When set,
+   * Accessible name for the dialog when it has no title at all. When set,
    * the dialog uses `aria-label` instead of `aria-labelledby`.
    */
   ariaLabel?: string;
+  /**
+   * Id of the element that names the dialog, for a title that does not live
+   * inside `DOffcanvas.Header` — hidden in the body, for instance. Without it
+   * the dialog looks for `${name}Label` in the header, which only works for a
+   * title rendered there. `ariaLabel` takes precedence over this.
+   */
+  ariaLabelledby?: string;
 }>;
 
 const variants: Variants = {
@@ -98,9 +106,14 @@ function DOffcanvas(
     children,
     dataAttributes,
     ariaLabel,
+    ariaLabelledby,
   }: Props,
 ) {
   const labelId = `${name}Label`;
+  // Con el nombre ya declarado, el header no debe adjudicarse `${name}Label`:
+  // si el título vive fuera y usa ese mismo id, habría dos elementos con él y
+  // el navegador resolvería con el del header, que puede estar vacío.
+  const headerOwnsLabel = !ariaLabel && !ariaLabelledby;
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
@@ -111,6 +124,28 @@ function DOffcanvas(
       dialog.focus();
     }
   }, []);
+
+  // Un diálogo sin nombre accesible se anuncia sin decir qué es, y el fallo no
+  // se ve en pantalla. El componente no puede inventarlo, así que se avisa al
+  // desarrollador.
+  const labelledBy = ariaLabel ? undefined : (ariaLabelledby ?? labelId);
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') return undefined;
+    // El header adopta `${name}Label` en un layout effect con estado, que
+    // provoca un re-render: este efecto corre antes de que ese id llegue al
+    // DOM. El microtask lo mira ya asentado, y de forma determinista.
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (cancelled) return;
+      warnDialogName({
+        component: 'DOffcanvas',
+        name,
+        labelledBy,
+        hasAriaLabelledby: !!ariaLabelledby,
+      });
+    });
+    return () => { cancelled = true; };
+  }, [ariaLabelledby, labelledBy, name]);
 
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
@@ -176,7 +211,7 @@ function DOffcanvas(
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
-      aria-labelledby={ariaLabel ? undefined : labelId}
+      aria-labelledby={labelledBy}
       aria-hidden="false"
       custom={resolvedOpenFrom}
       variants={variants}
@@ -197,7 +232,7 @@ function DOffcanvas(
       })}
       {...dataAttributes}
     >
-      <DOffcanvasLabelContext.Provider value={labelId}>
+      <DOffcanvasLabelContext.Provider value={headerOwnsLabel ? labelId : undefined}>
         {children}
       </DOffcanvasLabelContext.Provider>
     </motion.div>
