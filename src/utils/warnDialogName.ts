@@ -56,14 +56,19 @@ function textAlternative(element: Element): string | undefined {
 /**
  * Accessible name an element contributes, in the order a browser resolves it:
  * `aria-label`, then its own text alternative, then its content, and `title`
- * only as a last resort. Descendants hidden from assistive technology
- * contribute nothing to the content step.
+ * only as a last resort.
+ *
+ * `exemptHidden` carries the referenced root's hidden state down the
+ * recursion. A node referenced directly by `aria-labelledby` contributes even
+ * when hidden, and so does everything inside it — a hidden heading wrapping a
+ * `<span>` still names the dialog, and the span inherits that exemption. Only
+ * when the root is visible do hidden descendants drop out.
  *
  * `aria-labelledby` is not followed. The computation does not chain
  * references, so a title that only carries one leaves the dialog unnamed, and
  * warning is the right call.
  */
-function nameOf(element: Element): string {
+function nameOf(element: Element, exemptHidden: boolean): string {
   const ariaLabel = element.getAttribute('aria-label')?.trim();
   if (ariaLabel) return ariaLabel;
 
@@ -76,11 +81,11 @@ function nameOf(element: Element): string {
       if (node.nodeType !== Node.ELEMENT_NODE) return '';
 
       const child = node as Element;
-      if (isHiddenFromAT(child)) return '';
+      if (!exemptHidden && isHiddenFromAT(child)) return '';
 
       // El espaciado evita que se peguen palabras cuando un descendiente
       // aporta un atributo en lugar de su propio texto.
-      const name = nameOf(child);
+      const name = nameOf(child, exemptHidden);
       return name ? ` ${name} ` : '';
     })
     .join('')
@@ -109,13 +114,12 @@ function firstById(id: string): Element | undefined {
  *
  * It is an approximation, enough for a development warning rather than a
  * reimplementation of the accessible name computation. Beyond the order
- * `nameOf` follows, the part that matters here is the exemption: a node
- * referenced directly by `aria-labelledby` contributes even when hidden —
- * with `aria-hidden`, the `hidden` attribute or CSS — while hidden descendants
- * do not.
+ * `nameOf` follows, the part that matters here is the exemption for a node
+ * referenced directly: it contributes even when hidden — with `aria-hidden`,
+ * the `hidden` attribute or CSS — and so does its whole subtree.
  */
 function referencedName(element: Element): string {
-  return nameOf(element);
+  return nameOf(element, isHiddenFromAT(element));
 }
 
 /**

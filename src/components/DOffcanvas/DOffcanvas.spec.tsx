@@ -712,6 +712,59 @@ describe('<DOffcanvas />', () => {
         expect(warn).not.toHaveBeenCalled();
       });
 
+      it('no avisa cuando el título referenciado está oculto y envuelve su texto', async () => {
+        // La raíz referenciada está exenta aunque esté oculta, y la exención
+        // alcanza a su subárbol: el span hereda la visibilidad pero sigue
+        // nombrando el diálogo.
+        render(
+          <DOffcanvas name="warnNestedHidden" ariaLabelledby="warnNestedHiddenTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnNestedHiddenTitle" style={{ visibility: 'hidden' }}>
+                <span>Transferencia exitosa</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado con display:none envuelve su texto', async () => {
+        render(
+          <DOffcanvas name="warnNestedNone" ariaLabelledby="warnNestedNoneTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnNestedNoneTitle" style={{ display: 'none' }}>
+                <span>Transferencia exitosa</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('con la raíz visible, un descendiente oculto sí se descarta', async () => {
+        render(
+          <DOffcanvas name="warnVisibleRoot" ariaLabelledby="warnVisibleRootTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnVisibleRootTitle">
+                <span style={{ visibility: 'hidden' }}>Invisible</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
       it('solo avisa una vez por diálogo', async () => {
         const { unmount } = render(
           <DOffcanvas name="warnOnce">
