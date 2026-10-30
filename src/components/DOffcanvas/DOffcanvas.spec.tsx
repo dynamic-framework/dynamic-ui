@@ -393,6 +393,398 @@ describe('<DOffcanvas />', () => {
       expect(screen.getByRole('dialog', { name: 'Test Header' })).toBeInTheDocument();
     });
 
+    describe('ariaLabelledby', () => {
+      it('nombra el diálogo con un título que vive fuera del header', () => {
+        render(
+          <DOffcanvas name="successSheet" ariaLabelledby="successTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="successTitle">Transferencia exitosa</h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        const dialog = screen.getByRole('dialog', { name: 'Transferencia exitosa' });
+        expect(dialog).toHaveAttribute('aria-labelledby', 'successTitle');
+      });
+
+      it('el header cede el id cuando el título de fuera usa ese mismo id', () => {
+        // La migración natural es declarar el id que ya se tenía. Si el header
+        // siguiera adoptándolo habría dos elementos con él y el navegador
+        // resolvería con el del header, vacío.
+        render(
+          <DOffcanvas name="successSheet" ariaLabelledby="successSheetLabel">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="successSheetLabel">Transferencia exitosa</h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(document.querySelectorAll('[id="successSheetLabel"]')).toHaveLength(1);
+        expect(document.getElementById('successSheetLabel')?.tagName).toBe('H2');
+        expect(screen.getByRole('dialog', { name: 'Transferencia exitosa' })).toBeInTheDocument();
+      });
+
+      it('el header también cede el id con ariaLabel', () => {
+        render(
+          <DOffcanvas name="successSheet" ariaLabel="Filtros">
+            <DOffcanvas.Header>Cabecera</DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        expect(document.querySelectorAll('[id="successSheetLabel"]')).toHaveLength(0);
+      });
+
+      it('ariaLabel manda sobre ariaLabelledby', () => {
+        render(
+          <DOffcanvas name="successSheet" ariaLabel="Filtros" ariaLabelledby="successTitle">
+            <DOffcanvas.Body><h2 id="successTitle">Transferencia exitosa</h2></DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        const dialog = screen.getByRole('dialog', { name: 'Filtros' });
+        expect(dialog).not.toHaveAttribute('aria-labelledby');
+      });
+
+      it('sin la prop, el comportamiento actual no cambia', () => {
+        render(
+          <DOffcanvas name="myOffcanvas">
+            <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+
+        const dialog = screen.getByRole('dialog', { name: 'Test Header' });
+        expect(dialog).toHaveAttribute('aria-labelledby', 'myOffcanvasLabel');
+        expect(document.getElementById('myOffcanvasLabel')?.tagName).toBe('DIV');
+      });
+    });
+
+    describe('aviso de diálogo sin nombre', () => {
+      // El aviso se emite en un microtask: el header adopta el id en un layout
+      // effect con estado y aún no ha llegado al DOM cuando corren los efectos
+      // del diálogo.
+      const flush = () => act(async () => { await Promise.resolve(); });
+      let warn: jest.SpyInstance;
+
+      beforeEach(() => {
+        warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      });
+      afterEach(() => {
+        warn.mockRestore();
+      });
+
+      it('avisa cuando el título vive fuera del header y no se declara', async () => {
+        render(
+          <DOffcanvas name="warnUndeclared">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnUndeclaredLabel">Transferencia exitosa</h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('pass ariaLabelledby'));
+      });
+
+      it('avisa cuando no hay título en ninguna parte', async () => {
+        render(
+          <DOffcanvas name="warnNoTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando ariaLabelledby apunta a un id que no existe', async () => {
+        render(
+          <DOffcanvas name="warnBadRef" ariaLabelledby="noSuchTitle">
+            <DOffcanvas.Header>Cabecera</DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('its ariaLabelledby points to "noSuchTitle"'),
+        );
+      });
+
+      it('no avisa cuando el título está en el header', async () => {
+        render(
+          <DOffcanvas name="warnTitled">
+            <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título de fuera se declara con ariaLabelledby', async () => {
+        render(
+          <DOffcanvas name="warnDeclared" ariaLabelledby="warnDeclaredTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body><h2 id="warnDeclaredTitle">Operación exitosa</h2></DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando lleva ariaLabel', async () => {
+        render(
+          <DOffcanvas name="warnAriaLabel" ariaLabel="Filtros">
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente aria-hidden', async () => {
+        render(
+          <DOffcanvas name="warnAriaHidden">
+            <DOffcanvas.Header><span aria-hidden="true">Invisible</span></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente display:none', async () => {
+        // `display: none` saca al elemento del árbol de accesibilidad: hay
+        // texto en el DOM, pero el diálogo no tiene nombre.
+        render(
+          <DOffcanvas name="warnDisplayNone">
+            <DOffcanvas.Header><span style={{ display: 'none' }}>Invisible</span></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente visibility:hidden', async () => {
+        render(
+          <DOffcanvas name="warnVisibilityHidden">
+            <DOffcanvas.Header><span style={{ visibility: 'hidden' }}>Invisible</span></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el título usa el patrón visually-hidden', async () => {
+        // Recorta una caja posicionada, sin display:none ni visibility:hidden,
+        // así que el lector de pantalla sí lo lee.
+        render(
+          <DOffcanvas name="warnVisuallyHidden" ariaLabelledby="warnVisuallyHiddenTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2
+                id="warnVisuallyHiddenTitle"
+                style={{
+                  position: 'absolute',
+                  width: '1px',
+                  height: '1px',
+                  padding: 0,
+                  margin: '-1px',
+                  overflow: 'hidden',
+                  clip: 'rect(0, 0, 0, 0)',
+                  whiteSpace: 'nowrap',
+                  border: 0,
+                }}
+              >
+                Transferencia exitosa
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado es una imagen con alt', async () => {
+        render(
+          <DOffcanvas name="warnImgRef" ariaLabelledby="warnImgRefTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <img id="warnImgRefTitle" alt="Transfer successful" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el header solo contiene una imagen con alt', async () => {
+        render(
+          <DOffcanvas name="warnImgHeader">
+            <DOffcanvas.Header><img alt="Transfer successful" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando la imagen del header es decorativa', async () => {
+        // Un alt vacío marca la imagen como decorativa: no aporta nombre.
+        render(
+          <DOffcanvas name="warnImgDecorative">
+            <DOffcanvas.Header><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el nombre sale del atributo title', async () => {
+        render(
+          <DOffcanvas name="warnTitleAttr">
+            <DOffcanvas.Header><span title="Transferencia exitosa" /></DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando ariaLabelledby referencia varios ids', async () => {
+        render(
+          <DOffcanvas name="warnMultiRef" ariaLabelledby="warnPart1 warnPart2">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnPart1">Trans</h2>
+              <span id="warnPart2">ferencia</span>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('ariaLabelledby vacío se comporta como no pasarlo', async () => {
+        render(
+          <DOffcanvas name="warnEmptyProp" ariaLabelledby="">
+            <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(screen.getByRole('dialog')).toHaveAttribute('aria-labelledby', 'warnEmptyPropLabel');
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado está oculto y envuelve su texto', async () => {
+        // La raíz referenciada está exenta aunque esté oculta, y la exención
+        // alcanza a su subárbol: el span hereda la visibilidad pero sigue
+        // nombrando el diálogo.
+        render(
+          <DOffcanvas name="warnNestedHidden" ariaLabelledby="warnNestedHiddenTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnNestedHiddenTitle" style={{ visibility: 'hidden' }}>
+                <span>Transferencia exitosa</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado con display:none envuelve su texto', async () => {
+        render(
+          <DOffcanvas name="warnNestedNone" ariaLabelledby="warnNestedNoneTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnNestedNoneTitle" style={{ display: 'none' }}>
+                <span>Transferencia exitosa</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('con la raíz visible, un descendiente oculto sí se descarta', async () => {
+        render(
+          <DOffcanvas name="warnVisibleRoot" ariaLabelledby="warnVisibleRootTitle">
+            <DOffcanvas.Header showCloseButton onClose={() => {}} />
+            <DOffcanvas.Body>
+              <h2 id="warnVisibleRootTitle">
+                <span style={{ visibility: 'hidden' }}>Invisible</span>
+              </h2>
+            </DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('solo avisa una vez por diálogo', async () => {
+        const { unmount } = render(
+          <DOffcanvas name="warnOnce">
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+        unmount();
+
+        render(
+          <DOffcanvas name="warnOnce">
+            <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+          </DOffcanvas>,
+        );
+        await flush();
+
+        expect(warn).toHaveBeenCalledTimes(1);
+      });
+    });
+
     it('usa ariaLabel como nombre cuando no hay título', () => {
       render(
         <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">
