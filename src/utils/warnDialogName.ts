@@ -1,6 +1,7 @@
 /**
  * Dialogs already reported, keyed by component and `name`, so the same mistake
- * only warns once per page load however often the dialog re-opens.
+ * only warns once per page load however often the dialog re-opens. The id is
+ * no good as a key: `useId` gives a fresh one on every mount.
  */
 const warnedDialogs = new Set<string>();
 
@@ -19,28 +20,87 @@ type WarnDialogNameOptions = {
 };
 
 /**
- * Text a descendant contributes to the name of the element being named.
+ * Whether a descendant is hidden from assistive technology, and so contributes
+ * nothing to the name.
  *
- * Descendants hidden from assistive technology contribute nothing, and one
- * carrying its own `aria-label` contributes that instead of its subtree. Only
- * `aria-hidden` and the `hidden` attribute are considered: CSS-hidden content
- * is deliberately not excluded, since the `visually-hidden` pattern — off
- * screen but exposed to a screen reader — is a legitimate way to title a
- * dialog.
+ * `display: none` and `visibility: hidden` take an element out of the
+ * accessibility tree; the `visually-hidden` pattern uses neither — it clips an
+ * absolutely positioned box — so an off-screen title still counts, which is a
+ * legitimate way to name a dialog.
  */
-function descendantText(node: Node): string {
-  if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? '';
-  if (node.nodeType !== Node.ELEMENT_NODE) return '';
-
-  const element = node as Element;
+function isHiddenFromAT(element: Element): boolean {
   if (element.getAttribute('aria-hidden') === 'true' || element.hasAttribute('hidden')) {
-    return '';
+    return true;
   }
+  const { display, visibility } = getComputedStyle(element);
+  return display === 'none' || visibility === 'hidden';
+}
 
+/**
+ * Text alternative of an element that has one of its own, such as an image's
+ * `alt`. An explicit empty `alt` marks a decorative image and contributes
+ * nothing, which is why the attribute's presence is what matters, not whether
+ * it has content. Elements without the concept return undefined, so naming
+ * falls through to their content.
+ */
+function textAlternative(element: Element): string | undefined {
+  const { tagName } = element;
+  const hasAlt = tagName === 'IMG'
+    || tagName === 'AREA'
+    || (tagName === 'INPUT' && element.getAttribute('type') === 'image');
+  if (!hasAlt) return undefined;
+
+  return element.getAttribute('alt')?.trim();
+}
+
+/**
+ * Accessible name an element contributes, in the order a browser resolves it:
+ * `aria-label`, then its own text alternative, then its content, and `title`
+ * only as a last resort. Descendants hidden from assistive technology
+ * contribute nothing to the content step.
+ *
+ * `aria-labelledby` is not followed. The computation does not chain
+ * references, so a title that only carries one leaves the dialog unnamed, and
+ * warning is the right call.
+ */
+function nameOf(element: Element): string {
   const ariaLabel = element.getAttribute('aria-label')?.trim();
-  if (ariaLabel) return ` ${ariaLabel} `;
+  if (ariaLabel) return ariaLabel;
 
-  return Array.from(element.childNodes).map(descendantText).join('');
+  const alternative = textAlternative(element);
+  if (alternative !== undefined) return alternative;
+
+  const fromContent = Array.from(element.childNodes)
+    .map((node) => {
+      if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? '';
+      if (node.nodeType !== Node.ELEMENT_NODE) return '';
+
+      const child = node as Element;
+      if (isHiddenFromAT(child)) return '';
+
+      // El espaciado evita que se peguen palabras cuando un descendiente
+      // aporta un atributo en lugar de su propio texto.
+      const name = nameOf(child);
+      return name ? ` ${name} ` : '';
+    })
+    .join('')
+    .trim();
+  if (fromContent) return fromContent;
+
+  return element.getAttribute('title')?.trim() ?? '';
+}
+
+/**
+ * First element in document order carrying `id`, the one a browser resolves an
+ * `aria-labelledby` reference to when several share it. It is spelled out
+ * rather than delegated to `getElementById`, because jsdom resolves duplicates
+ * differently and would hide exactly the case worth reporting: the defect this
+ * warning exists for produces two elements with the same id. The id is
+ * compared, never interpolated into a selector — `name` is free text, so the
+ * id it derives is not guaranteed to be a valid CSS selector.
+ */
+function firstById(id: string): Element | undefined {
+  return Array.from(document.querySelectorAll('[id]')).find((element) => element.id === id);
 }
 
 /**
@@ -48,29 +108,14 @@ function descendantText(node: Node): string {
  * contributes.
  *
  * It is an approximation, enough for a development warning rather than a
- * reimplementation of the accessible name computation. It follows the parts
- * that decide whether a dialog ends up named at all:
- *
- * - `aria-label` on the element wins over its content.
- * - `aria-labelledby` on the element is *not* followed: the computation does
- *   not chain references, so a title that only carries one leaves the dialog
- *   unnamed, and warning is the right call.
- * - The element itself contributes even when hidden — a node referenced
- *   directly by `aria-labelledby` is exempt — while hidden descendants do not.
+ * reimplementation of the accessible name computation. Beyond the order
+ * `nameOf` follows, the part that matters here is the exemption: a node
+ * referenced directly by `aria-labelledby` contributes even when hidden —
+ * with `aria-hidden`, the `hidden` attribute or CSS — while hidden descendants
+ * do not.
  */
-/**
- * First element in document order carrying `id`, the one a browser resolves an
- * `aria-labelledby` reference to when several share it.
- */
-function firstById(id: string): Element | undefined {
-  return Array.from(document.querySelectorAll('[id]')).find((element) => element.id === id);
-}
-
 function referencedName(element: Element): string {
-  const ariaLabel = element.getAttribute('aria-label')?.trim();
-  if (ariaLabel) return ariaLabel;
-
-  return Array.from(element.childNodes).map(descendantText).join('').trim();
+  return nameOf(element);
 }
 
 /**
@@ -88,13 +133,8 @@ function referencedName(element: Element): string {
  * consumer — so the warning names the ways out, and tells apart a header with
  * no title from an `ariaLabelledby` that points nowhere.
  *
- * Resolving an id means taking the first element in document order carrying it,
- * which is what a browser does — and what matters here, since the defect being
- * warned about produces two elements with the same id. It is spelled out
- * rather than delegated to `getElementById`, because jsdom resolves duplicates
- * differently and would hide exactly the case worth reporting. The id is
- * compared, never interpolated into a selector: `name` is free text, so the id
- * it derives is not guaranteed to be a valid CSS selector.
+ * `getElementById` rather than a selector: ids from `useId` and from consumers
+ * are not guaranteed to be valid CSS selectors.
  *
  * This is a mount-time check: a title rendered later, after an async update,
  * warns even though it eventually arrives.
