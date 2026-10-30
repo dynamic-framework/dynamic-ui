@@ -478,6 +478,54 @@ describe('<DModal />', () => {
         );
       });
 
+      it('avisa cuando el único texto del header está en un descendiente display:none', () => {
+        // `display: none` saca al elemento del árbol de accesibilidad: hay
+        // texto en el DOM, pero el diálogo no tiene nombre.
+        render(
+          <DModal name="warnDisplayNone">
+            <DModal.Header><span style={{ display: 'none' }}>Invisible</span></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('avisa cuando el único texto del header está en un descendiente visibility:hidden', () => {
+        render(
+          <DModal name="warnVisibilityHidden">
+            <DModal.Header><span style={{ visibility: 'hidden' }}>Invisible</span></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el título usa el patrón visually-hidden', () => {
+        // Recorta una caja posicionada, sin display:none ni visibility:hidden,
+        // así que el lector de pantalla sí lo lee.
+        render(
+          <DModal name="warnVisuallyHidden">
+            <DModal.Header>
+              <span style={{
+                position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0,
+              }}
+              >
+                Transferencia exitosa
+              </span>
+            </DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
       it('no avisa cuando el texto del header viene del aria-label de un hijo', () => {
         render(
           <DModal name="warnChildLabel">
@@ -506,6 +554,55 @@ describe('<DModal />', () => {
         render(
           <DModal name="warnAriaLabel" ariaLabel="Filtros">
             <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el título referenciado es una imagen con alt', () => {
+        render(
+          <DModal name="warnImgRef" ariaLabelledby="warnImgRefTitle">
+            <DModal.Header showCloseButton onClose={() => {}} />
+            <DModal.Body>
+              <img id="warnImgRefTitle" alt="Transfer successful" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+            </DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('no avisa cuando el header solo contiene una imagen con alt', () => {
+        render(
+          <DModal name="warnImgHeader">
+            <DModal.Header><img alt="Transfer successful" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).not.toHaveBeenCalled();
+      });
+
+      it('avisa cuando la imagen del header es decorativa', () => {
+        // Un alt vacío marca la imagen como decorativa: no aporta nombre.
+        render(
+          <DModal name="warnImgDecorative">
+            <DModal.Header><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></DModal.Header>
+            <DModal.Body>Test Body</DModal.Body>
+          </DModal>,
+        );
+
+        expect(warn).toHaveBeenCalledWith(
+          expect.stringContaining('this dialog has no accessible name'),
+        );
+      });
+
+      it('no avisa cuando el nombre sale del atributo title', () => {
+        render(
+          <DModal name="warnTitleAttr">
+            <DModal.Header><span title="Transferencia exitosa" /></DModal.Header>
             <DModal.Body>Test Body</DModal.Body>
           </DModal>,
         );
