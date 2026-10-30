@@ -128,7 +128,7 @@ function DOffcanvas(
   // Un diálogo sin nombre accesible se anuncia sin decir qué es, y el fallo no
   // se ve en pantalla. El componente no puede inventarlo, así que se avisa al
   // desarrollador.
-  const labelledBy = ariaLabel ? undefined : (ariaLabelledby ?? labelId);
+  const labelledBy = ariaLabel ? undefined : (ariaLabelledby || labelId);
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') return undefined;
     // El header adopta `${name}Label` en un layout effect con estado, que
