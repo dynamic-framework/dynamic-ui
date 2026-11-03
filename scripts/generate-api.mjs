@@ -567,9 +567,12 @@ function exportedComponentFiles() {
       // eslint-disable-next-line no-bitwise
       if (!(target.flags & ts.SymbolFlags.Value)) return null;
       const declaration = target.valueDeclaration ?? target.declarations?.[0];
-      return declaration?.getSourceFile().fileName ?? null;
+      // El checker usa `/` en todas las plataformas: `resolve` lo pasa al
+      // separador del sistema, el mismo que usan COMPONENTS_DIR y
+      // subcomponentFiles().
+      return declaration ? resolve(declaration.getSourceFile().fileName) : null;
     })
-    .filter((fileName) => fileName && fileName.startsWith(`${COMPONENTS_DIR}/`));
+    .filter((fileName) => fileName && fileName.startsWith(`${COMPONENTS_DIR}${sep}`));
   return [...new Set(files)];
 }
 
