@@ -11,7 +11,8 @@
  *   - cada entrada de `components` que no es un export lleva `parent` y
  *     `accessor`, y todo `accessor` resuelve a un miembro real del padre;
  *   - el `required` de cada prop coincide con su opcionalidad en el `.d.ts`;
- *   - ningún `type` está truncado (`... N more ...`).
+ *   - ningún `type`, `returnType` ni `signature` está truncado
+ *     (`... N more ...`).
  * No compara el texto de los `type`.
  */
 
@@ -25,7 +26,15 @@ import { TRUNCATED } from './component-docgen.mjs';
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
 
-export const TYPES_INDEX = resolve(ROOT, 'dist/types/index.d.ts');
+/**
+ * Índice de los tipos publicados. `API_TYPES_DIR` permite apuntar a otras
+ * declaraciones con la misma estructura (los tests emiten las suyas en un
+ * directorio temporal para no depender de un build previo).
+ */
+export const TYPES_INDEX = resolve(
+  process.env.API_TYPES_DIR ? resolve(process.env.API_TYPES_DIR) : resolve(ROOT, 'dist/types'),
+  'index.d.ts',
+);
 
 /**
  * Exports `D*` invocables que no son componentes y por eso no tienen entrada
@@ -38,12 +47,16 @@ export const NON_COMPONENT_EXPORTS = {
   DContext: 'objeto de createContext; se accede con useDContext',
 };
 
-/** Todos los valores de las claves `type` de un objeto, con su ruta. */
+// Claves cuyo valor es un tipo de TypeScript en texto: `type` en props,
+// campos y parámetros; `returnType` y `signature` en los hooks.
+const TYPE_KEYS = new Set(['type', 'returnType', 'signature']);
+
+/** Todos los valores de las claves de TYPE_KEYS de un objeto, con su ruta. */
 function typeEntries(value, prefix = '$') {
   if (!value || typeof value !== 'object') return [];
   return Object.entries(value).flatMap(([key, nested]) => {
     const path = `${prefix}.${key}`;
-    return key === 'type' && typeof nested === 'string'
+    return TYPE_KEYS.has(key) && typeof nested === 'string'
       ? [[path, nested]]
       : typeEntries(nested, path);
   });

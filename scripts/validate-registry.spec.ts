@@ -23,15 +23,31 @@ const FIXTURE_B = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-b-
 jest.setTimeout(120000);
 
 let workdir: string;
+// Declaraciones emitidas desde src/. Van dentro del repo para que sus imports
+// (`react`, `react-select`…) resuelvan contra su node_modules.
+let typesDir: string;
 
 beforeAll(() => {
   workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'dynamic-registry-'));
   // registry/ no se versiona: el schema se genera antes de validar.
   spawnSync('node', [path.join(ROOT, 'scripts/generate-schema.mjs')], { stdio: 'ignore' });
+  // El validador compara con las declaraciones del paquete. Se emiten aquí,
+  // desde src/, para no depender de un `npm run build` previo ni de un
+  // dist/types/ desactualizado.
+  const cacheDir = path.join(ROOT, 'node_modules/.cache');
+  fs.mkdirSync(cacheDir, { recursive: true });
+  typesDir = fs.mkdtempSync(path.join(cacheDir, 'api-types-'));
+  const emitted = spawnSync('npx', [
+    'tsc', '-p', path.join(ROOT, 'tsconfig.build.json'),
+    '--emitDeclarationOnly', '--declarationDir', typesDir,
+    '--outDir', path.join(workdir, 'js'),
+  ], { encoding: 'utf8' });
+  if (emitted.status !== 0) throw new Error(emitted.stdout + emitted.stderr);
 });
 
 afterAll(() => {
   fs.rmSync(workdir, { recursive: true, force: true });
+  fs.rmSync(typesDir, { recursive: true, force: true });
 });
 
 type Run = { status: number; stdout: string; stderr: string };
@@ -39,6 +55,7 @@ type Run = { status: number; stdout: string; stderr: string };
 function run(file: string): Run {
   const spawned = spawnSync('node', [VALIDATE, file], {
     encoding: 'utf8',
+    env: { ...process.env, API_TYPES_DIR: typesDir },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   return { status: spawned.status ?? -1, stdout: spawned.stdout, stderr: spawned.stderr };
@@ -306,7 +323,7 @@ describe('validate-registry', () => {
         'DInputCheck.type: obligatoria en el .d.ts, required: false en api.json',
         'DInputSelect.options: obligatoria en el .d.ts, required: false en api.json',
       ]);
-      expect(listedUnder(stderr, 'type truncados con "... N more ..."')).toEqual([
+      expect(listedUnder(stderr, 'tipos truncados con "... N more ..."')).toEqual([
         '$.components.DInputCheck.props.type.type',
       ]);
     });
@@ -348,13 +365,27 @@ describe('validate-registry', () => {
         .toEqual(['DButton.colour: no existe en el tipo de las props']);
     });
 
+    test('falla si returnType o signature de un hook están truncados', () => {
+      const api = completeApi();
+      api.hooks.useDToast.returnType = '{ a: string; ... 3 more ...; z: number; }';
+      api.hooks.useDToast.signature = 'useDToast() => { a: string; ... 3 more ...; z: number; }';
+      api.hooks.useDToast.returns = {};
+
+      const { status, stderr } = write('api-types-truncated-return.json', api);
+      expect(status).toBe(1);
+      expect(listedUnder(stderr, 'tipos truncados con "... N more ..."')).toEqual([
+        '$.hooks.useDToast.signature',
+        '$.hooks.useDToast.returnType',
+      ]);
+    });
+
     test('falla si un type de hooks está truncado', () => {
       const api = completeApi();
       api.hooks.useDToast.returnType = 'string';
       api.hooks.useDToast.returns = { toast: { type: '{ a: string; ... 3 more ...; z: number; }' } };
 
       const { stderr } = write('api-types-truncated-hook.json', api);
-      expect(listedUnder(stderr, 'type truncados con "... N more ..."'))
+      expect(listedUnder(stderr, 'tipos truncados con "... N more ..."'))
         .toEqual(['$.hooks.useDToast.returns.toast.type']);
     });
   });

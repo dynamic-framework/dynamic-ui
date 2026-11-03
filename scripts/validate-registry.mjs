@@ -19,8 +19,9 @@
  *   - contra los tipos publicados en dist/types/ (scripts/api-types.mjs):
  *     cada export D* que es un componente tiene entrada, las entradas que no
  *     son exports son subcomponentes con un accessor real, el required de
- *     cada prop coincide con el .d.ts y ningún type está truncado. Requiere
- *     `npm run build`.
+ *     cada prop coincide con el .d.ts y ningún type, returnType ni signature
+ *     está truncado. Requiere `npm run build` (o API_TYPES_DIR apuntando a
+ *     otras declaraciones).
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -233,7 +234,7 @@ report(typesComparison.orphanEntries, 'entradas de components que no son exports
 report(typesComparison.badAccessors, 'accessors que no resuelven a un miembro del padre en dist/types');
 report(typesComparison.requiredMismatches, 'props cuyo required difiere de su opcionalidad en dist/types');
 report(typesComparison.unresolvedProps, 'props cuyo required no se puede comprobar contra dist/types');
-report(typesComparison.truncatedTypes, 'type truncados con "... N more ..."');
+report(typesComparison.truncatedTypes, 'tipos truncados con "... N more ..."');
 
 if (invalid) {
   process.exit(1);
