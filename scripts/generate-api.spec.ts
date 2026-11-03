@@ -29,7 +29,10 @@ type Api = {
     forwardedProps?: { target: string; type: string };
     types?: Record<string, { type: string; fields?: Record<string, { type: string }> }>;
   }>;
-  contexts: Record<string, { props: Record<string, { description: string; required: boolean }> }>;
+  contexts: Record<string, {
+    props: Record<string, { description: string; required: boolean }>;
+    types: Record<string, { description: string }>;
+  }>;
   hooks: Record<string, {
     signature: string;
     returns: Record<string, { parameters?: Param[] }>;
@@ -284,5 +287,14 @@ describe('generate-api', () => {
     // Las que son opcionales en los dos tipos siguen opcionales.
     expect(api.components.DInputCheck.props.checked.required).toBe(false);
     expect(api.components.DButtonIcon.props.color.required).toBe(false);
+  });
+  // #1341: los valores por defecto de iconMap son nombres de lucide-react, no
+  // sufijos de clases de una fuente de iconos.
+  test('IconProps e IconMapProps describen lo que reciben', () => {
+    const { IconProps, IconMapProps } = api.contexts.DContextProvider.types;
+    expect(IconMapProps.description).toContain('The defaults are\nlucide-react names');
+    expect(IconMapProps.description).not.toContain('class suffixes');
+    expect(IconProps.description).toContain('neither registered in `iconRegistry` nor exported by lucide-react');
+    expect(IconProps.description).not.toContain('to resolve icon classes');
   });
 });
