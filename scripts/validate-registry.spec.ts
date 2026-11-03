@@ -37,8 +37,10 @@ beforeAll(() => {
   const cacheDir = path.join(ROOT, 'node_modules/.cache');
   fs.mkdirSync(cacheDir, { recursive: true });
   typesDir = fs.mkdtempSync(path.join(cacheDir, 'api-types-'));
-  const emitted = spawnSync('npx', [
-    'tsc', '-p', path.join(ROOT, 'tsconfig.build.json'),
+  // tsc se invoca con Node: el shim .cmd de npx no se ejecuta sin shell en
+  // Windows.
+  const emitted = spawnSync(process.execPath, [
+    require.resolve('typescript/bin/tsc'), '-p', path.join(ROOT, 'tsconfig.build.json'),
     '--emitDeclarationOnly', '--declarationDir', typesDir,
     '--outDir', path.join(workdir, 'js'),
   ], { encoding: 'utf8' });
