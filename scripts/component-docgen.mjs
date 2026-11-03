@@ -404,6 +404,23 @@ function typeDefinition(symbol, checker, knownTypeNames) {
   return { description, ...info };
 }
 
+/** Marcador con el que el checker trunca un tipo largo (`... 7 more ...`). */
+export const TRUNCATED = /\.\.\. \d+ more \.\.\./;
+
+/**
+ * Devuelve la prop con su `type` completo si el parser lo truncó (#1306).
+ * react-docgen-typescript arma `type.name` con `checker.typeToString(type)`
+ * sin `NoTruncation`, y ninguna opción lo activa. Solo se rehacen los tipos
+ * truncados: el parser formatea las uniones y las intersecciones a su manera,
+ * y rehacerlos todos cambiaría el `type` de props que hoy están bien.
+ */
+function untruncated(prop, propType, checker) {
+  if (!TRUNCATED.test(prop.type?.name ?? '')) return prop;
+  const name = checker.typeToString(propType, undefined, ts.TypeFormatFlags.NoTruncation)
+    .replace(/import\("[^"]*"\)\./g, '');
+  return { ...prop, type: { name } };
+}
+
 /**
  * Resuelve los alias del proyecto que usan las props de un componente:
  * expande los de miembros literales en `type` y define el resto en `types`,
@@ -416,11 +433,13 @@ function resolveProjectTypes(fn, props, checker) {
 
   const pending = new Set();
   const all = new Set();
-  const resolvedProps = Object.fromEntries(Object.entries(props).map(([name, prop]) => {
+  const resolvedProps = Object.fromEntries(Object.entries(props).map(([name, original]) => {
     const symbol = propsType.getProperty(name);
-    if (!symbol) return [name, prop];
+    if (!symbol) return [name, original];
+    const propType = checker.getTypeOfSymbolAtLocation(symbol, fn);
+    const prop = untruncated(original, propType, checker);
     const found = new Set();
-    collectProjectTypes(checker.getTypeOfSymbolAtLocation(symbol, fn), checker, found);
+    collectProjectTypes(propType, checker, found);
     const replacements = [];
     found.forEach((alias) => {
       all.add(alias);

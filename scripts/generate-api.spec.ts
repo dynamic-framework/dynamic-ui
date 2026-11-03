@@ -252,4 +252,25 @@ describe('generate-api', () => {
   test('los exports D* que no son componentes no entran en components', () => {
     expect(api.components).not.toHaveProperty('DContext');
   });
+  // #1306: el parser trunca los tipos largos con `... N more ...`.
+  test('ningún type sale truncado', () => {
+    const truncated = Object.entries(api.components).flatMap(([component, { props }]) => (
+      Object.entries(props)
+        .filter(([, { type }]) => /\.\.\. \d+ more \.\.\./.test(type))
+        .map(([prop]) => `${component}.${prop}`)
+    ));
+    expect(truncated).toEqual([]);
+  });
+
+  test('los type que estaban truncados salen completos', () => {
+    const { props: carousel } = api.components.DCarousel;
+    expect(carousel.iconArrowLeft.type).toContain('useListenerSize?: boolean | undefined; hasCircle?: boolean | undefined;');
+    expect(api.components.DDatePicker.props.onChange.type).toContain('(date: [Date | null, Date | null], event?:');
+    expect(api.components.DInputMask.props.component.type).toContain('"label" | "size" | "value" | "onChange" | keyof BaseProps');
+    expect(api.components.DVoucher.props.icon.type).toMatch(/^string \| false \| Partial<BaseProps & \{ icon: IconValue;/);
+  });
+
+  test('DInputCheck.type tiene el tipo propio, no el del atributo HTML', () => {
+    expect(api.components.DInputCheck.props.type.type).toBe('"checkbox" | "radio"');
+  });
 });
