@@ -273,4 +273,16 @@ describe('generate-api', () => {
   test('DInputCheck.type tiene el tipo propio, no el del atributo HTML', () => {
     expect(api.components.DInputCheck.props.type.type).toBe('"checkbox" | "radio"');
   });
+  // #1341: required sigue la opcionalidad del tipo de las props, no la del
+  // parser.
+  test('una prop obligatoria con default en el código sigue obligatoria', () => {
+    expect(api.components.DInputSelect.props.options).toMatchObject({ required: true, defaultValue: '[]' });
+  });
+
+  test('una prop propia obligatoria no toma la opcionalidad del atributo HTML', () => {
+    expect(api.components.DInputCheck.props.type.required).toBe(true);
+    // Las que son opcionales en los dos tipos siguen opcionales.
+    expect(api.components.DInputCheck.props.checked.required).toBe(false);
+    expect(api.components.DButtonIcon.props.color.required).toBe(false);
+  });
 });

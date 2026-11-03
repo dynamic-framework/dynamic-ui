@@ -489,6 +489,30 @@ function resolveProjectTypes(fn, props, checker) {
 }
 
 /**
+ * Ajusta `required` a la opcionalidad de cada prop en el tipo de las props
+ * del componente, que es lo que comprueba `tsc` (#1341). El parser se aparta
+ * de ella en dos casos:
+ *   - una prop obligatoria con default en el código (`options = []`) sale
+ *     opcional;
+ *   - una prop propia que comparte nombre con una de un tipo base
+ *     (`type` de `InputHTMLAttributes`) toma la declaración del tipo base, que
+ *     el parser guarda en caché por archivo y nombre.
+ * En una intersección el checker marca la propiedad como opcional solo si lo
+ * es en todos los miembros, igual que en los `.d.ts`.
+ */
+function withDeclaredRequired(fn, props, checker) {
+  const propsType = fn.parameters[0] && checker.getTypeAtLocation(fn.parameters[0]);
+  if (!propsType) return props;
+  return Object.fromEntries(Object.entries(props).map(([name, prop]) => {
+    const symbol = propsType.getProperty(name);
+    if (!symbol) return [name, prop];
+    // eslint-disable-next-line no-bitwise
+    const required = (symbol.flags & ts.SymbolFlags.Optional) === 0;
+    return [name, required === prop.required ? prop : { ...prop, required }];
+  }));
+}
+
+/**
  * Indica si un ComponentDoc es un componente del proyecto. El parser devuelve
  * un doc por cada export del archivo que parece una función, también los
  * hooks y funciones que se reexportan de librerías
@@ -557,7 +581,7 @@ export function parseComponentFile(filePath) {
 
     const forwardedProps = fn ? forwardedPropsOf(fn, checker) : null;
     const resolved = fn
-      ? resolveProjectTypes(fn, props, checker)
+      ? resolveProjectTypes(fn, withDeclaredRequired(fn, props, checker), checker)
       : { props, types: {}, projectTypeNames: [] };
     const { expression, rootExpression, ...rest } = doc;
     return {
