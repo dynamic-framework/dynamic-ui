@@ -15,7 +15,13 @@
  *   - ninguna clave contiene `__@`, el nombre interno que TypeScript da a los
  *     símbolos conocidos (`[Symbol.iterator]` → `__@iterator@N`);
  *   - ninguna clave ni cadena contiene una ruta absoluta de la máquina que lo
- *     construye (scripts/absolute-paths.mjs).
+ *     construye (scripts/absolute-paths.mjs);
+ *   - contra los tipos publicados en dist/types/ (scripts/api-types.mjs):
+ *     cada export D* que es un componente tiene entrada, las entradas que no
+ *     son exports son subcomponentes con un accessor real, el required de
+ *     cada prop coincide con el .d.ts y ningún type, returnType ni signature
+ *     está truncado. Requiere `npm run build` (o API_TYPES_DIR apuntando a
+ *     otras declaraciones).
  *
  * Uso: node scripts/validate-registry.mjs [ruta/a/api.json]
  * Sin argumento valida registry/api.json.
@@ -29,6 +35,7 @@ import { createRequire } from 'module';
 import { ROOT, createIndexProgram, listPublicHooks } from './public-hooks.mjs';
 import { parseComponentFile } from './component-docgen.mjs';
 import { findAbsolutePaths } from './absolute-paths.mjs';
+import { compareWithTypes } from './api-types.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -212,6 +219,22 @@ report(lostDefaults, 'defaults declarados en el código que no llegan a defaultV
 report(missingProps, 'props propias o desestructuradas por el componente que faltan en api.json');
 report(extraProps, 'props en api.json que el filtro descarta (atributos de node_modules que el componente no maneja)');
 report(unresolvedTypes, 'alias de tipo del proyecto sin definición en el componente');
+
+// Tipos publicados (dist/types/): exports, subcomponentes, required y type
+// truncados (#1341, #1306).
+let typesComparison;
+try {
+  typesComparison = compareWithTypes(data);
+} catch (err) {
+  process.stderr.write(`Error: ${err.message}\n`);
+  process.exit(1);
+}
+report(typesComparison.missingExports, 'exports D* del índice sin entrada en components ni en contexts');
+report(typesComparison.orphanEntries, 'entradas de components que no son exports del índice y no llevan parent y accessor');
+report(typesComparison.badAccessors, 'accessors que no resuelven a un miembro del padre en dist/types');
+report(typesComparison.requiredMismatches, 'props cuyo required difiere de su opcionalidad en dist/types');
+report(typesComparison.unresolvedProps, 'props cuyo required no se puede comprobar contra dist/types');
+report(typesComparison.truncatedTypes, 'tipos truncados con "... N more ..."');
 
 if (invalid) {
   process.exit(1);
