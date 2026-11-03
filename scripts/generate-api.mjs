@@ -16,13 +16,15 @@
  */
 
 import {
-  readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync,
+  readFileSync, writeFileSync, existsSync, mkdirSync,
 } from 'fs';
-import { resolve, dirname, basename, relative } from 'path';
+import {
+  resolve, dirname, basename, relative, sep,
+} from 'path';
 import { createRequire } from 'module';
 
 import {
-  ROOT, TSCONFIG_PATH, createIndexProgram, listPublicHooks,
+  ROOT, TSCONFIG_PATH, INDEX_PATH, createIndexProgram, listPublicHooks,
 } from './public-hooks.mjs';
 import { parseComponentFile } from './component-docgen.mjs';
 import { resolveTypeInfo } from './type-info.mjs';
@@ -545,14 +547,31 @@ CONTEXT_FILES.forEach((relPath) => {
 
 // --- Props de los componentes, leídas del código TypeScript ---
 const COMPONENTS_DIR = resolve(ROOT, 'src/components');
-const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && entry.name.startsWith('D'))
-  .sort((a, b) => a.name.localeCompare(b.name))
-  .map((entry) => {
-    const mainFile = resolve(COMPONENTS_DIR, entry.name, `${entry.name}.tsx`);
-    return existsSync(mainFile) ? mainFile : null;
-  })
-  .filter(Boolean);
+
+/**
+ * Archivos de los componentes que exporta `src/index.ts`: cada export `D*`
+ * resuelto con el type checker hasta el archivo que lo declara. Solo cuentan
+ * los declarados en `src/components/`; los de `src/contexts/` van en
+ * `contexts`. Como con los hooks, la lista sale del índice y no de las
+ * carpetas: un componente que vive en un archivo con otro nombre que su
+ * carpeta (`DConfirmModal/DConfirmModalContainer.tsx`) también se exporta.
+ */
+function exportedComponentFiles() {
+  const indexFile = program.getSourceFile(INDEX_PATH);
+  const moduleSymbol = checker.getSymbolAtLocation(indexFile);
+  const files = checker.getExportsOfModule(moduleSymbol)
+    .filter((symbol) => /^D[A-Z]/.test(symbol.name))
+    .map((symbol) => {
+      // eslint-disable-next-line no-bitwise
+      const target = symbol.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(symbol) : symbol;
+      // eslint-disable-next-line no-bitwise
+      if (!(target.flags & ts.SymbolFlags.Value)) return null;
+      const declaration = target.valueDeclaration ?? target.declarations?.[0];
+      return declaration?.getSourceFile().fileName ?? null;
+    })
+    .filter((fileName) => fileName && fileName.startsWith(`${COMPONENTS_DIR}/`));
+  return [...new Set(files)];
+}
 
 const componentsSection = {};
 let componentsFailed = 0;
@@ -593,6 +612,24 @@ function subcomponentFiles(filePath) {
   });
 }
 
+// Los archivos de subcomponentes (`DCard.Header`, también exportado como
+// `DCardHeader`) se registran desde su padre, con `parent` y `accessor`.
+const exportedFiles = exportedComponentFiles();
+const subcomponentsByFile = new Map(
+  exportedFiles.map((filePath) => [filePath, subcomponentFiles(filePath)]),
+);
+const subcomponentFileSet = new Set(
+  [...subcomponentsByFile.values()].flat().map(({ file }) => file).filter(Boolean),
+);
+// Orden por carpeta y después por ruta, el mismo que tenía la enumeración por
+// carpetas, para que el orden de las claves de api.json no cambie.
+const componentFiles = exportedFiles
+  .filter((filePath) => !subcomponentFileSet.has(filePath))
+  .sort((a, b) => {
+    const folder = (f) => relative(COMPONENTS_DIR, f).split(sep)[0];
+    return folder(a).localeCompare(folder(b)) || a.localeCompare(b);
+  });
+
 for (const filePath of componentFiles) {
   try {
     const docs = parseComponentFile(filePath);
@@ -601,7 +638,7 @@ for (const filePath of componentFiles) {
       if (!doc.displayName) continue;
       componentsSection[doc.displayName] = componentEntry(doc, filePath);
     }
-    for (const { key, ident, file } of subcomponentFiles(filePath)) {
+    for (const { key, ident, file } of subcomponentsByFile.get(filePath)) {
       if (!file || !existsSync(file)) throw new Error(`no se puede resolver ${parent}.${key} (${ident})`);
       const subDocs = parseComponentFile(file);
       const doc = subDocs.find((d) => d.displayName === ident) ?? subDocs[0];

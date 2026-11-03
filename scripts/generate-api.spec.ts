@@ -22,6 +22,9 @@ type ComponentProp = { type: string; required: boolean; defaultValue: unknown; d
 
 type Api = {
   components: Record<string, {
+    parent?: string;
+    accessor?: string;
+    sourcePath?: string;
     props: Record<string, ComponentProp>;
     forwardedProps?: { target: string; type: string };
     types?: Record<string, { type: string; fields?: Record<string, { type: string }> }>;
@@ -229,5 +232,24 @@ describe('generate-api', () => {
     ['DButton', 'DInput', 'DInputCounter', 'DInputSearch'].forEach((name) => {
       expect(api.components).toHaveProperty(name);
     });
+  });
+  // #1341: los componentes se enumeran desde los exports de src/index.ts.
+  test('components incluye los exports que no están en <Carpeta>/<Carpeta>.tsx', () => {
+    expect(api.components.DConfirmModalContainer).toMatchObject({
+      sourcePath: 'src/components/DConfirmModal/DConfirmModalContainer.tsx',
+      props: { nodeId: { type: 'string', required: true } },
+    });
+    expect(api.components.DConfirmModalContainer.parent).toBeUndefined();
+  });
+
+  test('los subcomponentes conservan parent y accessor', () => {
+    expect(api.components.DSelectOptionCheck).toMatchObject({ parent: 'DSelect', accessor: 'DSelect.OptionCheck' });
+    expect(api.components.DToastHeader).toMatchObject({ parent: 'DToast', accessor: 'DToast.Header' });
+    expect(api.components.DCardHeader).toMatchObject({ parent: 'DCard', accessor: 'DCard.Header' });
+    expect(Object.values(api.components).filter((entry) => entry.parent)).toHaveLength(30);
+  });
+
+  test('los exports D* que no son componentes no entran en components', () => {
+    expect(api.components).not.toHaveProperty('DContext');
   });
 });
