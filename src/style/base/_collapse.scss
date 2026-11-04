@@ -47,12 +47,14 @@
   .collapse-body-wrapper {
     height: 0;
     overflow: hidden;
+    visibility: hidden;
     opacity: 0;
     transition: var(--#{$prefix}collapse-transition);
     interpolate-size: var(--#{$prefix}collapse-interpolate-size);
     &.show {
       display: block;
       height: auto;
+      visibility: visible;
       opacity: 1;
     }
   }
