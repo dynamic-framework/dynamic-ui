@@ -14,7 +14,6 @@ import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
-import warnDialogName from '../../utils/warnDialogName';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
@@ -125,28 +124,7 @@ function DOffcanvas(
     }
   }, []);
 
-  // Un diálogo sin nombre accesible se anuncia sin decir qué es, y el fallo no
-  // se ve en pantalla. El componente no puede inventarlo, así que se avisa al
-  // desarrollador.
   const labelledBy = ariaLabel ? undefined : (ariaLabelledby || labelId);
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') return undefined;
-    // El header adopta `${name}Label` en un layout effect con estado, que
-    // provoca un re-render: este efecto corre antes de que ese id llegue al
-    // DOM. El microtask lo mira ya asentado, y de forma determinista.
-    let cancelled = false;
-    queueMicrotask(() => {
-      if (cancelled) return;
-      warnDialogName({
-        component: 'DOffcanvas',
-        name,
-        labelledBy,
-        hasAriaLabelledby: !!ariaLabelledby,
-      });
-    });
-    return () => { cancelled = true; };
-  }, [ariaLabelledby, labelledBy, name]);
-
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
   // último enfocable. Tab desde el contenedor ya va al primero. Sin
