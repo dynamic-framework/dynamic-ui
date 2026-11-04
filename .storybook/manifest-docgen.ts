@@ -1,6 +1,7 @@
-import { existsSync } from 'node:fs';
-import { isAbsolute, relative } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { isAbsolute, relative, resolve } from 'node:path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
+import { loadCsf } from 'storybook/internal/csf-tools';
 
 import { parseComponentFile, propFilter as sharedPropFilter } from '../scripts/component-docgen.mjs';
 import { ROOT } from '../scripts/public-hooks.mjs';
@@ -39,9 +40,45 @@ type ManifestComponent = {
   };
 };
 
-type Manifests = {
-  components?: { components?: Record<string, ManifestComponent> };
+type ManifestEntry = ManifestComponent & {
+  name?: string;
+  path?: string;
 };
+
+type Manifests = {
+  components?: { components?: Record<string, ManifestEntry> };
+};
+
+/**
+ * Las stories de patrones declaran un `component` de relleno —casi siempre
+ * `DBox`, que solo envuelve el diseño— porque `satisfies Meta<typeof X>` pide
+ * uno. Storybook saca de ahí el `name` de la entrada, así que 14 patrones se
+ * publicaban como `DBox` y otros chocaban con la entrada del componente que
+ * documentan. El nombre sale del título del meta, que es lo que identifica al
+ * patrón; `reactDocgen` no se toca, porque sigue describiendo al componente
+ * que Storybook parseó.
+ */
+export const PATTERNS_TITLE_PREFIX = 'Patterns/';
+
+export function patternNameFromStory(storyPath: string): string | undefined {
+  const file = resolve(ROOT, storyPath);
+  if (!existsSync(file)) return undefined;
+
+  let title: string | undefined;
+  try {
+    title = loadCsf(readFileSync(file, 'utf8'), {
+      fileName: file,
+      makeTitle: (userTitle?: string) => userTitle ?? '',
+    }).parse().meta?.title;
+  } catch {
+    // Un archivo que el parser de CSF no entiende conserva su nombre: el
+    // manifest se publica igual y el test de nombres lo delata.
+    return undefined;
+  }
+
+  if (!title?.startsWith(PATTERNS_TITLE_PREFIX)) return undefined;
+  return title.slice(PATTERNS_TITLE_PREFIX.length) || undefined;
+}
 
 function toTsType({ type }: PropItem): DocgenTsType {
   if (type.name === 'enum' && Array.isArray(type.value)) {
@@ -73,6 +110,12 @@ function findDoc(docs: ComponentDoc[], displayName?: string) {
 export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
   const components = manifests.components?.components ?? {};
   const docsByFile = new Map<string, ComponentDoc[]>();
+
+  Object.values(components).forEach((entry) => {
+    if (!entry.path) return;
+    const name = patternNameFromStory(entry.path);
+    if (name) entry.name = name;
+  });
 
   Object.values(components).forEach(({ reactDocgen }) => {
     if (!reactDocgen?.definedInFile) return;
