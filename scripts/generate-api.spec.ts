@@ -22,11 +22,17 @@ type ComponentProp = { type: string; required: boolean; defaultValue: unknown; d
 
 type Api = {
   components: Record<string, {
+    parent?: string;
+    accessor?: string;
+    sourcePath?: string;
     props: Record<string, ComponentProp>;
     forwardedProps?: { target: string; type: string };
     types?: Record<string, { type: string; fields?: Record<string, { type: string }> }>;
   }>;
-  contexts: Record<string, { props: Record<string, { description: string; required: boolean }> }>;
+  contexts: Record<string, {
+    props: Record<string, { description: string; required: boolean }>;
+    types: Record<string, { description: string }>;
+  }>;
   hooks: Record<string, {
     signature: string;
     returns: Record<string, { parameters?: Param[] }>;
@@ -229,5 +235,66 @@ describe('generate-api', () => {
     ['DButton', 'DInput', 'DInputCounter', 'DInputSearch'].forEach((name) => {
       expect(api.components).toHaveProperty(name);
     });
+  });
+  // #1341: los componentes se enumeran desde los exports de src/index.ts.
+  test('components incluye los exports que no están en <Carpeta>/<Carpeta>.tsx', () => {
+    expect(api.components.DConfirmModalContainer).toMatchObject({
+      sourcePath: 'src/components/DConfirmModal/DConfirmModalContainer.tsx',
+      props: { nodeId: { type: 'string', required: true } },
+    });
+    expect(api.components.DConfirmModalContainer.parent).toBeUndefined();
+  });
+
+  test('los subcomponentes conservan parent y accessor', () => {
+    expect(api.components.DSelectOptionCheck).toMatchObject({ parent: 'DSelect', accessor: 'DSelect.OptionCheck' });
+    expect(api.components.DToastHeader).toMatchObject({ parent: 'DToast', accessor: 'DToast.Header' });
+    expect(api.components.DCardHeader).toMatchObject({ parent: 'DCard', accessor: 'DCard.Header' });
+    expect(Object.values(api.components).filter((entry) => entry.parent)).toHaveLength(30);
+  });
+
+  test('los exports D* que no son componentes no entran en components', () => {
+    expect(api.components).not.toHaveProperty('DContext');
+  });
+  // #1306: el parser trunca los tipos largos con `... N more ...`.
+  test('ningún type sale truncado', () => {
+    const truncated = Object.entries(api.components).flatMap(([component, { props }]) => (
+      Object.entries(props)
+        .filter(([, { type }]) => /\.\.\. \d+ more \.\.\./.test(type))
+        .map(([prop]) => `${component}.${prop}`)
+    ));
+    expect(truncated).toEqual([]);
+  });
+
+  test('los type que estaban truncados salen completos', () => {
+    const { props: carousel } = api.components.DCarousel;
+    expect(carousel.iconArrowLeft.type).toContain('useListenerSize?: boolean | undefined; hasCircle?: boolean | undefined;');
+    expect(api.components.DDatePicker.props.onChange.type).toContain('(date: [Date | null, Date | null], event?:');
+    expect(api.components.DInputMask.props.component.type).toContain('"label" | "size" | "value" | "onChange" | keyof BaseProps');
+    expect(api.components.DVoucher.props.icon.type).toMatch(/^string \| false \| Partial<BaseProps & \{ icon: IconValue;/);
+  });
+
+  test('DInputCheck.type tiene el tipo propio, no el del atributo HTML', () => {
+    expect(api.components.DInputCheck.props.type.type).toBe('"checkbox" | "radio"');
+  });
+  // #1341: required sigue la opcionalidad del tipo de las props, no la del
+  // parser.
+  test('una prop obligatoria con default en el código sigue obligatoria', () => {
+    expect(api.components.DInputSelect.props.options).toMatchObject({ required: true, defaultValue: '[]' });
+  });
+
+  test('una prop propia obligatoria no toma la opcionalidad del atributo HTML', () => {
+    expect(api.components.DInputCheck.props.type.required).toBe(true);
+    // Las que son opcionales en los dos tipos siguen opcionales.
+    expect(api.components.DInputCheck.props.checked.required).toBe(false);
+    expect(api.components.DButtonIcon.props.color.required).toBe(false);
+  });
+  // #1341: los valores por defecto de iconMap son nombres de lucide-react, no
+  // sufijos de clases de una fuente de iconos.
+  test('IconProps e IconMapProps describen lo que reciben', () => {
+    const { IconProps, IconMapProps } = api.contexts.DContextProvider.types;
+    expect(IconMapProps.description).toContain('The defaults are\nlucide-react names');
+    expect(IconMapProps.description).not.toContain('class suffixes');
+    expect(IconProps.description).toContain('neither registered in `iconRegistry` nor exported by lucide-react');
+    expect(IconProps.description).not.toContain('to resolve icon classes');
   });
 });

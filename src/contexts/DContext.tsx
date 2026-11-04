@@ -40,53 +40,62 @@ export type CurrencyProps = {
 };
 
 /**
- * Icon font configuration used by `DContextProvider` to resolve icon classes.
+ * Icon-font fallback used by `DIcon`. It only applies to icon names that are
+ * neither registered in `iconRegistry` nor exported by lucide-react: those
+ * render as `<i class="{familyClass} {familyPrefix}{name}">`. The default
+ * family is Bootstrap Icons (`"bi"` / `"bi-"`); Lucide icons do not use it.
  */
 export type IconProps = {
-  /** CSS class that identifies the icon font family (e.g. `"bi"`). */
+  /** CSS class of the icon-font family for fallback icons (default `"bi"`). */
   familyClass: string;
-  /** CSS prefix for icon names within the family (e.g. `"bi-"`). */
+  /** Prefix prepended to the icon name to build its font class (default `"bi-"`). */
   familyPrefix: string;
-  /** When `true`, icons are rendered in Material Design outlined style. */
+  /**
+   * When `true`, string icons skip lucide-react and render as the text of the
+   * icon-font element (Material Symbols ligatures). Default `false`.
+   */
   materialStyle: boolean;
 };
 
 /**
- * Map of semantic icon names to their icon-font class suffixes.
- * Used by Dynamic UI components to look up icons consistently.
+ * Icon names that Dynamic UI components use for their built-in icons (close,
+ * chevrons, alerts, inputs…). Each value is an icon name that `DIcon`
+ * resolves in order: `iconRegistry`, then a PascalCase lucide-react export,
+ * then the icon-font fallback configured in `icon`. The defaults are
+ * lucide-react names (e.g. `"X"`, `"ChevronDown"`, `"AlertTriangle"`).
  */
 export type IconMapProps = {
-  /** Class suffix for the generic close/dismiss icon. */
+  /** Generic close/dismiss icon (default `"X"`). */
   x: string;
-  /** Class suffix for the large close/dismiss icon. */
+  /** Large close/dismiss icon (default `"X"`). */
   xLg: string;
-  /** Class suffix for the chevron-down icon. */
+  /** Chevron-down icon (default `"ChevronDown"`). */
   chevronDown: string;
-  /** Class suffix for the chevron-up icon. */
+  /** Chevron-up icon (default `"ChevronUp"`). */
   chevronUp: string;
-  /** Class suffix for the chevron-left icon. */
+  /** Chevron-left icon (default `"ChevronLeft"`). */
   chevronLeft: string;
-  /** Class suffix for the chevron-right icon. */
+  /** Chevron-right icon (default `"ChevronRight"`). */
   chevronRight: string;
-  /** Per-state alert icon map (one icon per `ComponentStateColor` value). */
+  /** Per-state alert icon names (one per `ComponentStateColor` value). */
   alert: AlertThemeIconMap;
-  /** Class suffix for the upload/attach icon. */
+  /** Upload/attach icon (default `"Upload"`). */
   upload: string;
-  /** Class suffix for the calendar/date-picker icon. */
+  /** Calendar/date-picker icon (default `"Calendar"`). */
   calendar: string;
-  /** Class suffix for the checkmark icon. */
+  /** Checkmark icon (default `"Check"`). */
   check: string;
-  /** Icon class suffixes for text input adornments. */
+  /** Icon names for text input adornments. */
   input: {
-    /** Search/magnifier icon. */
+    /** Search/magnifier icon (default `"Search"`). */
     search: string;
-    /** Show password icon. */
+    /** Show password icon (default `"Eye"`). */
     show: string;
-    /** Hide password icon. */
+    /** Hide password icon (default `"EyeOff"`). */
     hide: string;
-    /** Numeric decrease icon. */
+    /** Numeric decrease icon (default `"Minus"`). */
     decrease: string;
-    /** Numeric increase icon. */
+    /** Numeric increase icon (default `"Plus"`). */
     increase: string;
   };
 };
