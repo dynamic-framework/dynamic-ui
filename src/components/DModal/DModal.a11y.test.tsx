@@ -113,4 +113,21 @@ describe('<DModal /> a11y', () => {
     expect(results).toHaveNoViolations();
     expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
+
+  it('no duplica el id cuando el título vive fuera del header', async () => {
+    const { container } = render(
+      <DModal name="myModal" ariaLabelledby="externalTitle">
+        <DModal.Header>Test Header</DModal.Header>
+        <DModal.Body>
+          <h2 id="externalTitle">Confirmar envío</h2>
+        </DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
 });

@@ -113,4 +113,21 @@ describe('<DOffcanvas /> a11y', () => {
     expect(results).toHaveNoViolations();
     expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
+
+  it('no duplica el id cuando el título vive fuera del header', async () => {
+    const { container } = render(
+      <DOffcanvas name="myOffcanvas" ariaLabelledby="externalTitle">
+        <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+        <DOffcanvas.Body>
+          <h2 id="externalTitle">Filtrar resultados</h2>
+        </DOffcanvas.Body>
+      </DOffcanvas>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
 });
