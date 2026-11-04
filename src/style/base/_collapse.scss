@@ -54,7 +54,7 @@
     &.show {
       display: block;
       height: auto;
-      visibility: visible;
+      visibility: inherit;
       opacity: 1;
     }
   }
