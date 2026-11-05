@@ -25,20 +25,7 @@ const TEXT_PROPS = {
   submit: 'Authorize and continue',
   title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
   invalidCode: 'Invalid code, please try again.',
-  contact: (
-    <>
-      <span>Problems with your digital token? Contact us</span>
-      {' '}
-      <a
-        href="https://www.modyo.com"
-        className="link-primary text-nowrap"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Contact us
-      </a>
-    </>
-  ),
+  contact: 'Problems with your digital token? Contact us',
 };
 
 export default function DOtp(
