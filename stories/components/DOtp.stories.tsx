@@ -98,7 +98,6 @@ export const CustomTexts: Story = {
     otpSize: 4,
     texts: {
       title: 'We’ve sent a 4-digit code to your registered email address.',
-      resend: 'Send again',
       resendText: 'Request new code',
       submit: 'Verify and continue',
       contact: (

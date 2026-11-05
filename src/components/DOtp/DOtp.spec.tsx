@@ -79,4 +79,47 @@ describe('DOtp', () => {
     expect(inputs[0]).toHaveClass('is-invalid');
     expect(screen.getByText('Invalid code, please try again.')).toBeInTheDocument();
   });
+  describe('textos', () => {
+    it('conserva los textos por defecto cuando texts es parcial', async () => {
+      const user = userEvent.setup();
+      render(<DOtp action={() => {}} texts={{ submit: 'Enviar' }} />);
+
+      expect(screen.getByText('We will send you a 6-digit code to your associated phone number so you can continue with your request.')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Resend' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Enviar' })).toBeInTheDocument();
+
+      await user.click(screen.getByText('Enviar'));
+
+      expect(screen.getByText('Invalid code, please try again.')).toBeInTheDocument();
+    });
+
+    it('no deja ningún botón sin etiqueta con un texts parcial', () => {
+      render(<DOtp action={() => {}} texts={{ title: 'Solo el título' }} />);
+
+      screen.getAllByRole('button').forEach((button) => {
+        expect(button).toHaveAccessibleName();
+      });
+    });
+
+    it('un texts completo sobrescribe todos los textos', () => {
+      render(
+        <DOtp
+          action={() => {}}
+          texts={{
+            submit: 'Enviar',
+            title: 'Título propio',
+            resendText: 'Reenviar',
+            invalidCode: 'Código inválido',
+            contact: 'Contacto propio',
+          }}
+        />,
+      );
+
+      expect(screen.getByText('Título propio')).toBeInTheDocument();
+      expect(screen.getByText('Contacto propio')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Reenviar' })).toBeInTheDocument();
+      expect(screen.queryByText('We will send you a 6-digit code to your associated phone number so you can continue with your request.')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Resend' })).not.toBeInTheDocument();
+    });
+  });
 });
