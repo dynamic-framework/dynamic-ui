@@ -6,7 +6,11 @@ import DButton from '../DButton';
 import useOtp from '../../hooks/useOtp';
 
 export type PropsOtp = PropsWithChildren<{
-  action: () => Promise<void> | void;
+  /**
+   * Called with the entered OTP when the user submits a code of the expected
+   * length. Use the received value to verify it.
+   */
+  action: (otp: string) => Promise<void> | void;
   isLoading?: boolean;
   className?: string;
   otpSize?: number;
@@ -54,13 +58,18 @@ export default function DOtp(
   }: PropsOtp,
 ) {
   const {
+    otp,
     setOtp,
     invalid,
     submit,
     isLoading: isSubmitting,
     secondsLeft,
     restartCountdown,
-  } = useOtp({ action, otpSize, seconds });
+  } = useOtp({
+    action: () => action(otp),
+    otpSize,
+    seconds,
+  });
 
   return (
     <div className={className}>
