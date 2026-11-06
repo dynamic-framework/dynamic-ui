@@ -405,6 +405,59 @@ describe('<DOffcanvas />', () => {
       expect(dialog).not.toHaveAttribute('aria-labelledby');
     });
 
+    it('usa ariaLabelledby cuando el título vive fuera del header', () => {
+      render(
+        <DOffcanvas name="myOffcanvas" ariaLabelledby="externalTitle">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>
+            <h2 id="externalTitle">Filtrar resultados</h2>
+          </DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Filtrar resultados' });
+      expect(dialog).toHaveAttribute('aria-labelledby', 'externalTitle');
+      expect(dialog).not.toHaveAttribute('aria-label');
+      expect(document.getElementById('myOffcanvasLabel')).toBeNull();
+    });
+
+    it('vuelve al título del header cuando ariaLabelledby llega vacío', () => {
+      render(
+        <DOffcanvas name="myOffcanvas" ariaLabelledby="">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Test Header' });
+      expect(dialog).toHaveAttribute('aria-labelledby', 'myOffcanvasLabel');
+    });
+
+    it('ariaLabel tiene precedencia sobre ariaLabelledby', () => {
+      render(
+        <DOffcanvas name="myOffcanvas" ariaLabel="Filtros" ariaLabelledby="externalTitle">
+          <DOffcanvas.Body>
+            <h2 id="externalTitle">Filtrar resultados</h2>
+          </DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Filtros' });
+      expect(dialog).not.toHaveAttribute('aria-labelledby');
+    });
+
+    it('con el nombre ya declarado el header no se adjudica el id del diálogo', () => {
+      render(
+        <DOffcanvas name="myOffcanvas" ariaLabel="Filtros">
+          <DOffcanvas.Header>Test Header</DOffcanvas.Header>
+          <DOffcanvas.Body>Test Body</DOffcanvas.Body>
+        </DOffcanvas>,
+      );
+
+      expect(screen.getByRole('dialog', { name: 'Filtros' })).toBeInTheDocument();
+      expect(document.getElementById('myOffcanvasLabel')).toBeNull();
+    });
+
     it('enfoca el contenedor al abrir', () => {
       render(
         <DOffcanvas name="myOffcanvas">
