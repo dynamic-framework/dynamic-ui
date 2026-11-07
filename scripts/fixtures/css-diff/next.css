@@ -1,0 +1,29 @@
+/*!
+ * dynamic-framework 2.13.0
+ * bootstrap ~5.3.8
+ */
+@charset "UTF-8";
+:root,
+[data-bs-theme=dynamic] {
+  --bs-primary-500: #1d4ed8;
+  --bs-btn-link-hover-bg: rgba(var(--bs-black-rgb), 0.03);
+  --bs-new-token: 2px;
+}
+@media (min-width: 1200px) {
+  :root,
+  [data-bs-theme=dynamic] {
+    --bs-fs-display: 3.5rem;
+  }
+}
+.btn {
+  --bs-btn-padding-x: 1rem;
+  color: var(--bs-btn-color);
+}
+.d-new-widget {
+  display: flex;
+}
+@media (min-width: 1200px) {
+  .btn {
+    font-size: 1rem;
+  }
+}

@@ -22,6 +22,7 @@ beforeEach(() => {
   workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'dynamic-manifest-'));
   fs.mkdirSync(path.join(workdir, 'scripts'));
   fs.copyFileSync(SOURCE, path.join(workdir, 'scripts/generate-manifest.mjs'));
+  fs.copyFileSync(path.resolve(__dirname, 'compare-stable.mjs'), path.join(workdir, 'scripts/compare-stable.mjs'));
 });
 
 afterEach(() => {

@@ -7,6 +7,9 @@ jobs:
   build:
     name: Build and Sync
     runs-on: ubuntu-latest
+    permissions:
+      # Editar las notas del release y subir css-diff.patch como asset.
+      contents: write
     env:
       CDN_BASE_URL: https://cdn.dynamicframework.dev/assets
     steps:
@@ -93,6 +96,39 @@ jobs:
             echo "::error::Release tag ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
             exit 1
           fi
+      - name: Append CSS diff to release notes
+        # Informativo: si falla, no bloquea la publicación al CDN.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          # Versión estable anterior según el índice leído de S3 (cubre backports).
+          PREV=$(node scripts/css-diff.mjs previous-version /tmp/manifest-prev.json "$RELEASE_TAG")
+          if [ -z "$PREV" ]; then
+            echo "::warning::No hay versión estable anterior a $RELEASE_TAG en el índice; no se agrega el diff del CSS."
+            exit 0
+          fi
+          # Bucket directo y no el CDN, como el índice: una copia cacheada en Cloudflare podría no ser la publicada.
+          CSS_URL="https://dynamicframework-cdn.s3.amazonaws.com/assets/$PREV/ui-react/css/dynamic-ui.css"
+          if ! curl -sf -o /tmp/dynamic-ui-prev.css "$CSS_URL"; then
+            echo "::warning::No se pudo descargar $CSS_URL; no se agrega el diff del CSS."
+            exit 0
+          fi
+          # --notes-file reemplaza el body completo: se parte del body actual para
+          # conservar las notas de release-please y las ediciones manuales.
+          gh release view "$RELEASE_TAG" --json body -q .body > /tmp/release-body.md
+          npm run diff:css -- \
+            --prev /tmp/dynamic-ui-prev.css \
+            --next dist/css/dynamic-ui.css \
+            --out-dir /tmp/css-diff \
+            --prev-label "v$PREV" \
+            --next-label "$RELEASE_TAG" \
+            --patch-url "https://github.com/${{ github.repository }}/releases/download/$RELEASE_TAG/css-diff.patch" \
+            --notes /tmp/release-body.md
+          gh release upload "$RELEASE_TAG" /tmp/css-diff/css-diff.patch --clobber
+          gh release edit "$RELEASE_TAG" --notes-file /tmp/css-diff/notes.md
+          echo "Diff del CSS de $RELEASE_TAG contra v$PREV agregado a las notas del release." >> "$GITHUB_STEP_SUMMARY"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
