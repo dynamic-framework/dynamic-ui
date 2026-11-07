@@ -8,6 +8,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(__dirname, '..');
@@ -29,8 +30,23 @@ const COMPONENTS = {
   DButtonIcon: 'src/components/DButtonIcon/DButtonIcon.tsx',
 };
 
+const PATTERNS = {
+  'patterns-otp': 'stories/patterns/OtpPatterns.stories.tsx',
+  'patterns-mobile-otp': 'stories/patterns/mobile/MobileOtpPatterns.stories.tsx',
+};
+const OTHER_PATTERN_FILES = ['stories/patterns', 'stories/patterns/mobile']
+  .flatMap((dir) => fs.readdirSync(path.join(ROOT, dir))
+    .filter((file) => file.endsWith('.stories.tsx'))
+    .map((file) => `${dir}/${file}`))
+  .filter((file) => !Object.values(PATTERNS).includes(file));
+const ALL_PATTERNS = {
+  ...PATTERNS,
+  ...Object.fromEntries(OTHER_PATTERN_FILES.map((file, index) => [`patterns-fixture-${index}`, file])),
+};
+
 let props: Record<string, Record<string, DocgenProp>>;
 let definedInFiles: Record<string, string>;
+let names: Record<string, string>;
 
 // Props que trae babel para DBadge: una propia, con metadatos que deben
 // prevalecer, y un atributo de @types/react que el filtro descarta.
@@ -44,16 +60,23 @@ const BABEL_PROPS: Record<string, Record<string, DocgenProp>> = {
 beforeAll(() => {
   const manifests = {
     components: {
-      components: Object.fromEntries(Object.entries(COMPONENTS).map(([name, file]) => [
-        name,
-        {
-          reactDocgen: {
-            displayName: name,
-            definedInFile: path.join(ROOT, file),
-            props: BABEL_PROPS[name] ?? {},
+      components: {
+        ...Object.fromEntries(Object.entries(COMPONENTS).map(([name, file]) => [
+          name,
+          {
+            name,
+            reactDocgen: {
+              displayName: name,
+              definedInFile: path.join(ROOT, file),
+              props: BABEL_PROPS[name] ?? {},
+            },
           },
-        },
-      ])),
+        ])),
+        ...Object.fromEntries(Object.entries(ALL_PATTERNS).map(([id, file]) => [
+          id,
+          { id, name: 'DBox', path: `./${file}` },
+        ])),
+      },
     },
   };
   const script = `
@@ -61,8 +84,9 @@ beforeAll(() => {
     const result = enrichComponentsManifest(${JSON.stringify(manifests)});
     const entries = Object.entries(result.components.components);
     process.stdout.write(JSON.stringify({
-      props: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen.props])),
-      files: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen.definedInFile])),
+      props: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen?.props])),
+      files: Object.fromEntries(entries.map(([name, { reactDocgen }]) => [name, reactDocgen?.definedInFile])),
+      names: Object.fromEntries(entries.map(([id, entry]) => [id, entry.name])),
     }));
   `;
   const run = spawnSync('node', ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', script], {
@@ -70,7 +94,7 @@ beforeAll(() => {
     encoding: 'utf8',
   });
   if (run.status !== 0) throw new Error(run.stderr);
-  ({ props, files: definedInFiles } = JSON.parse(run.stdout));
+  ({ props, files: definedInFiles, names } = JSON.parse(run.stdout));
 });
 
 describe('manifest-docgen', () => {
@@ -97,5 +121,23 @@ describe('manifest-docgen', () => {
 
   test('publica definedInFile relativo a la raíz del repo, sin la ruta de la máquina de build', () => {
     expect(definedInFiles).toEqual(COMPONENTS);
+  });
+
+  test('nombra los patrones por su título y conserva los nombres de componentes', () => {
+    expect(names['patterns-otp']).toBe('Patterns/OTP');
+    expect(names['patterns-mobile-otp']).toBe('Patterns/Mobile/OTP');
+    expect(names.DButton).toBe('DButton');
+  });
+
+  test('los 21 patrones tienen nombres únicos que no son componentes exportados', () => {
+    const patternNames = Object.keys(ALL_PATTERNS).map((id) => names[id]);
+    expect(patternNames).toHaveLength(21);
+    patternNames.forEach((name) => expect(name).toMatch(/^Patterns\//));
+    expect(new Set(patternNames).size).toBe(patternNames.length);
+    const exportedComponents = new Set(
+      [...fs.readFileSync(path.join(ROOT, 'src/components/index.ts'), 'utf8').matchAll(/\b(?:default as|^\s*)(D[A-Z]\w*)\b/gm)]
+        .map((match) => match[1]),
+    );
+    patternNames.forEach((name) => expect(exportedComponents.has(name)).toBe(false));
   });
 });
