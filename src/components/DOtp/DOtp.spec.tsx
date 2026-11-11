@@ -23,6 +23,21 @@ describe('DOtp', () => {
     await user.click(screen.getByText('Authorize and continue'));
 
     expect(action).toHaveBeenCalledTimes(1);
+    expect(action).toHaveBeenCalledWith('123456');
+  });
+
+  it('should pass the corrected otp to action after editing a digit', async () => {
+    const user = userEvent.setup();
+    const action = jest.fn();
+    render(<DOtp action={action} />);
+
+    const inputs = screen.getAllByRole('textbox');
+    await user.type(inputs[0], '123456');
+    await user.clear(inputs[5]);
+    await user.type(inputs[5], '9');
+    await user.click(screen.getByText('Authorize and continue'));
+
+    expect(action).toHaveBeenCalledWith('123459');
   });
 
   it('should show the invalid state and not call action when otp is too short', async () => {
