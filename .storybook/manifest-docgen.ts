@@ -1,6 +1,7 @@
-import { existsSync } from 'node:fs';
-import { isAbsolute, relative } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { isAbsolute, relative, resolve } from 'node:path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
+import ts from 'typescript';
 
 import { parseComponentFile, propFilter as sharedPropFilter } from '../scripts/component-docgen.mjs';
 import { ROOT } from '../scripts/public-hooks.mjs';
@@ -31,6 +32,8 @@ type DocgenProp = {
 };
 
 type ManifestComponent = {
+  name?: string;
+  path?: string;
   reactDocgen?: {
     displayName?: string;
     actualName?: string;
@@ -70,11 +73,36 @@ function findDoc(docs: ComponentDoc[], displayName?: string) {
   return docs.find((doc) => doc.displayName === displayName) ?? (docs.length === 1 ? docs[0] : undefined);
 }
 
+function patternTitle(storyPath?: string): string {
+  if (!storyPath) throw new Error('A pattern manifest entry has no story path');
+
+  const source = readFileSync(resolve(ROOT, storyPath), 'utf8');
+  const file = ts.createSourceFile(storyPath, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  // Read meta.title, not an unrelated `title` in the story's example data.
+  const meta = file.statements
+    .filter(ts.isVariableStatement)
+    .flatMap((statement) => [...statement.declarationList.declarations])
+    .find((declaration) => ts.isIdentifier(declaration.name) && declaration.name.text === 'meta');
+  const initializer = meta?.initializer;
+  const object = initializer && ts.isSatisfiesExpression(initializer) ? initializer.expression : initializer;
+  const title = object && ts.isObjectLiteralExpression(object)
+    ? object.properties.find((property) => ts.isPropertyAssignment(property)
+      && property.name.getText(file) === 'title')
+    : undefined;
+  if (title && ts.isPropertyAssignment(title) && ts.isStringLiteral(title.initializer)) {
+    return title.initializer.text;
+  }
+  throw new Error(`Pattern story ${storyPath} has no static meta title`);
+}
+
 export function enrichComponentsManifest<T extends Manifests>(manifests: T): T {
   const components = manifests.components?.components ?? {};
   const docsByFile = new Map<string, ComponentDoc[]>();
 
-  Object.values(components).forEach(({ reactDocgen }) => {
+  Object.entries(components).forEach(([id, component]) => {
+    if (id.startsWith('patterns-')) component.name = patternTitle(component.path);
+
+    const { reactDocgen } = component;
     if (!reactDocgen?.definedInFile) return;
 
     const file = reactDocgen.definedInFile;
