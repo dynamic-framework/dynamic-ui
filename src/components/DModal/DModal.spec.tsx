@@ -326,6 +326,59 @@ describe('<DModal />', () => {
       expect(dialog).not.toHaveAttribute('aria-labelledby');
     });
 
+    it('usa ariaLabelledby cuando el título vive fuera del header', () => {
+      render(
+        <DModal name="myModal" ariaLabelledby="externalTitle">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>
+            <h2 id="externalTitle">Confirmar envío</h2>
+          </DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Confirmar envío' });
+      expect(dialog).toHaveAttribute('aria-labelledby', 'externalTitle');
+      expect(dialog).not.toHaveAttribute('aria-label');
+      expect(document.getElementById('myModalLabel')).toBeNull();
+    });
+
+    it('vuelve al título del header cuando ariaLabelledby llega vacío', () => {
+      render(
+        <DModal name="myModal" ariaLabelledby="">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Test Header' });
+      expect(dialog).toHaveAttribute('aria-labelledby', 'myModalLabel');
+    });
+
+    it('ariaLabel tiene precedencia sobre ariaLabelledby', () => {
+      render(
+        <DModal name="myModal" ariaLabel="Confirmación" ariaLabelledby="externalTitle">
+          <DModal.Body>
+            <h2 id="externalTitle">Confirmar envío</h2>
+          </DModal.Body>
+        </DModal>,
+      );
+
+      const dialog = screen.getByRole('dialog', { name: 'Confirmación' });
+      expect(dialog).not.toHaveAttribute('aria-labelledby');
+    });
+
+    it('con el nombre ya declarado el header no se adjudica el id del diálogo', () => {
+      render(
+        <DModal name="myModal" ariaLabel="Confirmación">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+        </DModal>,
+      );
+
+      expect(screen.getByRole('dialog', { name: 'Confirmación' })).toBeInTheDocument();
+      expect(document.getElementById('myModalLabel')).toBeNull();
+    });
+
     it('enfoca el contenedor al abrir', () => {
       render(
         <DModal name="myModal">
