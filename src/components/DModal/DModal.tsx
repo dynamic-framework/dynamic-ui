@@ -34,6 +34,13 @@ type Props = BaseProps & PropsWithChildren<{
    * the dialog uses `aria-label` instead of `aria-labelledby`.
    */
   ariaLabel?: string;
+  /**
+   * Id of the element that names the dialog, for a title that does not live
+   * inside `DModal.Header` — hidden in the body, for instance. Without it the
+   * dialog looks for `${name}Label` in the header, which only works for a
+   * title rendered there. `ariaLabel` takes precedence over this.
+   */
+  ariaLabelledby?: string;
 }>;
 
 const defaultTransition: Transition = {
@@ -60,9 +67,14 @@ function DModal(
     children,
     dataAttributes,
     ariaLabel,
+    ariaLabelledby,
   }: Props,
 ) {
   const labelId = `${name}Label`;
+  // Con el nombre ya declarado, el header no debe adjudicarse `${name}Label`:
+  // si el título vive fuera y usa ese mismo id, habría dos elementos con él y
+  // el navegador resolvería con el del header, que puede estar vacío.
+  const headerOwnsLabel = !ariaLabel && !ariaLabelledby;
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
@@ -74,6 +86,7 @@ function DModal(
     }
   }, []);
 
+  const labelledBy = ariaLabel ? undefined : (ariaLabelledby || labelId);
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
   // último enfocable. Tab desde el contenedor ya va al primero. Sin
@@ -122,7 +135,7 @@ function DModal(
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
-      aria-labelledby={ariaLabel ? undefined : labelId}
+      aria-labelledby={labelledBy}
       aria-hidden="false"
       style={style}
       initial={{ opacity: 0, scale: 0.95 }}
@@ -140,7 +153,7 @@ function DModal(
     >
       <div className={classNames(generateModalDialogClasses)}>
         <div className="modal-content">
-          <DModalLabelContext.Provider value={labelId}>
+          <DModalLabelContext.Provider value={headerOwnsLabel ? labelId : undefined}>
             {children}
           </DModalLabelContext.Provider>
         </div>

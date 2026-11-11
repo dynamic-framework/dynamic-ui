@@ -27,7 +27,7 @@ Ideal for **banking**, **insurance**, and **financial** applications.
   },
   argTypes: {
     action: {
-      description: 'Function called when submitting the OTP.',
+      description: 'Function called with the entered OTP when submitting it.',
       control: false,
       table: { category: 'Events' },
     },
@@ -68,10 +68,10 @@ export function Template(args: PropsOtp) {
         <DOtp
           isLoading={isLoading}
           {...args}
-          action={async () => {
+          action={async (otp) => {
             setIsLoading(true);
             await new Promise((resolve) => setTimeout(() => {
-              alert('OTP submitted');
+              alert(`OTP submitted: ${otp}`);
               setIsLoading(false);
               resolve(true);
             }, 1000));
@@ -98,7 +98,6 @@ export const CustomTexts: Story = {
     otpSize: 4,
     texts: {
       title: 'We’ve sent a 4-digit code to your registered email address.',
-      resend: 'Send again',
       resendText: 'Request new code',
       submit: 'Verify and continue',
       contact: (
