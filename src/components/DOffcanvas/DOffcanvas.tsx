@@ -43,10 +43,17 @@ type Props = BaseProps & PropsWithChildren<{
   height?: string | ResponsiveProp;
   transition?: Transition;
   /**
-   * Accessible name for the dialog when it has no visible title. When set,
+   * Accessible name for the dialog when it has no title at all. When set,
    * the dialog uses `aria-label` instead of `aria-labelledby`.
    */
   ariaLabel?: string;
+  /**
+   * Id of the element that names the dialog, for a title that does not live
+   * inside `DOffcanvas.Header` — hidden in the body, for instance. Without it
+   * the dialog looks for `${name}Label` in the header, which only works for a
+   * title rendered there. `ariaLabel` takes precedence over this.
+   */
+  ariaLabelledby?: string;
 }>;
 
 const variants: Variants = {
@@ -98,9 +105,14 @@ function DOffcanvas(
     children,
     dataAttributes,
     ariaLabel,
+    ariaLabelledby,
   }: Props,
 ) {
   const labelId = `${name}Label`;
+  // Con el nombre ya declarado, el header no debe adjudicarse `${name}Label`:
+  // si el título vive fuera y usa ese mismo id, habría dos elementos con él y
+  // el navegador resolvería con el del header, que puede estar vacío.
+  const headerOwnsLabel = !ariaLabel && !ariaLabelledby;
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
@@ -112,6 +124,7 @@ function DOffcanvas(
     }
   }, []);
 
+  const labelledBy = ariaLabel ? undefined : (ariaLabelledby || labelId);
   // Con el foco en el contenedor, Shift+Tab iría a lo que hay antes del
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
   // último enfocable. Tab desde el contenedor ya va al primero. Sin
@@ -176,7 +189,7 @@ function DOffcanvas(
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
-      aria-labelledby={ariaLabel ? undefined : labelId}
+      aria-labelledby={labelledBy}
       aria-hidden="false"
       custom={resolvedOpenFrom}
       variants={variants}
@@ -197,7 +210,7 @@ function DOffcanvas(
       })}
       {...dataAttributes}
     >
-      <DOffcanvasLabelContext.Provider value={labelId}>
+      <DOffcanvasLabelContext.Provider value={headerOwnsLabel ? labelId : undefined}>
         {children}
       </DOffcanvasLabelContext.Provider>
     </motion.div>

@@ -54,7 +54,9 @@ We **love** pull requests! Before [forking the repo](https://help.github.com/en/
 
 - **Add documentation.** Document your changes with storybook examples or controls if added.
 
-- **Use the repo's default branch.** Branch from and [submit your pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to the repo's default branch. Usually this is `master`, but it could be `develop`.
+- **Use the `develop` branch.** Branch from `develop` and [submit your pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to `develop`, the repo's default branch. `master` only receives releases.
+
+- **Link the issue.** If your pull request resolves an issue, add `Closes #123` to its description so the issue closes when the pull request is merged.
 
 - **[Resolve any merge conflicts](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-on-github)** that occur.
 

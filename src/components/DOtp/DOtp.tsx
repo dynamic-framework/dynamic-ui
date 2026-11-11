@@ -17,7 +17,6 @@ export type PropsOtp = PropsWithChildren<{
   seconds?: number;
   texts?: {
     submit?: string;
-    resend?: string;
     title?: string;
     contact?: string | React.ReactNode;
     resendText?: string;
@@ -26,25 +25,11 @@ export type PropsOtp = PropsWithChildren<{
 }>;
 
 const TEXT_PROPS = {
-  resend: 'Resend',
   resendText: 'Resend',
   submit: 'Authorize and continue',
   title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
   invalidCode: 'Invalid code, please try again.',
-  contact: (
-    <>
-      <span>Problems with your digital token? Contact us</span>
-      {' '}
-      <a
-        href="https://www.modyo.com"
-        className="link-primary text-nowrap"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Contact us
-      </a>
-    </>
-  ),
+  contact: 'Problems with your digital token? Contact us',
 };
 
 export default function DOtp(
@@ -53,10 +38,11 @@ export default function DOtp(
     action,
     isLoading,
     otpSize = 6,
-    texts = TEXT_PROPS,
+    texts: textsProp,
     seconds = 15,
   }: PropsOtp,
 ) {
+  const texts = { ...TEXT_PROPS, ...textsProp };
   const {
     otp,
     setOtp,
