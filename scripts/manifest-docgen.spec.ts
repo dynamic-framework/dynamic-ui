@@ -101,12 +101,6 @@ describe('manifest-docgen', () => {
   });
 });
 
-/**
- * Los nombres de las entradas `patterns-*` (#1352). Las stories de patrones
- * declaran un `component` de relleno para satisfacer `Meta<typeof X>`, y
- * Storybook sacaba de ahí el `name`: 14 patrones se publicaban como `DBox` y
- * otros pisaban la entrada del componente que documentan.
- */
 describe('nombres de los patrones', () => {
   const PATTERNS_DIR = path.join(ROOT, 'stories/patterns');
 

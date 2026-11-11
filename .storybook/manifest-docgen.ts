@@ -49,15 +49,6 @@ type Manifests = {
   components?: { components?: Record<string, ManifestEntry> };
 };
 
-/**
- * Las stories de patrones declaran un `component` de relleno —casi siempre
- * `DBox`, que solo envuelve el diseño— porque `satisfies Meta<typeof X>` pide
- * uno. Storybook saca de ahí el `name` de la entrada, así que 14 patrones se
- * publicaban como `DBox` y otros chocaban con la entrada del componente que
- * documentan. El nombre sale del título del meta, que es lo que identifica al
- * patrón; `reactDocgen` no se toca, porque sigue describiendo al componente
- * que Storybook parseó.
- */
 export const PATTERNS_TITLE_PREFIX = 'Patterns/';
 
 export function patternNameFromStory(storyPath: string): string | undefined {
