@@ -23,31 +23,35 @@ describe('<DInputSelect />', () => {
       );
 
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div>
-            <div
-              class="input-group"
-            >
-              <select
-                aria-label=""
-                class="form-select"
-                id="Random-id"
-              >
-                <option
-                  value="1"
-                >
-                  Option 1
-                </option>
-                <option
-                  value="2"
-                >
-                  Option 2
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-      `);
+<div>
+  <div>
+    <div
+      class="input-group"
+    >
+      <select
+        aria-label=""
+        class="form-select"
+        id="Random-id"
+      >
+        <option
+          value="1"
+        >
+          Option 1
+        </option>
+        <option
+          value="2"
+        >
+          Option 2
+        </option>
+      </select>
+      <span
+        aria-hidden="true"
+        class="form-control-icon-mask form-select-icon"
+      />
+    </div>
+  </div>
+</div>
+`);
     });
 
     it('should render with a floating label', () => {

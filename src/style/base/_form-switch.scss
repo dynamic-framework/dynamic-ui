@@ -1,30 +1,80 @@
+// Switch.
+//
+// POC del rediseño: la perilla era un SVG con el color horneado dentro, uno
+// distinto por estado (reposo, foco, marcado, válido, inválido). Aquí es un
+// círculo CSS —`border-radius: 50%` sobre el ::before de la caja— así que su
+// color es una variable y no queda ni un SVG en el control.
+
 .form-switch {
   --#{$prefix}form-switch-width: #{$form-switch-width};
-  --#{$prefix}form-switch-padding-start: calc(#{$form-switch-padding-start} * -1);
-  --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image)};
-  --#{$prefix}form-switch-border-radius: #{$form-switch-border-radius};
-  --#{$prefix}form-switch-focus-bg-image: #{escape-svg($form-switch-focus-bg-image)};
-  --#{$prefix}form-switch-checked-bg-image: #{escape-svg($form-switch-checked-bg-image)};
+  // Igual que el glifo del check: proporciones del alto del control, para que
+  // una pista más alta traiga una perilla más grande sin tocar nada más.
+  --#{$prefix}form-switch-knob-scale: .75;
+  --#{$prefix}form-switch-knob-size: calc(var(--#{$prefix}form-check-size) * var(--#{$prefix}form-switch-knob-scale));
+  --#{$prefix}form-switch-knob-inset: calc((var(--#{$prefix}form-check-size) - var(--#{$prefix}form-switch-knob-size)) / 2);
 
-  .form-check-input {
-    width: var(--#{$prefix}form-switch-width);
-    margin-left: var(--#{$prefix}form-switch-padding-start);
-    border-radius: var(--#{$prefix}form-switch-border-radius);
+  // La perilla lee `--bs-form-switch-knob-color`, que vive en `:root` por la
+  // misma razón que las del check.
 
-    &:focus {
-      --#{$prefix}form-switch-bg: var(--#{$prefix}form-switch-focus-bg-image);
-    }
+  // Sólo el ancho: el alto lo sigue marcando --bs-form-check-size, porque la
+  // pista es alargada y no una caja cuadrada.
+  --#{$prefix}form-check-width: var(--#{$prefix}form-switch-width);
 
-    &:checked {
-      --#{$prefix}form-switch-bg: var(--#{$prefix}form-switch-checked-bg-image);
+  .form-check-control {
+    --#{$prefix}form-check-border-radius: #{$form-switch-border-radius};
+
+    justify-content: flex-start;
+
+    // La perilla. Sin máscara y sin imagen: un círculo.
+    &::before {
+      // Posicionada, no como flex item: al desplazarse, el ancho que pedía
+      // (margen + perilla) superaba el interior del control —los bordes
+      // restan— y flex la encogía 2px, así que salía ovalada en vez de
+      // redonda. Absoluta, el 100% es la caja de relleno y el borde ya no
+      // entra en la cuenta.
+      //
+      // `inset-inline-start` es una longitud, así que anima, y por ser
+      // propiedad lógica en RTL se desplaza hacia el otro lado sin reglas
+      // aparte. El valor va declarado en cada estado y no a través de una
+      // custom property: cuando lo que cambia es la variable, el navegador
+      // sustituye el valor pero no interpola, y el salto sale seco.
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: var(--#{$prefix}form-switch-knob-inset);
+      width: var(--#{$prefix}form-switch-knob-size);
+      height: var(--#{$prefix}form-switch-knob-size);
+      background-color: var(--#{$prefix}form-switch-knob-color);
+      border-radius: 50%;
+      opacity: 1;
+      /* stylelint-disable property-no-vendor-prefix --
+      el prefijo -webkit- es obligatorio dentro del floor de .browserslistrc: Chrome 111
+      no implementaba mask-* sin prefijo, que llegó en la 120. */
+      -webkit-mask-image: none;
+      mask-image: none;
+      /* stylelint-enable property-no-vendor-prefix */
+      transform: translateY(-50%);
+      @include transition($form-switch-knob-transition);
     }
   }
 
-  .form-check-input.is-valid:not(:checked) {
-    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-valid-bg-image)};
+  // El desplazamiento de la perilla es la única diferencia visual del marcado:
+  // `margin-inline-start: auto` la lleva al otro extremo de la pista.
+  .form-check-input:checked ~ .form-check-control {
+    --#{$prefix}form-switch-knob-color: var(--#{$prefix}form-switch-checked-knob-color);
+
+    &::before {
+      inset-inline-start:
+        calc(
+          100% - var(--#{$prefix}form-switch-knob-size) - var(--#{$prefix}form-switch-knob-inset)
+        );
+    }
   }
 
-  .form-check-input.is-invalid:not(:checked) {
-    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-invalid-bg-image)};
+  // Válido e inválido sin marcar: la perilla toma el color del estado. Antes
+  // eran dos SVG con #198754 y #dc3545 dentro, que ningún theme alcanzaba.
+  @each $state, $data in $form-validation-states {
+    .form-check-input.is-#{$state}:not(:checked) ~ .form-check-control {
+      --#{$prefix}form-switch-knob-color: #{map-get($data, "border-color")};
+    }
   }
 }

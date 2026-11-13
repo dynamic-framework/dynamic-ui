@@ -383,6 +383,16 @@
   // We can't use a css variable in SVG code,
   --#{$prefix}form-feedback-icon-invalid: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$danger}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$danger}' stroke='none'/></svg>"))};
 
+  // Colores de los controles de formulario. Van en `:root` a propósito: una
+  // variable declarada sobre el componente gana a la heredada, así que un
+  // theme que las declarara en `:root` no las alcanzaría. Son colores CSS, no
+  // SVG: por eso un theme solo necesita cambiar un color.
+  --#{$prefix}form-check-checked-bg: var(--#{$prefix}primary);
+  --#{$prefix}form-check-icon-color: var(--#{$prefix}white);
+  --#{$prefix}form-switch-knob-color: var(--#{$prefix}gray-300);
+  --#{$prefix}form-switch-checked-knob-color: var(--#{$prefix}white);
+  --#{$prefix}form-select-icon-color: var(--#{$prefix}gray-500);
+
   --#{$prefix}default-placeholder-bg: var(--#{$prefix}secondary-200);
 
   --#{$prefix}default-accordion-padding-x: var(--#{$prefix}ref-spacer-4);

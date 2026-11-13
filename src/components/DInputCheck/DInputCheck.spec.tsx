@@ -24,12 +24,20 @@ describe('<DInputCheck />', () => {
 
     expect(container).toMatchInlineSnapshot(`
 <div>
-  <input
-    class="form-check-input"
-    id="checkTest"
-    type="checkbox"
-    value=""
-  />
+  <div
+    class="form-check"
+  >
+    <input
+      class="form-check-input"
+      id="checkTest"
+      type="checkbox"
+      value=""
+    />
+    <span
+      aria-hidden="true"
+      class="form-check-control"
+    />
+  </div>
 </div>
 `);
   });
@@ -50,12 +58,20 @@ describe('<DInputCheck />', () => {
 
     expect(container).toMatchInlineSnapshot(`
 <div>
-  <input
-    class="form-check-input"
-    id="radioTest"
-    type="radio"
-    value=""
-  />
+  <div
+    class="form-check"
+  >
+    <input
+      class="form-check-input"
+      id="radioTest"
+      type="radio"
+      value=""
+    />
+    <span
+      aria-hidden="true"
+      class="form-check-control"
+    />
+  </div>
 </div>
 `);
   });

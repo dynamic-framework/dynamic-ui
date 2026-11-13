@@ -1,13 +1,55 @@
+// Checkbox, radio e indeterminado.
+//
+// POC del rediseño: Bootstrap pinta la caja y el glifo en el mismo elemento, el
+// propio <input>, y el glifo va como background-image. Un data URI de SVG no
+// puede leer una custom property, así que el color del glifo queda horneado en
+// tiempo de compilación y ningún theme lo alcanza: con un primary claro el
+// check se queda blanco sobre fondo claro.
+//
+// Aquí la caja y el glifo son elementos distintos. El <input> sigue siendo el
+// control —enfocable, etiquetado y anunciado— pero deja de pintarse; la caja es
+// `.form-check-control`, y el glifo su ::before, que se recorta con una máscara
+// y se colorea con `background-color`. El color pasa a ser una variable CSS de
+// verdad, y la forma, una máscara estática que ningún theme necesita regenerar.
+
 .form-check-label {
   --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
 }
 
-.form-check-input {
+.form-check {
+  --#{$prefix}form-check-size: #{$form-check-input-width};
+  // Ancho aparte del alto: el switch es una pista larga, no una caja cuadrada.
+  --#{$prefix}form-check-width: var(--#{$prefix}form-check-size);
+  --#{$prefix}form-check-bg: #{$form-check-input-bg};
+  // Bootstrap define el borde del check como shorthand, no en piezas.
+  --#{$prefix}form-check-border: #{$form-check-input-border};
+  --#{$prefix}form-check-border-radius: #{$form-check-input-border-radius};
+
+  // `--bs-form-check-checked-bg` y `--bs-form-check-icon-color` viven en
+  // `:root`: son las dos que un theme cambia, y declaradas aquí no las
+  // alcanzaría.
+
+  // Proporción, no longitud: el glifo se mide contra el control, así que
+  // cambiar --bs-form-check-size lo escala todo junto. Con un `em` se medía
+  // contra la fuente, y la caja crecía sola.
+  --#{$prefix}form-check-icon-scale: .75;
+  // Grosor del trazo del check y de la barra del indeterminado. Es una
+  // variable CSS, no un número de Sass, porque los glifos se dibujan con
+  // bordes y no con un SVG: dentro de un data URI no habría forma de leerla.
+  --#{$prefix}form-check-icon-thickness: .125em;
+  // El control se alinea con la primera línea de la etiqueta, no con el borde
+  // de arriba. Derivarlo del interlineado evita tener que forzar
+  // `line-height: 1`, que aplastaría el texto para cuadrar un cuadrito.
+  --#{$prefix}form-check-align-offset: calc((#{$line-height-base} * 1em - var(--#{$prefix}form-check-size)) / 2);
+
   --#{$prefix}form-check-input-focus-border-color: #{$component-focus-border-color};
   --#{$prefix}form-check-input-focus-box-shadow: #{$input-btn-focus-box-shadow};
-}
 
-.form-check {
+  position: relative;
+  display: block;
+  min-height: var(--#{$prefix}form-check-size);
+  padding-inline-start: var(--#{$prefix}form-check-width);
+
   // .form-check padding-start only accounts for the input width, the gap between
   // the input and the label comes from .form-check-label's --bs-label-padding-x.
   // The hint must repeat that offset to stay aligned with the label text.
@@ -24,5 +66,124 @@
         color: $border-color;
       }
     }
+  }
+}
+
+// El control real. Sigue recibiendo el foco, el nombre accesible y el estado;
+// sólo se le quita la pintura. Nunca `display: none` ni `visibility: hidden`,
+// que lo sacarían del árbol de accesibilidad y del orden de tabulación: se
+// superpone a la caja con opacidad 0, así que el clic y el foco caen donde el
+// usuario ve el control.
+.form-check-input {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 1;
+  width: var(--#{$prefix}form-check-width);
+  height: var(--#{$prefix}form-check-size);
+  margin: 0;
+  margin-block-start: var(--#{$prefix}form-check-align-offset);
+  appearance: none;
+  cursor: pointer;
+  opacity: 0;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+// La caja. `aria-hidden` en el marcado: es decoración, el estado lo anuncia el
+// input.
+.form-check-control {
+
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}form-check-width);
+  height: var(--#{$prefix}form-check-size);
+  margin-block-start: var(--#{$prefix}form-check-align-offset);
+  pointer-events: none;
+  background-color: var(--#{$prefix}form-check-bg);
+  border: var(--#{$prefix}form-check-border);
+  border-radius: var(--#{$prefix}form-check-border-radius);
+
+  // El tamaño se resuelve aquí y no en `.form-check`: las escalas del radio y
+  // del indeterminado se declaran sobre este elemento, y un calc resuelto en
+  // el ancestro no las vería.
+  --#{$prefix}form-check-icon-size: calc(var(--#{$prefix}form-check-size) * var(--#{$prefix}form-check-icon-scale));
+  @include transition($form-check-transition);
+
+  // El glifo se dibuja con bordes, no con una máscara de SVG. Es lo que
+  // permite que el grosor sea una custom property: dentro de un data URI
+  // ninguna variable se resolvería. De paso, en el control no queda ni un SVG.
+  &::before {
+    content: "";
+    opacity: 0;
+    @include transition($form-check-icon-transition);
+  }
+}
+
+// Las tres formas se acotan a `.form-check` que no sea switch: la perilla
+// también cuelga de un [type="checkbox"], y sus reglas viven en _form-switch.
+// Check: una escuadra girada 45°, así que el grosor es el de sus dos bordes.
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:not(:indeterminate) ~ .form-check-control::before {
+  width: calc(var(--#{$prefix}form-check-icon-size) * .55);
+  height: var(--#{$prefix}form-check-icon-size);
+  border-block-end: var(--#{$prefix}form-check-icon-thickness) solid var(--#{$prefix}form-check-icon-color);
+  border-inline-end: var(--#{$prefix}form-check-icon-thickness) solid var(--#{$prefix}form-check-icon-color);
+  // El giro deja la escuadra descentrada: el ajuste la devuelve al medio.
+  transform: translateY(-8%) rotate(45deg);
+}
+
+// Indeterminado: una barra del mismo grosor que el check.
+.form-check:not(.form-switch) .form-check-input:indeterminate ~ .form-check-control::before {
+  width: var(--#{$prefix}form-check-icon-size);
+  height: var(--#{$prefix}form-check-icon-thickness);
+  background-color: var(--#{$prefix}form-check-icon-color);
+  border-radius: var(--#{$prefix}form-check-icon-thickness);
+}
+
+// Radio: un círculo, igual que la perilla del switch.
+.form-check:not(.form-switch) .form-check-input[type="radio"] ~ .form-check-control::before {
+  width: var(--#{$prefix}form-check-icon-size);
+  height: var(--#{$prefix}form-check-icon-size);
+  background-color: var(--#{$prefix}form-check-icon-color);
+  border-radius: 50%;
+}
+
+.form-check-input[type="radio"] ~ .form-check-control {
+  --#{$prefix}form-check-border-radius: 50%;
+  --#{$prefix}form-check-icon-scale: .5;
+}
+
+.form-check-input:checked ~ .form-check-control,
+.form-check-input:indeterminate ~ .form-check-control {
+  --#{$prefix}form-check-bg: var(--#{$prefix}form-check-checked-bg);
+  --#{$prefix}form-check-border: var(--#{$prefix}border-width) solid var(--#{$prefix}form-check-checked-bg);
+
+  &::before {
+    opacity: 1;
+  }
+}
+
+.form-check-input:indeterminate ~ .form-check-control {
+  --#{$prefix}form-check-icon-scale: .625;
+}
+
+.form-check-input:focus-visible ~ .form-check-control {
+  border-color: var(--#{$prefix}form-check-input-focus-border-color);
+  box-shadow: var(--#{$prefix}form-check-input-focus-box-shadow);
+}
+
+.form-check-input:disabled ~ .form-check-control {
+  opacity: $form-check-label-disabled-opacity;
+}
+
+@each $state, $data in $form-validation-states {
+  .form-check-input.is-#{$state} ~ .form-check-control {
+    --#{$prefix}form-check-border: var(--#{$prefix}border-width) solid #{map-get($data, "border-color")};
   }
 }

@@ -1,0 +1,64 @@
+// Flecha del select e iconos de validación.
+//
+// POC del rediseño: estos dos iban como `background-image` sobre el propio
+// <select> o <input>, y un elemento de formulario no admite pseudo-elementos,
+// así que no había dónde poner una máscara. La salida es el contenedor que
+// estos componentes ya renderizan: el icono es un <span> dentro del
+// `.input-group`, con la forma en una máscara y el color en una variable.
+
+// Las versiones horneadas de Bootstrap se apagan: la librería hace que estas
+// tres variables alimenten sus `background-image`, así que ponerlas a `none`
+// quita la imagen sin tocar el resto de la regla.
+.form-select {
+  --#{$prefix}form-select-bg-img: none;
+}
+
+.form-control,
+.form-select {
+  --#{$prefix}form-feedback-icon-valid: none;
+  --#{$prefix}form-feedback-icon-invalid: none;
+}
+
+.form-control-icon-mask {
+  --#{$prefix}form-icon-size: 1rem;
+  --#{$prefix}form-icon-color: var(--#{$prefix}form-select-icon-color);
+  --#{$prefix}form-icon-inset: var(--#{$prefix}ref-spacer-4);
+
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--#{$prefix}form-icon-inset);
+  z-index: 4;
+  width: var(--#{$prefix}form-icon-size);
+  height: var(--#{$prefix}form-icon-size);
+  pointer-events: none;
+  background-color: var(--#{$prefix}form-icon-color);
+  /* stylelint-disable property-no-vendor-prefix --
+  el prefijo -webkit- es obligatorio dentro del floor de .browserslistrc: Chrome 111
+  no implementaba mask-* sin prefijo, que llegó en la 120. */
+  -webkit-mask-image: var(--#{$prefix}form-icon);
+  mask-image: var(--#{$prefix}form-icon);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  /* stylelint-enable property-no-vendor-prefix */
+  transform: translateY(-50%);
+}
+
+.form-select-icon {
+  --#{$prefix}form-icon: #{escape-svg($form-select-icon)};
+  --#{$prefix}form-icon-size: #{$form-select-bg-size};
+}
+
+@each $state, $data in $form-validation-states {
+  .form-feedback-icon-#{$state} {
+    --#{$prefix}form-icon: #{escape-svg($form-feedback-icon-shape)};
+    --#{$prefix}form-icon-color: #{map-get($data, "border-color")};
+  }
+}
+
+.form-feedback-icon-invalid {
+  --#{$prefix}form-icon: #{escape-svg($form-feedback-icon-invalid-shape)};
+}

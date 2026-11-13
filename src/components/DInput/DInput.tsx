@@ -199,17 +199,39 @@ function DInput(
     label,
   ]);
 
+  // El icono de validación: decoración con máscara dentro del contenedor que
+  // el componente ya renderiza, porque un <input> no admite pseudo-elementos.
+  // Sólo cuando no hay un iconEnd, que ocuparía el mismo sitio.
+  const feedbackIcon = useMemo(() => {
+    if (iconEnd || loading || !(invalid || valid)) return null;
+    return (
+      <span
+        className={classNames(
+          'form-control-icon-mask',
+          invalid ? 'form-feedback-icon-invalid' : 'form-feedback-icon-valid',
+        )}
+        aria-hidden="true"
+      />
+    );
+  }, [iconEnd, loading, invalid, valid]);
+
   const dynamicComponent = useMemo(() => {
     if (floatingLabel) {
       return (
         <div className="form-floating">
           {inputComponent}
           {labelComponent}
+          {feedbackIcon}
         </div>
       );
     }
-    return inputComponent;
-  }, [floatingLabel, inputComponent, labelComponent]);
+    return (
+      <>
+        {inputComponent}
+        {feedbackIcon}
+      </>
+    );
+  }, [floatingLabel, inputComponent, labelComponent, feedbackIcon]);
 
   if (process.env.NODE_ENV !== 'production') {
     warnLabelUsage({

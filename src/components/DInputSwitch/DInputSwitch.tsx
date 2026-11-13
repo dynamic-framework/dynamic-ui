@@ -132,6 +132,8 @@ export default function DInputSwitch(
         aria-label={ariaLabel}
         {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       />
+      {/* La pista y la perilla: decoración, el estado lo anuncia el input. */}
+      <span className="form-check-control" aria-hidden="true" />
       {hasLabelContent(label) && (
         <DFormLabel
           className="form-check-label"

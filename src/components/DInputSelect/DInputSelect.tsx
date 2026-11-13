@@ -160,32 +160,36 @@ export default function DInputSelect<T extends object = DefaultOption>(
   ), [id, iconStart, iconEnd, hint]);
 
   const selectComponent = useMemo(() => (
-    <select
-      id={id}
-      name={name}
-      className={classNames({
-        'form-select': true,
-        [`form-select-${size}`]: !!size,
-        'floating-label': floatingLabel,
-        'is-invalid': invalid,
-        'is-valid': valid,
-      })}
-      aria-label={ariaLabel ?? (isTextLabel(label) ? String(label) : undefined)}
-      disabled={disabled || loading}
-      onChange={changeHandler}
-      onBlur={blurHandler}
-      {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
-      {...value && { value }}
-    >
-      {options.map((option) => (
-        <option
-          value={internalValueExtractor(option)}
-          key={internalValueExtractor(option)}
-        >
-          {internalLabelExtractor(option)}
-        </option>
-      ))}
-    </select>
+    <>
+      <select
+        id={id}
+        name={name}
+        className={classNames({
+          'form-select': true,
+          [`form-select-${size}`]: !!size,
+          'floating-label': floatingLabel,
+          'is-invalid': invalid,
+          'is-valid': valid,
+        })}
+        aria-label={ariaLabel ?? (isTextLabel(label) ? String(label) : undefined)}
+        disabled={disabled || loading}
+        onChange={changeHandler}
+        onBlur={blurHandler}
+        {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+        {...value && { value }}
+      >
+        {options.map((option) => (
+          <option
+            value={internalValueExtractor(option)}
+            key={internalValueExtractor(option)}
+          >
+            {internalLabelExtractor(option)}
+          </option>
+        ))}
+      </select>
+      {/* La flecha: decoración con máscara, el color lo pone una variable. */}
+      <span className="form-control-icon-mask form-select-icon" aria-hidden="true" />
+    </>
   ), [
     ariaDescribedby,
     ariaLabel,

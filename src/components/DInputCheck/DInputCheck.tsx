@@ -134,31 +134,37 @@ export default function DInputCheck(
     innerRef.current.checked = checked;
   }, [isControlled, checked]);
 
+  // La caja y el glifo son un elemento aparte: el <input> sigue siendo el
+  // control, pero no se pinta. Es decoración, así que no entra en el árbol de
+  // accesibilidad; el estado lo anuncia el input.
   const inputComponent = useMemo(() => (
-    <input
-      ref={innerRef}
-      {...isControlled
-        ? { checked }
-        : defaultChecked !== undefined && { defaultChecked }}
-      onChange={handleChange}
-      className={classNames(
-        'form-check-input',
-        {
-          'is-invalid': invalid,
-          'is-valid': valid,
-        },
-        inputClassName,
-      )}
-      style={style}
-      id={id}
-      disabled={disabled}
-      type={type}
-      name={name}
-      value={value}
-      aria-label={ariaLabel}
-      {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
-      {...props}
-    />
+    <>
+      <input
+        ref={innerRef}
+        {...isControlled
+          ? { checked }
+          : defaultChecked !== undefined && { defaultChecked }}
+        onChange={handleChange}
+        className={classNames(
+          'form-check-input',
+          {
+            'is-invalid': invalid,
+            'is-valid': valid,
+          },
+          inputClassName,
+        )}
+        style={style}
+        id={id}
+        disabled={disabled}
+        type={type}
+        name={name}
+        value={value}
+        aria-label={ariaLabel}
+        {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+        {...props}
+      />
+      <span className="form-check-control" aria-hidden="true" />
+    </>
   ), [
     isControlled,
     checked,
@@ -190,8 +196,17 @@ export default function DInputCheck(
     });
   }
 
+  // Sin label el contenedor sigue haciendo falta: la caja se posiciona contra
+  // él y de él toma su tamaño.
   if (!hasLabelContent(label)) {
-    return inputComponent;
+    return (
+      <div
+        className={classNames('form-check', className)}
+        {...dataAttributes}
+      >
+        {inputComponent}
+      </div>
+    );
   }
 
   return (

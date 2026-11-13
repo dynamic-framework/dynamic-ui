@@ -22,25 +22,29 @@ describe('<DInputSwitch />', () => {
         </DContextProvider>,
       );
       expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            class="form-check form-switch"
-          >
-            <input
-              class="form-check-input"
-              id="switchTest"
-              role="switch"
-              type="checkbox"
-            />
-            <label
-              class="form-check-label"
-              for="switchTest"
-            >
-              toggle
-            </label>
-          </div>
-        </div>
-      `);
+<div>
+  <div
+    class="form-check form-switch"
+  >
+    <input
+      class="form-check-input"
+      id="switchTest"
+      role="switch"
+      type="checkbox"
+    />
+    <span
+      aria-hidden="true"
+      class="form-check-control"
+    />
+    <label
+      class="form-check-label"
+      for="switchTest"
+    >
+      toggle
+    </label>
+  </div>
+</div>
+`);
     });
 
     it('should be checked when the checked prop is true', () => {
