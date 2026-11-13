@@ -238,6 +238,7 @@ export function mergeNotes(body, block) {
 /**
  * Body final del release. Si el diff completo no cabe en el límite, prueba con
  * solo el diff de `:root` y, si tampoco cabe, deja únicamente el resumen.
+ * Devuelve `null` si ni el resumen cabe: las notas existentes no se tocan.
  */
 export function notesWithinLimit(body, sections, options = {}, limit = RELEASE_BODY_LIMIT) {
   const attempts = [
@@ -249,7 +250,7 @@ export function notesWithinLimit(body, sections, options = {}, limit = RELEASE_B
     const notes = mergeNotes(body, buildMarkdown(sections, { ...options, include }));
     if (notes.length <= limit) return notes;
   }
-  return mergeNotes(body, buildMarkdown(sections, { ...options, include: attempts[2] }));
+  return null;
 }
 
 // --- CLI ---
@@ -298,7 +299,13 @@ function main(argv) {
   fs.writeFileSync(path.join(outDir, 'css-diff.patch'), sections.map((section) => section.diff).join(''));
   fs.writeFileSync(path.join(outDir, 'css-diff.md'), `${buildMarkdown(sections, options)}\n`);
   if (flags.notes) {
-    fs.writeFileSync(path.join(outDir, 'notes.md'), notesWithinLimit(read(flags.notes), sections, options));
+    const notes = notesWithinLimit(read(flags.notes), sections, options);
+    if (notes === null) {
+      // Sin notes.md el workflow no edita el release y conserva las notas actuales.
+      process.stdout.write(`::warning::Las notas del release no admiten ni el resumen del diff del CSS sin superar ${RELEASE_BODY_LIMIT} caracteres; no se modifican.\n`);
+    } else {
+      fs.writeFileSync(path.join(outDir, 'notes.md'), notes);
+    }
   }
 
   sections.forEach((section) => {

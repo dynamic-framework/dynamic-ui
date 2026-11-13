@@ -134,6 +134,22 @@ describe('css-diff', () => {
     expect(read('css-diff.md').length).toBeGreaterThan(125000);
   });
 
+  test('si ni el resumen cabe en el body del release, no genera notes.md y emite un warning', () => {
+    const notes = path.join(workdir, 'body.md');
+    fs.writeFileSync(notes, `### Features\n\n${'x'.repeat(124900)}\n`);
+    const outDir = path.join(workdir, 'out');
+
+    const stdout = run([
+      '--prev', PREV, '--next', NEXT, '--out-dir', outDir,
+      '--prev-label', 'v2.12.0', '--next-label', 'v2.13.0', '--patch-url', PATCH_URL, '--notes', notes,
+    ]);
+    expect(stdout).toContain('::warning::');
+    expect(fs.existsSync(path.join(outDir, 'notes.md'))).toBe(false);
+    // El patch y css-diff.md se generan igual.
+    expect(fs.readFileSync(path.join(outDir, 'css-diff.patch'), 'utf8')).toContain('+.d-new-widget {');
+    expect(fs.existsSync(path.join(outDir, 'css-diff.md'))).toBe(true);
+  });
+
   describe('previous-version', () => {
     const manifest = () => {
       const file = path.join(workdir, 'manifest.json');

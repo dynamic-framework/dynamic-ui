@@ -127,6 +127,10 @@ jobs:
             --patch-url "https://github.com/${{ github.repository }}/releases/download/$RELEASE_TAG/css-diff.patch" \
             --notes /tmp/release-body.md
           gh release upload "$RELEASE_TAG" /tmp/css-diff/css-diff.patch --clobber
+          # Sin notes.md el diff no cabe ni como resumen (el script ya emitió el warning).
+          if [ ! -f /tmp/css-diff/notes.md ]; then
+            exit 0
+          fi
           gh release edit "$RELEASE_TAG" --notes-file /tmp/css-diff/notes.md
           echo "Diff del CSS de $RELEASE_TAG contra v$PREV agregado a las notas del release." >> "$GITHUB_STEP_SUMMARY"
       - name: Configure AWS Credentials
