@@ -1,0 +1,115 @@
+// Iconos monocromos servidos como SVG.
+//
+// Un SVG usado como imagen se renderiza como un documento aislado: no hereda
+// las custom properties de la página, así que un `var()` dentro del data URI
+// se queda sin valor y la propiedad cae a su valor inicial. Pasaba en tres:
+//
+//   .navbar-toggler-icon   stroke sin valor -> `none` -> el botón salía vacío
+//   .accordion-button      fill sin valor   -> negro  -> no seguía al theme
+//   .btn-close             fill sin valor   -> negro  -> acertaba por azar
+//
+// La salida es no pedirle color al SVG: el data URI pasa a ser sólo la
+// silueta, se usa como máscara, y el color lo pone un `background-color` que
+// sí es una custom property normal y tematizable.
+//
+// Las variables que llevan la URL se conservan con el mismo nombre y ahora
+// alimentan la máscara, así que quien las sobrescriba para cambiar la forma
+// sigue funcionando.
+
+@mixin svg-icon-mask($image, $color) {
+  background-color: $color;
+  background-image: none;
+  /* stylelint-disable property-no-vendor-prefix --
+     el prefijo -webkit- es obligatorio dentro del floor de .browserslistrc:
+     Chrome 111 no implementaba mask-* sin prefijo, que llegó en la 120. */
+  -webkit-mask-image: $image;
+  mask-image: $image;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  /* stylelint-enable property-no-vendor-prefix */
+}
+
+// -- Navbar toggler ---------------------------------------------------------
+
+.navbar {
+  --#{$prefix}navbar-toggler-icon-color: #{$navbar-light-icon-color};
+}
+
+.navbar-toggler-icon {
+  @include svg-icon-mask(
+    var(--#{$prefix}navbar-toggler-icon-bg),
+    var(--#{$prefix}navbar-toggler-icon-color)
+  );
+}
+
+// El navbar oscuro sólo cambia el color: la silueta es la misma.
+.navbar-dark,
+[data-#{$prefix}theme="dark"] .navbar {
+  --#{$prefix}navbar-toggler-icon-color: #{$navbar-dark-color};
+}
+
+// -- Chevron del acordeón ---------------------------------------------------
+
+.accordion {
+  --#{$prefix}accordion-btn-icon-color: #{$accordion-icon-color};
+  --#{$prefix}accordion-btn-active-icon-color: #{$accordion-icon-active-color};
+}
+
+.accordion-button::after {
+  @include svg-icon-mask(
+    var(--#{$prefix}accordion-btn-icon),
+    var(--#{$prefix}accordion-btn-icon-color)
+  );
+}
+
+// Abierto: misma flecha, otro color. La silueta activa se conserva como
+// máscara por si un theme la cambia, pero el color ya no viaja dentro.
+.accordion-button:not(.collapsed)::after {
+  @include svg-icon-mask(
+    var(--#{$prefix}accordion-btn-active-icon),
+    var(--#{$prefix}accordion-btn-active-icon-color)
+  );
+}
+
+// -- Botón de cierre --------------------------------------------------------
+
+// Bootstrap lo pinta con el shorthand `background`, que de paso fija el
+// tamaño; al pasar a máscara hay que reponer ese tamaño aquí.
+.btn-close {
+  @include svg-icon-mask(
+    var(--#{$prefix}btn-close-bg),
+    var(--#{$prefix}btn-close-color)
+  );
+
+  /* stylelint-disable property-no-vendor-prefix --
+     mismo motivo que arriba. */
+  -webkit-mask-size: $btn-close-width auto;
+  mask-size: $btn-close-width auto;
+  /* stylelint-enable property-no-vendor-prefix */
+}
+
+// -- Controles del carrusel -------------------------------------------------
+
+.carousel {
+  --#{$prefix}carousel-control-icon-color: #{$carousel-control-color};
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  @include svg-icon-mask(
+    var(--#{$prefix}carousel-control-icon-bg),
+    var(--#{$prefix}carousel-control-icon-color)
+  );
+}
+
+.carousel-control-prev-icon {
+  --#{$prefix}carousel-control-icon-bg: #{escape-svg($carousel-control-prev-icon-bg)};
+}
+
+.carousel-control-next-icon {
+  --#{$prefix}carousel-control-icon-bg: #{escape-svg($carousel-control-next-icon-bg)};
+}

@@ -38,7 +38,8 @@
   opacity: .85;
 }
 
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  filter: invert(1);
-}
+// Sin `filter: invert(1)`: existía para compensar que el SVG salía negro. El
+// `fill='var(--bs-white)'` que llevaba dentro no resolvía —un SVG servido como
+// imagen no hereda las custom properties— así que caía al negro inicial y el
+// filtro lo volvía blanco. Ahora el color lo pone `background-color` sobre una
+// máscara (base/_svg-icons.scss), así que invertirlo lo rompería.
