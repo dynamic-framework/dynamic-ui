@@ -57,7 +57,6 @@ describe('<DOtp /> a11y', () => {
         seconds={30}
         texts={{
           submit: 'Confirm',
-          resend: 'Send again',
           resendText: 'Send again',
           title: 'Enter the 4-digit code we sent you.',
           invalidCode: 'That code is not valid.',
@@ -67,5 +66,12 @@ describe('<DOtp /> a11y', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
+  it('no tiene violaciones con un texts parcial', async () => {
+    const { container } = render(<DOtp action={() => {}} texts={{ submit: 'Enviar' }} />);
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toContain('button-name');
   });
 });

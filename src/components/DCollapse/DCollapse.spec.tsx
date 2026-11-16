@@ -5,6 +5,7 @@ import {
   render,
   screen,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ComponentProps } from 'react';
 import DCollapse from '.';
 import { DContextProvider } from '../../contexts';
@@ -188,5 +189,115 @@ describe('<DCollapse />', () => {
     const icon = container.querySelector('.collapse-icon');
     expect(icon?.className).not.toContain('material-symbols-outlined');
     expect(icon?.querySelector('svg')).toBeInTheDocument();
+  });
+  describe('estado anunciado del encabezado', () => {
+    it('anuncia el estado actual y la región que controla', () => {
+      const { container } = render(
+        <DCollapse Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      const button = screen.getByRole('button');
+      const bodyWrapper = container.querySelector('.collapse-body-wrapper');
+
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(button.getAttribute('aria-controls')).toBe(bodyWrapper?.id);
+      expect(bodyWrapper?.id).toBeTruthy();
+    });
+
+    it('anuncia expandido cuando arranca abierto', () => {
+      render(
+        <DCollapse Component={HeaderMock} defaultCollapsed={false}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('cambia aria-expanded al hacer clic', async () => {
+      const user = userEvent.setup();
+      render(
+        <DCollapse Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      const button = screen.getByRole('button');
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('cambia aria-expanded con el teclado', async () => {
+      const user = userEvent.setup();
+      render(
+        <DCollapse Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      const button = screen.getByRole('button');
+      await user.tab();
+      expect(button).toHaveFocus();
+
+      await user.keyboard('{Enter}');
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+
+      await user.keyboard(' ');
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('apunta al cuerpo que realmente se muestra y se oculta', async () => {
+      const user = userEvent.setup();
+      const { container } = render(
+        <DCollapse Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      const button = screen.getByRole('button');
+      const controlled = document.getElementById(button.getAttribute('aria-controls') as string);
+
+      expect(controlled).toBe(container.querySelector('.collapse-body-wrapper'));
+      expect(controlled).toHaveTextContent('Collapsible Body');
+      expect(controlled).not.toHaveClass('show');
+
+      await user.click(button);
+      expect(controlled).toHaveClass('show');
+    });
+
+    it('deriva el id del cuerpo del id del contenedor sin duplicarlo', () => {
+      const { container } = render(
+        <DCollapse id="myCollapse" Component={HeaderMock}>
+          {BodyMock}
+        </DCollapse>,
+      );
+
+      const button = screen.getByRole('button');
+      const bodyId = button.getAttribute('aria-controls') as string;
+
+      expect(bodyId).not.toBe('myCollapse');
+      expect(container.querySelector('.collapse-container')?.id).toBe('myCollapse');
+      expect(document.getElementById(bodyId)).toHaveClass('collapse-body-wrapper');
+      expect(document.querySelectorAll(`[id="${bodyId}"]`)).toHaveLength(1);
+    });
+
+    it('da ids distintos a dos collapse sin id propio', () => {
+      render(
+        <>
+          <DCollapse Component={<>First Header</>}>First Body</DCollapse>
+          <DCollapse Component={<>Second Header</>}>Second Body</DCollapse>
+        </>,
+      );
+
+      const [first, second] = screen.getAllByRole('button');
+      expect(first.getAttribute('aria-controls')).not.toBe(second.getAttribute('aria-controls'));
+    });
   });
 });

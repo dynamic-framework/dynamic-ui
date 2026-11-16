@@ -1,6 +1,6 @@
 {
   "name": "Ejemplo con zonas",
-  "dynamicUi": "2.10.0",
+  "dynamicUi": "2.12.0",
   "roles": {
     "primary": "#3b5f8a",
     "secondary": "#5a6570",
@@ -86,15 +86,12 @@
     "oscura": {
       "vars": {
         "--bs-body-bg-rgb": "var(--bs-dark-rgb)",
-        "--bs-body-bg": "rgb(var(--bs-dark-rgb))",
         "--bs-body-color-rgb": "var(--bs-white-rgb)",
-        "--bs-body-color": "rgb(var(--bs-white-rgb))",
+        "--bs-secondary-bg-rgb": "var(--bs-gray-800-rgb)",
+        "--bs-tertiary-bg-rgb": "var(--bs-gray-900-rgb)",
         "--bs-secondary-color-rgb": "var(--bs-white-rgb)",
-        "--bs-secondary-color": "rgba(var(--bs-white-rgb), .75)",
         "--bs-tertiary-color-rgb": "var(--bs-white-rgb)",
-        "--bs-tertiary-color": "rgba(var(--bs-white-rgb), .5)",
         "--bs-emphasis-color-rgb": "var(--bs-white-rgb)",
-        "--bs-emphasis-color": "rgb(var(--bs-white-rgb))",
         "--bs-heading-color": "rgb(var(--bs-white-rgb))",
         "--bs-link-color-rgb": "var(--bs-primary-300-rgb)",
         "--bs-link-hover-color-rgb": "var(--bs-primary-200-rgb)",
@@ -122,7 +119,10 @@
             "--bs-btn-color": "rgb(var(--bs-white-rgb))",
             "--bs-btn-hover-color": "rgb(var(--bs-dark-rgb))",
             "--bs-btn-hover-bg": "rgb(var(--bs-primary-200-rgb))",
-            "--bs-btn-hover-border-color": "rgb(var(--bs-primary-200-rgb))"
+            "--bs-btn-hover-border-color": "rgb(var(--bs-primary-200-rgb))",
+            "--bs-btn-active-color": "rgb(var(--bs-dark-rgb))",
+            "--bs-btn-active-bg": "rgb(var(--bs-primary-300-rgb))",
+            "--bs-btn-active-border-color": "rgb(var(--bs-primary-300-rgb))"
           }
         },
         {

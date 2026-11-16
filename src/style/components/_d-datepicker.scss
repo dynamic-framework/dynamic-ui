@@ -345,7 +345,6 @@
   font-weight: var(--#{$prefix}fw-semibold) !important;
 }
 
-// START TODO: Revisar con Mati diseño del time
 .react-datepicker__time-container {
   float: right;
   border-left: 1px solid var(--#{$prefix}gray-100);
@@ -398,7 +397,6 @@
     }
   }
 }
-// END TODO: Revisar con Mati diseño del time
 
 .react-datepicker__week-number {
   color: var(--#{$prefix}datepicker-week-number-color);

@@ -21,22 +21,22 @@ const meta = {
     docs: {
       description: {
         component: `
-> We work with button variables at two levels, variables in root per variant (default, outline, link)
+> Button variables work at two levels, variables in root per variant (default, outline, link)
 >and internal variables in each button that use the previous ones.
 
 > - in the root there are variables for color (\`--bs-primary\`, \`--bs-info\`, ...),
 > - then variables for variant and color for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
-> - and finally for selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
->   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
+> - and finally the selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
+>   define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
 
 
-The style of our buttons is highly based on bootstrap, however,
-boostrap darkens or lightens the color of a button to generate its different states,
-we use the established palettes in the variables.
+Button styles are based on Bootstrap; however,
+Bootstrap darkens or lightens the color of a button to generate its different states,
+while Dynamic uses the palette shades defined in the variables.
 
-## Differences between bootstrap and our implementation:
+## Differences from Bootstrap:
 
-### For our buttons:
+### For Dynamic buttons:
 
 #### normal
 * **default** background \`-500\`, text contrast with background
@@ -91,7 +91,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
 | --${PREFIX_BS}btn-box-shadow         | .btn  | css box shadow  | Button box shadow               |
 | --${PREFIX_BS}btn-disabled-opacity   | .btn  | css length unit | Button link padding vertical    |
 | --${PREFIX_BS}btn-focus-box-shadow   | .btn  | css box shadow  | Button focus box shadow         |
-| --${PREFIX_BS}btn–text-decoration    | .btn  | text decoration | Button text decoration          |
+| --${PREFIX_BS}btn-text-decoration    | .btn  | text decoration | Button text decoration          |
 | --${PREFIX_BS}btn-lg-padding-x       | .btn  | css length unit | Button large padding horizontal |
 | --${PREFIX_BS}btn-lg-padding-y       | .btn  | css length unit | Button large padding vertical   |
 | --${PREFIX_BS}btn-lg-font-size       | .btn  | css length unit | Button large font size          |

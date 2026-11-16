@@ -532,13 +532,13 @@ export const Dashboard2: Story = {
                     <div className="d-avatar-group">
                       <DAvatar
                         name="AB"
-                        image="https://www.sarahdeanephotography.co.uk/wp-content/uploads/2021/01/MENS-GROOMING-FOR-PHOTO-SHOOT-IN-STUDIO-FOR-ONLINE-PROFILES-AND-PORTRAITURE-IN-NEWCASTLE-7.jpg"
+                        image="https://placehold.co/64x64/EEE/333?text=AB"
                         size="sm"
                         useNameAsInitials
                       />
                       <DAvatar
                         name="AB"
-                        image="https://www.anthropics.com/portraitpro/img/page-images/homepage/v22/what-can-it-do-2A.jpg"
+                        image="https://placehold.co/64x64/EEE/333?text=AB"
                         size="sm"
                         useNameAsInitials
                       />
@@ -550,7 +550,7 @@ export const Dashboard2: Story = {
                       />
                       <DAvatar
                         name="AB"
-                        image="https://us.images.westend61.de/0001485597pw/medium-shot-portrait-of-young-beautiful-woman-wearing-a-beige-dress-posing-in-a-field-full-of-flowers-and-surrounded-by-trees-she-is-with-her-hand-in-her-face-ADSF17772.jpg"
+                        image="https://placehold.co/64x64/EEE/333?text=AB"
                         size="sm"
                         useNameAsInitials
                       />
@@ -584,7 +584,7 @@ export const Dashboard2: Story = {
                   width: '100%',
                   display: 'block',
                 }}
-                src="https://img.freepik.com/free-vector/hand-drawn-w-colours-illustration_23-2149852395.jpg?t=st=1761342724~exp=1761346324~hmac=7ae6cc17547356bb03c37c5ff6039be6514e0c8feb50c975486113aa4b40e9ef&w=2000"
+                src="https://placehold.co/600x400"
               />
             </div>
           </DBox>

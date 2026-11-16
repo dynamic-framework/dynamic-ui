@@ -29,6 +29,30 @@ jobs:
           fi
       - name: Build packages
         run: npm run build
+      - name: Check package contents
+        # El paquete no lleva tests: solo jest/, que usan los tests del consumidor.
+        # --ignore-scripts deja en stdout solo el JSON; prepack no cambia la lista.
+        run: |
+          npm pack --dry-run --json --ignore-scripts > "$RUNNER_TEMP/pack.json"
+          node -e '
+            const [pack] = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"));
+            const tests = pack.files.map((f) => f.path)
+              .filter((p) => /\.(spec|test)\.[^/]+$/.test(p) && !p.startsWith("jest/"));
+            if (tests.length > 0) {
+              console.error(`El paquete lleva tests fuera de jest/:\n${tests.join("\n")}`);
+              process.exit(1);
+            }
+            console.log(`${pack.files.length} archivos, ninguno es un test fuera de jest/.`);
+          ' "$RUNNER_TEMP/pack.json"
+      - name: Check known-tokens.json
+        # theme-expand y theme-validate leen este inventario: tiene que tener los
+        # mismos tokens que el CSS que acaba de compilarse. No compara la versión.
+        run: node scripts/theme/build-known-tokens.mjs --check
+      - name: Validate api.json
+        # El build genera registry/api.json; el schema se genera aquí.
+        run: |
+          node scripts/generate-schema.mjs
+          npm run validate:registry
       - name: Lint packages
         run: |
           npm run eslint

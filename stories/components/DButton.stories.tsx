@@ -16,14 +16,14 @@ const meta = {
     docs: {
       description: {
         component: `
-Our **DButton** component extends Bootstrap's button system with
+**DButton** extends Bootstrap's button system with
 design-system–specific theming, palette consistency, and semantic structure.
 
 ---
 
 ## 💡 Overview
 
-We work with button variables at two levels:
+Button variables work at three levels:
 
 1. **Root variables** for color and theme  
    (\`--bs-primary\`, \`--bs-info\`, …)
@@ -32,7 +32,7 @@ We work with button variables at two levels:
 3. **Component-level internal variables**  
    (\`--bs-btn-bg\`, \`--bs-btn-color\`, …)
 
-Our button states use fixed palette shades instead of Bootstrap’s mix-based lightening/darkening system.
+Button states use fixed palette shades instead of Bootstrap’s mix-based lightening/darkening system.
 
 ---
 

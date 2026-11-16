@@ -14,7 +14,6 @@ export default async function configureI8n(
     .init({
       resources,
       lng,
-      initImmediate: true,
       fallbackLng,
       interpolation: {
         escapeValue: false, // react already safes from xss

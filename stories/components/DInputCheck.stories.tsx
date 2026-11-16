@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component: `
-Create consistent cross-browser and cross-device checkboxes with our completely rewritten checks component.
+Consistent cross-browser and cross-device checkboxes built on Bootstrap's checks component.
 
 **Checkbox:** Allows the user to make multiple selections from a set of options.
 

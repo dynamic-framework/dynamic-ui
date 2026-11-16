@@ -1,0 +1,77 @@
+/*
+ * Theme con zonas escrito a mano siguiendo scripts/theme/README.md: superficies
+ * en el raíz y, en la zona, cada triplete con su wrapper, `color` y
+ * `background-color` sobre el elemento, y bloques propios para .nav y .btn-*.
+ * Lo usa theme-validate.spec.ts: pasa --strict con salida 0.
+ */
+
+:root,
+[data-bs-theme="dynamic"] {
+  --bs-body-bg-rgb: 248, 249, 251;
+  --bs-body-color-rgb: var(--bs-gray-900-rgb);
+  --bs-border-color: rgb(var(--bs-gray-100-rgb));
+  --bs-secondary-bg-rgb: var(--bs-gray-50-rgb);
+  --bs-tertiary-bg-rgb: var(--bs-gray-25-rgb);
+}
+
+[data-bs-theme="nocturna"] {
+  --bs-body-bg-rgb: 17, 24, 39;
+  --bs-body-bg: rgb(17, 24, 39);
+  --bs-body-color-rgb: var(--bs-white-rgb);
+  --bs-body-color: rgb(var(--bs-white-rgb));
+  --bs-secondary-bg-rgb: var(--bs-gray-800-rgb);
+  --bs-secondary-bg: rgb(var(--bs-gray-800-rgb));
+  --bs-tertiary-bg-rgb: var(--bs-gray-900-rgb);
+  --bs-tertiary-bg: rgb(var(--bs-gray-900-rgb));
+  --bs-secondary-color-rgb: var(--bs-white-rgb);
+  --bs-secondary-color: rgba(var(--bs-white-rgb), .75);
+  --bs-emphasis-color-rgb: var(--bs-white-rgb);
+  --bs-emphasis-color: rgb(var(--bs-white-rgb));
+  --bs-heading-color: rgb(var(--bs-white-rgb));
+  --bs-link-color-rgb: var(--bs-primary-300-rgb);
+  --bs-link-color: rgb(var(--bs-link-color-rgb));
+  --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
+  --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
+  --bs-border-color: rgba(var(--bs-white-rgb), .15);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+
+[data-bs-theme="nocturna"] .nav {
+  --bs-nav-link-color: rgb(var(--bs-white-rgb));
+  --bs-nav-link-hover-color: rgb(var(--bs-primary-200-rgb));
+}
+
+[data-bs-theme="nocturna"] .nav-pills {
+  --bs-nav-pills-link-active-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-nav-pills-link-active-color: rgb(var(--bs-gray-900-rgb));
+}
+
+[data-bs-theme="nocturna"] .btn-primary {
+  --bs-btn-color: rgb(var(--bs-gray-900-rgb));
+  --bs-btn-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-border-color: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-hover-color: rgb(var(--bs-gray-900-rgb));
+  --bs-btn-hover-bg: rgb(var(--bs-primary-100-rgb));
+  --bs-btn-hover-border-color: rgb(var(--bs-primary-100-rgb));
+  --bs-btn-active-color: rgb(var(--bs-gray-900-rgb));
+  --bs-btn-active-bg: rgb(var(--bs-primary-300-rgb));
+  --bs-btn-active-border-color: rgb(var(--bs-primary-300-rgb));
+}
+
+[data-bs-theme="nocturna"] .btn-outline-primary {
+  --bs-btn-color: rgb(var(--bs-white-rgb));
+  --bs-btn-hover-color: rgb(var(--bs-gray-900-rgb));
+  --bs-btn-hover-bg: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-hover-border-color: rgb(var(--bs-primary-200-rgb));
+  --bs-btn-active-color: rgb(var(--bs-gray-900-rgb));
+  --bs-btn-active-bg: rgb(var(--bs-primary-300-rgb));
+  --bs-btn-active-border-color: rgb(var(--bs-primary-300-rgb));
+}
+
+[data-bs-theme="nocturna"] .list-group {
+  --bs-list-group-color: rgb(var(--bs-body-color-rgb));
+  --bs-list-group-bg: transparent;
+  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));
+  --bs-list-group-border-color: var(--bs-border-color);
+}

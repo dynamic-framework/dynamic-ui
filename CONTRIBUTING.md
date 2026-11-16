@@ -54,7 +54,9 @@ We **love** pull requests! Before [forking the repo](https://help.github.com/en/
 
 - **Add documentation.** Document your changes with storybook examples or controls if added.
 
-- **Use the repo's default branch.** Branch from and [submit your pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to the repo's default branch. Usually this is `master`, but it could be `develop`.
+- **Use the `develop` branch.** Branch from `develop` and [submit your pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) to `develop`, the repo's default branch. `master` only receives releases.
+
+- **Link the issue.** If your pull request resolves an issue, add `Closes #123` to its description so the issue closes when the pull request is merged.
 
 - **[Resolve any merge conflicts](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-on-github)** that occur.
 
@@ -115,10 +117,13 @@ npm run build:storybook
 
 ### Changing the API structure
 
-If you modify `api.json`'s root structure (add/remove/rename top-level fields):
+If you modify the structure of `api.json` (root fields or the fields of an entry):
 
-1. Update `scripts/generate-api.mjs` (source of truth).
+1. Update `scripts/generate-api.mjs` (source of truth) or
+   `scripts/component-docgen.mjs` for component props.
 2. Update `scripts/generate-schema.mjs` to keep the JSON Schema in sync.
-3. Bump `schemaVersion` in `generate-api.mjs` if the change is breaking.
+3. Bump `schemaVersion` in `generate-api.mjs` following the versioning policy
+   in `API_CONTRACT.md`: minor for additive changes, major for removals or renames.
 4. Update `API_CONTRACT.md` to document the change.
+5. Run `npm run generate:registry && npm run validate:registry`.
 

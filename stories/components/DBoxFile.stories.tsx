@@ -573,7 +573,7 @@ export const ChildrenAsFunction: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The `children` prop can be a function (render prop) that receives utilities like `openFileDialog`. This allows you to create a custom UI and trigger the file dialog programmatically. We recommend using the `noClick` prop to disable the default click-to-open behavior when using this pattern.',
+        story: 'The `children` prop can be a function (render prop) that receives utilities like `openFileDialog`. This allows you to create a custom UI and trigger the file dialog programmatically. Use the `noClick` prop to disable the default click-to-open behavior when using this pattern.',
       },
       source: {
         language: 'tsx',
