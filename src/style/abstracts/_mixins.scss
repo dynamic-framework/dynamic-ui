@@ -239,68 +239,115 @@
 // scss-docs-end df-table-variant
 
 @mixin exact-classes($names) {
-  $selector: ();
+  // Sin nombres no se emite nada: un selector vacío no es CSS válido, y una
+  // utilidad desactivada deja la lista vacía.
+  @if length($names) > 0 {
+    $selector: ();
 
-  @each $name in $names {
-    $selector: append($selector, unquote(".#{$name}"), comma);
-  }
+    @each $name in $names {
+      $selector: append($selector, unquote(".#{$name}"), comma);
+    }
 
-  #{$selector} {
-    @content;
+    #{$selector} {
+      @content;
+    }
   }
 }
 
-// The names a responsive utility generates, reading its values from the final
-// `$utilities` map. That map is the only source that also sees a consumer's
-// `map-merge`, so the list can never drift from the classes actually emitted.
+// The class names a utility generates, mirroring Bootstrap's utility API so the
+// list cannot drift from what is actually emitted:
 //
-// The infix comes from `breakpoint-infix()`, as in `base/_tables.scss`:
-// Bootstrap omits it when a breakpoint has no minimum width, not when it is
-// first in the map. With a `$grid-breakpoints` starting at `sm`, skipping the
-// first entry would list `display-1` where the utility emits `display-sm-1`.
+// - The root is the utility's `class`, falling back to its first property, so
+//   overriding `class` moves the list with it.
+// - Breakpoint infixes come from `breakpoint-infix()`, and only when the
+//   utility is `responsive` — otherwise Bootstrap emits it once, unprefixed.
+//   `print: true` adds the `-print` infix.
+// - A `null` value key means the base class, with no modifier.
+// - `state` appends a class per pseudo-class (`-hover` and friends).
+//
+// A utility that is absent or disabled returns an empty list instead of
+// failing: `$utilities` can be merged with `null` to switch one off.
 @function utility-class-names($utility-key) {
   $utility: map-get($utilities, $utility-key);
-  $base: map-get($utility, class);
-  $keys: map-keys(map-get($utility, values));
-  $names: ();
+
+  @if type-of($utility) != "map" {
+    @return ();
+  }
+
+  $values: map-get($utility, values);
+
+  @if $values == null {
+    @return ();
+  }
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  $properties: map-get($utility, property);
+
+  @if type-of($properties) == "string" {
+    $properties: append((), $properties);
+  }
+
+  $class: if(
+    map-has-key($utility, class),
+    map-get($utility, class),
+    if($properties, nth($properties, 1), null)
+  );
+  $class: if($class == null, "", $class);
+  $state: if(map-has-key($utility, state), map-get($utility, state), ());
+
+  $infixes: ();
 
   @each $breakpoint in map-keys($grid-breakpoints) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-    @each $key in $keys {
-      $names: append($names, "#{$base}#{$infix}-#{$key}");
+    @if map-get($utility, responsive) or $infix == "" {
+      $infixes: append($infixes, $infix);
+    }
+  }
+
+  @if map-get($utility, print) == true {
+    $infixes: append($infixes, "-print");
+  }
+
+  $names: ();
+
+  @each $infix in $infixes {
+    $i: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
+
+    @each $key, $value in $values {
+      $modifier: if($key, if($class == "" and $i == "", "", "-") + $key, "");
+      $name: "#{$class}#{$i}#{$modifier}";
+      $names: append($names, $name);
+
+      @each $pseudo in $state {
+        $names: append($names, "#{$name}-#{$pseudo}");
+      }
     }
   }
 
   @return $names;
 }
 
-// The names of the `link-underline` family. Colors and opacity steps come from
-// the two `$utilities` entries that generate them, not from a list of our own:
-// with a separate list, dropping a step left its class emitted but without the
-// underline, and adding one listed a class nobody generates.
+// The `link-underline` family: the color utility plus the opacity one, both
+// read from their own entries so an overridden `class` moves the list too.
 //
-// `abstracts/_utilities-hover.scss` and `_utilities-dark.scss` also prefix the
+// `abstracts/_utilities-hover.scss` and `_utilities-dark.scss` prefix only the
 // color utility — not the opacity one — and the previous substring selector
-// reached them. They are included with their escaped names so they keep the
-// underline. No prefixed combination of Bootstrap's `-hover` suffix is added:
-// those generators do not emit any.
+// reached them, so they are included with their escaped names.
 @function link-underline-class-names() {
-  $colors: map-keys(map-get(map-get($utilities, "link-underline"), values));
-  $steps: map-keys(map-get(map-get($utilities, "link-underline-opacity"), values));
   $names: ();
 
-  @each $color in $colors {
-    // The map's `null` key is the base class, with no suffix.
-    $suffix: if($color == null, "", "-#{$color}");
-    $names: append($names, "link-underline#{$suffix}");
-    $names: append($names, "hover\\:link-underline#{$suffix}");
-    $names: append($names, "dark\\:link-underline#{$suffix}");
+  @each $name in utility-class-names("link-underline") {
+    $names: append($names, $name);
+    $names: append($names, "hover\\:#{$name}");
+    $names: append($names, "dark\\:#{$name}");
   }
 
-  @each $step in $steps {
-    $names: append($names, "link-underline-opacity-#{$step}");
-    $names: append($names, "link-underline-opacity-#{$step}-hover");
+  @each $name in utility-class-names("link-underline-opacity") {
+    $names: append($names, $name);
   }
 
   @return $names;
