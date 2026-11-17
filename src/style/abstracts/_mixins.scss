@@ -333,24 +333,64 @@
   @return $names;
 }
 
-// The `link-underline` family: the color utility plus the opacity one, both
-// read from their own entries so an overridden `class` moves the list too.
-//
-// `abstracts/_utilities-hover.scss` and `_utilities-dark.scss` prefix only the
-// color utility — not the opacity one — and the previous substring selector
-// reached them, so they are included with their escaped names.
-@function link-underline-class-names() {
+// The names that `abstracts/_utilities-hover.scss` and `_utilities-dark.scss`
+// emit for a utility, which follow their own rules and not the utility API's:
+// no breakpoint infix, no `-print`, no `state` suffix, and nothing for a value
+// that is null. `utility-class-names()` honours all of those, so reusing it
+// here would both miss the real prefixed classes — with a `$grid-breakpoints`
+// that has no zero-width entry it returns nothing at all — and invent prefixed
+// names that no generator emits.
+@function prefixed-utility-class-names($utility-key, $prefixes) {
+  $utility: map-get($utilities, $utility-key);
+
+  @if type-of($utility) != "map" {
+    @return ();
+  }
+
+  $values: map-get($utility, values);
+
+  @if $values == null {
+    @return ();
+  }
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  $properties: map-get($utility, property);
+
+  @if type-of($properties) == "string" {
+    $properties: append((), $properties);
+  }
+
+  $class: if(
+    map-has-key($utility, class),
+    map-get($utility, class),
+    if($properties, nth($properties, 1), null)
+  );
+  $class: if($class == null, "", $class);
   $names: ();
 
-  @each $name in utility-class-names("link-underline") {
-    $names: append($names, $name);
-    $names: append($names, "hover\\:#{$name}");
-    $names: append($names, "dark\\:#{$name}");
+  @each $key, $value in $values {
+    @if $value != null {
+      $modifier: if($key, if($class == "", "", "-") + $key, "");
+
+      @each $prefix in $prefixes {
+        $names: append($names, "#{$prefix}\\:#{$class}#{$modifier}");
+      }
+    }
   }
 
-  @each $name in utility-class-names("link-underline-opacity") {
-    $names: append($names, $name);
-  }
+  @return $names;
+}
+
+// The `link-underline` family: the color utility and the opacity one, each read
+// from its own entry so disabling one does not affect the other, plus the
+// prefixed variants that only the color utility gets.
+@function link-underline-class-names() {
+  $names: utility-class-names("link-underline");
+  $names: join($names, prefixed-utility-class-names("link-underline", ("hover", "dark")));
+  $names: join($names, utility-class-names("link-underline-opacity"));
 
   @return $names;
 }
