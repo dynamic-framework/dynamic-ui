@@ -1,4 +1,4 @@
-[class*="text-truncate-"] {
+@include exact-classes(responsive-class-names("text-truncate", map-keys($text-truncate-values))) {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
