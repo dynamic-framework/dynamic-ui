@@ -34,7 +34,7 @@
 }
 
 // Type display classes
-@include exact-classes(responsive-class-names("display", map-keys($display-font-sizes))) {
+@include exact-classes(utility-class-names("display-font-size")) {
   font-family: $display-font-family;
   font-size: var(--#{$prefix}display-font-size) !important;
   font-style: $display-font-style;
