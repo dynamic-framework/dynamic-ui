@@ -96,30 +96,43 @@ jobs:
             echo "::error::Release tag ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
             exit 1
           fi
-      - name: Append CSS diff to release notes
-        # Informativo: si falla, no bloquea la publicación al CDN.
+      - name: Fetch previous release CSS
+        id: prev_css
+        # Informativo: si falla, no bloquea la publicación al CDN. Los pasos que
+        # comparan contra la versión anterior leen sus outputs.
         continue-on-error: true
         env:
-          GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
           # Versión estable anterior según el índice leído de S3 (cubre backports).
           PREV=$(node scripts/css-diff.mjs previous-version /tmp/manifest-prev.json "$RELEASE_TAG")
           if [ -z "$PREV" ]; then
-            echo "::warning::No hay versión estable anterior a $RELEASE_TAG en el índice; no se agrega el diff del CSS."
+            echo "::warning::No hay versión estable anterior a $RELEASE_TAG en el índice; no se compara el CSS."
             exit 0
           fi
           # Bucket directo y no el CDN, como el índice: una copia cacheada en Cloudflare podría no ser la publicada.
           CSS_URL="https://dynamicframework-cdn.s3.amazonaws.com/assets/$PREV/ui-react/css/dynamic-ui.css"
           if ! curl -sf -o /tmp/dynamic-ui-prev.css "$CSS_URL"; then
-            echo "::warning::No se pudo descargar $CSS_URL; no se agrega el diff del CSS."
+            echo "::warning::No se pudo descargar $CSS_URL; no se compara el CSS."
             exit 0
           fi
+          echo "version=$PREV" >> "$GITHUB_OUTPUT"
+          echo "css=/tmp/dynamic-ui-prev.css" >> "$GITHUB_OUTPUT"
+      - name: Append CSS diff to release notes
+        if: ${{ steps.prev_css.outputs.css != '' }}
+        # Informativo: si falla, no bloquea la publicación al CDN.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          PREV: ${{ steps.prev_css.outputs.version }}
+          PREV_CSS: ${{ steps.prev_css.outputs.css }}
+        run: |
           # --notes-file reemplaza el body completo: se parte del body actual para
           # conservar las notas de release-please y las ediciones manuales.
           gh release view "$RELEASE_TAG" --json body -q .body > /tmp/release-body.md
           npm run diff:css -- \
-            --prev /tmp/dynamic-ui-prev.css \
+            --prev "$PREV_CSS" \
             --next dist/css/dynamic-ui.css \
             --out-dir /tmp/css-diff \
             --prev-label "v$PREV" \

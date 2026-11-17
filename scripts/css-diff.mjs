@@ -18,7 +18,9 @@
  *   Escribe <dir>/css-diff.patch (diff completo) y <dir>/css-diff.md (bloque
  *   Markdown con el diff). Con --notes escribe además <dir>/notes.md: el body
  *   recibido con el bloque agregado al final (o reemplazado si ya estaba),
- *   dentro del límite de caracteres del body de un release.
+ *   dentro del límite de caracteres del body de un release. Si los labels son
+ *   versiones, el bloque incluye el comando `npm diff` para reproducir el diff
+ *   en local contra los paquetes publicados.
  *
  *   node scripts/css-diff.mjs previous-version <manifest.json> <versión actual>
  *
@@ -40,6 +42,8 @@ import { compareStable } from './compare-stable.mjs';
 export const RELEASE_BODY_LIMIT = 125000;
 export const START_MARKER = '<!-- css-diff:start -->';
 export const END_MARKER = '<!-- css-diff:end -->';
+const CSS_PATH = 'dist/css/dynamic-ui.css';
+const VERSION_LABEL = /^v?(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/;
 
 const SECTIONS = [
   { key: 'root', title: 'Variables `:root`', file: 'root.css' },
@@ -207,24 +211,38 @@ function sectionMarkdown(section, includeDiff, patchUrl) {
 }
 
 /**
+ * Comando para reproducir el diff en local contra las versiones publicadas en
+ * npm. Devuelve `null` si algún label no es una versión.
+ */
+export function npmDiffCommand(npmPackage, prevLabel, nextLabel) {
+  const prev = prevLabel?.match(VERSION_LABEL)?.[1];
+  const next = nextLabel?.match(VERSION_LABEL)?.[1];
+  if (!npmPackage || !prev || !next) return null;
+  return `npm diff --diff=${npmPackage}@${prev} --diff=${npmPackage}@${next} ${CSS_PATH}`;
+}
+
+/**
  * Bloque Markdown del diff. `include` indica, por sección, si va el diff
  * completo o solo el resumen.
  */
 export function buildMarkdown(sections, {
-  prevLabel, nextLabel, patchUrl, include = { root: true, rest: true },
+  prevLabel, nextLabel, patchUrl, npmPackage, include = { root: true, rest: true },
 } = {}) {
   const header = ['## Cambios en el CSS distribuido', ''];
   if (prevLabel && nextLabel) {
-    header.push(`\`dist/css/dynamic-ui.css\` de \`${nextLabel}\` comparado contra \`${prevLabel}\`.`);
+    header.push(`\`${CSS_PATH}\` de \`${nextLabel}\` comparado contra \`${prevLabel}\`.`);
   } else {
-    header.push('Diff de `dist/css/dynamic-ui.css` contra la versión anterior.');
+    header.push(`Diff de \`${CSS_PATH}\` contra la versión anterior.`);
   }
   if (patchUrl) header.push(`Diff completo: [css-diff.patch](${patchUrl}).`);
   if (sections.every((section) => !section.diff)) {
     return [START_MARKER, ...header, '', 'Sin cambios en el CSS distribuido.', END_MARKER].join('\n');
   }
+  // El comando funciona en cuanto la versión nueva termina de publicarse en npm.
+  const command = npmDiffCommand(npmPackage, prevLabel, nextLabel);
+  const reproduce = command ? ['', 'Para reproducirlo en local:', '', '```shell', command, '```'] : [];
   const body = sections.map((section) => sectionMarkdown(section, include[section.key], patchUrl));
-  return [START_MARKER, ...header, '', body.join('\n\n'), END_MARKER].join('\n');
+  return [START_MARKER, ...header, ...reproduce, '', body.join('\n\n'), END_MARKER].join('\n');
 }
 
 const BLOCK_PATTERN = new RegExp(`\\s*${START_MARKER}[\\s\\S]*?${END_MARKER}\\s*`, 'g');
@@ -288,6 +306,7 @@ function main(argv) {
     prevLabel: flags['prev-label'],
     nextLabel: flags['next-label'],
     patchUrl: flags['patch-url'],
+    npmPackage: JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8')).name,
   };
   const sections = diffCss(read(flags.prev), read(flags.next), {
     prevLabel: options.prevLabel ?? 'prev',

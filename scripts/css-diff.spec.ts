@@ -95,6 +95,24 @@ describe('css-diff', () => {
     expect(section(md, 'Resto del CSS')).toContain('+.d-renamed-widget {');
   });
 
+  test('incluye el comando npm diff para reproducir el diff en local', () => {
+    const md = diff(PREV, NEXT).read('css-diff.md');
+    const command = 'npm diff --diff=@dynamic-framework/ui-react@2.12.0 --diff=@dynamic-framework/ui-react@2.13.0 dist/css/dynamic-ui.css';
+    expect(md).toContain(`\`\`\`shell\n${command}\n\`\`\``);
+    // Va en el encabezado, antes de las secciones.
+    expect(md.indexOf(command)).toBeLessThan(md.indexOf('### Variables `:root`'));
+  });
+
+  test('omite el comando npm diff si los labels no son versiones o no hay cambios', () => {
+    const outDir = path.join(workdir, 'out');
+    run(['--prev', PREV, '--next', NEXT, '--out-dir', outDir, '--prev-label', 'base', '--next-label', 'local']);
+    expect(fs.readFileSync(path.join(outDir, 'css-diff.md'), 'utf8')).not.toContain('npm diff');
+
+    const sameButVersion = path.join(workdir, 'same.css');
+    fs.writeFileSync(sameButVersion, fs.readFileSync(PREV, 'utf8').replace('2.12.0', '2.13.0'));
+    expect(diff(PREV, sameButVersion).read('css-diff.md')).not.toContain('npm diff');
+  });
+
   test('conserva las notas existentes y agrega el diff al final', () => {
     const notes = path.join(workdir, 'body.md');
     const releasePlease = '## [2.13.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.12.0...v2.13.0)\n\n### Bug Fixes\n\n* algo (#1)\n';
