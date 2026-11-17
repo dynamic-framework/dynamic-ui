@@ -318,12 +318,14 @@
     $i: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
 
     @each $key, $value in $values {
-      $modifier: if($key, if($class == "" and $i == "", "", "-") + $key, "");
-      $name: "#{$class}#{$i}#{$modifier}";
-      $names: append($names, $name);
+      @if $value != null {
+        $modifier: if($key, if($class == "" and $i == "", "", "-") + $key, "");
+        $name: "#{$class}#{$i}#{$modifier}";
+        $names: append($names, $name);
 
-      @each $pseudo in $state {
-        $names: append($names, "#{$name}-#{$pseudo}");
+        @each $pseudo in $state {
+          $names: append($names, "#{$name}-#{$pseudo}");
+        }
       }
     }
   }
