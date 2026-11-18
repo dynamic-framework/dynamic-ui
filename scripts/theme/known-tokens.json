@@ -1,6 +1,6 @@
 {
   "dynamicUi": "2.12.1",
-  "count": 1923,
+  "count": 1924,
   "tokens": [
     "--bs-accordion-active-bg",
     "--bs-accordion-active-color",
@@ -834,6 +834,7 @@
     "--bs-collapse-button-gap",
     "--bs-collapse-button-padding-x",
     "--bs-collapse-button-padding-y",
+    "--bs-collapse-icon-color",
     "--bs-collapse-interpolate-size",
     "--bs-collapse-separator-bg",
     "--bs-collapse-separator-display",
