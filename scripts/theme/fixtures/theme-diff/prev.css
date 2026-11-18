@@ -4,9 +4,7 @@
 :root,
 [data-bs-theme="dynamic"] {
   --bs-kept: 1rem;
-  --bs-spacing-base: .25rem;
   --bs-body-bg: #fff;
-  --bs-shadow-color: rgba(0, 0, 0, .5);
   --bs-gray-25: #fcfcfd;
   --bs-legacy-flag: 1;
   --bs-font-size-1: 2rem;
@@ -16,12 +14,25 @@
   --bs-root-font-size: 16px;
 }
 
-.btn {
+[data-bs-theme="dark"] {
+  --bs-body-bg: #000;
+}
+
+.btn,
+.btn-group {
   --bs-btn-padding-x: 1rem;
 }
 
-[data-bs-theme="dark"] {
-  --bs-body-bg: #000;
+.btn {
+  --bs-btn-color: var(--bs-body-color);
+}
+
+.alert {
+  --bs-alert-gap: .5rem;
+}
+
+.legacy-badge {
+  --bs-legacy-badge-bg: #eee;
 }
 
 @media (min-width: 1200px) {
@@ -29,16 +40,14 @@
   [data-bs-theme="dynamic"] {
     --bs-font-size-1: 2.5rem;
   }
-}
 
-@media (min-width: 1200px) {
   .g-xl-1 {
     --bs-gutter-x: .25rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  :root {
-    --bs-transition: none;
+@supports not (width: 1lh) {
+  .chip {
+    --bs-chip-size: 1.5em;
   }
 }

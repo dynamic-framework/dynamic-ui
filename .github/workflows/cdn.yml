@@ -116,7 +116,7 @@ jobs:
           npm run theme:diff -- /tmp/theme-diff-prev.css dist/css/dynamic-ui.css --out "$OUT"
           echo "file=$OUT" >> "$GITHUB_OUTPUT"
           {
-            echo "Diff de custom properties $PREV → $SEMVER: $(jq -c .summary "$OUT")"
+            echo "Diff de custom properties y clases $PREV → $SEMVER: $(jq -c .summary "$OUT")"
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4

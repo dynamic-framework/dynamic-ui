@@ -68,9 +68,9 @@ Un theme que no declare ninguna zona se muestra igual, sólo con la columna clar
 
 ## Diff entre versiones
 
-`theme-diff.mjs` compara las custom properties del CSS compilado de dos
-versiones y describe la diferencia en JSON. Sirve para saber qué tocar en un
-theme o en un UI Kit al subir de versión.
+`theme-diff.mjs` compara el CSS compilado de dos versiones y describe en JSON
+lo que cambia para un theme o un UI Kit: las custom properties de todo el CSS
+y las clases que aparecen o desaparecen.
 
 ```bash
 npm run theme:diff -- <prev>/dynamic-ui.css <next>/dynamic-ui.css [--out changes.json]
@@ -83,31 +83,42 @@ anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0):
 https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes-<semver>.json
 ```
 
-Alcance: el bloque raíz (`:root`, `[data-bs-theme="dynamic"]`, scope `root`) y
-ese mismo bloque dentro de `@media (min-width: 1200px)` (scope `media-1200`).
-Los tokens de componente (`--bs-btn-*`, `--bs-alert-*`…), las zonas y los
-demás `@media` quedan fuera.
-
 ```json
 {
   "from": "2.12.0",
   "to": "2.12.1",
-  "scopes": { "root": "…", "media-1200": "…" },
-  "summary": { "added": 0, "removed": 0, "changed": 8, "renamed": 0 },
-  "added":   [{ "name": "--bs-…", "scope": "root", "value": "…" }],
-  "removed": [{ "name": "--bs-…", "scope": "root", "value": "…" }],
-  "changed": [{ "name": "--bs-…", "scope": "root", "from": "…", "to": "…" }],
-  "renamed": [{ "from": "--bs-…", "to": "--bs-…", "scope": "root", "value": "…", "similarity": 0.5, "suggestion": true }]
+  "summary": {
+    "customProperties": { "added": 1, "removed": 1, "changed": 9, "renamed": 0 },
+    "classes": { "added": 0, "removed": 0 }
+  },
+  "customProperties": {
+    "added":   [{ "name": "--bs-btn-text-decoration", "selector": ".btn", "media": null, "value": "none" }],
+    "removed": [{ "name": "--bs-…", "selector": "…", "media": null, "value": "…" }],
+    "changed": [{ "name": "--bs-…", "selector": ":root", "media": null, "from": "…", "to": "…" }],
+    "renamed": [{ "from": "--bs-…", "to": "--bs-…", "selector": "…", "media": null, "value": "…", "similarity": 0.5, "suggestion": true }]
+  },
+  "classes": { "added": [".d-skeleton"], "removed": [] }
 }
 ```
 
+- Una custom property se identifica por nombre, selector y `media` (la cadena
+  de `@media`/`@supports` que la envuelve, o `null`). Entran `:root`,
+  componentes (`.btn`, `.alert`…), utilidades, zonas
+  (`[data-bs-theme="dark"]`) y cualquier at-rule; quedan fuera las de
+  `@keyframes`.
+- Las listas de selectores se separan, así que reagrupar reglas en Sass no
+  aparece como cambio. `[data-bs-theme=dynamic]` se reporta como `:root`.
 - `changed` ignora diferencias de espacios y de mayúsculas en hex; agregar o
   quitar `!important` sí cuenta.
-- `renamed` es una sugerencia: un par eliminado/agregado del mismo scope con el
-  mismo valor y nombres parecidos (coeficiente de Dice sobre los segmentos del
-  nombre). Las dos variables siguen en `removed` y `added`.
+- `renamed` es una sugerencia: un par eliminado/agregado del mismo selector y
+  `media`, con el mismo valor y nombres parecidos (coeficiente de Dice sobre
+  los segmentos del nombre). Las dos variables siguen en `removed` y `added`.
+- `classes` lista los nombres de clase que aparecen o desaparecen de los
+  selectores, en cualquier regla.
+- Las declaraciones normales (`padding`, `color`…) quedan fuera: una release
+  puede mover cientos y taparían lo que un theme tiene que revisar.
 - La entrada es el CSS y no `known-tokens.json`: el inventario solo tiene
-  nombres, sin valores, y no distingue el bloque raíz de los componentes.
+  nombres, sin valores ni selector.
 
 ## Entrada
 
