@@ -93,6 +93,31 @@ jobs:
             echo "::error::Release tag ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
             exit 1
           fi
+      - name: Generate custom property diff against previous release
+        id: theme_diff
+        # Un fallo aquí no bloquea la publicación: el release sale sin
+        # changes-<semver>.json y el aviso queda en el resumen del job.
+        continue-on-error: true
+        env:
+          SEMVER: ${{ steps.version.outputs.semver }}
+        run: |
+          PREV=$(node scripts/theme/theme-diff.mjs --previous-version /tmp/manifest-prev.json "$SEMVER")
+          if [ -z "$PREV" ]; then
+            echo "::warning::No hay versión estable anterior a $SEMVER en el índice; no se genera tokens/changes-$SEMVER.json."
+            exit 0
+          fi
+          # Desde el bucket y no desde el CDN, por la misma razón que el índice.
+          PREV_URL="https://dynamicframework-cdn.s3.amazonaws.com/assets/$PREV/ui-react/css/dynamic-ui.css"
+          if ! curl -sf -o /tmp/theme-diff-prev.css "$PREV_URL"; then
+            echo "::warning::No se pudo descargar $PREV_URL; no se genera tokens/changes-$SEMVER.json."
+            exit 0
+          fi
+          OUT="/tmp/changes-$SEMVER.json"
+          npm run theme:diff -- /tmp/theme-diff-prev.css dist/css/dynamic-ui.css --out "$OUT"
+          echo "file=$OUT" >> "$GITHUB_OUTPUT"
+          {
+            echo "Diff de custom properties $PREV → $SEMVER: $(jq -c .summary "$OUT")"
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -177,6 +202,13 @@ jobs:
             s3://dynamicframework-cdn/assets/latest/ui-react/tokens/token-overrides.json \
             --acl public-read \
             --cache-control "public, max-age=300, must-revalidate"
+      - name: Upload custom property diff to CDN (versioned)
+        if: ${{ steps.theme_diff.outputs.file != '' }}
+        run: |
+          aws s3 cp "${{ steps.theme_diff.outputs.file }}" \
+            s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/tokens/changes-${{ steps.version.outputs.semver }}.json \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
       - name: Upload token-overrides JSON Schema to CDN
         run: |
           aws s3 cp registry/schema/token-overrides.v1.json \
@@ -196,8 +228,18 @@ jobs:
           if [ "${{ steps.manifest.outputs.is_latest }}" = "true" ]; then
             BASES+=("${{ env.CDN_BASE_URL }}/latest/ui-react")
           fi
+          VERSIONED_BASE="${BASES[0]}"
+          # changes-<semver>.json solo existe en la ruta versionada y solo si se generó.
+          VERSIONED_EXTRA=()
+          if [ -n "${{ steps.theme_diff.outputs.file }}" ]; then
+            VERSIONED_EXTRA+=("tokens/changes-${{ steps.version.outputs.semver }}.json")
+          fi
           for BASE in "${BASES[@]}"; do
-            for path in "${PATHS[@]}"; do
+            BASE_PATHS=("${PATHS[@]}")
+            if [ "$BASE" = "$VERSIONED_BASE" ]; then
+              BASE_PATHS+=("${VERSIONED_EXTRA[@]}")
+            fi
+            for path in "${BASE_PATHS[@]}"; do
               URL="$BASE/$path"
               echo "Checking $URL"
               success=0

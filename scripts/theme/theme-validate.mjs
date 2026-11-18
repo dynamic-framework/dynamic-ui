@@ -45,7 +45,9 @@ import {
  * Lector mínimo: sólo necesita ver declaraciones de custom properties, en qué
  * bloque caen y en qué `@media`. Devuelve las declaraciones del bloque raíz
  * (`root`), las del breakpoint 1200px (`wide`) y la lista de bloques con su
- * selector (`blocks`), con el número de línea de cada declaración.
+ * selector (`blocks`), con el número de línea de cada declaración. `wideRoot`
+ * es el subconjunto de `wide` declarado en un bloque raíz: `wide` también
+ * recoge los `--bs-gutter-x` de `.g-xl-*` y similares.
  *
  * Separar por bloque es lo que permite que un theme con componentes y zonas se
  * valide: sin eso, `[data-bs-theme="oscura"] { --bs-body-bg-rgb: … }` pisaría
@@ -56,6 +58,7 @@ export function readCss(css) {
   const stripped = css.replace(/\/\*[\s\S]*?\*\//g, (match) => match.replace(/[^\n]/g, ' '));
   const root = new Map();
   const wide = new Map();
+  const wideRoot = new Map();
   const blocks = [];
   const stack = [];
   const blockStack = [];
@@ -76,13 +79,14 @@ export function readCss(css) {
     const value = important ? match[2].replace(/\s*!\s*important$/i, '') : match[2];
     const entry = { value, line: endLine, ...(important && { important }) };
 
+    const block = currentBlock();
     if (inWideMedia()) {
       cascadeSet(wide, match[1], entry);
+      if (block && block.isRoot) cascadeSet(wideRoot, match[1], entry);
       return;
     }
     if (inAnyMedia()) return;
 
-    const block = currentBlock();
     if (block) cascadeSet(block.decls, match[1], entry);
     if (block && block.isRoot) cascadeSet(root, match[1], entry);
   };
@@ -121,7 +125,7 @@ export function readCss(css) {
   }
 
   return {
-    root, wide, blocks, usesWhere: /:where\s*\(/.test(stripped),
+    root, wide, wideRoot, blocks, usesWhere: /:where\s*\(/.test(stripped),
   };
 }
 

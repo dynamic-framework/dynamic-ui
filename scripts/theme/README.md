@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts`, `theme-tokens.spec.ts` y `theme-diff.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -65,6 +65,49 @@ tocar el HTML:
 ```
 
 Un theme que no declare ninguna zona se muestra igual, sólo con la columna clara.
+
+## Diff entre versiones
+
+`theme-diff.mjs` compara las custom properties del CSS compilado de dos
+versiones y describe la diferencia en JSON. Sirve para saber qué tocar en un
+theme o en un UI Kit al subir de versión.
+
+```bash
+npm run theme:diff -- <prev>/dynamic-ui.css <next>/dynamic-ui.css [--out changes.json]
+```
+
+Cada release lo publica en el CDN, comparado contra la mayor versión estable
+anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0):
+
+```
+https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes-<semver>.json
+```
+
+Alcance: el bloque raíz (`:root`, `[data-bs-theme="dynamic"]`, scope `root`) y
+ese mismo bloque dentro de `@media (min-width: 1200px)` (scope `media-1200`).
+Los tokens de componente (`--bs-btn-*`, `--bs-alert-*`…), las zonas y los
+demás `@media` quedan fuera.
+
+```json
+{
+  "from": "2.12.0",
+  "to": "2.12.1",
+  "scopes": { "root": "…", "media-1200": "…" },
+  "summary": { "added": 0, "removed": 0, "changed": 8, "renamed": 0 },
+  "added":   [{ "name": "--bs-…", "scope": "root", "value": "…" }],
+  "removed": [{ "name": "--bs-…", "scope": "root", "value": "…" }],
+  "changed": [{ "name": "--bs-…", "scope": "root", "from": "…", "to": "…" }],
+  "renamed": [{ "from": "--bs-…", "to": "--bs-…", "scope": "root", "value": "…", "similarity": 0.5, "suggestion": true }]
+}
+```
+
+- `changed` ignora diferencias de espacios y de mayúsculas en hex; agregar o
+  quitar `!important` sí cuenta.
+- `renamed` es una sugerencia: un par eliminado/agregado del mismo scope con el
+  mismo valor y nombres parecidos (coeficiente de Dice sobre los segmentos del
+  nombre). Las dos variables siguen en `removed` y `added`.
+- La entrada es el CSS y no `known-tokens.json`: el inventario solo tiene
+  nombres, sin valores, y no distingue el bloque raíz de los componentes.
 
 ## Entrada
 
