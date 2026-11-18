@@ -35,10 +35,6 @@
 
 // -- Navbar toggler ---------------------------------------------------------
 
-.navbar {
-  --#{$prefix}navbar-toggler-icon-color: #{$navbar-light-icon-color};
-}
-
 .navbar-toggler-icon {
   @include svg-icon-mask(
     var(--#{$prefix}navbar-toggler-icon-bg),
@@ -53,11 +49,6 @@
 }
 
 // -- Chevron del acordeón ---------------------------------------------------
-
-.accordion {
-  --#{$prefix}accordion-btn-icon-color: #{$accordion-icon-color};
-  --#{$prefix}accordion-btn-active-icon-color: #{$accordion-icon-active-color};
-}
 
 .accordion-button::after {
   @include svg-icon-mask(
@@ -80,9 +71,11 @@
 // Bootstrap lo pinta con el shorthand `background`, que de paso fija el
 // tamaño; al pasar a máscara hay que reponer ese tamaño aquí.
 .btn-close {
+  // Variable propia: la de Bootstrap, `--bs-btn-close-color`, se declara sobre
+  // `.btn-close`, así que un theme no la alcanzaría desde `:root`.
   @include svg-icon-mask(
     var(--#{$prefix}btn-close-bg),
-    var(--#{$prefix}btn-close-color)
+    var(--#{$prefix}btn-close-icon-color)
   );
 
   /* stylelint-disable property-no-vendor-prefix --
@@ -93,10 +86,6 @@
 }
 
 // -- Controles del carrusel -------------------------------------------------
-
-.carousel {
-  --#{$prefix}carousel-control-icon-color: #{$carousel-control-color};
-}
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
