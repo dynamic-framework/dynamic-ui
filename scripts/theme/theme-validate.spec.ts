@@ -1849,6 +1849,47 @@ describe('contraste-horneado — el relleno de .btn-outline-* declarado sólo po
     expect(result.stderr).not.toContain('en hover');
   });
 
+  it('no lo apaga un bloque .btn compartido, que la regla de botones no mide', () => {
+    // `.btn { --bs-btn-bg }` declara una genérica, pero sobre el selector
+    // común: la regla de botones sólo procesa `.btn-<role>` y
+    // `.btn-outline-<role>`, así que nadie mediría este hover si el par se
+    // apartara por él.
+    const theme = tokenOnly('raiz');
+    theme.components = theme.components.map((c: { selector: string; vars?: Record<string, string> }) => (
+      c.selector === '.btn' ? { ...c, vars: { ...c.vars, '--bs-btn-bg': 'transparent' } } : c));
+    const result = validateStrict(expandCss(theme));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('".btn-outline-primary, en hover": 1.00:1');
+  });
+
+  it('no mide el contexto donde el relleno no está declarado', () => {
+    // El relleno sólo existe dentro de la zona, y ahí contrasta. El botón del
+    // raíz sigue transparente sobre la superficie: no es un par que el theme
+    // haya movido, y medirlo rompía --strict con un aviso que no toca nada.
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    theme.zones.oscura.vars = {
+      ...theme.zones.oscura.vars,
+      '--bs-btn-outline-light-hover-bg': 'rgb(var(--bs-black-rgb))',
+    };
+    const result = validateStrict(expandCss(theme));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide el relleno de la zona cuando es la zona la que lo declara', () => {
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    theme.zones.oscura.vars = {
+      ...theme.zones.oscura.vars,
+      '--bs-btn-outline-light-hover-bg': 'var(--bs-btn-outline-light-hover-color)',
+    };
+    const { stderr } = validateStrict(expandCss(theme));
+    expect(stderr).toContain(
+      '".btn-outline-light dentro de [data-bs-theme="oscura"], en hover": 1.00:1',
+    );
+    // Y sólo ahí: el botón del raíz no lo declara.
+    expect(stderr).not.toContain('".btn-outline-light, en hover"');
+  });
+
   it('no mide dos veces el botón que la regla de botones ya cubre', () => {
     // Con una genérica sobre el mismo botón manda la regla de botones, que
     // conoce el bloque y el estado. El par horneado se aparta.

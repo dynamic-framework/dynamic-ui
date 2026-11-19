@@ -957,21 +957,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
   // de ellos lo mueve sin declarar nada del role.
   const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
-  // Un estado de `.btn-outline-<role>` sólo se mide si el theme declara su
-  // relleno: sin el token la variante lo deja transparente y se ve la
-  // superficie, que es lo que ya miden las demás reglas. Se mira estado por
-  // estado, así que declarar el de hover no arrastra al active. El token vale
-  // en cualquier bloque —el raíz, una zona o el propio botón—, porque el botón
-  // lo lee desde `--bs-btn-<estado>-bg` allí donde se resuelva.
-  const declaredIn = [root, ...blocks.map((block) => block.decls)];
-  const declaresFill = (pair) => declaredIn.some((decls) => decls.has(pair.fill));
+  // Los pares de `.btn-outline-<role>` se generan para todos los roles; qué
+  // estado se mide y en qué contexto lo decide el bucle, que mira si el relleno
+  // está declarado donde se está midiendo.
   const bakedPairs = [
     ...BAKED_PAIRS,
     ...pairRoles.flatMap((role) => bakedRolePairs(role)
       .filter((pair) => !isTextBg(pair) && !pair.outline)),
     ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
-    ...ROLES.flatMap((role) => bakedRolePairs(role)
-      .filter((pair) => pair.outline && declaresFill(pair))),
+    ...ROLES.flatMap((role) => bakedRolePairs(role).filter((pair) => pair.outline)),
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
@@ -990,13 +984,32 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Sin esto, un theme que arregla el par en un bloque de componente
       // seguiría apareciendo por debajo del umbral.
       const element = ctx.element(...pair.owners);
-      // Un botón con contorno sobre el que el theme declara alguna variable
-      // genérica lo mide R10, que conoce el bloque y el estado. Se comprueba
-      // en la capa del elemento, y por eso vale por contexto: un bloque que
-      // sólo existe dentro de una zona no apaga el par en el raíz.
-      if (pair.outline && R10_BUTTON_VARS.some(
-        (name) => element.has(name) && element.get(name).source !== 'defecto',
-      )) continue;
+      if (pair.outline) {
+        /*
+         * Un estado del botón con contorno sólo se mide si su relleno está
+         * declarado aquí: sobre el propio botón, en la zona que se está
+         * midiendo o en el raíz, que llega a la zona. Sin el token la variante
+         * lo deja transparente y se ve la superficie, que es lo que ya miden
+         * las demás reglas; declararlo en una zona no convierte en medible el
+         * botón intacto del raíz. Y se mira estado por estado, así que el
+         * relleno de hover no arrastra al active.
+         */
+        const relleno = element.has(pair.fill) || ctx.own.has(pair.fill) || root.has(pair.fill);
+        if (!relleno) continue;
+        /*
+         * Si el theme declara una variable genérica sobre el botón, lo mide
+         * R10, que conoce el bloque y el estado. La capa que se consulta es la
+         * del selector de la variante y no la del elemento, que funde también
+         * lo declarado sobre `.btn`: R10 sólo procesa `.btn-<role>` y
+         * `.btn-outline-<role>`, así que un bloque `.btn` compartido no mide
+         * este botón y no puede apagar el par. Vale por contexto, porque un
+         * bloque que sólo existe dentro de una zona no cubre el raíz.
+         */
+        const variante = ctx.element([pair.component]);
+        if (R10_BUTTON_VARS.some(
+          (name) => variante.has(name) && variante.get(name).source !== 'defecto',
+        )) continue;
+      }
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
       const where = `${pair.component}${inContext(ctx)}${pair.estado ? `, ${pair.estado}` : ''}`;
