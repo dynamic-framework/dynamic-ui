@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 
-import type { BaseProps, ComponentColor } from '../interface';
+import type { BaseProps, ComponentColor, ComponentSize } from '../interface';
 import DIcon from '../DIcon';
 
 import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
@@ -12,7 +12,7 @@ type Props =
   & {
     text?: string;
     soft?: boolean;
-    size?: string | ResponsiveProp;
+    size?: ComponentSize | ResponsiveProp<ComponentSize>;
     rounded?: boolean;
     color?: ComponentColor;
     id?: string;

@@ -144,7 +144,7 @@ export const TransactionHistory: Story = {
             <div>
               <h6 className="mb-1">
                 <DBadge soft color="info" className="me-1" text="Food" />
-                Starbucks Coffee
+                Coffee Shop
               </h6>
               <small className="text-muted">Today, 9:45 AM</small>
             </div>
@@ -158,7 +158,7 @@ export const TransactionHistory: Story = {
             <div>
               <h6 className="mb-1">
                 <DBadge soft color="info" className="me-1" text="Shopping" />
-                Amazon Purchase
+                Online Store Purchase
               </h6>
               <small className="text-muted">Yesterday, 3:20 PM</small>
             </div>
@@ -390,7 +390,7 @@ export const InvestmentPortfolio: Story = {
         <DListGroup.Item>
           <div className="d-flex w-100 justify-content-between align-items-start">
             <div>
-              <h6 className="mb-1">Apple Inc. (AAPL)</h6>
+              <h6 className="mb-1">Orchard Devices Inc. (ORDV)</h6>
               <small className="text-muted">25 shares @ $178.32</small>
               <div className="mt-1">
                 <DBadge soft color="success" text="+$1,500.00" iconStart="ArrowUp" />
@@ -405,7 +405,7 @@ export const InvestmentPortfolio: Story = {
         <DListGroup.Item>
           <div className="d-flex w-100 justify-content-between align-items-start">
             <div>
-              <h6 className="mb-1">Microsoft Corp. (MSFT)</h6>
+              <h6 className="mb-1">Bluefield Software Corp. (BFSW)</h6>
               <small className="text-muted">15 shares @ $368.45</small>
               <div className="mt-1">
                 <DBadge soft color="success" text="+$1,500.00" iconStart="ArrowUp" />
@@ -420,7 +420,7 @@ export const InvestmentPortfolio: Story = {
         <DListGroup.Item>
           <div className="d-flex w-100 justify-content-between align-items-start">
             <div>
-              <h6 className="mb-1">Tesla Inc. (TSLA)</h6>
+              <h6 className="mb-1">Voltway Motors Inc. (VLTW)</h6>
               <small className="text-muted">10 shares @ $242.18</small>
               <div className="mt-1">
                 <DBadge soft color="danger" text="-$1,500.00" iconStart="ArrowDown" />
@@ -435,7 +435,7 @@ export const InvestmentPortfolio: Story = {
         <DListGroup.Item>
           <div className="d-flex w-100 justify-content-between align-items-start">
             <div>
-              <h6 className="mb-1">S&P 500 Index Fund (VOO)</h6>
+              <h6 className="mb-1">Broad Market Index Fund (BMIX)</h6>
               <small className="text-muted">50 shares @ $412.90</small>
               <div className="mt-1">
                 <DBadge soft color="success" text="+$1,500.00" iconStart="ArrowUp" />
@@ -950,7 +950,7 @@ export const TransactionsWithActions: Story = {
             <div className="flex-grow-1">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="mb-1">Starbucks Coffee</h6>
+                  <h6 className="mb-1">Coffee Shop</h6>
                   <small className="text-muted">Today, 9:45 AM</small>
                   <div className="mt-1">
                     <DBadge size="sm" color="secondary" soft text="Groceries" />
@@ -994,7 +994,7 @@ export const TransactionsWithActions: Story = {
             <div className="flex-grow-1">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="mb-1">Amazon Purchase</h6>
+                  <h6 className="mb-1">Online Store Purchase</h6>
                   <small className="text-muted">Yesterday, 3:20 PM</small>
                   <div className="mt-1">
                     <DBadge size="sm" color="secondary" soft text="Shopping" />

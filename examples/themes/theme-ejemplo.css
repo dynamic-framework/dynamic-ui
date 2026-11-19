@@ -1,6 +1,6 @@
 /*
  * Theme: Banco Ejemplo
- * Para @dynamic-framework/ui-react 2.10.0.
+ * Para @dynamic-framework/ui-react 2.12.0.
  * Se carga después del CSS de Dynamic UI.
  */
 
@@ -125,7 +125,7 @@
   --bs-tertiary-bg-rgb: var(--bs-gray-100-rgb);
 
   /* Tipografía */
-  --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-font-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --bs-rfs-fs-1: calc(1.4rem + 1.8vw);
   --bs-rfs-fs-2: calc(1.35rem + 1.2vw);
   --bs-rfs-fs-3: calc(1.3125rem + .75vw);

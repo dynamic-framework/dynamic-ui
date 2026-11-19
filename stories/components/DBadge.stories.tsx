@@ -2,7 +2,12 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
-import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
+import {
+  COMPONENT_SIZE,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
+  ICONS,
+  THEMES,
+} from '../config/constants';
 import {
   DContextProvider,
 } from '../../src';
@@ -35,7 +40,7 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
   argTypes: {
     size: {
       control: 'select',
-      options: [undefined, 'sm', 'md', 'lg'],
+      options: COMPONENT_SIZE,
       table: { category: 'Appearance' },
       description: 'Badge size',
     },

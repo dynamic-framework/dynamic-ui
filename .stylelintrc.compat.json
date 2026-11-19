@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "stylelint-no-unsupported-browser-features"
+  ],
+  "rules": {
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "error",
+        "ignorePartialSupport": true,
+        "ignore": [
+          "css3-cursors",
+          "css-autofill",
+          "css-overflow-anchor",
+          "css-resize",
+          "css-scrollbar",
+          "css-touch-action"
+        ]
+      }
+    ]
+  }
+}

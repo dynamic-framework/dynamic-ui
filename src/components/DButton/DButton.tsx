@@ -18,6 +18,7 @@ import type {
   ButtonVariant,
   ClassMap,
   ComponentColor,
+  ComponentSize,
   EndIconProps,
   StartIconProps,
 } from '../interface';
@@ -31,7 +32,7 @@ interface Props
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
   color?: ComponentColor;
-  size?: string | ResponsiveProp;
+  size?: ComponentSize | ResponsiveProp<ComponentSize>;
   variant?: ButtonVariant;
   text?: string;
   loading?: boolean;

@@ -1,0 +1,148 @@
+{
+  "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
+  "schemaVersion": "1.1.0",
+  "packageVersion": "2.12.0",
+  "repository": "https://github.com/dynamic-framework/dynamic-ui",
+  "generatedAt": "2026-01-01T00:00:00.000Z",
+  "components": {},
+  "hooks": {
+    "useDToast": {
+      "source": "src/components/DToastContainer/useDToast.tsx",
+      "kind": "hook",
+      "description": "Hook that provides a `toast` function to dispatch DToast notifications.\n\nPrerequisites:\n- The calling component must be inside `DContextProvider` (provides icon context).\n- `DToastContainer` must be present somewhere in the component tree as a render target.",
+      "requires": [
+        "DContextProvider",
+        "DToastContainer"
+      ],
+      "signature": "useDToast() => { toast }",
+      "parameters": [],
+      "returns": {
+        "toast": {
+          "type": "function",
+          "description": "Dispatches a toast notification rendered as a `DToast` component.\nWhen `data` is a `ToastData` object, the default DToast layout is used.\nWhen `data` is a render function, full custom content is rendered instead.\nReturns the toast ID, which can be passed to `reactHotToast.dismiss(id)`.",
+          "parameters": [
+            {
+              "name": "data",
+              "type": "ToastData | ValueFunction<Renderable, Toast>",
+              "required": true,
+              "description": "Toast content as `ToastData` or a render function for custom layouts."
+            },
+            {
+              "name": "toastProps",
+              "type": "DToastOptions | undefined",
+              "required": true,
+              "description": "Optional per-toast overrides: id, duration, position."
+            }
+          ],
+          "returns": {
+            "type": "string"
+          }
+        }
+      },
+      "types": {},
+      "name": "useDToast"
+    },
+    "useDPortalContext": {
+      "source": "src/contexts/DPortalContext.tsx",
+      "kind": "hook",
+      "description": "Hook to open/close registered portals (modals, offcanvas, etc.).\n\n**Prerequisite**: must be called inside a `DContextProvider` configured with\n`portalName` and `availablePortals`. `DContextProvider` mounts\n`DPortalContextProvider` internally — consumers never use\n`DPortalContextProvider` directly.",
+      "requires": [
+        "DContextProvider"
+      ],
+      "signature": "useDPortalContext<T>() => { stack, openPortal, closePortal }",
+      "parameters": [],
+      "returns": {
+        "stack": {
+          "description": "Currently open portals, ordered from oldest (bottom) to newest (top).",
+          "type": "PortalStackEntry<T>[]"
+        },
+        "openPortal": {
+          "type": "function",
+          "description": "Pushes a named portal onto the stack, rendering its registered component\nwith the given payload.",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "K",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "payload",
+              "type": "T[K]",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        },
+        "closePortal": {
+          "type": "function",
+          "description": "Pops the topmost portal off the stack, closing it.",
+          "parameters": [],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "throws": [
+        "If called outside of `DContextProvider` / `DPortalContextProvider`."
+      ],
+      "name": "useDPortalContext"
+    },
+    "useDContext": {
+      "source": "src/contexts/DContext.tsx",
+      "kind": "hook",
+      "description": "Returns the Dynamic UI context value set by `DContextProvider`.\nFalls back to the library's built-in defaults when no `DContextProvider`\nis present in the tree — wrap your application with `DContextProvider`\nto customise icons, currency, language, and portal settings.",
+      "requires": [],
+      "signature": "useDContext() => { language, currency, icon, iconRegistry, iconMap, breakpoints, setContext }",
+      "parameters": [],
+      "returns": {
+        "language": {
+          "description": "",
+          "type": "string"
+        },
+        "currency": {
+          "description": "",
+          "type": "CurrencyProps"
+        },
+        "icon": {
+          "description": "",
+          "type": "IconProps"
+        },
+        "iconRegistry": {
+          "description": "",
+          "type": "Record<string, IconComponent>"
+        },
+        "iconMap": {
+          "description": "",
+          "type": "IconMapProps"
+        },
+        "breakpoints": {
+          "description": "",
+          "type": "BreakpointProps"
+        },
+        "setContext": {
+          "type": "function",
+          "description": "",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "Partial<Props>",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "returns": {
+            "type": "void"
+          }
+        }
+      },
+      "types": {},
+      "name": "useDContext"
+    }
+  },
+  "contexts": {}
+}

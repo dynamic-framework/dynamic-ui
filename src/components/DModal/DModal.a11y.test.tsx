@@ -72,4 +72,62 @@ describe('<DModal /> a11y', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+  it('no tiene violaciones cuando el header no lleva id y el diálogo toma su nombre', async () => {
+    const { container } = render(
+      <DModal name="myModal">
+        <DModal.Header>Test Header</DModal.Header>
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
+
+  it('no duplica el id cuando el consumidor ya lo puso en el título', async () => {
+    const { container } = render(
+      <DModal name="myModal">
+        <DModal.Header>
+          <span id="myModalLabel">Test Header</span>
+        </DModal.Header>
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
+
+  it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
+    const { container } = render(
+      <DModal name="myModal" ariaLabel="Confirmación">
+        <DModal.Body>Test Body</DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
+  });
+
+  it('no duplica el id cuando el título vive fuera del header', async () => {
+    const { container } = render(
+      <DModal name="myModal" ariaLabelledby="externalTitle">
+        <DModal.Header>Test Header</DModal.Header>
+        <DModal.Body>
+          <h2 id="externalTitle">Confirmar envío</h2>
+        </DModal.Body>
+      </DModal>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
+  });
 });

@@ -90,7 +90,7 @@ const newEntry = {
 const { [semver]: _replaced, ...rest } = existingManifest.versions;
 const versions = { [semver]: newEntry, ...rest };
 
-// Advance `latest` only for stable releases (never for prereleases)
+// `latest` solo avanza con una versión estable mayor que la actual (nunca con un prerelease)
 const currentLatest = existingManifest.latest ?? null;
 if (isPrerelease && !currentLatest) {
   process.stderr.write(
@@ -99,7 +99,22 @@ if (isPrerelease && !currentLatest) {
   );
   process.exit(1);
 }
-const latest = isPrerelease ? currentLatest : semver;
+// `latest` nunca retrocede: un parche de una línea anterior (p. ej. 2.11.1 después
+// de 2.12.0) se agrega al índice, pero latest sigue siendo la versión estable mayor.
+// Los metadatos de build (`+...`) no cuentan para la precedencia semver y se quitan
+// antes de comparar; si no, el parche sería NaN y la comparación, siempre falsa.
+const compareStable = (a, b) => {
+  const pa = a.split('+')[0].split('.').map(Number);
+  const pb = b.split('+')[0].split('.').map(Number);
+  for (let i = 0; i < 3; i += 1) {
+    if (pa[i] !== pb[i]) return pa[i] - pb[i];
+  }
+  return 0;
+};
+let latest = semver;
+if (isPrerelease || (currentLatest && compareStable(currentLatest, semver) > 0)) {
+  latest = currentLatest;
+}
 
 const manifest = {
   updatedAt: new Date().toISOString(),

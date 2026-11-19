@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import {
+  useId,
   useMemo,
   useState,
   useEffect,
@@ -52,6 +53,8 @@ export default function DCollapse(
   }: Props,
 ) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const generatedId = useId();
+  const bodyId = `${id || generatedId}-body`;
 
   const onChangeCollapse = () => {
     setCollapsed((prev) => {
@@ -93,6 +96,8 @@ export default function DCollapse(
         className="collapse-button"
         type="button"
         onClick={onChangeCollapse}
+        aria-expanded={!collapsed}
+        aria-controls={bodyId}
       >
         <div className="flex-grow-1">
           {Component}
@@ -108,6 +113,7 @@ export default function DCollapse(
         />
       </button>
       <div
+        id={bodyId}
         className={classNames('collapse-body-wrapper', {
           show: !collapsed,
         })}

@@ -83,7 +83,7 @@ export const Default: Story = {
 };
 
 /**
- * To share a different language configuration we only need to change the key language
+ * To share a different language configuration, change the key `language`
  *
  * > This key only takes a string with the language in ISO 639 Set 1 (ISO 639-1)
  */
@@ -101,10 +101,10 @@ export const LanguageSettings: Story = {
 };
 
 /**
- * To share a different currency format configuration we need to change the key currency
+ * To share a different currency format configuration, change the key `currency`
  *
  * > The configuration for currency format is given by the library [currency.js](https://currency.js.org/),
- * particularly we use the key precision, separator, decimal and not in all cases symbol.
+ * specifically the keys `precision`, `separator`, `decimal` and, in some cases, `symbol`.
  */
 export const CurrencySettings: Story = {
   parameters: {
@@ -127,7 +127,7 @@ export const CurrencySettings: Story = {
 /**
  * By default and without additional configuration, the icons are linked to <code>Lucide icons</code>.
  *
- * To share a different icon configuration we need to change the key icon
+ * To share a different icon configuration, change the key `icon`
  *
  * Additionally, you can provide `iconRegistry` to map string icon names
  * to custom SVG components (for example from a shared commons package).
