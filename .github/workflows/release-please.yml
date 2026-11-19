@@ -60,3 +60,33 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      - name: Append CSS diff command to release notes
+        if: ${{ steps.release.outputs.release_created }}
+        # Informativo: el release y la publicación en npm ya están hechos; si falla, no marca el workflow como fallido.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.release.outputs.tag_name }}
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          # Versión estable inmediatamente menor por semver (en un backport no es el latest).
+          PREV=$(gh release list --exclude-pre-releases --limit 100 --json tagName -q '.[].tagName | ltrimstr("v")' \
+            | sort -V | grep -x -B1 "$VERSION" | head -n -1)
+          if [ -z "$PREV" ]; then
+            echo "::warning::No hay versión estable anterior a $VERSION; no se agrega el comando de diff."
+            exit 0
+          fi
+          gh release view "$TAG" --json body -q .body > /tmp/release-notes.md
+          cat >> /tmp/release-notes.md <<EOF
+
+          ### CSS changes
+
+          To see what changed in the compiled CSS since v$PREV, run:
+
+          \`\`\`bash
+          npm diff --diff=@dynamic-framework/ui-react@$PREV --diff=@dynamic-framework/ui-react@$VERSION dist/css/dynamic-ui.css
+          \`\`\`
+          EOF
+          gh release edit "$TAG" --notes-file /tmp/release-notes.md
