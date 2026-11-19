@@ -684,19 +684,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
 
         /*
          * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña tres, uno por estado, y en Dynamic no se
-         * rellena en ninguno: la librería no declara --bs-btn-hover-bg ni
-         * --bs-btn-active-bg en `.btn-outline-<role>`, así que
-         * `background-color: var(--bs-btn-hover-bg)` queda transparente y lo
-         * que se ve detrás es la superficie del contexto. Sólo hay relleno si
-         * el theme declara esas variables, sobre el botón o en un ancestro
-         * (la zona o el raíz), y entonces se mide contra ellas. El texto de
-         * cada estado es el que declara la librería en el botón
+         * Uno con contorno enseña tres, uno por estado. El relleno de hover y
+         * de active sale de `--bs-btn-outline-<role>-{hover,active}-bg`, que la
+         * librería cablea en `.btn-outline-<role>` y deja transparentes: si
+         * nadie los declara, lo que se ve detrás es la superficie del contexto
+         * y contra eso mide measureSide. Un theme que los declare, en el raíz,
+         * en la zona o sobre el botón, pinta ese relleno y se mide contra él.
+         * El texto de cada estado es el que declara la librería en el botón
          * (`--bs-btn-outline-<role>-hover-color`…), salvo que el theme lo pise.
          */
         const surface = () => measureSide(ctx, element, '--bs-body-bg-rgb', { background: true });
-        // El relleno puede venir del botón o heredado de un ancestro: la zona o
-        // el raíz, que llega a la zona ya calculado.
+        // El relleno sale del token que cablea la librería en el botón, o de lo
+        // que declare un ancestro: la zona o el raíz, que llega a la zona ya
+        // calculado. Si vale `transparent`, measureSide cae a la superficie.
         const fill = (variable) => (element.has(variable) || ctx.own.has(variable) || root.has(variable)
           ? measureSide(ctx, element, variable, { background: true })
           : surface());

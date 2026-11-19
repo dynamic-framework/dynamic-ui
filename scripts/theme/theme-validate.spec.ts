@@ -1740,12 +1740,13 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
   });
 
   it('mide el relleno que la zona hereda del raíz', () => {
-    // --bs-btn-hover-bg negro en :root llega a la zona ya calculado: el texto
-    // negro del hover cae sobre él, 1:1, aunque la superficie de la zona sea clara.
+    // --bs-btn-outline-primary-hover-bg negro en :root llega a la zona ya
+    // calculado, y el botón lo lee en los dos contextos: el texto negro del
+    // hover cae sobre él, 1:1, aunque la superficie de la zona sea clara.
     const theme = outlineTheme({ ...blanco, '--bs-btn-hover-color': 'rgb(var(--bs-black-rgb))' });
     const css = expandCss({
       ...theme,
-      root: { ...theme.root, '--bs-btn-hover-bg': 'rgb(var(--bs-black-rgb))' },
+      root: { ...theme.root, '--bs-btn-outline-primary-hover-bg': 'rgb(var(--bs-black-rgb))' },
     });
     expect(validateStrict(css).stderr).toContain(
       '".btn-outline-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre el texto '
@@ -1753,14 +1754,21 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
     );
   });
 
-  it('no cuenta --bs-btn-outline-<role>-hover-bg, que no lee ningún selector', () => {
-    // La librería lo declara en :root, pero el hover pinta var(--bs-btn-hover-bg).
+  it('cuenta --bs-btn-outline-<role>-active-bg, que el botón lee en --bs-btn-active-bg', () => {
+    // El active pinta var(--bs-btn-active-bg), y `.btn-outline-primary` lo
+    // cablea a este token: en la zona, el blanco del texto cae sobre el primary
+    // claro, 1.72:1. Antes del cableado el token no lo leía ningún selector.
     const theme = outlineTheme(blanco);
     const css = expandCss({
       ...theme,
-      root: { ...theme.root, '--bs-btn-outline-primary-hover-bg': 'rgb(var(--bs-primary-rgb))' },
+      root: { ...theme.root, '--bs-btn-outline-primary-active-bg': 'rgb(var(--bs-primary-rgb))' },
     });
-    expect(validateStrict(css).status).toBe(0);
+    const result = validateStrict(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en active": 1.72:1 entre el texto '
+      + '--bs-btn-active-color (--bs-white-rgb) y el fondo --bs-btn-active-bg (--bs-primary-rgb)',
+    );
   });
 });
 
