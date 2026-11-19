@@ -38,14 +38,15 @@ Object.defineProperty(global.window, 'matchMedia', {
 });
 
 /**
- * `<dialog>` para jsdom, que no lo implementa.
- *
- * Sólo los dos métodos y el atributo `open`, que es con lo que hablan los
- * componentes. Lo que de verdad justifica la etiqueta —la trampa de foco, la
- * página inerte detrás, la capa superior, Escape, `::backdrop` y la devolución
- * del foco al cerrar— es del navegador y aquí no tiene sustituto: esa parte se
- * verifica en Chromium, no en jsdom.
- */
+* `<dialog>` for jsdom, which does not implement it. 
+*
+* Includes only the two methods and the `open` attribute—the elements that
+* components actually interact with. The features that truly define the
+* element—focus trapping, the inert state of the underlying page, the top layer,
+* the Escape key, `::backdrop`, and the restoration of focus upon closing—are
+* handled by the browser and have no equivalent here; such functionality is
+* verified in Chromium, not in jsdom. 
+*/
 const dialogProto = window.HTMLElement.prototype as unknown as Record<string, unknown>;
 
 dialogProto.showModal = function showModal(this: HTMLElement) {
