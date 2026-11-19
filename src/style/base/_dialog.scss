@@ -1,0 +1,25 @@
+// Los paneles del portal (`.modal` y `.offcanvas`) son `<dialog>`, por el foco:
+// abiertos con `showModal()`, el navegador atrapa el foco dentro, deja inerte
+// el resto de la página y, al cerrarlos, lo devuelve a quien los abrió.
+//
+// A cambio hay que desactivar la caja que el navegador le da a un `<dialog>`:
+// recuadro, relleno, fondo opaco y un tamaño ajustado al contenido.
+//
+// Las clases van en `:where()`, que no suma peso: así la regla cede ante
+// cualquier selector de clase de Bootstrap —el fondo y los bordes del
+// offcanvas son suyos— y sólo decide donde no declara nadie, que es de donde
+// salía el estilo del navegador.
+dialog:where(.modal, .offcanvas) {
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+}
+
+// El velo lo pinta `.backdrop`, que entra y sale animado con el panel. El del
+// navegador se sumaría al nuestro y oscurecería el doble.
+dialog:where(.modal, .offcanvas)::backdrop {
+  background: transparent;
+}

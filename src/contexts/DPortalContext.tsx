@@ -142,8 +142,12 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       }
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
+      // Without `blur()`: the panel opens via `showModal()`, and the browser
+      // returns focus to whatever element was focused at that moment once the
+      // dialog closes. Previously, removing focus from the trigger meant that
+      // this "previous element" became the `<body>`, so focus would not return
+      // upon closing.
       push({ name, Component, payload } as unknown as InternalStackItem<T>);
-      (document.activeElement as HTMLElement)?.blur();
     },
     [availablePortals, push],
   ) as PortalContextType<T>['openPortal'];
@@ -168,7 +172,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }), [publicStack, openPortal, closePortal]) as PortalContextType<any>;
 
   const handleClose = useCallback((target: Element) => {
-    if (!(target instanceof HTMLDivElement)) {
+    if (!(target instanceof HTMLElement)) {
       return;
     }
     if (target.classList.contains('portal') && !('bsBackdrop' in target.dataset)) {
@@ -185,7 +189,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
-      const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
+      const lastPortal = document.querySelector(`#${portalName} > div > :last-child`);
       if (event.key === 'Escape') {
         if (lastPortal) {
           handleClose(lastPortal as HTMLElement);
