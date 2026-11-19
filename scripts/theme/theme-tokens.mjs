@@ -1121,5 +1121,28 @@ export function bakedRolePairs(role) {
     });
   }
 
+  // El relleno de hover y de active de `.btn-outline-<role>` sale de
+  // `--bs-btn-outline-<role>-<estado>-bg`, que la variante cablea a
+  // `--bs-btn-<estado>-bg`. Por defecto es transparente y se ve la superficie,
+  // pero un theme que declara el token pinta ese color y el texto del estado
+  // —el que la librería horneó— se queda encima. Quien los pide filtra por los
+  // roles cuyo relleno declara el theme: sin ese token no hay par que medir.
+  if (OUTLINE_COLORS[role]) {
+    for (const estado of ['hover', 'active']) {
+      pairs.push({
+        component: `.btn-outline-${role}`,
+        estado: `en ${estado}`,
+        why: `el botón con contorno conserva el --bs-btn-outline-<role>-${estado}-color que la librería resolvió en Sass`,
+        owners: [['.btn', `.btn-outline-${role}`]],
+        fg: { variable: `--bs-btn-${estado}-color` },
+        bg: { variable: `--bs-btn-${estado}-bg` },
+        // El token por-role que el theme declara, para apuntar a su línea.
+        fill: `--bs-btn-outline-${role}-${estado}-bg`,
+        role,
+        outline: true,
+      });
+    }
+  }
+
   return pairs;
 }

@@ -654,6 +654,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  // Las variables genéricas cuya presencia en un bloque de botón dispara R10.
+  // R13 las consulta para no medir dos veces el mismo botón con contorno.
+  const R10_BUTTON_VARS = [
+    '--bs-btn-color', '--bs-btn-bg',
+    '--bs-btn-hover-color', '--bs-btn-hover-bg',
+    '--bs-btn-active-color', '--bs-btn-active-bg',
+  ];
+
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
@@ -949,10 +957,21 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
   // de ellos lo mueve sin declarar nada del role.
   const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
+  // Un estado de `.btn-outline-<role>` sólo se mide si el theme declara su
+  // relleno: sin el token la variante lo deja transparente y se ve la
+  // superficie, que es lo que ya miden las demás reglas. Se mira estado por
+  // estado, así que declarar el de hover no arrastra al active. El token vale
+  // en cualquier bloque —el raíz, una zona o el propio botón—, porque el botón
+  // lo lee desde `--bs-btn-<estado>-bg` allí donde se resuelva.
+  const declaredIn = [root, ...blocks.map((block) => block.decls)];
+  const declaresFill = (pair) => declaredIn.some((decls) => decls.has(pair.fill));
   const bakedPairs = [
     ...BAKED_PAIRS,
-    ...pairRoles.flatMap((role) => bakedRolePairs(role).filter((pair) => !isTextBg(pair))),
+    ...pairRoles.flatMap((role) => bakedRolePairs(role)
+      .filter((pair) => !isTextBg(pair) && !pair.outline)),
     ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
+    ...ROLES.flatMap((role) => bakedRolePairs(role)
+      .filter((pair) => pair.outline && declaresFill(pair))),
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
@@ -971,9 +990,16 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Sin esto, un theme que arregla el par en un bloque de componente
       // seguiría apareciendo por debajo del umbral.
       const element = ctx.element(...pair.owners);
+      // Un botón con contorno sobre el que el theme declara alguna variable
+      // genérica lo mide R10, que conoce el bloque y el estado. Se comprueba
+      // en la capa del elemento, y por eso vale por contexto: un bloque que
+      // sólo existe dentro de una zona no apaga el par en el raíz.
+      if (pair.outline && R10_BUTTON_VARS.some(
+        (name) => element.has(name) && element.get(name).source !== 'defecto',
+      )) continue;
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
-      const where = `${pair.component}${inContext(ctx)}`;
+      const where = `${pair.component}${inContext(ctx)}${pair.estado ? `, ${pair.estado}` : ''}`;
 
       if (!fg.rgb || !bg.rgb) {
         if (explainedByR1(ctx, element, fg, bg)) continue;
@@ -995,6 +1021,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const line = (fgEntry?.source === 'defecto' ? null : fgEntry?.line)
         ?? ctx.own.get(pair.fg.variable)?.line
         ?? root.get(pair.fg.variable)?.line
+        // Si el theme no declara el texto, la línea útil es la del relleno que
+        // sí declara: es lo que trajo el par por debajo del umbral.
+        ?? (pair.fill && (element.get(pair.fill)?.line
+          ?? ctx.own.get(pair.fill)?.line ?? root.get(pair.fill)?.line))
         ?? null;
 
       // Si el par ya está por debajo del umbral con la paleta por defecto y aquí
