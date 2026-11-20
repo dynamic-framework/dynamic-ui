@@ -440,8 +440,13 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   estado se mide contra ella. `--bs-btn-outline-<role>-hover-bg` existe en
   `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
-  `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren. Sin fondo
-  propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
+  `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta la pastilla:
+  el enlace activo dentro del contenedor, con la capa del contenedor y la del
+  enlace. Un par que `.nav-pills` deja roto y que un bloque del enlace
+  (`.nav-pills .nav-link.active`, cualquiera que lleve `.active` en el elemento
+  al que apunta) corrige no es un hallazgo: ninguna pastilla se ve mal. Cada
+  pastilla se reporta una vez por contexto, por el bloque del enlace si lo hay.
+  Sin fondo propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.

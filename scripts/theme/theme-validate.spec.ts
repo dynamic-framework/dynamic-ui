@@ -2557,6 +2557,100 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     expect(result.status).toBe(1);
   });
 
+  describe('la pastilla se mide en el enlace que la pinta', () => {
+    const W = 'rgb(var(--bs-white-rgb))';
+    const B = 'rgb(var(--bs-black-rgb))';
+    const color = '--bs-nav-pills-link-active-color';
+    const bg = '--bs-nav-pills-link-active-bg';
+
+    it('el enlace corrige el fondo que el contenedor deja roto', () => {
+      // Theme generado por theme-expand. En Chromium toda pastilla activa
+      // pinta blanco sobre negro: el bloque del enlace gana al del contenedor.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: W } },
+          { selector: '.nav-pills .nav-link.active', vars: { [bg]: B } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('el enlace corrige también con la zona pegada al contenedor', () => {
+      // El mismo par, esta vez dentro de `[data-bs-theme="oscura"].nav-pills`:
+      // la zona en el propio contenedor no cambia quién pinta la pastilla.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '[data-bs-theme="oscura"].nav-pills', vars: { [color]: W, [bg]: W } },
+          { selector: '[data-bs-theme="oscura"].nav-pills .nav-link.active', vars: { [bg]: B } },
+        ],
+        zones: { oscura: { vars: { '--bs-heading-color': B } } },
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.nav-pills:/),
+        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.nav-pills \.nav-link\.active:/),
+      ]);
+      // Ninguna pastilla rota: --strict sale con 1 sólo por esos dos avisos.
+      expect(result.stderr).toContain('0 errores, 2 aviso(s)');
+      expect(result.status).toBe(1);
+    });
+
+    it('un par que sigue roto en el enlace se detecta una sola vez', () => {
+      // El enlace repite el blanco del contenedor sobre fondo blanco: 1:1 en
+      // Chromium. Lo reporta el enlace, que es quien pinta la pastilla.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: W } },
+          { selector: '.nav-pills .nav-link.active', vars: { [color]: W } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un descendiente que no es la pastilla no corrige el par del contenedor', () => {
+      // `.nav-pills .dropdown-menu` no es el enlace activo: la pastilla sigue
+      // pintando blanco sobre blanco.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: W } },
+          { selector: '.nav-pills .dropdown-menu', vars: { [bg]: B } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('el enlace de otro contenedor no corrige la pastilla genérica', () => {
+      // `.sidebar .nav-pills .nav-link.active` sólo arregla las pastillas de
+      // la barra lateral; las de fuera siguen rotas.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '.nav-pills', vars: { [color]: W, [bg]: W } },
+          { selector: '.sidebar .nav-pills .nav-link.active', vars: { [bg]: B } },
+        ],
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+  });
+
   describe('la cascada dentro de la capa de un elemento', () => {
     const W = 'rgb(var(--bs-white-rgb))';
     const B = 'rgb(var(--bs-black-rgb))';

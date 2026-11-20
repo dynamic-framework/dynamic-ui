@@ -774,11 +774,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   }
 
   /**
-   * ¿Lleva el compuesto la clase `.nav-pills` en su primer nivel? No cuentan la
-   * que va dentro de un argumento (`:not(.nav-pills)`), la de un atributo ni
-   * una clase más larga (`.nav-pills-extra`).
+   * El compuesto sin lo que no selecciona en su primer nivel: lo que va dentro
+   * de un argumento (`:not(.nav-pills)`), de un atributo o escapado. Lo que
+   * queda es donde se buscan las clases que importan.
    */
-  const hasPillsClass = (compound) => {
+  const outerOf = (compound) => {
     let depth = 0;
     let quote = null;
     let outer = '';
@@ -793,8 +793,26 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       else if (char === ')' || char === ']') depth -= 1;
       else if (depth === 0) outer += char;
     }
-    return /\.nav-pills(?![\w-])/.test(outer);
+    return outer;
   };
+
+  /**
+   * ¿Lleva el compuesto la clase `.nav-pills` en su primer nivel? No cuentan la
+   * que va dentro de un argumento (`:not(.nav-pills)`), la de un atributo ni
+   * una clase más larga (`.nav-pills-extra`).
+   */
+  const hasPillsClass = (compound) => /\.nav-pills(?![\w-])/.test(outerOf(compound));
+
+  /**
+   * ¿Nombra el compuesto la pastilla activa? La pinta `.nav-link.active`, así
+   * que sólo un bloque que lleve `.active` en el elemento al que apunta cambia
+   * lo que se ve; uno sobre otro descendiente (`.nav-pills .dropdown-menu`) no
+   * toca la pastilla.
+   */
+  const hasActiveClass = (compound) => /\.active(?![\w-])/.test(outerOf(compound));
+
+  /** El último compuesto de un selector: el elemento al que apunta. */
+  const lastCompound = (selector) => splitCompounds(normalizeSelector(selector)).at(-1) ?? '';
 
   /**
    * Elementos de una pastilla activa para un selector, del contenedor al
@@ -822,9 +840,75 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     return groups;
   };
 
+  /**
+   * ¿Apunta el selector a un descendiente del contenedor en vez de al propio
+   * `.nav-pills`? `.nav-pills .nav-link.active` sí; `.sidebar > .nav-pills`,
+   * no, aunque también lleve un ancestro delante.
+   */
+  const insidePills = (selector) => pillElements(selector).length > 1
+    && !hasPillsClass(lastCompound(selector));
+
+  /**
+   * Clave de la pastilla que pinta un selector: su contenedor, el `.nav-pills`
+   * más interno (o el propio selector si no lleva ninguno). Dos bloques con la
+   * misma clave —el del contenedor y el del enlace de dentro— hablan de la
+   * misma pastilla y se miden una sola vez.
+   */
+  const pillKey = (selector) => {
+    const groups = pillElements(selector);
+    const container = insidePills(selector) ? groups.at(-2) : groups.at(-1);
+    return JSON.stringify([...new Set(container.map(normalizeSelector))].sort());
+  };
+
+  /**
+   * Selectores del enlace activo de cada contenedor. La pastilla la pinta
+   * `.nav-link.active`, no el contenedor: lo que un bloque del enlace declara
+   * gana sobre lo que `.nav-pills` dejó resuelto, así que la capa del enlace
+   * entra en la medición venga la variable de donde venga. Los bloques de zona
+   * se registran por su selector sin prefijo; es `element()` quien descarta los
+   * de otra zona.
+   */
+  const activeLinks = new Map();
+  for (const block of blocks) {
+    for (const { bare } of alternatives(block)) {
+      if (!insidePills(bare) || !hasActiveClass(lastCompound(bare))) continue;
+      const key = pillKey(bare);
+      activeLinks.set(key, (activeLinks.get(key) ?? new Set()).add(bare));
+    }
+  }
+
+  /** Los elementos que hay que medir para la pastilla de un selector. */
+  const pillLayers = (selector) => {
+    const groups = pillElements(selector);
+    // Un bloque del enlace ya traía su capa; se reemplaza por la de todos los
+    // bloques que nombran esa pastilla, que es la que ve el navegador.
+    const container = insidePills(selector) ? groups.slice(0, -1) : groups;
+    const links = activeLinks.get(pillKey(selector));
+    return links ? [...container, [...links]] : container;
+  };
+
   // R11 — pastilla activa de .nav-pills, en cada contexto donde se vea. Sin
   // fondo propio, la pastilla activa usa el de la librería en `.nav-pills`:
   // var(--bs-gray-50).
+  //
+  // Se mide en el elemento que la pinta, el enlace activo dentro del
+  // contenedor, y no en el bloque que declara la variable: un theme que rompe
+  // el par en `.nav-pills` y lo corrige en `.nav-pills .nav-link.active` no
+  // enseña ninguna pastilla rota. Cada pastilla se mide una vez por contexto,
+  // aunque varios bloques declaren sobre ella, y la reporta el bloque del
+  // enlace si lo hay: es quien la pinta.
+  const measuredByLink = new Set();
+  for (const block of blocks) {
+    if (!block.decls.has('--bs-nav-pills-link-active-color')) continue;
+    for (const { zone: altZone, bare: part } of alternatives(block)) {
+      if (!insidePills(part) || !hasActiveClass(lastCompound(part))) continue;
+      for (const ctx of contextsFor(altZone, part, '--bs-nav-pills-link-active-color')) {
+        measuredByLink.add(`${ctx.zone ?? ''}|${pillKey(part)}`);
+      }
+    }
+  }
+
+  const measured = new Set();
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-nav-pills-link-active-color');
     if (!fgDecl) continue;
@@ -835,8 +919,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // `:root` no es una pastilla: lo que declara ahí lo pisa la librería en
       // `.nav-pills`.
       if (isRootPrelude(part)) continue;
-      const groups = pillElements(part);
+      const groups = pillLayers(part);
+      const fromLink = insidePills(part) && hasActiveClass(lastCompound(part));
       for (const ctx of contextsFor(altZone, part, '--bs-nav-pills-link-active-color')) {
+        // La pastilla, no el bloque: varios bloques declaran sobre la misma y
+        // la medición es una sola.
+        const pill = `${ctx.zone ?? ''}|${pillKey(part)}`;
+        if (measured.has(pill) || (!fromLink && measuredByLink.has(pill))) continue;
+        measured.add(pill);
         const element = ctx.element(...groups);
         const selector = altZone ? `${zoneSelector(altZone)}${sameElement ? '' : ' '}${part}` : part;
         const where = `${selector}${block.zone ? '' : inContext(ctx)}`;
