@@ -34,7 +34,7 @@
 }
 
 // Type display classes
-[class*="display-"] {
+@include exact-classes(utility-class-names("display-font-size")) {
   font-family: $display-font-family;
   font-size: var(--#{$prefix}display-font-size) !important;
   font-style: $display-font-style;
@@ -105,6 +105,6 @@
   }
 }
 
-[class*="link-underline"] {
+@include exact-classes(link-underline-class-names()) {
   text-decoration: underline;
 }
