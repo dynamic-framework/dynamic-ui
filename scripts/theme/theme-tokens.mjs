@@ -390,8 +390,8 @@ export const normalizeCssValue = (value) => String(value)
 /**
  * Texto de `.btn-outline-<role>` en reposo, en hover y en active, tal como lo
  * declara la librería en `--bs-btn-outline-<role>-{color,hover-color,active-color}`.
- * El fondo no está aquí: el botón con contorno no se rellena, y en los tres
- * estados deja ver lo que tiene detrás.
+ * El fondo no está aquí: no sale de una rampa. La librería lo deja
+ * transparente en los tres estados, y el botón deja ver lo que tiene detrás.
  */
 const rampOutline = (rest, hover, active) => ({
   color: { kind: 'role', step: rest },
@@ -686,7 +686,8 @@ const specVar = (spec, role) => {
 /**
  * Variables de color que la librería declara en `:root` y que leen los pares
  * horneados: el texto y el fondo de `.alert-<role>`, el texto de
- * `.text-bg-<role>`, los de `.btn-<role>` y los textos de `.btn-outline-<role>`.
+ * `.text-bg-<role>`, los de `.btn-<role>`, y los textos y los rellenos de
+ * hover y de active de `.btn-outline-<role>`.
  * Todas son alias de un wrapper, y por
  * eso se calculan en el raíz: una zona que sólo cambia el triplete al que
  * apuntan no las mueve.
@@ -703,6 +704,10 @@ export const LIBRARY_ROOT_COLORS = (() => {
     for (const [state, spec] of Object.entries(OUTLINE_COLORS[role])) {
       map.set(`--bs-btn-outline-${role}-${state}`, specVar(spec, role));
     }
+    // El relleno de hover y de active del botón con contorno. La librería los
+    // deja transparentes; un theme que los declare pinta ese color.
+    map.set(`--bs-btn-outline-${role}-hover-bg`, 'transparent');
+    map.set(`--bs-btn-outline-${role}-active-bg`, 'transparent');
   }
   return map;
 })();
@@ -743,12 +748,8 @@ export const LIBRARY_ELEMENT_VARS = new Map([
     ['--bs-btn-color', `var(--bs-btn-${role}-color)`],
     ['--bs-btn-bg', `var(--bs-btn-${role}-bg)`],
   ])]),
-  // Sin --bs-btn-hover-bg ni --bs-btn-active-bg: la librería no los declara en
-  // el botón con contorno, y `background-color: var(--bs-btn-hover-bg)` queda
-  // transparente. `--bs-btn-outline-<role>-hover-bg` existe en :root, pero no
-  // lo lee ningún selector.
   ...ROLES.map((role) => [`.btn-outline-${role}`, new Map(
-    Object.keys(OUTLINE_COLORS[role]).map((state) => [
+    [...Object.keys(OUTLINE_COLORS[role]), 'hover-bg', 'active-bg'].map((state) => [
       `--bs-btn-${state}`,
       `var(--bs-btn-outline-${role}-${state})`,
     ]),
@@ -1118,6 +1119,30 @@ export function bakedRolePairs(role) {
       role,
       onlyWithoutOverride: true,
     });
+  }
+
+  // El relleno de hover y de active de `.btn-outline-<role>` sale de
+  // `--bs-btn-outline-<role>-<estado>-bg`, que la variante cablea a
+  // `--bs-btn-<estado>-bg`. Por defecto es transparente y se ve la superficie,
+  // pero un theme que declara el token pinta ese color y el texto del estado
+  // —el que la librería horneó— se queda encima. Quien los pide filtra por los
+  // roles cuyo relleno declara el theme: sin ese token no hay par que medir.
+  if (OUTLINE_COLORS[role]) {
+    for (const state of ['hover', 'active']) {
+      pairs.push({
+        component: `.btn-outline-${role}`,
+        // El texto del estado como sale en el mensaje, igual que en R10.
+        estado: `en ${state}`,
+        why: `el botón con contorno conserva el --bs-btn-outline-<role>-${state}-color que la librería resolvió en Sass`,
+        owners: [['.btn', `.btn-outline-${role}`]],
+        fg: { variable: `--bs-btn-${state}-color` },
+        bg: { variable: `--bs-btn-${state}-bg` },
+        // El token por-role que el theme declara, para apuntar a su línea.
+        fill: `--bs-btn-outline-${role}-${state}-bg`,
+        role,
+        outline: true,
+      });
+    }
   }
 
   return pairs;

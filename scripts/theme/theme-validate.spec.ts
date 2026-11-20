@@ -1740,12 +1740,13 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
   });
 
   it('mide el relleno que la zona hereda del raíz', () => {
-    // --bs-btn-hover-bg negro en :root llega a la zona ya calculado: el texto
-    // negro del hover cae sobre él, 1:1, aunque la superficie de la zona sea clara.
+    // --bs-btn-outline-primary-hover-bg negro en :root llega a la zona ya
+    // calculado, y el botón lo lee en los dos contextos: el texto negro del
+    // hover cae sobre él, 1:1, aunque la superficie de la zona sea clara.
     const theme = outlineTheme({ ...blanco, '--bs-btn-hover-color': 'rgb(var(--bs-black-rgb))' });
     const css = expandCss({
       ...theme,
-      root: { ...theme.root, '--bs-btn-hover-bg': 'rgb(var(--bs-black-rgb))' },
+      root: { ...theme.root, '--bs-btn-outline-primary-hover-bg': 'rgb(var(--bs-black-rgb))' },
     });
     expect(validateStrict(css).stderr).toContain(
       '".btn-outline-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre el texto '
@@ -1753,14 +1754,154 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
     );
   });
 
-  it('no cuenta --bs-btn-outline-<role>-hover-bg, que no lee ningún selector', () => {
-    // La librería lo declara en :root, pero el hover pinta var(--bs-btn-hover-bg).
+  it('cuenta --bs-btn-outline-<role>-active-bg, que el botón lee en --bs-btn-active-bg', () => {
+    // El active pinta var(--bs-btn-active-bg), y `.btn-outline-primary` lo
+    // cablea a este token: en la zona, el blanco del texto cae sobre el primary
+    // claro, 1.72:1. Antes del cableado el token no lo leía ningún selector.
     const theme = outlineTheme(blanco);
     const css = expandCss({
       ...theme,
-      root: { ...theme.root, '--bs-btn-outline-primary-hover-bg': 'rgb(var(--bs-primary-rgb))' },
+      root: { ...theme.root, '--bs-btn-outline-primary-active-bg': 'rgb(var(--bs-primary-rgb))' },
     });
-    expect(validateStrict(css).status).toBe(0);
+    const result = validateStrict(css);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en active": 1.72:1 entre el texto '
+      + '--bs-btn-active-color (--bs-white-rgb) y el fondo --bs-btn-active-bg (--bs-primary-rgb)',
+    );
+  });
+});
+
+describe('contraste-horneado — el relleno de .btn-outline-* declarado sólo por token', () => {
+  const EJEMPLO = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
+  /**
+   * El ejemplo con el relleno de un estado apuntando al color de texto de ese
+   * mismo estado: el botón se pinta del color de su propia letra, 1:1, y deja
+   * de leerse. Ninguno de estos casos declara una variable genérica del botón
+   * (`--bs-btn-hover-bg`…), que es lo que dispara la regla de botones: el único
+   * rastro es el token por-role, y es lo que aquí se mide.
+   */
+  const tokenOnly = (
+    where: 'root' | 'zone' | 'component',
+    token = '--bs-btn-outline-primary-hover-bg',
+    value = 'var(--bs-btn-outline-primary-hover-color)',
+  ) => {
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    if (where === 'root') theme.root = { ...theme.root, [token]: value };
+    if (where === 'zone') {
+      // La zona del ejemplo pisa --bs-btn-hover-bg sobre el propio botón, y esa
+      // declaración gana al token: sin quitarla el relleno no llega a pintarse.
+      theme.zones.oscura.components = theme.zones.oscura.components
+        .filter((c: { selector: string }) => !c.selector.includes('btn-outline'));
+      theme.zones.oscura.vars = { ...theme.zones.oscura.vars, [token]: value };
+    }
+    if (where === 'component') {
+      theme.components = [...theme.components, { selector: '.btn-outline-primary', vars: { [token]: value } }];
+    }
+    return theme;
+  };
+
+  it('el ejemplo sin el token sigue pasando --strict', () => {
+    const result = validateStrict(expandCss(JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'))));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it.each(['root', 'component'] as const)('mide el relleno declarado en el %s', (where) => {
+    const result = validateStrict(expandCss(tokenOnly(where)));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '".btn-outline-primary, en hover": 1.00:1 entre --bs-btn-hover-color '
+      + '(--bs-primary-600-rgb) y --bs-btn-hover-bg (--bs-primary-600-rgb)',
+    );
+  });
+
+  it('mide el relleno declarado en una zona', () => {
+    const result = validateStrict(expandCss(tokenOnly('zone')));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '".btn-outline-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre '
+      + '--bs-btn-hover-color (--bs-primary-600-rgb) y --bs-btn-hover-bg (--bs-primary-600-rgb)',
+    );
+  });
+
+  it('apunta a la línea del token, que es lo único que declara el theme', () => {
+    const { stderr } = validateStrict(expandCss(tokenOnly('root')));
+    expect(stderr).toMatch(/\.css:\d+ {2}\[contraste-horneado\]/);
+  });
+
+  it('mide sólo el estado cuyo relleno declara el theme', () => {
+    // Con el relleno de active sin declarar, el botón pulsado sigue dejando ver
+    // la superficie: es el caso que ya cubren las demás reglas.
+    const { stderr } = validateStrict(expandCss(tokenOnly('root')));
+    expect(stderr).toContain('en hover');
+    expect(stderr).not.toContain('en active');
+  });
+
+  it('mide el relleno de active por su propio token', () => {
+    const result = validateStrict(expandCss(tokenOnly(
+      'root',
+      '--bs-btn-outline-primary-active-bg',
+      'var(--bs-btn-outline-primary-active-color)',
+    )));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('".btn-outline-primary, en active": 1.00:1');
+    expect(result.stderr).not.toContain('en hover');
+  });
+
+  it('no lo apaga un bloque .btn compartido, que la regla de botones no mide', () => {
+    // `.btn { --bs-btn-bg }` declara una genérica, pero sobre el selector
+    // común: la regla de botones sólo procesa `.btn-<role>` y
+    // `.btn-outline-<role>`, así que nadie mediría este hover si el par se
+    // apartara por él.
+    const theme = tokenOnly('root');
+    theme.components = theme.components.map((c: { selector: string; vars?: Record<string, string> }) => (
+      c.selector === '.btn' ? { ...c, vars: { ...c.vars, '--bs-btn-bg': 'transparent' } } : c));
+    const result = validateStrict(expandCss(theme));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('".btn-outline-primary, en hover": 1.00:1');
+  });
+
+  it('no mide el contexto donde el relleno no está declarado', () => {
+    // El relleno sólo existe dentro de la zona, y ahí contrasta. El botón del
+    // raíz sigue transparente sobre la superficie: no es un par que el theme
+    // haya movido, y medirlo rompía --strict con un aviso que no toca nada.
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    theme.zones.oscura.vars = {
+      ...theme.zones.oscura.vars,
+      '--bs-btn-outline-light-hover-bg': 'rgb(var(--bs-black-rgb))',
+    };
+    const result = validateStrict(expandCss(theme));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('mide el relleno de la zona cuando es la zona la que lo declara', () => {
+    const theme = JSON.parse(fs.readFileSync(EJEMPLO, 'utf8'));
+    theme.zones.oscura.vars = {
+      ...theme.zones.oscura.vars,
+      '--bs-btn-outline-light-hover-bg': 'var(--bs-btn-outline-light-hover-color)',
+    };
+    const { stderr } = validateStrict(expandCss(theme));
+    expect(stderr).toContain(
+      '".btn-outline-light dentro de [data-bs-theme="oscura"], en hover": 1.00:1',
+    );
+    // Y sólo ahí: el botón del raíz no lo declara.
+    expect(stderr).not.toContain('".btn-outline-light, en hover"');
+  });
+
+  it('no mide dos veces el botón que la regla de botones ya cubre', () => {
+    // Con una genérica sobre el mismo botón manda la regla de botones, que
+    // conoce el bloque y el estado. El par horneado se aparta.
+    const theme = tokenOnly('root');
+    theme.components = [...theme.components, {
+      selector: '.btn-outline-primary',
+      vars: { '--bs-btn-hover-color': 'rgb(var(--bs-primary-600-rgb))' },
+    }];
+    const { stderr } = validateStrict(expandCss(theme));
+    expect(stderr).toContain('[contraste-boton]');
+    expect(stderr).not.toContain('[contraste-horneado]');
+    expect(stderr.match(/en hover/g)).toHaveLength(1);
   });
 });
 

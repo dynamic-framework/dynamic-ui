@@ -52,4 +52,16 @@ describe('CSS compilado de botones (#1275)', () => {
       '--bs-btn-link-primary-hover-bg: rgba(var(--bs-black-rgb), 0.03);',
     );
   });
+
+  it('.btn-outline-primary lee los tokens de fondo de hover y de active', () => {
+    const body = ruleBody(css, '.btn-outline-primary');
+    expect(body).toContain('--bs-btn-hover-bg: var(--bs-btn-outline-primary-hover-bg);');
+    expect(body).toContain('--bs-btn-active-bg: var(--bs-btn-outline-primary-active-bg);');
+  });
+
+  it('los tokens de fondo de btn-outline-primary valen transparent en :root', () => {
+    const root = ruleBody(css, ':root,\n[data-bs-theme=dynamic]');
+    expect(root).toContain('--bs-btn-outline-primary-hover-bg: transparent;');
+    expect(root).toContain('--bs-btn-outline-primary-active-bg: transparent;');
+  });
 });
