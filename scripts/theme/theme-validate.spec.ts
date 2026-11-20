@@ -2839,16 +2839,16 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     });
 
     it('un bloque con estado no reporta la pastilla en reposo', () => {
-      // El bloque de `:hover` va primero, pero en reposo no pinta: el par roto
-      // del contenedor lo reporta `.nav-pills`, que vale siempre. Los dos
-      // estados están rotos y cada uno sale una vez.
+      // El bloque de `:hover` va primero, pero en reposo no pinta: el blanco
+      // sobre blanco del contenedor lo reporta `.nav-pills`, que vale siempre,
+      // y el negro sobre negro del puntero encima lo reporta el `:hover`.
       const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills .nav-link.active:hover {\n`
-        + `  ${color}: ${W};\n}\n`
+        + `  ${color}: ${B};\n  ${bg}: ${B};\n}\n`
         + `\n.nav-pills {\n  ${color}: ${W};\n  ${bg}: ${W};\n}\n`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active:hover, en hover": 1\.00:1/),
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active:hover, en hover": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -3049,6 +3049,83 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(1);
     });
 
+    it('una pseudoclase que no se modela tampoco vale siempre', () => {
+      // `:first-child` no se sabe resolver, pero ata la regla al primer ítem:
+      // las demás pastillas siguen blancas sobre blancas.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-item:first-child .nav-link.active {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un :not() que no excluye la pastilla no descarta la regla', () => {
+      // `:not(.active.featured)` sobre el enlace activo es `:not(.featured)`:
+      // la regla sigue valiendo, y el triplete que redefine deja el texto
+      // negro sobre el fondo negro del enlace.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills .nav-link.active {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + '\n.nav-pills .nav-link.active:not(.active.featured) {\n  --bs-white-rgb: 0, 0, 0;\n}\n';
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('el .active del ítem es una condición, no algo que lleve siempre', () => {
+      // El ítem seleccionado no lleva `.active` en Bootstrap, lo lleva el
+      // enlace: la corrección sólo alcanza a las barras que sí se la pongan.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-item.active {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('dos estados del contenedor se miden juntos', () => {
+      // La barra con el puntero encima y el foco dentro cumple las dos reglas:
+      // el fondo blanco de una con el texto blanco de la otra.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills:hover .nav-link.active {\n  ${color}: ${B};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills:focus-within .nav-link.active {\n  ${color}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:hover \.nav-link\.active, en hover y focus-within": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un valor exacto arrastra la condición de que el atributo exista', () => {
+      // Un enlace con `data-label="a"` casa también con `[data-label]`, que va
+      // después y le devuelve el fondo negro: no hay pastilla rota.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .nav-link.active[data-label="a"] {\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active[data-label] {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un descendiente que no es la pastilla no se mide aunque declare el par', () => {
+      // `.nav-pills .dropdown-menu` no lo lee ningún enlace activo: medirlo
+      // daría un 1:1 que no se ve en ninguna pastilla.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .dropdown-menu {\n  ${bg}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
     it('el enlace de otro contenedor no corrige la pastilla genérica', () => {
       // `.sidebar .nav-pills .nav-link.active` sólo arregla las pastillas de
       // la barra lateral; las de fuera siguen rotas.
@@ -3169,10 +3246,12 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     it('un espacio dentro de :has() no es un combinador', () => {
       // Un solo elemento: el gray-50 que redefine es el que pinta la pastilla.
+      // `:has()` no se modela, así que es una condición: la barra que lo cumple
+      // se mide aparte y el mensaje la nombra.
       const css = `${expandCss(MINIMAL_THEME)}\n${rule('.nav-pills:has(.icon .label)', { '--bs-gray-50': B, [color]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:has\(\.icon \.label\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:has\(\.icon \.label\), con :has\(\.icon \.label\)": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
