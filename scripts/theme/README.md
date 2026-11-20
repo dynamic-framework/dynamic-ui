@@ -441,19 +441,34 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta la pastilla:
-  el enlace activo dentro del contenedor, con la capa del contenedor y la del
-  enlace. Un par que `.nav-pills` deja roto y que un bloque del enlace corrige
-  no es un hallazgo: ninguna pastilla se ve mal. Alcanzan a la pastilla los
-  bloques sobre el enlace y sobre lo que hay entre él y el contenedor
-  (`.nav-link`, `.nav-item`, `.active`, en cualquier combinación), porque la
-  variable se hereda hasta ella; uno sobre cualquier otro descendiente
-  (`.nav-pills .dropdown-menu`) no. Una regla del enlace vale en los
-  contenedores que nombra: `.nav-pills .nav-link.active` también arregla las
-  pastillas de `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active`
-  no toca las de fuera de la barra. Un bloque con estado (`:hover`,
-  `:focus-visible`) no entra en la medición en reposo: si mueve el par, ese
-  estado se mide aparte y el mensaje lo dice (`…, en hover`). Cada pastilla se
-  reporta una vez por contexto y estado, por el bloque del enlace si lo hay.
+  el enlace activo dentro del contenedor, no el bloque donde se declaren. Un par
+  que `.nav-pills` deja roto y que un bloque de dentro corrige no es un
+  hallazgo: ninguna pastilla se ve mal. En detalle:
+  - **Qué alcanza a la pastilla.** Los bloques sobre el enlace y sobre lo que
+    hay entre él y el contenedor (`.nav-link`, `.nav-item`, `.active`, en
+    cualquier combinación), porque la variable se hereda por esa cadena. Uno
+    sobre cualquier otro descendiente (`.nav-pills .dropdown-menu`,
+    `.nav-pills .nav-link .badge`) no la toca, y uno que la excluya
+    (`.nav-link:not(.active)`) tampoco.
+  - **Ítem y enlace son capas distintas.** Lo que declara el ítem le llega al
+    enlace por herencia, así que lo que el enlace declara sobre sí mismo gana,
+    aunque lo del ítem sea `!important`. La cascada sólo compite dentro de un
+    mismo elemento.
+  - **Qué contenedores alcanza una regla.** Los que nombra:
+    `.nav-pills .nav-link.active` también arregla las pastillas de
+    `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca
+    las de fuera de la barra.
+  - **Situaciones.** Lo que una regla exige para aplicarse —un estado
+    (`:hover`, `:focus-visible`), una clase o un atributo de más, en el enlace o
+    en el ítem— la deja fuera de la medición en reposo. Si la regla puede mover
+    el par, esa situación se mide aparte y el mensaje la nombra (`…, en hover`,
+    `…, con [data-label="a"]`), y también las combinaciones que pueden darse a
+    la vez (`en hover y focus`); dos valores del mismo atributo no se combinan,
+    porque no casan juntos. Mueve el par tanto la regla que declara una de las
+    dos variables como la que declara cualquier token del que cuelguen.
+  - **Un informe por pastilla.** Cada contexto y situación se reporta una vez,
+    por el bloque que pide justo esas condiciones si lo hay.
+
   Sin fondo propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
