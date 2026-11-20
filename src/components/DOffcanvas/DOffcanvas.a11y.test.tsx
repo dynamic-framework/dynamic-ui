@@ -82,7 +82,7 @@ describe('<DOffcanvas /> a11y', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-    expect(container.querySelector('dialog')).toHaveAccessibleName('Test Header');
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
 
   it('no duplica el id cuando el consumidor ya lo puso en el título', async () => {
@@ -97,8 +97,9 @@ describe('<DOffcanvas /> a11y', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-    expect(results.passes.map(({ id }) => id)).toContain('duplicate-id-aria');
-    expect(container.querySelector('dialog')).toHaveAccessibleName('Test Header');
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
   });
 
   it('no tiene violaciones sin título cuando lleva ariaLabel', async () => {
@@ -110,7 +111,7 @@ describe('<DOffcanvas /> a11y', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-    expect(container.querySelector('dialog')).toHaveAccessibleName('Filtros');
+    expect(results.passes.map(({ id }) => id)).toContain('aria-dialog-name');
   });
 
   it('no duplica el id cuando el título vive fuera del header', async () => {
@@ -125,7 +126,8 @@ describe('<DOffcanvas /> a11y', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-    expect(results.passes.map(({ id }) => id)).toContain('duplicate-id-aria');
-    expect(container.querySelector('dialog')).toHaveAccessibleName('Filtrar resultados');
+    expect(results.passes.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['duplicate-id-aria', 'aria-dialog-name']),
+    );
   });
 });

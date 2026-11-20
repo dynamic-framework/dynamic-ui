@@ -42,11 +42,13 @@ describe('<DModal />', () => {
 
       expect(container).toMatchInlineSnapshot(`
         <div>
-          <dialog
+          <div
+            aria-hidden="false"
             aria-labelledby="myModalLabel"
+            aria-modal="true"
             class="modal portal show"
             id="myModal"
-            open=""
+            role="dialog"
             style="opacity: 0; transform: scale(0.95);"
             tabindex="-1"
           >
@@ -83,7 +85,7 @@ describe('<DModal />', () => {
                 </div>
               </div>
             </div>
-          </dialog>
+          </div>
         </div>
       `);
     });
@@ -264,10 +266,7 @@ describe('<DModal />', () => {
       );
 
       const dialog = screen.getByRole('dialog', { name: 'Test Header' });
-      // Es un `<dialog>` abierto con `showModal()`: de ahí salen el rol y la
-      // modalidad, y por eso ya no lleva `role` ni `aria-modal` propios.
-      expect(dialog.tagName).toBe('DIALOG');
-      expect(dialog).toHaveAttribute('open');
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
       expect(dialog).toHaveAttribute('aria-labelledby', 'myModalLabel');
     });
 

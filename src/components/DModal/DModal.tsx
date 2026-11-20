@@ -7,13 +7,12 @@ import {
 import classNames from 'classnames';
 import { motion, type Transition } from 'framer-motion';
 
-import type { KeyboardEvent, PropsWithChildren, SyntheticEvent } from 'react';
+import type { KeyboardEvent, PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
-import useModalDialog from '../../hooks/useModalDialog';
 import DModalHeader from './components/DModalHeader';
 import DModalLabelContext from './components/DModalLabelContext';
 import DModalBody from './components/DModalBody';
@@ -79,10 +78,7 @@ function DModal(
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  // Abre el panel con showModal() y lo cierra antes de desmontarlo, que es lo
-  // que devuelve el foco al elemento que lo abrió.
-  useModalDialog(dialogRef);
+  const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && !dialog.contains(document.activeElement)) {
@@ -95,7 +91,7 @@ function DModal(
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
   // último enfocable. Tab desde el contenedor ya va al primero. Sin
   // enfocables, ninguna de las dos teclas saca el foco del contenedor.
-  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDialogElement>) => {
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     const dialog = dialogRef.current;
     if (event.key !== 'Tab' || !dialog || document.activeElement !== dialog) {
       return;
@@ -109,16 +105,6 @@ function DModal(
       event.preventDefault();
       focusableElements[focusableElements.length - 1].focus();
     }
-  }, []);
-
-  /*
-   * Escape lo sigue gobernando el portal, que respeta `staticBackdrop` y corre
-   * la animación de salida antes de desmontar el panel. Sin este veto el
-   * navegador cerraría el diálogo por su cuenta y el panel desaparecería de
-   * golpe, sin animación y con el portal todavía apilándolo.
-   */
-  const handleCancel = useCallback((event: SyntheticEvent) => {
-    event.preventDefault();
   }, []);
 
   const fullScreenClass = useMemo(() => {
@@ -140,15 +126,17 @@ function DModal(
   }), [fullScreenClass, centered, fullScreen, scrollable, size]);
 
   return (
-    <motion.dialog
+    <motion.div
       ref={dialogRef}
       className={classNames('modal portal show', className)}
       id={name}
       tabIndex={-1}
       onKeyDown={handleKeyDown}
-      onCancel={handleCancel}
+      role="dialog"
+      aria-modal="true"
       aria-label={ariaLabel}
       aria-labelledby={labelledBy}
+      aria-hidden="false"
       style={style}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -170,7 +158,7 @@ function DModal(
           </DModalLabelContext.Provider>
         </div>
       </div>
-    </motion.dialog>
+    </motion.div>
   );
 }
 

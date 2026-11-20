@@ -88,11 +88,13 @@ describe('<DOffcanvas />', () => {
 
       expect(container).toMatchInlineSnapshot(`
         <div>
-          <dialog
+          <div
+            aria-hidden="false"
             aria-labelledby="myOffcanvasLabel"
+            aria-modal="true"
             class="offcanvas portal show offcanvas-end"
             id="myOffcanvas"
-            open=""
+            role="dialog"
             style="transition: none; transform: translateX(100%);"
             tabindex="-1"
           >
@@ -121,7 +123,7 @@ describe('<DOffcanvas />', () => {
             >
               Test Footer
             </div>
-          </dialog>
+          </div>
         </div>
       `);
     });
@@ -343,10 +345,7 @@ describe('<DOffcanvas />', () => {
       );
 
       const dialog = screen.getByRole('dialog', { name: 'Test Header' });
-      // Es un `<dialog>` abierto con `showModal()`: de ahí salen el rol y la
-      // modalidad, y por eso ya no lleva `role` ni `aria-modal` propios.
-      expect(dialog.tagName).toBe('DIALOG');
-      expect(dialog).toHaveAttribute('open');
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
       expect(dialog).toHaveAttribute('aria-labelledby', 'myOffcanvasLabel');
     });
 

@@ -11,7 +11,7 @@ import '@testing-library/jest-dom';
 import { DContextProvider } from './DContext';
 import { useDPortalContext, type PortalProps } from './DPortalContext';
 
-type Payloads = { example: { title: string } };
+type Payloads = { example: { title: string }; second: { title: string } };
 
 function ExamplePortal({ payload }: PortalProps<Payloads['example']>) {
   return <div className="portal">{payload.title}</div>;
@@ -23,6 +23,18 @@ function Opener() {
     <>
       <button type="button" onClick={() => openPortal('example', { title: 'Portal content' })}>Open</button>
       <button type="button" onClick={closePortal}>Close</button>
+    </>
+  );
+}
+
+/** Two levels: the second portal is opened from inside the first one. */
+function StackedOpener() {
+  const { openPortal, closePortal } = useDPortalContext<Payloads>();
+  return (
+    <>
+      <button type="button" onClick={() => openPortal('example', { title: 'First portal' })}>Open first</button>
+      <button type="button" onClick={() => openPortal('second', { title: 'Second portal' })}>Open second</button>
+      <button type="button" onClick={closePortal}>Close stacked</button>
     </>
   );
 }
@@ -118,5 +130,70 @@ describe('DPortalContextProvider', () => {
     await screen.findByText('Portal content');
     fireEvent.keyDown(window, { key: 'Escape' });
     await waitFor(() => expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument());
+  });
+
+  // #1293 — closing used to leave the focus on `<body>`, so a keyboard or
+  // screen reader user lost their place and had to walk the page again.
+  describe('the focus goes back to whoever opened the portal', () => {
+    it.each([
+      ['closePortal', () => fireEvent.click(screen.getByText('Close'))],
+      ['Escape', () => fireEvent.keyDown(window, { key: 'Escape' })],
+    ])('restores it when closing with %s', async (_, close) => {
+      renderWithPortals();
+      const open = screen.getByText('Open');
+      open.focus();
+      fireEvent.click(open);
+      await screen.findByText('Portal content');
+      expect(open).not.toHaveFocus();
+
+      close();
+      await waitFor(() => expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument());
+      expect(open).toHaveFocus();
+    });
+
+    it('gives each stacked portal back its own trigger', async () => {
+      render(
+        <DContextProvider availablePortals={{ example: ExamplePortal, second: ExamplePortal }}>
+          <StackedOpener />
+        </DContextProvider>,
+      );
+      const first = screen.getByText('Open first');
+      first.focus();
+      fireEvent.click(first);
+      await screen.findByText('First portal');
+
+      // The second portal is opened from inside the first one.
+      const second = screen.getByText('Open second');
+      second.focus();
+      fireEvent.click(second);
+      await screen.findByText('Second portal');
+
+      fireEvent.keyDown(window, { key: 'Escape' });
+      await waitFor(() => expect(second).toHaveFocus());
+
+      fireEvent.keyDown(window, { key: 'Escape' });
+      await waitFor(() => expect(first).toHaveFocus());
+    });
+
+    it('does not move the focus when the trigger is gone', async () => {
+      renderWithPortals();
+      // A trigger that leaves the document while the portal is open. It is
+      // created here rather than taken from the render so that removing it
+      // does not fight React over a node it owns.
+      const trigger = document.createElement('button');
+      document.body.appendChild(trigger);
+      trigger.focus();
+
+      // The click does not move the focus, so this is the active element when
+      // the portal opens and therefore the one that gets stored.
+      fireEvent.click(screen.getByText('Open'));
+      await screen.findByText('Portal content');
+      trigger.remove();
+
+      fireEvent.click(screen.getByText('Close'));
+      await waitFor(() => expect(document.querySelector('#d-portal .portal')).not.toBeInTheDocument());
+      // Focusing a detached element silently drops the focus; nothing moves.
+      expect(document.activeElement).toBe(document.body);
+    });
   });
 });

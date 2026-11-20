@@ -8,14 +8,12 @@ import {
   useRef,
   type KeyboardEvent,
   type PropsWithChildren,
-  type SyntheticEvent,
 } from 'react';
 
 import { PREFIX_BS } from '../config';
 import DPortalStack from '../../contexts/portal/DPortalStack';
 import { registerPortalStack } from '../../contexts/portal/portalStackRegistry';
 import getKeyboardFocusableElements from '../../utils/getKeyboardFocusableElements';
-import useModalDialog from '../../hooks/useModalDialog';
 
 import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 
@@ -118,10 +116,7 @@ function DOffcanvas(
 
   // Foco inicial: el contenedor recibe el foco al montar, salvo que ya esté
   // dentro (un hijo con autoFocus).
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  // Abre el panel con showModal() y lo cierra antes de desmontarlo, que es lo
-  // que devuelve el foco al elemento que lo abrió.
-  useModalDialog(dialogRef);
+  const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && !dialog.contains(document.activeElement)) {
@@ -134,7 +129,7 @@ function DOffcanvas(
   // diálogo: el bucle de Tab de DPortalContext solo actúa desde el primer y el
   // último enfocable. Tab desde el contenedor ya va al primero. Sin
   // enfocables, ninguna de las dos teclas saca el foco del contenedor.
-  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDialogElement>) => {
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     const dialog = dialogRef.current;
     if (event.key !== 'Tab' || !dialog || document.activeElement !== dialog) {
       return;
@@ -153,16 +148,6 @@ function DOffcanvas(
   // Solo se suscribe a los cambios de breakpoint cuando llega un objeto
   // responsive, para no crear suscripciones de matchMedia innecesarias en el
   // caso habitual de valores string.
-  /*
-   * Escape lo sigue gobernando el portal, que respeta `staticBackdrop` y corre
-   * la animación de salida antes de desmontar el panel. Sin este veto el
-   * navegador cerraría el diálogo por su cuenta y el panel desaparecería de
-   * golpe, sin animación y con el portal todavía apilándolo.
-   */
-  const handleCancel = useCallback((event: SyntheticEvent) => {
-    event.preventDefault();
-  }, []);
-
   const hasResponsiveProp = typeof openFrom === 'object'
     || typeof width === 'object'
     || typeof height === 'object';
@@ -183,7 +168,7 @@ function DOffcanvas(
   }, [responsivePropValue, height]);
 
   return (
-    <motion.dialog
+    <motion.div
       ref={dialogRef}
       className={classNames(
         'offcanvas portal show',
@@ -201,14 +186,11 @@ function DOffcanvas(
       id={name}
       tabIndex={-1}
       onKeyDown={handleKeyDown}
-      onCancel={handleCancel}
-      /*
-       * Sin `role="dialog"` ni `aria-modal`: `<dialog>` ya lleva el rol, y
-       * `showModal()` ya anuncia que es modal. La APG desaconseja `aria-modal`
-       * en un diálogo nativo, y axe marca el rol repetido como no permitido.
-       */
+      role="dialog"
+      aria-modal="true"
       aria-label={ariaLabel}
       aria-labelledby={labelledBy}
+      aria-hidden="false"
       custom={resolvedOpenFrom}
       variants={variants}
       initial="hidden"
@@ -231,7 +213,7 @@ function DOffcanvas(
       <DOffcanvasLabelContext.Provider value={headerOwnsLabel ? labelId : undefined}>
         {children}
       </DOffcanvasLabelContext.Provider>
-    </motion.dialog>
+    </motion.div>
   );
 }
 
