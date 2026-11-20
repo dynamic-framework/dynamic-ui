@@ -27,15 +27,26 @@ function Opener() {
   );
 }
 
-/** Two levels: the second portal is opened from inside the first one. */
-function StackedOpener() {
-  const { openPortal, closePortal } = useDPortalContext<Payloads>();
+/**
+ * A portal that opens another one from inside itself, which is what stacking
+ * looks like in practice: the trigger of the second portal lives in the first
+ * one and is still mounted when the second closes.
+ */
+function ParentPortal({ payload }: PortalProps<Payloads['example']>) {
+  const { openPortal } = useDPortalContext<Payloads>();
   return (
-    <>
-      <button type="button" onClick={() => openPortal('example', { title: 'First portal' })}>Open first</button>
+    <div className="portal">
+      {payload.title}
       <button type="button" onClick={() => openPortal('second', { title: 'Second portal' })}>Open second</button>
-      <button type="button" onClick={closePortal}>Close stacked</button>
-    </>
+    </div>
+  );
+}
+
+/** The only page-level trigger: the second portal is opened from the first. */
+function StackedOpener() {
+  const { openPortal } = useDPortalContext<Payloads>();
+  return (
+    <button type="button" onClick={() => openPortal('example', { title: 'First portal' })}>Open first</button>
   );
 }
 
@@ -153,7 +164,7 @@ describe('DPortalContextProvider', () => {
 
     it('gives each stacked portal back its own trigger', async () => {
       render(
-        <DContextProvider availablePortals={{ example: ExamplePortal, second: ExamplePortal }}>
+        <DContextProvider availablePortals={{ example: ParentPortal, second: ExamplePortal }}>
           <StackedOpener />
         </DContextProvider>,
       );
@@ -162,17 +173,23 @@ describe('DPortalContextProvider', () => {
       fireEvent.click(first);
       await screen.findByText('First portal');
 
-      // The second portal is opened from inside the first one.
+      // The trigger of the second portal is inside the first one.
       const second = screen.getByText('Open second');
       second.focus();
       fireEvent.click(second);
       await screen.findByText('Second portal');
 
+      // Closing the child goes back into the parent, which is still open: this
+      // is the level that a page-level trigger would never exercise.
       fireEvent.keyDown(window, { key: 'Escape' });
-      await waitFor(() => expect(second).toHaveFocus());
+      await waitFor(() => expect(screen.queryByText('Second portal')).not.toBeInTheDocument());
+      expect(screen.getByText('First portal')).toBeInTheDocument();
+      expect(second).toHaveFocus();
 
+      // And closing the parent goes back out to the page.
       fireEvent.keyDown(window, { key: 'Escape' });
-      await waitFor(() => expect(first).toHaveFocus());
+      await waitFor(() => expect(screen.queryByText('First portal')).not.toBeInTheDocument());
+      expect(first).toHaveFocus();
     });
 
     it('does not move the focus when the trigger is gone', async () => {
