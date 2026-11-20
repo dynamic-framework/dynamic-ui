@@ -665,8 +665,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
-  // calculó. `.btn-outline-<role>` se mide en reposo, en hover y en active, cada
-  // uno con su texto y sobre el fondo que de verdad se pinta.
+  // calculó. Sólido y con contorno se miden en reposo, en hover y en active,
+  // cada uno con su texto y sobre el fondo que de verdad se pinta: un bloque
+  // que sólo aclara el fondo de reposo y oscurece el texto deja los otros dos
+  // estados con el texto oscuro sobre el relleno oscuro de la librería.
   const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-btn-color');
@@ -691,8 +693,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         const label = `${part.trim()}${inContext(ctx)}`;
 
         /*
-         * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña tres, uno por estado. El relleno de hover y
+         * Cada botón enseña tres pares, uno por estado. En el sólido los tres
+         * rellenos los pinta la librería (`--bs-btn-<role>-{hover,active}-bg`,
+         * los pasos 600 y 700 del role), así que se miden siempre: el theme
+         * declara lo que quiera pisar y el resto sale de ahí.
+         * En el de contorno, el relleno de hover y
          * de active sale de `--bs-btn-outline-<role>-{hover,active}-bg`, que la
          * librería cablea en `.btn-outline-<role>` y deja transparentes: si
          * nadie los declara, lo que se ve detrás es la superficie del contexto
@@ -743,6 +748,20 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: measureSide(ctx, element, '--bs-btn-bg', { background: true }),
               themeFg: Boolean(fgDecl),
+            },
+            {
+              estado: 'en hover',
+              decl: hoverDecl ?? hoverBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-hover-color'),
+              bg: measureSide(ctx, element, '--bs-btn-hover-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-hover-color'),
+            },
+            {
+              estado: 'en active',
+              decl: activeDecl ?? activeBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-active-color'),
+              bg: measureSide(ctx, element, '--bs-btn-active-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-active-color'),
             },
           ];
 
