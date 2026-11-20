@@ -987,7 +987,17 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+        // El hover del botón sólido lo pinta la librería (primary-600 con
+        // texto blanco): con este primary claro no llega a AA, así que el
+        // bloque fija también ese estado y deja en pie sólo el par de reposo,
+        // que es lo que mide este caso.
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1011,7 +1021,17 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+        // El hover del botón sólido lo pinta la librería (primary-600 con
+        // texto blanco): con este primary claro no llega a AA, así que el
+        // bloque fija también ese estado y deja en pie sólo el par de reposo,
+        // que es lo que mide este caso.
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1349,7 +1369,17 @@ describe('componentes propios de una zona', () => {
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))' } },
+        // El hover del botón sólido lo pinta la librería (primary-600 con
+        // texto blanco): con este primary claro no llega a AA, así que el
+        // bloque fija también ese estado y deja en pie sólo el par de reposo,
+        // que es lo que mide este caso.
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-body-color-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1438,7 +1468,13 @@ describe('theme-validate — pares horneados', () => {
         '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
       },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-dark-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1464,7 +1500,13 @@ describe('theme-validate — pares horneados', () => {
       ...SECTIONED_THEME,
       roles: { primary: '#7fd4d0' },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-dark-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1621,7 +1663,13 @@ describe('theme-validate — pares horneados', () => {
         '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
       },
       components: [
-        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-dark-rgb))' } },
+        {
+          selector: '.btn-primary',
+          vars: {
+            '--bs-btn-color': 'rgb(var(--bs-dark-rgb))',
+            '--bs-btn-hover-color': 'rgb(var(--bs-dark-rgb))',
+          },
+        },
       ],
       zones: {
         oscura: {
@@ -1918,6 +1966,115 @@ describe('theme-expand — el breakpoint de RFS', () => {
     // El paso 6 no lo toca la librería en ese breakpoint: no necesita bloque.
     expect(css).not.toMatch(/@media \(min-width: 1200px\) \{[\s\S]*--bs-rfs-fs-6/);
     expect(validate(css).status).toBe(0);
+  });
+});
+
+describe('contraste-boton — .btn-<role> sólido en hover y active (#1372)', () => {
+  const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
+  type Bloque = { selector: string; vars: Record<string, string> };
+  type Ejemplo = { zones: { oscura: { components: Bloque[] } } };
+  const leerEjemplo = (): Ejemplo => JSON.parse(fs.readFileSync(themePath, 'utf8'));
+
+  /** El bloque `.btn-primary` de la zona oscura del ejemplo. */
+  const botonDeZona = (theme: Ejemplo) => {
+    const bloque = theme.zones.oscura.components.find((c) => c.selector === '.btn-primary');
+    if (!bloque) throw new Error('el ejemplo ya no trae un .btn-primary de zona');
+    return bloque;
+  };
+
+  /**
+   * El ejemplo tal como estaba antes de #1372: el bloque de zona aclara el
+   * fondo de reposo y oscurece el texto de los tres estados, pero no declara
+   * los fondos de hover ni de active. La librería los deja en los pasos 600 y
+   * 700 del role, oscuros, y el texto oscuro queda encima.
+   */
+  const sinFondosDeEstado = () => {
+    const theme = leerEjemplo();
+    const boton = botonDeZona(theme);
+    boton.vars = Object.fromEntries(Object.entries(boton.vars)
+      .filter(([name]) => !/^--bs-btn-(hover|active)-(bg|border-color)$/.test(name)));
+    return theme;
+  };
+
+  it('el ejemplo versionado pasa --strict con sus fondos declarados', () => {
+    const result = validateStrict(expandCss(leerEjemplo()));
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+  });
+
+  it('sin los fondos, mide hover y active contra los pasos 600 y 700 de la librería', () => {
+    // Los mismos ratios que Chromium saca del botón renderizado: 1.66:1 en
+    // hover y 1.25:1 en active, con el texto oscuro que fija el bloque.
+    const result = validateStrict(expandCss(sinFondosDeEstado()));
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      '".btn-primary dentro de [data-bs-theme="oscura"], en hover": 1.66:1 entre el texto '
+      + '--bs-btn-hover-color (--bs-dark-rgb) y el fondo --bs-btn-hover-bg (--bs-primary-600-rgb)',
+    );
+    expect(result.stderr).toContain(
+      '".btn-primary dentro de [data-bs-theme="oscura"], en active": 1.25:1 entre el texto '
+      + '--bs-btn-active-color (--bs-dark-rgb) y el fondo --bs-btn-active-bg (--bs-primary-700-rgb)',
+    );
+    // El reposo sí contrasta: 7.86:1 sobre primary-200.
+    expect(result.stderr).not.toContain('".btn-primary dentro de [data-bs-theme="oscura"]":');
+  });
+
+  it('cada estado se reporta por separado: arreglar el hover no calla el active', () => {
+    const theme = sinFondosDeEstado();
+    botonDeZona(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-primary-100-rgb))';
+    const { stderr } = validateStrict(expandCss(theme));
+    expect(stderr).not.toContain('en hover');
+    expect(stderr).toContain('".btn-primary dentro de [data-bs-theme="oscura"], en active": 1.25:1');
+  });
+
+  it('mide contra el fondo que declara el theme, no contra el de la librería', () => {
+    const theme = sinFondosDeEstado();
+    // Un fondo propio igual de oscuro que el de la librería: el par sigue roto,
+    // pero el mensaje apunta a lo que declara el theme.
+    botonDeZona(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-dark-rgb))';
+    const { stderr } = validateStrict(expandCss(theme));
+    expect(stderr).toContain(
+      '".btn-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre el texto '
+      + '--bs-btn-hover-color (--bs-dark-rgb) y el fondo --bs-btn-hover-bg (--bs-dark-rgb)',
+    );
+  });
+
+  it('un bloque que sólo cambia el fondo de reposo arrastra los dos estados', () => {
+    // Sin tocar ningún texto: el reposo se aclara y hover y active se quedan
+    // con el blanco que la librería horneó sobre un primary claro.
+    const css = expandCss({
+      ...SECTIONED_THEME,
+      roles: { primary: '#7fd4d0' },
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-bg': 'rgb(var(--bs-primary-100-rgb))' } },
+      ],
+    });
+    const { stderr } = validate(css);
+    expect(stderr).toContain('".btn-primary, en hover": 2.67:1');
+    expect(stderr).toContain(
+      'El theme no lo fija, así que el botón conserva el que Bootstrap horneó para "primary"',
+    );
+  });
+
+  it('el par de reposo sigue sin etiqueta de estado en el mensaje', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-primary-rgb))' } },
+      ],
+    });
+    expect(validate(css).stderr).toContain('".btn-primary": 1.00:1');
+  });
+
+  it('un botón que la librería deja legible no se reporta en ningún estado', () => {
+    // primary oscuro: el blanco horneado contrasta en los pasos 500, 600 y 700.
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '.btn-primary', vars: { '--bs-btn-bg': 'rgb(var(--bs-primary-rgb))' } },
+      ],
+    });
+    expect(validate(css).stderr).not.toContain('[contraste-boton]');
   });
 });
 

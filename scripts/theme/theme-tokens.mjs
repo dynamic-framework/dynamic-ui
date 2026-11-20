@@ -99,6 +99,54 @@ export const SOLID_PAIRS = {
   dark: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 900 } },
 };
 
+/**
+ * Los mismos pares, pero en hover y en active. La librería los hornea igual que
+ * el de reposo: el fondo es un paso más oscuro de la rampa (600 en hover, 700
+ * en active, salvo los roles que `_root.scss` llama con pasos propios) y el
+ * texto es el `color-contrast()` que Sass calculó contra ese paso. Un theme que
+ * mueve la rampa no los recalcula, y un bloque que sólo cambia el texto de
+ * reposo deja estos dos estados con el par horneado.
+ */
+export const SOLID_STATE_PAIRS = {
+  primary: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // `_root.scss` le da a secondary los pasos 100/100: hover y active comparten
+  // relleno, y el texto es el 700 del role en los dos.
+  secondary: {
+    hover: { fg: { kind: 'role', step: 700 }, bg: { kind: 'role', step: 100 } },
+    active: { fg: { kind: 'role', step: 700 }, bg: { kind: 'role', step: 100 } },
+  },
+  success: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  info: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // El amarillo del 600 todavía pide texto negro; el 700 ya pide blanco.
+  warning: {
+    hover: { fg: { kind: 'black' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  danger: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // light y dark van por la rampa de grises, con los pasos que `_root.scss`
+  // pasa al mixin: no son el 600 y el 700 del role.
+  light: {
+    hover: { fg: { kind: 'gray', step: 700 }, bg: { kind: 'gray', step: 50 } },
+    active: { fg: { kind: 'black' }, bg: { kind: 'gray', step: 300 } },
+  },
+  dark: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 800 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 700 } },
+  },
+};
+
 /** Pares `--bs-<role>-text-emphasis` sobre `--bs-<role>-bg-subtle`. */
 export const SUBTLE_PAIRS = {
   primary: { fg: { kind: 'role', step: 600 }, bg: { kind: 'role', step: 100 } },
@@ -679,6 +727,7 @@ export const DEFAULT_TRIPLETS = (() => {
 /** Una referencia de un par a la variable que lo resuelve: `var(--bs-gray-700)`. */
 const specVar = (spec, role) => {
   if (spec.kind === 'white') return 'var(--bs-white)';
+  if (spec.kind === 'black') return 'var(--bs-black)';
   if (spec.kind === 'gray') return `var(--bs-gray-${spec.step})`;
   return `var(--bs-${role}-${spec.step})`;
 };
@@ -686,8 +735,8 @@ const specVar = (spec, role) => {
 /**
  * Variables de color que la librería declara en `:root` y que leen los pares
  * horneados: el texto y el fondo de `.alert-<role>`, el texto de
- * `.text-bg-<role>`, los de `.btn-<role>`, y los textos y los rellenos de
- * hover y de active de `.btn-outline-<role>`.
+ * `.text-bg-<role>`, los de `.btn-<role>` en sus tres estados, y los textos y
+ * los rellenos de hover y de active de `.btn-outline-<role>`.
  * Todas son alias de un wrapper, y por
  * eso se calculan en el raíz: una zona que sólo cambia el triplete al que
  * apuntan no las mueve.
@@ -701,6 +750,12 @@ export const LIBRARY_ROOT_COLORS = (() => {
     if (role !== 'secondary') map.set(`--bs-${role}-text-bg-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-bg`, specVar(SOLID_PAIRS[role].bg, role));
+    // Hover y active del botón sólido. Sin esto el validador no sabe qué pinta
+    // la librería en esos estados y sólo puede medir el reposo.
+    for (const [state, pair] of Object.entries(SOLID_STATE_PAIRS[role])) {
+      map.set(`--bs-btn-${role}-${state}-color`, specVar(pair.fg, role));
+      map.set(`--bs-btn-${role}-${state}-bg`, specVar(pair.bg, role));
+    }
     for (const [state, spec] of Object.entries(OUTLINE_COLORS[role])) {
       map.set(`--bs-btn-outline-${role}-${state}`, specVar(spec, role));
     }
@@ -744,9 +799,16 @@ export const LIBRARY_ELEMENT_VARS = new Map([
     ['--bs-nav-pills-link-active-color', 'var(--bs-primary-500)'],
     ['--bs-nav-pills-link-active-bg', 'var(--bs-gray-50)'],
   ])],
+  // `df-button-variant-mapper` cablea las variables genéricas del botón a las
+  // del role, estado por estado. El theme pisa las genéricas en su bloque; lo
+  // que no pise se resuelve aquí.
   ...ROLES.map((role) => [`.btn-${role}`, new Map([
     ['--bs-btn-color', `var(--bs-btn-${role}-color)`],
     ['--bs-btn-bg', `var(--bs-btn-${role}-bg)`],
+    ['--bs-btn-hover-color', `var(--bs-btn-${role}-hover-color)`],
+    ['--bs-btn-hover-bg', `var(--bs-btn-${role}-hover-bg)`],
+    ['--bs-btn-active-color', `var(--bs-btn-${role}-active-color)`],
+    ['--bs-btn-active-bg', `var(--bs-btn-${role}-active-bg)`],
   ])]),
   ...ROLES.map((role) => [`.btn-outline-${role}`, new Map(
     [...Object.keys(OUTLINE_COLORS[role]), 'hover-bg', 'active-bg'].map((state) => [
