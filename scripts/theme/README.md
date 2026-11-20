@@ -442,10 +442,18 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
   `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta la pastilla:
   el enlace activo dentro del contenedor, con la capa del contenedor y la del
-  enlace. Un par que `.nav-pills` deja roto y que un bloque del enlace
-  (`.nav-pills .nav-link.active`, cualquiera que lleve `.active` en el elemento
-  al que apunta) corrige no es un hallazgo: ninguna pastilla se ve mal. Cada
-  pastilla se reporta una vez por contexto, por el bloque del enlace si lo hay.
+  enlace. Un par que `.nav-pills` deja roto y que un bloque del enlace corrige
+  no es un hallazgo: ninguna pastilla se ve mal. Alcanzan a la pastilla los
+  bloques sobre el enlace y sobre lo que hay entre él y el contenedor
+  (`.nav-link`, `.nav-item`, `.active`, en cualquier combinación), porque la
+  variable se hereda hasta ella; uno sobre cualquier otro descendiente
+  (`.nav-pills .dropdown-menu`) no. Una regla del enlace vale en los
+  contenedores que nombra: `.nav-pills .nav-link.active` también arregla las
+  pastillas de `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active`
+  no toca las de fuera de la barra. Un bloque con estado (`:hover`,
+  `:focus-visible`) no entra en la medición en reposo: si mueve el par, ese
+  estado se mide aparte y el mensaje lo dice (`…, en hover`). Cada pastilla se
+  reporta una vez por contexto y estado, por el bloque del enlace si lo hay.
   Sin fondo propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara

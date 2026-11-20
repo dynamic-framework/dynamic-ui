@@ -2633,6 +2633,84 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(1);
     });
 
+    it('una regla genérica del enlace alcanza a un contenedor cualificado', () => {
+      // `.nav-pills .nav-link.active` casa también con las pastillas de
+      // `.sidebar .nav-pills`. Chromium: blanco sobre negro, 21:1.
+      const css = `${expandCss(MINIMAL_THEME)}\n.sidebar .nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un bloque sobre .nav-link sin .active también pinta la pastilla', () => {
+      // `.nav-link.active` es un `.nav-link`: el texto negro que pone este
+      // bloque gana sobre el blanco del contenedor. Chromium: negro sobre
+      // negro, 1:1.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .nav-link {\n  ${color}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un estado no tapa el par del enlace en reposo', () => {
+      // El fondo negro sólo llega con el puntero encima; la pastilla
+      // seleccionada se ve blanca sobre blanca el resto del tiempo.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills .nav-link.active {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active:hover {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un estado que rompe el par se mide y se reporta aparte', () => {
+      // En reposo la pastilla contrasta; con el puntero encima, no.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .nav-link.active:hover {\n  ${bg}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills, en hover": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un estado que no mueve el par no abre una medición nueva', () => {
+      // `.nav-pills .nav-link:hover` sólo toca el color del enlace normal: la
+      // pastilla rota se reporta una vez, no una por estado.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link:hover {\n  --bs-nav-link-hover-color: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un bloque con estado no reporta la pastilla en reposo', () => {
+      // El bloque de `:hover` va primero, pero en reposo no pinta: el par roto
+      // del contenedor lo reporta `.nav-pills`, que vale siempre. Los dos
+      // estados están rotos y cada uno sale una vez.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills .nav-link.active:hover {\n`
+        + `  ${color}: ${W};\n}\n`
+        + `\n.nav-pills {\n  ${color}: ${W};\n  ${bg}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active:hover, en hover": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
     it('el enlace de otro contenedor no corrige la pastilla genérica', () => {
       // `.sidebar .nav-pills .nav-link.active` sólo arregla las pastillas de
       // la barra lateral; las de fuera siguen rotas.
