@@ -68,27 +68,25 @@ function diff(prev: string, next: string) {
 
 const where = ({ media, selector, name }: Entry) => `${media ?? '-'} | ${selector} | ${name}`;
 
+const NO_CHANGES = {
+  customProperties: {
+    added: [], removed: [], changed: [], renamed: [],
+  },
+  classes: { added: [], removed: [] },
+};
+
 describe('theme-diff con los fixtures', () => {
   const result = () => diff(PREV, NEXT);
 
-  it('toma las versiones de la cabecera y resume custom properties y clases', () => {
-    const { from, to, summary } = result();
+  it('toma las versiones de la cabecera', () => {
+    const { from, to } = result();
     expect(from).toBe('1.0.0');
     expect(to).toBe('1.1.0');
-    expect(summary).toEqual({
-      customProperties: {
-        added: 4, removed: 3, changed: 7, renamed: 1,
-      },
-      classes: { added: 1, removed: 1 },
-    });
   });
 
   it('lista las custom properties agregadas y eliminadas en cualquier selector', () => {
     const { customProperties } = result();
     expect(customProperties.added).toEqual([
-      {
-        name: '--bs-neutral-25', selector: ':root', media: null, value: '#fcfcfd',
-      },
       {
         name: '--bs-new-token', selector: ':root', media: null, value: '2px',
       },
@@ -100,9 +98,6 @@ describe('theme-diff con los fixtures', () => {
       },
     ]);
     expect(customProperties.removed).toEqual([
-      {
-        name: '--bs-gray-25', selector: ':root', media: null, value: '#fcfcfd',
-      },
       {
         name: '--bs-legacy-flag', selector: ':root', media: null, value: '1',
       },
@@ -149,37 +144,25 @@ describe('theme-diff con los fixtures', () => {
     expect(result().classes).toEqual({ added: ['.d-skeleton'], removed: ['.legacy-badge'] });
   });
 
-  it('sugiere el renombre sin sacar el par de added/removed', () => {
+  it('reporta el renombre con el nombre anterior y el nuevo, fuera de added/removed', () => {
     const { customProperties } = result();
     expect(customProperties.renamed).toEqual([{
-      from: '--bs-gray-25',
-      to: '--bs-neutral-25',
-      selector: ':root',
-      media: null,
-      value: '#fcfcfd',
-      similarity: 0.5,
-      suggestion: true,
+      from: '--bs-gray-25', to: '--bs-neutral-25', selector: ':root', media: null, value: '#fcfcfd',
     }]);
-    expect(customProperties.added.map((entry: Entry) => entry.name)).toContain('--bs-neutral-25');
-    expect(customProperties.removed.map((entry: Entry) => entry.name)).toContain('--bs-gray-25');
+    expect(customProperties.added.map((entry: Entry) => entry.name)).not.toContain('--bs-neutral-25');
+    expect(customProperties.removed.map((entry: Entry) => entry.name)).not.toContain('--bs-gray-25');
   });
 
   it('con --out escribe el JSON y resume en stdout', () => {
     const out = path.join(workdir, 'nested', 'changes-1.1.0.json');
     const { status, stdout } = run([PREV, NEXT, '--out', out]);
     expect(status).toBe(0);
-    expect(stdout).toMatch(/1\.0\.0 → 1\.1\.0\. Custom properties: 4 agregada\(s\), 3 eliminada\(s\), 7 cambiada\(s\), 1 renombre\(s\) sugerido\(s\)\. Clases: 1 agregada\(s\), 1 eliminada\(s\)\./);
+    expect(stdout).toMatch(/1\.0\.0 → 1\.1\.0\. Custom properties: 3 agregada\(s\), 2 eliminada\(s\), 7 cambiada\(s\), 1 renombrada\(s\)\. Clases: 1 agregada\(s\), 1 eliminada\(s\)\./);
     expect(JSON.parse(fs.readFileSync(out, 'utf8'))).toEqual(result());
   });
 
   it('el mismo CSS contra sí mismo no tiene cambios', () => {
-    const { summary } = diff(NEXT, NEXT);
-    expect(summary).toEqual({
-      customProperties: {
-        added: 0, removed: 0, changed: 0, renamed: 0,
-      },
-      classes: { added: 0, removed: 0 },
-    });
+    expect(diff(NEXT, NEXT)).toMatchObject(NO_CHANGES);
   });
 });
 
@@ -187,15 +170,13 @@ describe('theme-diff — selectores', () => {
   it('cuenta [data-bs-theme=dynamic] como :root', () => {
     const prev = write(css('1.0.0', ':root {\n  --bs-a: 1;\n}'));
     const next = write(css('1.0.1', '[data-bs-theme=dynamic] {\n  --bs-a: 1;\n}'));
-    expect(diff(prev, next).summary.customProperties).toEqual({
-      added: 0, removed: 0, changed: 0, renamed: 0,
-    });
+    expect(diff(prev, next)).toMatchObject(NO_CHANGES);
   });
 
   it('no distingue atributos con y sin comillas ni espacios en el selector', () => {
     const prev = write(css('1.0.0', '[data-bs-theme=dark]   .card {\n  --bs-card-bg: #000;\n}'));
     const next = write(css('1.0.1', '[data-bs-theme="dark"] .card {\n  --bs-card-bg: #000;\n}'));
-    expect(diff(prev, next).summary.customProperties.added).toBe(0);
+    expect(diff(prev, next).customProperties.added).toEqual([]);
   });
 
   it('un mismo nombre en selectores distintos son entradas distintas', () => {
@@ -209,7 +190,7 @@ describe('theme-diff — selectores', () => {
   it('ignora las custom properties de @keyframes', () => {
     const prev = write(css('1.0.0', '@keyframes spin {\n  to {\n    --bs-angle: 360deg;\n  }\n}'));
     const next = write(css('1.0.1', '@keyframes spin {\n  to {\n    --bs-angle: 180deg;\n  }\n}'));
-    expect(diff(prev, next).summary.customProperties.changed).toBe(0);
+    expect(diff(prev, next).customProperties.changed).toEqual([]);
   });
 
   it('saca las clases de selectores compuestos, sin contar puntos de atributos', () => {
@@ -235,13 +216,14 @@ describe('theme-diff — valores', () => {
   });
 });
 
-describe('theme-diff — heurística de renombres', () => {
-  it('entre varios candidatos con el mismo valor gana el nombre más parecido', () => {
+describe('theme-diff — renombres', () => {
+  it('con más de un candidato con el mismo valor no adivina', () => {
     const prev = write(root('1.0.0', '  --bs-link-hover-color: #123456;'));
     const next = write(root('1.0.1', '  --bs-anchor-color: #123456;\n  --bs-link-color-hover: #123456;'));
-    const { renamed } = diff(prev, next).customProperties;
-    expect(renamed).toHaveLength(1);
-    expect(renamed[0]).toMatchObject({ from: '--bs-link-hover-color', to: '--bs-link-color-hover', similarity: 1 });
+    const { renamed, added, removed } = diff(prev, next).customProperties;
+    expect(renamed).toEqual([]);
+    expect(added).toHaveLength(2);
+    expect(removed).toHaveLength(1);
   });
 
   it('solo empareja dentro del mismo selector', () => {
@@ -250,7 +232,7 @@ describe('theme-diff — heurística de renombres', () => {
     expect(diff(prev, next).customProperties.renamed).toEqual([]);
   });
 
-  it('no sugiere nada si los nombres no comparten segmentos', () => {
+  it('no empareja si los nombres no comparten segmentos', () => {
     const prev = write(root('1.0.0', '  --bs-foo: 0;'));
     const next = write(root('1.0.1', '  --bs-bar: 0;'));
     const { renamed, added, removed } = diff(prev, next).customProperties;
@@ -259,16 +241,18 @@ describe('theme-diff — heurística de renombres', () => {
     expect(removed).toHaveLength(1);
   });
 
-  it('no sugiere nada si el valor cambió', () => {
+  it('no empareja si el valor cambió', () => {
     const prev = write(root('1.0.0', '  --bs-gray-25: #fcfcfd;'));
     const next = write(root('1.0.1', '  --bs-neutral-25: #fafafa;'));
     expect(diff(prev, next).customProperties.renamed).toEqual([]);
   });
 
-  it('entre varios candidatos por debajo del umbral no sugiere nada', () => {
-    const prev = write(root('1.0.0', '  --bs-a-b-c-d: 0;\n  --bs-a-x-y-z: 0;'));
-    const next = write(root('1.0.1', '  --bs-a-q-r-s: 0;'));
-    expect(diff(prev, next).customProperties.renamed).toEqual([]);
+  it('empareja aunque el valor difiera solo en espacios o mayúsculas de hex', () => {
+    const prev = write(root('1.0.0', '  --bs-gray-25: #FCFCFD;'));
+    const next = write(root('1.0.1', '  --bs-neutral-25: #fcfcfd;'));
+    expect(diff(prev, next).customProperties.renamed).toEqual([{
+      from: '--bs-gray-25', to: '--bs-neutral-25', selector: ':root', media: null, value: '#fcfcfd',
+    }]);
   });
 });
 
@@ -296,45 +280,5 @@ describe('theme-diff — errores', () => {
   it('sale con 2 con argumentos incompletos', () => {
     expect(run([PREV]).status).toBe(2);
     expect(run([PREV, NEXT, '--out']).status).toBe(2);
-  });
-});
-
-describe('theme-diff --previous-version', () => {
-  const manifest = () => write(JSON.stringify({
-    latest: '2.12.1',
-    versions: {
-      '2.5.1': {},
-      '2.10.0': {},
-      '2.11.0': {},
-      '2.12.0': {},
-      '2.12.1': {},
-      '2.13.0-rc.1': {},
-    },
-  }), '.json');
-
-  it.each([
-    ['patch', '2.12.2', '2.12.1'],
-    ['minor', '2.13.0', '2.12.1'],
-    ['major', '3.0.0', '2.12.1'],
-    ['prefijo v', 'v2.13.0', '2.12.1'],
-    ['backport', '2.11.1', '2.11.0'],
-    ['re-ejecución de una versión ya indexada', '2.12.1', '2.12.0'],
-    ['orden numérico, no lexicográfico', '2.10.1', '2.10.0'],
-    ['prerelease de la versión siguiente', '2.13.0-rc.2', '2.12.1'],
-  ])('%s: %s compara contra %s', (_case, version, expected) => {
-    const { status, stdout } = run(['--previous-version', manifest(), version]);
-    expect(status).toBe(0);
-    expect(stdout.trim()).toBe(expected);
-  });
-
-  it('no imprime nada si no hay versión estable anterior', () => {
-    const { status, stdout } = run(['--previous-version', manifest(), '2.5.1']);
-    expect(status).toBe(0);
-    expect(stdout).toBe('');
-  });
-
-  it('sale con 2 si el índice no es JSON', () => {
-    const { status } = run(['--previous-version', write('no es json', '.json'), '2.13.0']);
-    expect(status).toBe(2);
   });
 });

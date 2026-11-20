@@ -77,25 +77,23 @@ npm run theme:diff -- <prev>/dynamic-ui.css <next>/dynamic-ui.css [--out changes
 ```
 
 Cada release lo publica en el CDN, comparado contra la mayor versión estable
-anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0):
+anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0). Si la
+versión es el latest del índice, también se publica en `latest/`:
 
 ```
-https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes-<semver>.json
+https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes.json
+https://cdn.dynamicframework.dev/assets/latest/ui-react/tokens/changes.json
 ```
 
 ```json
 {
   "from": "2.12.0",
   "to": "2.12.1",
-  "summary": {
-    "customProperties": { "added": 1, "removed": 1, "changed": 9, "renamed": 0 },
-    "classes": { "added": 0, "removed": 0 }
-  },
   "customProperties": {
     "added":   [{ "name": "--bs-btn-text-decoration", "selector": ".btn", "media": null, "value": "none" }],
     "removed": [{ "name": "--bs-…", "selector": "…", "media": null, "value": "…" }],
     "changed": [{ "name": "--bs-…", "selector": ":root", "media": null, "from": "…", "to": "…" }],
-    "renamed": [{ "from": "--bs-…", "to": "--bs-…", "selector": "…", "media": null, "value": "…", "similarity": 0.5, "suggestion": true }]
+    "renamed": [{ "from": "--bs-…", "to": "--bs-…", "selector": "…", "media": null, "value": "…" }]
   },
   "classes": { "added": [".d-skeleton"], "removed": [] }
 }
@@ -110,9 +108,11 @@ https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes-<semver
   aparece como cambio. `[data-bs-theme=dynamic]` se reporta como `:root`.
 - `changed` ignora diferencias de espacios y de mayúsculas en hex; agregar o
   quitar `!important` sí cuenta.
-- `renamed` es una sugerencia: un par eliminado/agregado del mismo selector y
-  `media`, con el mismo valor y nombres parecidos (coeficiente de Dice sobre
-  los segmentos del nombre). Las dos variables siguen en `removed` y `added`.
+- `renamed` empareja una variable eliminada con una agregada del mismo
+  selector y `media` cuando son las únicas de su lado con ese valor y los
+  nombres comparten algún segmento (`--bs-gray-25` → `--bs-neutral-25`). El
+  par sale de `removed` y `added`. Con más de un candidato no se adivina y
+  quedan en `removed` y `added`.
 - `classes` lista los nombres de clase que aparecen o desaparecen de los
   selectores, en cualquier regla.
 - Las declaraciones normales (`padding`, `color`…) quedan fuera: una release

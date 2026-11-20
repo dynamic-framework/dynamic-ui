@@ -3,48 +3,32 @@
 // theme-diff — compara el CSS compilado de dos versiones de Dynamic UI y
 // describe en JSON lo que afecta a un theme o a un UI Kit:
 //
-//   - customProperties: todas las custom properties del CSS, en cualquier
-//     selector (`:root`, componentes, utilidades, zonas) y en cualquier
-//     `@media`/`@supports`: agregadas, eliminadas, con otro valor y renombres
-//     sugeridos.
+//   - customProperties: custom properties de cualquier selector (`:root`,
+//     componentes, utilidades, zonas) y de cualquier `@media`/`@supports`:
+//     agregadas, eliminadas, con otro valor y renombradas.
 //   - classes: clases que aparecen o desaparecen de los selectores.
 //
 //   node scripts/theme/theme-diff.mjs <prev.css> <next.css> [--out <archivo>]
-//   node scripts/theme/theme-diff.mjs --previous-version <manifest.json> <semver>
 //
-// Una custom property se identifica por su nombre, su selector y la cadena de
-// at-rules que la envuelve. Las listas de selectores se separan, así que
-// reagrupar reglas en Sass no aparece como cambio. `[data-bs-theme=dynamic]`
-// se cuenta como `:root`: la librería siempre los declara juntos.
+// Una custom property se identifica por nombre, selector y cadena de at-rules.
+// Las listas de selectores se separan, así que reagrupar reglas en Sass no
+// aparece como cambio. `[data-bs-theme=dynamic]` se cuenta como `:root`: la
+// librería siempre los declara juntos.
 //
 // Las declaraciones normales (`padding`, `color`…) quedan fuera: una release
 // puede mover cientos y taparían lo que un theme tiene que revisar.
-//
-// La entrada es el CSS y no known-tokens.json: el inventario solo lleva
-// nombres, sin valores ni selector, así que no alcanza para `changed` ni para
-// `renamed`.
-//
-// `renamed` es una sugerencia: los dos lados del par siguen en `removed` y
-// `added`, que son exhaustivas aunque la heurística se equivoque.
-//
-// --previous-version imprime la mayor versión estable del índice del CDN
-// (manifest.json) menor a <semver>, o nada si no hay. Es la base contra la que
-// cdn.yml compara cada release.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
+import { parseArgs } from 'node:util';
 
 import postcss from 'postcss';
 
 import { cascadeSet, normalizeCssValue } from './theme-tokens.mjs';
 
-/** Similitud mínima entre nombres para sugerir un renombre entre varios candidatos. */
-export const RENAME_MIN_SIMILARITY = 0.5;
-
-const USAGE = 'uso: theme-diff.mjs <prev.css> <next.css> [--out <archivo>]\n'
-  + '     theme-diff.mjs --previous-version <manifest.json> <semver>\n';
+const USAGE = 'uso: theme-diff.mjs <prev.css> <next.css> [--out <archivo>]\n';
 
 // -- Lectura ------------------------------------------------------------------
 
@@ -82,12 +66,14 @@ function atRuleChain(node) {
   return chain.length > 0 ? chain.join(' ') : null;
 }
 
-const keyOf = ({ media, selector, name }) => `${media ?? ''}\u0000${selector}\u0000${name}`;
+const contextOf = ({ media, selector }) => `${media ?? ''}\u0000${selector}`;
+const keyOf = (entry) => `${contextOf(entry)}\u0000${entry.name}`;
 
 /**
  * Inventario de un CSS: `props` (Map de clave → { name, selector, media,
  * value }) y `classes` (Set). Dentro de una misma clave gana la última
  * declaración, salvo que una anterior lleve `!important` y la nueva no.
+ * `value` incluye `!important` si la declaración lo lleva.
  */
 export function readInventory(css) {
   const props = new Map();
@@ -96,12 +82,15 @@ export function readInventory(css) {
     if (rule.parent?.type === 'atrule' && /keyframes$/i.test(rule.parent.name)) return;
     const media = atRuleChain(rule);
     const decls = rule.nodes.filter((node) => node.type === 'decl' && node.prop.startsWith('--'));
-    const selectors = [...new Set(rule.selectors.map(normalizeSelector))];
-    for (const selector of selectors) {
+    for (const selector of new Set(rule.selectors.map(normalizeSelector))) {
       for (const className of classesOf(selector)) classes.add(className);
       for (const decl of decls) {
         const entry = {
-          name: decl.prop, selector, media, value: decl.value, important: decl.important,
+          name: decl.prop,
+          selector,
+          media,
+          value: decl.important ? `${decl.value} !important` : decl.value,
+          important: decl.important,
         };
         cascadeSet(props, keyOf(entry), entry);
       }
@@ -120,84 +109,10 @@ export const comparable = (value) => normalizeCssValue(value)
   .replace(/\s*([,()])\s*/g, '$1')
   .trim();
 
-const valueOf = (entry) => (entry.important ? `${entry.value} !important` : entry.value);
-
 // -- Diff ---------------------------------------------------------------------
 
 /** Por código de carácter, no por locale: el orden no cambia entre máquinas. */
 const compareText = (a, b) => (a < b ? -1 : Number(a > b));
-
-const segments = (name) => name.replace(/^--bs-/, '').split('-').filter(Boolean);
-
-/** Coeficiente de Dice entre los segmentos de dos nombres (multiconjunto). */
-export function nameSimilarity(a, b) {
-  const left = segments(a);
-  const right = segments(b);
-  if (left.length + right.length === 0) return 0;
-  const pool = [...right];
-  let common = 0;
-  for (const segment of left) {
-    const index = pool.indexOf(segment);
-    if (index !== -1) {
-      common += 1;
-      pool.splice(index, 1);
-    }
-  }
-  return Math.round(((2 * common) / (left.length + right.length)) * 100) / 100;
-}
-
-const contextOf = ({ media, selector }) => `${media ?? ''}\u0000${selector}`;
-
-/**
- * Pares (eliminada, agregada) con el mismo selector, la misma at-rule y el
- * mismo valor. Se acepta un par si es el único candidato de los dos lados y
- * los nombres comparten algún segmento, o si su similitud llega a
- * RENAME_MIN_SIMILARITY. Entre varios candidatos gana el de mayor similitud, y
- * cada variable entra en un solo par.
- */
-function suggestRenames(removed, added) {
-  const candidates = [];
-  for (const r of removed) {
-    for (const a of added) {
-      if (contextOf(r) === contextOf(a) && comparable(r.value) === comparable(a.value)) {
-        candidates.push({ r, a, similarity: nameSimilarity(r.name, a.name) });
-      }
-    }
-  }
-  const countBy = (side) => candidates.reduce(
-    (acc, c) => acc.set(keyOf(c[side]), (acc.get(keyOf(c[side])) ?? 0) + 1),
-    new Map(),
-  );
-  const perRemoved = countBy('r');
-  const perAdded = countBy('a');
-
-  candidates.sort((x, y) => y.similarity - x.similarity
-    || compareText(keyOf(x.r), keyOf(y.r))
-    || compareText(keyOf(x.a), keyOf(y.a)));
-
-  const used = new Set();
-  const renamed = [];
-  for (const { r, a, similarity } of candidates) {
-    const rKey = `r${keyOf(r)}`;
-    const aKey = `a${keyOf(a)}`;
-    if (used.has(rKey) || used.has(aKey)) continue;
-    const oneToOne = perRemoved.get(keyOf(r)) === 1 && perAdded.get(keyOf(a)) === 1;
-    if ((oneToOne && similarity > 0) || similarity >= RENAME_MIN_SIMILARITY) {
-      used.add(rKey);
-      used.add(aKey);
-      renamed.push({
-        from: r.name,
-        to: a.name,
-        selector: a.selector,
-        media: a.media,
-        value: a.value,
-        similarity,
-        suggestion: true,
-      });
-    }
-  }
-  return renamed;
-}
 
 /**
  * Orden estable: primero lo que no está bajo una at-rule, `:root` antes que el
@@ -208,169 +123,138 @@ const order = (x, y) => compareText(x.media ?? '', y.media ?? '')
   || compareText(x.selector, y.selector)
   || compareText(x.name ?? x.from, y.name ?? y.from);
 
-const describe = (entry) => ({
-  name: entry.name, selector: entry.selector, media: entry.media, value: valueOf(entry),
+const segments = (name) => name.replace(/^--bs-/, '').split('-').filter(Boolean);
+const shareSegment = (a, b) => segments(a).some((segment) => segments(b).includes(segment));
+
+/**
+ * Renombres: una variable eliminada y una agregada con el mismo selector, la
+ * misma at-rule y el mismo valor, cuando son las únicas de su lado con ese
+ * valor y los nombres comparten algún segmento (`--bs-gray-25` →
+ * `--bs-neutral-25`). Si hay más de un candidato no se adivina: quedan en
+ * `added` y `removed`.
+ */
+function findRenames(removed, added) {
+  const bucketOf = (entry) => `${contextOf(entry)}\u0000${comparable(entry.value)}`;
+  const addedByBucket = Map.groupBy(added, bucketOf);
+  const renames = [];
+  for (const [bucket, [from, ...others]] of Map.groupBy(removed, bucketOf)) {
+    const candidates = addedByBucket.get(bucket) ?? [];
+    if (others.length === 0 && candidates.length === 1 && shareSegment(from.name, candidates[0].name)) {
+      renames.push({ from, to: candidates[0] });
+    }
+  }
+  return renames;
+}
+
+const describe = ({
+  name, selector, media, value,
+}) => ({
+  name, selector, media, value,
 });
 
 /** Diferencia entre dos inventarios, tal como los devuelve `readInventory`. */
 export function diffInventories(prev, next) {
-  const added = [];
-  const removed = [];
+  const added = [...next.props].filter(([key]) => !prev.props.has(key)).map(([, entry]) => entry);
+  const removed = [...prev.props].filter(([key]) => !next.props.has(key)).map(([, entry]) => entry);
   const changed = [];
   for (const [key, entry] of next.props) {
     const before = prev.props.get(key);
-    if (!before) {
-      added.push(describe(entry));
-    } else if (comparable(valueOf(before)) !== comparable(valueOf(entry))) {
+    if (before && comparable(before.value) !== comparable(entry.value)) {
       changed.push({
-        name: entry.name,
-        selector: entry.selector,
-        media: entry.media,
-        from: valueOf(before),
-        to: valueOf(entry),
+        name: entry.name, selector: entry.selector, media: entry.media, from: before.value, to: entry.value,
       });
     }
   }
-  for (const [key, entry] of prev.props) {
-    if (!next.props.has(key)) removed.push(describe(entry));
-  }
-  const sortedClasses = (from, to) => [...to].filter((c) => !from.has(c)).sort();
+
+  const renames = findRenames(removed, added);
+  const paired = new Set(renames.flatMap(({ from, to }) => [from, to]));
+  const unpaired = (list) => list.filter((entry) => !paired.has(entry)).map(describe).sort(order);
+  const newClasses = (from, to) => [...to].filter((name) => !from.has(name)).sort();
+
   return {
     customProperties: {
-      added: added.sort(order),
-      removed: removed.sort(order),
+      added: unpaired(added),
+      removed: unpaired(removed),
       changed: changed.sort(order),
-      renamed: suggestRenames(removed, added).sort(order),
+      renamed: renames.map(({ from, to }) => ({
+        from: from.name, to: to.name, selector: to.selector, media: to.media, value: to.value,
+      })).sort(order),
     },
     classes: {
-      added: sortedClasses(prev.classes, next.classes),
-      removed: sortedClasses(next.classes, prev.classes),
+      added: newClasses(prev.classes, next.classes),
+      removed: newClasses(next.classes, prev.classes),
     },
   };
 }
 
-const counts = (group) => Object.fromEntries(Object.entries(group).map(([key, list]) => [key, list.length]));
-
 export function diffCss(prevCss, nextCss) {
-  const changes = diffInventories(readInventory(prevCss), readInventory(nextCss));
   return {
     from: cssVersion(prevCss),
     to: cssVersion(nextCss),
-    summary: {
-      customProperties: counts(changes.customProperties),
-      classes: counts(changes.classes),
-    },
-    ...changes,
+    ...diffInventories(readInventory(prevCss), readInventory(nextCss)),
   };
-}
-
-// -- Versión anterior ---------------------------------------------------------
-
-const STABLE = /^(\d+)\.(\d+)\.(\d+)$/;
-
-const compareStable = (a, b) => {
-  const left = a.match(STABLE).slice(1).map(Number);
-  const right = b.match(STABLE).slice(1).map(Number);
-  for (let i = 0; i < 3; i += 1) {
-    if (left[i] !== right[i]) return left[i] - right[i];
-  }
-  return 0;
-};
-
-/**
- * Mayor versión estable de `manifest.versions` estrictamente menor a `version`.
- * Los prereleases nunca son base. En un backport (2.11.1 con 2.12.x publicado)
- * devuelve 2.11.0, y al re-ejecutar un release su propia versión no cuenta.
- */
-export function previousVersion(manifest, version) {
-  const current = String(version).replace(/^v/, '').replace(/[-+].*$/, '');
-  if (!STABLE.test(current)) return null;
-  const versions = Object.keys(manifest?.versions ?? {}).filter((v) => STABLE.test(v));
-  const lower = versions.filter((v) => compareStable(v, current) < 0).sort(compareStable);
-  return lower.at(-1) ?? null;
 }
 
 // -- CLI ----------------------------------------------------------------------
 
 function readFile(file) {
   try {
-    return { text: fs.readFileSync(path.resolve(file), 'utf8') };
+    return fs.readFileSync(path.resolve(file), 'utf8');
   } catch (error) {
     process.stderr.write(`No se pudo leer ${file}: ${error.message}\n`);
-    return { error: true };
+    return null;
   }
-}
-
-function mainPreviousVersion(args) {
-  if (args.length !== 2) {
-    process.stderr.write(USAGE);
-    return 2;
-  }
-  const { text, error } = readFile(args[0]);
-  if (error) return 2;
-  let manifest;
-  try {
-    manifest = JSON.parse(text);
-  } catch (parseError) {
-    process.stderr.write(`${args[0]} no es JSON válido: ${parseError.message}\n`);
-    return 2;
-  }
-  const previous = previousVersion(manifest, args[1]);
-  if (previous) process.stdout.write(`${previous}\n`);
-  return 0;
 }
 
 function main(argv) {
-  const args = argv.slice(2);
-  if (args.includes('-h') || args.includes('--help')) {
+  let args;
+  try {
+    args = parseArgs({
+      args: argv.slice(2),
+      allowPositionals: true,
+      options: { out: { type: 'string' }, help: { type: 'boolean', short: 'h' } },
+    });
+  } catch {
+    process.stderr.write(USAGE);
+    return 2;
+  }
+  const { values, positionals } = args;
+  if (values.help) {
     process.stdout.write(USAGE);
     return 0;
   }
-  if (args[0] === '--previous-version') return mainPreviousVersion(args.slice(1));
-
-  const positional = [];
-  let out = null;
-  for (let i = 0; i < args.length; i += 1) {
-    if (args[i] === '--out') {
-      out = args[i + 1] ?? null;
-      i += 1;
-    } else {
-      positional.push(args[i]);
-    }
-  }
-  if (positional.length !== 2 || (args.includes('--out') && !out)) {
+  if (positionals.length !== 2) {
     process.stderr.write(USAGE);
     return 2;
   }
 
-  const sources = positional.map(readFile);
-  if (sources.some((source) => source.error)) return 2;
-  for (const [index, source] of sources.entries()) {
-    if (!cssVersion(source.text)) {
-      process.stderr.write(`${positional[index]} no lleva la cabecera de versión de Dynamic UI.\n`);
-      return 2;
-    }
+  const sources = positionals.map(readFile);
+  if (sources.includes(null)) return 2;
+  const missingHeader = positionals.find((_, index) => !cssVersion(sources[index]));
+  if (missingHeader) {
+    process.stderr.write(`${missingHeader} no lleva la cabecera de versión de Dynamic UI.\n`);
+    return 2;
   }
 
   let result;
   try {
-    result = diffCss(sources[0].text, sources[1].text);
+    result = diffCss(...sources);
   } catch (error) {
     process.stderr.write(`No se pudo leer el CSS: ${error.message}\n`);
     return 2;
   }
   const json = `${JSON.stringify(result, null, 2)}\n`;
-  if (!out) {
+  if (!values.out) {
     process.stdout.write(json);
     return 0;
   }
-  fs.mkdirSync(path.dirname(path.resolve(out)), { recursive: true });
-  fs.writeFileSync(out, json, 'utf8');
-  const { customProperties: props, classes } = result.summary;
+  fs.mkdirSync(path.dirname(path.resolve(values.out)), { recursive: true });
+  fs.writeFileSync(values.out, json, 'utf8');
+  const { customProperties: props, classes } = result;
   process.stdout.write(
-    `${out}: ${result.from} → ${result.to}. Custom properties: ${props.added} agregada(s), `
-    + `${props.removed} eliminada(s), ${props.changed} cambiada(s), ${props.renamed} renombre(s) sugerido(s). `
-    + `Clases: ${classes.added} agregada(s), ${classes.removed} eliminada(s).\n`,
+    `${values.out}: ${result.from} → ${result.to}. Custom properties: ${props.added.length} agregada(s), `
+    + `${props.removed.length} eliminada(s), ${props.changed.length} cambiada(s), ${props.renamed.length} renombrada(s). `
+    + `Clases: ${classes.added.length} agregada(s), ${classes.removed.length} eliminada(s).\n`,
   );
   return 0;
 }
