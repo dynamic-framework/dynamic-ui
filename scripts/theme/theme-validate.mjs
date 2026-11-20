@@ -802,41 +802,51 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     return text.length - 1;
   };
 
-  /** Los estados que un selector puede pedir; el resto de pseudoclases no lo es. */
+  /** Los estados que un selector puede pedir; las demás pseudoclases no lo son. */
   const STATE_PSEUDOS = ['hover', 'focus', 'focus-visible', 'focus-within', 'active', 'visited', 'disabled', 'target'];
+  /** Pseudoelementos: no son el elemento, sino algo que se pinta aparte. */
+  const PSEUDO_ELEMENTS = ['before', 'after', 'first-line', 'first-letter', 'selection', 'marker', 'placeholder', 'backdrop', 'file-selector-button'];
 
   /**
    * Las partes de primer nivel de un compuesto: sus clases, sus atributos, los
-   * estados que pide y los argumentos de sus `:not()`. Lo que va dentro de un
-   * argumento o de un atributo no selecciona por sí mismo, y lo escapado no es
-   * selector: por eso se recorre a mano y no con una expresión regular.
+   * estados que pide, los argumentos de sus `:not()` y los pseudoelementos.
+   * Lo que va dentro de un argumento o de un atributo no selecciona por sí
+   * mismo, y lo escapado no es selector: por eso se recorre a mano y no con una
+   * expresión regular.
    */
   const parseCompound = (compound) => {
     const parts = {
-      classes: [], attributes: [], states: [], negations: [],
+      classes: [], attributes: [], states: [], negations: [], elements: [],
     };
     for (let i = 0; i < compound.length; i += 1) {
       const char = compound[i];
-      if (char === '\\') i += 1;
-      else if (char === '[') {
+      if (char === '\\') {
+        i += 1;
+        continue;
+      }
+      if (char === '[') {
         const end = closing(compound, i);
         parts.attributes.push(compound.slice(i, end + 1));
         i = end;
-      } else if (char === '.' || (char === ':' && compound[i + 1] !== ':')) {
-        const name = /^[\w-]+/.exec(compound.slice(i + 1))?.[0];
-        if (!name) continue;
-        let end = i + name.length;
-        let argument = '';
-        if (compound[end + 1] === '(') {
-          const close = closing(compound, end + 1);
-          argument = compound.slice(end + 2, close);
-          end = close;
-        }
-        if (char === '.') parts.classes.push(name);
-        else if (name === 'not') parts.negations.push(argument);
-        else if (STATE_PSEUDOS.includes(name)) parts.states.push(name);
-        i = end;
-      } else if (char === ':') i += 1;
+        continue;
+      }
+      if (char !== '.' && char !== ':') continue;
+      const doubled = char === ':' && compound[i + 1] === ':';
+      const start = i + (doubled ? 2 : 1);
+      const name = /^[\w-]+/.exec(compound.slice(start))?.[0];
+      if (!name) continue;
+      let end = start + name.length - 1;
+      let argument = '';
+      if (compound[end + 1] === '(') {
+        const close = closing(compound, end + 1);
+        argument = compound.slice(end + 2, close);
+        end = close;
+      }
+      if (char === '.') parts.classes.push(name);
+      else if (doubled || PSEUDO_ELEMENTS.includes(name)) parts.elements.push(name);
+      else if (name === 'not') parts.negations.push(argument);
+      else if (STATE_PSEUDOS.includes(name)) parts.states.push(name);
+      i = end;
     }
     return parts;
   };
@@ -872,7 +882,9 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       ? [[...new Set(['.nav-pills', selector])]]
       : containers.map((i) => [...new Set(['.nav-pills', i === last ? selector : pieces.slice(0, 2 * i + 1).join('')])]);
     if (containers.length > 0 && containers.at(-1) !== last) groups.push([selector]);
-    return { compounds, containers, groups };
+    return {
+      pieces, compounds, containers, groups,
+    };
   };
 
   const pillElements = (selector) => pillParts(selector).groups;
@@ -880,56 +892,118 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   /**
    * Entre el contenedor y la pastilla sólo están el ítem y el propio enlace
    * (`.nav-pills > .nav-item > .nav-link.active`), y las custom properties
-   * bajan por esa cadena. Un compuesto que sólo nombre esas clases alcanza a la
-   * pastilla; uno sobre cualquier otro descendiente (`.nav-pills
-   * .dropdown-menu`, `.nav-pills .nav-link .badge`) no la toca, y uno que la
-   * excluya a propósito (`.nav-link:not(.active)`) tampoco: ésa es justo la
-   * pastilla que no pinta.
+   * bajan por esa cadena. Un compuesto que nombre uno de los dos alcanza a la
+   * pastilla, lleve además las clases que lleve —son condiciones, no motivo
+   * para descartarlo—. Uno sobre cualquier otro descendiente
+   * (`.nav-pills .dropdown-menu`, `.nav-pills .nav-link .badge`) no la toca;
+   * uno que la excluya (`.nav-link:not(.active)`) tampoco, porque ésa es justo
+   * la pastilla que no pinta; y un pseudoelemento (`.nav-link.active::before`)
+   * es otra caja, no el enlace.
    */
   const PILL_CLASSES = ['nav-item', 'nav-link', 'active'];
   const reachesPill = (compound) => {
-    const { classes, negations } = parseCompound(compound);
-    if (classes.length === 0 || !classes.every((name) => PILL_CLASSES.includes(name))) return false;
-    return !negations.some((argument) => parseCompound(argument).classes
-      .some((name) => PILL_CLASSES.includes(name)));
+    const { classes, negations, elements } = parseCompound(compound);
+    if (elements.length > 0) return false;
+    const names = (argument) => parseCompound(argument).classes;
+    if (!classes.includes('nav-link') && !classes.includes('nav-item')
+      && !(classes.length === 1 && classes[0] === 'active')) return false;
+    return !negations.some((argument) => names(argument).some((name) => PILL_CLASSES.includes(name)));
   };
 
-  /** ¿Apunta el compuesto al enlace o al ítem que lo envuelve? */
-  const roleOf = (compound) => (parseCompound(compound).classes
-    .some((name) => name === 'nav-link' || name === 'active') ? 'enlace' : 'ítem');
-
   /**
-   * Lo que una regla exige para aplicarse, leído de todo el camino que va del
-   * contenedor a la pastilla y no sólo del último compuesto: en
-   * `.nav-pills .nav-item:hover .nav-link.active` el `:hover` es del ítem, pero
-   * la regla sigue valiendo sólo con el puntero encima. Cada exigencia lleva el
-   * elemento al que pertenece, porque un atributo del ítem y uno del enlace son
-   * condiciones distintas.
+   * ¿Apunta el compuesto al enlace o al ítem que lo envuelve? `.nav-item.active`
+   * sigue siendo el ítem: el `.active` no lo convierte en el enlace.
    */
-  const requirementsOf = (path) => path.flatMap((compound) => {
-    const { classes, attributes, states } = parseCompound(compound);
-    const role = roleOf(compound);
-    return [
-      ...states.map((name) => ({ role, kind: 'estado', text: name })),
-      ...classes.filter((name) => !PILL_CLASSES.includes(name)).map((name) => ({ role, kind: 'clase', text: `.${name}` })),
-      ...attributes.map((text) => ({ role, kind: 'atributo', text })),
-    ];
-  });
+  const roleOf = (compound) => {
+    const { classes } = parseCompound(compound);
+    if (classes.includes('nav-link')) return 'enlace';
+    return classes.includes('nav-item') ? 'ítem' : 'enlace';
+  };
 
   const atomKey = (atom) => `${atom.role}|${atom.kind}|${atom.text}`;
   const setKey = (requirements) => requirements.map(atomKey).sort().join(' ');
   const includesAtom = (requirements, atom) => requirements.some((other) => atomKey(other) === atomKey(atom));
 
+  /** Las condiciones que un compuesto pone, cada una con su elemento. */
+  const atomsOf = (parts, role) => [
+    ...parts.states.map((name) => ({ role, kind: 'estado', text: name })),
+    ...parts.classes.filter((name) => !PILL_CLASSES.includes(name))
+      .map((name) => ({ role, kind: 'clase', text: `.${name}` })),
+    ...parts.attributes.map((text) => ({ role, kind: 'atributo', text })),
+  ];
+
   /**
-   * ¿Se excluyen dos exigencias? Un elemento puede estar en `:hover` y en
-   * `:focus` a la vez, y llevar dos clases; lo que no puede es tener el mismo
-   * atributo con dos valores.
+   * Lo que una regla exige para aplicarse, leído de todo el camino que va del
+   * contenedor a la pastilla y no sólo del último compuesto: en
+   * `.nav-pills .nav-item:hover .nav-link.active` el `:hover` es del ítem, pero
+   * la regla sigue valiendo sólo con el puntero encima. Cada condición lleva el
+   * elemento al que pertenece, porque un atributo del ítem y uno del enlace son
+   * cosas distintas, y un `:not()` deja una condición negada: la regla vale
+   * mientras no se dé, así que su situación contraria también hay que medirla.
+   * Un combinador de hermano (`+`, `~`) coloca la pastilla en un sitio concreto
+   * de la barra: no se modela, pero tampoco vale en todas.
    */
-  const attributeName = (text) => /^\[\s*([\w-]+)/.exec(text)?.[1] ?? '';
-  const hasValue = (text) => /[~^|$*]?=/.test(text);
-  const conflict = (a, b) => a.role === b.role && a.kind === 'atributo' && b.kind === 'atributo'
-    && attributeName(a.text) === attributeName(b.text) && a.text !== b.text
-    && hasValue(a.text) && hasValue(b.text);
+  const requirementsOf = (path, combinators) => {
+    const atoms = path.flatMap((compound) => {
+      const parts = parseCompound(compound);
+      const role = roleOf(compound);
+      return [
+        ...atomsOf(parts, role),
+        ...parts.negations.map((argument) => {
+          const inner = atomsOf(parseCompound(argument), role);
+          // Un `:not()` con varias condiciones no es la negación de ninguna por
+          // separado: se guarda entero y su contraria se mide como un bloque.
+          return inner.length === 1
+            ? { ...inner[0], negated: true }
+            : { role, kind: 'negación', text: argument, negated: true };
+        }),
+      ];
+    });
+    if (combinators.some((piece) => /[+~]/.test(piece))) {
+      atoms.push({ role: 'enlace', kind: 'estructura', text: path.join(' … ') });
+    }
+    return atoms;
+  };
+
+  /** Un atributo, leído: su nombre, su operador y su valor. */
+  const parseAttribute = (text) => {
+    const match = /^\[\s*([\w-]+)\s*(?:([~^|$*]?=)\s*(?:"([^"]*)"|'([^']*)'|([^\]\s]*)))?/.exec(text);
+    if (!match) return null;
+    return { name: match[1], operator: match[2] ?? null, value: match[3] ?? match[4] ?? match[5] ?? null };
+  };
+
+  /** ¿Cumple un valor exacto la condición del otro atributo? */
+  const satisfies = (value, { operator, value: wanted }) => {
+    if (wanted === null) return true;
+    if (operator === '=') return value === wanted;
+    if (operator === '~=') return value.split(/\s+/).includes(wanted);
+    if (operator === '|=') return value === wanted || value.startsWith(`${wanted}-`);
+    if (operator === '^=') return value.startsWith(wanted);
+    if (operator === '$=') return value.endsWith(wanted);
+    if (operator === '*=') return value.includes(wanted);
+    return true;
+  };
+
+  /**
+   * ¿Se excluyen dos condiciones? Un elemento puede estar en `:hover` y en
+   * `:focus` a la vez y llevar dos clases; y `[data-flags~="a"]` y
+   * `[data-flags~="b"]` los cumple `data-flags="a b"`. Lo que no puede es tener
+   * el mismo atributo con dos valores exactos distintos, ni uno exacto que no
+   * cumpla lo que el otro pide.
+   */
+  const conflict = (a, b) => {
+    if (a.role !== b.role || a.kind !== 'atributo' || b.kind !== 'atributo') return false;
+    const one = parseAttribute(a.text);
+    const other = parseAttribute(b.text);
+    if (!one || !other || one.name !== other.name) return false;
+    if (!one.operator || !other.operator) return false;
+    if (one.operator === '=') return !satisfies(one.value, other);
+    if (other.operator === '=') return !satisfies(other.value, one);
+    if (one.operator !== other.operator) return false;
+    if (one.operator === '^=') return !(one.value.startsWith(other.value) || other.value.startsWith(one.value));
+    if (one.operator === '$=') return !(one.value.endsWith(other.value) || other.value.endsWith(one.value));
+    return false;
+  };
 
   const PILL_VARS = ['--bs-nav-pills-link-active-color', '--bs-nav-pills-link-active-bg'];
 
@@ -957,13 +1031,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  /** La primera declaración del bloque que puede mover el par, si la hay. */
+  const pairDecl = (block) => PILL_VARS.map((name) => block.decls.get(name)).find(Boolean)
+    ?? [...block.decls].filter(([name]) => pairTokens.has(name)).map(([, entry]) => entry)[0];
+
   /**
    * La regla de pastilla que es un selector: a qué contenedor pertenece, sobre
    * qué elemento declara, qué exige para aplicarse y si puede mover el par.
    * Devuelve null si el selector apunta al contenedor y no a algo de dentro.
    */
   const pillRule = (bare, block) => {
-    const { compounds, containers, groups } = pillParts(bare);
+    const {
+      pieces, compounds, containers, groups,
+    } = pillParts(bare);
     if (containers.length === 0 || containers.at(-1) === compounds.length - 1) return null;
     const path = compounds.slice(containers.at(-1) + 1);
     if (!reachesPill(path.at(-1))) return null;
@@ -972,8 +1052,9 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       container: groups.at(-2),
       containerGroups: groups.slice(0, -1),
       role: roleOf(path.at(-1)),
-      requirements: requirementsOf(path),
-      movesPair: [...block.decls.keys()].some((name) => pairTokens.has(name)),
+      requirements: requirementsOf(path, pieces.slice(2 * containers.at(-1) + 1).filter((_, i) => i % 2 === 0)),
+      movesPair: Boolean(pairDecl(block)),
+      line: pairDecl(block)?.line ?? block.line,
     };
   };
 
@@ -998,30 +1079,60 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     return rule.container.every((selector) => matches.has(normalizeSelector(selector)));
   };
 
+  /** ¿Se aplica la regla cuando se dan justo estas condiciones y ninguna más? */
+  const appliesWith = (rule, requirements) => rule.requirements
+    .every((atom) => includesAtom(requirements, atom) !== Boolean(atom.negated));
+
   /**
-   * Las situaciones en las que hay que medir una pastilla: en reposo, sin más
-   * exigencias, y además cada combinación de las que piden las reglas que
-   * pueden mover el par, siempre que se puedan dar a la vez —`:hover` y
-   * `:focus` sí, `[data-label="a"]` y `[data-label="b"]` no—. Medir sólo las
-   * exigencias sueltas dejaría pasar el enlace enfocado y con el puntero
-   * encima, que lee de las dos reglas.
+   * Las situaciones en las que hay que medir una pastilla: en reposo, sin
+   * ninguna condición, y además cada combinación de las que piden —o niegan—
+   * las reglas que pueden mover el par, siempre que puedan darse a la vez. Se
+   * recorren de menos a más condiciones, así que si hay que cortar por el tope
+   * se cortan las combinaciones grandes y nunca las sueltas.
    */
   const REQUIREMENT_LIMIT = 64;
   const situations = (rules) => {
-    const sets = [[]];
-    const seen = new Set(['']);
-    for (const rule of rules.filter((item) => item.movesPair && item.requirements.length > 0)) {
-      if (sets.length >= REQUIREMENT_LIMIT) break;
-      for (const base of [...sets]) {
-        if (sets.length >= REQUIREMENT_LIMIT) break;
-        if (rule.requirements.some((atom) => base.some((other) => conflict(atom, other)))) continue;
-        const union = [...base, ...rule.requirements.filter((atom) => !includesAtom(base, atom))];
-        if (seen.has(setKey(union))) continue;
-        seen.add(setKey(union));
-        sets.push(union);
+    const pool = [];
+    for (const rule of rules) {
+      if (!rule.movesPair) continue;
+      for (const atom of rule.requirements) {
+        const positive = { role: atom.role, kind: atom.kind, text: atom.text };
+        if (!includesAtom(pool, positive)) pool.push(positive);
       }
     }
-    return sets;
+    const sets = [[]];
+    const seen = new Set(['']);
+    let level = [[]];
+    let truncated = false;
+    while (level.length > 0 && !truncated) {
+      const next = [];
+      for (const base of level) {
+        for (const atom of pool) {
+          if (includesAtom(base, atom)) continue;
+          if (base.some((other) => conflict(atom, other))) continue;
+          const union = [...base, atom];
+          if (seen.has(setKey(union))) continue;
+          if (sets.length >= REQUIREMENT_LIMIT) {
+            truncated = true;
+            break;
+          }
+          seen.add(setKey(union));
+          sets.push(union);
+          next.push(union);
+        }
+        if (truncated) break;
+      }
+      level = next;
+    }
+    return { sets, truncated };
+  };
+
+  /** Quién reporta una pastilla entre los bloques que hablan de ella. */
+  const rankOf = (own, requirements, ownKey) => {
+    if (!own) return 0;
+    const paints = own.role === 'enlace' ? 1 : 0;
+    if (ownKey === setKey(requirements)) return 3 + paints;
+    return appliesWith(own, requirements) ? 1 + paints : -1;
   };
 
   /** Cómo se nombra una situación en el mensaje. */
@@ -1033,17 +1144,18 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
 
   /**
-   * Las mediciones que pide una alternativa que declara el par: una por
-   * situación de la pastilla a la que apunta. Cada una lleva los elementos que
-   * hay que medir —el contenedor, el ítem y el enlace, cada uno con sus
-   * reglas—, porque lo que declara el ítem lo hereda el enlace y no compite con
-   * lo que el enlace declara sobre sí mismo. Una regla que no se aplique en la
-   * situación queda fuera de la capa: en reposo no entra lo que pide `:hover`.
+   * Las mediciones que pide una alternativa que toca el par: una por situación
+   * de la pastilla a la que apunta. Cada una lleva los elementos que hay que
+   * medir —el contenedor, el ítem y el enlace, cada uno con sus reglas—, porque
+   * lo que declara el ítem lo hereda el enlace y no compite con lo que el
+   * enlace declara sobre sí mismo. Una regla que no se aplique en la situación
+   * queda fuera de la capa: en reposo no entra lo que pide `:hover`.
    *
    * `rank` decide quién reporta cuando varios bloques hablan de la misma
-   * pastilla: el que pide justo esas exigencias (2), si no cualquiera del
-   * enlace que se aplique en ellas (1), después el del contenedor, que vale
-   * siempre (0), y en último lugar uno que en esa situación no pinta (-1).
+   * pastilla: el que pide justo esas condiciones, si no cualquiera de dentro
+   * que se aplique en ellas, y entre dos el del enlace antes que el del ítem,
+   * porque es el que la pinta; después el del contenedor, que vale siempre, y
+   * en último lugar uno que en esa situación no pinta.
    */
   const pillMeasurements = (bare, block) => {
     const own = pillRule(bare, block);
@@ -1051,18 +1163,20 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     const container = containerGroups.at(-1);
     const rules = pillRules.filter((rule) => reachesContainer(rule, container));
     const key = JSON.stringify([...new Set(container.map(normalizeSelector))].sort());
-    const ownKey = own ? setKey(own.requirements) : null;
-    return situations(rules).map((requirements) => {
-      const applies = (rule) => rule.requirements.every((atom) => includesAtom(requirements, atom));
+    const ownKey = own ? setKey(own.requirements.filter((atom) => !atom.negated)) : null;
+    const { sets, truncated } = situations(rules);
+    return sets.map((requirements) => {
       const layerFor = (role) => [...new Set(rules
-        .filter((rule) => rule.role === role && applies(rule))
+        .filter((rule) => rule.role === role && appliesWith(rule, requirements))
         .map((rule) => rule.selector))];
       const items = layerFor('ítem');
       const links = layerFor('enlace');
       return {
         key: `${key}|${setKey(requirements)}`,
+        container: key,
+        truncated,
         groups: [...containerGroups, ...(items.length > 0 ? [items] : []), ...(links.length > 0 ? [links] : [])],
-        rank: own ? ((ownKey === setKey(requirements) && 2) || (applies(own) ? 1 : -1)) : 0,
+        rank: rankOf(own, requirements, ownKey),
         situation: describeSituation(requirements),
       };
     });
@@ -1080,8 +1194,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // del enlace si lo hay: es quien la pinta.
   const pending = [];
   for (const block of blocks) {
-    const fgDecl = block.decls.get('--bs-nav-pills-link-active-color');
-    if (!fgDecl) continue;
+    const declared = PILL_VARS.map((name) => block.decls.get(name)).find(Boolean);
     // Cada selector de la lista es una alternativa, con su propio prefijo de
     // zona: se mide por separado, con lo que se declara sobre él y no sobre las
     // otras.
@@ -1089,6 +1202,12 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // `:root` no es una pastilla: lo que declara ahí lo pisa la librería en
       // `.nav-pills`.
       if (isRootPrelude(part)) continue;
+      // Un bloque que sólo declara el fondo, o sólo un token del que el par
+      // cuelga, también enseña una pastilla: el texto lo pone el contenedor o
+      // la librería. Sin él, un `.sidebar .nav-pills .nav-link.active` que
+      // cambia el fondo no se mediría en ningún sitio.
+      const rule = pillRule(part, block);
+      if (!declared && !rule?.movesPair) continue;
       const measurements = pillMeasurements(part, block);
       const selector = altZone ? `${zoneSelector(altZone)}${sameElement ? '' : ' '}${part}` : part;
       for (const ctx of contextsFor(altZone, part, '--bs-nav-pills-link-active-color')) {
@@ -1096,13 +1215,27 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
           pending.push({
             ...measurement,
             ctx,
-            line: fgDecl.line,
+            line: declared?.line ?? rule?.line ?? block.line,
             key: `${ctx.zone ?? ''}|${measurement.key}`,
             where: `${selector}${block.zone ? '' : inContext(ctx)}${measurement.situation}`,
           });
         }
       }
     }
+  }
+
+  // Si una pastilla pide más combinaciones de las que se miden, se dice: un
+  // resultado limpio no puede dar a entender que se miraron todas.
+  const warnedContainers = new Set();
+  for (const { ctx, container, truncated } of pending) {
+    if (!truncated || warnedContainers.has(`${ctx.zone ?? ''}|${container}`)) continue;
+    warnedContainers.add(`${ctx.zone ?? ''}|${container}`);
+    warn(
+      'situaciones-pastilla',
+      `La pastilla de ${JSON.parse(container).join(', ')}${inContext(ctx)} depende de más estados, `
+      + `clases y atributos de los que se pueden combinar: se midieron las primeras ${REQUIREMENT_LIMIT} `
+      + 'situaciones, de menos condiciones a más. Las que falten hay que mirarlas en la preview.',
+    );
   }
 
   const claims = new Map();

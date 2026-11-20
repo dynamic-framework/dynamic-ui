@@ -388,7 +388,7 @@ salida respeta*).
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
 `where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
-`contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
+`contraste-boton`, `contraste-nav-pills`, `situaciones-pastilla`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
 `--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
@@ -444,32 +444,42 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   el enlace activo dentro del contenedor, no el bloque donde se declaren. Un par
   que `.nav-pills` deja roto y que un bloque de dentro corrige no es un
   hallazgo: ninguna pastilla se ve mal. En detalle:
-  - **Qué alcanza a la pastilla.** Los bloques sobre el enlace y sobre lo que
-    hay entre él y el contenedor (`.nav-link`, `.nav-item`, `.active`, en
-    cualquier combinación), porque la variable se hereda por esa cadena. Uno
-    sobre cualquier otro descendiente (`.nav-pills .dropdown-menu`,
-    `.nav-pills .nav-link .badge`) no la toca, y uno que la excluya
-    (`.nav-link:not(.active)`) tampoco.
+  - **Qué alcanza a la pastilla.** Los bloques sobre el enlace y sobre el ítem
+    que lo envuelve (`.nav-link`, `.nav-item`, o `.active` a secas), porque la
+    variable se hereda por esa cadena; las clases y atributos de más no
+    descartan la regla, son condiciones. Uno sobre cualquier otro descendiente
+    (`.nav-pills .dropdown-menu`, `.nav-pills .nav-link .badge`) no la toca;
+    uno que la excluya (`.nav-link:not(.active)`) tampoco; y un pseudoelemento
+    (`.nav-link.active::before`) es otra caja, no el enlace.
   - **Ítem y enlace son capas distintas.** Lo que declara el ítem le llega al
     enlace por herencia, así que lo que el enlace declara sobre sí mismo gana,
     aunque lo del ítem sea `!important`. La cascada sólo compite dentro de un
-    mismo elemento.
+    mismo elemento, y `.nav-item.active` sigue siendo el ítem.
   - **Qué contenedores alcanza una regla.** Los que nombra:
     `.nav-pills .nav-link.active` también arregla las pastillas de
     `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca
-    las de fuera de la barra.
+    las de fuera de la barra. Una regla así trae su contenedor a la medición
+    aunque sólo cambie el fondo: el texto lo pone el contenedor o la librería.
   - **Situaciones.** Lo que una regla exige para aplicarse —un estado
     (`:hover`, `:focus-visible`), una clase o un atributo de más, en el enlace o
-    en el ítem— la deja fuera de la medición en reposo. Si la regla puede mover
+    en el ítem, y un combinador de hermano (`+`, `~`), que la ata a una posición
+    de la barra— la deja fuera de la medición en reposo. Si la regla puede mover
     el par, esa situación se mide aparte y el mensaje la nombra (`…, en hover`,
     `…, con [data-label="a"]`), y también las combinaciones que pueden darse a
-    la vez (`en hover y focus`); dos valores del mismo atributo no se combinan,
-    porque no casan juntos. Mueve el par tanto la regla que declara una de las
-    dos variables como la que declara cualquier token del que cuelguen.
+    la vez (`en hover y focus`, `[data-flags~="a"]` con `[data-flags~="b"]`);
+    sólo se descartan las que se contradicen, como dos valores exactos del mismo
+    atributo. Un `:not(…)` es una condición negada: su situación contraria
+    también se mide. Mueve el par tanto la regla que declara una de las dos
+    variables como la que declara cualquier token del que cuelguen.
   - **Un informe por pastilla.** Cada contexto y situación se reporta una vez,
-    por el bloque que pide justo esas condiciones si lo hay.
+    por el bloque que pide justo esas condiciones si lo hay y, entre dos, por el
+    del enlace antes que por el del ítem.
 
   Sin fondo propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
+- `situaciones-pastilla` — aviso cuando una pastilla depende de más condiciones
+  de las que se pueden combinar (64). Se miden de menos condiciones a más, así
+  que ninguna suelta se queda fuera; las combinaciones que falten hay que
+  mirarlas en la preview.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
