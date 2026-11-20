@@ -71,9 +71,10 @@ jobs:
           TAG: ${{ steps.release.outputs.tag_name }}
           VERSION: ${{ steps.release.outputs.version }}
         run: |
-          # Versión estable inmediatamente menor por semver (en un backport no es el latest).
-          PREV=$(gh release list --exclude-pre-releases --limit 100 --json tagName -q '.[].tagName | ltrimstr("v")' \
-            | sort -V | grep -x -B1 "$VERSION" | head -n -1)
+          # Versión estable inmediatamente menor por semver entre las publicadas en npm (en un backport no es el latest).
+          # Se agrega $VERSION a mano por si el registry todavía no la refleja justo después del publish.
+          PREV=$({ npm view @dynamic-framework/ui-react versions --json | jq -r '.[] | select(test("-") | not)'; echo "$VERSION"; } \
+            | sort -uV | grep -x -B1 "$VERSION" | head -n -1)
           if [ -z "$PREV" ]; then
             echo "::warning::No hay versión estable anterior a $VERSION; no se agrega el comando de diff."
             exit 0
