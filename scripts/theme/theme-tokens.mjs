@@ -1128,16 +1128,17 @@ export function bakedRolePairs(role) {
   // —el que la librería horneó— se queda encima. Quien los pide filtra por los
   // roles cuyo relleno declara el theme: sin ese token no hay par que medir.
   if (OUTLINE_COLORS[role]) {
-    for (const estado of ['hover', 'active']) {
+    for (const state of ['hover', 'active']) {
       pairs.push({
         component: `.btn-outline-${role}`,
-        estado: `en ${estado}`,
-        why: `el botón con contorno conserva el --bs-btn-outline-<role>-${estado}-color que la librería resolvió en Sass`,
+        // El texto del estado como sale en el mensaje, igual que en R10.
+        estado: `en ${state}`,
+        why: `el botón con contorno conserva el --bs-btn-outline-<role>-${state}-color que la librería resolvió en Sass`,
         owners: [['.btn', `.btn-outline-${role}`]],
-        fg: { variable: `--bs-btn-${estado}-color` },
-        bg: { variable: `--bs-btn-${estado}-bg` },
+        fg: { variable: `--bs-btn-${state}-color` },
+        bg: { variable: `--bs-btn-${state}-bg` },
         // El token por-role que el theme declara, para apuntar a su línea.
-        fill: `--bs-btn-outline-${role}-${estado}-bg`,
+        fill: `--bs-btn-outline-${role}-${state}-bg`,
         role,
         outline: true,
       });

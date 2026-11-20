@@ -994,8 +994,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
          * botón intacto del raíz. Y se mira estado por estado, así que el
          * relleno de hover no arrastra al active.
          */
-        const relleno = element.has(pair.fill) || ctx.own.has(pair.fill) || root.has(pair.fill);
-        if (!relleno) continue;
+        const fillDeclared = element.has(pair.fill) || ctx.own.has(pair.fill) || root.has(pair.fill);
+        if (!fillDeclared) continue;
         /*
          * Si el theme declara una variable genérica sobre el botón, lo mide
          * R10, que conoce el bloque y el estado. La capa que se consulta es la
@@ -1005,9 +1005,9 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
          * este botón y no puede apagar el par. Vale por contexto, porque un
          * bloque que sólo existe dentro de una zona no cubre el raíz.
          */
-        const variante = ctx.element([pair.component]);
+        const variantLayer = ctx.element([pair.component]);
         if (R10_BUTTON_VARS.some(
-          (name) => variante.has(name) && variante.get(name).source !== 'defecto',
+          (name) => variantLayer.has(name) && variantLayer.get(name).source !== 'defecto',
         )) continue;
       }
       const fg = measureSide(ctx, element, pair.fg.variable);
