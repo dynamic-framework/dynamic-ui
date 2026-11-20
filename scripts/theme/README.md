@@ -459,6 +459,10 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
     aunque lo del ítem sea `!important`. La cascada sólo compite dentro de un
     mismo elemento. `.nav-item.active` sigue siendo el ítem, y ese `.active` es
     una condición: el ítem seleccionado no lo lleva, lo lleva el enlace.
+  - **Con ítems y sin ellos son dos barras.** Bootstrap admite las dos formas,
+    y son árboles distintos: lo que declara `.nav-item` no le llega a un enlace
+    que cuelga del contenedor (`.nav-pills > .nav-link.active`), y al revés.
+    Cada una se mide por su lado; un descendiente a secas vale en las dos.
   - **Qué contenedores alcanza una regla.** Los que nombra:
     `.nav-pills .nav-link.active` también arregla las pastillas de
     `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca
@@ -466,19 +470,27 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
     aunque sólo cambie el fondo: el texto lo pone el contenedor o la librería.
     Un `.nav-pills:hover` no es otra barra: es la misma en otra situación.
   - **Situaciones.** Lo que una regla exige para aplicarse —un estado
-    (`:hover`, `:focus-visible`), una clase, un atributo o una pseudoclase de
-    más (`:first-child`, `:has(…)`), en el contenedor, en el ítem o en el
-    enlace, y un combinador de hermano (`+`, `~`), que la ata a una posición de
-    la barra— la deja fuera de la medición en reposo. Si la regla puede mover el
+    (`:hover`, `:focus-visible`), una clase, un id, un atributo o una
+    pseudoclase de más (`:first-child`, `:has(…)`), en el contenedor, en el ítem
+    o en el enlace, y un combinador de hermano (`+`, `~`), que la ata a una
+    posición de la barra— la deja fuera de la medición en reposo. Cada
+    condición lleva el elemento del que sale, y entre ancestros el camino
+    concreto: `.sidebar:hover .nav-pills` y `.sidebar .nav-pills:hover` no son
+    la misma situación. Si la regla puede mover el
     par, esa situación se mide aparte y el mensaje la nombra (`…, en hover`,
     `…, con [data-label="a"]`), y también las combinaciones que pueden darse a
     la vez (`en hover y focus`, `[data-flags~="a"]` con `[data-flags~="b"]`);
     sólo se descartan las que se contradicen, como dos valores exactos del mismo
-    atributo, y las que dejarían fuera algo que un valor arrastra
-    (`[data-label="a"]` trae `[data-label]`). Un `:not(…)` es una condición
-    negada: su situación contraria también se mide. Mueve el par tanto la regla
-    que declara una de las dos variables como la que declara cualquier token del
-    que cuelguen.
+    atributo o dos ids, y las que dejarían fuera algo que otra condición
+    arrastra: `[data-label="a"]` trae `[data-label]`, el puntero sobre el enlace
+    lo está también sobre el ítem y la barra, y un `:focus-visible` es un
+    `:focus`. Un `:not(…)` es una condición negada con el mismo vocabulario que
+    la positiva, así que `:not(:hover)` y `:hover` cubren justo lo que el otro
+    deja; uno compuesto (`:not(.foo.bar)`) sólo se incumple cuando se dan todas
+    sus partes. Mueve el par tanto la regla que declara una de las dos variables
+    como la que declara cualquier token del que cuelguen —y ésa, además, tiene
+    que nombrar `.nav-pills` para contar—. Las reglas de una zona sólo cuentan
+    dentro de ella, también al enumerar.
   - **Un informe por pastilla.** Cada contexto y situación se reporta una vez,
     por el bloque que pide justo esas condiciones si lo hay y, entre dos, por el
     del enlace antes que por el del ítem. Y un mismo par roto en la misma barra

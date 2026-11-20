@@ -820,7 +820,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    */
   const parseCompound = (compound) => {
     const parts = {
-      classes: [], attributes: [], states: [], negations: [], elements: [], pseudos: [], identity: '',
+      classes: [], ids: [], attributes: [], states: [], negations: [], elements: [], pseudos: [], identity: '',
     };
     for (let i = 0; i < compound.length; i += 1) {
       const char = compound[i];
@@ -835,6 +835,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         parts.identity += compound.slice(i, end + 1);
         i = end;
         continue;
+      }
+      if (char === '#') {
+        const name = /^[\w-]+/.exec(compound.slice(i + 1))?.[0];
+        if (name) {
+          parts.ids.push(name);
+          parts.identity += compound.slice(i, i + name.length + 1);
+          i += name.length;
+          continue;
+        }
       }
       if (char !== '.' && char !== ':') {
         parts.identity += char;
@@ -883,27 +892,58 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    */
   const GUARANTEED = { contenedor: ['nav-pills'], 'ítem': ['nav-item'], enlace: ['nav-link', 'active'] };
 
-  /** Las condiciones que un compuesto pone sobre el ítem o el enlace. */
-  const atomsOf = (parts, role) => [
+  /**
+   * Las condiciones que un compuesto pone sobre su elemento: estado, clases y
+   * atributos de más, un id, y las pseudoclases que no se modelan. Las clases
+   * que el elemento lleva siempre no cuentan. `identity` dice si las clases y
+   * el id describen al elemento —un contenedor es otra barra, no otra
+   * situación— o son condiciones suyas.
+   */
+  const atomsOf = (parts, role, { identity = false } = {}) => [
     ...parts.states.map((name) => ({ role, kind: 'estado', text: name })),
-    ...parts.classes.filter((name) => !GUARANTEED[role].includes(name))
-      .map((name) => ({ role, kind: 'clase', text: `.${name}` })),
-    ...parts.attributes.map((text) => ({ role, kind: 'atributo', text })),
+    ...(identity ? [] : parts.classes.filter((name) => !(GUARANTEED[role] ?? []).includes(name))
+      .map((name) => ({ role, kind: 'clase', text: `.${name}` }))),
+    ...(identity ? [] : parts.ids.map((name) => ({ role, kind: 'id', text: `#${name}` }))),
+    ...(identity ? [] : parts.attributes.map((text) => ({ role, kind: 'atributo', text }))),
     ...parts.pseudos.map((text) => ({ role, kind: 'pseudo', text })),
   ];
 
   /**
-   * Las condiciones de un compuesto de contenedor. Sus clases y atributos no
-   * lo son: dicen qué barra es. Lo son el estado, las pseudoclases que no se
-   * modelan y lo que niega, que la regla deja de cumplir en cuanto se dé.
+   * Lo que un `:not()` deja como condición, con el mismo vocabulario que una
+   * condición positiva: así `:not(:hover)` y `:hover` hablan de lo mismo y sus
+   * situaciones encajan. `:not(a, b)` son dos condiciones, una por alternativa,
+   * y un argumento compuesto (`:not(.foo.bar)`) es una sola que sólo se
+   * incumple cuando se dan todas sus partes a la vez. Si de una alternativa no
+   * queda nada —niega lo que el elemento lleva siempre—, la regla no casa nunca
+   * con ese elemento y se descarta entera (null).
    */
-  const containerAtoms = (parts) => [
-    ...parts.states.map((name) => ({ role: 'contenedor', kind: 'estado', text: name })),
-    ...parts.pseudos.map((text) => ({ role: 'contenedor', kind: 'pseudo', text })),
-    ...parts.negations.map((text) => ({
-      role: 'contenedor', kind: 'negación', text, negated: true,
-    })),
-  ];
+  const negationsOf = (parts, role, options) => {
+    const atoms = [];
+    for (const argument of parts.negations) {
+      for (const piece of splitSelectorList(argument)) {
+        const inner = atomsOf(parseCompound(piece), role, options);
+        if (inner.length === 0) return null;
+        atoms.push(inner.length === 1
+          ? { ...inner[0], negated: true }
+          : {
+            role, kind: 'negación', text: piece, atoms: inner, negated: true,
+          });
+      }
+    }
+    return atoms;
+  };
+
+  /**
+   * Las condiciones de un compuesto de contenedor, con el elemento del que
+   * salen: `.sidebar:hover .nav-pills` y `.sidebar .nav-pills:hover` no son la
+   * misma situación. Sus clases, su id y sus atributos no son condiciones:
+   * dicen qué barra es.
+   */
+  const containerAtoms = (parts, identity) => {
+    const role = `contenedor(${identity})`;
+    const negated = negationsOf(parts, role, { identity: false });
+    return negated === null ? null : [...atomsOf(parts, role, { identity: true }), ...negated];
+  };
 
   /**
    * Un selector, partido: sus compuestos, los combinadores de en medio, qué
@@ -926,7 +966,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     const containers = compounds.flatMap((compound, i) => (hasPillsClass(compound) && isAncestor(i) ? [i] : []));
     const identity = (i) => pieces.slice(0, 2 * i + 1)
       .map((piece, k) => (k % 2 === 0 ? parseCompound(piece).identity : piece)).join('');
-    const conditions = (i) => compounds.slice(0, i + 1).flatMap((compound) => containerAtoms(parseCompound(compound)));
+    const conditions = (i) => {
+      const atoms = compounds.slice(0, i + 1)
+        .map((compound, k) => containerAtoms(parseCompound(compound), identity(k)));
+      return atoms.some((group) => group === null) ? null : atoms.flat();
+    };
     const groups = containers.length === 0
       ? [[...new Set(['.nav-pills', selector])]]
       : containers.map((i) => [...new Set(['.nav-pills', identity(i)])]);
@@ -963,21 +1007,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
 
   /**
-   * Lo que un `:not()` deja como condición. Las clases que el elemento lleva
-   * siempre no cuentan: `:not(.active.featured)` sobre el enlace activo es
-   * `:not(.featured)`, porque el `.active` ya lo tiene. Si no queda nada, la
-   * regla no casa nunca con la pastilla y se descarta entera (null).
-   */
-  const negatedAtom = (piece, role) => {
-    const parts = parseCompound(piece);
-    const atoms = atomsOf(parts, role);
-    if (atoms.length === 0) return null;
-    return atoms.length === 1
-      ? { ...atoms[0], negated: true }
-      : { role, kind: 'negación', text: piece, negated: true };
-  };
-
-  /**
    * Las condiciones del camino que va del contenedor a la pastilla, leído
    * entero y no sólo en el último compuesto: en
    * `.nav-pills .nav-item:hover .nav-link.active` el `:hover` es del ítem, pero
@@ -992,14 +1021,20 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const parts = parseCompound(compound);
       if (parts.elements.length > 0) return null;
       const role = roleOf(compound);
-      atoms.push(...atomsOf(parts, role));
-      for (const argument of parts.negations) {
-        for (const piece of splitSelectorList(argument)) {
-          const atom = negatedAtom(piece, role);
-          if (!atom) return null;
-          atoms.push(atom);
-        }
-      }
+      const negated = negationsOf(parts, role);
+      if (negated === null) return null;
+      atoms.push(...atomsOf(parts, role), ...negated);
+    }
+    // La barra se escribe con ítems o sin ellos, y son dos árboles distintos:
+    // lo que declara `.nav-item` no le llega a un enlace que cuelga del
+    // contenedor, y al revés. Quien nombra el ítem pide que lo haya; quien
+    // apunta al enlace como hijo directo, que no; un descendiente a secas vale
+    // en los dos.
+    const item = path.some((compound) => roleOf(compound) === 'ítem');
+    const structure = { role: 'enlace', kind: 'estructura', text: 'ítem' };
+    if (item) atoms.push(structure);
+    else if (path.length === 1 && /^\s*>\s*$/.test(combinators[0] ?? '')) {
+      atoms.push({ ...structure, negated: true });
     }
     // Un combinador de hermano (`+`, `~`) ata la pastilla a un sitio concreto
     // de la barra: no se modela, pero tampoco vale en todas.
@@ -1045,44 +1080,41 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * aplicarse y si puede mover el par. Devuelve null si el selector apunta a un
    * descendiente que no pinta ninguna pastilla.
    */
-  const pillRule = (bare, block) => {
+  const pillRule = (bare, block, zone = null) => {
     const {
       pieces, compounds, containers, groups, conditions,
     } = pillParts(bare);
     const last = compounds.length - 1;
     const inside = containers.length > 0 && containers.at(-1) !== last;
+    const own = containers.length === 0 ? [] : conditions(containers.at(-1));
+    // Un `:not()` del contenedor que lo excluye del todo: la regla no pinta
+    // ninguna pastilla.
+    if (own === null) return null;
     const common = {
       selector: bare,
+      zone,
+      withinPills: containers.length > 0,
       identity: groups.at(inside ? -2 : -1),
       containerGroups: inside ? groups.slice(0, -1) : groups,
       movesPair: Boolean(pairDecl(block)),
       line: pairDecl(block)?.line ?? block.line,
     };
-    if (!inside) {
-      return {
-        ...common,
-        element: 'contenedor',
-        requirements: containers.length === 0 ? [] : conditions(containers.at(-1)),
-      };
-    }
+    if (!inside) return { ...common, element: 'contenedor', requirements: own };
     const index = containers.at(-1);
     const path = compounds.slice(index + 1);
     const atoms = pathAtoms(path, pieces.slice(2 * index + 1).filter((_, i) => i % 2 === 0));
     if (!atoms) return null;
-    return {
-      ...common,
-      element: roleOf(path.at(-1)),
-      requirements: [...conditions(index), ...atoms],
-    };
+    return { ...common, element: roleOf(path.at(-1)), requirements: [...own, ...atoms] };
   };
 
   const pillRules = [];
   for (const block of blocks) {
-    for (const { bare } of alternatives(block)) {
+    for (const { zone, bare } of alternatives(block)) {
       if (isRootPrelude(bare)) continue;
-      const rule = pillRule(bare, block);
-      // Los bloques de zona entran por su selector sin prefijo; es `element()`
-      // quien descarta los de otra zona.
+      // Los bloques de zona entran por su selector sin prefijo, pero con su
+      // zona: fuera de ella no declaran nada y sus condiciones no son de esta
+      // pastilla.
+      const rule = pillRule(bare, block, zone);
       if (rule) pillRules.push(rule);
     }
   }
@@ -1113,12 +1145,41 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
 
   /**
+   * ¿Está el elemento de `role` dentro del de `other`, o es el mismo? El enlace
+   * cuelga del ítem y los dos del contenedor; entre contenedores manda el
+   * camino, que uno es prefijo del otro.
+   */
+  const within = (role, other) => {
+    if (role === other) return true;
+    if (other === 'enlace') return false;
+    if (other === 'ítem') return role === 'enlace';
+    if (!other.startsWith('contenedor(')) return false;
+    if (!role.startsWith('contenedor(')) return true;
+    return role.slice('contenedor('.length).startsWith(other.slice('contenedor('.length, -1));
+  };
+
+  /**
+   * Estados que arrastran a otros: el puntero sobre el enlace lo está también
+   * sobre el ítem y sobre la barra; `:focus-visible` es un `:focus`, y un
+   * `:focus` deja `:focus-within` en todo lo que hay por encima.
+   */
+  const impliedState = (a, b) => {
+    if (a.kind !== 'estado' || b.kind !== 'estado') return false;
+    const above = within(a.role, b.role);
+    if (a.text === b.text) return above && (a.text === 'hover' || a.text === 'focus-within');
+    if (a.text === 'focus-visible' && b.text === 'focus') return a.role === b.role;
+    if ((a.text === 'focus' || a.text === 'focus-visible') && b.text === 'focus-within') return above;
+    return false;
+  };
+
+  /**
    * ¿Arrastra una condición a la otra? Un enlace con `[data-label="a"]` lleva
    * también `[data-label]`, así que una situación con la primera tiene que
    * traer la segunda: si no, se mediría una pastilla que no existe.
    */
   const implies = (a, b) => {
     if (atomKey(a) === atomKey(b)) return true;
+    if (impliedState(a, b)) return true;
     if (a.role !== b.role || a.kind !== 'atributo' || b.kind !== 'atributo') return false;
     const one = parseAttribute(a.text);
     const other = parseAttribute(b.text);
@@ -1135,7 +1196,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * cumpla lo que el otro pide.
    */
   const conflict = (a, b) => {
-    if (a.role !== b.role || a.kind !== 'atributo' || b.kind !== 'atributo') return false;
+    if (a.role !== b.role) return false;
+    // Un elemento tiene un id, no dos.
+    if (a.kind === 'id' && b.kind === 'id') return a.text !== b.text;
+    if (a.kind !== 'atributo' || b.kind !== 'atributo') return false;
     const one = parseAttribute(a.text);
     const other = parseAttribute(b.text);
     if (!one || !other || one.name !== other.name) return false;
@@ -1148,9 +1212,18 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     return false;
   };
 
+  /**
+   * ¿Se cumple una condición en esta situación? Una compuesta
+   * (`:not(.foo.bar)`) sólo se cumple cuando se dan todas sus partes: negarla
+   * no es negar cada una por su cuenta.
+   */
+  const satisfied = (atom, requirements) => (atom.atoms
+    ? atom.atoms.every((inner) => includesAtom(requirements, inner))
+    : includesAtom(requirements, atom));
+
   /** ¿Se aplica la regla cuando se dan justo estas condiciones y ninguna más? */
   const appliesWith = (rule, requirements) => rule.requirements
-    .every((atom) => includesAtom(requirements, atom) !== Boolean(atom.negated));
+    .every((atom) => satisfied(atom, requirements) !== Boolean(atom.negated));
 
   /** ¿Alcanza la regla a esta barra? Comparando identidades, no situaciones. */
   const reaches = (rule, identity) => {
@@ -1172,8 +1245,12 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     for (const rule of rules) {
       if (!rule.movesPair) continue;
       for (const atom of rule.requirements) {
-        const positive = { role: atom.role, kind: atom.kind, text: atom.text };
-        if (!includesAtom(pool, positive)) pool.push(positive);
+        // De una condición compuesta entran sus partes: la situación que la
+        // incumple es justo la que las da todas.
+        for (const part of atom.atoms ?? [atom]) {
+          const positive = { role: part.role, kind: part.kind, text: part.text };
+          if (!includesAtom(pool, positive)) pool.push(positive);
+        }
       }
     }
     const close = (set) => {
@@ -1234,8 +1311,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * mismo. Una regla que no se aplique en la situación queda fuera de la capa:
    * en reposo no entra lo que pide `:hover`.
    */
-  const pillMeasurements = (own) => {
-    const rules = pillRules.filter((rule) => reaches(rule, own.identity));
+  const pillMeasurements = (own, zone) => {
+    // Una regla de otra zona no declara nada aquí: ni entra en la capa ni sus
+    // condiciones son situaciones de esta pastilla.
+    const rules = pillRules.filter((rule) => (!rule.zone || rule.zone === zone)
+      && reaches(rule, own.identity));
     const key = JSON.stringify([...new Set(own.identity.map(normalizeSelector))].sort());
     const ownKey = setKey(own.requirements.filter((atom) => !atom.negated));
     const { sets, truncated } = situations(rules);
@@ -1292,11 +1372,12 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // cuelga, también enseña una pastilla: el texto lo pone el contenedor o
       // la librería. Sin él, un `.sidebar .nav-pills .nav-link.active` que
       // cambia el fondo no se mediría en ningún sitio.
-      if (!declared && !rule.movesPair) continue;
-      const measurements = pillMeasurements(rule);
+      // Un bloque que sólo mueve un token y ni siquiera nombra `.nav-pills`
+      // (`.dropdown-menu { --bs-gray-50: … }`) no habla de ninguna barra.
+      if (!declared && !(rule.movesPair && rule.withinPills)) continue;
       const selector = altZone ? `${zoneSelector(altZone)}${sameElement ? '' : ' '}${part}` : part;
       for (const ctx of contextsFor(altZone, part, '--bs-nav-pills-link-active-color')) {
-        for (const measurement of measurements) {
+        for (const measurement of pillMeasurements(rule, ctx.zone)) {
           pending.push({
             ...measurement,
             ctx,

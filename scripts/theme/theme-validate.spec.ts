@@ -3126,6 +3126,113 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
+    it('un id en el enlace es una condición, no algo que tengan todos', () => {
+      // La corrección sólo alcanza a la pastilla con ese id; las demás siguen
+      // blancas sobre blancas.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active#special {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('el estado de cada ancestro es una situación distinta', () => {
+      // Con el puntero sobre el hueco de `.sidebar`, fuera de la barra, vale la
+      // primera regla y no la segunda: blanco sobre blanco.
+      const css = `${expandCss(MINIMAL_THEME)}\n.sidebar .nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.sidebar:hover .nav-pills .nav-link.active {\n  ${bg}: ${W};\n}\n`
+        + `\n.sidebar .nav-pills:hover .nav-link.active {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar:hover \.nav-pills \.nav-link\.active, en hover": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un enlace hijo del contenedor no hereda del ítem', () => {
+      // La barra se escribe con ítems o sin ellos. Sin ellos, el fondo negro
+      // de `.nav-item` no le llega al enlace, que queda blanco sobre blanco.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills > .nav-item {\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills > .nav-link.active {\n  ${color}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills > \.nav-link\.active": 1\.00:1/),
+      ]);
+      expect(result.status).toBe(1);
+    });
+
+    it('un :not() de estado del contenedor cubre lo que el estado deja', () => {
+      // Entre las dos reglas no queda hueco: con el puntero encima y sin él,
+      // la pastilla pinta blanco sobre negro.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills:not(:hover) .nav-link.active {\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills:hover .nav-link.active {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un :not() compuesto se mide contra sus partes', () => {
+      // `:not(.foo.bar)` sólo se incumple cuando se dan las dos clases, que es
+      // justo cuando vale la otra regla: no hay pastilla sin corregir.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .nav-link.active:not(.foo.bar) {\n  ${color}: ${B};\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active.foo.bar {\n  ${color}: ${W};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('las condiciones de una zona no se mezclan con las de otra', () => {
+      // Siete zonas con una condición cada una no agotan el tope: en cada
+      // contexto sólo cuentan las reglas de esa zona.
+      const zones = Object.fromEntries([1, 2, 3, 4, 5, 6, 7]
+        .map((n) => [`z${n}`, { vars: { '--bs-heading-color': B } }]));
+      const components = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
+        selector: `[data-bs-theme="z${n}"] .nav-pills .nav-link.active[data-f${n}]`,
+        vars: { [bg]: B },
+      }));
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [{ selector: '.nav-pills', vars: { [color]: W, [bg]: B } }, ...components],
+        zones,
+      });
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un :focus-visible es un :focus, y no una situación sin él', () => {
+      // La regla de `:focus` va después y devuelve el fondo negro a todo lo que
+      // tiene el foco, `:focus-visible` incluido.
+      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
+        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
+        + `\n.nav-pills .nav-link.active:focus-visible {\n  ${bg}: ${W};\n}\n`
+        + `\n.nav-pills .nav-link.active:focus {\n  ${bg}: ${B};\n}\n`;
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
+    it('un bloque que sólo mueve un token fuera de la barra no es una pastilla', () => {
+      // `.dropdown-menu` no nombra `.nav-pills`: medirlo juntaría dos capas que
+      // nunca se tocan —el gray-50 de aquí con el texto que la librería pone
+      // en la barra— y daría un 1:1 que no existe.
+      const css = `${expandCss(MINIMAL_THEME)}\n`
+        + '.dropdown-menu {\n  --bs-gray-50: var(--bs-primary-500);\n}\n';
+      const result = validateStrict(css);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
+    });
+
     it('el enlace de otro contenedor no corrige la pastilla genérica', () => {
       // `.sidebar .nav-pills .nav-link.active` sólo arregla las pastillas de
       // la barra lateral; las de fuera siguen rotas.
