@@ -594,7 +594,7 @@ describe('theme-expand — sección zones', () => {
     const css = expandCss(SECTIONED_THEME);
     expect(css).toContain('[data-bs-theme="oscura"] .nav {\n  --bs-nav-link-color: rgb(var(--bs-white-rgb));\n}');
     expect(css).toMatch(/\[data-bs-theme="oscura"\] \.nav-pills \{[^}]*--bs-nav-pills-link-active-bg/);
-    // Sin variables de pastilla no se emite el bloque .nav-pills vacío.
+    // Sin variables de pill no se emite el bloque .nav-pills vacío.
     const soloNav = expandCss({
       ...SECTIONED_THEME,
       zones: {
@@ -917,7 +917,7 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
     expect(result.stderr).toContain('WCAG 2.x AA');
   });
 
-  it('atrapa una pastilla activa ilegible sobre su propio fondo', () => {
+  it('atrapa una pill activo ilegible sobre su propio fondo', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
       components: [
@@ -2513,7 +2513,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       + '\n.other {\n  --bs-nav-pills-link-active-bg: rgb(var(--bs-black-rgb));\n}\n';
     const result = validateStrict(css);
     expect(findings(result)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
     ]);
     expect(result.status).toBe(1);
   });
@@ -2629,13 +2629,13 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     expect(result.status).toBe(1);
   });
 
-  it('una pastilla activa sin fondo propio se mide sobre el de la librería, --bs-gray-50', () => {
+  it('un pill activo sin fondo propio se mide sobre el de la librería, --bs-gray-50', () => {
     // .nav-pills pone --bs-nav-pills-link-active-bg: var(--bs-gray-50). Un texto
     // casi blanco contrastaría con --bs-primary; con gray-50, no.
     const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n  --bs-nav-pills-link-active-color: rgb(var(--bs-gray-25-rgb));\n}\n`;
     const result = validateStrict(css);
     expect(findings(result)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.\d\d:1 entre --bs-nav-pills-link-active-color \(--bs-gray-25-rgb\) y --bs-nav-pills-link-active-bg \(--bs-gray-50-rgb\)/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.\d\d:1 entre --bs-nav-pills-link-active-color \(--bs-gray-25-rgb\) y --bs-nav-pills-link-active-bg \(--bs-gray-50-rgb\)/),
     ]);
     expect(result.status).toBe(1);
   });
@@ -2652,7 +2652,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     const roto = validateStrict(link('rgb(var(--bs-black-rgb))'));
     expect(findings(roto)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills \.nav-link\.active": 1\.00:1/),
     ]);
     expect(roto.status).toBe(1);
 
@@ -2671,19 +2671,19 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     const oculto = validateStrict(`${expandCss(MINIMAL_THEME)}\n${pill('.sidebar .nav-pills', W, W)}\n${pill('.nav-pills', B, W)}`);
     expect(findings(oculto)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar \.nav-pills": 1\.00:1/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.sidebar \.nav-pills": 1\.00:1/),
     ]);
     expect(oculto.status).toBe(1);
 
     // Aquí el único par roto es el de `.nav-pills` fuera de `.sidebar`.
     const falso = validateStrict(`${expandCss(MINIMAL_THEME)}\n${pill('.sidebar .nav-pills', W, B)}\n${pill('.nav-pills', W, W)}`);
     expect(findings(falso)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
     ]);
     expect(falso.status).toBe(1);
   });
 
-  it('conserva el combinador del ancestro de una pastilla descendiente', () => {
+  it('conserva el combinador del ancestro de un pill descendiente', () => {
     // El contenedor es `.sidebar > .nav-pills`: el enlace hereda su fondo negro
     // y pone el texto negro. Chromium: negro sobre negro, 1:1.
     const css = `${expandCss(MINIMAL_THEME)}\n.sidebar > .nav-pills {\n`
@@ -2693,19 +2693,19 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       + '  --bs-nav-pills-link-active-color: rgb(var(--bs-black-rgb));\n}\n';
     const result = validateStrict(css);
     expect(findings(result)).toEqual([
-      expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar > \.nav-pills \.nav-link\.active": 1\.00:1/),
+      expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.sidebar > \.nav-pills \.nav-link\.active": 1\.00:1/),
     ]);
     expect(result.status).toBe(1);
   });
 
-  describe('la pastilla se mide en el enlace que la pinta', () => {
+  describe('el pill se mide en el enlace que lo pinta', () => {
     const W = 'rgb(var(--bs-white-rgb))';
     const B = 'rgb(var(--bs-black-rgb))';
     const color = '--bs-nav-pills-link-active-color';
     const bg = '--bs-nav-pills-link-active-bg';
 
     it('el enlace corrige el fondo que el contenedor deja roto', () => {
-      // Theme generado por theme-expand. En Chromium toda pastilla activa
+      // Theme generado por theme-expand. En Chromium toda pill activo
       // pinta blanco sobre negro: el bloque del enlace gana al del contenedor.
       const css = expandCss({
         ...MINIMAL_THEME,
@@ -2721,7 +2721,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     it('el enlace corrige también con la zona pegada al contenedor', () => {
       // El mismo par, esta vez dentro de `[data-bs-theme="oscura"].nav-pills`:
-      // la zona en el propio contenedor no cambia quién pinta la pastilla.
+      // la zona en el propio contenedor no cambia quién pinta el pill.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [
@@ -2735,14 +2735,14 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.nav-pills:/),
         expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.nav-pills \.nav-link\.active:/),
       ]);
-      // Ninguna pastilla rota: --strict sale con 1 sólo por esos dos avisos.
+      // Ningun pill rota: --strict sale con 1 sólo por esos dos avisos.
       expect(result.stderr).toContain('0 errores, 2 aviso(s)');
       expect(result.status).toBe(1);
     });
 
     it('un par que sigue roto en el enlace se detecta una sola vez', () => {
       // El enlace repite el blanco del contenedor sobre fondo blanco: 1:1 en
-      // Chromium. Lo reporta el enlace, que es quien pinta la pastilla.
+      // Chromium. Lo reporta el enlace, que es quien pinta el pill.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [
@@ -2752,12 +2752,12 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       });
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link\.active": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills \.nav-link\.active": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
 
-    it('un bloque sobre .nav-link sin .active también pinta la pastilla', () => {
+    it('un bloque sobre .nav-link sin .active también pinta el pill', () => {
       // `.nav-link.active` es un `.nav-link`: el texto negro que pone este
       // bloque gana sobre el blanco del contenedor. Chromium: negro sobre
       // negro, 1:1.
@@ -2766,13 +2766,13 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n.nav-pills .nav-link {\n  ${color}: ${B};\n}\n`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills \.nav-link": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills \.nav-link": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
 
     it('una regla genérica del enlace alcanza a un contenedor cualificado', () => {
-      // `.nav-pills .nav-link.active` casa también con las pastillas de
+      // `.nav-pills .nav-link.active` casa también con los pills de
       // `.sidebar .nav-pills`. Chromium: blanco sobre negro, 21:1, dentro y
       // fuera de la barra.
       const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n  ${color}: ${W};\n}\n`
@@ -2783,8 +2783,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('el enlace de otro contenedor no corrige la pastilla genérica', () => {
-      // `.sidebar .nav-pills .nav-link.active` sólo arregla las pastillas de
+    it('el enlace de otro contenedor no corrige el pill genérica', () => {
+      // `.sidebar .nav-pills .nav-link.active` sólo arregla los pills de
       // la barra lateral; las de fuera siguen rotas.
       const css = expandCss({
         ...MINIMAL_THEME,
@@ -2795,12 +2795,12 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       });
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
 
-    it('conserva el combinador del ancestro de una pastilla descendiente', () => {
+    it('conserva el combinador del ancestro de un pill descendiente', () => {
       // El contenedor es `.sidebar > .nav-pills`: el enlace hereda su fondo
       // negro y pone el texto negro. Chromium: negro sobre negro, 1:1.
       const css = `${expandCss(MINIMAL_THEME)}\n.sidebar > .nav-pills {\n`
@@ -2808,82 +2808,53 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n.sidebar > .nav-pills .nav-link.active {\n  ${color}: ${B};\n}\n`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.sidebar > \.nav-pills \.nav-link\.active": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.sidebar > \.nav-pills \.nav-link\.active": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
   });
 
-  describe('lo que la regla de la pastilla no modela', () => {
+  describe('lo que no cuenta como enlace activo', () => {
     const W = 'rgb(var(--bs-white-rgb))';
     const B = 'rgb(var(--bs-black-rgb))';
     const color = '--bs-nav-pills-link-active-color';
     const bg = '--bs-nav-pills-link-active-bg';
 
-    // Decidir a qué enlaces llega un selector cualquiera pide el HTML, que el
-    // validador no ve. En vez de aproximarlo, modela una forma —el enlace
-    // activo escrito a pelo dentro de su contenedor— y avisa del resto: el
-    // bloque no corrige nada en la medición, y el aviso dice dónde mirar.
+    // Sólo cuenta el enlace activo escrito dentro de su contenedor. Con un
+    // estado, un atributo o un descendiente cualquiera de por medio, a qué
+    // enlaces llega el bloque depende del HTML, que el validador no ve: no
+    // corrige el par, y el error del contenedor se sigue dando.
     it.each([
       ['un estado', '.nav-pills .nav-link.active:hover'],
       ['un estado del ítem', '.nav-pills .nav-item:hover .nav-link.active'],
       ['una clase de más', '.nav-pills .nav-link.active.featured'],
-      ['un id', '.nav-pills .nav-link.active#destacada'],
+      ['un id', '.nav-pills .nav-link.active#destacado'],
       ['un atributo', '.nav-pills .nav-link.active[data-label="a"]'],
       ['una negación', '.nav-pills .nav-link.active:not(.featured)'],
-      ['una pseudoclase que no se modela', '.nav-pills .nav-item:first-child .nav-link.active'],
+      ['otra pseudoclase', '.nav-pills .nav-item:first-child .nav-link.active'],
       ['un combinador de hermano', '.nav-pills .nav-item + .nav-item .nav-link.active'],
       ['un pseudoelemento', '.nav-pills .nav-link.active::before'],
       ['el ítem, que no es el enlace', '.nav-pills .nav-item'],
       ['otro descendiente', '.nav-pills .dropdown-menu'],
       ['un .nav-pills dentro de :not()', '.nav-pills .nav-link.active:not(.nav-pills)'],
       ['un .nav-pills dentro de un atributo', '.nav-pills .nav-link.active[data-label="].nav-pills"]'],
-    ])('avisa de %s y no lo cuenta como corrección', (_, selector) => {
-      // El contenedor deja el par roto y este bloque lo "arregla": como no se
-      // modela, el error del contenedor se sigue dando y el aviso explica por
-      // qué no se tuvo en cuenta.
+    ])('%s no corrige el par del contenedor', (_, selector) => {
       const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
         + `  ${color}: ${W};\n  ${bg}: ${W};\n}\n`
         + `\n${selector} {\n  ${bg}: ${B};\n}\n`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso pastilla-no-modelada: ".+" mueve el par de la pastilla activa con un selector que el validador no modela/),
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
 
-    it('un bloque que no toca el par no se avisa', () => {
-      // El aviso es para quien mueve el par de la pastilla, no para cualquier
-      // bloque dentro de la barra.
-      const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
-        + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
-        + '\n.nav-pills .nav-link:hover {\n  --bs-nav-link-hover-color: rgb(var(--bs-black-rgb));\n}\n';
-      const result = validateStrict(css);
-      expect(findings(result)).toEqual([]);
-      expect(result.status).toBe(0);
-    });
-
-    it('un descendiente que no es la pastilla no se mide como si lo fuera', () => {
+    it('un descendiente que no es el enlace no se mide como si lo fuera', () => {
       // `.nav-pills .dropdown-menu` no lo lee ningún enlace activo: medirlo
-      // daría un 1:1 que no se ve en ninguna pastilla.
+      // daría un 1:1 que no se ve en ningún pill.
       const css = `${expandCss(MINIMAL_THEME)}\n.nav-pills {\n`
         + `  ${color}: ${W};\n  ${bg}: ${B};\n}\n`
-        + `\n.nav-pills .dropdown-menu {\n  ${bg}: ${W};\n}\n`;
-      const result = validateStrict(css);
-      expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso pastilla-no-modelada: "\.nav-pills \.dropdown-menu"/),
-      ]);
-      // El par de la barra contrasta: el único hallazgo es el aviso.
-      expect(result.stderr).toContain('0 errores, 1 aviso(s)');
-      expect(result.status).toBe(1);
-    });
-
-    it('un bloque fuera de la barra no es una pastilla', () => {
-      // `.dropdown-menu` no nombra `.nav-pills` ni declara el par: no hay
-      // ninguna barra de la que hablar.
-      const css = `${expandCss(MINIMAL_THEME)}\n`
-        + '.dropdown-menu {\n  --bs-gray-50: var(--bs-primary-500);\n}\n';
+        + `\n.nav-pills .dropdown-menu {\n  ${color}: ${W};\n  ${bg}: ${W};\n}\n`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([]);
       expect(result.status).toBe(0);
@@ -2908,7 +2879,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('.nav-pills', { [bg]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -2939,8 +2910,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const mal = validateStrict(roto);
       expect(findings(mal)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\)": 1\.00:1/),
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills:not\(\.disabled\.foo\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills:not\(\.disabled\.foo\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
       expect(mal.status).toBe(1);
     });
@@ -2952,7 +2923,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\[data-bs-theme="oscura"\] \.sidebar \.nav-pills dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\[data-bs-theme="oscura"\] \.sidebar \.nav-pills dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -2964,7 +2935,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills\[data-target="#panel"\] dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills\[data-target="#panel"\] dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -2973,7 +2944,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       const css = `${expandCss(MINIMAL_THEME)}\n${rule(':root,\n.nav-pills', { [color]: W, [bg]: W })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -2984,18 +2955,18 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\)": 1\.00:1/),
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills:not\(\.disabled, \.foo\.bar\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills:not\(\.disabled, \.foo\.bar\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
 
     it('un espacio dentro de :has() no es un combinador', () => {
-      // Un solo elemento: el gray-50 que redefine es el que pinta la pastilla.
+      // Un solo elemento: el gray-50 que redefine es el que pinta el pill.
       const css = `${expandCss(MINIMAL_THEME)}\n${rule('.nav-pills:has(.icon .label)', { '--bs-gray-50': B, [color]: B })}`;
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:has\(\.icon \.label\)": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills:has\(\.icon \.label\)": 1\.00:1/),
       ]);
       expect(result.status).toBe(1);
     });
@@ -3003,8 +2974,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     it('un .nav-pills dentro de :not() no hace del enlace el contenedor', () => {
       // Theme generado por theme-expand. El `.nav-pills` del `:not()` no es el
       // contenedor: si lo fuera, el enlace se mediría como una barra con su
-      // propio --bs-black y saldría un 1:1 que no existe. El selector lleva un
-      // `:not()`, así que no se modela y se avisa, pero nada se rompe.
+      // propio --bs-black y saldría un 1:1 que no existe.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [
@@ -3016,13 +2986,11 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         ],
       });
       const result = validateStrict(css);
-      expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso pastilla-no-modelada: "\.nav-pills \.nav-link\.active:not\(\.nav-pills\)"/),
-      ]);
-      expect(result.status).toBe(1);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
     });
 
-    it('un combinador tras el prefijo de zona no desplaza el contenedor de la pastilla', () => {
+    it('un combinador tras el prefijo de zona no desplaza el contenedor de el pill', () => {
       // Theme generado por theme-expand. El enlace hereda el fondo negro que
       // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
       const css = expandCss({
@@ -3093,8 +3061,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     it('un corchete entre comillas no hace del enlace el contenedor', () => {
       // Theme generado por theme-expand. El `.nav-pills` del atributo no es una
-      // clase, así que el enlace no es una barra con su propio --bs-black. El
-      // selector lleva un atributo: no se modela y se avisa, sin medir de más.
+      // clase, así que el enlace no es una barra con su propio --bs-black.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [
@@ -3103,10 +3070,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         ],
       });
       const result = validateStrict(css);
-      expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso pastilla-no-modelada: "\.nav-pills \.nav-link\.active\[data-label="\]\.nav-pills"\]"/),
-      ]);
-      expect(result.status).toBe(1);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
     });
 
     it('un contenedor anidado hereda lo que el exterior ya resolvió', () => {
@@ -3126,7 +3091,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     });
 
     it.each(['+', '~'])('un .nav-pills hermano (%s) no es el contenedor padre', (combinator) => {
-      // Theme generado por theme-expand. La segunda pastilla no hereda nada de
+      // Theme generado por theme-expand. La segunda pill no hereda nada de
       // su hermana: negro sobre el gris claro de la librería. Chromium: 18.45:1.
       const css = expandCss({
         ...MINIMAL_THEME,
@@ -3141,7 +3106,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     });
 
     it('dos atributos con valores distintos son selectores distintos, aunque difieran en espacios', () => {
-      // Theme generado por theme-expand. En Chromium las dos pastillas se ven
+      // Theme generado por theme-expand. En Chromium las dos pills se ven
       // bien: blanco sobre negro y negro sobre gray-50. Tratar `a+b` y `a + b`
       // como el mismo selector mezclaba sus declaraciones y daba dos errores
       // falsos de 1:1.
@@ -3159,7 +3124,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       // Y el fallo real de uno de los dos no se esconde detrás del otro.
       const roto = validateStrict(pills({ [color]: W, [bg]: W }, { [color]: B, [bg]: W }));
       expect(findings(roto)).toEqual([
-        expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills\[data-label="a\+b"\]": 1\.00:1/),
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\.nav-pills\[data-label="a\+b"\]": 1\.00:1/),
       ]);
       expect(roto.status).toBe(1);
     });

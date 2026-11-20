@@ -174,7 +174,7 @@ comprueba es la forma.
 - **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
   trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
   las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
-  las de pastilla sobre `.nav` no las alcanza. Y si trae `components`, con la
+  las de pill sobre `.nav` no las alcanza. Y si trae `components`, con la
   misma forma que la sección global, cada bloque sale como
   `[data-bs-theme="<nombre>"] <selector>`, después de `vars` y de `nav`: dentro
   del subárbol pisa tanto a las variables de la zona como al bloque global del
@@ -388,7 +388,7 @@ salida respeta*).
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
 `where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
-`contraste-boton`, `contraste-nav-pills`, `pastilla-no-modelada`, `contraste-zona`, `contraste-superficie`,
+`contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
 `--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
@@ -440,33 +440,22 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   estado se mide contra ella. `--bs-btn-outline-<role>-hover-bg` existe en
   `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
-  `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta la pastilla:
-  el enlace activo dentro del contenedor, no el bloque donde se declaren. Un par
-  que `.nav-pills` deja roto y que un bloque del enlace corrige no es un
-  hallazgo: ninguna pastilla se ve mal. El validador no ve el HTML, así que
-  modela una forma concreta y avisa del resto:
-  - **Cuenta como enlace** el que cuelga del contenedor por descendiente o `>`,
-    con compuestos de la cadena de la barra (`.nav-item`, `.nav-link`,
-    `.active`), el último nombrando el enlace, y sin pedir nada más: ni estado,
-    ni atributo, ni id, ni `:not()`, ni pseudoelemento. Es lo que escribe
-    theme-expand: `.nav-pills .nav-link.active`,
-    `.nav-pills > .nav-item > .nav-link.active`, `.nav-pills .nav-link`.
-  - **Cuenta como contenedor** el selector que termina en `.nav-pills`, con los
-    ancestros que lleve (`.sidebar .nav-pills`). Un bloque del enlace vale en
-    los contenedores que nombra: `.nav-pills .nav-link.active` también arregla
-    las pastillas de `.sidebar .nav-pills`, pero
-    `.sidebar .nav-pills .nav-link.active` no toca las de fuera de la barra.
-  - **Todo lo demás se avisa** (`pastilla-no-modelada`) y no corrige nada: con
-    un estado o un atributo de por medio, a qué enlaces llega el bloque depende
-    del HTML. Si el par del contenedor estaba roto, el error se sigue dando; el
-    aviso dice por qué ese bloque no se tuvo en cuenta.
-  - **Un informe por pastilla.** Cada contexto se reporta una vez, por el bloque
-    del enlace si lo hay: es quien la pinta.
-
-  Sin fondo propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
-- `pastilla-no-modelada` — aviso por cada bloque que mueve el par de la pastilla
-  con un selector fuera de esa forma. No es un error del theme: es el validador
-  diciendo que ahí no llega, y que ese caso se mira en la preview.
+  `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta el pill
+  activo —el enlace dentro del contenedor, con la capa del contenedor y la del
+  enlace— y no en el bloque donde se declaren. Un par que `.nav-pills` deja roto
+  y que un bloque del enlace corrige no es un hallazgo: no se ve ningún pill
+  mal. Cuenta como enlace el que cuelga del contenedor por descendiente o `>`,
+  con compuestos de la cadena de la barra (`.nav-item`, `.nav-link`,
+  `.active`), el último nombrando el enlace y sin pedir nada más —ni estado, ni
+  atributo, ni id, ni `:not()`, ni pseudoelemento—: es lo que escribe
+  theme-expand. Fuera de esa forma, a qué enlaces llega el bloque depende del
+  HTML, que el validador no ve, así que no corrige nada y el par del contenedor
+  se mide sin él. Un bloque del enlace vale en los contenedores que nombra:
+  `.nav-pills .nav-link.active` también arregla los pills de
+  `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca los
+  de fuera de la barra. Cada pill se reporta una vez por contexto, por el bloque
+  del enlace si lo hay. Sin fondo propio, el pill activo usa el de la librería,
+  `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.

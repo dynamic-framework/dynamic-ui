@@ -26,7 +26,6 @@ import {
   contrast,
   inheritsParent,
   isRootPrelude,
-  LIBRARY_ELEMENT_VARS,
   libraryWrapper,
   luminance,
   normalizeSelector,
@@ -782,45 +781,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // -- R11: qué bloques pintan la pastilla activa -----------------------------
-  //
-  // El validador no ve el HTML, así que no puede decidir a qué elementos llega
-  // un selector cualquiera. En vez de aproximarlo, modela una forma concreta y
-  // avisa de lo que se sale de ella: un falso positivo con su explicación es
-  // honesto; un falso negativo en silencio, no.
-
-  /**
-   * Las clases de primer nivel de un compuesto y si no pide nada más: ni
-   * atributo, ni id, ni estado, ni `:not()`, ni otra pseudoclase, ni
-   * pseudoelemento. Lo que va dentro de un argumento o de un atributo no
-   * selecciona por sí mismo, y lo escapado no es selector: por eso se recorre a
-   * mano y no con una expresión regular.
-   */
-  const readCompound = (compound) => {
-    const classes = [];
-    let plain = true;
-    for (let i = 0; i < compound.length; i += 1) {
-      const char = compound[i];
-      if (char === '\\') i += 1;
-      else if (char === '[' || char === '#') {
-        plain = false;
-        if (char === '[') i = closing(compound, i);
-      } else if (char === '.' || char === ':') {
-        const start = i + (compound[i + 1] === ':' ? 2 : 1);
-        const name = /^[\w-]+/.exec(compound.slice(start))?.[0];
-        if (!name) continue;
-        let end = start + name.length - 1;
-        if (compound[end + 1] === '(') end = closing(compound, end + 1);
-        if (char === '.') classes.push(name);
-        else plain = false;
-        i = end;
-      }
-    }
-    return { classes, plain };
-  };
-
   /** Dónde cierra el `[` o el `(` que abre en `start`. */
-  function closing(text, start) {
+  const closing = (text, start) => {
     let depth = 0;
     let quote = null;
     for (let i = start; i < text.length; i += 1) {
@@ -835,24 +797,53 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       }
     }
     return text.length - 1;
-  }
+  };
 
   /**
-   * ¿Lleva el compuesto la clase `.nav-pills` en su primer nivel? No cuentan la
-   * que va dentro de un argumento (`:not(.nav-pills)`), la de un atributo ni
-   * una clase más larga (`.nav-pills-extra`).
+   * Las clases de primer nivel de un compuesto y si no pide nada más: ni
+   * atributo, ni id, ni estado, ni `:not()`, ni otra pseudoclase, ni
+   * pseudoelemento. No cuenta lo que va dentro de un argumento
+   * (`:not(.nav-pills)`), de un atributo (`[data-label="].nav-pills"]`) ni lo
+   * escapado: por eso se recorre a mano y no con una expresión regular.
+   */
+  const readCompound = (compound) => {
+    const classes = [];
+    let plain = true;
+    for (let i = 0; i < compound.length; i += 1) {
+      const char = compound[i];
+      if (char === '\\') i += 1;
+      else if (char === '#') plain = false;
+      else if (char === '[') {
+        plain = false;
+        i = closing(compound, i);
+      } else if (char === '.' || char === ':') {
+        const start = i + (compound[i + 1] === ':' ? 2 : 1);
+        const name = /^[\w-]+/.exec(compound.slice(start))?.[0];
+        if (!name) continue;
+        let end = start + name.length - 1;
+        if (compound[end + 1] === '(') end = closing(compound, end + 1);
+        if (char === '.') classes.push(name);
+        else plain = false;
+        i = end;
+      }
+    }
+    return { classes, plain };
+  };
+
+  /**
+   * ¿Lleva el compuesto la clase `.nav-pills` en su primer nivel? No cuenta una
+   * clase más larga (`.nav-pills-extra`).
    */
   const hasPillsClass = (compound) => readCompound(compound).classes.includes('nav-pills');
 
   /**
-   * Un selector, partido: sus compuestos, los combinadores de en medio, qué
-   * posiciones son contenedores `.nav-pills` y los elementos que forman, del
-   * exterior al interior. Si el selector apunta al propio `.nav-pills` (o a uno
-   * cualificado, como `.sidebar .nav-pills`), el último elemento es él mismo; si
-   * apunta a un descendiente, ése es un elemento aparte que hereda del
-   * contenedor.
+   * Elementos de un pill activo para un selector, del contenedor al enlace. Si
+   * el selector apunta al propio `.nav-pills` (o a uno cualificado, como
+   * `.sidebar .nav-pills`), es el mismo elemento. Si apunta a un descendiente
+   * (`.nav-pills .nav-link.active`), el enlace es una capa aparte que hereda
+   * del contenedor.
    */
-  const pillParts = (selector) => {
+  const pillElements = (selector) => {
     // Compuestos en las posiciones pares y combinadores en las impares, para
     // poder recortar el ancestro sin perder un `>` o un `+`.
     const pieces = splitCompounds(normalizeSelector(selector));
@@ -864,57 +855,62 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     // o `~` es un hermano y no le pasa nada.
     const isAncestor = (i) => i === last || /^\s*>?\s*$/.test(pieces[2 * i + 1]);
     const containers = compounds.flatMap((compound, i) => (hasPillsClass(compound) && isAncestor(i) ? [i] : []));
-    const groups = containers.length === 0
-      ? [[...new Set(['.nav-pills', selector])]]
-      : containers.map((i) => [...new Set(['.nav-pills', i === last ? selector : pieces.slice(0, 2 * i + 1).join('')])]);
-    if (containers.length > 0 && containers.at(-1) !== last) groups.push([selector]);
-    return {
-      pieces, compounds, containers, groups,
-    };
+    if (containers.length === 0) return [[...new Set(['.nav-pills', selector])]];
+    const groups = containers.map((i) => [...new Set(['.nav-pills', i === last ? selector : pieces.slice(0, 2 * i + 1).join('')])]);
+    if (containers.at(-1) !== last) groups.push([selector]);
+    return groups;
   };
 
-  const pillElements = (selector) => pillParts(selector).groups;
-
   /**
-   * La única forma de bloque que el validador cuenta como pastilla: el enlace
-   * activo colgando de su contenedor, escrito a pelo. El camino del contenedor
-   * al enlace son compuestos de la cadena de la barra (`.nav-item`,
-   * `.nav-link`, `.active`), unidos por descendiente o `>`, el último nombra el
-   * enlace, y ninguno pide nada más —ni estado, ni atributo, ni id, ni
-   * `:not()`, ni pseudoelemento—.
-   *
-   * Es la forma que escribe theme-expand y la que traen los themes. Lo que se
-   * sale de aquí no se modela: no corrige la pastilla y se avisa, porque
-   * decidir a qué enlaces llega pide el HTML, que el validador no ve.
+   * El contenedor al que un selector le pinta el pill activo, o null si no se
+   * lo pinta a ninguno. Es el enlace activo escrito dentro de su contenedor:
+   * compuestos de la cadena de la barra (`.nav-item`, `.nav-link`, `.active`)
+   * unidos por descendiente o `>`, el último nombrando el enlace, y ninguno
+   * pidiendo nada más. Fuera de esa forma —un estado, un atributo, otro
+   * descendiente— saber a qué enlaces llega el bloque pide el HTML, que el
+   * validador no ve: no cuenta como corrección, y el par del contenedor se
+   * sigue midiendo sin él.
    */
   const PILL_CHAIN = ['nav-item', 'nav-link', 'active'];
-  const paintsPill = (path, combinators) => {
-    if (combinators.some((piece) => !/^\s*>?\s*$/.test(piece))) return false;
-    if (!path.every((compound) => {
-      const { classes, plain } = readCompound(compound);
-      return plain && classes.length > 0 && classes.every((name) => PILL_CHAIN.includes(name));
-    })) return false;
-    const { classes } = readCompound(path.at(-1));
-    return classes.includes('nav-link') || (classes.length === 1 && classes[0] === 'active');
+  const activeLinkOf = (selector) => {
+    const pieces = splitCompounds(normalizeSelector(selector));
+    const compounds = pieces.filter((_, i) => i % 2 === 0);
+    const groups = pillElements(selector);
+    if (groups.length < 2) return null;
+    const index = compounds.findLastIndex(hasPillsClass);
+    const path = compounds.slice(index + 1);
+    // Un `.nav-pills` dentro de otro es otro contenedor, no un enlace.
+    if (path.length === 0) return null;
+    const steps = path.map(readCompound);
+    if (pieces.slice(2 * index + 1).filter((_, i) => i % 2 === 0)
+      .some((piece) => !/^\s*>?\s*$/.test(piece))) return null;
+    if (!steps.every(({ classes, plain }) => plain && classes.length > 0
+      && classes.every((name) => PILL_CHAIN.includes(name)))) return null;
+    const { classes } = steps.at(-1);
+    const paints = classes.includes('nav-link') || (classes.length === 1 && classes[0] === 'active');
+    return paints ? groups.at(-2) : null;
   };
 
-  /**
-   * Lo que un selector es para esta regla: el contenedor de una pastilla
-   * (`.nav-pills`, `.sidebar .nav-pills`), el enlace activo de dentro
-   * (`.nav-pills .nav-link.active`), o un descendiente que no la pinta.
-   */
-  const pillRole = (bare) => {
-    const {
-      pieces, compounds, containers, groups,
-    } = pillParts(bare);
-    if (containers.length === 0 || containers.at(-1) === compounds.length - 1) {
-      return { element: 'contenedor', container: groups.at(-1), containerGroups: groups };
+  // Los bloques del enlace activo, con el contenedor al que le pintan el pill.
+  // Los de zona entran por su selector sin prefijo; es `element()` quien
+  // descarta los de otra zona.
+  const activeLinks = [];
+  for (const block of blocks) {
+    for (const { bare } of alternatives(block)) {
+      if (isRootPrelude(bare)) continue;
+      const container = activeLinkOf(bare);
+      if (container) activeLinks.push({ container, selector: bare });
     }
-    const index = containers.at(-1);
-    const path = compounds.slice(index + 1);
-    const combinators = pieces.slice(2 * index + 1).filter((_, i) => i % 2 === 0);
-    if (!paintsPill(path, combinators)) return { element: 'otro' };
-    return { element: 'enlace', container: groups.at(-2), containerGroups: groups.slice(0, -1) };
+  }
+
+  /**
+   * ¿Apunta el selector a algo de dentro del contenedor y no al contenedor
+   * mismo? `.nav-pills.outer .nav-pills` es otro contenedor; `.nav-pills
+   * .dropdown-menu`, un descendiente.
+   */
+  const insidePills = (selector) => {
+    const compounds = splitCompounds(normalizeSelector(selector)).filter((_, i) => i % 2 === 0);
+    return pillElements(selector).length > 1 && !hasPillsClass(compounds.at(-1));
   };
 
   /**
@@ -923,71 +919,53 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * `.nav-pills .nav-link.active` vale dentro de `.sidebar .nav-pills`, pero
    * `.sidebar .nav-pills .nav-link.active` no toca al `.nav-pills` de fuera.
    */
-  const reachesContainer = (rule, container) => {
+  const reachesContainer = (link, container) => {
     const matches = new Set(container.map(normalizeSelector));
-    return rule.container.every((selector) => matches.has(normalizeSelector(selector)));
+    return link.container.every((selector) => matches.has(normalizeSelector(selector)));
   };
 
-  const PILL_VARS = ['--bs-nav-pills-link-active-color', '--bs-nav-pills-link-active-bg'];
-
-  // Los bloques del enlace activo, con el contenedor al que pertenecen. Los de
-  // zona entran por su selector sin prefijo; es `element()` quien descarta los
-  // de otra zona.
-  const pillLinks = [];
-  for (const block of blocks) {
-    for (const { bare } of alternatives(block)) {
-      if (isRootPrelude(bare)) continue;
-      const role = pillRole(bare);
-      if (role.element === 'enlace') pillLinks.push({ container: role.container, selector: bare });
-    }
-  }
-
-  // R11 — pastilla activa de .nav-pills, en cada contexto donde se vea. Sin
-  // fondo propio, la pastilla activa usa el de la librería en `.nav-pills`:
+  // R11 — pill activo de .nav-pills, en cada contexto donde se vea. Sin fondo
+  // propio, el pill activo usa el de la librería en `.nav-pills`:
   // var(--bs-gray-50).
   //
-  // Se mide en el elemento que la pinta, el enlace activo dentro del
-  // contenedor, y no en el bloque que declara la variable: un theme que rompe
-  // el par en `.nav-pills` y lo corrige en `.nav-pills .nav-link.active` no
-  // enseña ninguna pastilla rota. Cada pastilla se mide una vez por contexto,
-  // aunque varios bloques declaren sobre ella, y la reporta el del enlace si lo
-  // hay: es quien la pinta.
+  // Se mide en el elemento que lo pinta, el enlace activo dentro del
+  // contenedor, con la capa del contenedor y la del enlace, y no en el bloque
+  // que declara la variable: un theme que rompe el par en `.nav-pills` y lo
+  // corrige en `.nav-pills .nav-link.active` no enseña ningún pill roto. Cada
+  // pill se mide una vez por contexto, aunque varios bloques declaren sobre él,
+  // y lo reporta el del enlace si lo hay: es quien lo pinta.
   const pending = [];
   for (const block of blocks) {
-    const declared = PILL_VARS.map((name) => block.decls.get(name)).find(Boolean);
-    if (!declared) continue;
+    const fgDecl = block.decls.get('--bs-nav-pills-link-active-color');
+    if (!fgDecl) continue;
     // Cada selector de la lista es una alternativa, con su propio prefijo de
     // zona: se mide por separado, con lo que se declara sobre él y no sobre las
     // otras.
     for (const { zone: altZone, bare: part, sameElement } of alternatives(block)) {
-      // `:root` no es una pastilla: lo que declara ahí lo pisa la librería en
+      // `:root` no es un pill: lo que declara ahí lo pisa la librería en
       // `.nav-pills`.
       if (isRootPrelude(part)) continue;
+      const groups = pillElements(part);
+      const link = activeLinkOf(part);
+      // Un descendiente que no pinta ningún pill no se mide: lo que
+      // `.nav-pills .dropdown-menu` declare no lo lee ningún enlace activo.
+      if (!link && insidePills(part)) continue;
+      const container = link ?? groups.at(-1);
+      const layer = activeLinks
+        .filter((other) => reachesContainer(other, container))
+        .map((other) => other.selector);
+      const elements = [
+        ...(link ? groups.slice(0, -1) : groups),
+        ...(layer.length > 0 ? [[...new Set(layer)]] : []),
+      ];
+      const key = JSON.stringify([...new Set(container.map(normalizeSelector))].sort());
       const selector = altZone ? `${zoneSelector(altZone)}${sameElement ? '' : ' '}${part}` : part;
-      const role = pillRole(part);
-      if (role.element === 'otro') {
-        warn(
-          'pastilla-no-modelada',
-          `"${selector}" mueve el par de la pastilla activa con un selector que el validador no `
-          + 'modela: sólo cuenta el enlace activo escrito a pelo dentro de su contenedor '
-          + '(`.nav-pills .nav-link.active`), sin estados, atributos, ids ni `:not()`, porque '
-          + 'saber a qué enlaces llega lo demás pide el HTML. Este bloque no corrige nada en la '
-          + 'medición: si lo que arregla es el par de la barra, revísalo en la preview.',
-          declared.line,
-        );
-        continue;
-      }
-      const links = pillLinks
-        .filter((link) => reachesContainer(link, role.container))
-        .map((link) => link.selector);
-      const groups = [...role.containerGroups, ...(links.length > 0 ? [[...new Set(links)]] : [])];
-      const key = JSON.stringify([...new Set(role.container.map(normalizeSelector))].sort());
       for (const ctx of contextsFor(altZone, part, '--bs-nav-pills-link-active-color')) {
         pending.push({
           ctx,
-          groups,
-          line: declared.line,
-          rank: role.element === 'enlace' ? 1 : 0,
+          elements,
+          line: fgDecl.line,
+          rank: link ? 1 : 0,
           key: `${ctx.zone ?? ''}|${key}`,
           where: `${selector}${block.zone ? '' : inContext(ctx)}`,
         });
@@ -999,13 +977,13 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   for (const { key, rank } of pending) claims.set(key, Math.max(claims.get(key) ?? 0, rank));
   const measured = new Set();
   for (const {
-    ctx, groups, key, rank, where, line,
+    ctx, elements, key, rank, where, line,
   } of pending) {
-    // La pastilla, no el bloque: varios bloques declaran sobre la misma y la
+    // El pill, no el bloque: varios bloques declaran sobre el mismo y la
     // medición es una sola.
     if (rank < claims.get(key) || measured.has(key)) continue;
     measured.add(key);
-    const element = ctx.element(...groups);
+    const element = ctx.element(...elements);
     const fg = measureSide(ctx, element, '--bs-nav-pills-link-active-color');
     const bg = measureSide(ctx, element, '--bs-nav-pills-link-active-bg', { background: true });
     noteLiteral(element, fg, `${where} --bs-nav-pills-link-active-color`);
@@ -1014,7 +992,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       if (explainedByR1(ctx, element, fg, bg)) continue;
       warn(
         'contraste-irresoluble',
-        `No se pudo medir la pastilla activa de "${where}": ${fg.reason ?? bg.reason}.`,
+        `No se pudo medir el pill activo de "${where}": ${fg.reason ?? bg.reason}.`,
         line,
       );
       continue;
@@ -1023,8 +1001,8 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     if (ratio < minContrast) {
       fail(
         'contraste-nav-pills',
-        `Pastilla activa en "${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, `
-        + `por debajo del ${minContrast}:1 de WCAG 2.x AA. La pastilla activa `
+        `Pill activo en "${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, `
+        + `por debajo del ${minContrast}:1 de WCAG 2.x AA. El pill activo `
         + 'es el único elemento de la barra que lleva fondo sólido: si su par no contrasta, '
         + 'la opción seleccionada es la menos legible de todas.',
         line,
