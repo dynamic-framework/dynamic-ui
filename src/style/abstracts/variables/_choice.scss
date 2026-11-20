@@ -1,0 +1,84 @@
+// Choice group
+//
+// A group of selectable options that reads as a row of buttons but is a set of
+// radios or checkboxes underneath.
+//
+// Every value here hangs off the button tokens on purpose. The two controls sit
+// next to each other in real forms, so a choice that did not move when
+// `$btn-padding-y` moved would drift out of the family within one release. What
+// this file owns is the *mapping* — which button token answers for which part
+// of a choice — not the values themselves.
+//
+// The colours come from the `--#{$prefix}btn-{color}-*` layer that
+// `df-button-variant-mapper` publishes for every theme colour, with the soft
+// variant answering for the resting state and the solid one for the selected
+// state. That pairing is the whole look: a quiet chip that turns into a filled
+// button once you pick it.
+
+// scss-docs-start choice-variables
+$choice-padding-y: $btn-padding-y !default;
+$choice-padding-x: $btn-padding-x !default;
+$choice-font-weight: $btn-font-weight !default;
+$choice-line-height: $btn-line-height !default;
+$choice-border-width: $btn-border-width !default;
+$choice-border-radius: $btn-border-radius !default;
+$choice-transition: $btn-transition !default;
+// `$btn-focus-width` itself is Bootstrap's and is not defined yet at this
+// point in the import order; this is the variable it defaults to, so the ring
+// is the same width as a button's either way.
+$choice-focus-width: $input-btn-focus-width !default;
+$choice-disabled-opacity: $btn-disabled-opacity !default;
+
+// The regular font size is NOT here: it derives from `$btn-font-size`, which
+// is Bootstrap's and is not defined yet at this point in the import order.
+// `_d-choice-group.scss` reads it directly, which also means the choice keeps
+// following a theme that overrides the button's size. The two below can live
+// here because their sources are this project's own.
+$choice-padding-y-sm: $btn-padding-y-sm !default;
+$choice-padding-x-sm: $btn-padding-x-sm !default;
+$choice-font-size-sm: $btn-font-size-sm !default;
+$choice-border-radius-sm: $btn-border-radius-sm !default;
+
+$choice-padding-y-lg: $btn-padding-y-lg !default;
+$choice-padding-x-lg: $btn-padding-x-lg !default;
+$choice-font-size-lg: $btn-lg-font-size !default;
+$choice-border-radius-lg: $btn-border-radius-lg !default;
+
+// The selected state.
+//
+// A darker step of the group's own colour, so the selection keeps the colour's
+// identity instead of turning into the same slab everywhere.
+//
+// Which step is a contrast question. Measured in Chromium against the resting
+// fill (`{color}-50`), with white text on top — the pair that has to clear
+// 3:1 for the state and 4.5:1 for the text:
+//
+//   -100 … -400   1.06 – 3.18   nowhere near; white text fails on all of them
+//   -500          3.93 – 12.32  passes everywhere, but see the note below
+//   -600          2.63 –  6.40  fine except warning
+//   -700          4.42 –  9.03  passes everywhere
+//   -800          7.91 – 15.99  comfortable everywhere
+//
+// Shipping `-500`, with `-700` for warning, which is a yellow and therefore
+// lighter at the same step. That exception is not invented here: the theme
+// already makes it, `$warning-text-emphasis` is `-800` where every other
+// colour is `-600`.
+//
+// NOTE ON THE MARGIN at `-500`: `success` and `danger` land on 4.53:1 for the
+// white text, three hundredths over the 4.5:1 line. They pass, but nothing in
+// the build checks it, so a nudge to either ramp breaks the text contrast
+// silently. `-700` is the step that leaves room (8.43:1 at worst) if that
+// margin ever turns out to be too thin.
+//
+// `light` and `dark` have no numeric scale, so they fall back to grey, which
+// is what the theme does for them too.
+$choice-selected-step: 500 !default;
+$choice-selected-step-warning: 700 !default;
+$choice-selected-color: var(--#{$prefix}white) !default;
+
+// The gap between options, and between the group's label and its options.
+$choice-group-gap: $spacer-2 !default;
+$choice-group-label-gap: $spacer-2 !default;
+$choice-group-label-font-weight: $font-weight-semibold !default;
+$choice-group-hint-font-size: $small-font-size !default;
+// scss-docs-end choice-variables
