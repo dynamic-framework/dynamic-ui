@@ -2967,6 +2967,60 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
   });
 });
 
+describe('theme-validate — una zona sin bloque propio', () => {
+  // Una zona existe en cuanto un selector la nombra. Antes el contexto sólo se
+  // creaba desde un bloque de zona pelado, así que una hoja con únicamente
+  // bloques de componente dentro de la zona no se medía en ninguna parte: cero
+  // hallazgos sobre un CSS roto, que es peor que un falso positivo.
+  const WHITE = 'rgb(var(--bs-white-rgb))';
+  const WHITE_ON_WHITE = {
+    '--bs-list-group-color': WHITE,
+    '--bs-list-group-action-color': WHITE,
+    '--bs-list-group-bg': WHITE,
+  };
+
+  it('mide el componente aunque la zona no tenga bloque propio', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+    });
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('mide igual si la zona sí tiene bloque propio', () => {
+    // El bloque de zona no toca nada de la lista, así que el veredicto sobre el
+    // componente tiene que ser el mismo con él y sin él.
+    const withZoneBlock = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+      zones: { clara: { vars: { '--bs-heading-color': 'rgb(var(--bs-black-rgb))' } } },
+    }));
+    const withoutZoneBlock = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+    }));
+
+    expect(findings(withoutZoneBlock)).toEqual(findings(withZoneBlock));
+    expect(withoutZoneBlock.status).toBe(withZoneBlock.status);
+  });
+
+  it('`:root, [data-bs-theme="light"]` no es una zona, es el alias del raíz', () => {
+    // La forma con la que Bootstrap emite el modo claro en el CSS compilado.
+    // Tomarla por zona duplicaba cada hallazgo del raíz dentro de ella.
+    const css = `${expandCss(MINIMAL_THEME)}\n:root,\n[data-bs-theme="light"] {\n  --bs-heading-color: rgb(var(--bs-black-rgb));\n}\n`;
+    const result = validateStrict(css);
+
+    expect(result.stderr).not.toContain('[data-bs-theme="light"]');
+    expect(result.status).toBe(0);
+  });
+});
+
 describe('known-tokens.json al día con el CSS compilado (#1311)', () => {
   const THEME_DIR = path.join(ROOT, 'scripts/theme');
   const INVENTORY = path.join(THEME_DIR, 'known-tokens.json');
