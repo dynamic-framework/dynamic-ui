@@ -171,10 +171,11 @@ function DSelect<
         className,
         {
           'd-select-floating': floatingLabel,
-          disabled: disabled || loading,
+          disabled,
         },
       )}
       style={style}
+      {...loading && { 'aria-busy': true }}
       {...dataAttributes}
     >
       {hasLabelContent(label) && (
@@ -186,7 +187,7 @@ function DSelect<
         className={classNames({
           'input-group': true,
           'has-validation': invalid,
-          disabled: disabled || loading,
+          disabled,
         })}
       >
         {iconStart && (
@@ -233,7 +234,7 @@ function DSelect<
             'is-valid': valid,
           })}
           classNamePrefix="d-select"
-          isDisabled={disabled || loading}
+          isDisabled={disabled}
           isClearable={clearable}
           isLoading={loading}
           isRtl={rtl}

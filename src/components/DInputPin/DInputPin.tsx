@@ -175,7 +175,11 @@ export default function DInputPin(
           {label}
         </DFormLabel>
       )}
-      <div className="d-input-pin-group" id={id}>
+      <div
+        className="d-input-pin-group"
+        id={id}
+        {...loading && { 'aria-busy': true }}
+      >
         {Array.from({ length: characters }).map((_, index) => (
           <input
             className={classNames({
@@ -198,7 +202,7 @@ export default function DInputPin(
             onPaste={(event) => handlePaste(event)}
             autoComplete="off"
             placeholder={placeholder}
-            disabled={disabled || loading}
+            disabled={disabled}
             required
             // eslint-disable-next-line react/no-array-index-key
             key={index}
