@@ -654,6 +654,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  // Las variables genéricas cuya presencia en un bloque de botón dispara R10.
+  // R13 las consulta para no medir dos veces el mismo botón con contorno.
+  const R10_BUTTON_VARS = [
+    '--bs-btn-color', '--bs-btn-bg',
+    '--bs-btn-hover-color', '--bs-btn-hover-bg',
+    '--bs-btn-active-color', '--bs-btn-active-bg',
+  ];
+
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
@@ -684,19 +692,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
 
         /*
          * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña tres, uno por estado, y en Dynamic no se
-         * rellena en ninguno: la librería no declara --bs-btn-hover-bg ni
-         * --bs-btn-active-bg en `.btn-outline-<role>`, así que
-         * `background-color: var(--bs-btn-hover-bg)` queda transparente y lo
-         * que se ve detrás es la superficie del contexto. Sólo hay relleno si
-         * el theme declara esas variables, sobre el botón o en un ancestro
-         * (la zona o el raíz), y entonces se mide contra ellas. El texto de
-         * cada estado es el que declara la librería en el botón
+         * Uno con contorno enseña tres, uno por estado. El relleno de hover y
+         * de active sale de `--bs-btn-outline-<role>-{hover,active}-bg`, que la
+         * librería cablea en `.btn-outline-<role>` y deja transparentes: si
+         * nadie los declara, lo que se ve detrás es la superficie del contexto
+         * y contra eso mide measureSide. Un theme que los declare, en el raíz,
+         * en la zona o sobre el botón, pinta ese relleno y se mide contra él.
+         * El texto de cada estado es el que declara la librería en el botón
          * (`--bs-btn-outline-<role>-hover-color`…), salvo que el theme lo pise.
          */
         const surface = () => measureSide(ctx, element, '--bs-body-bg-rgb', { background: true });
-        // El relleno puede venir del botón o heredado de un ancestro: la zona o
-        // el raíz, que llega a la zona ya calculado.
+        // El relleno sale del token que cablea la librería en el botón, o de lo
+        // que declare un ancestro: la zona o el raíz, que llega a la zona ya
+        // calculado. Si vale `transparent`, measureSide cae a la superficie.
         const fill = (variable) => (element.has(variable) || ctx.own.has(variable) || root.has(variable)
           ? measureSide(ctx, element, variable, { background: true })
           : surface());
@@ -949,10 +957,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
   // de ellos lo mueve sin declarar nada del role.
   const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
+  // Los pares de `.btn-outline-<role>` se generan para todos los roles; qué
+  // estado se mide y en qué contexto lo decide el bucle, que mira si el relleno
+  // está declarado donde se está midiendo.
   const bakedPairs = [
     ...BAKED_PAIRS,
-    ...pairRoles.flatMap((role) => bakedRolePairs(role).filter((pair) => !isTextBg(pair))),
+    ...pairRoles.flatMap((role) => bakedRolePairs(role)
+      .filter((pair) => !isTextBg(pair) && !pair.outline)),
     ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
+    ...ROLES.flatMap((role) => bakedRolePairs(role).filter((pair) => pair.outline)),
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
@@ -971,9 +984,35 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Sin esto, un theme que arregla el par en un bloque de componente
       // seguiría apareciendo por debajo del umbral.
       const element = ctx.element(...pair.owners);
+      if (pair.outline) {
+        /*
+         * Un estado del botón con contorno sólo se mide si su relleno está
+         * declarado aquí: sobre el propio botón, en la zona que se está
+         * midiendo o en el raíz, que llega a la zona. Sin el token la variante
+         * lo deja transparente y se ve la superficie, que es lo que ya miden
+         * las demás reglas; declararlo en una zona no convierte en medible el
+         * botón intacto del raíz. Y se mira estado por estado, así que el
+         * relleno de hover no arrastra al active.
+         */
+        const fillDeclared = element.has(pair.fill) || ctx.own.has(pair.fill) || root.has(pair.fill);
+        if (!fillDeclared) continue;
+        /*
+         * Si el theme declara una variable genérica sobre el botón, lo mide
+         * R10, que conoce el bloque y el estado. La capa que se consulta es la
+         * del selector de la variante y no la del elemento, que funde también
+         * lo declarado sobre `.btn`: R10 sólo procesa `.btn-<role>` y
+         * `.btn-outline-<role>`, así que un bloque `.btn` compartido no mide
+         * este botón y no puede apagar el par. Vale por contexto, porque un
+         * bloque que sólo existe dentro de una zona no cubre el raíz.
+         */
+        const variantLayer = ctx.element([pair.component]);
+        if (R10_BUTTON_VARS.some(
+          (name) => variantLayer.has(name) && variantLayer.get(name).source !== 'defecto',
+        )) continue;
+      }
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
-      const where = `${pair.component}${inContext(ctx)}`;
+      const where = `${pair.component}${inContext(ctx)}${pair.estado ? `, ${pair.estado}` : ''}`;
 
       if (!fg.rgb || !bg.rgb) {
         if (explainedByR1(ctx, element, fg, bg)) continue;
@@ -995,6 +1034,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const line = (fgEntry?.source === 'defecto' ? null : fgEntry?.line)
         ?? ctx.own.get(pair.fg.variable)?.line
         ?? root.get(pair.fg.variable)?.line
+        // Si el theme no declara el texto, la línea útil es la del relleno que
+        // sí declara: es lo que trajo el par por debajo del umbral.
+        ?? (pair.fill && (element.get(pair.fill)?.line
+          ?? ctx.own.get(pair.fill)?.line ?? root.get(pair.fill)?.line))
         ?? null;
 
       // Si el par ya está por debajo del umbral con la paleta por defecto y aquí
