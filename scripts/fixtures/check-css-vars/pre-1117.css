@@ -1,0 +1,32 @@
+/* Extracto literal del CSS que compilaba src/style/dynamic-ui.scss justo
+ * antes de #1117 (bc491ab5e^), con las dos erratas que motivan el check.
+ * Sin cambios: los nombres y los valores son los que se publicaron. */
+
+.form-text {
+  margin-top: var(--bs-ref-spacer-1);
+  font-size: var(--bs-fs-small);
+  color: var(--bs-bs-gray-400);
+}
+
+.form-text {
+  --bs-form-text-padding: 0 0;
+  --bs-form-text-gap: var(--bs-ref-spacer-1);
+  --bs-form-text-color: var(--bs-bs-gray-400);
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--bs-form-text-gap);
+  align-items: center;
+  padding: var(--bs-form-text-padding);
+  color: var(--bs-form-text-color);
+}
+
+.d-carousel .d-carousel-pagination {
+  bottom: var(--bs-carousel-pagination-bottom);
+  position: relative;
+  margin-top: var(--bs---bs-ref-spacer-4);
+  width: fit-content;
+  padding: var(--bs-ref-spacer-2) var(--bs-ref-spacer-4);
+  border-radius: var(--bs-border-radius-lg);
+  margin: auto;
+  gap: var(--bs-ref-spacer-2);
+}
