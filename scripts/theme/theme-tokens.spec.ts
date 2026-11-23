@@ -306,6 +306,19 @@ describe('buildContexts', () => {
       expect(zone).toEqual({ zone: 'z', line: 1, own: 1 });
     });
 
+    it('la nombra aunque la lista lleve `:root` delante', () => {
+      // `:root, [data-bs-theme="clara"] .list-group` es un bloque raíz, pero su
+      // segunda alternativa sí es una zona: lo que la distingue del alias es
+      // tener parte de componente.
+      expect(fromPreludes([
+        {
+          prelude: ':root,\n[data-bs-theme="clara"] .list-group',
+          isRoot: true,
+          decls: { '--bs-list-group-bg': '255, 255, 255' },
+        },
+      ])).toEqual([{ zone: 'clara', line: 1, own: 0 }]);
+    });
+
     it('no confunde el alias del raíz con una zona', () => {
       // Así emite Bootstrap el modo claro en el CSS compilado: el segundo
       // selector es otro nombre para el raíz, y sus declaraciones ya están ahí.

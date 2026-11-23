@@ -953,16 +953,17 @@ export function buildContexts(blocks, root) {
     // un bloque propio: `[data-bs-theme="z"] .list-group` ya crea el contexto
     // en el que se mide esa lista. Sin esto, una hoja que sólo lleva bloques de
     // componente dentro de la zona no se medía en ninguna parte.
-    // Un bloque raíz queda fuera: en `:root, [data-bs-theme="light"]` el
-    // segundo selector es otro nombre para el raíz, no una zona aparte, y sus
-    // declaraciones ya están en `root`. Es la forma con la que Bootstrap emite
-    // el modo claro en el CSS compilado.
-    if (!block.isRoot) {
-      for (const alternative of splitSelectorList(block.prelude)) {
-        const { zone } = splitZone(alternative);
-        // `dynamic` tampoco es una zona: es el alias del raíz de Dynamic.
-        if (zone && zone !== 'dynamic') touch(zone, block.line);
-      }
+    for (const alternative of splitSelectorList(block.prelude)) {
+      const { zone, bare } = splitZone(alternative);
+      // `dynamic` tampoco es una zona: es el alias del raíz de Dynamic.
+      if (!zone || zone === 'dynamic') continue;
+      // En un bloque raíz, el selector de zona a secas es otro nombre para el
+      // raíz y sus declaraciones ya están en `root`: así emite Bootstrap el
+      // modo claro (`:root, [data-bs-theme="light"]`). Lo delata no tener
+      // parte de componente. Una alternativa que sí la tiene nombra una zona
+      // de verdad, aunque la lista lleve `:root` delante.
+      if (block.isRoot && bare === '') continue;
+      touch(zone, block.line);
     }
     // Sólo el bloque de la zona declara sobre el elemento que la lleva. Lo que
     // declara un bloque de componente cae sobre el componente, y de eso se

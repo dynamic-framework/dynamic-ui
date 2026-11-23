@@ -3010,14 +3010,38 @@ describe('theme-validate — una zona sin bloque propio', () => {
     expect(withoutZoneBlock.status).toBe(withZoneBlock.status);
   });
 
-  it('`:root, [data-bs-theme="light"]` no es una zona, es el alias del raíz', () => {
-    // La forma con la que Bootstrap emite el modo claro en el CSS compilado.
-    // Tomarla por zona duplicaba cada hallazgo del raíz dentro de ella.
-    const css = `${expandCss(MINIMAL_THEME)}\n:root,\n[data-bs-theme="light"] {\n  --bs-heading-color: rgb(var(--bs-black-rgb));\n}\n`;
+  it('mide el componente aunque la lista lleve `:root` delante', () => {
+    // La excepción del alias del raíz no puede llevarse por delante la
+    // alternativa de componente que va en la misma lista.
+    const css = `${expandCss(MINIMAL_THEME)}\n:root,\n[data-bs-theme="clara"] .list-group {\n`
+      + `  --bs-list-group-color: ${WHITE};\n`
+      + `  --bs-list-group-action-color: ${WHITE};\n`
+      + `  --bs-list-group-bg: ${WHITE};\n}\n`;
     const result = validateStrict(css);
 
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('`:root, [data-bs-theme="light"]` no es una zona, es el alias del raíz', () => {
+    // La forma con la que Bootstrap emite el modo claro en el CSS compilado.
+    // Tomarla por zona duplica cada hallazgo del raíz dentro de ella, así que
+    // el theme tiene que traer uno: con un theme limpio la confusión no se
+    // nota y el caso no mordería.
+    const css = `${expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '.list-group', vars: WHITE_ON_WHITE }],
+    })}\n:root,\n[data-bs-theme="light"] {\n  --bs-heading-color: rgb(var(--bs-black-rgb));\n}\n`;
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action": 1\.00:1/),
+    ]);
     expect(result.stderr).not.toContain('[data-bs-theme="light"]');
-    expect(result.status).toBe(0);
   });
 });
 
