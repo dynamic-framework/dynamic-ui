@@ -67,8 +67,10 @@ overriding them there themes every switch at once.
 | --${PREFIX_BS}form-switch-icon-valid         | :root  | data url svg | Knob of an unchecked \`.is-valid\` switch       |
 | --${PREFIX_BS}form-switch-icon-invalid       | :root  | data url svg | Knob of an unchecked \`.is-invalid\` switch     |
 
-The last two have no counterpart on \`.form-switch\`: \`:root\` is the only place to theme the
-validation knobs.
+Rest, focus and checked also have a component-level variable on \`.form-switch\`
+(\`--${PREFIX_BS}form-switch-bg\`, \`--${PREFIX_BS}form-switch-focus-bg-image\`,
+\`--${PREFIX_BS}form-switch-checked-bg-image\`) for a one-off switch. The validation knobs have
+none, so \`:root\` is where you theme those.
 
 \`\`\`css
 /* After dynamic-ui.css */
