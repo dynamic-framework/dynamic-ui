@@ -30,6 +30,31 @@ const meta = {
 | --${PREFIX_BS}collapse-separator-bg          | .collapse-container | css color unit  | Collapse separator color                  |
 | --${PREFIX_BS}collapse-interpolate-size      | .collapse-container | css keyword     | Controls interpolate-size for animation   |
 | --${PREFIX_BS}collapse-transition            | .collapse-container | css transition  | Collapse body transition animation        |
+| --${PREFIX_BS}collapse-icon-color            | .collapse-container | css color unit  | Collapse header chevron color             |
+
+### Header icon
+
+The chevron used to be painted in \`primary\` with no way to change it. It now reads
+\`--${PREFIX_BS}collapse-icon-color\`, which defaults to \`var(--${PREFIX_BS}body-color)\`, so by
+default it follows the text color of the surface it sits on — including inside a
+\`[data-${PREFIX_BS}theme]\` zone.
+
+\`\`\`css
+/* After dynamic-ui.css */
+
+/* Every collapse */
+:root {
+  --${PREFIX_BS}collapse-icon-color: var(--${PREFIX_BS}primary);
+}
+
+/* Or just one, on the container */
+.collapse-container.muted-chevron {
+  --${PREFIX_BS}collapse-icon-color: var(--${PREFIX_BS}gray-500);
+}
+\`\`\`
+
+Unlike the SVG icons of the form controls, this one is a font icon rendered by \`DIcon\`, so the
+value is a plain color and \`var()\` works as usual.
         `,
       },
     },

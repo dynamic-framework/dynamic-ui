@@ -49,6 +49,36 @@ The Bootstrap documentation provides details on the default [Radio CSS Variables
 |-----------------------------------------------------|---------------------|-----------------|-----------------------------|
 | --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color          |
 | --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow            |
+
+### Icon
+
+The dot drawn inside a checked radio is an SVG served as a data URL, declared on \`:root\`:
+overriding it there changes every radio at once.
+
+| Variable                              | Class  | Type         | Description            |
+|---------------------------------------|--------|--------------|------------------------|
+| --${PREFIX_BS}form-check-icon-radio   | :root  | data url svg | Dot of a checked radio |
+
+\`\`\`css
+/* After dynamic-ui.css */
+:root {
+  /* A smaller dot */
+  --${PREFIX_BS}form-check-icon-radio:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='1.5' fill='%23fff'/></svg>");
+}
+\`\`\`
+
+Two things to keep in mind when writing the value:
+
++ **The color inside the SVG has to be a literal.** A \`var()\` there does not resolve: the browser
+renders an SVG used as an image as a separate document, which does not inherit the page's custom
+properties, so the fill falls back to its initial value. Write \`%23fff\`, \`rgb(255 255 255)\` or a
+named color — not \`var(--${PREFIX_BS}white)\`.
++ **Percent-encode \`#\`.** Inside a URL it starts a fragment, so a hex color has to be written as
+\`%23fff\`. Using \`rgb()\` or a named color avoids the question.
+
+The circle itself is not part of the icon: its fill and border come from \`background-color\` and
+\`border-color\` on \`.form-check-input\`, which follow the theme on their own.
         `,
       },
     },
