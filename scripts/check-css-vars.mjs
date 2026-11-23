@@ -24,9 +24,15 @@
  * - `segmento-vacio`: el nombre lleva `--` después del `--` inicial, o termina
  *   en `-`. Cubre `--bs---bs-ref-spacer-4`.
  *
- * Solo mira nombres de custom property —declaraciones `--nombre:` y
- * referencias `var(--nombre)`—, no el texto suelto: hay clases BEM con doble
- * guion (`.react-datepicker__header--time--only`) que no son un problema.
+ * Solo mira nombres de custom property, no el texto que los imita. Antes de
+ * buscar, blanquea comentarios, cadenas y el contenido sin comillas de `url()`,
+ * y luego exige que el nombre esté en posición de declaración —detrás de `{` o
+ * de `;`— o dentro de un `var()`. Así no fallan por un nombre que no es tal:
+ *
+ *   .react-datepicker__header--time--only { … }   // clase BEM con doble guion
+ *   .--bs-bs-gray-400:hover { … }                 // selector, no declaración
+ *   .a::before { content: "var(--bs-bs-gray-400)" }
+ *   /* historical var(--bs-bs-gray-400) *\/
  *
  * Uso:
  *   node scripts/check-css-vars.mjs [dist/css/dynamic-ui.css …]
@@ -55,10 +61,24 @@ const DEFAULT_FILES = [
   'dist/css/dynamic-ui.min.css',
 ];
 
-// Declaración `--nombre:` y referencia `var(--nombre)`. El nombre de una custom
-// property admite más caracteres, pero el CSS compilado solo usa estos.
-const DECLARATION = /(?<![\w-])(--[\w-]*)\s*:/g;
+// Comentario, cadena entre comillas y `url()` sin comillas: tramos donde un
+// `--bs-bs-…` es texto, no código. El orden importa poco porque la alternancia
+// se resuelve por la posición más a la izquierda, que es la que abre el tramo.
+const NON_CODE = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\[\s\S])*"|'(?:[^'\\\n]|\\[\s\S])*'|\burl\(\s*[^)"'\s][^)]*\)/gi;
+
+// Declaración: el nombre va detrás de `{` o de `;`, que es la única posición en
+// la que una custom property puede declararse. Un selector como
+// `.--bs-bs-gray-400:hover` va detrás de `.`, así que no entra.
+const DECLARATION = /[{;]\s*(--[\w-]*)\s*:/g;
 const REFERENCE = /var\(\s*(--[\w-]*)/g;
+
+/**
+ * El CSS con los tramos que no son código sustituidos por espacios. No se
+ * recortan: así los índices —y con ellos los números de línea— no se mueven.
+ */
+function code(content) {
+  return content.replace(NON_CODE, (chunk) => chunk.replace(/[^\n]/g, ' '));
+}
 
 /**
  * El nombre que probablemente se quería: colapsa los guiones repetidos y el
@@ -100,12 +120,13 @@ function malformed(name) {
 export function checkCss(content) {
   const problems = [];
   const seen = new Set();
+  const scanned = code(content);
   const lineOf = (index) => content.slice(0, index).split('\n').length;
 
   // matchAll clona el literal antes de recorrerlo, así que no hay lastIndex
   // compartido entre llamadas.
   [DECLARATION, REFERENCE].forEach((pattern) => {
-    [...content.matchAll(pattern)].forEach(({ 1: name, index }) => {
+    [...scanned.matchAll(pattern)].forEach(({ 1: name, index }) => {
       const problem = malformed(name);
       // Un mismo nombre mal formado aparece muchas veces (la declaración y
       // cada var() que lo lee). Con una ocurrencia basta para localizarlo.

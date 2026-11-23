@@ -72,10 +72,44 @@ describe('check-css-vars', () => {
     expect(stdout).toContain('sin custom properties mal formadas');
   });
 
-  it('no confunde una clase BEM con doble guion con una custom property', () => {
-    const file = write('bem.css', '.react-datepicker__header--time--only { color: red; }\n');
+  describe('no falla con texto que imita un nombre mal formado', () => {
+    it.each([
+      ['una clase BEM con doble guion', '.react-datepicker__header--time--only { color: red; }'],
+      ['un selector de clase, no una declaración', '.--bs-bs-gray-400:hover { color: red; }'],
+      ['una cadena entre comillas dobles', '.a::before { content: "var(--bs-bs-gray-400)"; }'],
+      ['una cadena entre comillas simples', ".a::before { content: 'var(--bs-bs-gray-400)'; }"],
+      ['un comentario', '/* historical var(--bs-bs-gray-400) */\n.a { color: red; }'],
+      ['un url() sin comillas', '.a { background: url(data:image/svg+xml,var(--bs-bs-gray-400)); }'],
+    ])('%s', (_, css) => {
+      const file = write(`${_.replace(/\W+/g, '-')}.css`, `${css}\n`);
+      const { status, stderr } = run([file]);
 
-    expect(run([file]).status).toBe(0);
+      expect(stderr).toBe('');
+      expect(status).toBe(0);
+    });
+  });
+
+  it('sigue viendo la declaración que va detrás de un comentario', () => {
+    const file = write('after-comment.css', ':root { /* gris */ --bs-bs-gray-400: #ccc; }\n');
+
+    expect(run([file]).status).toBe(1);
+  });
+
+  it('blanquea el texto sin desplazar los números de línea', () => {
+    // El comentario ocupa dos líneas y lleva dentro un nombre mal formado: el
+    // que se reporta es el de la línea 4, no el del comentario.
+    const file = write('offsets.css', [
+      '/* histórico:',
+      '   var(--bs-bs-gray-400) */',
+      '.a {',
+      '  color: var(--bs---bs-ref-spacer-4);',
+      '}',
+    ].join('\n'));
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).not.toContain('--bs-bs-gray-400');
+    expect(stderr).toContain('offsets.css:4');
   });
 
   it('detecta el nombre mal formado tanto en la declaración como en var()', () => {
