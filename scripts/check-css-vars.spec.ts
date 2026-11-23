@@ -112,6 +112,41 @@ describe('check-css-vars', () => {
     expect(run([file]).status).toBe(1);
   });
 
+  describe('reporta la línea del nombre, no la del inicio del match', () => {
+    it('en una declaración que va detrás de un `;` en otra línea', () => {
+      const file = write('multiline-semicolon.css', [
+        ':root {',
+        '  --bs-primary: #000;',
+        '  --bs-bs-gray-400: #ccc;',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-semicolon.css:3');
+    });
+
+    it('en la primera declaración del bloque, detrás del `{`', () => {
+      const file = write('multiline-brace.css', [
+        ':root {',
+        '  --bs-bs-gray-400: #ccc;',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-brace.css:2');
+    });
+
+    it('en un var() partido en dos líneas', () => {
+      const file = write('multiline-var.css', [
+        '.a {',
+        '  color: var(',
+        '    --bs-bs-gray-400',
+        '  );',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-var.css:3');
+    });
+  });
+
   it('blanquea el texto sin desplazar los números de línea', () => {
     // El comentario ocupa dos líneas y lleva dentro un nombre mal formado: el
     // que se reporta es el de la línea 4, no el del comentario.

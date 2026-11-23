@@ -69,8 +69,14 @@ const NON_CODE = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\[\s\S])*"|'(?:[^'\\\n]|\\[\s\S
 // Declaración: el nombre va detrás de `{` o de `;`, que es la única posición en
 // la que una custom property puede declararse. Un selector como
 // `.--bs-bs-gray-400:hover` va detrás de `.`, así que no entra.
-const DECLARATION = /[{;]\s*(--[\w-]*)\s*:/g;
-const REFERENCE = /var\(\s*(--[\w-]*)/g;
+//
+// Los dos empiezan antes del nombre, y el `\s*` de por medio puede llevar un
+// salto de línea: en `:root {\n  --bs-bs-gray-400: …` el match arranca en el
+// `{` de la línea anterior. De ahí el flag `d`, que añade `indices` con el
+// desplazamiento del grupo capturado; sin él la línea que se reporta es la del
+// `{` o el `;`, no la del nombre.
+const DECLARATION = /[{;]\s*(--[\w-]*)\s*:/gd;
+const REFERENCE = /var\(\s*(--[\w-]*)/gd;
 
 /**
  * El CSS con los tramos que no son código sustituidos por espacios. No se
@@ -126,13 +132,14 @@ export function checkCss(content) {
   // matchAll clona el literal antes de recorrerlo, así que no hay lastIndex
   // compartido entre llamadas.
   [DECLARATION, REFERENCE].forEach((pattern) => {
-    [...scanned.matchAll(pattern)].forEach(({ 1: name, index }) => {
+    [...scanned.matchAll(pattern)].forEach(({ 1: name, indices }) => {
+      const [nameIndex] = indices[1];
       const problem = malformed(name);
       // Un mismo nombre mal formado aparece muchas veces (la declaración y
       // cada var() que lo lee). Con una ocurrencia basta para localizarlo.
       if (problem && !seen.has(name)) {
         seen.add(name);
-        problems.push({ line: lineOf(index), name, ...problem });
+        problems.push({ line: lineOf(nameIndex), name, ...problem });
       }
     });
   });
