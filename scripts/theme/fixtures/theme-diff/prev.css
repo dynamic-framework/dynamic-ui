@@ -1,0 +1,53 @@
+/*!
+ * dynamic-framework 1.0.0
+ */
+:root,
+[data-bs-theme="dynamic"] {
+  --bs-kept: 1rem;
+  --bs-body-bg: #fff;
+  --bs-gray-25: #fcfcfd;
+  --bs-legacy-flag: 1;
+  --bs-font-size-1: 2rem;
+}
+
+:root {
+  --bs-root-font-size: 16px;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #000;
+}
+
+.btn,
+.btn-group {
+  --bs-btn-padding-x: 1rem;
+}
+
+.btn {
+  --bs-btn-color: var(--bs-body-color);
+}
+
+.alert {
+  --bs-alert-gap: .5rem;
+}
+
+.legacy-badge {
+  --bs-legacy-badge-bg: #eee;
+}
+
+@media (min-width: 1200px) {
+  :root,
+  [data-bs-theme="dynamic"] {
+    --bs-font-size-1: 2.5rem;
+  }
+
+  .g-xl-1 {
+    --bs-gutter-x: .25rem;
+  }
+}
+
+@supports not (width: 1lh) {
+  .chip {
+    --bs-chip-size: 1.5em;
+  }
+}

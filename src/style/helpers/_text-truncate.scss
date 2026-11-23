@@ -1,4 +1,4 @@
-[class*="text-truncate-"] {
+@include exact-classes(utility-class-names("text-truncate")) {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;

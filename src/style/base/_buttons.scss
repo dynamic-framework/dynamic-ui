@@ -164,6 +164,11 @@
 
     .btn-link-#{$color} {
       @include df-button-variant-mapper($color, "link");
+      --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
+
+      @if $enable-gradients {
+        background-image: none;
+      }
     }
 
     .btn-outline-#{$color} {
@@ -193,15 +198,6 @@
     var(--#{$prefix}btn-sm-border-radius),
   );
 }
-
-[class*="btn-link-"] {
-  --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
-
-  @if $enable-gradients {
-    background-image: none;
-  }
-}
-
 //
 // Botones de enlace
 //
