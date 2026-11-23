@@ -172,8 +172,10 @@
   --#{$prefix}btn-border-color: var(--#{$prefix}btn-outline-#{$color-name}-border-color);
 
   --#{$prefix}btn-hover-color: var(--#{$prefix}btn-outline-#{$color-name}-hover-color);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}btn-outline-#{$color-name}-hover-bg);
   --#{$prefix}btn-hover-border-color: var(--#{$prefix}btn-outline-#{$color-name}-hover-border-color);
   --#{$prefix}btn-active-color: var(--#{$prefix}btn-outline-#{$color-name}-active-color);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}btn-outline-#{$color-name}-active-bg);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}btn-outline-#{$color-name}-active-border-color);
 
   --#{$prefix}btn-focus-color: var(--#{$prefix}btn-outline-#{$color-name}-focus-color);

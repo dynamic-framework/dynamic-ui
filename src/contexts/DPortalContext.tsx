@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useSyncExternalStore,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -109,6 +110,15 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 ) {
   const { created } = usePortal(portalName);
   const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
+  /**
+   * Who had the focus when each portal was opened, one entry per stack level.
+   *
+   * It is a ref and not state because nothing renders from it: it only has to
+   * survive between opening and closing. Stacked portals each restore their
+   * own trigger, so closing them in order walks the focus back out the same
+   * way it came in.
+   */
+  const triggers = useRef<Array<HTMLElement | null>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   // The animated stack (framer-motion) is registered by the overlay components
@@ -140,6 +150,11 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
           + `Ensure "${String(name)}" has an entry in the availablePortals map on DContextProvider.`,
         );
       }
+      // The element that opened the portal, kept so that closing can give the
+      // focus back to it. Without this the blur below left the focus on
+      // `<body>`, and whoever was navigating with a keyboard or a screen
+      // reader came back to the top of the page.
+      triggers.current.push(document.activeElement as HTMLElement | null);
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
       push({ name, Component, payload } as unknown as InternalStackItem<T>);
@@ -150,8 +165,17 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {
-      // pop() is safe on empty stacks, so close remains idempotent.
+      // pop() is safe on empty stacks, so close remains idempotent. The
+      // trigger stack is popped alongside it and stays in step: both are empty
+      // at the same time, so an extra close is a no-op here too.
+      const trigger = triggers.current.pop();
       pop();
+      // Only if it is still in the document: the portal may have been opened
+      // from something that is no longer there, and focusing a detached
+      // element silently moves the focus to `<body>`.
+      if (trigger?.isConnected) {
+        trigger.focus();
+      }
     },
     [pop],
   );
