@@ -502,6 +502,16 @@ function parseWrapper(raw) {
   return parseVarCall(inner.slice(0, end).trim());
 }
 
+/** Triplete literal, `var()` a una `-rgb`, o un respaldo que termina en uno de los dos. */
+export function holdsBareTriplet(value) {
+  const raw = String(value).trim();
+  if (parseTriplet(raw)) return true;
+  const call = parseVarCall(raw);
+  if (!call) return false;
+  if (call.name.endsWith('-rgb')) return true;
+  return call.fallback !== undefined && holdsBareTriplet(call.fallback);
+}
+
 /**
  * Resuelve una custom property a un color tal como la ve un subárbol (una zona,
  * o un componente dentro de ella) que redefine algunas variables sobre su padre.
@@ -530,6 +540,8 @@ function parseWrapper(raw) {
  * e `invalidFormat` nombra la variable `-rgb` cuyo valor no es un triplete. Un
  * resultado lleva `kind`: 'triplet' si sale de un triplete y 'color' si sale de
  * un wrapper o un literal.
+ * `unwrappedIn` nombra la primera variable sin `-rgb` que recibe un triplete sin
+ * envolver.
  */
 export function resolveInherited(name, own, resolveParent, seen = new Set()) {
   if (!own.has(name)) return resolveParent(name);
@@ -572,13 +584,20 @@ function resolveOwn(name, own, resolveParent, path) {
         invalidFormat: name,
       };
     }
+    if (!isTriplet && resolved.rgb && resolved.kind === 'triplet' && !resolved.unwrappedIn) {
+      return { ...resolved, unwrappedIn: name };
+    }
     return resolved;
   };
 
   function resolveValue(value) {
     const raw = String(value).trim();
     const triplet = parseTriplet(raw);
-    if (triplet) return { rgb: triplet, source, token: name, kind: 'triplet' };
+    if (triplet) {
+      return {
+        rgb: triplet, source, token: name, kind: 'triplet', ...(!isTriplet && { unwrappedIn: name }),
+      };
+    }
 
     const call = parseVarCall(raw);
     if (call) return follow(call);
@@ -596,7 +615,9 @@ function resolveOwn(name, own, resolveParent, path) {
             reason: `${name} envuelve en rgb() a ${wrapped.name}, que ya vale un color completo`,
           };
         }
-        return { ...resolved, kind: 'color' };
+        // Envuelto en rgb(): ya es un color válido.
+        const { unwrappedIn, ...wrappedColor } = resolved;
+        return { ...wrappedColor, kind: 'color' };
       }
       // `transparent` no es un color sobre el que medir: lo que se ve es lo que
       // haya detrás, y eso lo decide quien mide.

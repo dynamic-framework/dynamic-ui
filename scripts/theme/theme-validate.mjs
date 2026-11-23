@@ -24,6 +24,7 @@ import {
   buildContexts,
   cascadeSet,
   contrast,
+  holdsBareTriplet,
   inheritsParent,
   isRootPrelude,
   libraryWrapper,
@@ -234,6 +235,28 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  // R1d — una variable sin -rgb se consume como color: un triplete ahí no se
+  // pinta. En el raíz, R2 y R4 ya cubren el wrapper y --bs-border-color.
+  const unwrapped = new Set();
+  for (const block of blocks) {
+    const where = block.isRoot ? '' : ` en "${block.prelude.replace(/\s+/g, ' ')}"`;
+    for (const [name, { value, line }] of block.decls) {
+      if (!name.startsWith('--bs-') || name.endsWith('-rgb')) continue;
+      if (!holdsBareTriplet(value)) continue;
+      unwrapped.add(name);
+      if (block.isRoot && wrapperName(name)) continue;
+      if (block.isRoot && name === '--bs-border-color' && parseTriplet(value)) continue;
+      fail(
+        'triplete-sin-envolver',
+        `${name}${where}: "${value}" deja un triplete en una variable de color. Las variables `
+        + 'que no terminan en -rgb se consumen como color completo, así que aquí el navegador '
+        + 'recibe "R, G, B", descarta la propiedad y el elemento hereda el color del padre. '
+        + 'Envuelve el triplete: rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+        line,
+      );
+    }
+  }
+
   /**
    * ¿Ya explicó R1 por qué no se puede medir este par? Es así cuando lo que
    * falla es una variable -rgb mal escrita en el raíz o en la zona: avisar
@@ -241,6 +264,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * Una declarada en el bloque de un componente no la revisa R1, y se avisa.
    */
   const explainedByR1 = (ctx, element, ...sides) => sides.some((side) => {
+    if (side.unwrapped) return unwrapped.has(side.unwrapped); // R1d
     const name = side.invalidFormat;
     if (!name || element?.has(name)) return false;
     // La declaración que ve el contexto: la de la zona o, si no la tiene, la
@@ -569,6 +593,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Un texto transparente no se ve, sea cual sea el fondo.
       if (!background) return { rgb: null, reason: `${name} es transparente: el texto no se ve`, variable: name };
       return { ...ctx.lookup('--bs-body-bg-rgb'), name: '--bs-body-bg-rgb', variable: name };
+    }
+    // No se pinta: no hay par que medir.
+    if (resolved.unwrappedIn) {
+      return {
+        rgb: null,
+        reason: `${resolved.unwrappedIn} vale un triplete sin envolver en rgb(), que no es un color`,
+        unwrapped: resolved.unwrappedIn,
+        variable: name,
+      };
     }
     return { ...resolved, name: describe(name, resolved), variable: name };
   };
