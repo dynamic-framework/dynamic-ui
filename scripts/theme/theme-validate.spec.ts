@@ -2705,7 +2705,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
     const bg = '--bs-nav-pills-link-active-bg';
 
     it('el enlace corrige el fondo que el contenedor deja roto', () => {
-      // Theme generado por theme-expand. En Chromium toda pill activo
+      // Theme generado por theme-expand. Todo pill activo
       // pinta blanco sobre negro: el bloque del enlace gana al del contenedor.
       const css = expandCss({
         ...MINIMAL_THEME,
