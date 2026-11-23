@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts`, `theme-tokens.spec.ts` y `theme-diff.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -65,6 +65,60 @@ tocar el HTML:
 ```
 
 Un theme que no declare ninguna zona se muestra igual, sólo con la columna clara.
+
+## Diff entre versiones
+
+`theme-diff.mjs` compara el CSS compilado de dos versiones y describe en JSON
+lo que cambia para un theme o un UI Kit: las custom properties de todo el CSS
+y las clases que aparecen o desaparecen.
+
+```bash
+npm run theme:diff -- <prev>/dynamic-ui.css <next>/dynamic-ui.css [--out changes.json]
+```
+
+Cada release lo publica en el CDN, comparado contra la mayor versión estable
+anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0). Si la
+versión es el latest del índice, también se publica en `latest/`:
+
+```
+https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes.json
+https://cdn.dynamicframework.dev/assets/latest/ui-react/tokens/changes.json
+```
+
+```json
+{
+  "from": "2.12.0",
+  "to": "2.12.1",
+  "customProperties": {
+    "added":   [{ "name": "--bs-btn-text-decoration", "selector": ".btn", "media": null, "value": "none" }],
+    "removed": [{ "name": "--bs-…", "selector": "…", "media": null, "value": "…" }],
+    "changed": [{ "name": "--bs-…", "selector": ":root", "media": null, "from": "…", "to": "…" }],
+    "renamed": [{ "from": "--bs-…", "to": "--bs-…", "selector": "…", "media": null, "value": "…" }]
+  },
+  "classes": { "added": [".d-skeleton"], "removed": [] }
+}
+```
+
+- Una custom property se identifica por nombre, selector y `media` (la cadena
+  de `@media`/`@supports` que la envuelve, o `null`). Entran `:root`,
+  componentes (`.btn`, `.alert`…), utilidades, zonas
+  (`[data-bs-theme="dark"]`) y cualquier at-rule; quedan fuera las de
+  `@keyframes`.
+- Las listas de selectores se separan, así que reagrupar reglas en Sass no
+  aparece como cambio. `[data-bs-theme=dynamic]` se reporta como `:root`.
+- `changed` ignora diferencias de espacios y de mayúsculas en hex; agregar o
+  quitar `!important` sí cuenta.
+- `renamed` empareja una variable eliminada con una agregada del mismo
+  selector y `media` cuando son las únicas de su lado con ese valor y los
+  nombres comparten algún segmento (`--bs-gray-25` → `--bs-neutral-25`). El
+  par sale de `removed` y `added`. Con más de un candidato no se adivina y
+  quedan en `removed` y `added`.
+- `classes` lista los nombres de clase que aparecen o desaparecen de los
+  selectores, en cualquier regla.
+- Las declaraciones normales (`padding`, `color`…) quedan fuera: una release
+  puede mover cientos y taparían lo que un theme tiene que revisar.
+- La entrada es el CSS y no `known-tokens.json`: el inventario solo tiene
+  nombres, sin valores ni selector.
 
 ## Entrada
 
