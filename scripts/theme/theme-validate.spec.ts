@@ -1969,7 +1969,7 @@ describe('theme-expand — el breakpoint de RFS', () => {
   });
 });
 
-describe('contraste-boton — .btn-<role> sólido en hover y active (#1372)', () => {
+describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
   const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
   type Bloque = { selector: string; vars: Record<string, string> };
   type Ejemplo = { zones: { oscura: { components: Bloque[] } } };
