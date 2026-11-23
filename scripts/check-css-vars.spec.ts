@@ -75,6 +75,9 @@ describe('check-css-vars', () => {
   describe('no falla con texto que imita un nombre mal formado', () => {
     it.each([
       ['una clase BEM con doble guion', '.react-datepicker__header--time--only { color: red; }'],
+      ['los modificadores BEM de splide, bajo DCarousel', '.splide__arrow--prev:hover > .splide__track--ttb { color: red; }'],
+      ['los modificadores BEM de react-select, bajo DSelect', '.d-select__option--is-focused:not(.d-select__option--is-selected) { color: red; }'],
+      ['un modificador BEM en un selector de atributo', '[class*="--is-selected"] { color: red; }'],
       ['un selector de clase, no una declaración', '.--bs-bs-gray-400:hover { color: red; }'],
       ['una cadena entre comillas dobles', '.a::before { content: "var(--bs-bs-gray-400)"; }'],
       ['una cadena entre comillas simples', ".a::before { content: 'var(--bs-bs-gray-400)'; }"],
@@ -87,6 +90,20 @@ describe('check-css-vars', () => {
       expect(stderr).toBe('');
       expect(status).toBe(0);
     });
+  });
+
+  it('sí ve el nombre mal formado dentro de una regla con clase BEM', () => {
+    // El selector se ignora, el cuerpo no: si no, el check sería ciego justo
+    // en los componentes de terceros (splide, react-select) que usan BEM.
+    const file = write('bem-body.css', [
+      '.splide__arrow--prev { padding: var(--bs---bs-ref-spacer-1); }',
+      '.d-select__option--is-focused { --bs-bs-option-bg: #eee; }',
+    ].join('\n'));
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('--bs---bs-ref-spacer-1');
+    expect(stderr).toContain('--bs-bs-option-bg');
   });
 
   it('sigue viendo la declaración que va detrás de un comentario', () => {
