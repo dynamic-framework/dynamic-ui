@@ -2967,6 +2967,88 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
   });
 });
 
+describe('theme-validate — una hoja de sólo zonas', () => {
+  // Quien mantiene un theme puede querer añadir una zona en un archivo aparte,
+  // sin repetir el bloque raíz. Antes eso daba `vacio` y salida 1, y la única
+  // forma de validarlo era añadirle un :root de relleno.
+  const ZONA = [
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 33, 41, 51;',
+    '  --bs-body-color-rgb: 255, 255, 255;',
+    '}',
+  ].join('\n');
+
+  it('no es `vacio`: se mide contra los valores por defecto de la librería', () => {
+    const result = validateStrict(ZONA);
+
+    expect(result.stderr).not.toContain('[vacio]');
+    // Los hallazgos son los de la zona, no los de un archivo que no se pudo
+    // leer: un fondo casi negro bajo el texto gray-900 que la lista hereda.
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.24:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.24:1/),
+    ]);
+    expect(missingWrappers(result)).toEqual(['--bs-body-bg-rgb', '--bs-body-color-rgb']);
+  });
+
+  it('mide igual que la misma zona dentro de un theme con raíz', () => {
+    // El raíz declara algo que no toca ninguna de las variables de la zona, así
+    // que las dos hojas tienen que medirse contra los mismos valores por
+    // defecto. Si la hoja suelta midiera otra cosa, el arreglo sería un atajo.
+    const conRaiz = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-ref-spacer-1: .25rem;',
+      '}',
+      '',
+      ZONA,
+    ].join('\n');
+
+    const sola = validateStrict(ZONA);
+    const completo = validateStrict(conRaiz);
+
+    expect(findings(sola)).toEqual(findings(completo));
+    expect(missingWrappers(sola)).toEqual(missingWrappers(completo));
+    expect(sola.status).toBe(completo.status);
+  });
+
+  it('pasa --strict con salida 0 cuando la zona está bien escrita', () => {
+    const result = validateStrict([
+      '[data-bs-theme="oscura"] {',
+      '  --bs-body-bg-rgb: 33, 41, 51;',
+      '  --bs-body-bg: rgb(33, 41, 51);',
+      '  --bs-body-color-rgb: 255, 255, 255;',
+      '  --bs-body-color: rgb(255, 255, 255);',
+      '  color: var(--bs-body-color);',
+      '  background-color: var(--bs-body-bg);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] .list-group {',
+      '  --bs-list-group-color: rgb(var(--bs-body-color-rgb));',
+      '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));',
+      '}',
+    ].join('\n'));
+
+    expect(findings(result)).toEqual([]);
+    expect(missingWrappers(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  describe('`vacio` sigue siendo el CSS que no declara ninguna --bs-*', () => {
+    it.each([
+      ['un archivo vacío', ''],
+      ['un CSS sin custom properties', '.card { color: red; }'],
+      ['una zona sin custom properties', '[data-bs-theme="oscura"] { color: red; }'],
+      ['sólo custom properties que no son --bs-*', ':root { --mi-marca: #0b6b53; }'],
+    ])('%s', (_, css) => {
+      const result = validateStrict(css);
+
+      expect(result.stderr).toContain('[vacio]');
+      expect(result.status).toBe(1);
+    });
+  });
+});
+
 describe('known-tokens.json al día con el CSS compilado (#1311)', () => {
   const THEME_DIR = path.join(ROOT, 'scripts/theme');
   const INVENTORY = path.join(THEME_DIR, 'known-tokens.json');
