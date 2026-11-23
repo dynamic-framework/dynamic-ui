@@ -2990,7 +2990,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('un combinador tras el prefijo de zona no desplaza el contenedor de el pill', () => {
+    it('un combinador tras el prefijo de zona no desplaza el contenedor del pill', () => {
       // Theme generado por theme-expand. El enlace hereda el fondo negro que
       // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
       const css = expandCss({
