@@ -800,34 +800,33 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   };
 
   /**
-   * Las clases de primer nivel de un compuesto y si no pide nada más: ni
-   * atributo, ni id, ni estado, ni `:not()`, ni otra pseudoclase, ni
-   * pseudoelemento. No cuenta lo que va dentro de un argumento
-   * (`:not(.nav-pills)`), de un atributo (`[data-label="].nav-pills"]`) ni lo
-   * escapado: por eso se recorre a mano y no con una expresión regular.
+   * Las clases de primer nivel de un compuesto y si el compuesto es sólo eso:
+   * una sucesión de clases, sin tipo, id, atributo, estado, `:not()` ni nada
+   * escapado. `a.nav-link.active` no lo es —sólo alcanza a los enlaces que son
+   * `<a>`, y los pills de la librería son `<button>`—, y en
+   * `.nav-link\+featured.active` la clase de verdad no es `nav-link`.
+   *
+   * Las clases se recogen a mano y no con una expresión regular porque lo que
+   * va dentro de un argumento (`:not(.nav-pills)`) o de un atributo
+   * (`[data-label="].nav-pills"]`) no selecciona por sí mismo.
    */
   const readCompound = (compound) => {
     const classes = [];
-    let plain = true;
     for (let i = 0; i < compound.length; i += 1) {
       const char = compound[i];
       if (char === '\\') i += 1;
-      else if (char === '#') plain = false;
-      else if (char === '[') {
-        plain = false;
-        i = closing(compound, i);
-      } else if (char === '.' || char === ':') {
+      else if (char === '[') i = closing(compound, i);
+      else if (char === '.' || char === ':') {
         const start = i + (compound[i + 1] === ':' ? 2 : 1);
         const name = /^[\w-]+/.exec(compound.slice(start))?.[0];
         if (!name) continue;
         let end = start + name.length - 1;
         if (compound[end + 1] === '(') end = closing(compound, end + 1);
         if (char === '.') classes.push(name);
-        else plain = false;
         i = end;
       }
     }
-    return { classes, plain };
+    return { classes, plain: /^(?:\.[\w-]+)+$/.test(compound) };
   };
 
   /**

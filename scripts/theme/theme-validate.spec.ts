@@ -2834,6 +2834,8 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       ['otra pseudoclase', '.nav-pills .nav-item:first-child .nav-link.active'],
       ['un combinador de hermano', '.nav-pills .nav-item + .nav-item .nav-link.active'],
       ['un pseudoelemento', '.nav-pills .nav-link.active::before'],
+      ['un tipo', '.nav-pills a.nav-link.active'],
+      ['una clase escapada', '.nav-pills .nav-link\\+featured.active'],
       ['el ítem, que no es el enlace', '.nav-pills .nav-item'],
       ['otro descendiente', '.nav-pills .dropdown-menu'],
       ['un .nav-pills dentro de :not()', '.nav-pills .nav-link.active:not(.nav-pills)'],
@@ -2990,7 +2992,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('un combinador tras el prefijo de zona no desplaza el contenedor de el pill', () => {
+    it('un combinador tras el prefijo de zona no desplaza el contenedor del pill', () => {
       // Theme generado por theme-expand. El enlace hereda el fondo negro que
       // calcula `.nav-pills`, aunque redefina --bs-black. Chromium: 21:1.
       const css = expandCss({
