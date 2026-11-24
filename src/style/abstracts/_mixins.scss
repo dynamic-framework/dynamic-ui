@@ -239,3 +239,160 @@
   }
 }
 // scss-docs-end df-table-variant
+
+@mixin exact-classes($names) {
+  // Sin nombres no se emite nada: un selector vacío no es CSS válido, y una
+  // utilidad desactivada deja la lista vacía.
+  @if length($names) > 0 {
+    $selector: ();
+
+    @each $name in $names {
+      $selector: append($selector, unquote(".#{$name}"), comma);
+    }
+
+    #{$selector} {
+      @content;
+    }
+  }
+}
+
+// The class names a utility generates, mirroring Bootstrap's utility API so the
+// list cannot drift from what is actually emitted:
+//
+// - The root is the utility's `class`, falling back to its first property, so
+//   overriding `class` moves the list with it.
+// - Breakpoint infixes come from `breakpoint-infix()`, and only when the
+//   utility is `responsive` — otherwise Bootstrap emits it once, unprefixed.
+//   `print: true` adds the `-print` infix.
+// - A `null` value key means the base class, with no modifier.
+// - `state` appends a class per pseudo-class (`-hover` and friends).
+//
+// A utility that is absent or disabled returns an empty list instead of
+// failing: `$utilities` can be merged with `null` to switch one off.
+@function utility-class-names($utility-key) {
+  $utility: map-get($utilities, $utility-key);
+
+  @if type-of($utility) != "map" {
+    @return ();
+  }
+
+  $values: map-get($utility, values);
+
+  @if $values == null {
+    @return ();
+  }
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  $properties: map-get($utility, property);
+
+  @if type-of($properties) == "string" {
+    $properties: append((), $properties);
+  }
+
+  $class: if(
+    map-has-key($utility, class),
+    map-get($utility, class),
+    if($properties, nth($properties, 1), null)
+  );
+  $class: if($class == null, "", $class);
+  $state: if(map-has-key($utility, state), map-get($utility, state), ());
+
+  $infixes: ();
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @if map-get($utility, responsive) or $infix == "" {
+      $infixes: append($infixes, $infix);
+    }
+  }
+
+  @if map-get($utility, print) == true {
+    $infixes: append($infixes, "-print");
+  }
+
+  $names: ();
+
+  @each $infix in $infixes {
+    $i: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
+
+    @each $key, $value in $values {
+      @if $value != null {
+        $modifier: if($key, if($class == "" and $i == "", "", "-") + $key, "");
+        $name: "#{$class}#{$i}#{$modifier}";
+        $names: append($names, $name);
+
+        @each $pseudo in $state {
+          $names: append($names, "#{$name}-#{$pseudo}");
+        }
+      }
+    }
+  }
+
+  @return $names;
+}
+
+// The names that `abstracts/_utilities-hover.scss` and `_utilities-dark.scss`
+// emit for a utility, which follow their own rules and not the utility API's:
+// no breakpoint infix, no `-print`, no `state` suffix, and nothing for a value
+// that is null. `utility-class-names()` honours all of those, so reusing it
+// here would both miss the real prefixed classes — with a `$grid-breakpoints`
+// that has no zero-width entry it returns nothing at all — and invent prefixed
+// names that no generator emits.
+@function prefixed-utility-class-names($utility-key, $prefixes) {
+  $utility: map-get($utilities, $utility-key);
+
+  @if type-of($utility) != "map" {
+    @return ();
+  }
+
+  $values: map-get($utility, values);
+
+  @if $values == null {
+    @return ();
+  }
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  $properties: map-get($utility, property);
+
+  @if type-of($properties) == "string" {
+    $properties: append((), $properties);
+  }
+
+  $class: if(
+    map-has-key($utility, class),
+    map-get($utility, class),
+    if($properties, nth($properties, 1), null)
+  );
+  $class: if($class == null, "", $class);
+  $names: ();
+
+  @each $key, $value in $values {
+    @if $value != null {
+      $modifier: if($key, if($class == "", "", "-") + $key, "");
+
+      @each $prefix in $prefixes {
+        $names: append($names, "#{$prefix}\\:#{$class}#{$modifier}");
+      }
+    }
+  }
+
+  @return $names;
+}
+
+// The `link-underline` family: the color utility and the opacity one, each read
+// from its own entry so disabling one does not affect the other, plus the
+// prefixed variants that only the color utility gets.
+@function link-underline-class-names() {
+  $names: utility-class-names("link-underline");
+  $names: join($names, prefixed-utility-class-names("link-underline", ("hover", "dark")));
+  $names: join($names, utility-class-names("link-underline-opacity"));
+
+  @return $names;
+}
