@@ -64,6 +64,8 @@ We **love** pull requests! Before [forking the repo](https://help.github.com/en/
 
 - **Promptly address any CI failures**. If your pull request fails to build or pass tests, please push another commit to fix it.
 
+- **Changed the base branch?** Close and reopen the pull request (or push a commit) so the checks run again: editing the pull request does not trigger them.
+
 ## :memo: Commit Message Guidelines
 
 We adhere to Conventional Commits with certain limitations:
