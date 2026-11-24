@@ -1,7 +1,6 @@
 /**
  * Tests de normalizeType (api-types.mjs). El módulo es ESM, así que se corre
- * en un proceso aparte, con un tope de tiempo para que un bucle no cuelgue la
- * suite.
+ * en un proceso aparte.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -49,6 +48,23 @@ describe('normalizeType', () => {
   test('conserva los espacios dentro de los literales', () => {
     const [two, one] = normalize('"a  b"', '"a b"');
     expect(two).not.toBe(one);
+  });
+
+  test('ordena las uniones dentro de la firma de un método', () => {
+    const [a, b] = normalize('{ handle(event: B | A): void; }', '{ handle(event: A | B): void; }');
+    expect(a).toBe(b);
+  });
+
+  test('no mezcla la rama de un tipo condicional con una unión', () => {
+    const [a, b] = normalize(
+      'T extends string ? string : number | boolean',
+      'boolean | T extends string ? string : number',
+    );
+    expect(a).not.toBe(b);
+  });
+
+  test('devuelve tal cual un texto que no parsea como tipo', () => {
+    expect(normalize('T[', 'T[>', 'A; type U = B')).toEqual(['T[', 'T[>', 'A; type U = B']);
   });
 
   test('colapsa los espacios fuera de los literales', () => {

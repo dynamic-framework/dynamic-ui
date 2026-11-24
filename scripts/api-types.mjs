@@ -64,120 +64,41 @@ function typeEntries(value, prefix = '$') {
   });
 }
 
-const OPEN = { '(': ')', '<': '>', '[': ']', '{': '}' };
-const CLOSE = new Set(Object.values(OPEN));
-const QUOTES = new Set(['"', "'", '`']);
+const printer = ts.createPrinter({ removeComments: true });
 
-/** Índice de la comilla que cierra el literal que abre en `i`, o el final del texto. */
-function quoteEnd(text, i) {
-  for (let j = i + 1; j < text.length; j += 1) {
-    if (text[j] === '\\') j += 1;
-    else if (text[j] === text[i]) return j;
-  }
-  return text.length - 1;
-}
-
-/** Colapsa los espacios fuera de los literales; dentro se conservan. */
-function collapseSpaces(text) {
-  let out = '';
-  for (let i = 0; i < text.length; i += 1) {
-    if (QUOTES.has(text[i])) {
-      const end = quoteEnd(text, i);
-      out += text.slice(i, end + 1);
-      i = end;
-    } else if (/\s/.test(text[i])) {
-      if (!out.endsWith(' ')) out += ' ';
-    } else {
-      out += text[i];
-    }
-  }
-  return out.trim();
+/** Imprime `node` en una línea, con los miembros de uniones e intersecciones ordenados. */
+function printSorted(node, source) {
+  const print = (n) => printer.printNode(ts.EmitHint.Unspecified, n, source);
+  const visit = (n) => {
+    const visited = ts.visitEachChild(n, visit, ts.nullTransformationContext);
+    const out = ts.setEmitFlags(visited, ts.EmitFlags.SingleLine);
+    if (!ts.isUnionTypeNode(out) && !ts.isIntersectionTypeNode(out)) return out;
+    const sorted = [...out.types].sort((a, b) => print(a).localeCompare(print(b)));
+    const types = ts.factory.createNodeArray(sorted);
+    return ts.isUnionTypeNode(out)
+      ? ts.factory.updateUnionTypeNode(out, types)
+      : ts.factory.updateIntersectionTypeNode(out, types);
+  };
+  return print(visit(node));
 }
 
 /**
- * Parte `text` por `separators` en el primer nivel: fuera de paréntesis,
- * genéricos, corchetes, llaves y literales. `=>` no cierra un genérico.
+ * Tipo en texto con espacios canónicos y uniones e intersecciones ordenadas en
+ * todos los niveles. Un texto que no parsea como tipo se devuelve tal cual.
  */
-function splitTop(text, separators) {
-  const parts = [];
-  const stack = [];
-  let start = 0;
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
-    if (QUOTES.has(char)) {
-      i = quoteEnd(text, i);
-    } else if (char === '=' && text[i + 1] === '>') {
-      if (!stack.length && separators.includes('=>')) {
-        parts.push(text.slice(start, i));
-        start = i + 2;
-      }
-      i += 1;
-    } else if (OPEN[char]) {
-      stack.push(OPEN[char]);
-    } else if (char === stack[stack.length - 1]) {
-      stack.pop();
-    } else if (!stack.length && separators.includes(char)) {
-      parts.push(text.slice(start, i));
-      start = i + 1;
-    }
-  }
-  parts.push(text.slice(start));
-  return parts.map((part) => part.trim());
-}
-
-/** Índice del delimitador que cierra el grupo que abre en `i`, o el final del texto. */
-function groupEnd(text, i) {
-  let depth = 0;
-  for (let j = i; j < text.length; j += 1) {
-    if (QUOTES.has(text[j])) j = quoteEnd(text, j);
-    else if (text[j] === '=' && text[j + 1] === '>') j += 1;
-    else if (OPEN[text[j]]) depth += 1;
-    else if (CLOSE.has(text[j])) {
-      depth -= 1;
-      if (depth === 0) return j;
-    }
-  }
-  return text.length;
-}
-
-/** Normaliza cada grupo entre paréntesis, genéricos, corchetes o llaves. */
-function normalizeGroups(text) {
-  let out = '';
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
-    if (QUOTES.has(char)) {
-      const end = quoteEnd(text, i);
-      out += text.slice(i, end + 1);
-      i = end;
-    } else if (char === '=' && text[i + 1] === '>') {
-      out += '=>';
-      i += 1;
-    } else if (OPEN[char]) {
-      const j = groupEnd(text, i);
-      // Cada elemento de la lista (`a: T`, `T`) se normaliza por separado.
-      const items = splitTop(text.slice(i + 1, j), [',', ';']).map((item) => {
-        const [key, ...rest] = splitTop(item, [':']);
-        // eslint-disable-next-line no-use-before-define
-        return rest.length ? `${key}: ${normalizeType(rest.join(': '))}` : normalizeType(item);
-      });
-      out += `${char}${items.join(char === '{' ? '; ' : ', ')}${OPEN[char]}`;
-      i = j;
-    } else {
-      out += char;
-    }
-  }
-  return out;
-}
-
-/** Tipo en texto con espacios colapsados y uniones e intersecciones ordenadas en todos los niveles. */
 export function normalizeType(text) {
-  const clean = collapseSpaces(text);
-  const [head, ...ret] = splitTop(clean, ['=>']);
-  if (ret.length) return `${normalizeGroups(head)} => ${normalizeType(ret.join(' => '))}`;
-  return splitTop(clean, ['|'])
-    .map((member) => splitTop(member, ['&']).map(normalizeGroups).sort().join(' & '))
-    .sort()
-    .join(' | ');
+  const source = ts.createSourceFile(
+    'type.ts',
+    `type T = ${text};`,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const [statement, ...rest] = source.statements;
+  const parsed = !source.parseDiagnostics.length && !rest.length
+    && ts.isTypeAliasDeclaration(statement);
+  if (!parsed) return text;
+  return printSorted(statement.type, source);
 }
 
 /** Crea un programa sobre el índice de los tipos publicados. */
@@ -257,7 +178,8 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
       if (!members.every((t) => t.flags & PRIMITIVE_OR_LITERAL)) return;
       const name = statement.name.text;
       const text = checker.typeToString(declared, undefined, ALIAS_FORMAT);
-      literalAliases.set(name, literalAliases.has(name) && literalAliases.get(name) !== text ? null : text);
+      const conflicting = literalAliases.has(name) && literalAliases.get(name) !== text;
+      literalAliases.set(name, conflicting ? null : text);
     }));
   const aliasReplacements = [...literalAliases].filter(([, text]) => text !== null);
 
