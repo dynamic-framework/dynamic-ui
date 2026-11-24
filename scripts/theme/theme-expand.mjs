@@ -55,6 +55,7 @@ import {
   colorAlpha,
   deriveRamp,
   formatRem,
+  holdsBareTriplet,
   inheritsParent,
   libraryWrapper,
   normalizeCssValue,
@@ -396,21 +397,34 @@ export function readTheme(theme) {
       );
     }
   };
-  for (const { name, value } of root) checkRefs(value, `root.${name}`);
+  // Misma regla que `triplete-sin-envolver` en theme-validate.
+  const checkUnwrapped = (name, value, where) => {
+    if (!name.startsWith('--bs-') || name.endsWith('-rgb') || !holdsBareTriplet(value)) return;
+    push(
+      `\`${where}\`: "${value}" deja un triplete en una variable de color. Las variables que `
+      + 'no terminan en -rgb se consumen como color completo; envuelve el triplete, '
+      + 'rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+    );
+  };
+  const checkVar = (name, value, where) => {
+    checkRefs(value, where);
+    checkUnwrapped(name, value, where);
+  };
+  for (const { name, value } of root) checkVar(name, value, `root.${name}`);
   for (const { selector, vars, declarations } of components) {
-    for (const { name, value } of vars) checkRefs(value, `components["${selector}"].${name}`);
+    for (const { name, value } of vars) checkVar(name, value, `components["${selector}"].${name}`);
     for (const { property, value } of declarations) {
       checkRefs(value, `components["${selector}"].${property}`);
     }
   }
   for (const zone of zones) {
-    for (const { name, value } of zone.vars) checkRefs(value, `zones.${zone.name}.${name}`);
+    for (const { name, value } of zone.vars) checkVar(name, value, `zones.${zone.name}.${name}`);
     for (const { name, value } of [...(zone.nav?.link ?? []), ...(zone.nav?.pills ?? [])]) {
-      checkRefs(value, `zones.${zone.name}.nav.${name}`);
+      checkVar(name, value, `zones.${zone.name}.nav.${name}`);
     }
     for (const { selector, vars, declarations } of zone.components) {
       for (const { name, value } of vars) {
-        checkRefs(value, `zones.${zone.name}.components["${selector}"].${name}`);
+        checkVar(name, value, `zones.${zone.name}.components["${selector}"].${name}`);
       }
       for (const { property, value } of declarations) {
         checkRefs(value, `zones.${zone.name}.components["${selector}"].${property}`);
