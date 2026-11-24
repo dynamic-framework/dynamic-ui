@@ -2312,6 +2312,7 @@ describe('triplete sin envolver en una variable de color (#1299)', () => {
       ['components', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb)' } }] }, 'components[".btn-primary"].--bs-btn-color'],
       ['root', { root: { '--bs-heading-color': 'var(--bs-gray-300-rgb)' } }, 'root.--bs-heading-color'],
       ['zones', { zones: { oscura: { vars: { '--bs-body-bg-rgb': 'var(--bs-dark-rgb)', '--bs-primary': '11, 107, 83' } } } }, 'zones.oscura.--bs-primary'],
+      ['components con !important', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb) !important' } }] }, 'components[".btn-primary"].--bs-btn-color'],
     ])('en %s', (_section, section, where) => {
       const result = expand({ ...MINIMAL_THEME, ...section });
       expect(result.status).toBe(1);
