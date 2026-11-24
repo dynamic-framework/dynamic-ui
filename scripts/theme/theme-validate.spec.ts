@@ -3081,6 +3081,39 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(result.status).toBe(0);
   });
 
+  it('la zona pegada al contenedor de un selector descendiente también cuenta', () => {
+    // `[data-bs-theme="oscura"].nav-pills .nav-link.active` pone la zona en el
+    // contenedor, no en el enlace. La capa del contenedor tiene que saberlo:
+    // su padre está fuera de la zona, así que un `inherit` sobre él toma el
+    // valor de fuera. El bloque `.nav-pills` va después del de la zona, así
+    // que gana sobre el mismo elemento y el `inherit` es el que manda.
+    // Chromium, con `<ul class="nav nav-pills" data-bs-theme="oscura">`:
+    // blanco sobre negro, 21:1. Mirando sólo si el selector tiene un único
+    // compuesto, la capa no se marcaba y el `inherit` caía al negro de la
+    // zona: un falso 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      '.nav-pills { --bs-white: inherit; }',
+      '',
+      '[data-bs-theme="oscura"].nav-pills .nav-link.active {',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
   it('ya no avisa `zona-pegada`', () => {
     // El aviso existía porque la forma pegada se medía como si la zona fuera
     // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.

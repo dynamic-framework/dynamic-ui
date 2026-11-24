@@ -989,18 +989,22 @@ export function buildContexts(blocks, root) {
     // librería y el theme ponen sobre el componente, en vez de heredarse ya
     // resuelto desde un ancestro.
     //
-    // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto, y
-    // eso no basta: en `[data-bs-theme="z"].sidebar .nav-pills` la zona está en
-    // la barra, que es ancestro de la pastilla, y lo que declara tiene que
-    // llegarle heredado. Que esté en el elemento de esta capa exige además que
-    // ese primer compuesto sea el único del selector.
+    // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto del
+    // selector. El elemento que lleva la zona es, por tanto, ese compuesto: hay
+    // que comprobarlo contra esta capa y no contra el selector entero.
+    //
+    //   [z].btn-primary                → la zona es el botón
+    //   [z].sidebar .nav-pills         → la zona es la barra, ancestro de la
+    //                                    pastilla: a ella le llega heredado
+    //   [z].nav-pills .nav-link.active → la zona es el contenedor; la capa del
+    //                                    enlace sí la tiene como ancestro
     let attached = false;
     for (const block of blocks) {
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare, sameElement } = splitZone(alternative);
         if (!sameElement || altZone !== zone) continue;
-        if (splitCompounds(bare).length !== 1) continue;
-        if (wanted.has(normalizeSelector(bare))) attached = true;
+        const [first] = splitCompounds(bare);
+        if (wanted.has(normalizeSelector(first))) attached = true;
       }
     }
 
