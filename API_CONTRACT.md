@@ -77,7 +77,10 @@ field points to the repository root instead of the release tag and
 
 ### `components[name]`
 
-Each component entry is an object with the following shape:
+`components` has one entry per component the package exports: every
+capitalized, callable export, including the ones that do not start with `D`
+(`EmptyState`, `ErrorState`, `LoadingState`). Each component entry is an object
+with the following shape:
 
 ```jsonc
 {
@@ -163,6 +166,11 @@ Project type aliases referenced by the props:
 - Types from libraries (`ReactNode`, `CSSProperties`, …) keep their name and
   are not defined.
 
+Apart from that expansion and the order of union members, `type` is the type
+of the prop in the published `.d.ts`: intersections stay intersections
+(`DButtonIcon.onClick`) and type parameters keep their name
+(`DSelect.multi` is `IsMulti | undefined`). `validate:registry` checks it.
+
 ```jsonc
 {
   "DStepper": {
@@ -245,8 +253,8 @@ of `parameters`/`returns`:
     "description": "Root context provider for Dynamic UI.",
     "signature": "DContextProvider<T>({ language?, currency?, ... }) => JSX.Element",
     "props": {
-      "language": { "type": "string", "required": false, "description": "" },
-      "currency": { "type": "string", "required": false, "description": "" }
+      "language": { "type": "string | undefined", "required": false, "description": "" },
+      "currency": { "type": "CurrencyProps | undefined", "required": false, "description": "" }
     },
     "requires": [],
     "types": {}

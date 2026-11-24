@@ -468,7 +468,9 @@ function contextEntry(node, sourceFile, relPath) {
       doc.props[prop.name] = {
         description: [deprecated, symbolDoc].filter(Boolean).join('\n'),
         required: !isOptional,
-        ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
+        // Como en `components`: el texto del checker, con `| undefined` (#1351).
+        type: checker.typeToString(propType, undefined, ts.TypeFormatFlags.NoTruncation)
+          .replace(/import\("[^"]*"\)\./g, ''),
       };
     });
   }
@@ -549,8 +551,9 @@ CONTEXT_FILES.forEach((relPath) => {
 const COMPONENTS_DIR = resolve(ROOT, 'src/components');
 
 /**
- * Archivos de los componentes que exporta `src/index.ts`: cada export `D*`
- * resuelto con el type checker hasta el archivo que lo declara. Solo cuentan
+ * Archivos de los componentes que exporta `src/index.ts`: cada export en
+ * mayúscula e invocable (`D*`, `EmptyState`…) resuelto con el type checker
+ * hasta el archivo que lo declara. Solo cuentan
  * los declarados en `src/components/`; los de `src/contexts/` van en
  * `contexts`. Como con los hooks, la lista sale del índice y no de las
  * carpetas: un componente que vive en un archivo con otro nombre que su
@@ -560,12 +563,13 @@ function exportedComponentFiles() {
   const indexFile = program.getSourceFile(INDEX_PATH);
   const moduleSymbol = checker.getSymbolAtLocation(indexFile);
   const files = checker.getExportsOfModule(moduleSymbol)
-    .filter((symbol) => /^D[A-Z]/.test(symbol.name))
+    .filter((symbol) => /^[A-Z]/.test(symbol.name))
     .map((symbol) => {
       // eslint-disable-next-line no-bitwise
       const target = symbol.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(symbol) : symbol;
       // eslint-disable-next-line no-bitwise
       if (!(target.flags & ts.SymbolFlags.Value)) return null;
+      if (!checker.getTypeOfSymbol(target).getCallSignatures().length) return null;
       const declaration = target.valueDeclaration ?? target.declarations?.[0];
       // El checker usa `/` en todas las plataformas: `resolve` lo pasa al
       // separador del sistema, el mismo que usan COMPONENTS_DIR y
