@@ -15,7 +15,9 @@ the release publishes the package to npm, the CDN and Storybook.
    merge commit (the `master` ruleset allows nothing else). The release notes
    list the PRs whose commits are between the previous tag and this one; a
    squash would leave only this PR. This PR gets the `skip-changelog` label and
-   is not listed. PRs to `develop` are squashed (its ruleset allows only that).
+   is not listed. Its required check is the browser a11y suite
+   (`a11y-browser.yml`), which runs only on PRs to `master`. PRs to `develop`
+   are squashed (its ruleset allows only that).
 3. **Draft.** The push to `master` runs the `Draft release` job: it creates the
    draft `vX.Y.Z` on that commit, with notes generated from the PRs and the
    `npm diff` command for the compiled CSS. A new push regenerates the notes

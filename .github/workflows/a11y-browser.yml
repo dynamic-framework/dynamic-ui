@@ -4,9 +4,9 @@ on:
   pull_request:
     # Sin edited: cambiar título o descripción no cambia el código.
     types: [opened, reopened, synchronize]
+    # Solo antes de una release: es el check requerido de master.
     branches:
       - master
-      - develop
 
 jobs:
   a11y-browser:
