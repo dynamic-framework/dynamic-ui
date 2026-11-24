@@ -1,0 +1,31 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    # Sin target-branch: los PRs van a la rama por defecto (develop), y con
+    # target-branch esta entrada dejaría de aplicar a los security updates.
+    schedule:
+      interval: "weekly"
+    # Solo security updates: los version updates quedan apagados (no cuentan para este límite).
+    open-pull-requests-limit: 0
+    # chore(deps) y chore(deps-dev), que pasan commitlint.
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      npm-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(ci)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

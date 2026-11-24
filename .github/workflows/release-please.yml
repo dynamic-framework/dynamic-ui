@@ -1,78 +1,69 @@
+# El nombre del archivo se mantiene: el trusted publisher de npm (OIDC) está
+# configurado para este workflow. Renombrarlo rompe la publicación.
 name: Release
 
 on:
   push:
     branches:
       - master
+  release:
+    types: [published]
 
 permissions:
-  id-token: write
-  contents: write
-  packages: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  release-please:
-    name: Version and Release
+  draft:
+    name: Draft release
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: release-draft
+      cancel-in-progress: true
     steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-          release-type: node
-          target-branch: master
-          config-file: release-please-config.json
-
       - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.release_created }}
 
-      - name: Setup Node.js
-        if: ${{ steps.release.outputs.release_created }}
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: https://registry.npmjs.org/
-          scope: '@dynamic-framework'
+      - name: Get package version
+        id: version
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
 
-      - name: Update npm
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm install -g npm@11.5.1
-
-      - name: Install dependencies
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm ci
-
-      - name: Ensure Rollup binary
-        if: ${{ steps.release.outputs.release_created }}
-        run: |
-          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
-            echo "Installing missing Rollup Linux binary..."
-            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
-          fi
-
-      - name: Build packages
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm run build
-
-      - name: Publish to NPM
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm publish --access public
+      - name: Create draft release
+        id: draft
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: v${{ steps.version.outputs.version }}
+        run: |
+          STATE=$(gh release view "$TAG" --json isDraft --jq '.isDraft' 2>/dev/null || echo "")
+          if [ "$STATE" = "false" ]; then
+            echo "$TAG ya está publicado: no se crea draft."
+            echo "created=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$STATE" = "true" ]; then
+            gh release delete "$TAG" --yes
+          fi
+          # --target: la rama por defecto es develop; el tag tiene que quedar en master.
+          gh release create "$TAG" \
+            --draft \
+            --generate-notes \
+            --title "$TAG" \
+            --target "$GITHUB_SHA"
+          echo "created=true" >> "$GITHUB_OUTPUT"
 
       - name: Append CSS diff command to release notes
-        if: ${{ steps.release.outputs.release_created }}
-        # Informativo: el release y la publicación en npm ya están hechos; si falla, no marca el workflow como fallido.
+        if: steps.draft.outputs.created == 'true'
+        # Informativo: si falla, el draft queda igual y el job no falla.
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          TAG: ${{ steps.release.outputs.tag_name }}
-          VERSION: ${{ steps.release.outputs.version }}
+          TAG: v${{ steps.version.outputs.version }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           # Versión estable inmediatamente menor por semver entre las publicadas en npm (en un backport no es el latest).
-          # Se agrega $VERSION a mano por si el registry todavía no la refleja justo después del publish.
           PREV=$({ npm view @dynamic-framework/ui-react versions --json | jq -r '.[] | select(test("-") | not)'; echo "$VERSION"; } \
             | sort -uV | grep -x -B1 "$VERSION" | head -n -1)
           if [ -z "$PREV" ]; then
@@ -91,3 +82,51 @@ jobs:
           \`\`\`
           EOF
           gh release edit "$TAG" --notes-file /tmp/release-notes.md
+
+  publish:
+    name: Publish to npm
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: https://registry.npmjs.org/
+          scope: '@dynamic-framework'
+
+      - name: Update npm
+        # OIDC requiere npm >= 11.5.1.
+        run: npm install -g npm@11.5.1
+
+      - name: Check release tag matches package version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          VERSION=$(jq -r .version package.json)
+          if [ "${TAG#v}" != "$VERSION" ]; then
+            echo "::error::El tag $TAG no coincide con package.json ($VERSION)."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ensure Rollup binary
+        run: |
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Publish to npm
+        # Sin NODE_AUTH_TOKEN: autentica por OIDC (trusted publisher).
+        run: npm publish --access public

@@ -46,7 +46,7 @@ jobs:
           ' "$RUNNER_TEMP/pack.json"
       - name: Check known-tokens.json
         # theme-expand y theme-validate leen este inventario: tiene que tener los
-        # mismos tokens que el CSS que acaba de compilarse. No compara la versión.
+        # mismos tokens y la misma versión que el CSS que acaba de compilarse.
         run: node scripts/theme/build-known-tokens.mjs --check
       - name: Check compiled CSS custom properties
         # Nombres mal formados (--bs-bs-, --bs---) que Sass interpola sin

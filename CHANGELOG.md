@@ -1,5 +1,9 @@
 # Change Log
 
+> Starting with 2.13.0, release notes are published in
+> [GitHub Releases](https://github.com/dynamic-framework/dynamic-ui/releases).
+> This file is no longer updated.
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

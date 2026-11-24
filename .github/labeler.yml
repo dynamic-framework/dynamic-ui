@@ -6,3 +6,5 @@ fix: 'fix/*'
 refactor: 'refactor/*'
 style: 'style/*'
 test: 'test/*'
+# El PR develop → master no es un cambio: se excluye de las notas (.github/release.yml).
+skip-changelog: 'develop'

@@ -80,7 +80,7 @@
     "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint '**/*.css' '**/*.scss' --rd",
     "stylelint:compat": "stylelint dist/css/dynamic-ui.min.css --config .stylelintrc.compat.json --ignore-path .stylelintignore.compat",
-    "postversion": "npm run build:scss",
+    "postversion": "npm run build:scss && npm run build:known-tokens",
     "prepack": "npm run build:known-tokens",
     "publish:cdn": "npm run publish:cdn-version && npm run publish:cdn-latest",
     "publish:cdn-version": "node scripts/publish-cdn.js",

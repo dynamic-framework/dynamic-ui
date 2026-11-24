@@ -154,7 +154,7 @@ a human to judge.
 
 - **`dynamicUi`** = the library version, **read live from `package.json`**
   (data-driven, never hardcoded). Today `2.5.2`; it becomes `2.6.0` when
-  release-please bumps the version.
+  the release PR bumps the version.
 - **Schema versioning (values vs. shape):** a rebrand changes *values* → it does
   **not** bump the schema (`token-overrides.v1.json` stays valid). Only bump to
   `token-overrides.v2.json` when the document **shape** changes (add/remove/retype
