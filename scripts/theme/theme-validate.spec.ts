@@ -3252,6 +3252,38 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(result.status).toBe(0);
   });
 
+  it('la zona pegada a un HERMANO del contenedor no le pasa nada', () => {
+    // En `[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active` la
+    // zona está en la primera lista; la que se mide es la segunda, detrás de
+    // un `+`. Entre hermanos no se heredan las custom properties, así que el
+    // fondo negro de la zona nunca llega: la pastilla se queda con el gris que
+    // la librería pone en `.nav-pills`.
+    // Chromium: blanco sobre gris claro, 1.14:1.
+    // Mirando sólo si el primer compuesto está en la capa, el `.nav-pills` de
+    // la izquierda casaba con el alias de la capa y el fondo negro se daba por
+    // bueno: 21:1 y ningún hallazgo sobre una pastilla ilegible.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      `[data-bs-theme="oscura"] { ${ACTIVE_BG}: rgb(0, 0, 0); }`,
+      '',
+      '[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active {',
+      `  ${ACTIVE_COLOR}: rgb(255, 255, 255);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.14:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
   it('ya no avisa `zona-pegada`', () => {
     // El aviso existía porque la forma pegada se medía como si la zona fuera
     // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.

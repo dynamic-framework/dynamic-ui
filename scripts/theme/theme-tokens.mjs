@@ -1012,21 +1012,36 @@ export function buildContexts(blocks, root) {
     // resuelto desde un ancestro.
     //
     // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto del
-    // selector. El elemento que lleva la zona es, por tanto, ese compuesto: hay
-    // que comprobarlo contra esta capa y no contra el selector entero.
+    // selector. El elemento que lleva la zona es ese compuesto, y hay que
+    // comprobar que sea el de ESTA capa:
     //
-    //   [z].btn-primary                → la zona es el botón
-    //   [z].sidebar .nav-pills         → la zona es la barra, ancestro de la
-    //                                    pastilla: a ella le llega heredado
-    //   [z].nav-pills .nav-link.active → la zona es el contenedor; la capa del
-    //                                    enlace sí la tiene como ancestro
+    //   [z].btn-primary                      → la zona es el botón
+    //   [z].sidebar .nav-pills               → la zona es la barra, ancestro
+    //                                          de la pastilla: le llega heredado
+    //   [z].nav-pills .nav-link.active       → la zona es el contenedor
+    //   [z].nav-pills + .nav-pills .nav-link → la zona es el HERMANO del
+    //                                          contenedor, y entre hermanos no
+    //                                          se hereda nada
+    //
+    // No basta con mirar si el primer compuesto está en `wanted`: la capa
+    // reconoce también el alias suelto (`.nav-pills`), que casa con cualquier
+    // posición del selector. Lo que identifica al elemento de la capa es su
+    // ruta cualificada, el prefijo MÁS LARGO de `bare` que la capa reconoce
+    // (`.nav-pills + .nav-pills`). La zona está en este elemento sólo si esa
+    // ruta es exactamente el primer compuesto.
+    const zoneIsThisElement = (bare) => {
+      const pieces = splitCompounds(normalizeSelector(bare));
+      for (let k = (pieces.length - 1) / 2; k >= 0; k -= 1) {
+        if (wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) return k === 0;
+      }
+      return false;
+    };
     let attached = false;
     for (const block of blocks) {
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare, sameElement } = splitZone(alternative);
         if (!sameElement || altZone !== zone) continue;
-        const [first] = splitCompounds(bare);
-        if (wanted.has(normalizeSelector(first))) attached = true;
+        if (zoneIsThisElement(bare)) attached = true;
       }
     }
 
