@@ -11,10 +11,11 @@ the release publishes the package to npm, the CDN and Storybook.
    `scripts/theme/known-tokens.json`, which carries the version too. Commit
    `package.json`, `package-lock.json` and `scripts/theme/known-tokens.json`
    with the title `chore(release): X.Y.Z`.
-2. **PR `develop` → `master`**, titled `chore(release): X.Y.Z`. Merge it with
-   **Create a merge commit**, not squash: the release notes list the PRs whose
-   commits are between the previous tag and this one, and a squash leaves only
-   this PR. This PR gets the `skip-changelog` label and is not listed.
+2. **PR `develop` → `master`**, titled `chore(release): X.Y.Z`, merged with a
+   merge commit (the `master` ruleset allows nothing else). The release notes
+   list the PRs whose commits are between the previous tag and this one; a
+   squash would leave only this PR. This PR gets the `skip-changelog` label and
+   is not listed. PRs to `develop` are squashed (its ruleset allows only that).
 3. **Draft.** The push to `master` runs the `Draft release` job: it creates the
    draft `vX.Y.Z` on that commit, with notes generated from the PRs and the
    `npm diff` command for the compiled CSS. A new push recreates the draft; a
