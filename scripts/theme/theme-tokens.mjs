@@ -966,11 +966,33 @@ export function splitZone(prelude) {
 export function buildContexts(blocks, root) {
   const inRoot = (name) => resolve(name, root);
   const zones = new Map();
+  const touch = (name, line) => {
+    if (!zones.has(name)) zones.set(name, { zone: name, own: new Map(), line });
+    return zones.get(name);
+  };
   for (const block of blocks) {
+    // Una zona existe en cuanto un selector la nombra, aunque el theme no le dé
+    // un bloque propio: `[data-bs-theme="z"] .list-group` ya crea el contexto
+    // en el que se mide esa lista. Sin esto, una hoja que sólo lleva bloques de
+    // componente dentro de la zona no se medía en ninguna parte.
+    for (const alternative of splitSelectorList(block.prelude)) {
+      const { zone, bare } = splitZone(alternative);
+      // `dynamic` tampoco es una zona: es el alias del raíz de Dynamic.
+      if (!zone || zone === 'dynamic') continue;
+      // En un bloque raíz, el selector de zona a secas es otro nombre para el
+      // raíz y sus declaraciones ya están en `root`: así emite Bootstrap el
+      // modo claro (`:root, [data-bs-theme="light"]`). Lo delata no tener
+      // parte de componente. Una alternativa que sí la tiene nombra una zona
+      // de verdad, aunque la lista lleve `:root` delante.
+      if (block.isRoot && bare === '') continue;
+      touch(zone, block.line);
+    }
+    // Sólo el bloque de la zona declara sobre el elemento que la lleva. Lo que
+    // declara un bloque de componente cae sobre el componente, y de eso se
+    // encarga `layerFor`.
     if (!block.zone) continue;
-    const zone = zones.get(block.zone) ?? { zone: block.zone, own: new Map(), line: block.line };
+    const zone = touch(block.zone, block.line);
     for (const [name, entry] of block.decls) cascadeSet(zone.own, name, entry);
-    zones.set(block.zone, zone);
   }
 
   /**

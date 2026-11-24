@@ -461,6 +461,12 @@ resuelve el navegador:
 
 - Varias reglas `[data-bs-theme="<zona>"]` se aplican juntas: sus declaraciones
   se funden en orden de aparición antes de medir.
+- Una zona existe en cuanto un selector la nombra, con bloque propio o sin él:
+  una hoja que sólo lleva `[data-bs-theme="<zona>"] .list-group` se mide dentro
+  de esa zona. Lo que declara un bloque de componente sigue siendo del
+  componente, no de la zona. `:root, [data-bs-theme="<nombre>"]` no cuenta: ahí
+  el segundo selector es otro nombre para el raíz, que es como Bootstrap emite
+  el modo claro, y sus declaraciones ya están en el raíz.
 - Una custom property se resuelve donde se declara y se hereda ya calculada. Lo
   que la zona no declara vale dentro de ella lo mismo que en el raíz, aunque la
   zona cambie el token al que apunta. Eso incluye los wrappers de la librería:
