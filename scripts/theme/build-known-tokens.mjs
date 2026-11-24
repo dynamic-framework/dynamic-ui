@@ -37,7 +37,7 @@ function main(argv) {
     return 2;
   }
 
-  const version = css.match(/dynamic-framework\s+([\d.]+)/)?.[1] ?? null;
+  const version = css.match(/dynamic-framework\s+(\d+\.\d+\.\d+[\w.+-]*)/)?.[1] ?? null;
   if (!version) {
     process.stderr.write(`${source} no lleva la cabecera de versión de Dynamic UI.\n`);
     return 2;

@@ -42,15 +42,19 @@ jobs:
             echo "created=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          if [ "$STATE" = "true" ]; then
-            gh release delete "$TAG" --yes
-          fi
           # --target: la rama por defecto es develop; el tag tiene que quedar en master.
-          gh release create "$TAG" \
-            --draft \
-            --generate-notes \
-            --title "$TAG" \
-            --target "$GITHUB_SHA"
+          if [ "$STATE" = "true" ]; then
+            # Se edita en vez de borrar: si alguien lo publicó recién, no se pierde.
+            NOTES=$(gh api "repos/$GH_REPO/releases/generate-notes" \
+              -f tag_name="$TAG" -f target_commitish="$GITHUB_SHA" --jq .body)
+            gh release edit "$TAG" --target "$GITHUB_SHA" --notes "$NOTES"
+          else
+            gh release create "$TAG" \
+              --draft \
+              --generate-notes \
+              --title "$TAG" \
+              --target "$GITHUB_SHA"
+          fi
           echo "created=true" >> "$GITHUB_OUTPUT"
 
       - name: Append CSS diff command to release notes

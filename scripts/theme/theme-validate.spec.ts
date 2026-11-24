@@ -4663,6 +4663,12 @@ describe('known-tokens.json al día con el CSS compilado (#1311)', () => {
       expect(result.stderr).toContain(`  versión: ${versionedVersion()} en el JSON, 9.9.9 en el CSS\n`);
     });
 
+    it('sale con 1 si el CSS es una prerelease de la misma versión', () => {
+      const result = run(BUILD, ['--check', cssWith(versioned(), `${versionedVersion()}-rc.1`)]);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(`en el JSON, ${versionedVersion()}-rc.1 en el CSS\n`);
+    });
+
     it('sale con 1 y lista lo que entra y lo que sale', () => {
       const [first, ...rest] = versioned();
       const result = run(BUILD, ['--check', cssWith([...rest, '--bs-token-nuevo'])]);

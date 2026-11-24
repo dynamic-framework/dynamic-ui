@@ -18,7 +18,8 @@ the release publishes the package to npm, the CDN and Storybook.
    is not listed. PRs to `develop` are squashed (its ruleset allows only that).
 3. **Draft.** The push to `master` runs the `Draft release` job: it creates the
    draft `vX.Y.Z` on that commit, with notes generated from the PRs and the
-   `npm diff` command for the compiled CSS. A new push recreates the draft; a
+   `npm diff` command for the compiled CSS. A new push regenerates the notes
+   and target of the existing draft (manual edits to the notes are lost); a
    version already published is left as is.
 4. **Publish.** Review and edit the notes, then publish the draft. That runs:
    - `Publish to npm` (same workflow), with OIDC and provenance;
