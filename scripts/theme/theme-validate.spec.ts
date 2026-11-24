@@ -2204,6 +2204,144 @@ describe('theme-validate — el triplete está acotado', () => {
   });
 });
 
+describe('triplete sin envolver en una variable de color (#1299)', () => {
+  /** El CSS mínimo que el validador acepta, más un bloque propio. */
+  const conBloque = (selector: string, decls: Record<string, string>) => {
+    const body = Object.entries(decls).map(([name, value]) => `  ${name}: ${value};`).join('\n');
+    return `${expandCss(MINIMAL_THEME)}\n${selector} {\n${body}\n}\n`;
+  };
+  const contrastes = (result: Run) => findings(result).filter((f) => / contraste-/.test(f));
+
+  it('rechaza el caso grave de la issue y no mide el par: el navegador no lo pinta', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': 'var(--bs-white-rgb)',
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary": "var\(--bs-white-rgb\)"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it('no mide con el triplete un par que nunca se pinta', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': 'var(--bs-gray-25-rgb)',
+      '--bs-btn-bg': 'rgb(var(--bs-gray-50-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it.each([
+    '255, 255, 255',
+    'var(--bs-nope, var(--bs-white-rgb))',
+    'var(--bs-nope, 255, 255, 255)',
+    'var(--bs-white, var(--bs-white-rgb))',
+  ])('rechaza %s, directo o por el respaldo de var()', (value) => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': value,
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(/^error triplete-sin-envolver: --bs-btn-color /));
+  });
+
+  it.each([
+    'rgb(var(--bs-white-rgb))',
+    'var(--bs-white)',
+    'rgb(var(--bs-white-rgb, 0, 0, 0))',
+    'rgba(var(--bs-white-rgb), .9)',
+  ])('acepta %s', (value) => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': value,
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('acepta un triplete en una variable -rgb', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-focus-shadow-rgb': 'var(--bs-white-rgb)',
+    }));
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('rechaza el triplete en un componente dentro de una zona y nombra el selector', () => {
+    const result = validateStrict(conBloque('[data-bs-theme="oscura"] .btn-primary', {
+      '--bs-btn-color': 'var(--bs-white-rgb)',
+    }));
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\[data-bs-theme="oscura"\] \.btn-primary"/,
+    ));
+  });
+
+  it('rechaza un wrapper con triplete dentro de una zona', () => {
+    const result = validateStrict(conBloque('[data-bs-theme="oscura"]', {
+      '--bs-primary-rgb': '168, 68, 63',
+      '--bs-primary': '168, 68, 63',
+    }));
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-primary en "\[data-bs-theme="oscura"\]"/,
+    ));
+  });
+
+  it('un wrapper con triplete en el raíz lo explica la regla wrapper, sin repetirlo', () => {
+    const css = expandCss(MINIMAL_THEME)
+      .replace('--bs-primary-rgb: 11, 107, 83;', '--bs-primary-rgb: 11, 107, 83;\n  --bs-primary: 11, 107, 83;');
+    const result = validateStrict(css);
+    expect(result.stderr).toContain('[wrapper]');
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('un token del raíz con triplete tampoco se mide en el par horneado que lo lee', () => {
+    const css = expandCss(MINIMAL_THEME)
+      .replace('--bs-primary-rgb: 11, 107, 83;', '--bs-primary-rgb: 11, 107, 83;\n  --bs-btn-primary-color: var(--bs-white-rgb);');
+    const result = validateStrict(css);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-primary-color: "var\(--bs-white-rgb\)"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it.each([
+    '@media (min-width: 1200px)',
+    '@media (prefers-color-scheme: dark)',
+  ])('rechaza el triplete dentro de %s', (media) => {
+    const css = `${expandCss(MINIMAL_THEME)}\n${media} {\n  .btn-primary { --bs-btn-color: var(--bs-white-rgb); }\n}\n`;
+    const result = validateStrict(css);
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary"/,
+    ));
+  });
+
+  it('rechaza un wrapper con triplete del raíz dentro de @media', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n@media (min-width: 1200px) {\n  :root { --bs-primary: 11, 107, 83; }\n}\n`;
+    expect(findings(validateStrict(css))).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-primary: "11, 107, 83"/,
+    ));
+  });
+
+  describe('theme-expand lo rechaza al generar', () => {
+    it.each([
+      ['components', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb)' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+      ['root', { root: { '--bs-heading-color': 'var(--bs-gray-300-rgb)' } }, 'root.--bs-heading-color'],
+      ['zones', { zones: { oscura: { vars: { '--bs-body-bg-rgb': 'var(--bs-dark-rgb)', '--bs-primary': '11, 107, 83' } } } }, 'zones.oscura.--bs-primary'],
+      ['components con !important', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb) !important' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+      ['components con comentario', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(/**/--bs-white-rgb) /* x */' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+    ])('en %s', (_section, section, where) => {
+      const result = expand({ ...MINIMAL_THEME, ...section });
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(`\`${where}\``);
+      expect(result.stderr).toContain('deja un triplete en una variable de color');
+    });
+  });
+});
+
 describe('theme-expand — body.borderColor conserva el alfa', () => {
   const conBorde = (borderColor: unknown) => (
     { ...MINIMAL_THEME, body: { ...MINIMAL_THEME.body, borderColor } }
@@ -2964,6 +3102,166 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       ]);
       expect(roto.status).toBe(1);
     });
+  });
+});
+
+describe('theme-validate — una hoja de sólo zonas', () => {
+  // Quien mantiene un theme puede querer añadir una zona en un archivo aparte,
+  // sin repetir el bloque raíz. Antes eso daba `vacio` y salida 1, y la única
+  // forma de validarlo era añadirle un :root de relleno.
+  const ZONA = [
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 33, 41, 51;',
+    '  --bs-body-color-rgb: 255, 255, 255;',
+    '}',
+  ].join('\n');
+
+  it('no es `vacio`: se mide contra los valores por defecto de la librería', () => {
+    const result = validateStrict(ZONA);
+
+    expect(result.stderr).not.toContain('[vacio]');
+    // Los hallazgos son los de la zona, no los de un archivo que no se pudo
+    // leer: un fondo casi negro bajo el texto gray-900 que la lista hereda.
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="oscura"\]": 1\.24:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="oscura"\]": 1\.24:1/),
+    ]);
+    expect(missingWrappers(result)).toEqual(['--bs-body-bg-rgb', '--bs-body-color-rgb']);
+  });
+
+  it('mide igual que la misma zona dentro de un theme con raíz', () => {
+    // El raíz declara algo que no toca ninguna de las variables de la zona, así
+    // que las dos hojas tienen que medirse contra los mismos valores por
+    // defecto. Si la hoja suelta midiera otra cosa, el arreglo sería un atajo.
+    const conRaiz = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-ref-spacer-1: .25rem;',
+      '}',
+      '',
+      ZONA,
+    ].join('\n');
+
+    const sola = validateStrict(ZONA);
+    const completo = validateStrict(conRaiz);
+
+    expect(findings(sola)).toEqual(findings(completo));
+    expect(missingWrappers(sola)).toEqual(missingWrappers(completo));
+    expect(sola.status).toBe(completo.status);
+  });
+
+  it('pasa --strict con salida 0 cuando la zona está bien escrita', () => {
+    const result = validateStrict([
+      '[data-bs-theme="oscura"] {',
+      '  --bs-body-bg-rgb: 33, 41, 51;',
+      '  --bs-body-bg: rgb(33, 41, 51);',
+      '  --bs-body-color-rgb: 255, 255, 255;',
+      '  --bs-body-color: rgb(255, 255, 255);',
+      '  color: var(--bs-body-color);',
+      '  background-color: var(--bs-body-bg);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] .list-group {',
+      '  --bs-list-group-color: rgb(var(--bs-body-color-rgb));',
+      '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));',
+      '}',
+    ].join('\n'));
+
+    expect(findings(result)).toEqual([]);
+    expect(missingWrappers(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  describe('`vacio` sigue siendo el CSS que no declara ninguna --bs-*', () => {
+    it.each([
+      ['un archivo vacío', ''],
+      ['un CSS sin custom properties', '.card { color: red; }'],
+      ['una zona sin custom properties', '[data-bs-theme="oscura"] { color: red; }'],
+      ['sólo custom properties que no son --bs-*', ':root { --mi-marca: #0b6b53; }'],
+    ])('%s', (_, css) => {
+      const result = validateStrict(css);
+
+      expect(result.stderr).toContain('[vacio]');
+      expect(result.status).toBe(1);
+    });
+  });
+});
+
+describe('theme-validate — una zona sin bloque propio', () => {
+  // Una zona existe en cuanto un selector la nombra. Antes el contexto sólo se
+  // creaba desde un bloque de zona pelado, así que una hoja con únicamente
+  // bloques de componente dentro de la zona no se medía en ninguna parte: cero
+  // hallazgos sobre un CSS roto, que es peor que un falso positivo.
+  const WHITE = 'rgb(var(--bs-white-rgb))';
+  const WHITE_ON_WHITE = {
+    '--bs-list-group-color': WHITE,
+    '--bs-list-group-action-color': WHITE,
+    '--bs-list-group-bg': WHITE,
+  };
+
+  it('mide el componente aunque la zona no tenga bloque propio', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+    });
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('mide igual si la zona sí tiene bloque propio', () => {
+    // El bloque de zona no toca nada de la lista, así que el veredicto sobre el
+    // componente tiene que ser el mismo con él y sin él.
+    const withZoneBlock = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+      zones: { clara: { vars: { '--bs-heading-color': 'rgb(var(--bs-black-rgb))' } } },
+    }));
+    const withoutZoneBlock = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="clara"] .list-group', vars: WHITE_ON_WHITE }],
+    }));
+
+    expect(findings(withoutZoneBlock)).toEqual(findings(withZoneBlock));
+    expect(withoutZoneBlock.status).toBe(withZoneBlock.status);
+  });
+
+  it('mide el componente aunque la lista lleve `:root` delante', () => {
+    // La excepción del alias del raíz no puede llevarse por delante la
+    // alternativa de componente que va en la misma lista.
+    const css = `${expandCss(MINIMAL_THEME)}\n:root,\n[data-bs-theme="clara"] .list-group {\n`
+      + `  --bs-list-group-color: ${WHITE};\n`
+      + `  --bs-list-group-action-color: ${WHITE};\n`
+      + `  --bs-list-group-bg: ${WHITE};\n}\n`;
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('`:root, [data-bs-theme="light"]` no es una zona, es el alias del raíz', () => {
+    // La forma con la que Bootstrap emite el modo claro en el CSS compilado.
+    // Tomarla por zona duplica cada hallazgo del raíz dentro de ella, así que
+    // el theme tiene que traer uno: con un theme limpio la confusión no se
+    // nota y el caso no mordería.
+    const css = `${expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '.list-group', vars: WHITE_ON_WHITE }],
+    })}\n:root,\n[data-bs-theme="light"] {\n  --bs-heading-color: rgb(var(--bs-black-rgb));\n}\n`;
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item": 1\.00:1/),
+      expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action": 1\.00:1/),
+    ]);
+    expect(result.stderr).not.toContain('[data-bs-theme="light"]');
   });
 });
 
