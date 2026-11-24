@@ -480,9 +480,13 @@ resuelve el navegador:
   `[data-bs-theme="x"]` es un atributo, así que pesa como una clase y, a igual
   peso, gana el que vaya después (el theme, que carga tras la librería). Y el
   **padre del componente queda fuera de la zona**, así que un `inherit` sobre él
-  toma el valor de fuera. Si el theme usa las dos formas sobre el mismo
-  componente (`[data-bs-theme="x"] .a` y `[data-bs-theme="x"].a`), son dos
-  elementos distintos y el validador mide uno: el de la zona pegada.
+  toma el valor de fuera. Esto vale sólo cuando el prefijo va pegado al
+  componente y nada más: en `[data-bs-theme="x"].sidebar .nav-pills` la zona
+  está en la barra, que es un ancestro de la pastilla, así que lo que declara
+  le llega heredado y pierde contra lo que la librería declara sobre
+  `.nav-pills`. Si el theme usa las dos formas sobre el mismo componente
+  (`[data-bs-theme="x"] .a` y `[data-bs-theme="x"].a`), son dos elementos
+  distintos y el validador mide uno: el de la zona pegada.
 
 El validador no ve el HTML: no sabe qué elementos casan con un selector. Un
 bloque se aplica a un componente cuando su selector, sin el prefijo de zona, es

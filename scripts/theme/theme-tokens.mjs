@@ -988,11 +988,19 @@ export function buildContexts(blocks, root) {
     // que la zona declara cae aquí y compite en la cascada con lo que la
     // librería y el theme ponen sobre el componente, en vez de heredarse ya
     // resuelto desde un ancestro.
+    //
+    // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto, y
+    // eso no basta: en `[data-bs-theme="z"].sidebar .nav-pills` la zona está en
+    // la barra, que es ancestro de la pastilla, y lo que declara tiene que
+    // llegarle heredado. Que esté en el elemento de esta capa exige además que
+    // ese primer compuesto sea el único del selector.
     let attached = false;
     for (const block of blocks) {
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare, sameElement } = splitZone(alternative);
-        if (sameElement && altZone === zone && wanted.has(normalizeSelector(bare))) attached = true;
+        if (!sameElement || altZone !== zone) continue;
+        if (splitCompounds(bare).length !== 1) continue;
+        if (wanted.has(normalizeSelector(bare))) attached = true;
       }
     }
 

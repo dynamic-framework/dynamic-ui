@@ -3044,6 +3044,43 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(result.status).toBe(0);
   });
 
+  it('la zona pegada a un ANCESTRO no se mide como si estuviera en el componente', () => {
+    // `[data-bs-theme="oscura"].sidebar .nav-pills` pone la zona en la barra,
+    // no en la pastilla. Lo que la zona declara tiene que llegarle heredado, y
+    // perder contra el `--bs-nav-pills-link-active-bg` que la librería declara
+    // sobre `.nav-pills`. Fundirlo en la capa de la pastilla daba por bueno un
+    // fondo negro que el navegador no pinta.
+    // Chromium, bajo `<div class="sidebar" data-bs-theme="oscura">`: 1.14:1,
+    // blanco sobre el gris claro de la librería.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '[data-bs-theme="oscura"].sidebar .nav-pills',
+        vars: { [ACTIVE_COLOR]: WHITE },
+      }],
+      zones: { oscura: { vars: { [ACTIVE_BG]: BLACK } } },
+    }));
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.14:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('y la pegada al propio componente se sigue midiendo como pegada', () => {
+    // El contrapunto del caso anterior: un solo compuesto, así que la zona sí
+    // está en el botón. Si esto dejara de medirse como pegada, volvería el
+    // falso 3.24:1 de #1301.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': BLACK } }],
+      zones: { oscura: { vars: { '--bs-btn-bg': WHITE } } },
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
   it('ya no avisa `zona-pegada`', () => {
     // El aviso existía porque la forma pegada se medía como si la zona fuera
     // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.
