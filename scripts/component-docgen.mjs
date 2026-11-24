@@ -369,7 +369,7 @@ function inlineText(symbol, checker) {
 }
 
 /** Sustituye en `text` cada alias por sus miembros, con paréntesis si hace falta. */
-export function inlineAliases(text, replacements) {
+function inlineAliases(text, replacements) {
   return replacements.reduce((result, [name, members]) => result.replace(
     new RegExp(`(&\\s*)?\\b${name}\\b(\\[\\])?(\\s*&)?`, 'g'),
     (match, before = '', array = '', after = '') => (

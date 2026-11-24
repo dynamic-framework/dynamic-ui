@@ -22,7 +22,7 @@ import { createRequire } from 'module';
 
 import { ROOT, TSCONFIG_PATH } from './public-hooks.mjs';
 import {
-  ALIAS_FORMAT, PRIMITIVE_OR_LITERAL, TRUNCATED, inlineAliases,
+  ALIAS_FORMAT, PRIMITIVE_OR_LITERAL, TRUNCATED,
 } from './component-docgen.mjs';
 
 const require = createRequire(import.meta.url);
@@ -66,14 +66,30 @@ function typeEntries(value, prefix = '$') {
 
 const printer = ts.createPrinter({ removeComments: true });
 
-/** Imprime `node` en una línea, con los miembros de uniones e intersecciones ordenados. */
-function printSorted(node, source) {
+/** Miembros de una unión o intersección, aplanando las anidadas del mismo tipo. */
+function flatMembers(node, isKind) {
+  return node.types.flatMap((member) => {
+    const inner = ts.isParenthesizedTypeNode(member) ? member.type : member;
+    return isKind(inner) ? flatMembers(inner, isKind) : [member];
+  });
+}
+
+/**
+ * Imprime `node` en una línea: expande las referencias a `aliases` (nombre →
+ * nodo) y ordena los miembros de uniones e intersecciones.
+ */
+function printSorted(node, source, aliases) {
   const print = (n) => printer.printNode(ts.EmitHint.Unspecified, n, source);
   const visit = (n) => {
+    if (ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && !n.typeArguments
+      && aliases.has(n.typeName.text)) {
+      return visit(aliases.get(n.typeName.text));
+    }
     const visited = ts.visitEachChild(n, visit, ts.nullTransformationContext);
     const out = ts.setEmitFlags(visited, ts.EmitFlags.SingleLine);
-    if (!ts.isUnionTypeNode(out) && !ts.isIntersectionTypeNode(out)) return out;
-    const sorted = [...out.types].sort((a, b) => print(a).localeCompare(print(b)));
+    const isKind = ts.isUnionTypeNode(out) ? ts.isUnionTypeNode : ts.isIntersectionTypeNode;
+    if (!isKind(out)) return out;
+    const sorted = flatMembers(out, isKind).sort((a, b) => print(a).localeCompare(print(b)));
     const types = ts.factory.createNodeArray(sorted);
     return ts.isUnionTypeNode(out)
       ? ts.factory.updateUnionTypeNode(out, types)
@@ -83,22 +99,25 @@ function printSorted(node, source) {
 }
 
 /**
- * Tipo en texto con espacios canónicos y uniones e intersecciones ordenadas en
- * todos los niveles. Un texto que no parsea como tipo se devuelve tal cual.
+ * Tipo en texto con espacios canónicos, los alias de `aliases` (`[nombre, tipo]`)
+ * expandidos y uniones e intersecciones ordenadas en todos los niveles. Un texto
+ * que no parsea como tipo se devuelve tal cual.
  */
-export function normalizeType(text) {
+export function normalizeType(text, aliases = []) {
+  // Los alias van en el mismo archivo para que el printer lea su texto.
   const source = ts.createSourceFile(
     'type.ts',
-    `type T = ${text};`,
+    [`type T = ${text};`, ...aliases.map(([name, type]) => `type ${name} = ${type};`)].join('\n'),
     ts.ScriptTarget.Latest,
     true,
     ts.ScriptKind.TS,
   );
   const [statement, ...rest] = source.statements;
-  const parsed = !source.parseDiagnostics.length && !rest.length
-    && ts.isTypeAliasDeclaration(statement);
+  const parsed = !source.parseDiagnostics.length && rest.length === aliases.length
+    && ts.isTypeAliasDeclaration(statement) && statement.name.text === 'T';
   if (!parsed) return text;
-  return printSorted(statement.type, source);
+  const aliasNodes = new Map(rest.map((alias) => [alias.name.text, alias.type]));
+  return printSorted(statement.type, source, aliasNodes);
 }
 
 /** Crea un programa sobre el índice de los tipos publicados. */
@@ -198,7 +217,7 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
     return checker.typeToString(type, undefined, ts.TypeFormatFlags.NoTruncation)
       .replace(/import\("[^"]*"\)\./g, '');
   };
-  const canonical = (text) => normalizeType(inlineAliases(text, aliasReplacements));
+  const canonical = (text) => normalizeType(text, aliasReplacements);
 
   const requiredMismatches = [];
   const typeMismatches = [];

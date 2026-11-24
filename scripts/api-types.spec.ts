@@ -9,12 +9,13 @@ import { pathToFileURL } from 'node:url';
 
 const API_TYPES = pathToFileURL(path.resolve(__dirname, 'api-types.mjs')).href;
 
-function normalize(...types: string[]): string[] {
+function normalizeWith(aliases: [string, string][], ...types: string[]): string[] {
   const script = `
     import { normalizeType } from ${JSON.stringify(API_TYPES)};
-    process.stdout.write(JSON.stringify(JSON.parse(process.argv[1]).map(normalizeType)));
+    const [types, aliases] = JSON.parse(process.argv[1]);
+    process.stdout.write(JSON.stringify(types.map((type) => normalizeType(type, aliases))));
   `;
-  const result = spawnSync('node', ['--input-type=module', '-e', script, JSON.stringify(types)], {
+  const result = spawnSync('node', ['--input-type=module', '-e', script, JSON.stringify([types, aliases])], {
     encoding: 'utf8',
     timeout: 10000,
   });
@@ -22,6 +23,8 @@ function normalize(...types: string[]): string[] {
   expect(result.stderr).toBe('');
   return JSON.parse(result.stdout);
 }
+
+const normalize = (...types: string[]) => normalizeWith([], ...types);
 
 describe('normalizeType', () => {
   test('ordena las uniones y las intersecciones en todos los niveles', () => {
@@ -65,6 +68,14 @@ describe('normalizeType', () => {
 
   test('devuelve tal cual un texto que no parsea como tipo', () => {
     expect(normalize('T[', 'T[>', 'A; type U = B')).toEqual(['T[', 'T[>', 'A; type U = B']);
+  });
+
+  test('expande los alias solo donde son referencias de tipo, no dentro de literales', () => {
+    const aliases: [string, string][] = [['ComponentColor', 'string'], ['ComponentSize', '"sm" | "lg"']];
+    const [literal, string] = normalizeWith(aliases, '"ComponentColor"', '"string"');
+    expect(literal).not.toBe(string);
+    const [alias, expanded] = normalizeWith(aliases, 'ComponentSize[] | undefined', 'undefined | ("lg" | "sm")[]');
+    expect(alias).toBe(expanded);
   });
 
   test('colapsa los espacios fuera de los literales', () => {
