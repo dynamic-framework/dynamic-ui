@@ -2204,6 +2204,144 @@ describe('theme-validate — el triplete está acotado', () => {
   });
 });
 
+describe('triplete sin envolver en una variable de color (#1299)', () => {
+  /** El CSS mínimo que el validador acepta, más un bloque propio. */
+  const conBloque = (selector: string, decls: Record<string, string>) => {
+    const body = Object.entries(decls).map(([name, value]) => `  ${name}: ${value};`).join('\n');
+    return `${expandCss(MINIMAL_THEME)}\n${selector} {\n${body}\n}\n`;
+  };
+  const contrastes = (result: Run) => findings(result).filter((f) => / contraste-/.test(f));
+
+  it('rechaza el caso grave de la issue y no mide el par: el navegador no lo pinta', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': 'var(--bs-white-rgb)',
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary": "var\(--bs-white-rgb\)"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it('no mide con el triplete un par que nunca se pinta', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': 'var(--bs-gray-25-rgb)',
+      '--bs-btn-bg': 'rgb(var(--bs-gray-50-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it.each([
+    '255, 255, 255',
+    'var(--bs-nope, var(--bs-white-rgb))',
+    'var(--bs-nope, 255, 255, 255)',
+    'var(--bs-white, var(--bs-white-rgb))',
+  ])('rechaza %s, directo o por el respaldo de var()', (value) => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': value,
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(/^error triplete-sin-envolver: --bs-btn-color /));
+  });
+
+  it.each([
+    'rgb(var(--bs-white-rgb))',
+    'var(--bs-white)',
+    'rgb(var(--bs-white-rgb, 0, 0, 0))',
+    'rgba(var(--bs-white-rgb), .9)',
+  ])('acepta %s', (value) => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-color': value,
+      '--bs-btn-bg': 'rgb(var(--bs-black-rgb))',
+    }));
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('acepta un triplete en una variable -rgb', () => {
+    const result = validateStrict(conBloque('.btn-primary', {
+      '--bs-btn-focus-shadow-rgb': 'var(--bs-white-rgb)',
+    }));
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('rechaza el triplete en un componente dentro de una zona y nombra el selector', () => {
+    const result = validateStrict(conBloque('[data-bs-theme="oscura"] .btn-primary', {
+      '--bs-btn-color': 'var(--bs-white-rgb)',
+    }));
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\[data-bs-theme="oscura"\] \.btn-primary"/,
+    ));
+  });
+
+  it('rechaza un wrapper con triplete dentro de una zona', () => {
+    const result = validateStrict(conBloque('[data-bs-theme="oscura"]', {
+      '--bs-primary-rgb': '168, 68, 63',
+      '--bs-primary': '168, 68, 63',
+    }));
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-primary en "\[data-bs-theme="oscura"\]"/,
+    ));
+  });
+
+  it('un wrapper con triplete en el raíz lo explica la regla wrapper, sin repetirlo', () => {
+    const css = expandCss(MINIMAL_THEME)
+      .replace('--bs-primary-rgb: 11, 107, 83;', '--bs-primary-rgb: 11, 107, 83;\n  --bs-primary: 11, 107, 83;');
+    const result = validateStrict(css);
+    expect(result.stderr).toContain('[wrapper]');
+    expect(result.stderr).not.toContain('[triplete-sin-envolver]');
+  });
+
+  it('un token del raíz con triplete tampoco se mide en el par horneado que lo lee', () => {
+    const css = expandCss(MINIMAL_THEME)
+      .replace('--bs-primary-rgb: 11, 107, 83;', '--bs-primary-rgb: 11, 107, 83;\n  --bs-btn-primary-color: var(--bs-white-rgb);');
+    const result = validateStrict(css);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-primary-color: "var\(--bs-white-rgb\)"/,
+    ));
+    expect(contrastes(result)).toEqual([]);
+  });
+
+  it.each([
+    '@media (min-width: 1200px)',
+    '@media (prefers-color-scheme: dark)',
+  ])('rechaza el triplete dentro de %s', (media) => {
+    const css = `${expandCss(MINIMAL_THEME)}\n${media} {\n  .btn-primary { --bs-btn-color: var(--bs-white-rgb); }\n}\n`;
+    const result = validateStrict(css);
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary"/,
+    ));
+  });
+
+  it('rechaza un wrapper con triplete del raíz dentro de @media', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n@media (min-width: 1200px) {\n  :root { --bs-primary: 11, 107, 83; }\n}\n`;
+    expect(findings(validateStrict(css))).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-primary: "11, 107, 83"/,
+    ));
+  });
+
+  describe('theme-expand lo rechaza al generar', () => {
+    it.each([
+      ['components', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb)' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+      ['root', { root: { '--bs-heading-color': 'var(--bs-gray-300-rgb)' } }, 'root.--bs-heading-color'],
+      ['zones', { zones: { oscura: { vars: { '--bs-body-bg-rgb': 'var(--bs-dark-rgb)', '--bs-primary': '11, 107, 83' } } } }, 'zones.oscura.--bs-primary'],
+      ['components con !important', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb) !important' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+      ['components con comentario', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(/**/--bs-white-rgb) /* x */' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+    ])('en %s', (_section, section, where) => {
+      const result = expand({ ...MINIMAL_THEME, ...section });
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(`\`${where}\``);
+      expect(result.stderr).toContain('deja un triplete en una variable de color');
+    });
+  });
+});
+
 describe('theme-expand — body.borderColor conserva el alfa', () => {
   const conBorde = (borderColor: unknown) => (
     { ...MINIMAL_THEME, body: { ...MINIMAL_THEME.body, borderColor } }
