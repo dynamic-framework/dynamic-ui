@@ -17,7 +17,7 @@
  */
 
 import { existsSync } from 'fs';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, sep } from 'path';
 import { createRequire } from 'module';
 
 import { ROOT, TSCONFIG_PATH } from './public-hooks.mjs';
@@ -65,23 +65,47 @@ function typeEntries(value, prefix = '$') {
 }
 
 const OPEN = { '(': ')', '<': '>', '[': ']', '{': '}' };
+const CLOSE = new Set(Object.values(OPEN));
+const QUOTES = new Set(['"', "'", '`']);
+
+/** Índice de la comilla que cierra el literal que abre en `i`, o el final del texto. */
+function quoteEnd(text, i) {
+  for (let j = i + 1; j < text.length; j += 1) {
+    if (text[j] === '\\') j += 1;
+    else if (text[j] === text[i]) return j;
+  }
+  return text.length - 1;
+}
+
+/** Colapsa los espacios fuera de los literales; dentro se conservan. */
+function collapseSpaces(text) {
+  let out = '';
+  for (let i = 0; i < text.length; i += 1) {
+    if (QUOTES.has(text[i])) {
+      const end = quoteEnd(text, i);
+      out += text.slice(i, end + 1);
+      i = end;
+    } else if (/\s/.test(text[i])) {
+      if (!out.endsWith(' ')) out += ' ';
+    } else {
+      out += text[i];
+    }
+  }
+  return out.trim();
+}
 
 /**
  * Parte `text` por `separators` en el primer nivel: fuera de paréntesis,
- * genéricos, corchetes, llaves y comillas. `=>` no cierra un genérico.
+ * genéricos, corchetes, llaves y literales. `=>` no cierra un genérico.
  */
 function splitTop(text, separators) {
   const parts = [];
   const stack = [];
-  let quote = null;
   let start = 0;
   for (let i = 0; i < text.length; i += 1) {
     const char = text[i];
-    if (quote) {
-      if (char === '\\') i += 1;
-      else if (char === quote) quote = null;
-    } else if (char === '"' || char === "'") {
-      quote = char;
+    if (QUOTES.has(char)) {
+      i = quoteEnd(text, i);
     } else if (char === '=' && text[i + 1] === '>') {
       if (!stack.length && separators.includes('=>')) {
         parts.push(text.slice(start, i));
@@ -101,29 +125,35 @@ function splitTop(text, separators) {
   return parts.map((part) => part.trim());
 }
 
+/** Índice del delimitador que cierra el grupo que abre en `i`, o el final del texto. */
+function groupEnd(text, i) {
+  let depth = 0;
+  for (let j = i; j < text.length; j += 1) {
+    if (QUOTES.has(text[j])) j = quoteEnd(text, j);
+    else if (text[j] === '=' && text[j + 1] === '>') j += 1;
+    else if (OPEN[text[j]]) depth += 1;
+    else if (CLOSE.has(text[j])) {
+      depth -= 1;
+      if (depth === 0) return j;
+    }
+  }
+  return text.length;
+}
+
 /** Normaliza cada grupo entre paréntesis, genéricos, corchetes o llaves. */
 function normalizeGroups(text) {
   let out = '';
   for (let i = 0; i < text.length; i += 1) {
     const char = text[i];
-    if (char === '"' || char === "'") {
-      const end = text.indexOf(char, i + 1);
+    if (QUOTES.has(char)) {
+      const end = quoteEnd(text, i);
       out += text.slice(i, end + 1);
       i = end;
     } else if (char === '=' && text[i + 1] === '>') {
       out += '=>';
       i += 1;
     } else if (OPEN[char]) {
-      let depth = 0;
-      let j = i;
-      for (; j < text.length; j += 1) {
-        if (text[j] === '=' && text[j + 1] === '>') j += 1;
-        else if (OPEN[text[j]]) depth += 1;
-        else if (Object.values(OPEN).includes(text[j])) {
-          depth -= 1;
-          if (depth === 0) break;
-        }
-      }
+      const j = groupEnd(text, i);
       // Cada elemento de la lista (`a: T`, `T`) se normaliza por separado.
       const items = splitTop(text.slice(i + 1, j), [',', ';']).map((item) => {
         const [key, ...rest] = splitTop(item, [':']);
@@ -141,7 +171,7 @@ function normalizeGroups(text) {
 
 /** Tipo en texto con espacios colapsados y uniones e intersecciones ordenadas en todos los niveles. */
 export function normalizeType(text) {
-  const clean = text.replace(/\s+/g, ' ').trim();
+  const clean = collapseSpaces(text);
   const [head, ...ret] = splitTop(clean, ['=>']);
   if (ret.length) return `${normalizeGroups(head)} => ${normalizeType(ret.join(' => '))}`;
   return splitTop(clean, ['|'])
@@ -217,7 +247,8 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
   const typesDir = dirname(indexPath);
   const literalAliases = new Map();
   program.getSourceFiles()
-    .filter((file) => file.fileName.startsWith(typesDir))
+    // TypeScript usa `/` en todas las plataformas; resolve lo pasa al separador del sistema.
+    .filter((file) => resolve(file.fileName).startsWith(`${typesDir}${sep}`))
     .forEach((file) => file.statements.forEach((statement) => {
       if (!ts.isTypeAliasDeclaration(statement) || statement.typeParameters) return;
       const declared = checker.getTypeAtLocation(statement.name);
