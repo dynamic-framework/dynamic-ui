@@ -2972,9 +2972,9 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
   // que la librería y el theme ponen sobre él, en vez de heredarse resuelto
   // desde un ancestro. Y el padre del componente queda fuera de la zona.
   //
-  // Los casos son los de #1301. Cada número viene de medirlo en Chromium con
-  // `node scripts/theme/measure-in-chromium.mjs`, sobre el marcado que el
-  // selector apunta de verdad: el que lleva data-bs-theme en el componente.
+  // Los casos son los de #1301. Cada número está medido en Chromium sobre el
+  // marcado que el selector apunta de verdad —el que lleva data-bs-theme en el
+  // componente, no en un ancestro—, que es el que cada caso deja escrito.
   const WHITE = 'rgb(var(--bs-white-rgb))';
   const BLACK = 'rgb(var(--bs-black-rgb))';
   const ACTIVE_COLOR = '--bs-nav-pills-link-active-color';

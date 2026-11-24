@@ -448,18 +448,6 @@ salida respeta*).
 `--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
 
-Para comprobar en un navegador real lo que el validador afirma:
-
-```
-node scripts/theme/measure-in-chromium.mjs <theme.css> '<html>' [selector]
-```
-
-Carga `dist/css/dynamic-ui.css` y encima el theme, monta el HTML y lee
-`getComputedStyle`. No entra en `npm run test` —levantar Chromium es lento y
-frágil en CI—: es la herramienta con la que se obtiene el número que luego
-queda escrito en el comentario del caso, que es como la suite documenta lo que
-hace el navegador.
-
 Cada componente se mide **en su propio contexto**, el raíz o una zona, como lo
 resuelve el navegador:
 
