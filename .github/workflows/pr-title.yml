@@ -26,4 +26,4 @@ jobs:
       - name: Lint PR title
         env:
           TITLE: ${{ github.event.pull_request.title }}
-        run: printf '%s\n' "$TITLE" | npx commitlint --verbose
+        run: printf '%s\n' "$TITLE" | npx commitlint --config .github/commitlint-pr-title.mjs --verbose

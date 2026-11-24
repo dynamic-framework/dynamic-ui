@@ -46,7 +46,8 @@ label (`.github/release.yml`):
 `pr-labeler.yml` sets the label from the branch prefix (`.github/labeler.yml`).
 A PR without any of these labels goes to "Other Changes". PRs labeled
 `skip-changelog` and Dependabot PRs are left out. The PR title is the line in
-the notes; the `PR title` check runs commitlint on it.
+the notes; the `PR title` check runs commitlint on it
+without its default ignores, so `2.13.0` or `Merge …` titles fail.
 
 `CHANGELOG.md` is no longer updated; it keeps the history up to 2.12.1.
 
