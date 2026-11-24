@@ -201,7 +201,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   const warn = (rule, message, line = null) => warnings.push({ rule, message, line });
   const note = (rule, message, line = null) => notes.push({ rule, message, line });
 
-  if (root.size === 0 && wide.size === 0) {
+  // Una hoja de sólo zonas es legítima: quien mantiene un theme puede añadir
+  // una zona en un archivo aparte sin repetir el bloque raíz. Se mide contra
+  // los valores por defecto de la librería, igual que una zona de un theme
+  // completo que no redefine esas variables en `:root`: `resolve` cae a
+  // `libraryRootValue` cuando el raíz no la declara. Por eso la condición mira
+  // todos los bloques y no sólo el raíz.
+  const declaresBs = (decls) => [...decls.keys()].some((name) => name.startsWith('--bs-'));
+  if (!declaresBs(wide) && !blocks.some((block) => declaresBs(block.decls))) {
     fail('vacio', 'El archivo no declara ninguna custom property --bs-*.');
     return { errors, warnings, notes };
   }

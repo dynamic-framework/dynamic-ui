@@ -515,6 +515,11 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
 - `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
   las superficies se heredan de Dynamic.
+- `vacio` — error cuando el CSS no declara ninguna custom property `--bs-*`. Una
+  hoja de sólo zonas (`[data-bs-theme="<nombre>"]`, sin bloque raíz) no lo es:
+  se mide contra los valores por defecto de la librería, igual que una zona de
+  un theme completo que no redefine esas variables en `:root`. Así se puede
+  mantener una zona en un archivo aparte sin repetir el raíz.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
 - `zona-pegada` — aviso por cada selector con el prefijo de zona pegado
   (`[data-bs-theme="x"].clase`): se mide como si la zona fuera un ancestro, y
