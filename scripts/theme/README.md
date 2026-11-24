@@ -543,7 +543,8 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
 - `triplete-sin-envolver` — error en cada variable `--bs-*` que no termina en
   `-rgb` y vale un triplete: literal (`255, 255, 255`), un `var()` a una `-rgb`
   (`var(--bs-white-rgb)`) o un `var()` cuyo respaldo sea uno de esos. Se revisa
-  en todos los bloques: raíz, zonas y componentes. La librería consume esas
+  en todos los bloques: raíz, zonas y componentes, también dentro de `@media`
+  (ahí sin las excepciones de abajo). La librería consume esas
   variables como color completo, así que el navegador descarta la propiedad y
   el elemento hereda el color del padre. Un wrapper con triplete en el raíz ya
   lo da `wrapper`, y un `--bs-border-color` con triplete literal en el raíz,

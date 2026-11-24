@@ -2307,12 +2307,32 @@ describe('triplete sin envolver en una variable de color (#1299)', () => {
     expect(contrastes(result)).toEqual([]);
   });
 
+  it.each([
+    '@media (min-width: 1200px)',
+    '@media (prefers-color-scheme: dark)',
+  ])('rechaza el triplete dentro de %s', (media) => {
+    const css = `${expandCss(MINIMAL_THEME)}\n${media} {\n  .btn-primary { --bs-btn-color: var(--bs-white-rgb); }\n}\n`;
+    const result = validateStrict(css);
+    expect(result.status).toBe(1);
+    expect(findings(result)).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-btn-color en "\.btn-primary"/,
+    ));
+  });
+
+  it('rechaza un wrapper con triplete del raíz dentro de @media', () => {
+    const css = `${expandCss(MINIMAL_THEME)}\n@media (min-width: 1200px) {\n  :root { --bs-primary: 11, 107, 83; }\n}\n`;
+    expect(findings(validateStrict(css))).toContainEqual(expect.stringMatching(
+      /^error triplete-sin-envolver: --bs-primary: "11, 107, 83"/,
+    ));
+  });
+
   describe('theme-expand lo rechaza al generar', () => {
     it.each([
       ['components', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb)' } }] }, 'components[".btn-primary"].--bs-btn-color'],
       ['root', { root: { '--bs-heading-color': 'var(--bs-gray-300-rgb)' } }, 'root.--bs-heading-color'],
       ['zones', { zones: { oscura: { vars: { '--bs-body-bg-rgb': 'var(--bs-dark-rgb)', '--bs-primary': '11, 107, 83' } } } }, 'zones.oscura.--bs-primary'],
       ['components con !important', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(--bs-white-rgb) !important' } }] }, 'components[".btn-primary"].--bs-btn-color'],
+      ['components con comentario', { components: [{ selector: '.btn-primary', vars: { '--bs-btn-color': 'var(/**/--bs-white-rgb) /* x */' } }] }, 'components[".btn-primary"].--bs-btn-color'],
     ])('en %s', (_section, section, where) => {
       const result = expand({ ...MINIMAL_THEME, ...section });
       expect(result.status).toBe(1);

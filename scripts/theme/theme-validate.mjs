@@ -77,13 +77,13 @@ export function readCss(css) {
     const value = important ? match[2].replace(/\s*!\s*important$/i, '') : match[2];
     const entry = { value, line: endLine, ...(important && { important }) };
 
-    if (inWideMedia()) {
-      cascadeSet(wide, match[1], entry);
+    const block = currentBlock();
+    if (inAnyMedia()) {
+      if (block) cascadeSet(block.mediaDecls, match[1], entry); // Solo para R1d.
+      if (inWideMedia()) cascadeSet(wide, match[1], entry);
       return;
     }
-    if (inAnyMedia()) return;
 
-    const block = currentBlock();
     if (block) cascadeSet(block.decls, match[1], entry);
     if (block && block.isRoot) cascadeSet(root, match[1], entry);
   };
@@ -102,6 +102,7 @@ export function readCss(css) {
           isRoot: isRootPrelude(prelude),
           zone: zoneFromPrelude(prelude),
           decls: new Map(),
+          mediaDecls: new Map(),
           line,
         };
         blocks.push(block);
@@ -238,22 +239,28 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R1d — una variable sin -rgb se consume como color: un triplete ahí no se
   // pinta. En el raíz, R2 y R4 ya cubren el wrapper y --bs-border-color.
   const unwrapped = new Set();
+  const isUnwrapped = (name, value) => name.startsWith('--bs-') && !name.endsWith('-rgb')
+    && holdsBareTriplet(value);
   for (const block of blocks) {
     const where = block.isRoot ? '' : ` en "${block.prelude.replace(/\s+/g, ' ')}"`;
+    const failUnwrapped = (name, value, line) => fail(
+      'triplete-sin-envolver',
+      `${name}${where}: "${value}" deja un triplete en una variable de color. Las variables `
+      + 'que no terminan en -rgb se consumen como color completo, así que aquí el navegador '
+      + 'recibe "R, G, B", descarta la propiedad y el elemento hereda el color del padre. '
+      + 'Envuelve el triplete: rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+      line,
+    );
     for (const [name, { value, line }] of block.decls) {
-      if (!name.startsWith('--bs-') || name.endsWith('-rgb')) continue;
-      if (!holdsBareTriplet(value)) continue;
+      if (!isUnwrapped(name, value)) continue;
       unwrapped.add(name);
       if (block.isRoot && wrapperName(name)) continue;
       if (block.isRoot && name === '--bs-border-color' && parseTriplet(value)) continue;
-      fail(
-        'triplete-sin-envolver',
-        `${name}${where}: "${value}" deja un triplete en una variable de color. Las variables `
-        + 'que no terminan en -rgb se consumen como color completo, así que aquí el navegador '
-        + 'recibe "R, G, B", descarta la propiedad y el elemento hereda el color del padre. '
-        + 'Envuelve el triplete: rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
-        line,
-      );
+      failUnwrapped(name, value, line);
+    }
+    // R2 y R4 no miran @media: aquí no hay excepciones.
+    for (const [name, { value, line }] of block.mediaDecls) {
+      if (isUnwrapped(name, value)) failUnwrapped(name, value, line);
     }
   }
 

@@ -504,8 +504,8 @@ function parseWrapper(raw) {
 
 /** Triplete literal, `var()` a una `-rgb`, o un respaldo que termina en uno de los dos. */
 export function holdsBareTriplet(value) {
-  // `!important` no es parte del valor.
-  const raw = String(value).trim().replace(/\s*!\s*important$/i, '');
+  // Sin comentarios ni `!important`: no son parte del valor.
+  const raw = String(value).replace(/\/\*[\s\S]*?\*\//g, ' ').trim().replace(/\s*!\s*important$/i, '');
   if (parseTriplet(raw)) return true;
   const call = parseVarCall(raw);
   if (!call) return false;
