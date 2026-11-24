@@ -4,16 +4,13 @@ on:
     branches:
       - develop
       - master
-    types: [
-      opened,
-      edited,
-      reopened,
-      synchronize
-    ]
+    types: [opened, edited]
 
 jobs:
   pr-labeler:
     name: Labeling Job
+    # El label sale de la rama, que no cambia: edited solo cuenta si se redirige el PR a otra base.
+    if: github.event.action == 'opened' || github.event.changes.base
     runs-on: ubuntu-latest
     steps:
       - uses: TimonVS/pr-labeler-action@v4

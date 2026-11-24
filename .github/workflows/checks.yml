@@ -1,7 +1,8 @@
 name: Checks
 on:
   pull_request:
-    types: [opened, edited, reopened, synchronize]
+    # Sin edited: cambiar título o descripción no cambia el código.
+    types: [opened, reopened, synchronize]
     branches:
       - master
       - develop
