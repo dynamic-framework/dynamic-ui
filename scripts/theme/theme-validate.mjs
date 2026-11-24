@@ -636,24 +636,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // R9 — zona pegada al selector. `[data-bs-theme="x"].btn-primary` pone la
-  // zona en el mismo elemento que el componente, y entonces lo que declara la
-  // zona compite en la cascada con lo que se declara sobre él. El validador no
-  // modela ese caso: lo mide como si la zona fuera un ancestro
-  // (`[data-bs-theme="x"] .btn-primary`) y lo avisa para que se revise.
-  for (const block of blocks) {
-    for (const alt of alternatives(block)) {
-      if (!alt.sameElement) continue;
-      warn(
-        'zona-pegada',
-        `${zoneSelector(alt.zone)}${alt.bare}: el prefijo de zona va pegado al selector, así que `
-        + 'la zona está en el mismo elemento que el componente. El validador lo mide como si la '
-        + `zona fuera un ancestro (${zoneSelector(alt.zone)} ${alt.bare}); revisa este caso en la preview.`,
-        block.line,
-      );
-    }
-  }
-
   // Las variables genéricas cuya presencia en un bloque de botón dispara R10.
   // R13 las consulta para no medir dos veces el mismo botón con contorno.
   const R10_BUTTON_VARS = [

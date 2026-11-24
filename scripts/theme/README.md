@@ -387,12 +387,24 @@ salida respeta*).
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
-`where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`where`, `vacio`, `ciclo`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
 `contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
 `--strict` hace fallar también con avisos (no con notas), y `--min-contrast N` cambia el umbral
 (4.5 por defecto, WCAG 2.x AA para texto normal).
+
+Para comprobar en un navegador real lo que el validador afirma:
+
+```
+node scripts/theme/measure-in-chromium.mjs <theme.css> '<html>' [selector]
+```
+
+Carga `dist/css/dynamic-ui.css` y encima el theme, monta el HTML y lee
+`getComputedStyle`. No entra en `npm run test` —levantar Chromium es lento y
+frágil en CI—: es la herramienta con la que se obtiene el número que luego
+queda escrito en el comentario del caso, que es como la suite documenta lo que
+hace el navegador.
 
 Cada componente se mide **en su propio contexto**, el raíz o una zona, como lo
 resuelve el navegador:
@@ -420,10 +432,15 @@ resuelve el navegador:
   `!important`, luego la de más especificidad (con el prefijo de zona) y, a
   igualdad, la última, como en la cascada.
 - Un prefijo de zona pegado al selector (`[data-bs-theme="oscura"].btn-primary`)
-  pone la zona en el mismo elemento que el componente. El validador no modela
-  ese caso: lo mide como si la zona fuera un ancestro
-  (`[data-bs-theme="oscura"] .btn-primary`) y da el aviso `zona-pegada` para que
-  se revise en la preview.
+  pone la zona en el mismo elemento que el componente, y eso cambia dos cosas.
+  Lo que la zona declara cae sobre el componente y **compite en la cascada** con
+  lo que la librería y el theme ponen ahí, en vez de heredarse ya resuelto;
+  `[data-bs-theme="x"]` es un atributo, así que pesa como una clase y, a igual
+  peso, gana el que vaya después (el theme, que carga tras la librería). Y el
+  **padre del componente queda fuera de la zona**, así que un `inherit` sobre él
+  toma el valor de fuera. Si el theme usa las dos formas sobre el mismo
+  componente (`[data-bs-theme="x"] .a` y `[data-bs-theme="x"].a`), son dos
+  elementos distintos y el validador mide uno: el de la zona pegada.
 
 El validador no ve el HTML: no sabe qué elementos casan con un selector. Un
 bloque se aplica a un componente cuando su selector, sin el prefijo de zona, es
@@ -454,9 +471,6 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
 - `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
   las superficies se heredan de Dynamic.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
-- `zona-pegada` — aviso por cada selector con el prefijo de zona pegado
-  (`[data-bs-theme="x"].clase`): se mide como si la zona fuera un ancestro, y
-  hay que revisarlo en la preview.
 - `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
   sí misma con `var()`: el navegador descarta la variable.
 - `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona

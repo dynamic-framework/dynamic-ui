@@ -2844,8 +2844,9 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     it('los pares horneados cuentan los bloques con la zona pegada al componente', () => {
       // Theme generado por theme-expand: `[data-bs-theme="clara"].list-group`
-      // pone texto y fondo blancos. Chromium: 1:1 en los dos tipos de ítem. Se
-      // miden como en develop, con la zona como ancestro, y se avisa la forma.
+      // pone texto y fondo blancos. Chromium, con la zona en la propia lista
+      // (`<ul class="list-group" data-bs-theme="clara">`): 1:1 en los dos
+      // tipos de ítem.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [{
@@ -2856,7 +2857,6 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       });
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="clara"\]\.list-group: el prefijo de zona va pegado al selector/),
         expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
         expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
       ]);
@@ -2878,21 +2878,20 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('la zona pegada al selector se avisa y se mide como si la zona fuera un ancestro', () => {
-      // `[data-bs-theme="oscura"].btn-primary` pone la zona en el botón. El
-      // validador no modela ese caso: lo mide como `[data-bs-theme="oscura"]
-      // .btn-primary`, igual que develop, y pide revisarlo en la preview.
+    it('la zona pegada al selector pone sus variables en el propio componente', () => {
+      // `[data-bs-theme="oscura"].btn-primary` pone la zona en el botón, así
+      // que el `--bs-btn-bg` de la zona cae sobre él y gana al de la librería,
+      // que tiene la misma especificidad y va antes. Texto negro sobre blanco.
+      // Chromium, con `<button class="btn btn-primary" data-bs-theme="oscura">`:
+      // 21:1. Medido como ancestro daba un falso 3.24:1 (#1301).
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': 'var(--bs-black)' } }],
         zones: { oscura: { vars: { '--bs-btn-bg': 'var(--bs-white)' } } },
       });
       const result = validateStrict(css);
-      expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.btn-primary: el prefijo de zona va pegado al selector.*revisa este caso en la preview\./),
-        expect.stringMatching(/^error contraste-boton: "\.btn-primary dentro de \[data-bs-theme="oscura"\]"/),
-      ]);
-      expect(result.status).toBe(1);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
     });
 
     it('un corchete entre comillas no hace del enlace el contenedor', () => {
@@ -2964,6 +2963,97 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       ]);
       expect(roto.status).toBe(1);
     });
+  });
+});
+
+describe('theme-validate — la zona pegada al selector (#1301)', () => {
+  // `[data-bs-theme="z"].x` pone la zona en el mismo elemento que el
+  // componente: lo que la zona declara cae ahí y compite en la cascada con lo
+  // que la librería y el theme ponen sobre él, en vez de heredarse resuelto
+  // desde un ancestro. Y el padre del componente queda fuera de la zona.
+  //
+  // Los casos son los de #1301. Cada número viene de medirlo en Chromium con
+  // `node scripts/theme/measure-in-chromium.mjs`, sobre el marcado que el
+  // selector apunta de verdad: el que lleva data-bs-theme en el componente.
+  const WHITE = 'rgb(var(--bs-white-rgb))';
+  const BLACK = 'rgb(var(--bs-black-rgb))';
+  const ACTIVE_COLOR = '--bs-nav-pills-link-active-color';
+  const ACTIVE_BG = '--bs-nav-pills-link-active-bg';
+
+  it('caso 2: `--bs-white: inherit` en el botón toma el blanco de fuera de la zona', () => {
+    // El botón ES la zona, así que su `inherit` mira al padre, que está fuera:
+    // le llega el blanco de la librería, no el negro que la zona llama blanco.
+    // Chromium, con `<button class="btn btn-primary" data-bs-theme="oscura">`: 21:1.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '[data-bs-theme="oscura"].btn-primary',
+        vars: { '--bs-white': 'inherit', '--bs-btn-color': BLACK },
+      }],
+      zones: { oscura: { vars: { '--bs-white': 'rgb(0, 0, 0)', '--bs-btn-bg': 'var(--bs-white)' } } },
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('caso 3: la pastilla activa de la zona pegada pisa el color del bloque global', () => {
+    // `.nav-pills` global pone blanco sobre negro; la zona, pegada al mismo
+    // `.nav-pills`, baja el texto a negro. Chromium: 1:1, ilegible.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '.nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"].nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('caso 4: la zona pegada a un ancestro del componente no lo rompe', () => {
+    // `[data-bs-theme="oscura"].sidebar .nav-pills`: la zona va en la barra,
+    // no en las pastillas. Chromium, bajo `.sidebar[data-bs-theme="oscura"]`: 21:1.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '[data-bs-theme="oscura"] .nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"].sidebar .nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('caso 5: las dos formas sobre el mismo componente coinciden', () => {
+    // Pegada y ancestro declarando lo mismo. Chromium: 21:1 en los dos
+    // marcados, así que la medición única vale para ambos.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '[data-bs-theme="oscura"].nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"] .nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('ya no avisa `zona-pegada`', () => {
+    // El aviso existía porque la forma pegada se medía como si la zona fuera
+    // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': BLACK } }],
+      zones: { oscura: { vars: { '--bs-btn-bg': WHITE } } },
+    }));
+
+    expect(result.stderr).not.toContain('zona-pegada');
   });
 });
 

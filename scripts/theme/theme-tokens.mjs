@@ -983,17 +983,37 @@ export function buildContexts(blocks, root) {
   const layerFor = (zone, selectors) => {
     const wanted = new Set(selectors.map(normalizeSelector));
     const candidates = [];
+    // ¿Alguna regla pone la zona en este mismo elemento
+    // (`[data-bs-theme="z"].btn-primary`)? Entonces el elemento ES la zona: lo
+    // que la zona declara cae aquí y compite en la cascada con lo que la
+    // librería y el theme ponen sobre el componente, en vez de heredarse ya
+    // resuelto desde un ancestro.
+    let attached = false;
+    for (const block of blocks) {
+      for (const alternative of splitSelectorList(block.prelude)) {
+        const { zone: altZone, bare, sameElement } = splitZone(alternative);
+        if (sameElement && altZone === zone && wanted.has(normalizeSelector(bare))) attached = true;
+      }
+    }
+
     for (const selector of selectors) {
       for (const [name, value] of LIBRARY_ELEMENT_VARS.get(selector) ?? []) {
         candidates.push({ name, entry: { value, source: 'defecto' }, weight: specificity(selector) });
       }
     }
     for (const block of blocks) {
-      if (block.zone) continue;
+      // El bloque de la zona declara sobre el elemento que la lleva: cuando la
+      // zona va pegada, ese elemento es el componente. `[data-bs-theme="z"]`
+      // es un atributo, así que pesa como una clase.
+      if (block.zone) {
+        if (!attached || block.zone !== zone) continue;
+        for (const [name, entry] of block.decls) {
+          candidates.push({ name, entry, weight: SPECIFICITY_CLASS });
+        }
+        continue;
+      }
       // Los bloques raíz también cuentan: una regla `:root, .nav-pills` declara
-      // sobre el componente. Es la alternativa que casa la que decide. Una
-      // alternativa con la zona pegada (`[data-bs-theme="z"].x`) se trata como
-      // si la zona fuera un ancestro; la regla `zona-pegada` lo avisa.
+      // sobre el componente. Es la alternativa que casa la que decide.
       let weight = -1;
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare } = splitZone(alternative);
@@ -1008,7 +1028,9 @@ export function buildContexts(blocks, root) {
     // sort es estable: a igual peso se conserva el orden de aparición.
     candidates.sort((a, b) => (Number(Boolean(a.entry.important)) - Number(Boolean(b.entry.important)))
       || (a.weight - b.weight));
-    return new Map(candidates.map(({ name, entry }) => [name, entry]));
+    const layer = new Map(candidates.map(({ name, entry }) => [name, entry]));
+    layer.attached = attached;
+    return layer;
   };
 
   // Cada grupo de selectores es un elemento: los del mismo grupo se funden, y
@@ -1018,6 +1040,9 @@ export function buildContexts(blocks, root) {
     const layers = groups.map((selectors) => layerFor(zone, selectors));
     return {
       layers,
+      // Si la zona va pegada a alguno de los elementos, el padre de la cadena
+      // está fuera de ella: lo que la zona declara ya entró en su capa.
+      attached: layers.some((layer) => layer.attached),
       has: (name) => layers.some((layer) => layer.has(name)),
       get: (name) => [...layers].reverse().find((layer) => layer.has(name))?.get(name),
     };
@@ -1030,7 +1055,7 @@ export function buildContexts(blocks, root) {
       if (!element) return resolveHere(name);
       const resolveInElement = element.layers.reduce(
         (parent, layer) => (inherited) => resolveInherited(inherited, layer, parent),
-        resolveHere,
+        element.attached ? inRoot : resolveHere,
       );
       return resolveInElement(name);
     },
