@@ -1031,10 +1031,11 @@ export function buildContexts(blocks, root) {
     // ruta es exactamente el primer compuesto.
     const zoneIsThisElement = (bare) => {
       const pieces = splitCompounds(normalizeSelector(bare));
-      for (let k = (pieces.length - 1) / 2; k >= 0; k -= 1) {
-        if (wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) return k === 0;
+      for (let k = (pieces.length - 1) / 2; k > 0; k -= 1) {
+        if (wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) return false;
       }
-      return false;
+      return wanted.has(normalizeSelector(pieces[0]))
+        && (pieces.length === 1 || /^\s*>?\s*$/.test(pieces[1]));
     };
     let attached = false;
     for (const block of blocks) {
