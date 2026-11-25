@@ -576,14 +576,23 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * la variable en cuestión: ahí manda el específico y medir el global sería
    * reportar algo que nunca se ve.
    */
-  const contextsFor = (zone, bare, variable) => {
+  const redefinedInZone = (zoneName, bare, variable) => blocks.some(
+    (other) => other.decls.has(variable)
+      && alternatives(other).some((alt) => alt.zone === zoneName
+        && normalizeSelector(alt.bare) === normalizeSelector(bare)),
+  );
+
+  const contextsFor = (zone, bare, variables) => {
     if (zone) return contexts.filter((ctx) => ctx.zone === zone);
+    const declared = [variables].flat();
     return contexts.filter((ctx) => {
       if (!ctx.zone) return true;
-      const overridden = blocks.some((other) => other.decls.has(variable)
-        && alternatives(other).some((alt) => alt.zone === ctx.zone
-          && normalizeSelector(alt.bare) === normalizeSelector(bare)));
-      return !overridden;
+      // El bloque global deja de verse en la zona en cuanto ésta tiene su
+      // propio bloque para el mismo selector que toque alguna de estas
+      // variables: los dos medirían el mismo par, porque los dos leen la capa
+      // ya fundida del elemento, y el hallazgo saldría dos veces. Manda el
+      // específico.
+      return !declared.some((variable) => redefinedInZone(ctx.zone, bare, variable));
     });
   };
 
@@ -717,6 +726,13 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // que sólo aclara el fondo de reposo y oscurece el texto deja los otros dos
   // estados con el texto oscuro sobre el relleno oscuro de la librería.
   const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
+  // Las dos variables que gobiernan cada estado, en el mismo orden en que se
+  // arma `cases`: reposo, hover y active.
+  const BUTTON_STATE_VARS = [
+    ['--bs-btn-color', '--bs-btn-bg'],
+    ['--bs-btn-hover-color', '--bs-btn-hover-bg'],
+    ['--bs-btn-active-color', '--bs-btn-active-bg'],
+  ];
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-btn-color');
     const hoverDecl = block.decls.get('--bs-btn-hover-color');
@@ -732,7 +748,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const outline = Boolean(match[1]);
       const role = match[2];
 
-      for (const ctx of contextsFor(altZone, part, fgDecl ? '--bs-btn-color' : '--bs-btn-bg')) {
+      for (const ctx of contextsFor(altZone, part, BUTTON_STATE_VARS.flat())) {
         // Lo que se declara sobre el botón dentro de este contexto: lo que pone
         // la librería en `.btn-<role>` y los bloques del theme, globales y de
         // la zona, para el mismo selector.

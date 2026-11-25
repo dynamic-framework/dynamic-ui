@@ -1969,6 +1969,73 @@ describe('theme-expand — el breakpoint de RFS', () => {
   });
 });
 
+describe('contraste-boton — un bloque de zona no duplica el hallazgo del global', () => {
+  // Los dos bloques leen la misma capa fundida del elemento, así que miden el
+  // mismo par. Si los dos se miden dentro de la zona, el hallazgo sale dos
+  // veces palabra por palabra.
+  const BASE = [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-color-rgb: 16, 24, 40;',
+    '  --bs-border-color: rgb(228, 231, 236);',
+    '}',
+    '',
+    '[data-bs-theme="oscura"] {',
+    '  --bs-body-bg-rgb: 16, 24, 40;',
+    '  --bs-body-color-rgb: 255, 255, 255;',
+    '}',
+    '',
+  ].join('\n');
+
+  /** Los hallazgos de botón, tal cual, para poder contar repeticiones. */
+  const botones = (css: string) => findings(validateStrict(css))
+    .filter((f) => f.startsWith('error contraste-boton'));
+
+  it('el bloque global que sólo declara hover deja de medirse en la zona', () => {
+    // La selección de contextos miraba --bs-btn-color o --bs-btn-bg para
+    // decidir si la zona ya había reemplazado al global. Un bloque que sólo
+    // declara hover no toca ninguna de las dos, así que se medía igual.
+    const css = `${BASE}${[
+      '.btn-primary { --bs-btn-hover-color: rgb(0, 0, 0); }',
+      '',
+      '[data-bs-theme="oscura"] .btn-primary {',
+      '  --bs-btn-hover-color: rgb(255, 255, 255);',
+      '  --bs-btn-hover-bg: rgb(255, 255, 255);',
+      '}',
+    ].join('\n')}`;
+    const enLaZona = botones(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
+
+    expect(enLaZona).toHaveLength(1);
+    expect(enLaZona[0]).toMatch(/en hover": 1\.00:1/);
+  });
+
+  it('con solapamiento parcial no se pierde el estado que la zona no toca', () => {
+    // El global rompe hover y active; la zona sólo pisa hover. Dentro de la
+    // zona tiene que salir un hallazgo por estado, ni duplicado ni de menos.
+    const css = `${BASE}${[
+      '.btn-primary {',
+      '  --bs-btn-hover-color: rgb(120, 120, 120);',
+      '  --bs-btn-hover-bg: rgb(130, 130, 130);',
+      '  --bs-btn-active-color: rgb(120, 120, 120);',
+      '  --bs-btn-active-bg: rgb(130, 130, 130);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] .btn-primary {',
+      '  --bs-btn-hover-color: rgb(255, 255, 255);',
+      '  --bs-btn-hover-bg: rgb(255, 255, 255);',
+      '}',
+    ].join('\n')}`;
+    const enLaZona = botones(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
+
+    expect(enLaZona).toHaveLength(2);
+    expect(enLaZona).toEqual([
+      expect.stringMatching(/en hover": 1\.00:1/),
+      expect.stringMatching(/en active": 1\.15:1/),
+    ]);
+  });
+});
+
 describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
   const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
   type Bloque = { selector: string; vars: Record<string, string> };
