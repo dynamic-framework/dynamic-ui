@@ -24,6 +24,7 @@ import {
   buildContexts,
   cascadeSet,
   contrast,
+  holdsBareTriplet,
   inheritsParent,
   isRootPrelude,
   libraryWrapper,
@@ -76,13 +77,13 @@ export function readCss(css) {
     const value = important ? match[2].replace(/\s*!\s*important$/i, '') : match[2];
     const entry = { value, line: endLine, ...(important && { important }) };
 
-    if (inWideMedia()) {
-      cascadeSet(wide, match[1], entry);
+    const block = currentBlock();
+    if (inAnyMedia()) {
+      if (block) cascadeSet(block.mediaDecls, match[1], entry); // Solo para R1d.
+      if (inWideMedia()) cascadeSet(wide, match[1], entry);
       return;
     }
-    if (inAnyMedia()) return;
 
-    const block = currentBlock();
     if (block) cascadeSet(block.decls, match[1], entry);
     if (block && block.isRoot) cascadeSet(root, match[1], entry);
   };
@@ -101,6 +102,7 @@ export function readCss(css) {
           isRoot: isRootPrelude(prelude),
           zone: zoneFromPrelude(prelude),
           decls: new Map(),
+          mediaDecls: new Map(),
           line,
         };
         blocks.push(block);
@@ -199,7 +201,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   const warn = (rule, message, line = null) => warnings.push({ rule, message, line });
   const note = (rule, message, line = null) => notes.push({ rule, message, line });
 
-  if (root.size === 0 && wide.size === 0) {
+  // Una hoja de sólo zonas es legítima: quien mantiene un theme puede añadir
+  // una zona en un archivo aparte sin repetir el bloque raíz. Se mide contra
+  // los valores por defecto de la librería, igual que una zona de un theme
+  // completo que no redefine esas variables en `:root`: `resolve` cae a
+  // `libraryRootValue` cuando el raíz no la declara. Por eso la condición mira
+  // todos los bloques y no sólo el raíz.
+  const declaresBs = (decls) => [...decls.keys()].some((name) => name.startsWith('--bs-'));
+  if (!declaresBs(wide) && !blocks.some((block) => declaresBs(block.decls))) {
     fail('vacio', 'El archivo no declara ninguna custom property --bs-*.');
     return { errors, warnings, notes };
   }
@@ -234,6 +243,34 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  // R1d — una variable sin -rgb se consume como color: un triplete ahí no se
+  // pinta. En el raíz, R2 y R4 ya cubren el wrapper y --bs-border-color.
+  const unwrapped = new Set();
+  const isUnwrapped = (name, value) => name.startsWith('--bs-') && !name.endsWith('-rgb')
+    && holdsBareTriplet(value);
+  for (const block of blocks) {
+    const where = block.isRoot ? '' : ` en "${block.prelude.replace(/\s+/g, ' ')}"`;
+    const failUnwrapped = (name, value, line) => fail(
+      'triplete-sin-envolver',
+      `${name}${where}: "${value}" deja un triplete en una variable de color. Las variables `
+      + 'que no terminan en -rgb se consumen como color completo, así que aquí el navegador '
+      + 'recibe "R, G, B", descarta la propiedad y el elemento hereda el color del padre. '
+      + 'Envuelve el triplete: rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+      line,
+    );
+    for (const [name, { value, line }] of block.decls) {
+      if (!isUnwrapped(name, value)) continue;
+      unwrapped.add(name);
+      if (block.isRoot && wrapperName(name)) continue;
+      if (block.isRoot && name === '--bs-border-color' && parseTriplet(value)) continue;
+      failUnwrapped(name, value, line);
+    }
+    // R2 y R4 no miran @media: aquí no hay excepciones.
+    for (const [name, { value, line }] of block.mediaDecls) {
+      if (isUnwrapped(name, value)) failUnwrapped(name, value, line);
+    }
+  }
+
   /**
    * ¿Ya explicó R1 por qué no se puede medir este par? Es así cuando lo que
    * falla es una variable -rgb mal escrita en el raíz o en la zona: avisar
@@ -241,6 +278,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * Una declarada en el bloque de un componente no la revisa R1, y se avisa.
    */
   const explainedByR1 = (ctx, element, ...sides) => sides.some((side) => {
+    if (side.unwrapped) return unwrapped.has(side.unwrapped); // R1d
     const name = side.invalidFormat;
     if (!name || element?.has(name)) return false;
     // La declaración que ve el contexto: la de la zona o, si no la tiene, la
@@ -569,6 +607,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Un texto transparente no se ve, sea cual sea el fondo.
       if (!background) return { rgb: null, reason: `${name} es transparente: el texto no se ve`, variable: name };
       return { ...ctx.lookup('--bs-body-bg-rgb'), name: '--bs-body-bg-rgb', variable: name };
+    }
+    // No se pinta: no hay par que medir.
+    if (resolved.unwrappedIn) {
+      return {
+        rgb: null,
+        reason: `${resolved.unwrappedIn} vale un triplete sin envolver en rgb(), que no es un color`,
+        unwrapped: resolved.unwrappedIn,
+        variable: name,
+      };
     }
     return { ...resolved, name: describe(name, resolved), variable: name };
   };
