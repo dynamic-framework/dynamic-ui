@@ -3315,6 +3315,37 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(result.status).toBe(0);
   });
 
+  it.each([
+    ['+', '[data-bs-theme="oscura"].sidebar .item + .nav-pills .nav-link.active'],
+    ['~', '[data-bs-theme="oscura"].sidebar .item ~ .x .nav-pills .nav-link.active'],
+  ])('un `%s` dentro de la zona no saca al componente de ella', (_, selector) => {
+    // El hermano relaciona dos hijos de `.sidebar`: la pastilla sigue dentro de
+    // la zona y su `inherit` toma el negro que la zona llama blanco.
+    // Chromium, bajo `<div class="sidebar" data-bs-theme="oscura">`: 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      `${selector} {`,
+      '  --bs-white: inherit;',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
   it('ya no avisa `zona-pegada`', () => {
     // El aviso existía porque la forma pegada se medía como si la zona fuera
     // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.
