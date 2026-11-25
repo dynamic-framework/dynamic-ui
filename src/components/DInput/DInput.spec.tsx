@@ -1,10 +1,12 @@
 /// <reference types="@testing-library/jest-dom" />
 
+import { useState } from 'react';
 import {
   fireEvent,
   render,
   screen,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import DInput from './DInput';
 import { DContextProvider } from '../../contexts';
 
@@ -126,6 +128,70 @@ describe('', () => {
     const spinner = screen.getByTestId('loading-spinner');
     expect(spinner).toHaveAttribute('role', 'status');
     expect(spinner).toHaveTextContent('Loading...');
+  });
+
+  describe('loading no deshabilita el campo', () => {
+    it('deja el input habilitado y lo marca con aria-busy', () => {
+      render(
+        <DInput
+          label="Input label"
+          loading
+        />,
+      );
+
+      const input = screen.getByLabelText('Input label');
+      expect(input).toBeEnabled();
+      expect(input).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('no pone aria-busy cuando no está cargando', () => {
+      render(<DInput label="Input label" />);
+
+      expect(screen.getByLabelText('Input label')).not.toHaveAttribute('aria-busy');
+    });
+
+    it('`disabled` sí lo deshabilita, con o sin loading', () => {
+      render(
+        <DInput
+          label="Input label"
+          disabled
+          loading
+        />,
+      );
+
+      expect(screen.getByLabelText('Input label')).toBeDisabled();
+    });
+
+    it('acepta todas las teclas mientras la validación va y viene', async () => {
+      // El caso del reporte: el consumidor enciende loading en cada cambio y lo
+      // apaga más tarde. Con el input deshabilitado sólo llegaba la primera
+      // tecla; el resto se perdía en mitad de la escritura.
+      function ValidatingInput() {
+        const [value, setValue] = useState('');
+        const [loading, setLoading] = useState(false);
+        return (
+          <DInput
+            label="Correo"
+            value={value}
+            loading={loading}
+            onChange={(next) => {
+              setValue(next);
+              setLoading(true);
+              setTimeout(() => setLoading(false), 600);
+            }}
+          />
+        );
+      }
+
+      const user = userEvent.setup();
+      render(<ValidatingInput />);
+      const input = screen.getByLabelText('Correo');
+
+      await user.type(input, 'hola@modyo.com');
+
+      expect(input).toHaveValue('hola@modyo.com');
+      expect(input).toBeEnabled();
+    });
   });
 
   it('calls onIconStartClick when iconStart is clicked', () => {

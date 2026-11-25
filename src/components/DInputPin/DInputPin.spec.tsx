@@ -115,6 +115,44 @@ describe('<DInputPin />', () => {
     });
   });
 
+  describe('loading no deshabilita los dígitos', () => {
+    it('deja los inputs habilitados y marca el grupo con aria-busy', () => {
+      render(
+        <DContextProvider>
+          <DInputPin id="myPin" loading />
+        </DContextProvider>,
+      );
+
+      screen.getAllByRole('textbox').forEach((input) => expect(input).toBeEnabled());
+      expect(document.getElementById('myPin')).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('acepta el pin completo mientras carga', async () => {
+      const user = userEvent.setup();
+      render(
+        <DContextProvider>
+          <DInputPin id="myPin" loading />
+        </DContextProvider>,
+      );
+
+      // Deshabilitado no entraba ningún dígito y el foco no avanzaba.
+      await user.type(screen.getAllByRole('textbox')[0], '1234');
+
+      expect(screen.getAllByRole('textbox').map((i) => (i as HTMLInputElement).value))
+        .toEqual(['1', '2', '3', '4']);
+    });
+
+    it('`disabled` sí los deshabilita, con o sin loading', () => {
+      render(
+        <DContextProvider>
+          <DInputPin id="myPin" disabled loading />
+        </DContextProvider>,
+      );
+
+      screen.getAllByRole('textbox').forEach((input) => expect(input).toBeDisabled());
+    });
+  });
+
   describe('User Interaction', () => {
     it('handles typing and calls onChange with the complete value', async () => {
       const user = userEvent.setup();

@@ -93,7 +93,7 @@ describe('<DInputSelect />', () => {
       expect(select).toHaveClass('is-valid');
     });
 
-    it('should be disabled and show a spinner when loading', () => {
+    it('should show a spinner when loading, without disabling the select', () => {
       render(
         <DContextProvider>
           <DInputSelect label="Loading Select" options={[]} loading />
@@ -101,10 +101,21 @@ describe('<DInputSelect />', () => {
       );
 
       const select = screen.getByLabelText('Loading Select');
-      expect(select).toBeDisabled();
+      expect(select).toBeEnabled();
+      expect(select).toHaveAttribute('aria-busy', 'true');
 
       const spinner = screen.getByRole('status', { hidden: true });
       expect(spinner).toBeInTheDocument();
+    });
+
+    it('should still be disabled by `disabled`, with or without loading', () => {
+      render(
+        <DContextProvider>
+          <DInputSelect label="Loading Select" options={[]} disabled loading />
+        </DContextProvider>,
+      );
+
+      expect(screen.getByLabelText('Loading Select')).toBeDisabled();
     });
 
     it.each(['sm', 'lg'])('should render with the correct size class for size "%s"', (size) => {
