@@ -1040,7 +1040,7 @@ export function buildContexts(blocks, root) {
         if (!wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) continue;
         if (k === 0) return 'same';
         const combinators = Array.from({ length: k }, (_, i) => pieces[2 * i + 1]);
-        return combinators.every((c) => /^\s*>?\s*$/.test(c)) ? 'ancestor' : 'sibling';
+return /^\s*>?\s*$/.test(combinators[0]) ? 'ancestor' : 'sibling';
       }
       return null;
     };
