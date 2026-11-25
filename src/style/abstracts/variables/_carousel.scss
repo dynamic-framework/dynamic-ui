@@ -13,6 +13,13 @@ $carousel-indicator-active-border: var(--#{$prefix}primary) !default;
 $carousel-indicator-hover-bg: var(--#{$prefix}primary-200) !default;
 $carousel-control-bg: var(--#{$prefix}primary) !default;
 $carousel-control-width: 24px !default;
+
+// Siluetas en negro literal: se usan como máscara y ahí sólo cuenta el alfa.
+// El color lo pone `--bs-carousel-control-icon-color` desde
+// base/_svg-icons.scss. Antes llevaban `fill='var(--bs-white)'` dentro del
+// SVG, que no resuelve, así que las flechas salían negras.
+$carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/></svg>") !default;
+$carousel-control-next-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/></svg>") !default;
 $carousel-control-height: 24px !default;
 $carousel-control-radius: 48px !default;
 $carousel-caption-color: var(--#{$prefix}white) !default;

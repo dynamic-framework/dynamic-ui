@@ -7,6 +7,7 @@
   --#{$prefix}collapse-button-padding-x: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}collapse-button-padding-y: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}collapse-button-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}collapse-icon-color: var(--#{$prefix}body-color);
   // Body
   --#{$prefix}collapse-body-padding-x: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}collapse-body-padding-y: var(--#{$prefix}ref-spacer-4);
@@ -20,6 +21,10 @@
   background-color: var(--#{$prefix}collapse-bg);
   border-radius: var(--#{$prefix}collapse-border-radius);
   box-shadow: var(--#{$prefix}collapse-box-shadow);
+
+  .collapse-icon {
+    --#{$prefix}icon-component-color: var(--#{$prefix}collapse-icon-color);
+  }
 
   .collapse-button {
     display: flex;
