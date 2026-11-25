@@ -53,6 +53,11 @@ jobs:
         # quejarse y stylelint no ve: el var() cae a su respaldo o deja la
         # declaración inválida. Ver #1117.
         run: npm run validate:css-vars
+      - name: Check SVG data URIs
+        # Un SVG servido como imagen no hereda las custom properties de la
+        # página: un var() dentro del data URI se queda sin valor y la
+        # propiedad cae a su valor inicial, sin ningún error visible.
+        run: npm run check:svg-vars
       - name: Validate api.json
         # El build genera registry/api.json; el schema se genera aquí.
         run: |

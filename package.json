@@ -92,7 +92,8 @@
     "commitlint": "commitlint --edit",
     "verify": "node scripts/verify.js",
     "axe": "npx tsx scripts/generate-a11y-report.ts",
-    "axe:browser": "npx tsx scripts/generate-a11y-browser-warnings.ts"
+    "axe:browser": "npx tsx scripts/generate-a11y-browser-warnings.ts",
+    "check:svg-vars": "node scripts/svg-vars.mjs"
   },
   "engines": {
     "node": ">=22.0.0"
