@@ -38,6 +38,8 @@
 @import "body";
 @import "badge";
 @import "accordion";
+// Después de los componentes de Bootstrap: convierte sus iconos SVG a máscara.
+@import "svg-icons";
 @import "form-switch";
 @import "form-check";
 @import "form-control";
