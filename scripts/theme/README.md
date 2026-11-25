@@ -242,7 +242,7 @@ comprueba es la forma.
 
 ### Hasta dónde llega una zona
 
-Una zona no es un tema aparte: es un subárbol del mismo documento, y hay dos
+Una zona no es un tema aparte: es un subárbol del mismo documento, y hay tres
 cosas que no hereda solas.
 
 **Los wrappers de color se computan donde se declaran.** La librería define
@@ -289,6 +289,34 @@ su sitio, y el generador no lo repite. Un triplete que vuelve al del padre
 es el que corresponde. Los bloques de `components`, globales o de
 la zona, siguen la misma regla: un triplete redefinido en `.card` lleva su
 wrapper en `.card`.
+
+**Los colores de los iconos monocromos se leen en el componente.** El toggler
+del navbar, el chevron del acordeón, los controles del carrusel y el botón de
+cierre se pintan con un `background-color` sobre una máscara, y ese color no se
+declara en `:root` justamente por lo anterior: ahí quedaría congelado con los
+valores del raíz. Cada componente lo lee con su valor por defecto como respaldo,
+
+```css
+.accordion-button::after {
+  background-color: var(--bs-accordion-btn-icon-color, var(--bs-body-color));
+}
+```
+
+así que sin theme se resuelve en el propio elemento y sigue a la zona, y un
+theme puede fijarlo en `:root` o en una zona y gana sobre el respaldo.
+
+Al no declararlos nadie, estos tokens no están en `known-tokens.json` —salvo
+`--bs-navbar-toggler-icon-color`, que `.navbar-dark` sí declara—, así que un
+`var()` a uno de ellos desde el theme deja la propiedad en su valor inicial: en
+el theme se declaran, no se referencian.
+
+| Token | Respaldo |
+| --- | --- |
+| `--bs-navbar-toggler-icon-color` | `rgba(var(--bs-body-color-rgb), .75)` |
+| `--bs-accordion-btn-icon-color` | `var(--bs-body-color)` |
+| `--bs-accordion-btn-active-icon-color` | `var(--bs-primary-600)` |
+| `--bs-carousel-control-icon-color` | `var(--bs-white)` |
+| `--bs-btn-close-icon-color` | `var(--bs-black)` |
 
 **Y la zona tiene que pintarse.** `--bs-body-bg` y `--bs-body-color` las aplica
 la librería sobre `body`; un subárbol a media página nunca pasa por esa regla.

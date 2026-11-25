@@ -71,6 +71,42 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
 |-----------------------------------------------------|---------------------|-----------------|-----------------------------|
 | --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color          |
 | --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow            |
+
+### Icons
+
+The mark drawn inside the box is an SVG served as a data URL. Each state reads its own variable,
+declared on \`:root\`, so overriding it changes every checkbox at once.
+
+| Variable                                       | Class  | Type         | Description                                |
+|------------------------------------------------|--------|--------------|--------------------------------------------|
+| --${PREFIX_BS}form-check-icon-checkbox         | :root  | data url svg | Tick of a checked checkbox                 |
+| --${PREFIX_BS}form-check-icon-indeterminate    | :root  | data url svg | Dash of an indeterminate checkbox          |
+| --${PREFIX_BS}form-check-icon-radio            | :root  | data url svg | Dot of a checked radio (\`type="radio"\`)   |
+
+\`\`\`css
+/* After dynamic-ui.css */
+:root {
+  /* A thicker tick, in the same white the default uses */
+  --${PREFIX_BS}form-check-icon-checkbox:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m3 8 3.5 3.5L13 5'/></svg>");
+
+  /* A wider dash for the indeterminate state */
+  --${PREFIX_BS}form-check-icon-indeterminate:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='%23fff' stroke-linecap='round' stroke-width='3' d='M5 10h10'/></svg>");
+}
+\`\`\`
+
+Two things to keep in mind when writing the value:
+
++ **The color inside the SVG has to be a literal.** A \`var()\` there does not resolve: the browser
+renders an SVG used as an image as a separate document, which does not inherit the page's custom
+properties, so the fill falls back to its initial value. Write \`%23fff\`, \`rgb(255 255 255)\` or a
+named color — not \`var(--${PREFIX_BS}white)\`.
++ **Percent-encode \`#\`.** Inside a URL it starts a fragment, so a hex color has to be written as
+\`%23fff\`. Using \`rgb()\` or a named color avoids the question.
+
+The box itself is not part of the icon: its fill and border come from \`background-color\` and
+\`border-color\` on \`.form-check-input\`, which follow the theme on their own.
         `,
       },
     },
