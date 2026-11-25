@@ -1029,20 +1029,30 @@ export function buildContexts(blocks, root) {
     // ruta cualificada, el prefijo MÁS LARGO de `bare` que la capa reconoce
     // (`.nav-pills + .nav-pills`). La zona está en este elemento sólo si esa
     // ruta es exactamente el primer compuesto.
-    const zoneIsThisElement = (bare) => {
+    // Dónde cae la zona respecto del elemento de esta capa: en él, en un
+    // ancestro suyo, o fuera de su rama. Lo tercero pasa con un combinador
+    // hermano, y es distinto de las otras dos: entre hermanos no se hereda
+    // nada, así que el elemento medido está FUERA de la zona y lo que no
+    // declare le llega del raíz, no del contexto de la zona.
+    const zoneRelation = (bare) => {
       const pieces = splitCompounds(normalizeSelector(bare));
-      for (let k = (pieces.length - 1) / 2; k > 0; k -= 1) {
-        if (wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) return false;
+      for (let k = (pieces.length - 1) / 2; k >= 0; k -= 1) {
+        if (!wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) continue;
+        if (k === 0) return 'same';
+        const combinators = Array.from({ length: k }, (_, i) => pieces[2 * i + 1]);
+        return combinators.every((c) => /^\s*>?\s*$/.test(c)) ? 'ancestor' : 'sibling';
       }
-      return wanted.has(normalizeSelector(pieces[0]))
-        && (pieces.length === 1 || /^\s*>?\s*$/.test(pieces[1]));
+      return null;
     };
     let attached = false;
+    let sibling = false;
     for (const block of blocks) {
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare, sameElement } = splitZone(alternative);
         if (!sameElement || altZone !== zone) continue;
-        if (zoneIsThisElement(bare)) attached = true;
+        const relation = zoneRelation(bare);
+        if (relation === 'same') attached = true;
+        if (relation === 'sibling') sibling = true;
       }
     }
 
@@ -1080,6 +1090,7 @@ export function buildContexts(blocks, root) {
       || (a.weight - b.weight));
     const layer = new Map(candidates.map(({ name, entry }) => [name, entry]));
     layer.attached = attached;
+    layer.sibling = sibling;
     return layer;
   };
 
@@ -1090,9 +1101,11 @@ export function buildContexts(blocks, root) {
     const layers = groups.map((selectors) => layerFor(zone, selectors));
     return {
       layers,
-      // Si la zona va pegada a alguno de los elementos, el padre de la cadena
-      // está fuera de ella: lo que la zona declara ya entró en su capa.
-      attached: layers.some((layer) => layer.attached),
+      // El padre de la cadena está fuera de la zona en dos casos: si la zona
+      // va pegada a alguno de los elementos —lo que declara ya entró en su
+      // capa— o si está en un hermano, y entonces el elemento medido nunca
+      // estuvo dentro.
+      attached: layers.some((layer) => layer.attached || layer.sibling),
       has: (name) => layers.some((layer) => layer.has(name)),
       get: (name) => [...layers].reverse().find((layer) => layer.has(name))?.get(name),
     };

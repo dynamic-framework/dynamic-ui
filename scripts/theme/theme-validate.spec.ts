@@ -3284,6 +3284,37 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(result.status).toBe(1);
   });
 
+  it('lo que el hermano hereda viene de fuera de la zona, no de ella', () => {
+    // Complemento del caso anterior. Allí el fondo lo declaraba la librería
+    // sobre el componente, así que la cadena no llegaba a consultarse; aquí el
+    // texto depende de un `--bs-white: inherit` del enlace.
+    //
+    // El enlace cuelga del segundo `.nav-pills`, que es hermano de la zona y
+    // por tanto está FUERA de ella: ese `inherit` toma el blanco del raíz, no
+    // el negro que la zona llama blanco. Chromium: blanco sobre negro, 21:1.
+    // Arrancando la cadena en el contexto de la zona salía un falso 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      '[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active {',
+      '  --bs-white: inherit;',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
   it('ya no avisa `zona-pegada`', () => {
     // El aviso existía porque la forma pegada se medía como si la zona fuera
     // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.
