@@ -347,10 +347,10 @@ function collectProjectTypes(type, checker, found, seen = new Set()) {
 }
 
 /* eslint-disable no-bitwise */
-const PRIMITIVE_OR_LITERAL = ts.TypeFlags.StringLike | ts.TypeFlags.NumberLike
+export const PRIMITIVE_OR_LITERAL = ts.TypeFlags.StringLike | ts.TypeFlags.NumberLike
   | ts.TypeFlags.BooleanLike | ts.TypeFlags.BigIntLike | ts.TypeFlags.Null | ts.TypeFlags.Undefined;
 
-const ALIAS_FORMAT = ts.TypeFormatFlags.InTypeAlias | ts.TypeFormatFlags.NoTruncation;
+export const ALIAS_FORMAT = ts.TypeFormatFlags.InTypeAlias | ts.TypeFormatFlags.NoTruncation;
 /* eslint-enable no-bitwise */
 
 /**
@@ -407,15 +407,22 @@ function typeDefinition(symbol, checker, knownTypeNames) {
 /** Marcador con el que el checker trunca un tipo largo (`... 7 more ...`). */
 export const TRUNCATED = /\.\.\. \d+ more \.\.\./;
 
+/** ¿Es un parámetro de tipo, directo o como miembro de una unión? (`IsMulti | undefined`) */
+function hasTypeParameter(type) {
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.TypeParameter) return true;
+  return type.isUnionOrIntersection() && type.types.some(hasTypeParameter);
+}
+
 /**
- * Devuelve la prop con su `type` completo si el parser lo truncó (#1306).
- * react-docgen-typescript arma `type.name` con `checker.typeToString(type)`
- * sin `NoTruncation`, y ninguna opción lo activa. Solo se rehacen los tipos
- * truncados: el parser formatea las uniones y las intersecciones a su manera,
- * y rehacerlos todos cambiaría el `type` de props que hoy están bien.
+ * `type` del checker cuando el del parser no es el declarado (#1306, #1351):
+ * truncado, prop que también declara `node_modules` (el parser muestra la
+ * intersección como unión) o parámetro de tipo (lo cambia por su restricción).
  */
-function untruncated(prop, propType, checker) {
-  if (!TRUNCATED.test(prop.type?.name ?? '')) return prop;
+function declaredType(prop, symbol, propType, checker) {
+  const files = (symbol.declarations ?? []).map((d) => d.getSourceFile().fileName);
+  const mixed = files.some(inNodeModules) && files.some((f) => !inNodeModules(f));
+  if (!TRUNCATED.test(prop.type?.name ?? '') && !mixed && !hasTypeParameter(propType)) return prop;
   const name = checker.typeToString(propType, undefined, ts.TypeFormatFlags.NoTruncation)
     .replace(/import\("[^"]*"\)\./g, '');
   return { ...prop, type: { name } };
@@ -437,7 +444,7 @@ function resolveProjectTypes(fn, props, checker) {
     const symbol = propsType.getProperty(name);
     if (!symbol) return [name, original];
     const propType = checker.getTypeOfSymbolAtLocation(symbol, fn);
-    const prop = untruncated(original, propType, checker);
+    const prop = declaredType(original, symbol, propType, checker);
     const found = new Set();
     collectProjectTypes(propType, checker, found);
     const replacements = [];

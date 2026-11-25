@@ -5,23 +5,25 @@
  * Los `.d.ts` salen del código que se ejecuta y mandan: si api.json difiere
  * de ellos, el error está en el generador. Lo usa `validate-registry.mjs`.
  *
- * Comprueba (#1341, #1306):
- *   - cada export `D*` del índice que es un componente tiene entrada en
+ * Comprueba (#1341, #1306, #1351):
+ *   - cada export del índice en mayúscula e invocable tiene entrada en
  *     `components` o en `contexts`, salvo los de `NON_COMPONENT_EXPORTS`;
  *   - cada entrada de `components` que no es un export lleva `parent` y
  *     `accessor`, y todo `accessor` resuelve a un miembro real del padre;
  *   - el `required` de cada prop coincide con su opcionalidad en el `.d.ts`;
+ *   - el `type` de cada prop coincide con el del `.d.ts` (`normalizeType`);
  *   - ningún `type`, `returnType` ni `signature` está truncado
  *     (`... N more ...`).
- * No compara el texto de los `type`.
  */
 
 import { existsSync } from 'fs';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, sep } from 'path';
 import { createRequire } from 'module';
 
 import { ROOT, TSCONFIG_PATH } from './public-hooks.mjs';
-import { TRUNCATED } from './component-docgen.mjs';
+import {
+  ALIAS_FORMAT, PRIMITIVE_OR_LITERAL, TRUNCATED,
+} from './component-docgen.mjs';
 
 const require = createRequire(import.meta.url);
 const ts = require('typescript');
@@ -37,8 +39,8 @@ export const TYPES_INDEX = resolve(
 );
 
 /**
- * Exports `D*` invocables que no son componentes y por eso no tienen entrada
- * en api.json, con el motivo.
+ * Exports en mayúscula invocables que no son componentes y por eso no tienen
+ * entrada en api.json, con el motivo.
  */
 export const NON_COMPONENT_EXPORTS = {
   // En React 19 un Context también se puede renderizar como provider, así que
@@ -62,6 +64,62 @@ function typeEntries(value, prefix = '$') {
   });
 }
 
+const printer = ts.createPrinter({ removeComments: true });
+
+/** Miembros de una unión o intersección, aplanando las anidadas del mismo tipo. */
+function flatMembers(node, isKind) {
+  return node.types.flatMap((member) => {
+    const inner = ts.isParenthesizedTypeNode(member) ? member.type : member;
+    return isKind(inner) ? flatMembers(inner, isKind) : [member];
+  });
+}
+
+/**
+ * Imprime `node` en una línea: expande las referencias a `aliases` (nombre →
+ * nodo) y ordena los miembros de uniones e intersecciones.
+ */
+function printSorted(node, source, aliases) {
+  const print = (n) => printer.printNode(ts.EmitHint.Unspecified, n, source);
+  const visit = (n) => {
+    if (ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && !n.typeArguments
+      && aliases.has(n.typeName.text)) {
+      return visit(aliases.get(n.typeName.text));
+    }
+    const visited = ts.visitEachChild(n, visit, ts.nullTransformationContext);
+    const out = ts.setEmitFlags(visited, ts.EmitFlags.SingleLine);
+    const isKind = ts.isUnionTypeNode(out) ? ts.isUnionTypeNode : ts.isIntersectionTypeNode;
+    if (!isKind(out)) return out;
+    const sorted = flatMembers(out, isKind).sort((a, b) => print(a).localeCompare(print(b)));
+    const types = ts.factory.createNodeArray(sorted);
+    return ts.isUnionTypeNode(out)
+      ? ts.factory.updateUnionTypeNode(out, types)
+      : ts.factory.updateIntersectionTypeNode(out, types);
+  };
+  return print(visit(node));
+}
+
+/**
+ * Tipo en texto con espacios canónicos, los alias de `aliases` (`[nombre, tipo]`)
+ * expandidos y uniones e intersecciones ordenadas en todos los niveles. Un texto
+ * que no parsea como tipo se devuelve tal cual.
+ */
+export function normalizeType(text, aliases = []) {
+  // Los alias van en el mismo archivo para que el printer lea su texto.
+  const source = ts.createSourceFile(
+    'type.ts',
+    [`type T = ${text};`, ...aliases.map(([name, type]) => `type ${name} = ${type};`)].join('\n'),
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const [statement, ...rest] = source.statements;
+  const parsed = !source.parseDiagnostics.length && rest.length === aliases.length
+    && ts.isTypeAliasDeclaration(statement) && statement.name.text === 'T';
+  if (!parsed) return text;
+  const aliasNodes = new Map(rest.map((alias) => [alias.name.text, alias.type]));
+  return printSorted(statement.type, source, aliasNodes);
+}
+
 /** Crea un programa sobre el índice de los tipos publicados. */
 function createTypesProgram(indexPath) {
   const { options } = ts.parseJsonConfigFileContent(
@@ -75,7 +133,8 @@ function createTypesProgram(indexPath) {
 /**
  * Devuelve los problemas de `data` frente a los tipos de `indexPath`:
  * `{ missingExports, orphanEntries, badAccessors, requiredMismatches,
- *    unresolvedProps, truncatedTypes }`, cada uno una lista de líneas.
+ *    typeMismatches, unresolvedProps, truncatedTypes }`, cada uno una lista
+ *    de líneas.
  */
 export function compareWithTypes(data, indexPath = TYPES_INDEX) {
   if (!existsSync(indexPath)) {
@@ -100,7 +159,7 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
   const isCallable = (type) => !!type && type.getCallSignatures().length > 0;
 
   const missingExports = [...exportTypes]
-    .filter(([name, type]) => /^D[A-Z]/.test(name) && isCallable(type))
+    .filter(([name, type]) => /^[A-Z]/.test(name) && isCallable(type))
     .map(([name]) => name)
     .filter((name) => !NON_COMPONENT_EXPORTS[name] && !components[name] && !contexts[name]);
 
@@ -123,7 +182,45 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
     }
   });
 
+  // Alias literales del proyecto, expandidos como en el generador. Un nombre
+  // con dos definiciones distintas no se expande.
+  const typesDir = dirname(indexPath);
+  const literalAliases = new Map();
+  program.getSourceFiles()
+    // TypeScript usa `/` en todas las plataformas; resolve lo pasa al separador del sistema.
+    .filter((file) => resolve(file.fileName).startsWith(`${typesDir}${sep}`))
+    .forEach((file) => file.statements.forEach((statement) => {
+      if (!ts.isTypeAliasDeclaration(statement) || statement.typeParameters) return;
+      const declared = checker.getTypeAtLocation(statement.name);
+      const members = declared.isUnion() ? declared.types : [declared];
+      // eslint-disable-next-line no-bitwise
+      if (!members.every((t) => t.flags & PRIMITIVE_OR_LITERAL)) return;
+      const name = statement.name.text;
+      const text = checker.typeToString(declared, undefined, ALIAS_FORMAT);
+      const conflicting = literalAliases.has(name) && literalAliases.get(name) !== text;
+      literalAliases.set(name, conflicting ? null : text);
+    }));
+  const aliasReplacements = [...literalAliases].filter(([, text]) => text !== null);
+
+  /** Tipo de la prop en el `.d.ts`; una unión de literales, miembro a miembro (`Placement`). */
+  const declaredText = (type) => {
+    const members = type.isUnion() ? type.types : [type];
+    // eslint-disable-next-line no-bitwise
+    if (members.length > 1 && members.every((t) => t.flags & PRIMITIVE_OR_LITERAL)) {
+      const texts = members.map((t) => checker.typeToString(t));
+      const booleans = texts.filter((t) => t === 'true' || t === 'false');
+      return [
+        ...texts.filter((t) => !booleans.includes(t)),
+        ...(booleans.length === 2 ? ['boolean'] : booleans),
+      ].join(' | ');
+    }
+    return checker.typeToString(type, undefined, ts.TypeFormatFlags.NoTruncation)
+      .replace(/import\("[^"]*"\)\./g, '');
+  };
+  const canonical = (text) => normalizeType(text, aliasReplacements);
+
   const requiredMismatches = [];
+  const typeMismatches = [];
   const unresolvedProps = [];
   [...Object.entries(components), ...Object.entries(contexts)].forEach(([name, entry]) => {
     const componentType = exportTypes.get(name) ?? (entry.accessor ? accessorType(entry) : null);
@@ -152,6 +249,14 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
           + `required: ${JSON.stringify(prop.required)} en api.json`,
         );
       }
+      // Un tipo truncado ya se reporta en truncatedTypes.
+      if (typeof prop.type !== 'string' || TRUNCATED.test(prop.type)) return;
+      const declaredType = checker.getTypeOfSymbol(symbol);
+      if (canonical(prop.type) !== canonical(declaredText(declaredType))) {
+        const shown = checker.typeToString(declaredType, undefined, ts.TypeFormatFlags.NoTruncation)
+          .replace(/import\("[^"]*"\)\./g, '');
+        typeMismatches.push(`${name}.${propName}: ${JSON.stringify(prop.type)} en api.json, ${JSON.stringify(shown)} en el .d.ts`);
+      }
     });
   });
 
@@ -164,6 +269,7 @@ export function compareWithTypes(data, indexPath = TYPES_INDEX) {
     orphanEntries,
     badAccessors,
     requiredMismatches,
+    typeMismatches,
     unresolvedProps,
     truncatedTypes,
   };
