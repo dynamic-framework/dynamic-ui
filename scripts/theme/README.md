@@ -505,7 +505,8 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   casi todos los roles son los pasos 600 y 700 de la rampa. Por eso un bloque
   que aclara el fondo de reposo y oscurece el texto no basta: hover y active
   siguen pintando el relleno oscuro de la librería bajo ese texto oscuro, y hay
-  que declarar también sus fondos.
+  que declarar también sus fondos. Un botón sólido sin bloque propio no entra
+  en esta regla: lo mide `contraste-horneado`, y sólo en reposo.
   El texto de cada estado es el que gana sobre el botón: el del theme o, si
   no lo fija, el que pone la librería (`--bs-btn-outline-<role>-color`,
   `-hover-color` y `-active-color`). El botón con contorno no se rellena: la
@@ -590,7 +591,7 @@ valor al que cae cuando nadie la toca.
 | `.alert-<role>` | `--bs-<role>-text-emphasis` | `--bs-<role>-bg-subtle` |
 | `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
 | `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
-| `.btn-<role>` sin override | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+| `.btn-<role>` sin bloque propio, sólo en reposo | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
 
 El valor por defecto de cada variable es el que declara la librería, y se
 resuelve donde ella lo declara: en `:root` las variables del role y del botón,
@@ -625,13 +626,25 @@ reposo el fondo es transparente y detrás está la superficie del contexto; sól
 al rellenarse (hover/active) el texto cae sobre el color del role, y ahí el que
 manda es `--bs-btn-hover-color`.
 
-En un botón sólido los tres rellenos los pinta siempre la librería, así que los
-tres estados se miden siempre. Un bloque que declara sólo `--bs-btn-color` y
-`--bs-btn-bg` deja hover y active con el par horneado: el texto es el
-`color-contrast()` que Sass calculó para la paleta anterior y el fondo, el paso
-600 o 700 del role nuevo. Si ese par no llega a AA, el arreglo es declarar
-`--bs-btn-hover-bg` y `--bs-btn-active-bg` (y sus `-border-color`, que la
-librería deja en el mismo paso) junto a los textos de cada estado.
+En un botón sólido los tres rellenos los pinta la librería, pero los tres
+estados se miden sólo cuando el theme le da un bloque `.btn-<role>`: es ese
+bloque el que lleva el botón a `contraste-boton`. Un bloque que declara sólo
+`--bs-btn-color` y `--bs-btn-bg` deja hover y active con el par horneado —el
+texto es el `color-contrast()` que Sass calculó para la paleta anterior y el
+fondo, el paso 600 o 700 del role nuevo— y los dos se reportan. Si no llegan a
+AA, el arreglo es declarar `--bs-btn-hover-bg` y `--bs-btn-active-bg` (y sus
+`-border-color`, que la librería deja en el mismo paso) junto a los textos de
+cada estado.
+
+**Sin un bloque `.btn-<role>`, del botón sólido se mide sólo el reposo.** La
+fila de la tabla es ese par y nada más: un theme que mueve la rampa del role y
+deja que la librería pinte el botón entero puede dejar hover o active por
+debajo de AA sin que el validador diga nada, porque el fondo de esos dos
+estados sale de los pasos 600 y 700 de la rampa nueva y el texto sigue siendo
+el que Sass horneó contra la anterior. Es el único camino del botón sólido que
+no se cubre: hay que mirarlo en la preview, o declarar el bloque `.btn-<role>`
+—aunque sólo repita lo que ya pinta la librería— para que los tres estados
+entren en `contraste-boton`.
 
 Un color escrito literal (`#fff`) donde se esperaba una referencia se acepta y se
 anota como `literal`: se mide tal cual, pero queda fuera del theme y cambiar el
