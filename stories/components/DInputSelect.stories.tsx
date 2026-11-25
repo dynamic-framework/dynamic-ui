@@ -42,6 +42,38 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
 | --${PREFIX_BS}form-text-padding           | .form-text   | css length unit | Hint padding                |
 | --${PREFIX_BS}form-text-gap               | .form-text   | css length unit | Space between hint elements |
 | --${PREFIX_BS}form-text-color             | .form-text   | css color unit  | Hint color                  |
+
+### Icon
+
+The chevron on the right of the control is an SVG served as a data URL, declared on \`:root\`:
+overriding it there changes every native select at once.
+
+| Variable                           | Class  | Type         | Description            |
+|------------------------------------|--------|--------------|------------------------|
+| --${PREFIX_BS}form-select-icon     | :root  | data url svg | Chevron of the select  |
+
+\`\`\`css
+/* After dynamic-ui.css */
+:root {
+  /* A thicker chevron, in the brand gray */
+  --${PREFIX_BS}form-select-icon:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%236d6d82' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+}
+\`\`\`
+
+Two things to keep in mind when writing the value:
+
++ **The color inside the SVG has to be a literal.** A \`var()\` there does not resolve: the browser
+renders an SVG used as an image as a separate document, which does not inherit the page's custom
+properties, so the stroke falls back to its initial value. Write \`%236d6d82\`,
+\`rgb(109 109 130)\` or a named color — not \`var(--${PREFIX_BS}gray-500)\`.
++ **Percent-encode \`#\`.** Inside a URL it starts a fragment, so a hex color has to be written as
+\`%236d6d82\`. Using \`rgb()\` or a named color avoids the question.
+
+\`:root\` is the place to theme every select. For a single one, \`.form-select\` exposes
+\`--${PREFIX_BS}form-select-bg-img\`, which reads the variable above and can be set on the element
+instead. The drawn size is not a CSS variable: it is fixed at build time by the
+\`$form-select-bg-size\` Sass variable, so the SVG has to be authored to fit it.
         `,
       },
     },

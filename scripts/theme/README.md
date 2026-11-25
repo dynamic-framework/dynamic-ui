@@ -42,7 +42,7 @@ npm run theme:expand -- examples/themes/theme-ejemplo.json
 npm run theme:validate -- examples/themes/theme-ejemplo.css
 ```
 
-Los tests viven en `theme-validate.spec.ts` y `theme-tokens.spec.ts`, y corren con `npm test`.
+Los tests viven en `theme-validate.spec.ts`, `theme-tokens.spec.ts` y `theme-diff.spec.ts`, y corren con `npm test`.
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
@@ -65,6 +65,60 @@ tocar el HTML:
 ```
 
 Un theme que no declare ninguna zona se muestra igual, sólo con la columna clara.
+
+## Diff entre versiones
+
+`theme-diff.mjs` compara el CSS compilado de dos versiones y describe en JSON
+lo que cambia para un theme o un UI Kit: las custom properties de todo el CSS
+y las clases que aparecen o desaparecen.
+
+```bash
+npm run theme:diff -- <prev>/dynamic-ui.css <next>/dynamic-ui.css [--out changes.json]
+```
+
+Cada release lo publica en el CDN, comparado contra la mayor versión estable
+anterior del índice (en un backport, 2.11.1 se compara contra 2.11.0). Si la
+versión es el latest del índice, también se publica en `latest/`:
+
+```
+https://cdn.dynamicframework.dev/assets/<semver>/ui-react/tokens/changes.json
+https://cdn.dynamicframework.dev/assets/latest/ui-react/tokens/changes.json
+```
+
+```json
+{
+  "from": "2.12.0",
+  "to": "2.12.1",
+  "customProperties": {
+    "added":   [{ "name": "--bs-btn-text-decoration", "selector": ".btn", "media": null, "value": "none" }],
+    "removed": [{ "name": "--bs-…", "selector": "…", "media": null, "value": "…" }],
+    "changed": [{ "name": "--bs-…", "selector": ":root", "media": null, "from": "…", "to": "…" }],
+    "renamed": [{ "from": "--bs-…", "to": "--bs-…", "selector": "…", "media": null, "value": "…" }]
+  },
+  "classes": { "added": [".d-skeleton"], "removed": [] }
+}
+```
+
+- Una custom property se identifica por nombre, selector y `media` (la cadena
+  de `@media`/`@supports` que la envuelve, o `null`). Entran `:root`,
+  componentes (`.btn`, `.alert`…), utilidades, zonas
+  (`[data-bs-theme="dark"]`) y cualquier at-rule; quedan fuera las de
+  `@keyframes`.
+- Las listas de selectores se separan, así que reagrupar reglas en Sass no
+  aparece como cambio. `[data-bs-theme=dynamic]` se reporta como `:root`.
+- `changed` ignora diferencias de espacios y de mayúsculas en hex; agregar o
+  quitar `!important` sí cuenta.
+- `renamed` empareja una variable eliminada con una agregada del mismo
+  selector y `media` cuando son las únicas de su lado con ese valor y los
+  nombres comparten algún segmento (`--bs-gray-25` → `--bs-neutral-25`). El
+  par sale de `removed` y `added`. Con más de un candidato no se adivina y
+  quedan en `removed` y `added`.
+- `classes` lista los nombres de clase que aparecen o desaparecen de los
+  selectores, en cualquier regla.
+- Las declaraciones normales (`padding`, `color`…) quedan fuera: una release
+  puede mover cientos y taparían lo que un theme tiene que revisar.
+- La entrada es el CSS y no `known-tokens.json`: el inventario solo tiene
+  nombres, sin valores ni selector.
 
 ## Entrada
 
@@ -165,6 +219,11 @@ comprueba es la forma.
 - **`root`** — toda clave empieza por `--bs-`. Se emite al final del bloque
   raíz, así que si repite una variable derivada, gana la tuya; el script lo
   avisa por la terminal.
+- En las tres secciones, una variable que no termina en `-rgb` lleva un color
+  completo: `"--bs-btn-color": "var(--bs-white-rgb)"`, un triplete literal o un
+  `var()` cuyo respaldo sea uno de los dos es un error. La librería la consume
+  como color (`color: var(--bs-btn-color)`) y un triplete ahí no se pinta; va
+  envuelto, `rgb(var(--bs-white-rgb))`, o apunta al wrapper, `var(--bs-white)`.
 - **`components`** — un bloque por `selector`. En `vars` van variables `--bs-*`
   del componente; en `declarations` sólo se admiten `padding`, `border-radius`,
   `border-color`, `font-family` y `font-variant-numeric`. Cualquier otra
@@ -183,7 +242,7 @@ comprueba es la forma.
 
 ### Hasta dónde llega una zona
 
-Una zona no es un tema aparte: es un subárbol del mismo documento, y hay dos
+Una zona no es un tema aparte: es un subárbol del mismo documento, y hay tres
 cosas que no hereda solas.
 
 **Los wrappers de color se computan donde se declaran.** La librería define
@@ -230,6 +289,34 @@ su sitio, y el generador no lo repite. Un triplete que vuelve al del padre
 es el que corresponde. Los bloques de `components`, globales o de
 la zona, siguen la misma regla: un triplete redefinido en `.card` lleva su
 wrapper en `.card`.
+
+**Los colores de los iconos monocromos se leen en el componente.** El toggler
+del navbar, el chevron del acordeón, los controles del carrusel y el botón de
+cierre se pintan con un `background-color` sobre una máscara, y ese color no se
+declara en `:root` justamente por lo anterior: ahí quedaría congelado con los
+valores del raíz. Cada componente lo lee con su valor por defecto como respaldo,
+
+```css
+.accordion-button::after {
+  background-color: var(--bs-accordion-btn-icon-color, var(--bs-body-color));
+}
+```
+
+así que sin theme se resuelve en el propio elemento y sigue a la zona, y un
+theme puede fijarlo en `:root` o en una zona y gana sobre el respaldo.
+
+Al no declararlos nadie, estos tokens no están en `known-tokens.json` —salvo
+`--bs-navbar-toggler-icon-color`, que `.navbar-dark` sí declara—, así que un
+`var()` a uno de ellos desde el theme deja la propiedad en su valor inicial: en
+el theme se declaran, no se referencian.
+
+| Token | Respaldo |
+| --- | --- |
+| `--bs-navbar-toggler-icon-color` | `rgba(var(--bs-body-color-rgb), .75)` |
+| `--bs-accordion-btn-icon-color` | `var(--bs-body-color)` |
+| `--bs-accordion-btn-active-icon-color` | `var(--bs-primary-600)` |
+| `--bs-carousel-control-icon-color` | `var(--bs-white)` |
+| `--bs-btn-close-icon-color` | `var(--bs-black)` |
 
 **Y la zona tiene que pintarse.** `--bs-body-bg` y `--bs-body-color` las aplica
 la librería sobre `body`; un subárbol a media página nunca pasa por esa regla.
@@ -338,6 +425,9 @@ salida respeta*).
 - Los colores viajan como triplete `"R, G, B"` sobre `--bs-<x>-rgb`. Nunca hex ni
   `rgb()` sobre el wrapper: la librería ya define
   `--bs-<x>: rgb(var(--bs-<x>-rgb))` en `src/style/root/_root.scss`.
+- Y al revés: una variable sin `-rgb` nunca lleva un triplete. Las variables de
+  color de componente (`--bs-btn-color`, `--bs-list-group-color`…) y los
+  wrappers se escriben `rgb(var(--bs-<x>-rgb))` o `var(--bs-<x>)`.
 - Rebrandear un role con rampa son **11 variables**: el base `-rgb` y las 10
   hojas (25, 50, 100, 200, 300, 400, 600, 700, 800, 900). El 500 no se declara
   con un valor propio: apunta al base.
@@ -387,7 +477,7 @@ salida respeta*).
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
-`where`, `vacio`, `ciclo`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`where`, `vacio`, `ciclo`, `triplete-sin-envolver`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
 `contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
@@ -399,6 +489,12 @@ resuelve el navegador:
 
 - Varias reglas `[data-bs-theme="<zona>"]` se aplican juntas: sus declaraciones
   se funden en orden de aparición antes de medir.
+- Una zona existe en cuanto un selector la nombra, con bloque propio o sin él:
+  una hoja que sólo lleva `[data-bs-theme="<zona>"] .list-group` se mide dentro
+  de esa zona. Lo que declara un bloque de componente sigue siendo del
+  componente, no de la zona. `:root, [data-bs-theme="<nombre>"]` no cuenta: ahí
+  el segundo selector es otro nombre para el raíz, que es como Bootstrap emite
+  el modo claro, y sus declaraciones ya están en el raíz.
 - Una custom property se resuelve donde se declara y se hereda ya calculada. Lo
   que la zona no declara vale dentro de ella lo mismo que en el raíz, aunque la
   zona cambie el token al que apunta. Eso incluye los wrappers de la librería:
@@ -447,6 +543,11 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
 - `superficie-heredada` — nota en un theme que no declara ninguna de las dos:
   las superficies se heredan de Dynamic.
+- `vacio` — error cuando el CSS no declara ninguna custom property `--bs-*`. Una
+  hoja de sólo zonas (`[data-bs-theme="<nombre>"]`, sin bloque raíz) no lo es:
+  se mide contra los valores por defecto de la librería, igual que una zona de
+  un theme completo que no redefine esas variables en `:root`. Así se puede
+  mantener una zona en un archivo aparte sin repetir el raíz.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
 - `zona-pegada` — aviso por cada selector con el prefijo de zona pegado
   (`[data-bs-theme="x"].clase`): se mide como si la zona fuera un ancestro, y
@@ -478,6 +579,16 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   el valor que gana si la zona se reparte en varias reglas). Las reglas de
   contraste que no pueden medir un par por esa causa no añaden
   `contraste-irresoluble`.
+- `triplete-sin-envolver` — error en cada variable `--bs-*` que no termina en
+  `-rgb` y vale un triplete: literal (`255, 255, 255`), un `var()` a una `-rgb`
+  (`var(--bs-white-rgb)`) o un `var()` cuyo respaldo sea uno de esos. Se revisa
+  en todos los bloques: raíz, zonas y componentes, también dentro de `@media`
+  (ahí sin las excepciones de abajo). La librería consume esas
+  variables como color completo, así que el navegador descarta la propiedad y
+  el elemento hereda el color del padre. Un wrapper con triplete en el raíz ya
+  lo da `wrapper`, y un `--bs-border-color` con triplete literal en el raíz,
+  `border-color`: no se repiten. Las reglas de contraste no miden un lado que
+  pase por una de estas variables, y tampoco añaden `contraste-irresoluble`.
 - `contraste-horneado` — los pares que la librería resuelve por su cuenta y que
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo

@@ -30,7 +30,7 @@ type Api = {
     types?: Record<string, { type: string; fields?: Record<string, { type: string }> }>;
   }>;
   contexts: Record<string, {
-    props: Record<string, { description: string; required: boolean }>;
+    props: Record<string, { type: string; description: string; required: boolean }>;
     types: Record<string, { description: string }>;
   }>;
   hooks: Record<string, {
@@ -275,6 +275,42 @@ describe('generate-api', () => {
 
   test('DInputCheck.type tiene el tipo propio, no el del atributo HTML', () => {
     expect(api.components.DInputCheck.props.type.type).toBe('"checkbox" | "radio"');
+  });
+
+  // #1351: el type sale como en el .d.ts.
+  test('una prop que comparte nombre con un atributo HTML conserva la intersección', () => {
+    expect(api.components.DButtonIcon.props.onClick.type).toBe(
+      '(MouseEventHandler<HTMLButtonElement> & ((event: MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void)) | undefined',
+    );
+    expect(api.components.DInputCheck.props.onChange.type).toBe(
+      '(ChangeEventHandler<HTMLInputElement, HTMLInputElement> & ((event: ChangeEvent<HTMLInputElement, Element>) => void)) | undefined',
+    );
+    expect(api.components.DInputCheck.props.value.type).toBe('string | (readonly string[] & string) | undefined');
+  });
+
+  test('un genérico conserva el parámetro de tipo', () => {
+    expect(api.components.DSelect.props.multi.type).toBe('IsMulti | undefined');
+  });
+
+  test('las props opcionales de contexts conservan | undefined', () => {
+    const { props } = api.contexts.DContextProvider;
+    expect(props.language.type).toBe('string | undefined');
+    expect(props.availablePortals.type).toBe('PortalAvailableList<T> | undefined');
+    expect(Object.entries(props)
+      .filter(([name, prop]) => !prop.required && name !== 'children' && !prop.type.endsWith('| undefined'))
+      .map(([name]) => name)).toEqual([]);
+  });
+
+  test('los componentes exportados que no empiezan por D tienen entrada', () => {
+    expect(api.components.EmptyState).toMatchObject({
+      sourcePath: 'src/components/DDataStateWrapper/components/EmptyState.tsx',
+      props: { icon: { defaultValue: 'FileText' } },
+    });
+    expect(api.components.ErrorState.props).toMatchObject({
+      retryMessage: { defaultValue: 'Retry' },
+      color: { defaultValue: 'danger' },
+    });
+    expect(api.components.LoadingState.props.ariaLabel.defaultValue).toBe('Loading...');
   });
   // #1341: required sigue la opcionalidad del tipo de las props, no la del
   // parser.
