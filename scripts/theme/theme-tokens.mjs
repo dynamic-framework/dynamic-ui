@@ -502,6 +502,17 @@ function parseWrapper(raw) {
   return parseVarCall(inner.slice(0, end).trim());
 }
 
+/** Triplete literal, `var()` a una `-rgb`, o un respaldo que termina en uno de los dos. */
+export function holdsBareTriplet(value) {
+  // Sin comentarios ni `!important`: no son parte del valor.
+  const raw = String(value).replace(/\/\*[\s\S]*?\*\//g, ' ').trim().replace(/\s*!\s*important$/i, '');
+  if (parseTriplet(raw)) return true;
+  const call = parseVarCall(raw);
+  if (!call) return false;
+  if (call.name.endsWith('-rgb')) return true;
+  return call.fallback !== undefined && holdsBareTriplet(call.fallback);
+}
+
 /**
  * Resuelve una custom property a un color tal como la ve un subárbol (una zona,
  * o un componente dentro de ella) que redefine algunas variables sobre su padre.
@@ -530,6 +541,8 @@ function parseWrapper(raw) {
  * e `invalidFormat` nombra la variable `-rgb` cuyo valor no es un triplete. Un
  * resultado lleva `kind`: 'triplet' si sale de un triplete y 'color' si sale de
  * un wrapper o un literal.
+ * `unwrappedIn` nombra la primera variable sin `-rgb` que recibe un triplete sin
+ * envolver.
  */
 export function resolveInherited(name, own, resolveParent, seen = new Set()) {
   if (!own.has(name)) return resolveParent(name);
@@ -572,13 +585,20 @@ function resolveOwn(name, own, resolveParent, path) {
         invalidFormat: name,
       };
     }
+    if (!isTriplet && resolved.rgb && resolved.kind === 'triplet' && !resolved.unwrappedIn) {
+      return { ...resolved, unwrappedIn: name };
+    }
     return resolved;
   };
 
   function resolveValue(value) {
     const raw = String(value).trim();
     const triplet = parseTriplet(raw);
-    if (triplet) return { rgb: triplet, source, token: name, kind: 'triplet' };
+    if (triplet) {
+      return {
+        rgb: triplet, source, token: name, kind: 'triplet', ...(!isTriplet && { unwrappedIn: name }),
+      };
+    }
 
     const call = parseVarCall(raw);
     if (call) return follow(call);
@@ -596,7 +616,9 @@ function resolveOwn(name, own, resolveParent, path) {
             reason: `${name} envuelve en rgb() a ${wrapped.name}, que ya vale un color completo`,
           };
         }
-        return { ...resolved, kind: 'color' };
+        // Envuelto en rgb(): ya es un color válido.
+        const { unwrappedIn, ...wrappedColor } = resolved;
+        return { ...wrappedColor, kind: 'color' };
       }
       // `transparent` no es un color sobre el que medir: lo que se ve es lo que
       // haya detrás, y eso lo decide quien mide.
@@ -944,11 +966,33 @@ export function splitZone(prelude) {
 export function buildContexts(blocks, root) {
   const inRoot = (name) => resolve(name, root);
   const zones = new Map();
+  const touch = (name, line) => {
+    if (!zones.has(name)) zones.set(name, { zone: name, own: new Map(), line });
+    return zones.get(name);
+  };
   for (const block of blocks) {
+    // Una zona existe en cuanto un selector la nombra, aunque el theme no le dé
+    // un bloque propio: `[data-bs-theme="z"] .list-group` ya crea el contexto
+    // en el que se mide esa lista. Sin esto, una hoja que sólo lleva bloques de
+    // componente dentro de la zona no se medía en ninguna parte.
+    for (const alternative of splitSelectorList(block.prelude)) {
+      const { zone, bare } = splitZone(alternative);
+      // `dynamic` tampoco es una zona: es el alias del raíz de Dynamic.
+      if (!zone || zone === 'dynamic') continue;
+      // En un bloque raíz, el selector de zona a secas es otro nombre para el
+      // raíz y sus declaraciones ya están en `root`: así emite Bootstrap el
+      // modo claro (`:root, [data-bs-theme="light"]`). Lo delata no tener
+      // parte de componente. Una alternativa que sí la tiene nombra una zona
+      // de verdad, aunque la lista lleve `:root` delante.
+      if (block.isRoot && bare === '') continue;
+      touch(zone, block.line);
+    }
+    // Sólo el bloque de la zona declara sobre el elemento que la lleva. Lo que
+    // declara un bloque de componente cae sobre el componente, y de eso se
+    // encarga `layerFor`.
     if (!block.zone) continue;
-    const zone = zones.get(block.zone) ?? { zone: block.zone, own: new Map(), line: block.line };
+    const zone = touch(block.zone, block.line);
     for (const [name, entry] of block.decls) cascadeSet(zone.own, name, entry);
-    zones.set(block.zone, zone);
   }
 
   /**
