@@ -42,12 +42,14 @@ default it follows the text color of the surface it sits on — including inside
 \`\`\`css
 /* After dynamic-ui.css */
 
-/* Every collapse */
-:root {
+/* Every collapse. The variable is declared on .collapse-container, so an
+   element's own declaration beats anything inherited from :root — target the
+   container, not the root. */
+.collapse-container {
   --${PREFIX_BS}collapse-icon-color: var(--${PREFIX_BS}primary);
 }
 
-/* Or just one, on the container */
+/* Or just one */
 .collapse-container.muted-chevron {
   --${PREFIX_BS}collapse-icon-color: var(--${PREFIX_BS}gray-500);
 }
