@@ -30,7 +30,7 @@ $accordion-button-active-color: var(--#{$prefix}default-accordion-active-color) 
 $accordion-button-focus-box-shadow: var(--#{$prefix}default-accordion-btn-focus-box-shadow) !default;
 
 $accordion-icon-width: var(--#{$prefix}default-accordion-btn-icon-width) !default;
-$accordion-icon-color: $body-color !default;
+$accordion-icon-color: var(--#{$prefix}body-color) !default;
 $accordion-icon-active-color: $primary-text-emphasis !default;
 $accordion-icon-transition: var(--#{$prefix}default-accordion-btn-icon-transition) !default;
 $accordion-icon-transform: var(--#{$prefix}default-accordion-btn-icon-transform) !default;

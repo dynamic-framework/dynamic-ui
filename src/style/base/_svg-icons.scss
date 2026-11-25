@@ -38,12 +38,17 @@
 .navbar-toggler-icon {
   @include svg-icon-mask(
     var(--#{$prefix}navbar-toggler-icon-bg),
-    var(--#{$prefix}navbar-toggler-icon-color)
+    var(--#{$prefix}navbar-toggler-icon-color, #{$navbar-light-icon-color})
   );
 }
 
 // El navbar oscuro sólo cambia el color: la silueta es la misma.
+//
+// El atributo va en el propio navbar (el patrón de Bootstrap 5.3, que compila
+// `.navbar[data-bs-theme=dark]` con el resto de sus colores) o en un ancestro;
+// hacen falta los dos selectores, porque el descendiente no cubre al elemento.
 .navbar-dark,
+.navbar[data-#{$prefix}theme="dark"],
 [data-#{$prefix}theme="dark"] .navbar {
   --#{$prefix}navbar-toggler-icon-color: #{$navbar-dark-color};
 }
@@ -53,7 +58,7 @@
 .accordion-button::after {
   @include svg-icon-mask(
     var(--#{$prefix}accordion-btn-icon),
-    var(--#{$prefix}accordion-btn-icon-color)
+    var(--#{$prefix}accordion-btn-icon-color, #{$accordion-icon-color})
   );
 }
 
@@ -62,7 +67,7 @@
 .accordion-button:not(.collapsed)::after {
   @include svg-icon-mask(
     var(--#{$prefix}accordion-btn-active-icon),
-    var(--#{$prefix}accordion-btn-active-icon-color)
+    var(--#{$prefix}accordion-btn-active-icon-color, #{$accordion-icon-active-color})
   );
 }
 
@@ -75,7 +80,7 @@
   // `.btn-close`, así que un theme no la alcanzaría desde `:root`.
   @include svg-icon-mask(
     var(--#{$prefix}btn-close-bg),
-    var(--#{$prefix}btn-close-icon-color)
+    var(--#{$prefix}btn-close-icon-color, #{$btn-close-color})
   );
 
   /* stylelint-disable property-no-vendor-prefix --
@@ -91,7 +96,7 @@
 .carousel-control-next-icon {
   @include svg-icon-mask(
     var(--#{$prefix}carousel-control-icon-bg),
-    var(--#{$prefix}carousel-control-icon-color)
+    var(--#{$prefix}carousel-control-icon-color, #{$carousel-control-color})
   );
 }
 

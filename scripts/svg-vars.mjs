@@ -12,8 +12,10 @@
  *
  * Ojo con cómo se busca: `escape-svg()` de Bootstrap codifica los paréntesis,
  * así que en el CSS compilado la referencia aparece como `var%28--x%29` y no
- * como `var(--x)`. Buscar el literal no encuentra nada. Por eso cada data URI
- * se decodifica antes de mirarlo.
+ * como `var(--x)`. Buscar sólo el literal no encuentra nada, y decodificar el
+ * data URI antes de mirarlo tampoco sirve: si trae un `%` literal (un
+ * `width='100%'`, por ejemplo) el decode falla y la referencia codificada se
+ * escapa. Por eso se buscan las dos formas sobre el texto crudo.
  *
  * Uso:
  *   node scripts/svg-vars.mjs [ruta.css]        (por defecto dist/css/dynamic-ui.css)
@@ -54,16 +56,15 @@ function declarationAt(css, index) {
 
 const lineAt = (css, index) => css.slice(0, index).split('\n').length;
 
+/**
+ * Una referencia a custom property, con el paréntesis literal o codificado:
+ * `escape-svg()` de Bootstrap deja `var%28--x%29` en el CSS compilado.
+ */
+const VAR_REF = /var(?:\(|%28)(?:\s|%20)*(--[\w-]+)/g;
+
 export function findSvgVars(css) {
   return svgDataUris(css).flatMap(({ index, raw }) => {
-    // `escape-svg()` codifica ( y ), así que `var(` viaja como `var%28`.
-    let decoded = raw;
-    try {
-      decoded = decodeURIComponent(raw);
-    } catch {
-      // Un data URI con un `%` suelto no es decodificable; se mira tal cual.
-    }
-    const refs = [...decoded.matchAll(/var\(\s*(--[\w-]+)/g)].map(([, v]) => v);
+    const refs = [...raw.matchAll(VAR_REF)].map(([, v]) => v);
     if (refs.length === 0) return [];
     return [{
       declaration: declarationAt(css, index),
