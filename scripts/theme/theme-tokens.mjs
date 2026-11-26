@@ -1275,7 +1275,7 @@ export const BAKED_PAIRS = [
     // tres, y el de la etiqueta misma cubre de paso el de la casilla.
     component: '.form-label',
     why: 'la etiqueta lee --bs-label-color, que el raíz resuelve a var(--bs-gray-700)',
-    owners: [['.form-label'], ['label'], ['.label']],
+    owners: [['.form-label', 'label', '.label']],
     fg: { variable: '--bs-label-color' },
     bg: { variable: '--bs-body-bg' },
   },
