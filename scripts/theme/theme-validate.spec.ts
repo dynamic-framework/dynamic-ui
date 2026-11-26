@@ -447,6 +447,11 @@ const SECTIONED_THEME = {
         '--bs-link-color-rgb': 'var(--bs-primary-200-rgb)',
         '--bs-link-hover-color-rgb': 'var(--bs-primary-100-rgb)',
         '--bs-btn-outline-primary-color': 'rgb(var(--bs-primary-200-rgb))',
+        '--bs-btn-outline-secondary-color': 'rgb(var(--bs-secondary-200-rgb))',
+        '--bs-btn-outline-success-color': 'rgb(var(--bs-success-200-rgb))',
+        '--bs-btn-outline-info-color': 'rgb(var(--bs-info-200-rgb))',
+        '--bs-btn-outline-warning-color': 'rgb(var(--bs-warning-200-rgb))',
+        '--bs-btn-outline-danger-color': 'rgb(var(--bs-danger-200-rgb))',
       },
       nav: {
         '--bs-nav-link-color': 'rgb(var(--bs-white-rgb))',
@@ -3920,6 +3925,10 @@ describe('theme-validate — una hoja de sólo zonas', () => {
       '  --bs-link-color-rgb: var(--bs-primary-200-rgb);',
       '  --bs-link-color: rgb(var(--bs-link-color-rgb));',
       '  --bs-label-color: rgb(var(--bs-gray-100-rgb));',
+      // El contorno no pinta fondo: su texto va contra la superficie de la zona.
+      ...['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map(
+        (role) => `  --bs-btn-outline-${role}-color: rgb(var(--bs-${role}-200-rgb));`,
+      ),
       '  color: var(--bs-body-color);',
       '  background-color: var(--bs-body-bg);',
       '}',
@@ -4252,6 +4261,35 @@ describe('theme-validate — los componentes que una zona no arrastra (#1375)', 
   });
 
   /*
+   * El theme sólo rebrandea primary. El contorno de los demás roles no depende
+   * de eso: la zona les oscurece la superficie igual.
+   */
+  it('mide el contorno de un role que el theme no toca', () => {
+    const result = validateStrict(withoutFix({ variable: '--bs-btn-outline-secondary-color' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.btn-outline-secondary dentro de \[data-bs-theme="oscura"\], en reposo": 1\.\d\d:1 /,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * success roza el umbral sobre el fondo claro de la librería (4.20:1). En la
+   * zona oscura da un número parecido, pero contra otra superficie: no es el par
+   * de la librería, así que no se calla como preexistente.
+   */
+  it('no calla como preexistente un contorno cuya superficie movió la zona', () => {
+    const result = validateStrict(withoutFix({ variable: '--bs-btn-outline-success-color' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.btn-outline-success dentro de \[data-bs-theme="oscura"\], en reposo": 3\.\d\d:1 .*\(con la paleta por defecto este par da 4\.\d\d:1\)/,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  /*
    * `light` y `dark` no son roles semánticos sino de superficie: cada uno
    * existe para el fondo contrario. Medirlos contra el cuerpo del contexto
    * delataría siempre al que se está usando donde debe.
@@ -4289,7 +4327,58 @@ describe('theme-validate — los componentes que una zona no arrastra (#1375)', 
       '.form-text',
       '.nav-link',
       '.text-body-secondary',
+      '.btn-outline-primary',
+      '.btn-outline-secondary',
+      '.btn-outline-success',
+      '.btn-outline-info',
+      '.btn-outline-warning',
+      '.btn-outline-danger',
     ]));
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * El theme literal de la reproducción de #1375: superficies y lista ya
+   * corregidas, nada más. Cada fila de la tabla del issue tiene que salir.
+   */
+  it('el theme de la reproducción recibe un hallazgo por cada fila de la tabla', () => {
+    const result = validateStrict(expandCss({
+      name: 'Ejemplo',
+      roles: { primary: '#0b6b53' },
+      body: { bg: '#f7f8fa', color: '#101828' },
+      typography: { fontFamily: 'system-ui, sans-serif' },
+      radius: '.5rem',
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': 'var(--bs-dark-rgb)',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+            '--bs-secondary-bg-rgb': 'var(--bs-gray-800-rgb)',
+            '--bs-tertiary-bg-rgb': 'var(--bs-gray-800-rgb)',
+          },
+          components: [{
+            selector: '.list-group',
+            vars: {
+              '--bs-list-group-color': 'rgb(var(--bs-white-rgb))',
+              '--bs-list-group-action-color': 'rgb(var(--bs-white-rgb))',
+            },
+          }],
+        },
+      },
+    }));
+    const zone = '\\[data-bs-theme="oscura"\\]';
+    const baked = (component: string) => new RegExp(
+      `^error contraste-horneado: "${component.replace(/\./g, '\\.')} dentro de ${zone}(, en reposo)?": `,
+    );
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-enlace-zona: Zona "oscura": el enlace da 2\.81:1/),
+      ...[
+        '.card', '.form-control', '.form-select', '.form-label', '.form-check-label',
+        '.form-text', '.nav-link', '.text-body-secondary',
+        '.btn-outline-primary', '.btn-outline-secondary', '.btn-outline-success',
+        '.btn-outline-info', '.btn-outline-warning', '.btn-outline-danger',
+      ].map((component) => expect.stringMatching(baked(component))),
+    ]);
     expect(result.status).toBe(1);
   });
 });

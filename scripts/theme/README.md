@@ -655,8 +655,9 @@ arreglan en dos sitios distintos según de dónde salga el color:
   un token global (`--bs-gray-500`) y una variable declarada en `.nav`. El
   arreglo va en el bloque del componente, y el aviso lo dice en cada caso.
 
-El contorno en reposo tiene dos recortes, y conviene saberlos antes de leer un
-informe:
+El contorno en reposo se mide para todos los roles, los toque el theme o no: una
+zona que oscurece la superficie lo deja ilegible sin declarar nada del role.
+Tiene dos recortes, y conviene saberlos antes de leer un informe:
 
 - **`light` y `dark` no se miden.** No son roles semánticos sino de superficie:
   `outline-light` da 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark`
@@ -668,8 +669,10 @@ informe:
   `success`, `warning` y `danger` entre 4.19:1 y 4.36:1 sobre su propio fondo.
   Avisar de eso en cada theme no aporta nada —no lo introdujo— y, como `--strict`
   se tiñe con cualquier aviso, dejaría la herramienta sin salida 0 posible. El
-  silencio dura mientras el par siga como estaba: si el theme lo empeora de
-  verdad, vuelve a salir, y como error.
+  silencio dura mientras el par siga como estaba: sobre una superficie parecida
+  a la de la librería y sin empeorar de verdad. Dentro de una zona oscura el
+  contorno de `success` da un número parecido (4.02:1) pero contra otro fondo,
+  así que no se calla: sale como error.
 
 El arreglo del contorno no es el genérico. `df-button-variant-mapper` redeclara
 `--bs-btn-color` en `.btn-outline-<role>`, así que declararlo en el bloque de la

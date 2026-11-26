@@ -40,6 +40,10 @@ import {
   zoneSelector,
 } from './theme-tokens.mjs';
 
+// Contraste máximo entre dos superficies para tratarlas como la misma: un
+// blanco roto contra el blanco da ~1.05, una zona oscura contra él pasa de 10.
+const SAME_SURFACE_MAX = 1.5;
+
 // -- Lectura del CSS --------------------------------------------------------
 
 /**
@@ -1046,15 +1050,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
   // de ellos lo mueve sin declarar nada del role.
   const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
+  // El contorno en reposo tampoco depende del role: una zona que oscurece la
+  // superficie lo deja ilegible sin que el theme declare nada de él.
+  const isOutlineRest = (pair) => pair.component === `.btn-outline-${pair.role}` && !pair.outline;
   // Los pares de `.btn-outline-<role>` se generan para todos los roles; qué
   // estado se mide y en qué contexto lo decide el bucle, que mira si el relleno
   // está declarado donde se está midiendo.
   const bakedPairs = [
     ...BAKED_PAIRS,
     ...pairRoles.flatMap((role) => bakedRolePairs(role)
-      .filter((pair) => !isTextBg(pair) && !pair.outline)),
+      .filter((pair) => !isTextBg(pair) && !pair.outline && !isOutlineRest(pair))),
     ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
-    ...ROLES.flatMap((role) => bakedRolePairs(role).filter((pair) => pair.outline)),
+    ...ROLES.flatMap((role) => bakedRolePairs(role)
+      .filter((pair) => pair.outline || isOutlineRest(pair))),
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
@@ -1134,16 +1142,22 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // es relativa porque estos pares se mueven unas décimas al cambiar el
       // color y esa diferencia no es información para nadie. Los pares no
       // corregibles se saltan esto: su aviso explica mejor qué hacer.
+      //
+      // Un par sin fondo propio se mide contra la superficie del contexto. Si
+      // el contexto la movió —una zona oscura—, el par ya no es el de la
+      // librería aunque el número se parezca: lo introdujo el theme.
+      const sameSurface = !pair.quietWhenPreexisting
+        || (baseBg.rgb && contrast(bg.rgb, baseBg.rgb) < SAME_SURFACE_MAX);
       if (!pair.notFixable && baseline !== null && baseline < minContrast
-        && ratio >= baseline * 0.9) {
+        && ratio >= baseline * 0.9 && sameSurface) {
         /*
          * Algunos pares vienen de fábrica rozando el umbral: Dynamic pinta el
          * contorno de success, warning y danger entre 4.19 y 4.36 sobre su
          * propio fondo. Avisar de eso en cada theme no le dice nada a nadie —no
          * lo introdujo— y, como --strict se tiñe con cualquier aviso, dejaría a
          * la herramienta sin salida 0 posible. Se callan, pero sólo mientras
-         * sigan como estaban: si el theme los empeora de verdad, el `ratio >=
-         * baseline * 0.9` de arriba ya no se cumple y caen como error.
+         * sigan como estaban: sobre la misma superficie y sin empeorar de
+         * verdad. Si no, caen como error.
          */
         if (pair.quietWhenPreexisting) continue;
         warn(
