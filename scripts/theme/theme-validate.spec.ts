@@ -2143,6 +2143,113 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
     });
     expect(validate(css).stderr).not.toContain('[contraste-boton]');
   });
+
+  it('un bloque que sólo cambia el texto reporta únicamente el estado que no llega a AA', () => {
+    // Caso del comentario de #1298: gray-900 sobre primary #5fbfae da 8.28:1
+    // en reposo y 5.40:1 en hover, pero 3.32:1 sobre el paso 700 de active.
+    const gray900 = 'var(--bs-gray-900)';
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      roles: { primary: '#5fbfae' },
+      components: [{
+        selector: '.btn-primary',
+        vars: {
+          '--bs-btn-color': gray900,
+          '--bs-btn-hover-color': gray900,
+          '--bs-btn-active-color': gray900,
+          '--bs-btn-disabled-color': gray900,
+        },
+      }],
+    });
+    const botones = findings(validateStrict(css)).filter((f) => f.startsWith('error contraste-boton'));
+    expect(botones).toEqual([expect.stringContaining(
+      '".btn-primary, en active": 3.32:1 entre el texto --bs-btn-active-color (--bs-gray-900-rgb) '
+      + 'y el fondo --bs-btn-active-bg (--bs-primary-700-rgb)',
+    )]);
+  });
+});
+
+describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () => {
+  const notas = (theme: unknown) => {
+    const result = expand(theme);
+    expect(result.status).toBe(0);
+    return result.stderr.split('\n').filter((line) => line.includes(' fija el texto de '));
+  };
+
+  it('avisa del texto de hover y active sin fondo, con el paso que pinta la librería', () => {
+    expect(notas({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '.btn-primary',
+        vars: { '--bs-btn-hover-color': 'var(--bs-black)', '--bs-btn-active-color': 'var(--bs-black)' },
+      }],
+    })).toEqual([
+      '.btn-primary fija el texto de hover y active sin su fondo: debajo queda el relleno de la '
+      + 'librería, --bs-primary-600 en hover y --bs-primary-700 en active. Declara '
+      + '--bs-btn-hover-bg y --bs-btn-active-bg, o confirma el contraste con theme-validate.',
+    ]);
+  });
+
+  it('sólo nombra el estado que se queda sin fondo, con los pasos propios del role', () => {
+    // secondary rellena hover con su paso 100, no con el 600.
+    expect(notas({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '.btn-secondary',
+        vars: {
+          '--bs-btn-hover-color': 'var(--bs-black)',
+          '--bs-btn-active-color': 'var(--bs-black)',
+          '--bs-btn-active-bg': 'var(--bs-gray-100)',
+        },
+      }],
+    })).toEqual([expect.stringMatching(
+      /^\.btn-secondary fija el texto de hover sin su fondo: .*--bs-secondary-100 en hover\. Declara --bs-btn-hover-bg,/,
+    )]);
+  });
+
+  it('no avisa en un botón con contorno ni cuando el fondo está declarado', () => {
+    expect(notas({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '.btn-outline-primary', vars: { '--bs-btn-hover-color': 'var(--bs-black)' } },
+        {
+          selector: '.btn-danger',
+          vars: { '--bs-btn-hover-color': 'var(--bs-black)', '--bs-btn-hover-bg': 'var(--bs-danger-100)' },
+        },
+      ],
+    })).toEqual([]);
+  });
+
+  it('en una zona cuenta el fondo que declara el bloque global del mismo selector', () => {
+    expect(notas({
+      ...SECTIONED_THEME,
+      components: [{ selector: '.btn-dark', vars: { '--bs-btn-hover-bg': 'var(--bs-gray-700)' } }],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          components: [{
+            selector: '.btn-dark',
+            vars: { '--bs-btn-hover-color': 'var(--bs-white)', '--bs-btn-active-color': 'var(--bs-white)' },
+          }],
+        },
+      },
+    })).toEqual([expect.stringMatching(
+      /^\[data-bs-theme="oscura"\] \.btn-dark fija el texto de active sin su fondo: .*--bs-gray-700 en active\./,
+    )]);
+  });
+
+  it('el ejemplo versionado sin sus fondos de estado da la nota; con ellos, no', () => {
+    const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
+    const theme = JSON.parse(fs.readFileSync(themePath, 'utf8'));
+    expect(notas(theme)).toEqual([]);
+
+    const boton = theme.zones.oscura.components.find((c: { selector: string }) => c.selector === '.btn-primary');
+    boton.vars = Object.fromEntries(Object.entries(boton.vars)
+      .filter(([name]) => !/^--bs-btn-(hover|active)-(bg|border-color)$/.test(name)));
+    expect(notas(theme)).toEqual([expect.stringMatching(
+      /^\[data-bs-theme="oscura"\] \.btn-primary fija el texto de hover y active sin su fondo/,
+    )]);
+  });
 });
 
 describe('el ejemplo con zonas que vive en el repo', () => {
