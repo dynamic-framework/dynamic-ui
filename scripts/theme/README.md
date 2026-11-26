@@ -46,7 +46,9 @@ Los tests viven en `theme-validate.spec.ts`, `theme-tokens.spec.ts` y `theme-dif
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
-zona y los pares horneados, y que el validador acepta sin errores:
+zona y los pares horneados, y que el validador acepta sin errores. El paquete lo
+publica en `scripts/theme/themes/theme-ejemplo-zonas.json`: es la referencia de
+una zona oscura completa.
 
 ```bash
 npm run theme:expand -- scripts/theme/themes/theme-ejemplo-zonas.json -o scripts/theme/out/theme-ejemplo-zonas.css
