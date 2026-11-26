@@ -329,9 +329,13 @@ el color heredado de *todo* el subárbol, incluidos los componentes que llevan s
 propio fondo claro: un `.form-control` dentro de una zona oscura pasa a texto
 blanco sobre fondo blanco. Esos componentes necesitan su propio bloque en
 `zones.<nombre>.components` devolviéndoles un color legible —es exactamente para
-lo que está esa sección—. El validador todavía no lo detecta: asume que dentro de
-una zona el fondo es el de la zona, así que este caso hay que mirarlo en la
-preview.
+lo que está esa sección—. El validador los mide: lleva en su tabla de pares
+horneados los componentes de la librería que no siguen a la zona, y los comprueba
+dentro de cada una. Lo que no alcanza es un componente que el theme repinta por su
+cuenta con una propiedad que no es una variable —un `color:` o un
+`background-color:` literal en un bloque de `components`—: las reglas de contraste
+leen variables, así que ese arreglo no apaga el aviso ni ese fondo propio entra en
+la medida. Ahí sí hay que mirar la preview.
 
 Toda referencia `var(--bs-algo)` de estas tres secciones se comprueba contra los
 tokens que el theme genera y contra `known-tokens.json`, el inventario de lo que
@@ -626,6 +630,35 @@ valor al que cae cuando nadie la toca.
 | `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
 | `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
 | `.btn-<role>` sin bloque propio, sólo en reposo | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+| `.card` | `--bs-body-color` | `--bs-card-bg` (→ `var(--bs-white)` en `.card`) |
+| `.form-control` | `--bs-body-color` | `--bs-white` (el fondo lo escribe la librería en el propio selector) |
+| `.form-select` | `--bs-body-color` | `--bs-white` |
+| `.form-label` | `--bs-label-color` (→ `var(--bs-gray-700)` en `:root`) | `--bs-body-bg` |
+| `.form-check-label` | `--bs-label-color` | `--bs-body-bg` |
+| `.form-text` | `--bs-gray-500` (el token global, no una variable suya) | `--bs-body-bg` |
+| `.nav-link` | `--bs-nav-link-color` (→ `var(--bs-gray-900)` en `.nav`) | `--bs-body-bg` |
+| `.text-body-secondary` | `--bs-secondary-color` (→ calculado en `:root`) | `--bs-body-bg` |
+
+Los de esta segunda mitad son los que una zona rompe sin declarar nada, y se
+arreglan en dos sitios distintos según de dónde salga el color:
+
+- Los que **traen su propio fondo** —`.card`, `.form-control`, `.form-select`—
+  heredan el texto de la zona pero no su superficie. Hay que bajar el fondo
+  (`--bs-card-bg`) o devolverle al componente un texto legible
+  (`--bs-body-color` sobre `.form-control`), y en el bloque del componente: el
+  fondo de los campos no sale de ninguna variable que el theme pueda mover.
+- Los que **leen un alias ya resuelto en `:root`** —`.form-label`,
+  `.form-check-label`, `.text-body-secondary`— se arreglan declarando el alias
+  en el bloque de la zona, que sí se hereda.
+- `.form-text` y `.nav-link` leen algo que la librería fija fuera de su alcance:
+  un token global (`--bs-gray-500`) y una variable declarada en `.nav`. El
+  arreglo va en el bloque del componente, y el aviso lo dice en cada caso.
+
+Las dos etiquetas van por separado a propósito. `_label.scss` pinta
+`--bs-label-color` sobre `label` y `.label`, así que un bloque que sólo cubra
+`.form-label` deja la etiqueta de la casilla igual de ilegible y el validador la
+sigue reportando. Declararlo sobre `label` —o en el bloque de la zona— cubre las
+dos de una vez.
 
 El valor por defecto de cada variable es el que declara la librería, y se
 resuelve donde ella lo declara: en `:root` las variables del role y del botón,

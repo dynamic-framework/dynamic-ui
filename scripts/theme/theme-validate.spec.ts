@@ -2947,9 +2947,26 @@ function findings(result: Run, rule?: string): string[] {
     .filter((m) => m[2] !== 'wrapper-faltante-zona')
     // Un caso que mide una regla concreta se queda con la suya: una zona oscura
     // arrastra siempre los pares horneados de sus componentes, y listarlos en
-    // cada expectativa taparía lo que el caso comprueba.
+    // cada expectativa taparía lo que el caso comprueba. Quien filtre tiene que
+    // fijar además el reparto completo con `rules`: si no, una regla ajena que
+    // empiece a disparar se cuela por el filtro y el caso sigue en verde.
     .filter((m) => !rule || m[2] === rule)
     .map((m) => `${m[1]} ${m[2]}: ${m[3]}`);
+}
+
+/**
+ * Qué reglas disparan en una salida y cuántas veces cada una, como
+ * `<regla> x<n>`, en orden alfabético. Es el contrapeso del filtro de
+ * `findings`: fija lo que el caso no lista hallazgo por hallazgo, de modo que
+ * una regla que aparece, desaparece o cambia de cuenta rompe el caso.
+ */
+function rules(result: Run): string[] {
+  const count = new Map<string, number>();
+  for (const m of result.stderr.matchAll(/^(?:error|aviso)\s+\S+\s+\[([\w-]+)\]$/gm)) {
+    if (m[1] === 'wrapper-faltante-zona') continue;
+    count.set(m[1], (count.get(m[1]) ?? 0) + 1);
+  }
+  return [...count].map(([rule, n]) => `${rule} x${n}`).sort();
 }
 
 /**
@@ -3202,6 +3219,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       + '  --bs-list-group-action-color: rgb(var(--bs-body-color-rgb));\n}\n';
     const result = validateStrict(css);
     expect(findings(result, 'contraste-boton')).toEqual([]);
+    expect(rules(result)).toEqual(['contraste-enlace-zona x1']);
     // --strict sale con 1 sólo por los wrappers que la zona omite a propósito.
     expect(missingWrappers(result)).toEqual([
       '--bs-body-bg-rgb', '--bs-body-color-rgb', '--bs-secondary-bg-rgb',
@@ -3339,6 +3357,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         + `\n${rule('[data-bs-theme="oscura"] .nav-pills', { [color]: B })}`;
       const bien = validateStrict(valido);
       expect(findings(bien, 'contraste-nav-pills')).toEqual([]);
+      expect(rules(bien)).toEqual(['contraste-enlace-zona x1']);
       // --strict sale con 1 sólo por los wrappers que ZONA omite a propósito.
       expect(missingWrappers(bien)).toEqual([
         '--bs-body-bg-rgb', '--bs-body-color-rgb', '--bs-secondary-bg-rgb', '--bs-tertiary-bg-rgb',
@@ -3354,6 +3373,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\)": 1\.00:1/),
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled\.foo\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
+      expect(rules(mal)).toEqual(['contraste-enlace-zona x1', 'contraste-nav-pills x2']);
       expect(mal.status).toBe(1);
     });
 
@@ -3366,6 +3386,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(findings(result, 'contraste-nav-pills')).toEqual([
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\[data-bs-theme="oscura"\] \.sidebar \.nav-pills dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
+      expect(rules(result)).toEqual(['contraste-enlace-zona x1', 'contraste-nav-pills x1']);
       expect(result.status).toBe(1);
     });
 
@@ -3378,6 +3399,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(findings(result, 'contraste-nav-pills')).toEqual([
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills\[data-target="#panel"\] dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
+      expect(rules(result)).toEqual(['contraste-enlace-zona x1', 'contraste-nav-pills x1']);
       expect(result.status).toBe(1);
     });
 
@@ -3399,6 +3421,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\)": 1\.00:1/),
         expect.stringMatching(/^error contraste-nav-pills: Pastilla activa en "\.nav-pills:not\(\.disabled, \.foo\.bar\) dentro de \[data-bs-theme="oscura"\]": 1\.00:1/),
       ]);
+      expect(rules(result)).toEqual(['contraste-enlace-zona x1', 'contraste-nav-pills x2']);
       expect(result.status).toBe(1);
     });
 
@@ -3598,8 +3621,10 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     }));
 
     expect(findings(result, 'contraste-nav-pills')).toEqual([]);
+    expect(rules(result)).toEqual(['contraste-horneado x3']);
     // El estado global ya no es 0: la zona, al no declararlos, arrastra los
     // pares horneados de sus componentes. Lo que mide este caso es la pastilla.
+    expect(result.status).toBe(1);
   });
 
   it('caso 3: la pastilla activa de la zona pegada pisa el color del bloque global', () => {
@@ -3716,8 +3741,10 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     const result = validateStrict(css);
 
     expect(findings(result, 'contraste-nav-pills')).toEqual([]);
+    expect(rules(result)).toEqual(['contraste-horneado x3']);
     // El estado global ya no es 0: la zona, al no declararlos, arrastra los
     // pares horneados de sus componentes. Lo que mide este caso es la pastilla.
+    expect(result.status).toBe(1);
   });
 
   it('la zona pegada a un HERMANO del contenedor no le pasa nada', () => {
@@ -3780,8 +3807,10 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     const result = validateStrict(css);
 
     expect(findings(result, 'contraste-nav-pills')).toEqual([]);
+    expect(rules(result)).toEqual(['contraste-horneado x3']);
     // El estado global ya no es 0: la zona, al no declararlos, arrastra los
     // pares horneados de sus componentes. Lo que mide este caso es la pastilla.
+    expect(result.status).toBe(1);
   });
 
   it.each([
@@ -3812,6 +3841,7 @@ describe('theme-validate — la zona pegada al selector (#1301)', () => {
     expect(findings(result, 'contraste-nav-pills')).toEqual([
       expect.stringMatching(/^error contraste-nav-pills: .*1\.00:1/),
     ]);
+    expect(rules(result)).toEqual(['contraste-horneado x3', 'contraste-nav-pills x1']);
     expect(result.status).toBe(1);
   });
 
@@ -4012,6 +4042,176 @@ describe('theme-validate — una zona sin bloque propio', () => {
       expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action": 1\.00:1/),
     ]);
     expect(result.stderr).not.toContain('[data-bs-theme="light"]');
+  });
+});
+
+/*
+ * Los componentes que la zona no arrastra. Cada caso parte del theme corregido
+ * y le quita justo un arreglo: así el error que aparece es el del par que el
+ * caso nombra, y no el ruido de una zona entera sin tocar.
+ */
+describe('theme-validate — los componentes que una zona no arrastra (#1375)', () => {
+  type Zona = typeof SECTIONED_THEME.zones.oscura;
+
+  /** El theme de las secciones con una de las correcciones de la zona fuera. */
+  function sinArreglo(
+    quitar: { bloque?: string; variable?: string; nav?: string },
+    agregar: Array<{ selector: string; vars: Record<string, string> }> = [],
+  ): string {
+    const zona: Zona = SECTIONED_THEME.zones.oscura;
+    const vars = { ...zona.vars } as Record<string, string>;
+    if (quitar.variable) delete vars[quitar.variable];
+    const nav = { ...zona.nav } as Record<string, string>;
+    if (quitar.nav) delete nav[quitar.nav];
+    return expandCss({
+      ...SECTIONED_THEME,
+      zones: {
+        oscura: {
+          ...zona,
+          vars,
+          nav,
+          components: [
+            ...zona.components.filter((c) => c.selector !== quitar.bloque),
+            ...agregar,
+          ],
+        },
+      },
+    });
+  }
+
+  it('con todos sus arreglos la zona no reporta ningún par', () => {
+    const result = validateStrict(expandCss(SECTIONED_THEME));
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('sin el bloque .card, el texto de la zona cae sobre el fondo propio de la tarjeta', () => {
+    const result = validateStrict(sinArreglo({ bloque: '.card' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.card dentro de \[data-bs-theme="oscura"\]": 1\.00:1 entre --bs-body-color .* y --bs-card-bg /,
+      ),
+    ]);
+    // El arreglo no es el genérico: la librería fija --bs-card-bg en `.card`.
+    expect(result.stderr).toContain('Declara --bs-card-bg sobre `.card` dentro de la zona');
+    expect(result.status).toBe(1);
+  });
+
+  it('sin el bloque de los campos, el texto claro cae sobre el blanco de la librería', () => {
+    const result = validateStrict(sinArreglo({ bloque: '.form-control, .form-select' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-control dentro de \[data-bs-theme="oscura"\]": 1\.00:1 entre --bs-body-color .* y --bs-white /,
+      ),
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-select dentro de \[data-bs-theme="oscura"\]": 1\.00:1 entre --bs-body-color .* y --bs-white /,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('sin el bloque .form-text, el texto de ayuda se queda en el gris global', () => {
+    const result = validateStrict(sinArreglo({ bloque: '.form-text' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-text dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-gray-500 /,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('sin --bs-label-color, las dos etiquetas se quedan en el gris del raíz', () => {
+    const result = validateStrict(sinArreglo({ variable: '--bs-label-color' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-label dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-label-color \(--bs-gray-700-rgb\)/,
+      ),
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-check-label dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-label-color \(--bs-gray-700-rgb\)/,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * `_label.scss` pinta --bs-label-color sobre `label`, no sobre una clase de
+   * formulario. Un bloque que sólo cubre `.form-label` arregla la etiqueta del
+   * campo y deja la de la casilla igual: el par de la casilla tiene que seguir
+   * reportándose, o el theme pasa el validador con media zona ilegible.
+   */
+  it('un arreglo sólo en .form-label deja reportada la etiqueta de la casilla', () => {
+    const result = validateStrict(sinArreglo(
+      { variable: '--bs-label-color' },
+      [{ selector: '.form-label', vars: { '--bs-label-color': 'rgb(var(--bs-gray-100-rgb))' } }],
+    ));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.form-check-label dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-label-color /,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('un arreglo sobre `label` cubre las dos etiquetas de una vez', () => {
+    const result = validateStrict(sinArreglo(
+      { variable: '--bs-label-color' },
+      [{ selector: 'label', vars: { '--bs-label-color': 'rgb(var(--bs-gray-100-rgb))' } }],
+    ));
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('sin --bs-nav-link-color, el enlace de navegación se queda en el gris de `.nav`', () => {
+    const result = validateStrict(sinArreglo({ nav: '--bs-nav-link-color' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.nav-link dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-nav-link-color \(--bs-gray-900-rgb\)/,
+      ),
+    ]);
+    // El arreglo va en `.nav`, no en el bloque de la zona: lo del elemento gana.
+    expect(result.stderr).toContain('Declara --bs-nav-link-color sobre `.nav` dentro de la zona');
+    expect(result.status).toBe(1);
+  });
+
+  it('sin --bs-secondary-color-rgb, el texto secundario se queda con el alias del raíz', () => {
+    const result = validateStrict(sinArreglo({ variable: '--bs-secondary-color-rgb' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.text-body-secondary dentro de \[data-bs-theme="oscura"\]": \d\.\d\d:1 entre --bs-secondary-color /,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * El caso del issue: una zona que sólo oscurece el cuerpo y no declara nada
+   * más. Antes salía sin un solo error; ahora cae el grupo entero de pares.
+   */
+  it('una zona que sólo oscurece el cuerpo reporta todos sus componentes', () => {
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      zones: {
+        oscura: {
+          vars: {
+            '--bs-body-bg-rgb': '16, 24, 40',
+            '--bs-body-color-rgb': 'var(--bs-white-rgb)',
+          },
+        },
+      },
+    }));
+    const horneados = findings(result, 'contraste-horneado')
+      .map((f) => f.replace(/^error contraste-horneado: "([^"]+) dentro de .*/, '$1'));
+    expect(horneados).toEqual(expect.arrayContaining([
+      '.card',
+      '.form-control',
+      '.form-select',
+      '.form-label',
+      '.form-check-label',
+      '.form-text',
+      '.nav-link',
+      '.text-body-secondary',
+    ]));
+    expect(result.status).toBe(1);
   });
 });
 

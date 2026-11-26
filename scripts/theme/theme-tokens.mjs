@@ -1270,9 +1270,23 @@ export const BAKED_PAIRS = [
    * tema claro y se hereda calculado, así que no se mueve.
    */
   {
+    // `_label.scss` pinta --bs-label-color sobre `label` y `.label`, no sobre
+    // la clase de formulario: el arreglo vale declarado en cualquiera de los
+    // tres, y el de la etiqueta misma cubre de paso el de la casilla.
     component: '.form-label',
     why: 'la etiqueta lee --bs-label-color, que el raíz resuelve a var(--bs-gray-700)',
-    owners: [['.form-label']],
+    owners: [['.form-label'], ['label'], ['.label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    // La etiqueta de la casilla es otro `label` con el mismo color, y va como
+    // par aparte porque se arregla en su propio selector: un bloque sobre
+    // `.form-label` la deja igual de ilegible.
+    component: '.form-check-label',
+    why: 'la etiqueta de la casilla es un `label` y lee el mismo --bs-label-color, '
+      + 'que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-check-label'], ['label'], ['.label']],
     fg: { variable: '--bs-label-color' },
     bg: { variable: '--bs-body-bg' },
   },
