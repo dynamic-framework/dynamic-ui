@@ -1005,17 +1005,75 @@ export function buildContexts(blocks, root) {
   const layerFor = (zone, selectors) => {
     const wanted = new Set(selectors.map(normalizeSelector));
     const candidates = [];
+    // ¿Alguna regla pone la zona en este mismo elemento
+    // (`[data-bs-theme="z"].btn-primary`)? Entonces el elemento ES la zona: lo
+    // que la zona declara cae aquí y compite en la cascada con lo que la
+    // librería y el theme ponen sobre el componente, en vez de heredarse ya
+    // resuelto desde un ancestro.
+    //
+    // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto del
+    // selector. El elemento que lleva la zona es ese compuesto, y hay que
+    // comprobar que sea el de ESTA capa:
+    //
+    //   [z].btn-primary                      → la zona es el botón
+    //   [z].sidebar .nav-pills               → la zona es la barra, ancestro
+    //                                          de la pastilla: le llega heredado
+    //   [z].nav-pills .nav-link.active       → la zona es el contenedor
+    //   [z].nav-pills + .nav-pills .nav-link → la zona es el HERMANO del
+    //                                          contenedor, y entre hermanos no
+    //                                          se hereda nada
+    //
+    // No basta con mirar si el primer compuesto está en `wanted`: la capa
+    // reconoce también el alias suelto (`.nav-pills`), que casa con cualquier
+    // posición del selector. Lo que identifica al elemento de la capa es su
+    // ruta cualificada, el prefijo MÁS LARGO de `bare` que la capa reconoce
+    // (`.nav-pills + .nav-pills`). La zona está en este elemento sólo si esa
+    // ruta es exactamente el primer compuesto.
+    // Dónde cae la zona respecto del elemento de esta capa: en él, en un
+    // ancestro suyo, o fuera de su rama. Lo tercero pasa con un combinador
+    // hermano, y es distinto de las otras dos: entre hermanos no se hereda
+    // nada, así que el elemento medido está FUERA de la zona y lo que no
+    // declare le llega del raíz, no del contexto de la zona.
+    const zoneRelation = (bare) => {
+      const pieces = splitCompounds(normalizeSelector(bare));
+      for (let k = (pieces.length - 1) / 2; k >= 0; k -= 1) {
+        if (!wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) continue;
+        if (k === 0) return 'same';
+        // Solo cuenta el combinador que sale de la zona: un `+` posterior relaciona hijos suyos.
+        return /^\s*>?\s*$/.test(pieces[1]) ? 'ancestor' : 'sibling';
+      }
+      return null;
+    };
+    let attached = false;
+    let sibling = false;
+    for (const block of blocks) {
+      for (const alternative of splitSelectorList(block.prelude)) {
+        const { zone: altZone, bare, sameElement } = splitZone(alternative);
+        if (!sameElement || altZone !== zone) continue;
+        const relation = zoneRelation(bare);
+        if (relation === 'same') attached = true;
+        if (relation === 'sibling') sibling = true;
+      }
+    }
+
     for (const selector of selectors) {
       for (const [name, value] of LIBRARY_ELEMENT_VARS.get(selector) ?? []) {
         candidates.push({ name, entry: { value, source: 'defecto' }, weight: specificity(selector) });
       }
     }
     for (const block of blocks) {
-      if (block.zone) continue;
+      // El bloque de la zona declara sobre el elemento que la lleva: cuando la
+      // zona va pegada, ese elemento es el componente. `[data-bs-theme="z"]`
+      // es un atributo, así que pesa como una clase.
+      if (block.zone) {
+        if (!attached || block.zone !== zone) continue;
+        for (const [name, entry] of block.decls) {
+          candidates.push({ name, entry, weight: SPECIFICITY_CLASS });
+        }
+        continue;
+      }
       // Los bloques raíz también cuentan: una regla `:root, .nav-pills` declara
-      // sobre el componente. Es la alternativa que casa la que decide. Una
-      // alternativa con la zona pegada (`[data-bs-theme="z"].x`) se trata como
-      // si la zona fuera un ancestro; la regla `zona-pegada` lo avisa.
+      // sobre el componente. Es la alternativa que casa la que decide.
       let weight = -1;
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare } = splitZone(alternative);
@@ -1030,7 +1088,10 @@ export function buildContexts(blocks, root) {
     // sort es estable: a igual peso se conserva el orden de aparición.
     candidates.sort((a, b) => (Number(Boolean(a.entry.important)) - Number(Boolean(b.entry.important)))
       || (a.weight - b.weight));
-    return new Map(candidates.map(({ name, entry }) => [name, entry]));
+    const layer = new Map(candidates.map(({ name, entry }) => [name, entry]));
+    layer.attached = attached;
+    layer.sibling = sibling;
+    return layer;
   };
 
   // Cada grupo de selectores es un elemento: los del mismo grupo se funden, y
@@ -1040,6 +1101,11 @@ export function buildContexts(blocks, root) {
     const layers = groups.map((selectors) => layerFor(zone, selectors));
     return {
       layers,
+      // El padre de la cadena está fuera de la zona en dos casos: si la zona
+      // va pegada a alguno de los elementos —lo que declara ya entró en su
+      // capa— o si está en un hermano, y entonces el elemento medido nunca
+      // estuvo dentro.
+      attached: layers.some((layer) => layer.attached || layer.sibling),
       has: (name) => layers.some((layer) => layer.has(name)),
       get: (name) => [...layers].reverse().find((layer) => layer.has(name))?.get(name),
     };
@@ -1052,7 +1118,7 @@ export function buildContexts(blocks, root) {
       if (!element) return resolveHere(name);
       const resolveInElement = element.layers.reduce(
         (parent, layer) => (inherited) => resolveInherited(inherited, layer, parent),
-        resolveHere,
+        element.attached ? inRoot : resolveHere,
       );
       return resolveInElement(name);
     },

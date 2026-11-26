@@ -2982,8 +2982,9 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
 
     it('los pares horneados cuentan los bloques con la zona pegada al componente', () => {
       // Theme generado por theme-expand: `[data-bs-theme="clara"].list-group`
-      // pone texto y fondo blancos. Chromium: 1:1 en los dos tipos de ítem. Se
-      // miden como en develop, con la zona como ancestro, y se avisa la forma.
+      // pone texto y fondo blancos. Chromium, con la zona en la propia lista
+      // (`<ul class="list-group" data-bs-theme="clara">`): 1:1 en los dos
+      // tipos de ítem.
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [{
@@ -2994,7 +2995,6 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       });
       const result = validateStrict(css);
       expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="clara"\]\.list-group: el prefijo de zona va pegado al selector/),
         expect.stringMatching(/^error contraste-horneado: "\.list-group-item dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
         expect.stringMatching(/^error contraste-horneado: "\.list-group-item-action dentro de \[data-bs-theme="clara"\]": 1\.00:1/),
       ]);
@@ -3016,21 +3016,20 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('la zona pegada al selector se avisa y se mide como si la zona fuera un ancestro', () => {
-      // `[data-bs-theme="oscura"].btn-primary` pone la zona en el botón. El
-      // validador no modela ese caso: lo mide como `[data-bs-theme="oscura"]
-      // .btn-primary`, igual que develop, y pide revisarlo en la preview.
+    it('la zona pegada al selector pone sus variables en el propio componente', () => {
+      // `[data-bs-theme="oscura"].btn-primary` pone la zona en el botón, así
+      // que el `--bs-btn-bg` de la zona cae sobre él y gana al de la librería,
+      // que tiene la misma especificidad y va antes. Texto negro sobre blanco.
+      // Chromium, con `<button class="btn btn-primary" data-bs-theme="oscura">`:
+      // 21:1. Medido como ancestro daba un falso 3.24:1 (#1301).
       const css = expandCss({
         ...MINIMAL_THEME,
         components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': 'var(--bs-black)' } }],
         zones: { oscura: { vars: { '--bs-btn-bg': 'var(--bs-white)' } } },
       });
       const result = validateStrict(css);
-      expect(findings(result)).toEqual([
-        expect.stringMatching(/^aviso zona-pegada: \[data-bs-theme="oscura"\]\.btn-primary: el prefijo de zona va pegado al selector.*revisa este caso en la preview\./),
-        expect.stringMatching(/^error contraste-boton: "\.btn-primary dentro de \[data-bs-theme="oscura"\]"/),
-      ]);
-      expect(result.status).toBe(1);
+      expect(findings(result)).toEqual([]);
+      expect(result.status).toBe(0);
     });
 
     it('un corchete entre comillas no hace del enlace el contenedor', () => {
@@ -3102,6 +3101,261 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       ]);
       expect(roto.status).toBe(1);
     });
+  });
+});
+
+describe('theme-validate — la zona pegada al selector (#1301)', () => {
+  // `[data-bs-theme="z"].x` pone la zona en el mismo elemento que el
+  // componente: lo que la zona declara cae ahí y compite en la cascada con lo
+  // que la librería y el theme ponen sobre él, en vez de heredarse resuelto
+  // desde un ancestro. Y el padre del componente queda fuera de la zona.
+  //
+  // Los casos son los de #1301. Cada número está medido en Chromium sobre el
+  // marcado que el selector apunta de verdad —el que lleva data-bs-theme en el
+  // componente, no en un ancestro—, que es el que cada caso deja escrito.
+  const WHITE = 'rgb(var(--bs-white-rgb))';
+  const BLACK = 'rgb(var(--bs-black-rgb))';
+  const ACTIVE_COLOR = '--bs-nav-pills-link-active-color';
+  const ACTIVE_BG = '--bs-nav-pills-link-active-bg';
+
+  it('caso 2: `--bs-white: inherit` en el botón toma el blanco de fuera de la zona', () => {
+    // El botón ES la zona, así que su `inherit` mira al padre, que está fuera:
+    // le llega el blanco de la librería, no el negro que la zona llama blanco.
+    // Chromium, con `<button class="btn btn-primary" data-bs-theme="oscura">`: 21:1.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '[data-bs-theme="oscura"].btn-primary',
+        vars: { '--bs-white': 'inherit', '--bs-btn-color': BLACK },
+      }],
+      zones: { oscura: { vars: { '--bs-white': 'rgb(0, 0, 0)', '--bs-btn-bg': 'var(--bs-white)' } } },
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('caso 3: la pastilla activa de la zona pegada pisa el color del bloque global', () => {
+    // `.nav-pills` global pone blanco sobre negro; la zona, pegada al mismo
+    // `.nav-pills`, baja el texto a negro. Chromium: 1:1, ilegible.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '.nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"].nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('caso 4: la zona pegada a un ancestro del componente no lo rompe', () => {
+    // `[data-bs-theme="oscura"].sidebar .nav-pills`: la zona va en la barra,
+    // no en las pastillas. Chromium, bajo `.sidebar[data-bs-theme="oscura"]`: 21:1.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '[data-bs-theme="oscura"] .nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"].sidebar .nav-pills', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('caso 5: las dos formas sobre el mismo componente coinciden', () => {
+    // Pegada y ancestro declarando lo mismo. Chromium: 21:1 en los dos
+    // marcados, así que la medición única vale para ambos.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [
+        { selector: '[data-bs-theme="oscura"].nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+        { selector: '[data-bs-theme="oscura"] .nav-pills .nav-link.active', vars: { [ACTIVE_COLOR]: WHITE, [ACTIVE_BG]: BLACK } },
+      ],
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('la zona pegada a un ANCESTRO no se mide como si estuviera en el componente', () => {
+    // `[data-bs-theme="oscura"].sidebar .nav-pills` pone la zona en la barra,
+    // no en la pastilla. Lo que la zona declara tiene que llegarle heredado, y
+    // perder contra el `--bs-nav-pills-link-active-bg` que la librería declara
+    // sobre `.nav-pills`. Fundirlo en la capa de la pastilla daba por bueno un
+    // fondo negro que el navegador no pinta.
+    // Chromium, bajo `<div class="sidebar" data-bs-theme="oscura">`: 1.14:1,
+    // blanco sobre el gris claro de la librería.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '[data-bs-theme="oscura"].sidebar .nav-pills',
+        vars: { [ACTIVE_COLOR]: WHITE },
+      }],
+      zones: { oscura: { vars: { [ACTIVE_BG]: BLACK } } },
+    }));
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.14:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('y la pegada al propio componente se sigue midiendo como pegada', () => {
+    // El contrapunto del caso anterior: un solo compuesto, así que la zona sí
+    // está en el botón. Si esto dejara de medirse como pegada, volvería el
+    // falso 3.24:1 de #1301.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': BLACK } }],
+      zones: { oscura: { vars: { '--bs-btn-bg': WHITE } } },
+    }));
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('la zona pegada al contenedor de un selector descendiente también cuenta', () => {
+    // `[data-bs-theme="oscura"].nav-pills .nav-link.active` pone la zona en el
+    // contenedor, no en el enlace. La capa del contenedor tiene que saberlo:
+    // su padre está fuera de la zona, así que un `inherit` sobre él toma el
+    // valor de fuera. El bloque `.nav-pills` va después del de la zona, así
+    // que gana sobre el mismo elemento y el `inherit` es el que manda.
+    // Chromium, con `<ul class="nav nav-pills" data-bs-theme="oscura">`:
+    // blanco sobre negro, 21:1. Mirando sólo si el selector tiene un único
+    // compuesto, la capa no se marcaba y el `inherit` caía al negro de la
+    // zona: un falso 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      '.nav-pills { --bs-white: inherit; }',
+      '',
+      '[data-bs-theme="oscura"].nav-pills .nav-link.active {',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it('la zona pegada a un HERMANO del contenedor no le pasa nada', () => {
+    // En `[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active` la
+    // zona está en la primera lista; la que se mide es la segunda, detrás de
+    // un `+`. Entre hermanos no se heredan las custom properties, así que el
+    // fondo negro de la zona nunca llega: la pastilla se queda con el gris que
+    // la librería pone en `.nav-pills`.
+    // Chromium: blanco sobre gris claro, 1.14:1.
+    // Mirando sólo si el primer compuesto está en la capa, el `.nav-pills` de
+    // la izquierda casaba con el alias de la capa y el fondo negro se daba por
+    // bueno: 21:1 y ningún hallazgo sobre una pastilla ilegible.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      `[data-bs-theme="oscura"] { ${ACTIVE_BG}: rgb(0, 0, 0); }`,
+      '',
+      '[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active {',
+      `  ${ACTIVE_COLOR}: rgb(255, 255, 255);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.14:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('lo que el hermano hereda viene de fuera de la zona, no de ella', () => {
+    // Complemento del caso anterior. Allí el fondo lo declaraba la librería
+    // sobre el componente, así que la cadena no llegaba a consultarse; aquí el
+    // texto depende de un `--bs-white: inherit` del enlace.
+    //
+    // El enlace cuelga del segundo `.nav-pills`, que es hermano de la zona y
+    // por tanto está FUERA de ella: ese `inherit` toma el blanco del raíz, no
+    // el negro que la zona llama blanco. Chromium: blanco sobre negro, 21:1.
+    // Arrancando la cadena en el contexto de la zona salía un falso 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      '[data-bs-theme="oscura"].nav-pills + .nav-pills .nav-link.active {',
+      '  --bs-white: inherit;',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([]);
+    expect(result.status).toBe(0);
+  });
+
+  it.each([
+    ['+', '[data-bs-theme="oscura"].sidebar .item + .nav-pills .nav-link.active'],
+    ['~', '[data-bs-theme="oscura"].sidebar .item ~ .x .nav-pills .nav-link.active'],
+  ])('un `%s` dentro de la zona no saca al componente de ella', (_, selector) => {
+    // El hermano relaciona dos hijos de `.sidebar`: la pastilla sigue dentro de
+    // la zona y su `inherit` toma el negro que la zona llama blanco.
+    // Chromium, bajo `<div class="sidebar" data-bs-theme="oscura">`: 1.00:1.
+    const css = [
+      ':root,',
+      '[data-bs-theme="dynamic"] {',
+      '  --bs-body-bg-rgb: 255, 255, 255;',
+      '  --bs-body-color-rgb: 16, 24, 40;',
+      '  --bs-border-color: rgb(228, 231, 236);',
+      '}',
+      '',
+      '[data-bs-theme="oscura"] { --bs-white: rgb(0, 0, 0); }',
+      '',
+      `${selector} {`,
+      '  --bs-white: inherit;',
+      `  ${ACTIVE_BG}: rgb(0, 0, 0);`,
+      `  ${ACTIVE_COLOR}: var(--bs-white);`,
+      '}',
+    ].join('\n');
+    const result = validateStrict(css);
+
+    expect(findings(result)).toEqual([
+      expect.stringMatching(/^error contraste-nav-pills: .*1\.00:1/),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  it('ya no avisa `zona-pegada`', () => {
+    // El aviso existía porque la forma pegada se medía como si la zona fuera
+    // un ancestro. Ahora se modela, así que no hay nada que revisar a mano.
+    const result = validateStrict(expandCss({
+      ...MINIMAL_THEME,
+      components: [{ selector: '[data-bs-theme="oscura"].btn-primary', vars: { '--bs-btn-color': BLACK } }],
+      zones: { oscura: { vars: { '--bs-btn-bg': WHITE } } },
+    }));
+
+    expect(result.stderr).not.toContain('zona-pegada');
   });
 });
 

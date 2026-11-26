@@ -477,7 +477,7 @@ salida respeta*).
 
 `triplete`, `wrapper`, `rampa-incompleta`, `rampa-inexistente`,
 `rampa-irresoluble`, `paso-500`, `superficie-faltante`, `superficie-heredada`, `border-color`,
-`where`, `vacio`, `ciclo`, `triplete-sin-envolver`, `zona-pegada`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
+`where`, `vacio`, `ciclo`, `triplete-sin-envolver`, `wrapper-faltante-zona`, `tipografia`, `tipografia-breakpoint`, `tipografia-familia`, `monotonia`,
 `contraste-boton`, `contraste-nav-pills`, `contraste-zona`, `contraste-superficie`,
 `contraste-enlace-zona`, `contraste-horneado`, `contraste-preexistente` y
 `contraste-irresoluble`. Sale con 1 si hay errores;
@@ -510,10 +510,19 @@ resuelve el navegador:
   `!important`, luego la de más especificidad (con el prefijo de zona) y, a
   igualdad, la última, como en la cascada.
 - Un prefijo de zona pegado al selector (`[data-bs-theme="oscura"].btn-primary`)
-  pone la zona en el mismo elemento que el componente. El validador no modela
-  ese caso: lo mide como si la zona fuera un ancestro
-  (`[data-bs-theme="oscura"] .btn-primary`) y da el aviso `zona-pegada` para que
-  se revise en la preview.
+  pone la zona en el mismo elemento que el componente, y eso cambia dos cosas.
+  Lo que la zona declara cae sobre el componente y **compite en la cascada** con
+  lo que la librería y el theme ponen ahí, en vez de heredarse ya resuelto;
+  `[data-bs-theme="x"]` es un atributo, así que pesa como una clase y, a igual
+  peso, gana el que vaya después (el theme, que carga tras la librería). Y el
+  **padre del componente queda fuera de la zona**, así que un `inherit` sobre él
+  toma el valor de fuera. Esto vale sólo cuando el prefijo va pegado al
+  componente y nada más: en `[data-bs-theme="x"].sidebar .nav-pills` la zona
+  está en la barra, que es un ancestro de la pastilla, así que lo que declara
+  le llega heredado y pierde contra lo que la librería declara sobre
+  `.nav-pills`. Si el theme usa las dos formas sobre el mismo componente
+  (`[data-bs-theme="x"] .a` y `[data-bs-theme="x"].a`), son dos elementos
+  distintos y el validador mide uno: el de la zona pegada.
 
 El validador no ve el HTML: no sabe qué elementos casan con un selector. Un
 bloque se aplica a un componente cuando su selector, sin el prefijo de zona, es
@@ -549,9 +558,6 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   un theme completo que no redefine esas variables en `:root`. Así se puede
   mantener una zona en un archivo aparte sin repetir el raíz.
 - `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
-- `zona-pegada` — aviso por cada selector con el prefijo de zona pegado
-  (`[data-bs-theme="x"].clase`): se mide como si la zona fuera un ancestro, y
-  hay que revisarlo en la preview.
 - `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
   sí misma con `var()`: el navegador descarta la variable.
 - `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona
