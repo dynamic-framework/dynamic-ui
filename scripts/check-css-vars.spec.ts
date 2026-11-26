@@ -55,7 +55,7 @@ describe('check-css-vars', () => {
     expect(status).toBe(1);
     expect(stderr).toContain('--bs-bs-gray-400');
     expect(stderr).toContain('--bs---bs-ref-spacer-4');
-    expect(stderr).toContain('2 custom propertie(s)');
+    expect(stderr).toContain('2 nombre(s) de custom property mal formado(s) en 1 de 1 archivo(s)');
   });
 
   it('propone el nombre bien formado para cada errata', () => {
@@ -196,7 +196,45 @@ describe('check-css-vars', () => {
       '.b { color: var(--bs-bs-gray-400); }',
     ].join('\n'));
 
-    expect(run([file]).stderr).toContain('1 custom propertie(s)');
+    expect(run([file]).stderr).toContain('1 nombre(s) de custom property mal formado(s)');
+  });
+
+  it('cuenta una vez el nombre que se repite en varios archivos', () => {
+    // El caso real: el .css y el .min.css llevan la misma errata.
+    const expanded = write('twice.css', '.a {\n  color: var(--bs-bs-gray-400);\n}\n');
+    const minified = write('twice.min.css', '.a{color:var(--bs-bs-gray-400)}');
+    const clean = write('clean.css', '.a { color: var(--bs-gray-400); }\n');
+
+    expect(run([expanded, minified, clean]).stderr)
+      .toContain('1 nombre(s) de custom property mal formado(s) en 2 de 3 archivo(s)');
+  });
+
+  describe('no distingue mayúsculas donde CSS no las distingue', () => {
+    it.each([
+      ['VAR() en mayúsculas', '.a { color: VAR(--bs-bs-gray-400); }'],
+      ['el prefijo duplicado en mayúsculas', '.a { color: var(--BS-BS-gray-400); }'],
+      ['el prefijo duplicado mixto', ':root { --bs-BS-gray-400: #ccc; }'],
+    ])('%s', (_, css) => {
+      const file = write(`${_.replace(/\W+/g, '-')}.css`, `${css}\n`);
+      const { status, stderr } = run([file]);
+
+      expect(status).toBe(1);
+      expect(stderr).toContain('probablemente se quería --bs-gray-400');
+    });
+  });
+
+  it('detecta el nombre mal formado en @property', () => {
+    const file = write('at-property.css', '@property --bs-bs-gray-400 { syntax: "<color>"; inherits: true; initial-value: #ccc; }\n');
+
+    expect(run([file]).status).toBe(1);
+  });
+
+  it('aplica segmento-vacio también a custom properties de terceros', () => {
+    const file = write('third-party.css', ':root { --swiper--x: 1px; }\n');
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('[segmento-vacio]  --swiper--x');
   });
 
   it('falla si el CSS no está compilado', () => {

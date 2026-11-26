@@ -20,14 +20,18 @@
  * que el check mire el nombre y no el render.
  *
  * Reglas:
- * - `prefijo-duplicado`: el nombre empieza por `--bs-bs-`.
+ * - `prefijo-duplicado`: el nombre empieza por `--bs-bs-`, sin distinguir
+ *   mayúsculas (`--BS-bs-` tampoco existe: los nombres sí las distinguen).
  * - `segmento-vacio`: el nombre lleva `--` después del `--` inicial, o termina
- *   en `-`. Cubre `--bs---bs-ref-spacer-4`.
+ *   en `-`. Cubre `--bs---bs-ref-spacer-4`. Aplica a toda custom property, no
+ *   solo a `--bs-*`: una de terceros con doble guion (`--swiper--x`) también
+ *   falla, a propósito.
  *
  * Solo mira nombres de custom property, no el texto que los imita. Antes de
  * buscar, blanquea comentarios, cadenas y el contenido sin comillas de `url()`,
  * y luego exige que el nombre esté en posición de declaración —detrás de `{` o
- * de `;`— o dentro de un `var()`. Así no fallan por un nombre que no es tal:
+ * de `;`—, dentro de un `var()` o tras `@property`. Así no fallan por un nombre
+ * que no es tal:
  *
  *   .react-datepicker__header--time--only { … }   // clase BEM con doble guion
  *   .--bs-bs-gray-400:hover { … }                 // selector, no declaración
@@ -76,7 +80,10 @@ const NON_CODE = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\[\s\S])*"|'(?:[^'\\\n]|\\[\s\S
 // desplazamiento del grupo capturado; sin él la línea que se reporta es la del
 // `{` o el `;`, no la del nombre.
 const DECLARATION = /[{;]\s*(--[\w-]*)\s*:/gd;
-const REFERENCE = /var\(\s*(--[\w-]*)/gd;
+// `var()` y `@property` no distinguen mayúsculas.
+const REFERENCE = /var\(\s*(--[\w-]*)/gdi;
+const AT_PROPERTY = /@property\s+(--[\w-]*)/gdi;
+const DUPLICATED_PREFIX = `--${PREFIX}-${PREFIX}-`;
 
 /**
  * El CSS con los tramos que no son código sustituidos por espacios. No se
@@ -96,8 +103,8 @@ function suggest(name) {
   do {
     previous = fixed;
     fixed = `--${fixed.slice(2).replace(/-{2,}/g, '-').replace(/-$/, '')}`;
-    if (fixed.startsWith(`--${PREFIX}-${PREFIX}-`)) {
-      fixed = `--${PREFIX}-${fixed.slice(`--${PREFIX}-${PREFIX}-`.length)}`;
+    if (fixed.toLowerCase().startsWith(DUPLICATED_PREFIX)) {
+      fixed = `--${PREFIX}-${fixed.slice(DUPLICATED_PREFIX.length)}`;
     }
   } while (fixed !== previous);
   return fixed;
@@ -108,7 +115,7 @@ function suggest(name) {
  */
 function malformed(name) {
   const rule = (() => {
-    if (name.startsWith(`--${PREFIX}-${PREFIX}-`)) return 'prefijo-duplicado';
+    if (name.toLowerCase().startsWith(DUPLICATED_PREFIX)) return 'prefijo-duplicado';
     if (name.slice(2).includes('--') || name.endsWith('-')) return 'segmento-vacio';
     return undefined;
   })();
@@ -131,7 +138,7 @@ export function checkCss(content) {
 
   // matchAll clona el literal antes de recorrerlo, así que no hay lastIndex
   // compartido entre llamadas.
-  [DECLARATION, REFERENCE].forEach((pattern) => {
+  [DECLARATION, REFERENCE, AT_PROPERTY].forEach((pattern) => {
     [...scanned.matchAll(pattern)].forEach(({ 1: name, indices }) => {
       const [nameIndex] = indices[1];
       const problem = malformed(name);
@@ -157,17 +164,20 @@ function main(argv) {
     return 1;
   }
 
-  let count = 0;
+  // Por nombre, no por aparición: el .css y el .min.css llevan la misma errata.
+  const names = new Set();
+  let affected = 0;
   targets.forEach((file) => {
     const problems = checkCss(fs.readFileSync(file, 'utf8'));
-    problems.forEach(({ line, rule, message }) => {
+    problems.forEach(({ line, name, rule, message }) => {
       process.stderr.write(`${display(file)}:${line}  [${rule}]  ${message}\n`);
+      names.add(name);
     });
-    count += problems.length;
+    if (problems.length) affected += 1;
   });
 
-  if (count) {
-    process.stderr.write(`\n${count} custom propertie(s) con el nombre mal formado en ${targets.length} archivo(s).\n`);
+  if (names.size) {
+    process.stderr.write(`\n${names.size} nombre(s) de custom property mal formado(s) en ${affected} de ${targets.length} archivo(s).\n`);
     return 1;
   }
   process.stdout.write(`${targets.length} archivo(s) sin custom properties mal formadas.\n`);
