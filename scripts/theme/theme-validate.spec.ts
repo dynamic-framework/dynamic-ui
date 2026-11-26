@@ -1703,7 +1703,8 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
   ));
 
   /**
-   * El ejemplo con un primary claro, sus dos pares reales corregidos y un
+   * El ejemplo con un primary claro, sus tres pares reales corregidos (el
+   * sólido .btn-primary incluido: el blanco horneado da 1.72:1) y un
    * .btn-outline-primary legible en los tres estados: primary-900 en el raíz y
    * blanco en la zona oscura. Ninguno declara fondo de hover ni de active, así
    * que el botón no se rellena. Chromium: 13.91:1 en el raíz y 14.69:1 en la
@@ -1715,7 +1716,11 @@ describe('contraste-boton — .btn-outline-* en reposo, hover y active (#1296)',
   ) => ({
     ...EJEMPLO,
     roles: { ...EJEMPLO.roles, primary: '#7fd4d0' },
-    root: { ...EJEMPLO.root, '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-900-rgb))' },
+    root: {
+      ...EJEMPLO.root,
+      '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-900-rgb))',
+      '--bs-btn-primary-color': 'var(--bs-primary-900)',
+    },
     components: [
       ...EJEMPLO.components.map((c: { selector: string; vars?: Record<string, string> }) => (
         c.selector === '.nav-pills'
@@ -2166,6 +2171,46 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
       '".btn-primary, en active": 3.32:1 entre el texto --bs-btn-active-color (--bs-gray-900-rgb) '
       + 'y el fondo --bs-btn-active-bg (--bs-primary-700-rgb)',
     )]);
+  });
+
+  describe('el reposo de un bloque que sólo toca hover o active no se mide dos veces', () => {
+    // Con primary #b5ece3 el blanco horneado da 1.31:1 en reposo. Un bloque que
+    // sólo declara el fondo de hover lleva el botón a R10, que mide también el
+    // reposo; el par horneado de .btn-primary no debe salir además.
+    const theme = (extra: object) => ({ ...SECTIONED_THEME, roles: { primary: '#b5ece3' }, ...extra });
+    const hoverBg = { '--bs-btn-hover-bg': 'rgb(var(--bs-primary-100-rgb))' };
+    // Sólo el par de reposo: sin etiqueta de estado y en el contexto pedido.
+    const restFindings = (list: string[], zone = '') => list.filter((f) => f.includes(`".btn-primary${zone}": `));
+
+    it('un bloque global lo mide sólo contraste-boton', () => {
+      const list = findings(validate(expandCss(theme({
+        components: [{ selector: '.btn-primary', vars: hoverBg }],
+      }))));
+      expect(restFindings(list)).toEqual([expect.stringMatching(/^error contraste-boton: "\.btn-primary": 1\.31:1/)]);
+    });
+
+    it('un bloque de zona no apaga el par horneado del raíz', () => {
+      const list = findings(validate(expandCss(theme({
+        zones: {
+          oscura: {
+            ...SECTIONED_THEME.zones.oscura,
+            components: [{ selector: '.btn-primary', vars: hoverBg }],
+          },
+        },
+      }))));
+      // En el raíz no hay bloque: lo mide contraste-horneado.
+      expect(restFindings(list)).toEqual([expect.stringMatching(/^error contraste-horneado: "\.btn-primary": 1\.31:1/)]);
+      // En la zona lo mide R10, una sola vez.
+      expect(restFindings(list, ' dentro de [data-bs-theme="oscura"]'))
+        .toEqual([expect.stringMatching(/^error contraste-boton: /)]);
+    });
+
+    it('un .btn-outline-<role> no apaga el par horneado del sólido', () => {
+      const list = findings(validate(expandCss(theme({
+        components: [{ selector: '.btn-outline-primary', vars: { '--bs-btn-color': 'var(--bs-primary-700)' } }],
+      }))));
+      expect(restFindings(list)).toEqual([expect.stringMatching(/^error contraste-horneado: "\.btn-primary": 1\.31:1/)]);
+    });
   });
 });
 
