@@ -2283,24 +2283,66 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
     )]);
   });
 
-  it('cuenta el fondo del role declarado en root o en las variables de la zona', () => {
-    const stateText = { '--bs-btn-hover-color': 'var(--bs-black)', '--bs-btn-active-color': 'var(--bs-black)' };
+  it('cuenta el token del role declarado en el raíz, que es lo que lee el mapper', () => {
+    // `df-button-variant-mapper` redeclara --bs-btn-hover-bg en .btn-<role>
+    // leyendo --bs-btn-<role>-hover-bg: fijarlo en el raíz pinta el relleno, y
+    // la nota diría que debajo queda el de la librería cuando ya no lo está.
+    expect(notesFor({
+      ...MINIMAL_THEME,
+      root: { '--bs-btn-primary-hover-bg': 'var(--bs-primary-100)' },
+      components: [{
+        selector: '.btn-primary',
+        vars: { '--bs-btn-hover-color': 'var(--bs-black)', '--bs-btn-active-color': 'var(--bs-black)' },
+      }],
+    })).toEqual([expect.stringMatching(/^\.btn-primary fija el texto de active sin su fondo/)]);
+  });
+
+  it('no cuenta la variable genérica en el raíz: el mapper la pisa en el botón', () => {
+    // --bs-btn-hover-bg en :root no llega: .btn-<role> la redeclara sobre el
+    // propio elemento, así que el relleno sigue siendo el de la librería.
+    expect(notesFor({
+      ...MINIMAL_THEME,
+      root: { '--bs-btn-hover-bg': 'var(--bs-primary-100)' },
+      components: [{
+        selector: '.btn-primary',
+        vars: { '--bs-btn-hover-color': 'var(--bs-black)' },
+      }],
+    })).toEqual([expect.stringMatching(/^\.btn-primary fija el texto de hover sin su fondo/)]);
+  });
+
+  it('el token del role en las variables de una zona sólo calla la nota de esa zona', () => {
+    const button = {
+      selector: '.btn-primary',
+      vars: { '--bs-btn-hover-color': 'var(--bs-black)' },
+    };
     expect(notesFor({
       ...SECTIONED_THEME,
-      root: { '--bs-btn-primary-hover-bg': 'var(--bs-primary-100)' },
-      components: [{ selector: '.btn-primary', vars: stateText }],
+      components: [button],
       zones: {
         oscura: {
           ...SECTIONED_THEME.zones.oscura,
-          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-btn-primary-active-bg': 'var(--bs-primary-300)' },
-          components: [{ selector: '.btn-primary', vars: stateText }],
+          vars: {
+            ...SECTIONED_THEME.zones.oscura.vars,
+            '--bs-btn-primary-hover-bg': 'var(--bs-primary-100)',
+          },
+          components: [button],
         },
       },
-    })).toEqual([
-      // En el raíz sólo hover tiene fondo; en la zona, hover llega de root y
-      // active lo pone la zona.
-      expect.stringMatching(/^\.btn-primary fija el texto de active sin su fondo/),
-    ]);
+    // El botón del raíz sigue con el relleno de la librería: la zona no lo alcanza.
+    })).toEqual([expect.stringMatching(/^\.btn-primary fija el texto de hover sin su fondo/)]);
+  });
+
+  it('el token del role en el propio bloque del botón también es fondo declarado', () => {
+    expect(notesFor({
+      ...MINIMAL_THEME,
+      components: [{
+        selector: '.btn-primary',
+        vars: {
+          '--bs-btn-hover-color': 'var(--bs-black)',
+          '--bs-btn-primary-hover-bg': 'var(--bs-primary-100)',
+        },
+      }],
+    })).toEqual([]);
   });
 
   it('el ejemplo versionado sin sus fondos de estado da la nota; con ellos, no', () => {
