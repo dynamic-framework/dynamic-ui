@@ -980,15 +980,22 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       }
     }
 
+    /*
+     * El enlace se mide declare la zona su color o no. Lo que hereda del raíz
+     * es un color ya resuelto contra la paleta clara, así que la zona que sólo
+     * oscurece el fondo lo deja igual: ése es justo el caso que hay que
+     * reportar. Condicionarlo a la declaración haría que la regla sólo
+     * revisara los themes que ya habían pensado en el enlace.
+     */
     const linkDecl = ctx.own.get('--bs-link-color-rgb');
-    if (!linkDecl || !bg.rgb) continue;
+    if (!bg.rgb) continue;
     const link = ctx.lookup('--bs-link-color-rgb');
     if (!link.rgb) {
       if (explainedByR1(ctx, null, link)) continue;
       warn(
         'contraste-irresoluble',
         `No se pudo medir el enlace de la zona "${ctx.zone}": ${link.reason}.`,
-        linkDecl.line,
+        linkDecl?.line ?? ctx.line,
       );
       continue;
     }
@@ -1001,14 +1008,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         'contraste-enlace-zona',
         `${detail} Pasa el 3:1 de componente gráfico, así que el enlace se distingue del `
         + 'fondo, pero su texto no llega a AA. Revísalo con diseño antes de darlo por bueno.',
-        linkDecl.line,
+        linkDecl?.line ?? ctx.line,
       );
       continue;
     }
     fail(
       'contraste-enlace-zona',
       `${detail} Ni siquiera llega al 3:1 mínimo para distinguirse del fondo.`,
-      linkDecl.line,
+      linkDecl?.line ?? ctx.line,
     );
   }
 
@@ -1151,7 +1158,12 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         continue;
       }
 
-      const arreglo = `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
+      // Un par puede traer su propia instrucción: la genérica —declarar el
+      // texto en el bloque de la zona— no sirve cuando la librería fija la
+      // variable en el selector del componente, porque lo del elemento gana
+      // sobre lo heredado y el arreglo no haría nada.
+      const arreglo = pair.fix
+        ?? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
         + 'para que el componente deje de heredar el valor de la librería.';
 
       fail(

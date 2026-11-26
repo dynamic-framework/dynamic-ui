@@ -33,8 +33,28 @@
   --bs-link-hover-color-rgb: var(--bs-primary-200-rgb);
   --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
   --bs-border-color: rgba(var(--bs-white-rgb), .15);
+  --bs-label-color: rgb(var(--bs-gray-100-rgb));
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
+}
+
+/*
+ * Componentes con fondo propio: dentro de la zona el texto se aclara, pero su
+ * fondo lo pinta la librería y sigue siendo claro. Hay que bajar uno u otro.
+ */
+[data-bs-theme="nocturna"] .card {
+  --bs-card-bg: rgb(var(--bs-body-bg-rgb));
+  --bs-card-border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="nocturna"] .form-control,
+[data-bs-theme="nocturna"] .form-select {
+  --bs-body-color: rgb(var(--bs-gray-900-rgb));
+}
+
+/* El texto de ayuda está atado a --bs-gray-500, un token global. */
+[data-bs-theme="nocturna"] .form-text {
+  --bs-gray-500: rgb(var(--bs-gray-300-rgb));
 }
 
 [data-bs-theme="nocturna"] .nav {

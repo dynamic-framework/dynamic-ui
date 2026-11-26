@@ -95,7 +95,8 @@
         "--bs-heading-color": "rgb(var(--bs-white-rgb))",
         "--bs-link-color-rgb": "var(--bs-primary-300-rgb)",
         "--bs-link-hover-color-rgb": "var(--bs-primary-200-rgb)",
-        "--bs-border-color": "rgba(var(--bs-white-rgb), .15)"
+        "--bs-border-color": "rgba(var(--bs-white-rgb), .15)",
+        "--bs-label-color": "rgb(var(--bs-gray-100-rgb))"
       },
       "nav": {
         "--bs-nav-link-color": "rgb(var(--bs-white-rgb))",
@@ -156,6 +157,12 @@
           "selector": ".modal .btn-outline-primary",
           "vars": {
             "--bs-btn-color": "rgb(var(--bs-dark-rgb))"
+          }
+        },
+        {
+          "selector": ".form-text",
+          "vars": {
+            "--bs-gray-500": "rgb(var(--bs-gray-300-rgb))"
           }
         }
       ]

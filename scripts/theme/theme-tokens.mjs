@@ -786,6 +786,10 @@ export const LIBRARY_ROOT_COLORS = (() => {
     map.set(`--bs-btn-outline-${role}-hover-bg`, 'transparent');
     map.set(`--bs-btn-outline-${role}-active-bg`, 'transparent');
   }
+  // La etiqueta de formulario lee `--bs-label-color`, que la librería declara
+  // en el raíz apuntando al gris 700. Una zona que oscurece el fondo no la
+  // mueve: el alias ya se resolvió arriba con la rampa del tema claro.
+  map.set('--bs-label-color', 'var(--bs-gray-700)');
   return map;
 })();
 
@@ -820,6 +824,16 @@ export const LIBRARY_ELEMENT_VARS = new Map([
   ['.nav-pills', new Map([
     ['--bs-nav-pills-link-active-color', 'var(--bs-primary-500)'],
     ['--bs-nav-pills-link-active-bg', 'var(--bs-gray-50)'],
+  ])],
+  // El enlace de navegación en reposo. La librería lo declara en `.nav`, no en
+  // el raíz, así que un bloque del theme sobre `.nav` lo pisa.
+  ['.nav', new Map([
+    ['--bs-nav-link-color', 'var(--bs-gray-900)'],
+  ])],
+  // La tarjeta pinta su propio fondo y no lo deriva de ninguna superficie del
+  // theme: dentro de una zona sigue siendo blanco.
+  ['.card', new Map([
+    ['--bs-card-bg', 'var(--bs-white)'],
   ])],
   // `df-button-variant-mapper` cablea las variables genéricas del botón a las
   // del role, estado por estado. El theme pisa las genéricas en su bloque; lo
@@ -1216,6 +1230,76 @@ export function buildContexts(blocks, root) {
  * advertencia: un error pediría un arreglo que no existe.
  */
 export const BAKED_PAIRS = [
+  /*
+   * Componentes con fondo propio. No heredan la superficie de la zona: la
+   * pintan ellos, con un color que la librería fija y que el rebrand no toca.
+   * El texto sí lo heredan, así que una zona que lo aclara deja texto claro
+   * sobre el fondo claro del componente — los pares de 1.00:1 del informe.
+   */
+  {
+    component: '.card',
+    fix: 'Declara --bs-card-bg sobre `.card` dentro de la zona: la librería lo fija en el propio selector, y ahí no llega lo que declare el bloque de la zona.',
+    why: 'la tarjeta pinta --bs-card-bg y hereda el texto del cuerpo, que la zona aclara',
+    owners: [['.card']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-card-bg' },
+  },
+  {
+    // El fondo no sale de una variable de componente: `_forms.scss` escribe
+    // `background-color: var(--bs-white)` en el propio selector. Por eso el
+    // arreglo es declarar el texto sobre `.form-control`, no el fondo.
+    component: '.form-control',
+    fix: 'Declara --bs-body-color sobre `.form-control` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el campo pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-control']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+  {
+    component: '.form-select',
+    fix: 'Declara --bs-body-color sobre `.form-select` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el select pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-select']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+
+  /*
+   * Textos atados a un alias que la librería calcula en `:root`. La zona cambia
+   * el fondo bajo ellos, pero el color ya se resolvió arriba con la rampa del
+   * tema claro y se hereda calculado, así que no se mueve.
+   */
+  {
+    component: '.form-label',
+    why: 'la etiqueta lee --bs-label-color, que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.form-text',
+    fix: 'Declara --bs-gray-500 sobre `.form-text` dentro de la zona: el texto de ayuda lee el token global, así que re-apuntarlo en el bloque de la zona movería la rampa entera.',
+    why: 'el texto de ayuda está atado a var(--bs-gray-500), un token global y no una variable suya',
+    owners: [['.form-text']],
+    fg: { variable: '--bs-gray-500' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.nav-link',
+    fix: 'Declara --bs-nav-link-color sobre `.nav` dentro de la zona: la librería lo fija ahí, y lo del elemento gana sobre lo que herede de la zona.',
+    why: 'el enlace de navegación lee --bs-nav-link-color, que `.nav` resuelve a var(--bs-gray-900)',
+    owners: [['.nav'], ['.nav-link']],
+    fg: { variable: '--bs-nav-link-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.text-body-secondary',
+    why: 'la clase lee --bs-secondary-color, que el raíz calcula sobre el texto del cuerpo del raíz',
+    owners: [['.text-body-secondary']],
+    fg: { variable: '--bs-secondary-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+
   {
     component: '.list-group-item',
     why: 'la lista hereda el texto de --bs-list-group-color, que apunta al role dark',
