@@ -164,11 +164,11 @@ describe('resolveInherited — valores de respaldo de var()', () => {
     const zone = { '--bs-white-rgb': 'initial', '--bs-a-rgb': 'var(--bs-white-rgb, 0, 0, 0)' };
     expect(resolveInZone('--bs-a-rgb', { '--bs-white-rgb': '255, 255, 255' }, zone).rgb).toEqual({ r: 0, g: 0, b: 0 });
     // Sin respaldo, no hay nada que medir, y tampoco se cae al valor del raíz.
-    const sinRespaldo = resolveInZone('--bs-b-rgb', { '--bs-white-rgb': '255, 255, 255' }, {
+    const withoutFallback = resolveInZone('--bs-b-rgb', { '--bs-white-rgb': '255, 255, 255' }, {
       '--bs-white-rgb': 'initial', '--bs-b-rgb': 'var(--bs-white-rgb)',
     });
-    expect(sinRespaldo.rgb).toBeNull();
-    expect(sinRespaldo.reason).toContain('initial');
+    expect(withoutFallback.rgb).toBeNull();
+    expect(withoutFallback.reason).toContain('initial');
   });
 
   it.each(['inherit', 'unset', 'revert'])('una variable que vale %s toma el valor del padre', (keyword) => {

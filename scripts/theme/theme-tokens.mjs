@@ -786,6 +786,10 @@ export const LIBRARY_ROOT_COLORS = (() => {
     map.set(`--bs-btn-outline-${role}-hover-bg`, 'transparent');
     map.set(`--bs-btn-outline-${role}-active-bg`, 'transparent');
   }
+  // La etiqueta de formulario lee `--bs-label-color`, que la librería declara
+  // en el raíz apuntando al gris 700. Una zona que oscurece el fondo no la
+  // mueve: el alias ya se resolvió arriba con la rampa del tema claro.
+  map.set('--bs-label-color', 'var(--bs-gray-700)');
   return map;
 })();
 
@@ -820,6 +824,16 @@ export const LIBRARY_ELEMENT_VARS = new Map([
   ['.nav-pills', new Map([
     ['--bs-nav-pills-link-active-color', 'var(--bs-primary-500)'],
     ['--bs-nav-pills-link-active-bg', 'var(--bs-gray-50)'],
+  ])],
+  // El enlace de navegación en reposo. La librería lo declara en `.nav`, no en
+  // el raíz, así que un bloque del theme sobre `.nav` lo pisa.
+  ['.nav', new Map([
+    ['--bs-nav-link-color', 'var(--bs-gray-900)'],
+  ])],
+  // La tarjeta pinta su propio fondo y no lo deriva de ninguna superficie del
+  // theme: dentro de una zona sigue siendo blanco.
+  ['.card', new Map([
+    ['--bs-card-bg', 'var(--bs-white)'],
   ])],
   // `df-button-variant-mapper` cablea las variables genéricas del botón a las
   // del role, estado por estado. El theme pisa las genéricas en su bloque; lo
@@ -1211,11 +1225,95 @@ export function buildContexts(blocks, root) {
  * sobre ellos, en la librería o en el theme, forma la capa de ese elemento. Lo
  * que declara el ítem no cambia lo que su ancestro ya resolvió.
  *
- * `noCorregible` marca los pares que ninguna declaración del theme puede
+ * `notFixable` marca los pares que ninguna declaración del theme puede
  * cambiar, porque el color no viaja por una variable. Esos se reportan como
  * advertencia: un error pediría un arreglo que no existe.
  */
 export const BAKED_PAIRS = [
+  /*
+   * Componentes con fondo propio. No heredan la superficie de la zona: la
+   * pintan ellos, con un color que la librería fija y que el rebrand no toca.
+   * El texto sí lo heredan, así que una zona que lo aclara deja texto claro
+   * sobre el fondo claro del componente — los pares de 1.00:1 del informe.
+   */
+  {
+    component: '.card',
+    fix: 'Declara --bs-card-bg sobre `.card` dentro de la zona: la librería lo fija en el propio selector, y ahí no llega lo que declare el bloque de la zona.',
+    why: 'la tarjeta pinta --bs-card-bg y hereda el texto del cuerpo, que la zona aclara',
+    owners: [['.card']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-card-bg' },
+  },
+  {
+    // El fondo no sale de una variable de componente: `_forms.scss` escribe
+    // `background-color: var(--bs-white)` en el propio selector. Por eso el
+    // arreglo es declarar el texto sobre `.form-control`, no el fondo.
+    component: '.form-control',
+    fix: 'Declara --bs-body-color sobre `.form-control` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el campo pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-control']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+  {
+    component: '.form-select',
+    fix: 'Declara --bs-body-color sobre `.form-select` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el select pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-select']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+
+  /*
+   * Textos atados a un alias que la librería calcula en `:root`. La zona cambia
+   * el fondo bajo ellos, pero el color ya se resolvió arriba con la rampa del
+   * tema claro y se hereda calculado, así que no se mueve.
+   */
+  {
+    // `_label.scss` pinta --bs-label-color sobre `label` y `.label`, no sobre
+    // la clase de formulario: el arreglo vale declarado en cualquiera de los
+    // tres, y el de la etiqueta misma cubre de paso el de la casilla.
+    component: '.form-label',
+    why: 'la etiqueta lee --bs-label-color, que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-label', 'label', '.label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    // La etiqueta de la casilla es otro `label` con el mismo color, y va como
+    // par aparte porque se arregla en su propio selector: un bloque sobre
+    // `.form-label` la deja igual de ilegible.
+    component: '.form-check-label',
+    why: 'la etiqueta de la casilla es un `label` y lee el mismo --bs-label-color, '
+      + 'que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-check-label'], ['label'], ['.label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.form-text',
+    fix: 'Declara --bs-gray-500 sobre `.form-text` dentro de la zona: el texto de ayuda lee el token global, así que re-apuntarlo en el bloque de la zona movería la rampa entera.',
+    why: 'el texto de ayuda está atado a var(--bs-gray-500), un token global y no una variable suya',
+    owners: [['.form-text']],
+    fg: { variable: '--bs-gray-500' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.nav-link',
+    fix: 'Declara --bs-nav-link-color sobre `.nav` dentro de la zona: la librería lo fija ahí, y lo del elemento gana sobre lo que herede de la zona.',
+    why: 'el enlace de navegación lee --bs-nav-link-color, que `.nav` resuelve a var(--bs-gray-900)',
+    owners: [['.nav'], ['.nav-link']],
+    fg: { variable: '--bs-nav-link-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.text-body-secondary',
+    why: 'la clase lee --bs-secondary-color, que el raíz calcula sobre el texto del cuerpo del raíz',
+    owners: [['.text-body-secondary']],
+    fg: { variable: '--bs-secondary-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+
   {
     component: '.list-group-item',
     why: 'la lista hereda el texto de --bs-list-group-color, que apunta al role dark',
@@ -1266,7 +1364,7 @@ export function bakedRolePairs(role) {
         fg: { variable: '--bs-secondary-700' },
         bg: { variable: '--bs-secondary-50' },
         role,
-        noCorregible: true,
+        notFixable: true,
       }
       : {
         // El texto lee --bs-<role>-text-bg-color, que la librería resuelve en
@@ -1293,6 +1391,47 @@ export function bakedRolePairs(role) {
     });
   }
 
+  // El botón con contorno en reposo. La librería no le pinta fondo —lo deja
+  // transparente en los tres estados—, así que detrás se ve la superficie del
+  // contexto y el par es su texto contra ella. El texto sale de
+  // `--bs-btn-outline-<role>-color`, un alias que el raíz resuelve con la rampa
+  // de arriba: una zona que sólo oscurece el fondo no lo mueve, y ahí es donde
+  // el botón se apaga sin que el theme haya declarado nada.
+  //
+  // `light` y `dark` se quedan fuera: no son roles semánticos sino de
+  // superficie, y cada uno existe para el fondo contrario —`outline-light` da
+  // 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark` al revés—. El
+  // validador no lee el HTML, así que medirlos contra el cuerpo del contexto
+  // sólo delataría al que está usándose en el lado para el que se hizo, y el
+  // aviso pediría un arreglo que rompería la variante.
+  if (OUTLINE_COLORS[role] && role !== 'light' && role !== 'dark') {
+    pairs.push({
+      component: `.btn-outline-${role}`,
+      stateLabel: 'en reposo',
+      why: 'el botón con contorno no pinta fondo y conserva el '
+        + '--bs-btn-outline-<role>-color que la librería resolvió en Sass',
+      // El genérico —declarar --bs-btn-color en el bloque de la zona— no vale:
+      // `df-button-variant-mapper` lo redeclara en `.btn-outline-<role>`, y lo
+      // del elemento gana sobre lo heredado. El token por-role sí llega, porque
+      // la variante lo lee con var() y eso se resuelve ya en el botón.
+      fix: `Declara --bs-btn-outline-${role}-color dentro de la zona: la variante `
+        + 'redeclara --bs-btn-color en el propio botón, así que declararlo en el bloque '
+        + 'de la zona no le llegaría.',
+      owners: [['.btn', `.btn-outline-${role}`]],
+      fg: { variable: '--bs-btn-color' },
+      bg: { variable: '--bs-body-bg' },
+      role,
+      // Dynamic ya pinta varios de estos contornos rozando el umbral sobre su
+      // propio fondo. Ese caso se calla en vez de avisar: no lo introduce el
+      // theme, y un aviso por theme dejaría --strict sin salida 0 posible.
+      quietWhenPreexisting: true,
+      // Con un bloque propio lo mide R10, que conoce el bloque y los tres
+      // estados. Se compara por componente: un `.btn-<role>` sólido no lleva
+      // el contorno a R10, así que no puede apagar este par.
+      onlyWithoutOverride: true,
+    });
+  }
+
   // El relleno de hover y de active de `.btn-outline-<role>` sale de
   // `--bs-btn-outline-<role>-<estado>-bg`, que la variante cablea a
   // `--bs-btn-<estado>-bg`. Por defecto es transparente y se ve la superficie,
@@ -1304,7 +1443,7 @@ export function bakedRolePairs(role) {
       pairs.push({
         component: `.btn-outline-${role}`,
         // El texto del estado como sale en el mensaje, igual que en R10.
-        estado: `en ${state}`,
+        stateLabel: `en ${state}`,
         why: `el botón con contorno conserva el --bs-btn-outline-<role>-${state}-color que la librería resolvió en Sass`,
         owners: [['.btn', `.btn-outline-${role}`]],
         fg: { variable: `--bs-btn-${state}-color` },

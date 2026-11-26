@@ -46,7 +46,9 @@ Los tests viven en `theme-validate.spec.ts`, `theme-tokens.spec.ts` y `theme-dif
 
 Los themes viven en `themes/` y su CSS generado en `out/`. El repo trae
 `theme-ejemplo-zonas.json`, que ejercita las tres secciones, los componentes de
-zona y los pares horneados, y que el validador acepta sin errores:
+zona y los pares horneados, y que el validador acepta sin errores. El paquete lo
+publica en `scripts/theme/themes/theme-ejemplo-zonas.json`: es la referencia de
+una zona oscura completa.
 
 ```bash
 npm run theme:expand -- scripts/theme/themes/theme-ejemplo-zonas.json -o scripts/theme/out/theme-ejemplo-zonas.css
@@ -329,9 +331,13 @@ el color heredado de *todo* el subárbol, incluidos los componentes que llevan s
 propio fondo claro: un `.form-control` dentro de una zona oscura pasa a texto
 blanco sobre fondo blanco. Esos componentes necesitan su propio bloque en
 `zones.<nombre>.components` devolviéndoles un color legible —es exactamente para
-lo que está esa sección—. El validador todavía no lo detecta: asume que dentro de
-una zona el fondo es el de la zona, así que este caso hay que mirarlo en la
-preview.
+lo que está esa sección—. El validador los mide: lleva en su tabla de pares
+horneados los componentes de la librería que no siguen a la zona, y los comprueba
+dentro de cada una. Lo que no alcanza es un componente que el theme repinta por su
+cuenta con una propiedad que no es una variable —un `color:` o un
+`background-color:` literal en un bloque de `components`—: las reglas de contraste
+leen variables, así que ese arreglo no apaga el aviso ni ese fondo propio entra en
+la medida. Ahí sí hay que mirar la preview.
 
 Toda referencia `var(--bs-algo)` de estas tres secciones se comprueba contra los
 tokens que el theme genera y contra `known-tokens.json`, el inventario de lo que
@@ -626,6 +632,63 @@ valor al que cae cuando nadie la toca.
 | `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
 | `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
 | `.btn-<role>` sin bloque propio, sólo en reposo | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+| `.btn-outline-<role>` sin bloque propio, en reposo (sin `light` ni `dark`) | `--bs-btn-outline-<role>-color` | la superficie del contexto: el contorno no pinta fondo |
+| `.card` | `--bs-body-color` | `--bs-card-bg` (→ `var(--bs-white)` en `.card`) |
+| `.form-control` | `--bs-body-color` | `--bs-white` (el fondo lo escribe la librería en el propio selector) |
+| `.form-select` | `--bs-body-color` | `--bs-white` |
+| `.form-label` | `--bs-label-color` (→ `var(--bs-gray-700)` en `:root`) | `--bs-body-bg` |
+| `.form-check-label` | `--bs-label-color` | `--bs-body-bg` |
+| `.form-text` | `--bs-gray-500` (el token global, no una variable suya) | `--bs-body-bg` |
+| `.nav-link` | `--bs-nav-link-color` (→ `var(--bs-gray-900)` en `.nav`) | `--bs-body-bg` |
+| `.text-body-secondary` | `--bs-secondary-color` (→ calculado en `:root`) | `--bs-body-bg` |
+
+Los de esta segunda mitad son los que una zona rompe sin declarar nada, y se
+arreglan en dos sitios distintos según de dónde salga el color:
+
+- Los que **traen su propio fondo** —`.card`, `.form-control`, `.form-select`—
+  heredan el texto de la zona pero no su superficie. Hay que bajar el fondo
+  (`--bs-card-bg`) o devolverle al componente un texto legible
+  (`--bs-body-color` sobre `.form-control`), y en el bloque del componente: el
+  fondo de los campos no sale de ninguna variable que el theme pueda mover.
+- Los que **leen un alias ya resuelto en `:root`** —`.form-label`,
+  `.form-check-label`, `.text-body-secondary`— se arreglan declarando el alias
+  en el bloque de la zona, que sí se hereda.
+- `.form-text` y `.nav-link` leen algo que la librería fija fuera de su alcance:
+  un token global (`--bs-gray-500`) y una variable declarada en `.nav`. El
+  arreglo va en el bloque del componente, y el aviso lo dice en cada caso.
+
+El contorno en reposo se mide para todos los roles, los toque el theme o no: una
+zona que oscurece la superficie lo deja ilegible sin declarar nada del role.
+Tiene dos recortes, y conviene saberlos antes de leer un informe:
+
+- **`light` y `dark` no se miden.** No son roles semánticos sino de superficie:
+  `outline-light` da 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark`
+  al revés. Cada uno existe para el fondo contrario, y como el validador no lee
+  el HTML, medirlos contra el cuerpo del contexto sólo delataría al que está
+  usándose donde debe. Si los usas del otro lado, eso hay que verlo en la
+  preview.
+- **Lo que ya venía rozando el umbral se calla.** Dynamic pinta el contorno de
+  `success`, `warning` y `danger` entre 4.19:1 y 4.36:1 sobre su propio fondo.
+  Avisar de eso en cada theme no aporta nada —no lo introdujo— y, como `--strict`
+  se tiñe con cualquier aviso, dejaría la herramienta sin salida 0 posible. El
+  silencio dura mientras el par siga como estaba: sobre una superficie parecida
+  a la de la librería y sin empeorar de verdad. Dentro de una zona oscura el
+  contorno de `success` da un número parecido (4.02:1) pero contra otro fondo,
+  así que no se calla: sale como error.
+
+El arreglo del contorno no es el genérico. `df-button-variant-mapper` redeclara
+`--bs-btn-color` en `.btn-outline-<role>`, así que declararlo en el bloque de la
+zona no le llega: lo del elemento gana sobre lo heredado. El que sí llega es el
+token por-role, `--bs-btn-outline-<role>-color`, porque la variante lo lee con
+`var()` y eso se resuelve ya en el botón. Darle al contorno un bloque propio
+también vale, pero lo saca de aquí y lo lleva a `contraste-boton`, que entonces
+le revisa los tres estados.
+
+Las dos etiquetas van por separado a propósito. `_label.scss` pinta
+`--bs-label-color` sobre `label` y `.label`, así que un bloque que sólo cubra
+`.form-label` deja la etiqueta de la casilla igual de ilegible y el validador la
+sigue reportando. Declararlo sobre `label` —o en el bloque de la zona— cubre las
+dos de una vez.
 
 El valor por defecto de cada variable es el que declara la librería, y se
 resuelve donde ella lo declara: en `:root` las variables del role y del botón,
@@ -655,10 +718,13 @@ Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
 botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el
 bloque concreto.
 
-Un botón con contorno se mide en sus dos estados, que son pares distintos: en
+Un botón con contorno se mide en sus tres estados, que son pares distintos: en
 reposo el fondo es transparente y detrás está la superficie del contexto; sólo
 al rellenarse (hover/active) el texto cae sobre el color del role, y ahí el que
-manda es `--bs-btn-hover-color`.
+manda es `--bs-btn-hover-color`. Con bloque propio los tres los mide
+`contraste-boton`; sin él, el reposo va como par horneado —con los dos recortes
+de arriba— y hover y active sólo si el theme declara su relleno, porque sin ese
+token siguen transparentes y lo que se ve es el reposo otra vez.
 
 En un botón sólido los tres rellenos los pinta la librería, pero los tres
 estados se miden sólo cuando el theme le da un bloque `.btn-<role>`: es ese

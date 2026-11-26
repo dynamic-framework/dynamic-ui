@@ -113,6 +113,7 @@
     "scripts/theme/theme-validate.mjs",
     "scripts/theme/theme-tokens.mjs",
     "scripts/theme/known-tokens.json",
+    "scripts/theme/themes/theme-ejemplo-zonas.json",
     "scripts/theme/README.md"
   ],
   "dependencies": {
