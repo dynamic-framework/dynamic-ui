@@ -1391,6 +1391,47 @@ export function bakedRolePairs(role) {
     });
   }
 
+  // El botón con contorno en reposo. La librería no le pinta fondo —lo deja
+  // transparente en los tres estados—, así que detrás se ve la superficie del
+  // contexto y el par es su texto contra ella. El texto sale de
+  // `--bs-btn-outline-<role>-color`, un alias que el raíz resuelve con la rampa
+  // de arriba: una zona que sólo oscurece el fondo no lo mueve, y ahí es donde
+  // el botón se apaga sin que el theme haya declarado nada.
+  //
+  // `light` y `dark` se quedan fuera: no son roles semánticos sino de
+  // superficie, y cada uno existe para el fondo contrario —`outline-light` da
+  // 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark` al revés—. El
+  // validador no lee el HTML, así que medirlos contra el cuerpo del contexto
+  // sólo delataría al que está usándose en el lado para el que se hizo, y el
+  // aviso pediría un arreglo que rompería la variante.
+  if (OUTLINE_COLORS[role] && role !== 'light' && role !== 'dark') {
+    pairs.push({
+      component: `.btn-outline-${role}`,
+      estado: 'en reposo',
+      why: 'el botón con contorno no pinta fondo y conserva el '
+        + '--bs-btn-outline-<role>-color que la librería resolvió en Sass',
+      // El genérico —declarar --bs-btn-color en el bloque de la zona— no vale:
+      // `df-button-variant-mapper` lo redeclara en `.btn-outline-<role>`, y lo
+      // del elemento gana sobre lo heredado. El token por-role sí llega, porque
+      // la variante lo lee con var() y eso se resuelve ya en el botón.
+      fix: `Declara --bs-btn-outline-${role}-color dentro de la zona: la variante `
+        + 'redeclara --bs-btn-color en el propio botón, así que declararlo en el bloque '
+        + 'de la zona no le llegaría.',
+      owners: [['.btn', `.btn-outline-${role}`]],
+      fg: { variable: '--bs-btn-color' },
+      bg: { variable: '--bs-body-bg' },
+      role,
+      // Dynamic ya pinta varios de estos contornos rozando el umbral sobre su
+      // propio fondo. Ese caso se calla en vez de avisar: no lo introduce el
+      // theme, y un aviso por theme dejaría --strict sin salida 0 posible.
+      quietWhenPreexisting: true,
+      // Con un bloque propio lo mide R10, que conoce el bloque y los tres
+      // estados. Se compara por componente: un `.btn-<role>` sólido no lleva
+      // el contorno a R10, así que no puede apagar este par.
+      onlyWithoutOverride: true,
+    });
+  }
+
   // El relleno de hover y de active de `.btn-outline-<role>` sale de
   // `--bs-btn-outline-<role>-<estado>-bg`, que la variante cablea a
   // `--bs-btn-<estado>-bg`. Por defecto es transparente y se ve la superficie,

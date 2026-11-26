@@ -446,6 +446,7 @@ const SECTIONED_THEME = {
         '--bs-label-color': 'rgb(var(--bs-gray-100-rgb))',
         '--bs-link-color-rgb': 'var(--bs-primary-200-rgb)',
         '--bs-link-hover-color-rgb': 'var(--bs-primary-100-rgb)',
+        '--bs-btn-outline-primary-color': 'rgb(var(--bs-primary-200-rgb))',
       },
       nav: {
         '--bs-nav-link-color': 'rgb(var(--bs-white-rgb))',
@@ -1486,6 +1487,9 @@ describe('theme-validate — pares horneados', () => {
       root: {
         ...SECTIONED_THEME.root,
         '--bs-primary-text-emphasis': 'rgb(var(--bs-primary-800-rgb))',
+        // Un primary claro tampoco se lee como contorno sobre el fondo del
+        // raíz: el botón no pinta relleno y se queda con el paso 500.
+        '--bs-btn-outline-primary-color': 'rgb(var(--bs-primary-800-rgb))',
       },
       components: [
         {
@@ -4181,6 +4185,81 @@ describe('theme-validate — los componentes que una zona no arrastra (#1375)', 
       ),
     ]);
     expect(result.status).toBe(1);
+  });
+
+
+  /*
+   * El botón con contorno en reposo. No pinta fondo, así que detrás se ve la
+   * superficie del contexto: una zona que la oscurece deja el texto —resuelto
+   * arriba con la rampa clara— encima de ella. Es la fila de botones de
+   * contorno que #1375 nombra y que ninguna regla medía sin bloque propio.
+   */
+  it('sin bloque propio, el contorno en reposo se mide contra el fondo de la zona', () => {
+    const result = validateStrict(sinArreglo({ variable: '--bs-btn-outline-primary-color' }));
+    expect(findings(result)).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.btn-outline-primary dentro de \[data-bs-theme="oscura"\], en reposo": \d\.\d\d:1 entre --bs-btn-color .* y --bs-body-bg/,
+      ),
+    ]);
+    // El arreglo genérico no sirve: la variante redeclara --bs-btn-color en el
+    // propio botón, así que el bloque de la zona no le llega.
+    expect(result.stderr).toContain('Declara --bs-btn-outline-primary-color dentro de la zona');
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * La supresión se cuenta por variante, no por role. Un bloque sobre el botón
+   * sólido no lleva el contorno a R10, así que no puede apagar su par: si la
+   * clave fuera el role, este caso saldría mudo con la zona rota.
+   */
+  it('un bloque del botón sólido no calla el par del contorno', () => {
+    const result = validateStrict(sinArreglo(
+      { variable: '--bs-btn-outline-primary-color' },
+      [{
+        selector: '.btn-primary',
+        vars: {
+          '--bs-btn-color': 'rgb(var(--bs-dark-rgb))',
+          '--bs-btn-bg': 'rgb(var(--bs-primary-200-rgb))',
+        },
+      }],
+    ));
+    expect(findings(result, 'contraste-horneado')).toEqual([
+      expect.stringMatching(
+        /^error contraste-horneado: "\.btn-outline-primary dentro de \[data-bs-theme="oscura"\], en reposo":/,
+      ),
+    ]);
+    expect(result.status).toBe(1);
+  });
+
+  /*
+   * Y al revés: con bloque propio lo mide R10, que conoce el bloque y los tres
+   * estados. El par horneado tiene que callarse o el mismo botón se reportaría
+   * dos veces.
+   */
+  it('un bloque del propio contorno lo lleva a R10 y no se reporta dos veces', () => {
+    const result = validateStrict(sinArreglo(
+      { variable: '--bs-btn-outline-primary-color' },
+      [{ selector: '.btn-outline-primary', vars: { '--bs-btn-color': 'rgb(var(--bs-primary-200-rgb))' } }],
+    ));
+    expect(findings(result, 'contraste-horneado')).toEqual([]);
+    // El botón no queda sin medir: pasa a R10, que al tener bloque propio le
+    // revisa los tres estados y sigue viendo hover y active contra la zona.
+    expect(findings(result, 'contraste-boton')).toEqual([
+      expect.stringMatching(/^error contraste-boton: "\.btn-outline-primary dentro de \[data-bs-theme="oscura"\], en hover":/),
+      expect.stringMatching(/^error contraste-boton: "\.btn-outline-primary dentro de \[data-bs-theme="oscura"\], en active":/),
+    ]);
+    expect(rules(result)).toEqual(['contraste-boton x2']);
+  });
+
+  /*
+   * `light` y `dark` no son roles semánticos sino de superficie: cada uno
+   * existe para el fondo contrario. Medirlos contra el cuerpo del contexto
+   * delataría siempre al que se está usando donde debe.
+   */
+  it('no mide el contorno de los roles de superficie', () => {
+    const result = validateStrict(sinArreglo({ variable: '--bs-btn-outline-primary-color' }));
+    expect(result.stderr).not.toContain('.btn-outline-light');
+    expect(result.stderr).not.toContain('.btn-outline-dark');
   });
 
   /*

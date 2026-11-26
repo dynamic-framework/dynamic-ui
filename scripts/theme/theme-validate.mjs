@@ -557,25 +557,32 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     ['--bs-btn-active-color', '--bs-btn-active-bg'],
   ];
 
-  // Un bloque `.btn-<role>` sólido que toque cualquiera de esas variables lleva
-  // el botón a R10, que mide también el reposo: en los contextos donde R10 lo
-  // mide, el par horneado de ese role no se mide aparte. Un bloque global los
-  // cubre todos; uno de zona, sólo esa zona. Un `.btn-outline-<role>` no
-  // cuenta: R10 no mide el sólido por él.
-  const SOLID_BUTTON = new RegExp(`^\\.btn-(${ROLES.join('|')})$`);
+  // Un bloque de botón que toque cualquiera de esas variables lleva ese botón a
+  // R10, que mide también el reposo: en los contextos donde R10 lo mide, el par
+  // horneado del mismo botón no se mide aparte. Un bloque global los cubre
+  // todos; uno de zona, sólo esa zona.
+  //
+  // La cuenta va por variante, no por role: `.btn-primary` y
+  // `.btn-outline-primary` son dos botones distintos con dos pares distintos, y
+  // un bloque sobre uno no lleva el otro a R10. Compartir la clave haría las dos
+  // cosas mal a la vez —callar el contorno porque el theme declaró el sólido, y
+  // reportarlo dos veces cuando declara el contorno—, así que la clave es el
+  // selector de la variante, el mismo `component` que lleva el par.
+  const BUTTON_VARIANT = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   const overriddenButtons = new Map();
   for (const block of blocks) {
     if (block.isRoot) continue;
     if (!BUTTON_STATE_VARS.flat().some((variable) => block.decls.has(variable))) continue;
     for (const { zone, bare } of alternatives(block)) {
-      const role = bare.trim().match(SOLID_BUTTON)?.[1];
-      if (!role) continue;
-      if (!overriddenButtons.has(role)) overriddenButtons.set(role, new Set());
-      overriddenButtons.get(role).add(zone ?? '*');
+      const variant = bare.trim().match(BUTTON_VARIANT);
+      if (!variant) continue;
+      const component = `.btn-${variant[1] ?? ''}${variant[2]}`;
+      if (!overriddenButtons.has(component)) overriddenButtons.set(component, new Set());
+      overriddenButtons.get(component).add(zone ?? '*');
     }
   }
-  const measuredByR10 = (role, ctx) => {
-    const zones = overriddenButtons.get(role);
+  const measuredByR10 = (component, ctx) => {
+    const zones = overriddenButtons.get(component);
     return Boolean(zones && (zones.has('*') || (ctx.zone && zones.has(ctx.zone))));
   };
 
@@ -1058,7 +1065,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     for (const ctx of contexts) {
       // Un botón con override propio no es un par horneado: lo mide R10, que
       // conoce el bloque concreto y el contexto en el que se ve.
-      if (pair.onlyWithoutOverride && measuredByR10(pair.role, ctx)) continue;
+      if (pair.onlyWithoutOverride && measuredByR10(pair.component, ctx)) continue;
 
       // La capa del elemento reúne lo que se declara sobre los selectores del
       // componente (`.list-group` para una lista, `.alert-<role>` para una
@@ -1129,6 +1136,16 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // corregibles se saltan esto: su aviso explica mejor qué hacer.
       if (!pair.noCorregible && baseline !== null && baseline < minContrast
         && ratio >= baseline * 0.9) {
+        /*
+         * Algunos pares vienen de fábrica rozando el umbral: Dynamic pinta el
+         * contorno de success, warning y danger entre 4.19 y 4.36 sobre su
+         * propio fondo. Avisar de eso en cada theme no le dice nada a nadie —no
+         * lo introdujo— y, como --strict se tiñe con cualquier aviso, dejaría a
+         * la herramienta sin salida 0 posible. Se callan, pero sólo mientras
+         * sigan como estaban: si el theme los empeora de verdad, el `ratio >=
+         * baseline * 0.9` de arriba ya no se cumple y caen como error.
+         */
+        if (pair.quietWhenPreexisting) continue;
         warn(
           'contraste-preexistente',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, bajo el `

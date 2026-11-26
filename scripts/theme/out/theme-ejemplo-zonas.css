@@ -204,6 +204,11 @@
   --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
   --bs-border-color: rgba(var(--bs-white-rgb), .15);
   --bs-label-color: rgb(var(--bs-gray-100-rgb));
+  --bs-btn-outline-secondary-color: rgb(var(--bs-secondary-200-rgb));
+  --bs-btn-outline-success-color: rgb(var(--bs-success-200-rgb));
+  --bs-btn-outline-info-color: rgb(var(--bs-info-200-rgb));
+  --bs-btn-outline-warning-color: rgb(var(--bs-warning-200-rgb));
+  --bs-btn-outline-danger-color: rgb(var(--bs-danger-200-rgb));
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
 }

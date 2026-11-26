@@ -630,6 +630,7 @@ valor al que cae cuando nadie la toca.
 | `.text-bg-<role>` (todos menos `secondary`) | `--bs-<role>-text-bg-color` (→ blanco, `gray-700` o negro, según el role por defecto) | `--bs-<role>-rgb` |
 | `.text-bg-secondary` | `--bs-secondary-700` | `--bs-secondary-50` |
 | `.btn-<role>` sin bloque propio, sólo en reposo | `--bs-btn-<role>-color` | `--bs-btn-<role>-bg` |
+| `.btn-outline-<role>` sin bloque propio, en reposo (sin `light` ni `dark`) | `--bs-btn-outline-<role>-color` | la superficie del contexto: el contorno no pinta fondo |
 | `.card` | `--bs-body-color` | `--bs-card-bg` (→ `var(--bs-white)` en `.card`) |
 | `.form-control` | `--bs-body-color` | `--bs-white` (el fondo lo escribe la librería en el propio selector) |
 | `.form-select` | `--bs-body-color` | `--bs-white` |
@@ -653,6 +654,30 @@ arreglan en dos sitios distintos según de dónde salga el color:
 - `.form-text` y `.nav-link` leen algo que la librería fija fuera de su alcance:
   un token global (`--bs-gray-500`) y una variable declarada en `.nav`. El
   arreglo va en el bloque del componente, y el aviso lo dice en cada caso.
+
+El contorno en reposo tiene dos recortes, y conviene saberlos antes de leer un
+informe:
+
+- **`light` y `dark` no se miden.** No son roles semánticos sino de superficie:
+  `outline-light` da 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark`
+  al revés. Cada uno existe para el fondo contrario, y como el validador no lee
+  el HTML, medirlos contra el cuerpo del contexto sólo delataría al que está
+  usándose donde debe. Si los usas del otro lado, eso hay que verlo en la
+  preview.
+- **Lo que ya venía rozando el umbral se calla.** Dynamic pinta el contorno de
+  `success`, `warning` y `danger` entre 4.19:1 y 4.36:1 sobre su propio fondo.
+  Avisar de eso en cada theme no aporta nada —no lo introdujo— y, como `--strict`
+  se tiñe con cualquier aviso, dejaría la herramienta sin salida 0 posible. El
+  silencio dura mientras el par siga como estaba: si el theme lo empeora de
+  verdad, vuelve a salir, y como error.
+
+El arreglo del contorno no es el genérico. `df-button-variant-mapper` redeclara
+`--bs-btn-color` en `.btn-outline-<role>`, así que declararlo en el bloque de la
+zona no le llega: lo del elemento gana sobre lo heredado. El que sí llega es el
+token por-role, `--bs-btn-outline-<role>-color`, porque la variante lo lee con
+`var()` y eso se resuelve ya en el botón. Darle al contorno un bloque propio
+también vale, pero lo saca de aquí y lo lleva a `contraste-boton`, que entonces
+le revisa los tres estados.
 
 Las dos etiquetas van por separado a propósito. `_label.scss` pinta
 `--bs-label-color` sobre `label` y `.label`, así que un bloque que sólo cubra
@@ -688,10 +713,13 @@ Cuando un theme redefine `--bs-btn-color` en su propio bloque, el par de ese
 botón deja de medirse como horneado y pasa a `contraste-boton`, que conoce el
 bloque concreto.
 
-Un botón con contorno se mide en sus dos estados, que son pares distintos: en
+Un botón con contorno se mide en sus tres estados, que son pares distintos: en
 reposo el fondo es transparente y detrás está la superficie del contexto; sólo
 al rellenarse (hover/active) el texto cae sobre el color del role, y ahí el que
-manda es `--bs-btn-hover-color`.
+manda es `--bs-btn-hover-color`. Con bloque propio los tres los mide
+`contraste-boton`; sin él, el reposo va como par horneado —con los dos recortes
+de arriba— y hover y active sólo si el theme declara su relleno, porque sin ese
+token siguen transparentes y lo que se ve es el reposo otra vez.
 
 En un botón sólido los tres rellenos los pinta la librería, pero los tres
 estados se miden sólo cuando el theme le da un bloque `.btn-<role>`: es ese

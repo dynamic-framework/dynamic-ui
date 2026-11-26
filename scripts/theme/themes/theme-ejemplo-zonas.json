@@ -1,6 +1,6 @@
 {
   "name": "Ejemplo con zonas",
-  "dynamicUi": "2.12.0",
+  "dynamicUi": "2.13.0",
   "roles": {
     "primary": "#3b5f8a",
     "secondary": "#5a6570",
@@ -96,7 +96,12 @@
         "--bs-link-color-rgb": "var(--bs-primary-300-rgb)",
         "--bs-link-hover-color-rgb": "var(--bs-primary-200-rgb)",
         "--bs-border-color": "rgba(var(--bs-white-rgb), .15)",
-        "--bs-label-color": "rgb(var(--bs-gray-100-rgb))"
+        "--bs-label-color": "rgb(var(--bs-gray-100-rgb))",
+        "--bs-btn-outline-secondary-color": "rgb(var(--bs-secondary-200-rgb))",
+        "--bs-btn-outline-success-color": "rgb(var(--bs-success-200-rgb))",
+        "--bs-btn-outline-info-color": "rgb(var(--bs-info-200-rgb))",
+        "--bs-btn-outline-warning-color": "rgb(var(--bs-warning-200-rgb))",
+        "--bs-btn-outline-danger-color": "rgb(var(--bs-danger-200-rgb))"
       },
       "nav": {
         "--bs-nav-link-color": "rgb(var(--bs-white-rgb))",
