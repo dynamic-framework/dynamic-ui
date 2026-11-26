@@ -668,6 +668,15 @@ sin el fondo de ese estado se nombra junto al paso que la librería pinta debajo
 No deriva el fondo, porque elegir el paso es una decisión de diseño. En una
 zona, cuenta el fondo que declare el bloque global del mismo selector.
 
+El relleno se puede fijar por dos caminos y la nota cuenta los dos. La variable
+genérica `--bs-btn-<estado>-bg` sólo vale declarada sobre el propio botón:
+`df-button-variant-mapper` la redeclara en `.btn-<role>`, así que una que venga
+del raíz o de la zona se pierde. El token del role,
+`--bs-btn-<role>-<estado>-bg`, es justo lo que esa redeclaración lee, y vale
+desde donde alcance al botón: el raíz, las variables de la zona o el bloque del
+propio botón. Un token declarado sólo en una zona calla la nota de esa zona,
+no la del raíz, porque el botón de fuera sigue con el relleno de la librería.
+
 **Sin un bloque `.btn-<role>`, del botón sólido se mide sólo el reposo.** La
 fila de la tabla es ese par y nada más: un theme que mueve la rampa del role y
 deja que la librería pinte el botón entero puede dejar hover o active por

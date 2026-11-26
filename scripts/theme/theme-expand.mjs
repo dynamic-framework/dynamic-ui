@@ -542,8 +542,17 @@ const SOLID_BUTTON = new RegExp(`^\\.btn-(${ROLES.join('|')})$`);
  * sin su fondo: debajo queda el relleno de la librería. No se deriva el fondo
  * porque elegir el paso es una decisión de diseño. En una zona cuenta también
  * el fondo que declare el bloque global del mismo selector.
+ *
+ * El relleno se puede fijar por dos caminos, y los dos cuentan:
+ *
+ *   - la variable genérica `--bs-btn-<estado>-bg`, que sólo vale declarada
+ *     sobre el propio botón: `df-button-variant-mapper` la redeclara en
+ *     `.btn-<role>`, así que una que venga del raíz o de la zona la pierde;
+ *   - el token del role, `--bs-btn-<role>-<estado>-bg`, que es justo lo que esa
+ *     redeclaración lee. Vale desde donde alcance al botón: el raíz, las
+ *     variables de la zona o el bloque del propio botón.
  */
-function solidButtonNotes(components, zones) {
+function solidButtonNotes(components, zones, root) {
   const declared = (blocks) => {
     const byPart = new Map();
     for (const { selector, vars } of blocks) {
@@ -557,21 +566,32 @@ function solidButtonNotes(components, zones) {
     return byPart;
   };
   const global = declared(components);
+  // Las variables que el botón hereda sin que nadie las declare sobre él. El
+  // raíz llega a todas partes; las de la zona, sólo dentro de ella.
+  const varNames = (vars) => new Set(vars.map(({ name }) => name));
+  const rootNames = varNames(root);
   const scopes = [
-    { prefix: '', own: global, inherited: new Map() },
+    {
+      prefix: '', own: global, inherited: new Map(), inherits: rootNames,
+    },
     ...zones.map((zone) => ({
       prefix: `${zoneSelector(zone.name)} `,
       own: declared(zone.components),
       inherited: global,
+      inherits: new Set([...rootNames, ...varNames(zone.vars)]),
     })),
   ];
 
   const notes = [];
-  for (const { prefix, own, inherited } of scopes) {
+  for (const {
+    prefix, own, inherited, inherits,
+  } of scopes) {
     for (const [part, names] of own) {
       const role = part.match(SOLID_BUTTON)[1];
-      const hasBg = (state) => names.has(`--bs-btn-${state}-bg`)
-        || Boolean(inherited.get(part)?.has(`--bs-btn-${state}-bg`));
+      const onButton = (name) => names.has(name) || Boolean(inherited.get(part)?.has(name));
+      const hasBg = (state) => onButton(`--bs-btn-${state}-bg`)
+        || onButton(`--bs-btn-${role}-${state}-bg`)
+        || inherits.has(`--bs-btn-${role}-${state}-bg`);
       const states = ['hover', 'active']
         .filter((state) => names.has(`--bs-btn-${state}-color`) && !hasBg(state));
       if (states.length === 0) continue;
@@ -804,7 +824,7 @@ export function expandTheme(input) {
   };
 
   const componentBlocks = theme.components.map((entry) => componentBlock(entry));
-  notes.push(...solidButtonNotes(theme.components, theme.zones));
+  notes.push(...solidButtonNotes(theme.components, theme.zones, theme.root));
 
   // Zonas. Cada una es un subárbol con su propia paleta; `nav` se reparte en
   // dos bloques porque .nav y .nav-pills leen variables distintas y montar las
