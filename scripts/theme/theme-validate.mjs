@@ -549,17 +549,35 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // Un theme puede corregir el par de un botón redefiniendo su color de texto en
-  // un bloque propio (`.btn-<role> { --bs-btn-color: … }`). Cuando lo hace, el
-  // par horneado ya no es el que se ve y lo mide la regla de botones.
-  const overriddenButtons = new Set(
-    blocks
-      .filter((block) => !block.isRoot && block.decls.has('--bs-btn-color'))
-      .flatMap((block) => splitSelectorList(block.prelude))
-      .map((part) => part.trim().replace(/^\[data-bs-theme=["']?[\w-]+["']?\]\s*/, ''))
-      .map((sel) => sel.match(new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`))?.[1])
-      .filter(Boolean),
-  );
+  // Las dos variables que gobiernan cada estado de un botón, en el orden en que
+  // R10 arma sus casos: reposo, hover y active.
+  const BUTTON_STATE_VARS = [
+    ['--bs-btn-color', '--bs-btn-bg'],
+    ['--bs-btn-hover-color', '--bs-btn-hover-bg'],
+    ['--bs-btn-active-color', '--bs-btn-active-bg'],
+  ];
+
+  // Un bloque `.btn-<role>` sólido que toque cualquiera de esas variables lleva
+  // el botón a R10, que mide también el reposo: en los contextos donde R10 lo
+  // mide, el par horneado de ese role no se mide aparte. Un bloque global los
+  // cubre todos; uno de zona, sólo esa zona. Un `.btn-outline-<role>` no
+  // cuenta: R10 no mide el sólido por él.
+  const SOLID_BUTTON = new RegExp(`^\\.btn-(${ROLES.join('|')})$`);
+  const overriddenButtons = new Map();
+  for (const block of blocks) {
+    if (block.isRoot) continue;
+    if (!BUTTON_STATE_VARS.flat().some((variable) => block.decls.has(variable))) continue;
+    for (const { zone, bare } of alternatives(block)) {
+      const role = bare.trim().match(SOLID_BUTTON)?.[1];
+      if (!role) continue;
+      if (!overriddenButtons.has(role)) overriddenButtons.set(role, new Set());
+      overriddenButtons.get(role).add(zone ?? '*');
+    }
+  }
+  const measuredByR10 = (role, ctx) => {
+    const zones = overriddenButtons.get(role);
+    return Boolean(zones && (zones.has('*') || (ctx.zone && zones.has(ctx.zone))));
+  };
 
   // Contextos en los que se mide un componente y también los pares horneados:
   // el bloque raíz y, además, cada zona declarada en el archivo. Un
@@ -576,14 +594,23 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * la variable en cuestión: ahí manda el específico y medir el global sería
    * reportar algo que nunca se ve.
    */
-  const contextsFor = (zone, bare, variable) => {
+  const redefinedInZone = (zoneName, bare, variable) => blocks.some(
+    (other) => other.decls.has(variable)
+      && alternatives(other).some((alt) => alt.zone === zoneName
+        && normalizeSelector(alt.bare) === normalizeSelector(bare)),
+  );
+
+  const contextsFor = (zone, bare, variables) => {
     if (zone) return contexts.filter((ctx) => ctx.zone === zone);
+    const declared = [variables].flat();
     return contexts.filter((ctx) => {
       if (!ctx.zone) return true;
-      const overridden = blocks.some((other) => other.decls.has(variable)
-        && alternatives(other).some((alt) => alt.zone === ctx.zone
-          && normalizeSelector(alt.bare) === normalizeSelector(bare)));
-      return !overridden;
+      // El bloque global deja de verse en la zona en cuanto ésta tiene su
+      // propio bloque para el mismo selector que toque alguna de estas
+      // variables: los dos medirían el mismo par, porque los dos leen la capa
+      // ya fundida del elemento, y el hallazgo saldría dos veces. Manda el
+      // específico.
+      return !declared.some((variable) => redefinedInZone(ctx.zone, bare, variable));
     });
   };
 
@@ -694,8 +721,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
-  // calculó. `.btn-outline-<role>` se mide en reposo, en hover y en active, cada
-  // uno con su texto y sobre el fondo que de verdad se pinta.
+  // calculó. Sólido y con contorno se miden en reposo, en hover y en active,
+  // cada uno con su texto y sobre el fondo que de verdad se pinta: un bloque
+  // que sólo aclara el fondo de reposo y oscurece el texto deja los otros dos
+  // estados con el texto oscuro sobre el relleno oscuro de la librería.
   const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-btn-color');
@@ -712,7 +741,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const outline = Boolean(match[1]);
       const role = match[2];
 
-      for (const ctx of contextsFor(altZone, part, fgDecl ? '--bs-btn-color' : '--bs-btn-bg')) {
+      for (const ctx of contextsFor(altZone, part, BUTTON_STATE_VARS.flat())) {
         // Lo que se declara sobre el botón dentro de este contexto: lo que pone
         // la librería en `.btn-<role>` y los bloques del theme, globales y de
         // la zona, para el mismo selector.
@@ -720,8 +749,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         const label = `${part.trim()}${inContext(ctx)}`;
 
         /*
-         * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña tres, uno por estado. El relleno de hover y
+         * Cada botón enseña tres pares, uno por estado. En el sólido los tres
+         * rellenos los pinta la librería (`--bs-btn-<role>-{hover,active}-bg`,
+         * los pasos 600 y 700 del role), así que se miden siempre: el theme
+         * declara lo que quiera pisar y el resto sale de ahí.
+         * En el de contorno, el relleno de hover y
          * de active sale de `--bs-btn-outline-<role>-{hover,active}-bg`, que la
          * librería cablea en `.btn-outline-<role>` y deja transparentes: si
          * nadie los declara, lo que se ve detrás es la superficie del contexto
@@ -772,6 +804,20 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: measureSide(ctx, element, '--bs-btn-bg', { background: true }),
               themeFg: Boolean(fgDecl),
+            },
+            {
+              estado: 'en hover',
+              decl: hoverDecl ?? hoverBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-hover-color'),
+              bg: measureSide(ctx, element, '--bs-btn-hover-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-hover-color'),
+            },
+            {
+              estado: 'en active',
+              decl: activeDecl ?? activeBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-active-color'),
+              bg: measureSide(ctx, element, '--bs-btn-active-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-active-color'),
             },
           ];
 
@@ -1005,7 +1051,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     for (const ctx of contexts) {
       // Un botón con override propio no es un par horneado: lo mide R10, que
       // conoce el bloque concreto y el contexto en el que se ve.
-      if (pair.onlyWithoutOverride && overriddenButtons.has(pair.role)) continue;
+      if (pair.onlyWithoutOverride && measuredByR10(pair.role, ctx)) continue;
 
       // La capa del elemento reúne lo que se declara sobre los selectores del
       // componente (`.list-group` para una lista, `.alert-<role>` para una
