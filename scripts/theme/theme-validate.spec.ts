@@ -2283,6 +2283,26 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
     )]);
   });
 
+  it('cuenta el fondo del role declarado en root o en las variables de la zona', () => {
+    const stateText = { '--bs-btn-hover-color': 'var(--bs-black)', '--bs-btn-active-color': 'var(--bs-black)' };
+    expect(notesFor({
+      ...SECTIONED_THEME,
+      root: { '--bs-btn-primary-hover-bg': 'var(--bs-primary-100)' },
+      components: [{ selector: '.btn-primary', vars: stateText }],
+      zones: {
+        oscura: {
+          ...SECTIONED_THEME.zones.oscura,
+          vars: { ...SECTIONED_THEME.zones.oscura.vars, '--bs-btn-primary-active-bg': 'var(--bs-primary-300)' },
+          components: [{ selector: '.btn-primary', vars: stateText }],
+        },
+      },
+    })).toEqual([
+      // En el raíz sólo hover tiene fondo; en la zona, hover llega de root y
+      // active lo pone la zona.
+      expect.stringMatching(/^\.btn-primary fija el texto de active sin su fondo/),
+    ]);
+  });
+
   it('el ejemplo versionado sin sus fondos de estado da la nota; con ellos, no', () => {
     const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
     const theme = JSON.parse(fs.readFileSync(themePath, 'utf8'));
