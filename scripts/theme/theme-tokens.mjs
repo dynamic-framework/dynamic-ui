@@ -1225,7 +1225,7 @@ export function buildContexts(blocks, root) {
  * sobre ellos, en la librería o en el theme, forma la capa de ese elemento. Lo
  * que declara el ítem no cambia lo que su ancestro ya resolvió.
  *
- * `noCorregible` marca los pares que ninguna declaración del theme puede
+ * `notFixable` marca los pares que ninguna declaración del theme puede
  * cambiar, porque el color no viaja por una variable. Esos se reportan como
  * advertencia: un error pediría un arreglo que no existe.
  */
@@ -1364,7 +1364,7 @@ export function bakedRolePairs(role) {
         fg: { variable: '--bs-secondary-700' },
         bg: { variable: '--bs-secondary-50' },
         role,
-        noCorregible: true,
+        notFixable: true,
       }
       : {
         // El texto lee --bs-<role>-text-bg-color, que la librería resuelve en
@@ -1407,7 +1407,7 @@ export function bakedRolePairs(role) {
   if (OUTLINE_COLORS[role] && role !== 'light' && role !== 'dark') {
     pairs.push({
       component: `.btn-outline-${role}`,
-      estado: 'en reposo',
+      stateLabel: 'en reposo',
       why: 'el botón con contorno no pinta fondo y conserva el '
         + '--bs-btn-outline-<role>-color que la librería resolvió en Sass',
       // El genérico —declarar --bs-btn-color en el bloque de la zona— no vale:
@@ -1443,7 +1443,7 @@ export function bakedRolePairs(role) {
       pairs.push({
         component: `.btn-outline-${role}`,
         // El texto del estado como sale en el mensaje, igual que en R10.
-        estado: `en ${state}`,
+        stateLabel: `en ${state}`,
         why: `el botón con contorno conserva el --bs-btn-outline-<role>-${state}-color que la librería resolvió en Sass`,
         owners: [['.btn', `.btn-outline-${role}`]],
         fg: { variable: `--bs-btn-${state}-color` },

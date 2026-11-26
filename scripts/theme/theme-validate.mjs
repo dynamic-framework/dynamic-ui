@@ -783,21 +783,21 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         const cases = outline
           ? [
             {
-              estado: 'en reposo',
+              stateLabel: 'en reposo',
               decl: fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: surface(),
               themeFg: fromTheme('--bs-btn-color'),
             },
             {
-              estado: 'en hover',
+              stateLabel: 'en hover',
               decl: hoverDecl ?? hoverBgDecl ?? fgDecl,
               fg: measureSide(ctx, element, '--bs-btn-hover-color'),
               bg: fill('--bs-btn-hover-bg'),
               themeFg: fromTheme('--bs-btn-hover-color'),
             },
             {
-              estado: 'en active',
+              stateLabel: 'en active',
               decl: activeDecl ?? activeBgDecl ?? fgDecl,
               fg: measureSide(ctx, element, '--bs-btn-active-color'),
               bg: fill('--bs-btn-active-bg'),
@@ -806,21 +806,21 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
           ]
           : [
             {
-              estado: null,
+              stateLabel: null,
               decl: fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: measureSide(ctx, element, '--bs-btn-bg', { background: true }),
               themeFg: Boolean(fgDecl),
             },
             {
-              estado: 'en hover',
+              stateLabel: 'en hover',
               decl: hoverDecl ?? hoverBgDecl ?? fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-hover-color'),
               bg: measureSide(ctx, element, '--bs-btn-hover-bg', { background: true }),
               themeFg: fromTheme('--bs-btn-hover-color'),
             },
             {
-              estado: 'en active',
+              stateLabel: 'en active',
               decl: activeDecl ?? activeBgDecl ?? fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-active-color'),
               bg: measureSide(ctx, element, '--bs-btn-active-bg', { background: true }),
@@ -828,9 +828,9 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
             },
           ];
 
-        for (const caso of cases) {
-          const where = caso.estado ? `${label}, ${caso.estado}` : label;
-          const { fg, bg } = caso;
+        for (const buttonCase of cases) {
+          const where = buttonCase.stateLabel ? `${label}, ${buttonCase.stateLabel}` : label;
+          const { fg, bg } = buttonCase;
           noteLiteral(element, fg, `${where} color de texto`);
           noteLiteral(element, bg, `${where} fondo`);
           if (!fg.rgb || !bg.rgb) {
@@ -838,7 +838,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
             warn(
               'contraste-irresoluble',
               `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
-              caso.decl?.line ?? null,
+              buttonCase.decl?.line ?? null,
             );
             continue;
           }
@@ -852,11 +852,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
               ? `El botón se declara una sola vez, pero dentro de la zona "${ctx.zone}" alguna de `
                 + 'las variables de las que depende vale otra cosa. Dale a la zona su propio '
                 + `bloque \`${zoneSelector(ctx.zone)} ${part.trim()}\`.`
-              : (caso.themeFg
+              : (buttonCase.themeFg
                 ? 'El theme fija ese color de texto: o se aclara el fondo, o se oscurece el texto.'
                 : `El theme no lo fija, así que el botón conserva el que Bootstrap horneó `
                   + `para "${role}".`)),
-            caso.decl?.line ?? null,
+            buttonCase.decl?.line ?? null,
           );
         }
       }
@@ -1101,7 +1101,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       }
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
-      const where = `${pair.component}${inContext(ctx)}${pair.estado ? `, ${pair.estado}` : ''}`;
+      const where = `${pair.component}${inContext(ctx)}${pair.stateLabel ? `, ${pair.stateLabel}` : ''}`;
 
       if (!fg.rgb || !bg.rgb) {
         if (explainedByR1(ctx, element, fg, bg)) continue;
@@ -1134,7 +1134,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // es relativa porque estos pares se mueven unas décimas al cambiar el
       // color y esa diferencia no es información para nadie. Los pares no
       // corregibles se saltan esto: su aviso explica mejor qué hacer.
-      if (!pair.noCorregible && baseline !== null && baseline < minContrast
+      if (!pair.notFixable && baseline !== null && baseline < minContrast
         && ratio >= baseline * 0.9) {
         /*
          * Algunos pares vienen de fábrica rozando el umbral: Dynamic pinta el
@@ -1161,7 +1161,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
        * sería pedir un arreglo que no existe. Se avisa, se dice por qué, y la
        * salida del proceso no se tiñe por él.
        */
-      if (pair.noCorregible) {
+      if (pair.notFixable) {
         warn(
           'contraste-horneado',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, por debajo del `
@@ -1179,7 +1179,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // texto en el bloque de la zona— no sirve cuando la librería fija la
       // variable en el selector del componente, porque lo del elemento gana
       // sobre lo heredado y el arreglo no haría nada.
-      const arreglo = pair.fix
+      const fixText = pair.fix
         ?? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
         + 'para que el componente deje de heredar el valor de la librería.';
 
@@ -1189,7 +1189,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         + `${minContrast}:1 que pide WCAG 2.x AA para texto normal`
         + (baseline !== null ? ` (con la paleta por defecto este par da ${baseline.toFixed(2)}:1)` : '')
         + `. Aquí ${pair.why}: es un par que la librería resuelve por su cuenta y que el `
-        + `rebrand no toca. ${arreglo}`,
+        + `rebrand no toca. ${fixText}`,
         line,
       );
     }
