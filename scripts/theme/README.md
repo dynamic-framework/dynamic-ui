@@ -662,7 +662,11 @@ texto es el `color-contrast()` que Sass calculó para la paleta anterior y el
 fondo, el paso 600 o 700 del role nuevo— y los dos se reportan. Si no llegan a
 AA, el arreglo es declarar `--bs-btn-hover-bg` y `--bs-btn-active-bg` (y sus
 `-border-color`, que la librería deja en el mismo paso) junto a los textos de
-cada estado.
+cada estado. `theme-expand` lo anticipa en sus notas de generación: un bloque
+`.btn-<role>` sólido que fija `--bs-btn-hover-color` o `--bs-btn-active-color`
+sin el fondo de ese estado se nombra junto al paso que la librería pinta debajo.
+No deriva el fondo, porque elegir el paso es una decisión de diseño. En una
+zona, cuenta el fondo que declare el bloque global del mismo selector.
 
 **Sin un bloque `.btn-<role>`, del botón sólido se mide sólo el reposo.** La
 fila de la tabla es ese par y nada más: un theme que mueve la rampa del role y

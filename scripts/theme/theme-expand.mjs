@@ -50,6 +50,7 @@ import {
   RFS_MEDIA_STEPS,
   DEFAULT_GRAYS,
   ROLES,
+  SOLID_STATE_PAIRS,
   THEME_SELECTOR,
   ZONE_NAME_RE,
   colorAlpha,
@@ -534,6 +535,62 @@ function withWrappers(vars) {
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
 
+const SOLID_BUTTON = new RegExp(`^\\.btn-(${ROLES.join('|')})$`);
+
+/**
+ * Notas para cada `.btn-<role>` sólido que fija el texto de hover o de active
+ * sin su fondo: debajo queda el relleno de la librería. No se deriva el fondo
+ * porque elegir el paso es una decisión de diseño. En una zona cuenta también
+ * el fondo que declare el bloque global del mismo selector.
+ */
+function solidButtonNotes(components, zones) {
+  const declared = (blocks) => {
+    const byPart = new Map();
+    for (const { selector, vars } of blocks) {
+      for (const part of selector.split(',').map((p) => p.trim())) {
+        if (!SOLID_BUTTON.test(part)) continue;
+        const names = byPart.get(part) ?? new Set();
+        for (const { name } of vars) names.add(name);
+        byPart.set(part, names);
+      }
+    }
+    return byPart;
+  };
+  const global = declared(components);
+  const scopes = [
+    { prefix: '', own: global, inherited: new Map() },
+    ...zones.map((zone) => ({
+      prefix: `${zoneSelector(zone.name)} `,
+      own: declared(zone.components),
+      inherited: global,
+    })),
+  ];
+
+  const notes = [];
+  for (const { prefix, own, inherited } of scopes) {
+    for (const [part, names] of own) {
+      const role = part.match(SOLID_BUTTON)[1];
+      const hasBg = (state) => names.has(`--bs-btn-${state}-bg`)
+        || Boolean(inherited.get(part)?.has(`--bs-btn-${state}-bg`));
+      const states = ['hover', 'active']
+        .filter((state) => names.has(`--bs-btn-${state}-color`) && !hasBg(state));
+      if (states.length === 0) continue;
+
+      const fill = (state) => {
+        const { kind, step } = SOLID_STATE_PAIRS[role][state].bg;
+        return `${kind === 'gray' ? `--bs-gray-${step}` : `--bs-${role}-${step}`} en ${state}`;
+      };
+      notes.push(
+        `${prefix}${part} fija el texto de ${states.join(' y ')} sin su fondo: debajo queda el `
+        + `relleno de la librería, ${states.map(fill).join(' y ')}. Declara `
+        + `${states.map((state) => `--bs-btn-${state}-bg`).join(' y ')}, o confirma el `
+        + 'contraste con theme-validate.',
+      );
+    }
+  }
+  return notes;
+}
+
 /**
  * Construye el CSS completo a partir de un theme ya normalizado.
  *
@@ -747,6 +804,7 @@ export function expandTheme(input) {
   };
 
   const componentBlocks = theme.components.map((entry) => componentBlock(entry));
+  notes.push(...solidButtonNotes(theme.components, theme.zones));
 
   // Zonas. Cada una es un subárbol con su propia paleta; `nav` se reparte en
   // dos bloques porque .nav y .nav-pills leen variables distintas y montar las
