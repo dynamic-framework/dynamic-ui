@@ -56,11 +56,12 @@ load paths `./` and `src/style/`:
 | **defs** | `scripts/tokens/_defs-harness.scss` | abstracts + root only (no components) | token **values** and **classification** |
 | **full** | `scripts/tokens/_full-harness.scss` | full chain (incl. components) | scanning `var(--bs-*)` **references** for slot detection |
 
-- **defs** compiles clean (~1262 lines). Because the component layer is excluded,
-  the carousel typo never reaches this output, so values/classification are clean.
+- **defs** compiles clean (~1262 lines). The component layer is excluded because
+  it READS tokens and defines its own Layer 3 (`--bs-{component}-*`) vars, which
+  would blur the definition/consumption split this harness exists to capture.
 - **full** is used **only** to extract the set of referenced custom properties.
-  It does include the carousel typo — that is expected and filtered out
-  (see [1.4](#14-slot-algorithm) / [1.5](#15-known-issues--css-typos-in-source)).
+  Malformed names, if any ever reach it, are filtered out
+  (see [1.4](#14-slot-algorithm) / [1.5](#15-malformed-custom-property-names)).
 
 ---
 
@@ -120,32 +121,32 @@ emitted artifact is the source of truth), split into:
   `referencedBy`** for human inspection.
 
 > A `suspected` entry may be a legitimate slot **or** a typo (see
-> [1.5](#15-known-issues--css-typos-in-source)). Consumers must **not** treat
+> [1.5](#15-malformed-custom-property-names)). Consumers must **not** treat
 > `suspected` entries as certainties.
 
 ---
 
-## 1.5 Known issues — CSS typos in source
+## 1.5 Malformed custom property names
 
-The slot scan surfaced **three** real typos in Dynamic's own SCSS. These are
-**CSS bugs, not slots.** 2.6 **routes around** them (denylist / suspected) but
-**does not fix** them.
+A name that repeats the prefix (`--bs-bs-gray-400`) or carries an empty segment
+(`--bs---bs-ref-spacer-4`) is a source typo, not a slot: Sass interpolates it
+without complaining and stylelint does not see it, because it is syntactically a
+valid name. **There are none right now** — `slots.denylist` is empty.
 
-| Typo | Location | Handling in 2.6 | Rule-detectable |
-|---|---|---|---|
-| `--bs---bs-ref-spacer-4` | `src/style/components/_d-carousel.scss:53` (double prefix) | `slots.denylist` | yes (leading dash) |
-| `--bs-bs-gray-400` | `src/style/abstracts/variables/_forms.scss:3` (double `bs-`) | `slots.denylist` | yes (double `bs-`) |
-| `--bs-subtle-primary` | `src/style/abstracts/variables/_list-group.scss:17` (transposition; likely meant `--bs-primary-*-subtle`) | slot `suspected` | no |
+Two things keep it that way:
 
-The denylist is auto-detected by regex (leading dash or double `bs-` after the
-`--bs-` prefix), so it catches the first two. The third is a transposition that no
-rule can prove is a typo, so it appears as a `suspected` slot pointing at its
-source line.
+- The **denylist regex** in `generate-token-overrides.mjs` (leading dash or
+  double `bs-` after the `--bs-` prefix) keeps such a name out of the catalog.
+  It is a filter, not a guard: it only runs when someone regenerates
+  `token-overrides.json`.
+- The **guard** is `scripts/check-css-vars.mjs` (`npm run validate:css-vars`),
+  a step of `.github/workflows/checks.yml`: it reads `dist/css/*.css` and fails
+  CI if a malformed name reaches the compiled CSS.
 
-**Recommendation:** fix these in a **separate, trivial PR** (one line each, under
-`src/style/**`), independent of 2.6. Once fixed, `--bs-subtle-primary` stops
-appearing as a suspected slot and the other two drop out of the denylist. Until
-then, the denylist keeps them out of the catalog.
+A **transposition** (`--bs-subtle-primary` for `--bs-primary-bg-subtle`) is a
+different animal: no rule can prove it is a typo rather than a theme slot, so it
+is never denylisted. It surfaces only through the slot scan, as `suspected`, for
+a human to judge.
 
 ---
 

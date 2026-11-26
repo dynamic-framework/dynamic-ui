@@ -7,9 +7,9 @@
 // `:root, [data-bs-theme="dynamic"] { … }` block is the source of truth for
 // token VALUES and their override-behavior CLASSIFICATION.
 //
-// Because the component layer is excluded, the carousel typo
-// (`--bs---bs-ref-spacer-4`, src/style/components/_d-carousel.scss:53) never
-// reaches this output. Do NOT add component imports here.
+// Do NOT add component imports here: the component layer READS tokens and
+// defines its own Layer 3 (`--bs-{component}-*`) vars, which would blur the
+// definition/consumption split this harness exists to capture.
 //
 // Compile with load paths `./` (bootstrap node_modules) and `src/style/`
 // (Dynamic partials). See generate-token-overrides.mjs.

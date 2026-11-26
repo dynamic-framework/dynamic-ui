@@ -1,2 +1,5 @@
 **/dist/
 **/build/
+# Recortes literales de CSS compilado que usan los tests de scripts/: se
+# guardan tal cual se publicaron, no son fuente que haya que mantener al día.
+scripts/fixtures/
