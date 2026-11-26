@@ -1989,7 +1989,7 @@ describe('contraste-boton — un bloque de zona no duplica el hallazgo del globa
   ].join('\n');
 
   /** Los hallazgos de botón, tal cual, para poder contar repeticiones. */
-  const botones = (css: string) => findings(validateStrict(css))
+  const buttonFindings = (css: string) => findings(validateStrict(css))
     .filter((f) => f.startsWith('error contraste-boton'));
 
   it('el bloque global que sólo declara hover deja de medirse en la zona', () => {
@@ -2004,10 +2004,10 @@ describe('contraste-boton — un bloque de zona no duplica el hallazgo del globa
       '  --bs-btn-hover-bg: rgb(255, 255, 255);',
       '}',
     ].join('\n')}`;
-    const enLaZona = botones(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
+    const inZone = buttonFindings(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
 
-    expect(enLaZona).toHaveLength(1);
-    expect(enLaZona[0]).toMatch(/en hover": 1\.00:1/);
+    expect(inZone).toHaveLength(1);
+    expect(inZone[0]).toMatch(/en hover": 1\.00:1/);
   });
 
   it('con solapamiento parcial no se pierde el estado que la zona no toca', () => {
@@ -2026,10 +2026,10 @@ describe('contraste-boton — un bloque de zona no duplica el hallazgo del globa
       '  --bs-btn-hover-bg: rgb(255, 255, 255);',
       '}',
     ].join('\n')}`;
-    const enLaZona = botones(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
+    const inZone = buttonFindings(css).filter((f) => f.includes('dentro de [data-bs-theme="oscura"]'));
 
-    expect(enLaZona).toHaveLength(2);
-    expect(enLaZona).toEqual([
+    expect(inZone).toHaveLength(2);
+    expect(inZone).toEqual([
       expect.stringMatching(/en hover": 1\.00:1/),
       expect.stringMatching(/en active": 1\.15:1/),
     ]);
@@ -2038,15 +2038,15 @@ describe('contraste-boton — un bloque de zona no duplica el hallazgo del globa
 
 describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
   const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
-  type Bloque = { selector: string; vars: Record<string, string> };
-  type Ejemplo = { zones: { oscura: { components: Bloque[] } } };
-  const leerEjemplo = (): Ejemplo => JSON.parse(fs.readFileSync(themePath, 'utf8'));
+  type Block = { selector: string; vars: Record<string, string> };
+  type ExampleTheme = { zones: { oscura: { components: Block[] } } };
+  const readExample = (): ExampleTheme => JSON.parse(fs.readFileSync(themePath, 'utf8'));
 
   /** El bloque `.btn-primary` de la zona oscura del ejemplo. */
-  const botonDeZona = (theme: Ejemplo) => {
-    const bloque = theme.zones.oscura.components.find((c) => c.selector === '.btn-primary');
-    if (!bloque) throw new Error('el ejemplo ya no trae un .btn-primary de zona');
-    return bloque;
+  const zoneButton = (theme: ExampleTheme) => {
+    const block = theme.zones.oscura.components.find((c) => c.selector === '.btn-primary');
+    if (!block) throw new Error('el ejemplo ya no trae un .btn-primary de zona');
+    return block;
   };
 
   /**
@@ -2055,16 +2055,16 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
    * los fondos de hover ni de active. La librería los deja en los pasos 600 y
    * 700 del role, oscuros, y el texto oscuro queda encima.
    */
-  const sinFondosDeEstado = () => {
-    const theme = leerEjemplo();
-    const boton = botonDeZona(theme);
-    boton.vars = Object.fromEntries(Object.entries(boton.vars)
+  const withoutStateBgs = () => {
+    const theme = readExample();
+    const button = zoneButton(theme);
+    button.vars = Object.fromEntries(Object.entries(button.vars)
       .filter(([name]) => !/^--bs-btn-(hover|active)-(bg|border-color)$/.test(name)));
     return theme;
   };
 
   it('el ejemplo versionado pasa --strict con sus fondos declarados', () => {
-    const result = validateStrict(expandCss(leerEjemplo()));
+    const result = validateStrict(expandCss(readExample()));
     expect(result.stderr).toBe('');
     expect(result.status).toBe(0);
   });
@@ -2072,7 +2072,7 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
   it('sin los fondos, mide hover y active contra los pasos 600 y 700 de la librería', () => {
     // Los mismos ratios que Chromium saca del botón renderizado: 1.66:1 en
     // hover y 1.25:1 en active, con el texto oscuro que fija el bloque.
-    const result = validateStrict(expandCss(sinFondosDeEstado()));
+    const result = validateStrict(expandCss(withoutStateBgs()));
     expect(result.status).toBe(1);
     expect(result.stderr).toContain(
       '".btn-primary dentro de [data-bs-theme="oscura"], en hover": 1.66:1 entre el texto '
@@ -2087,18 +2087,18 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
   });
 
   it('cada estado se reporta por separado: arreglar el hover no calla el active', () => {
-    const theme = sinFondosDeEstado();
-    botonDeZona(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-primary-100-rgb))';
+    const theme = withoutStateBgs();
+    zoneButton(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-primary-100-rgb))';
     const { stderr } = validateStrict(expandCss(theme));
     expect(stderr).not.toContain('en hover');
     expect(stderr).toContain('".btn-primary dentro de [data-bs-theme="oscura"], en active": 1.25:1');
   });
 
   it('mide contra el fondo que declara el theme, no contra el de la librería', () => {
-    const theme = sinFondosDeEstado();
+    const theme = withoutStateBgs();
     // Un fondo propio igual de oscuro que el de la librería: el par sigue roto,
     // pero el mensaje apunta a lo que declara el theme.
-    botonDeZona(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-dark-rgb))';
+    zoneButton(theme).vars['--bs-btn-hover-bg'] = 'rgb(var(--bs-dark-rgb))';
     const { stderr } = validateStrict(expandCss(theme));
     expect(stderr).toContain(
       '".btn-primary dentro de [data-bs-theme="oscura"], en hover": 1.00:1 entre el texto '
@@ -2161,8 +2161,8 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
         },
       }],
     });
-    const botones = findings(validateStrict(css)).filter((f) => f.startsWith('error contraste-boton'));
-    expect(botones).toEqual([expect.stringContaining(
+    const buttonFindings = findings(validateStrict(css)).filter((f) => f.startsWith('error contraste-boton'));
+    expect(buttonFindings).toEqual([expect.stringContaining(
       '".btn-primary, en active": 3.32:1 entre el texto --bs-btn-active-color (--bs-gray-900-rgb) '
       + 'y el fondo --bs-btn-active-bg (--bs-primary-700-rgb)',
     )]);
@@ -2170,14 +2170,14 @@ describe('contraste-boton — .btn-<role> sólido en hover y active', () => {
 });
 
 describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () => {
-  const notas = (theme: unknown) => {
+  const notesFor = (theme: unknown) => {
     const result = expand(theme);
     expect(result.status).toBe(0);
     return result.stderr.split('\n').filter((line) => line.includes(' fija el texto de '));
   };
 
   it('avisa del texto de hover y active sin fondo, con el paso que pinta la librería', () => {
-    expect(notas({
+    expect(notesFor({
       ...MINIMAL_THEME,
       components: [{
         selector: '.btn-primary',
@@ -2192,7 +2192,7 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
 
   it('sólo nombra el estado que se queda sin fondo, con los pasos propios del role', () => {
     // secondary rellena hover con su paso 100, no con el 600.
-    expect(notas({
+    expect(notesFor({
       ...MINIMAL_THEME,
       components: [{
         selector: '.btn-secondary',
@@ -2208,7 +2208,7 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
   });
 
   it('no avisa en un botón con contorno ni cuando el fondo está declarado', () => {
-    expect(notas({
+    expect(notesFor({
       ...MINIMAL_THEME,
       components: [
         { selector: '.btn-outline-primary', vars: { '--bs-btn-hover-color': 'var(--bs-black)' } },
@@ -2221,7 +2221,7 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
   });
 
   it('en una zona cuenta el fondo que declara el bloque global del mismo selector', () => {
-    expect(notas({
+    expect(notesFor({
       ...SECTIONED_THEME,
       components: [{ selector: '.btn-dark', vars: { '--bs-btn-hover-bg': 'var(--bs-gray-700)' } }],
       zones: {
@@ -2241,12 +2241,12 @@ describe('theme-expand — nota de .btn-<role> sólido sin fondo de estado', () 
   it('el ejemplo versionado sin sus fondos de estado da la nota; con ellos, no', () => {
     const themePath = path.join(ROOT, 'scripts/theme/themes/theme-ejemplo-zonas.json');
     const theme = JSON.parse(fs.readFileSync(themePath, 'utf8'));
-    expect(notas(theme)).toEqual([]);
+    expect(notesFor(theme)).toEqual([]);
 
-    const boton = theme.zones.oscura.components.find((c: { selector: string }) => c.selector === '.btn-primary');
-    boton.vars = Object.fromEntries(Object.entries(boton.vars)
+    const button = theme.zones.oscura.components.find((c: { selector: string }) => c.selector === '.btn-primary');
+    button.vars = Object.fromEntries(Object.entries(button.vars)
       .filter(([name]) => !/^--bs-btn-(hover|active)-(bg|border-color)$/.test(name)));
-    expect(notas(theme)).toEqual([expect.stringMatching(
+    expect(notesFor(theme)).toEqual([expect.stringMatching(
       /^\[data-bs-theme="oscura"\] \.btn-primary fija el texto de hover y active sin su fondo/,
     )]);
   });
