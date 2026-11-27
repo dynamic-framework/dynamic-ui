@@ -20,9 +20,12 @@ the release publishes the package to npm, the CDN and Storybook.
    are squashed (its ruleset allows only that).
 3. **Draft.** The push to `master` runs the `Draft release` job: it creates the
    draft `vX.Y.Z` on that commit, with notes generated from the PRs and the
-   `npm diff` command for the compiled CSS. A new push regenerates the notes
-   and target of the existing draft (manual edits to the notes are lost); a
-   version already published is left as is.
+   `npm diff` command for the compiled CSS. The job never edits or deletes an
+   existing release, so it cannot race with someone publishing it: a version
+   already published is left as is, and if a new push reaches `master` while
+   the draft points to an older commit, the job fails. In that case delete the
+   draft without publishing it and run the `Release` workflow on `master`
+   (**Run workflow**, or `gh workflow run release-please.yml --ref master`).
 4. **Publish.** Review and edit the notes, then publish the draft. That runs:
    - `Publish to npm` (same workflow), with OIDC and provenance;
    - `cdn.yml`, which publishes `dist/`, `api.json` and the manifests;

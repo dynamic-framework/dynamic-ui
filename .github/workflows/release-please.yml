@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - master
+  # Regenera el draft sobre master después de borrarlo a mano.
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -15,7 +17,7 @@ permissions:
 jobs:
   draft:
     name: Draft release
-    if: github.event_name == 'push'
+    if: github.event_name != 'release' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -29,53 +31,55 @@ jobs:
         id: version
         run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
 
-      - name: Create draft release
-        id: draft
+      # Una release existente no se edita ni se borra: alguien puede publicarla
+      # entre la lectura y la escritura.
+      - name: Check existing release
+        id: existing
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           TAG: v${{ steps.version.outputs.version }}
         run: |
-          STATE=$(gh release view "$TAG" --json isDraft --jq '.isDraft' 2>/dev/null || echo "")
-          if [ "$STATE" = "false" ]; then
+          read -r IS_DRAFT TARGET <<< "$(gh release view "$TAG" --json isDraft,targetCommitish \
+            --jq '"\(.isDraft) \(.targetCommitish)"' 2>/dev/null || true)"
+          if [ "$IS_DRAFT" = "false" ]; then
             echo "$TAG ya está publicado: no se crea draft."
-            echo "created=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # --target: la rama por defecto es develop; el tag tiene que quedar en master.
-          if [ "$STATE" = "true" ]; then
-            # Se edita en vez de borrar: si alguien lo publicó recién, no se pierde.
-            NOTES=$(gh api "repos/$GH_REPO/releases/generate-notes" \
-              -f tag_name="$TAG" -f target_commitish="$GITHUB_SHA" --jq .body)
-            gh release edit "$TAG" --target "$GITHUB_SHA" --notes "$NOTES"
+          elif [ "$TARGET" = "$GITHUB_SHA" ]; then
+            echo "El draft $TAG ya apunta a $GITHUB_SHA."
+          elif [ "$IS_DRAFT" = "true" ]; then
+            echo "::error::El draft $TAG apunta a $TARGET, no a $GITHUB_SHA. Bórralo sin publicarlo y ejecuta este workflow desde master (Run workflow)."
+            exit 1
           else
-            gh release create "$TAG" \
-              --draft \
-              --generate-notes \
-              --title "$TAG" \
-              --target "$GITHUB_SHA"
+            echo "create=true" >> "$GITHUB_OUTPUT"
           fi
-          echo "created=true" >> "$GITHUB_OUTPUT"
 
-      - name: Append CSS diff command to release notes
-        if: steps.draft.outputs.created == 'true'
-        # Informativo: si falla, el draft queda igual y el job no falla.
+      - name: Find previous stable version
+        id: prev
+        if: steps.existing.outputs.create == 'true'
+        # Solo alimenta el comando de diff del CSS: si falla, el draft se crea sin él.
         continue-on-error: true
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          TAG: v${{ steps.version.outputs.version }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           # Versión estable inmediatamente menor por semver entre las publicadas en npm (en un backport no es el latest).
           PREV=$({ npm view @dynamic-framework/ui-react versions --json | jq -r '.[] | select(test("-") | not)'; echo "$VERSION"; } \
             | sort -uV | grep -x -B1 "$VERSION" | head -n -1)
-          if [ -z "$PREV" ]; then
-            echo "::warning::No hay versión estable anterior a $VERSION; no se agrega el comando de diff."
-            exit 0
-          fi
-          gh release view "$TAG" --json body -q .body > /tmp/release-notes.md
-          cat >> /tmp/release-notes.md <<EOF
+          echo "version=$PREV" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft release
+        if: steps.existing.outputs.create == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: v${{ steps.version.outputs.version }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PREV: ${{ steps.prev.outputs.version }}
+        run: |
+          NOTES="$RUNNER_TEMP/release-notes.md"
+          gh api "repos/$GH_REPO/releases/generate-notes" \
+            -f tag_name="$TAG" -f target_commitish="$GITHUB_SHA" --jq .body > "$NOTES"
+          if [ -n "$PREV" ]; then
+            cat >> "$NOTES" <<EOF
 
           ### CSS changes
 
@@ -85,7 +89,11 @@ jobs:
           npm diff --diff=@dynamic-framework/ui-react@$PREV --diff=@dynamic-framework/ui-react@$VERSION dist/css/dynamic-ui.css
           \`\`\`
           EOF
-          gh release edit "$TAG" --notes-file /tmp/release-notes.md
+          else
+            echo "::warning::No hay versión estable anterior a $VERSION; no se agrega el comando de diff."
+          fi
+          # --target: la rama por defecto es develop; el tag tiene que quedar en master.
+          gh release create "$TAG" --draft --title "$TAG" --target "$GITHUB_SHA" --notes-file "$NOTES"
 
   publish:
     name: Publish to npm
