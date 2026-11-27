@@ -1,0 +1,41 @@
+# Categorías de las notas que genera `gh release create --generate-notes`.
+# Cada PR entra por sus labels, que pone pr-labeler.yml según el prefijo de la rama.
+changelog:
+  exclude:
+    labels:
+      - skip-changelog
+    authors:
+      - dependabot[bot]
+  categories:
+    - title: ⚠️ Breaking Changes
+      labels:
+        - BREAKING CHANGE
+    - title: 🚀 Features
+      labels:
+        - feature
+        - feat
+        - enhancement
+    - title: 🐛 Bug Fixes
+      labels:
+        - fix
+        - bug
+        - revert
+    - title: 🎨 Refactor
+      labels:
+        - refactor
+        - perf
+        - style
+    - title: 🧰 Maintenance
+      labels:
+        - chore
+        - build
+        - ci
+        - dependencies
+    - title: 📝 Docs/Test
+      labels:
+        - docs
+        - documentation
+        - test
+    - title: Other Changes
+      labels:
+        - "*"

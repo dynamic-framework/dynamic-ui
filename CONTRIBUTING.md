@@ -58,9 +58,13 @@ We **love** pull requests! Before [forking the repo](https://help.github.com/en/
 
 - **Link the issue.** If your pull request resolves an issue, add `Closes #123` to its description so the issue closes when the pull request is merged.
 
+- **Name the branch with its type** (`feat/`, `fix/`, `refactor/`, `chore/`, `docs/`, `test/`, `style/`, `ci/`). The branch prefix sets the pull request label, and the label sets its section in the release notes. The pull request title follows the commit guidelines below: it becomes the commit on `develop` and the line in the release notes. See [RELEASING.md](RELEASING.md).
+
 - **[Resolve any merge conflicts](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-on-github)** that occur.
 
 - **Promptly address any CI failures**. If your pull request fails to build or pass tests, please push another commit to fix it.
+
+- **Changed the base branch?** Close and reopen the pull request (or push a commit) so the checks run again: editing the pull request does not trigger them.
 
 ## :memo: Commit Message Guidelines
 
@@ -69,7 +73,7 @@ We adhere to Conventional Commits with certain limitations:
 - **feat**: Represents a new feature or major change that affects the API temporarily used for semver increments.
 - **fix**: Indicates a bug fix or patch that does not alter the API.
 - **docs**: Reserved for changes related to Storybook documentation.
-- **style**: Reserved for changes in the SASS API, such as redefining a DComponent or a class. However, commits to the master branch must be in the format `feat(style)` or `fix(style)` to trigger a version increment.
+- **style**: Reserved for changes in the SASS API, such as redefining a DComponent or a class.
 - **refactor**: Used for internal changes that do not alter the API, functionality, or fix errors. Typically used for performance improvements or code organization.
 - **test**: Exclusively for changes in tests.
 

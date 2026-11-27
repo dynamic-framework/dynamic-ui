@@ -351,11 +351,12 @@ un build o contra el CSS de un tarball publicado. `npm pack` y `npm publish` lo
 regeneran solos vía `prepack`, así que el paquete siempre lleva el inventario
 del CSS que publica.
 
-Con `--check` el script no escribe nada: compara los tokens del CSS con los del
-JSON versionado, lista los que entran (`+`) y los que salen (`-`), y sale con 1
-si no coinciden. No compara `dynamicUi`. CI lo corre después del build, así que
-un cambio de estilos que añade o quita un token lleva en la misma PR el
-inventario regenerado.
+Con `--check` el script no escribe nada: compara los tokens y la versión del CSS
+con los del JSON versionado, lista los tokens que entran (`+`) y los que salen
+(`-`), y sale con 1 si no coinciden. CI lo corre después del build, así que un
+cambio de estilos que añade o quita un token lleva en la misma PR el inventario
+regenerado. `npm version` lo regenera en `postversion`, así que la PR que sube la
+versión lleva también `dynamicUi`.
 
 ### Qué no va en un theme
 

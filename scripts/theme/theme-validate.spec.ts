@@ -2417,7 +2417,7 @@ describe('el ejemplo con zonas que vive en el repo', () => {
   it('el CSS versionado está al día con su JSON', () => {
     // El CSS se commitea para que la preview funcione recién clonado el repo;
     // si alguien toca el JSON y no regenera, esto lo dice. La versión de la
-    // librería en la cabecera se ignora: release-please la sube en
+    // librería en la cabecera se ignora: el PR de versión la sube en
     // package.json sin regenerar el CSS.
     const stripVersion = (css: string) => css.replace(
       /^( \* Para @dynamic-framework\/ui-react ).+\.$/m,
@@ -4644,16 +4644,29 @@ describe('known-tokens.json al día con el CSS compilado (#1311)', () => {
 
   describe('build-known-tokens --check', () => {
     const versioned = () => JSON.parse(fs.readFileSync(INVENTORY, 'utf8')).tokens as string[];
+    const versionedVersion = () => JSON.parse(fs.readFileSync(INVENTORY, 'utf8')).dynamicUi as string;
     /** Un CSS con la cabecera de versión y una declaración por token. */
     const cssWith = (tokens: string[], version = '9.9.9') => write(
       `/*!\n * dynamic-framework ${version}\n */\n:root {\n${tokens.map((t) => `  ${t}: 0;`).join('\n')}\n}\n`,
       '.css',
     );
 
-    it('sale con 0 si los tokens coinciden, aunque la versión no', () => {
-      const result = run(BUILD, ['--check', cssWith(versioned())]);
+    it('sale con 0 si coinciden los tokens y la versión', () => {
+      const result = run(BUILD, ['--check', cssWith(versioned(), versionedVersion())]);
       expect(result.status).toBe(0);
       expect(result.stdout).toContain('known-tokens.json coincide con el CSS');
+    });
+
+    it('sale con 1 si solo cambia la versión', () => {
+      const result = run(BUILD, ['--check', cssWith(versioned(), '9.9.9')]);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(`  versión: ${versionedVersion()} en el JSON, 9.9.9 en el CSS\n`);
+    });
+
+    it('sale con 1 si el CSS es una prerelease de la misma versión', () => {
+      const result = run(BUILD, ['--check', cssWith(versioned(), `${versionedVersion()}-rc.1`)]);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(`en el JSON, ${versionedVersion()}-rc.1 en el CSS\n`);
     });
 
     it('sale con 1 y lista lo que entra y lo que sale', () => {

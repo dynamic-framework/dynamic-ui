@@ -2,10 +2,11 @@ name: A11y browser checks
 
 on:
   pull_request:
-    types: [opened, edited, reopened, synchronize]
+    # Sin edited: cambiar título o descripción no cambia el código.
+    types: [opened, reopened, synchronize]
+    # Solo antes de una release: es el check requerido de master.
     branches:
       - master
-      - develop
 
 jobs:
   a11y-browser:

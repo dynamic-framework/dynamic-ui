@@ -1,0 +1,29 @@
+name: PR title
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches:
+      - develop
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  pr-title:
+    # Con squash, el título es el commit de develop y la línea de las notas de la release.
+    name: PR title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Lint PR title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$TITLE" | npx commitlint --config .github/commitlint-pr-title.mjs --verbose

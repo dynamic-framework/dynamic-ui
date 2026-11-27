@@ -14,11 +14,9 @@
 // `npm pack` y `npm publish` para que el JSON empaquetado con los binarios
 // coincida con el CSS de esa versión.
 //
-// Con --check no escribe nada: compara la lista de tokens del CSS con la del
-// JSON versionado y sale con 1 si difieren. No compara `dynamicUi`, porque la
-// PR de release sube la versión del paquete sin regenerar el inventario; el
-// JSON publicado la lleva al día porque `prepack` lo regenera. CI lo corre
-// después del build para que el inventario no vuelva a quedar desfasado.
+// Con --check no escribe nada: compara los tokens y la versión del CSS con los
+// del JSON versionado y sale con 1 si difieren. `npm version` lo regenera en
+// `postversion`. CI lo corre después del build.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,7 +37,7 @@ function main(argv) {
     return 2;
   }
 
-  const version = css.match(/dynamic-framework\s+([\d.]+)/)?.[1] ?? null;
+  const version = css.match(/dynamic-framework\s+(\d+\.\d+\.\d+[\w.+-]*)/)?.[1] ?? null;
   if (!version) {
     process.stderr.write(`${source} no lleva la cabecera de versión de Dynamic UI.\n`);
     return 2;
@@ -49,8 +47,9 @@ function main(argv) {
 
   if (check) {
     let versioned;
+    let versionedVersion;
     try {
-      versioned = JSON.parse(fs.readFileSync(OUT, 'utf8')).tokens ?? [];
+      ({ tokens: versioned = [], dynamicUi: versionedVersion } = JSON.parse(fs.readFileSync(OUT, 'utf8')));
     } catch (error) {
       process.stderr.write(`No se pudo leer known-tokens.json: ${error.message}\n`);
       return 2;
@@ -59,12 +58,14 @@ function main(argv) {
     const inCss = new Set(tokens);
     const added = tokens.filter((token) => !inJson.has(token));
     const removed = versioned.filter((token) => !inCss.has(token));
-    if (added.length === 0 && removed.length === 0) {
+    const sameVersion = versionedVersion === version;
+    if (added.length === 0 && removed.length === 0 && sameVersion) {
       process.stdout.write(`known-tokens.json coincide con el CSS: ${tokens.length} tokens.\n`);
       return 0;
     }
     process.stderr.write(
       `known-tokens.json no coincide con ${path.relative(process.cwd(), source)}.\n`
+      + (sameVersion ? '' : `  versión: ${versionedVersion} en el JSON, ${version} en el CSS\n`)
       + added.map((token) => `  + ${token}\n`).join('')
       + removed.map((token) => `  - ${token}\n`).join('')
       + 'Regenéralo con `npm run build:known-tokens` y versiona el resultado.\n',
