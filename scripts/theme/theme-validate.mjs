@@ -1099,35 +1099,68 @@ if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
     }
   }
 
-  // R12 — zonas. Una zona reescribe la paleta de su subárbol, así que su par
-  // cuerpo/fondo hay que medirlo otra vez dentro de ella. Lo que la zona no
-  // declara vale lo que valía en el raíz, ya calculado: un texto del raíz que
+  /*
+   * Una zona que no mueve ninguno de los dos lados de un par lo deja exactamente
+   * como está en el raíz: mismo color, mismo ratio, misma línea. Reportarlo otra
+   * vez por cada zona multiplica la cuenta sin añadir un solo problema, y manda
+   * el arreglo al sitio equivocado —pide declarar algo dentro de la zona cuando
+   * lo que hay que tocar es el raíz—. Cada zona se compara con el raíz por lo
+   * que RESUELVE, no por lo que declara: una zona puede reescribir el token y
+   * llegar al mismo color, y eso tampoco es un hallazgo nuevo.
+   */
+  const sameRgb = (a, b) => a && b && a.r === b.r && a.g === b.g && a.b === b.b;
+  const repeatsRoot = (rootSides, fg, bg) => rootSides
+    && sameRgb(fg.rgb, rootSides.fg) && sameRgb(bg.rgb, rootSides.bg);
+
+  // R12 — el par cuerpo/fondo de cada contexto. Una zona reescribe la paleta de
+  // su subárbol, así que hay que medirlo otra vez dentro de ella. Lo que la zona
+  // no declara vale lo que valía en el raíz, ya calculado: un texto del raíz que
   // apunta a un token no cambia porque la zona cambie el token.
-  for (const ctx of zoneContexts) {
+  //
+  // El raíz se mide igual que las zonas, y antes que ellas. Antes sólo se medían
+  // las zonas, así que un raíz con el par roto no se reportaba por sí mismo: lo
+  // delataba cada zona que lo heredaba, repetido y señalando el sitio
+  // equivocado. Midiéndolo aquí sale una vez, donde está el arreglo.
+  let rootBody = null;
+  for (const ctx of contexts) {
     const bg = ctx.lookup('--bs-body-bg-rgb');
     const fg = ctx.lookup('--bs-body-color-rgb');
-    const where = zoneSelector(ctx.zone);
+    const where = ctx.zone ? zoneSelector(ctx.zone) : ':root';
 
     if (!fg.rgb || !bg.rgb) {
       if (!explainedByR1(ctx, null, fg, bg)) {
         warn(
           'contraste-irresoluble',
-            `No se pudo medir el cuerpo de la zona "${ctx.zone}": ${fg.reason ?? bg.reason}.`,
+          ctx.zone
+            ? `No se pudo medir el cuerpo de la zona "${ctx.zone}": ${fg.reason ?? bg.reason}.`
+            : `No se pudo medir el cuerpo del documento: ${fg.reason ?? bg.reason}.`,
           ctx.line,
         );
       }
-    } else {
-      const ratio = contrast(fg.rgb, bg.rgb);
-      if (ratio < minContrast) {
-        fail(
-          'contraste-zona',
-          `Zona "${ctx.zone}": ${ratio.toFixed(2)}:1 entre --bs-body-color-rgb y `
-          + `--bs-body-bg-rgb, por debajo del ${minContrast}:1 de WCAG 2.x AA. Todo el texto `
-          + `de ${where} hereda este par, así que la zona entera queda ilegible, no un componente.`,
-          ctx.own.get('--bs-body-color-rgb')?.line ?? ctx.line,
-        );
-      }
+      if (!ctx.zone) rootBody = null;
+      continue;
     }
+
+    if (!ctx.zone) rootBody = { fg: fg.rgb, bg: bg.rgb };
+    // La zona que resuelve el mismo par que el raíz no añade nada: ya se
+    // reportó arriba, y el arreglo está allí.
+    else if (repeatsRoot(rootBody, fg, bg)) continue;
+
+    const ratio = contrast(fg.rgb, bg.rgb);
+    if (ratio >= minContrast) continue;
+    fail(
+      ctx.zone ? 'contraste-zona' : 'contraste-cuerpo',
+      (ctx.zone ? `Zona "${ctx.zone}"` : 'El cuerpo del documento')
+      + `: ${ratio.toFixed(2)}:1 entre --bs-body-color-rgb y `
+      + `--bs-body-bg-rgb, por debajo del ${minContrast}:1 de WCAG 2.x AA. Todo el texto `
+      + `de ${where} hereda este par, así que ${ctx.zone ? 'la zona entera queda' : 'la página entera queda'} `
+      + 'ilegible, no un componente.',
+      ctx.own.get('--bs-body-color-rgb')?.line ?? ctx.line,
+    );
+  }
+
+  for (const ctx of zoneContexts) {
+    const bg = ctx.lookup('--bs-body-bg-rgb');
 
     /*
      * El enlace se mide declare la zona su color o no. Lo que hereda del raíz
@@ -1208,6 +1241,9 @@ if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
   const [libraryContext] = buildContexts([], new Map());
 
   for (const pair of bakedPairs) {
+    // Lo que el raíz resolvió para este par, o null si allí no se midió. El
+    // raíz es el primer contexto, así que para cuando llega una zona ya está.
+    let rootSides = null;
     for (const ctx of contexts) {
       // Un botón con override propio no es un par horneado: lo mide R10, que
       // conoce el bloque concreto y el contexto en el que se ve.
@@ -1247,6 +1283,8 @@ if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
       }
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
+      if (!ctx.zone) rootSides = fg.rgb && bg.rgb ? { fg: fg.rgb, bg: bg.rgb } : null;
+      else if (repeatsRoot(rootSides, fg, bg)) continue;
       const where = `${pair.component}${inContext(ctx)}${pair.stateLabel ? `, ${pair.stateLabel}` : ''}`;
 
       if (!fg.rgb || !bg.rgb) {
