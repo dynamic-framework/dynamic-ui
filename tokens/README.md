@@ -30,7 +30,7 @@ Five things that were impossible before are now structural:
 |---|---|---|
 | Rebrand | edit Sass, rebuild, hope | edit one seed, `npm run tokens` |
 | Figma sync | paste hex by hand | `tokens:figma:push` / `:pull`, diffed in CI |
-| Dark mode | `$enable-dark-mode: false` | a mode of the Semantic collection |
+| Dark mode | `$enable-dark-mode: false` | a mode of the Semantic collection, on any subtree |
 | Contrast | `color-contrast-var()` at build, result buried in CSS | explicit token pairs, asserted in CI |
 | Typos | `--bs---bs-ref-spacer-4` shipped | impossible; names are paths, not strings |
 
@@ -130,6 +130,57 @@ This is not hypothetical: the first draft of this directory had exactly that
 bug, with a semantic `radius.*` role group colliding with the primitive
 `radius.*` scale. Hence `shape.*` for radius roles and `stroke.*` for border
 widths. **Role groups never share a name with the primitive scale they alias.**
+
+### D-bis. A mode-varying token is emitted as a `light-dark()` pair.
+
+Not an authoring rule — there is nothing to write in `tokens/`, the two mode
+files already say it — but the one emission decision worth knowing about,
+because it is what makes `data-df-theme` work on an element that is not
+`<html>`.
+
+A custom property is substituted **where it is declared**. `component/card.json`
+has one mode, so `--df-card-bg: var(--df-bg-surface)` is resolved on `:root` and
+the resulting hex inherits down. Redefining `--df-bg-surface` on a
+`[data-df-theme="dark"]` further in does not reach it, while the text on top —
+painted by a rule on the element itself — does flip. 197 of the 575 component
+declarations had that shape, and `.df-text-muted` on a `.df-card` inside a dark
+subtree measured 2.38:1.
+
+So `scripts/tokens/build.mjs` collapses the two modes of a colour token into
+one declaration on `:root`:
+
+```css
+:root { color-scheme: light dark; }
+[data-df-theme="dark"] { color-scheme: dark; }
+
+@supports (color: light-dark(#000, #fff)) {
+  :root {
+    --df-bg-surface: light-dark(var(--df-color-white), var(--df-color-neutral-800));
+  }
+}
+```
+
+`light-dark()` resolves at **used-value** time, against the `color-scheme` of
+the element that paints — so the pair survives any number of `var()` hops and
+every layer follows a zone with no duplication. The alternative, which is what
+Bootstrap 5.3 does, is to re-emit every token inside every mode selector.
+
+Two things follow:
+
+- The collapse is driven by `colorScheme` on the mode in `$manifest.json`, so a
+  collection whose modes are not a light/dark pair — the planned Breakpoint
+  collection — falls back to one block per mode without anyone remembering to
+  make it. Only `$type: color` qualifies; `light-dark()` is a `<color>`
+  function.
+- `npm run css:verify` asserts the invariant directly: **nothing that varies by
+  mode may be reachable only through a mode selector.** Add a token to
+  `color.dark.json` without its light twin reaching `:root` and the build says
+  so, naming the token.
+
+The pre-`light-dark()` emission is kept behind `@supports not` for browsers
+below Chrome 123 / Safari 17.5 / Firefox 120, and is checked for parity with
+the pairs. It is the block to delete when the floor rises; doing so takes
+`dynamic.core.css` below where it was before the change.
 
 ### E. Every mode declares the same token set.
 

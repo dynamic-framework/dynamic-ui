@@ -27,7 +27,7 @@
     {
       "name": "Semantic",
       "layer": "semantic",
-      "description": "The product vocabulary. The layer a client overrides to rebrand and the only one a designer composes with. Alias-only.",
+      "description": "The product vocabulary. The layer a client overrides to rebrand and the only one a designer composes with. Alias-only. Its two modes declare a `colorScheme`, which is what lets the CSS emitter collapse them into one `light-dark()` declaration per token and makes a themed subtree work at every layer — see scripts/tokens/lib/emit.mjs. A collection whose modes are not a light/dark pair simply omits the field and gets one block per mode.",
       "figma": {
         "publish": true,
         "hiddenFromPublishing": false
@@ -40,12 +40,14 @@
             "semantic/color.light.json",
             "semantic/shared.json"
           ],
-          "selector": "[data-df-theme=\"light\"]"
+          "selector": "[data-df-theme=\"light\"]",
+          "colorScheme": "light"
         },
         {
           "name": "dark",
           "selector": "[data-df-theme=\"dark\"]",
           "prefersColorScheme": "dark",
+          "colorScheme": "dark",
           "sources": [
             "semantic/color.dark.json",
             "semantic/shared.json"

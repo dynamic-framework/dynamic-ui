@@ -3,20 +3,19 @@
  * inherits, and the colour-scheme handshake with the browser.
  */
 @layer df.base {
-  html {
-    /* Tells the browser to render its own chrome — scrollbars, form controls,
-       the canvas behind the page — in the matching scheme. Without this the
-       scrollbar stays light in dark mode. */
-    color-scheme: light dark;
-  }
-
-  html[data-df-theme="light"] {
-    color-scheme: light;
-  }
-
-  html[data-df-theme="dark"] {
-    color-scheme: dark;
-  }
+  /*
+   * `color-scheme` used to be declared here, on `html` and on
+   * `html[data-df-theme="…"]`. It moved into the token layer, emitted from the
+   * modes in `tokens/$manifest.json`, for two reasons.
+   *
+   * It is no longer only a handshake for scrollbars and native form controls:
+   * it is what `light-dark()` reads to decide which half of every semantic
+   * token applies, so it belongs with the values rather than three layers
+   * away from them.
+   *
+   * And `html` is one element. A themed subtree needs the scheme on whatever
+   * element carries `data-df-theme`, which is the selector the emitter writes.
+   */
 
   body {
     min-height: 100vh;

@@ -191,8 +191,25 @@ const BUDGETS = {
    *             picker is ours now: a native `<select>` laid over a text flag
    *             and the dial code. 68.1 KB measured, 70 with the usual
    *             headroom.
+   *
+   *   70 -> 86  `light-dark()`. Every semantic token that differs between the
+   *             modes is now also emitted once, carrying both values, so the
+   *             browser resolves it against the `color-scheme` of the element
+   *             that paints it instead of against the element that declared
+   *             it. That is what makes a themed subtree work at EVERY layer:
+   *             197 of the 575 component declarations alias a mode-varying
+   *             semantic token, were substituted at `:root`, and kept their
+   *             light value inside a dark zone — `.df-text-muted` on a
+   *             `.df-card` measured 2.38:1 there.
+   *
+   *             96 declarations, +8.6 KB min / +1.3 KB gzip. The pre-
+   *             `light-dark()` blocks are kept behind `@supports not` and are
+   *             most of that cost; deleting them when the floor reaches
+   *             Chrome 123 / Safari 17.5 / Firefox 120 takes the file BELOW
+   *             where it started. 77.9 KB measured, 86 with the usual
+   *             headroom.
    */
-  'dynamic.core.min.css': 70,
+  'dynamic.core.min.css': 86,
   'dynamic.components.min.css': 132,
   /*
    *   61 -> 78   231 stepped colour classes: `bg-primary-100` and the text and

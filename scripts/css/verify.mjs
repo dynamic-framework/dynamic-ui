@@ -17,6 +17,8 @@
  *   1. Every variant x role combination resolves to a real colour, in both modes.
  *   2. Opaque fills clear 4.5:1 between their resolved foreground and background.
  *   3. The dark mode block actually overrides — i.e. the two modes differ.
+ *   4. Every mode-varying token is reachable from `:root`, so a themed SUBTREE
+ *      resolves it. See "zone integrity" below.
  *
  * Usage: node scripts/css/verify.mjs
  */
@@ -97,28 +99,53 @@ function readDecls(body) {
 const allRules = readRules(css);
 
 /**
- * Declarations for one mode, taken from its explicit attribute block rather
- * than the media query — same content, and no need to model a media context.
+ * Every rule with one selector, merged in source order — last declaration wins,
+ * which is the cascade for equal specificity.
+ *
+ * Merging rather than taking the first match is load-bearing. A mode selector
+ * now appears twice: once carrying `color-scheme`, once inside the
+ * `@supports not (...)` fallback carrying the values. `find()` returned the
+ * `color-scheme` rule, which has no `--df-*` in it at all, so the dark block
+ * read as empty and both of this file's dark checks reported a phantom
+ * failure. `:root` appears three times for the same reason.
  */
-function modeDecls(modeName) {
-  const selector = MODE_SELECTORS.get(modeName);
-  if (!selector) return new Map();
-  const rule = allRules.find((r) => r.selector === selector);
-  return rule ? readDecls(rule.body) : new Map();
-}
-
-/** Root custom properties for the light mode: every `:root` rule, merged. */
-function lightDecls() {
+function mergedDecls(selector) {
   const merged = new Map();
   for (const rule of allRules) {
-    if (rule.selector !== ':root') continue;
+    if (rule.selector !== selector) continue;
     for (const [k, v] of readDecls(rule.body)) merged.set(k, v);
   }
   return merged;
 }
 
-const LIGHT = lightDecls();
-const DARK = new Map([...LIGHT, ...modeDecls('dark')]);
+/** Declarations from one mode's explicit attribute block. */
+function modeDecls(modeName) {
+  const selector = MODE_SELECTORS.get(modeName);
+  return selector ? mergedDecls(selector) : new Map();
+}
+
+/** Every custom property declared on `:root`, across all three blocks. */
+const lightDecls = () => mergedDecls(':root');
+
+/**
+ * The declarations a browser resolves against, and the scheme it resolves
+ * `light-dark()` with.
+ *
+ * There is ONE map now, not two. Every token that differs between the modes is
+ * emitted once on `:root` carrying both halves, so light and dark are the same
+ * declarations read under a different `color-scheme` — which is exactly what
+ * the browser does, and what makes a themed subtree work.
+ *
+ * It used to be `new Map([...LIGHT, ...modeDecls('dark')])`: the dark block
+ * merged OVER the root block. That models a dark DOCUMENT correctly, where
+ * `html` declares both layers and everything re-substitutes, and it is blind
+ * to a dark ZONE by construction — it can never represent a component token
+ * that was substituted at `:root` and inherited its light value down. That
+ * blindness is why 197 such declarations shipped.
+ */
+const ROOT_DECLS = lightDecls();
+const LIGHT = ROOT_DECLS;
+const DARK = ROOT_DECLS;
 
 /** Local slot assignments per variant x colour selector. */
 function variantDecls(block, variant, color) {
@@ -136,13 +163,45 @@ function blockDefaults(block) {
 }
 
 /**
+ * Splits `light-dark(a, b)` into its two arguments, at the top level.
+ *
+ * Not a regex: both arguments are usually `var(--df-color-…)`, and a regex on
+ * the comma would cut inside the first `var()` as soon as one of them has a
+ * fallback.
+ */
+function splitLightDark(value) {
+  const inner = /^light-dark\(([\s\S]*)\)$/.exec(value.trim());
+  if (!inner) return null;
+
+  let depth = 0;
+  const text = inner[1];
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i];
+    if (c === '(') depth += 1;
+    else if (c === ')') depth -= 1;
+    else if (c === ',' && depth === 0) {
+      return [text.slice(0, i).trim(), text.slice(i + 1).trim()];
+    }
+  }
+  return null;
+}
+
+/**
  * Resolves a value through `var()` chains against a scope, the way the cascade
  * would. Handles the `var(--x, fallback)` form, because the component defaults
  * use it.
+ *
+ * `scheme` is which half of a `light-dark()` applies. The browser decides that
+ * from the `color-scheme` of the element doing the painting, which is the
+ * whole reason the token layer emits that form — and it is why a resolver that
+ * only knew about `var()` could not model a themed subtree at all.
  */
-function resolveValue(value, scope, seen = new Set()) {
+function resolveValue(value, scope, scheme = 'light', seen = new Set()) {
   if (value == null) return null;
   const trimmed = String(value).trim();
+
+  const pair = splitLightDark(trimmed);
+  if (pair) return resolveValue(scheme === 'dark' ? pair[1] : pair[0], scope, scheme, seen);
 
   const m = /^var\(\s*(--[a-zA-Z0-9-]+)\s*(?:,\s*([\s\S]+))?\)$/.exec(trimmed);
   if (!m) return trimmed;
@@ -151,8 +210,8 @@ function resolveValue(value, scope, seen = new Set()) {
   if (seen.has(name)) return null; // cycle
   seen.add(name);
 
-  if (scope.has(name)) return resolveValue(scope.get(name), scope, seen);
-  if (fallback != null) return resolveValue(fallback, scope, seen);
+  if (scope.has(name)) return resolveValue(scope.get(name), scope, scheme, seen);
+  if (fallback != null) return resolveValue(fallback, scope, scheme, seen);
   return null;
 }
 
@@ -175,6 +234,8 @@ const checked = [];
 
 function checkComponent(block, variants, slots) {
   for (const [modeName, rootScope] of [['light', LIGHT], ['dark', DARK]]) {
+    // Same declarations in both passes; `modeName` is the color-scheme.
+
     const defaults = blockDefaults(block);
 
     for (const variant of variants) {
@@ -189,8 +250,8 @@ function checkComponent(block, variants, slots) {
         // variant's local assignments — which is the order a browser applies.
         const scope = new Map([...rootScope, ...defaults, ...local]);
 
-        const bg = resolveValue(`var(${slots.bg})`, scope);
-        const fg = resolveValue(`var(${slots.fg})`, scope);
+        const bg = resolveValue(`var(${slots.bg})`, scope, modeName);
+        const fg = resolveValue(`var(${slots.fg})`, scope, modeName);
 
         const label = `${block}[${variant ?? '-'}][${role}] ${modeName}`;
 
@@ -271,8 +332,8 @@ const CONTROL_PARITY = [
 
 for (const [what, a, b] of CONTROL_PARITY) {
   for (const [mode, scope] of [['light', LIGHT], ['dark', DARK]]) {
-    const left = resolveValue(`var(${a})`, scope);
-    const right = resolveValue(`var(${b})`, scope);
+    const left = resolveValue(`var(${a})`, scope, mode);
+    const right = resolveValue(`var(${b})`, scope, mode);
     if (left !== right) {
       errors.push(
         `[parity] ${what} differs between the input and the combobox in ${mode}: `
@@ -438,7 +499,7 @@ const UA_DIALOG_PROPS = [
    * place that has to change if the scale's base ever does.
    */
   const length = (name) => {
-    const raw = String(resolveValue(`var(${name})`, LIGHT)).trim();
+    const raw = String(resolveValue(`var(${name})`, LIGHT, 'light')).trim();
     const m = /^(-?[\d.]+)(px|rem|em)$/.exec(raw);
     return m ? { value: Number(m[1]), unit: m[2] } : null;
   };
@@ -558,18 +619,103 @@ function applyInsets(into, prop, value) {
   }
 }
 
-/* --- the dark block must actually change something -------------------- */
+/* --- the dark mode must actually change something --------------------- */
 
-const darkOnly = modeDecls('dark');
-if (darkOnly.size === 0) {
-  errors.push(
-    `[dark] no "${MODE_SELECTORS.get('dark') ?? '(no selector in manifest)'}" block found `
-    + '— dark mode would silently render light',
-  );
-} else {
+{
   const sample = '--df-bg-canvas';
-  if (resolveValue(`var(${sample})`, LIGHT) === resolveValue(`var(${sample})`, DARK)) {
-    errors.push(`[dark] ${sample} resolves identically in both modes`);
+  const light = resolveValue(`var(${sample})`, LIGHT, 'light');
+  const dark = resolveValue(`var(${sample})`, DARK, 'dark');
+  if (!light || !dark) {
+    errors.push(`[dark] ${sample} does not resolve — dark mode would render nothing`);
+  } else if (light === dark) {
+    errors.push(
+      `[dark] ${sample} resolves to ${light} under both colour schemes — `
+      + 'the light-dark() pair is missing or both halves are the same',
+    );
+  }
+}
+
+/* --- zone integrity --------------------------------------------------- *
+ *
+ * Every token that differs between the modes must be reachable from `:root`.
+ *
+ * This is the check that would have caught the bug this file's resolver used
+ * to be blind to, and it is worth stating as an invariant rather than as a
+ * list of symptoms.
+ *
+ * A custom property is substituted where it is DECLARED. The Components
+ * collection has one mode, so `--df-card-bg: var(--df-bg-surface)` resolves on
+ * `:root` and the resulting HEX is what inherits down the tree. If
+ * `--df-bg-surface` only ever gets its dark value from a
+ * `[data-df-theme="dark"]` block, then inside such a subtree the semantic
+ * token flips and the component token does not — the card keeps its light
+ * fill while the text on it goes light too. Measured on the shipped bundle
+ * before `light-dark()`: `.df-text-muted` on a `.df-card` inside a dark
+ * subtree, 2.38:1.
+ *
+ * So the rule is not "the dark block exists". It is: **nothing that varies by
+ * mode may be reachable ONLY through a mode selector.** A `light-dark()` pair
+ * on `:root` satisfies it; a mode-selector-only declaration does not.
+ *
+ * The `@supports not (...)` fallback blocks are exempt — that is the branch
+ * for browsers that cannot do better, and they are matched by name here so
+ * that adding a token to one of them without adding it to `:root` still
+ * trips the check.
+ */
+{
+  const darkBlock = modeDecls('dark');
+
+  if (darkBlock.size === 0) {
+    errors.push(
+      `[dark] no "${MODE_SELECTORS.get('dark') ?? '(no selector in manifest)'}" block found `
+      + '— the pre-light-dark() fallback is gone, so an older browser gets no dark mode',
+    );
+  }
+
+  const unreachable = [];
+  for (const name of darkBlock.keys()) {
+    const atRoot = ROOT_DECLS.get(name);
+    if (atRoot && splitLightDark(atRoot)) continue;
+
+    const light = resolveValue(`var(${name})`, ROOT_DECLS, 'light');
+    const dark = resolveValue(`var(${name})`, ROOT_DECLS, 'dark');
+    if (light === dark) unreachable.push(name);
+  }
+
+  if (unreachable.length) {
+    errors.push(
+      `[zone] ${unreachable.length} token(s) change in "${MODE_SELECTORS.get('dark')}" but `
+      + 'resolve to one value from `:root`, so a component token that aliases them keeps '
+      + 'its light value inside a themed subtree: '
+      + `${unreachable.slice(0, 8).join(', ')}${unreachable.length > 8 ? ', …' : ''}. `
+      + 'Emit them as a light-dark() pair on :root.',
+    );
+  }
+}
+
+/* --- the fallback branch must declare the same set -------------------- *
+ *
+ * The `@supports not (...)` blocks are dead code in any browser that has
+ * `light-dark()`, which means nothing exercises them and nothing notices when
+ * they fall behind. A token added to the pair and not to the fallback is a
+ * token that silently has no dark value on an older Safari.
+ */
+const PAIRED = new Set(
+  [...ROOT_DECLS].filter(([, v]) => splitLightDark(v)).map(([k]) => k),
+);
+
+{
+  const paired = PAIRED;
+  const fallback = modeDecls('dark');
+  const missing = [...paired].filter((name) => !fallback.has(name));
+
+  if (missing.length) {
+    errors.push(
+      `[fallback] ${missing.length} token(s) have a light-dark() pair but no value in the `
+      + `"${MODE_SELECTORS.get('dark')}" block, so a browser without light-dark() renders `
+      + `them light in dark mode: ${missing.slice(0, 8).join(', ')}`
+      + `${missing.length > 8 ? ', …' : ''}`,
+    );
   }
 }
 
@@ -618,6 +764,10 @@ process.stdout.write('css-verify: the stacked stepper draws a connector at its s
 process.stdout.write('css-verify: an explicit border colour outranks the width utility\n');
 process.stdout.write('css-verify: no element is left to the UA for its margin\n');
 process.stdout.write('css-verify: an arrow outside the carousel flows\n');
+process.stdout.write(
+  `css-verify: ${PAIRED.size} mode-varying token(s) resolve from :root under both colour `
+  + 'schemes, so a themed subtree reaches every layer\n',
+);
 if (worst.length) {
   process.stdout.write('css-verify: tightest pairs —\n');
   for (const w of worst) {

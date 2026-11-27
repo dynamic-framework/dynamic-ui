@@ -108,12 +108,58 @@ function resolveColorPart(color, ctx) {
   return m ? cssVarRef(m[1], ctx.prefix) : color;
 }
 
+/** The serialised value of one token — an alias becomes a `var()`. */
+export function cssTokenValue(token, ctx) {
+  return token.alias ? cssVarRef(token.alias, ctx.prefix) : cssValue(token, ctx);
+}
+
 /** The full declaration for one token, alias-aware. */
 export function cssDeclaration(token, ctx) {
-  const value = token.alias
-    ? cssVarRef(token.alias, ctx.prefix)
-    : cssValue(token, ctx);
-  return `${cssVarName(token, ctx.prefix)}: ${value};`;
+  return `${cssVarName(token, ctx.prefix)}: ${cssTokenValue(token, ctx)};`;
+}
+
+/**
+ * The CSS test that decides whether a browser gets the `light-dark()` form.
+ *
+ * Exported so the emitter and anything reading the emitted sheet agree on one
+ * string rather than two that drift.
+ */
+export const LIGHT_DARK_SUPPORTS = 'color: light-dark(#000, #fff)';
+
+/**
+ * One declaration carrying BOTH modes, resolved where it is used.
+ *
+ * This is the whole fix for themed subtrees, and it is worth being precise
+ * about why, because the obvious reading of the old output is that it already
+ * worked.
+ *
+ * A custom property is substituted where it is **declared**. The Components
+ * collection has one mode, so `--df-card-bg: var(--df-bg-surface)` is declared
+ * once, on `:root`, and resolves there to the light hex. What inherits down
+ * the tree is that hex — not the reference. A `[data-df-theme="dark"]` further
+ * in redefines `--df-bg-surface`, but nothing re-reads it, so the card keeps
+ * its light fill while the text on top of it, which comes from a rule on the
+ * element itself, goes dark. Measured on the shipped bundle: `.df-text-muted`
+ * inside a `.df-card` inside a dark subtree sat at **2.38:1**.
+ *
+ * 197 of the 575 component declarations had that shape. Re-emitting all of
+ * them inside every mode selector is the other way out and is what Bootstrap
+ * 5.3 does; it costs the duplication and it only covers the layers someone
+ * remembered to duplicate.
+ *
+ * `light-dark()` moves the decision from substitution time to **used-value**
+ * time: the token stream `light-dark(a, b)` travels through any number of
+ * `var()` hops untouched, and the browser picks a side from the `color-scheme`
+ * of the element that finally paints it. So a component token declared once on
+ * `:root` lands correctly inside a zone, with no duplication and nothing for a
+ * component author to remember.
+ *
+ * Only `$type: color` qualifies — `light-dark()` is a `<color>` function. Every
+ * token that currently differs between light and dark is a colour, and the
+ * emitter falls back to per-mode blocks for anything that is not.
+ */
+export function cssLightDarkValue(lightToken, darkToken, ctx) {
+  return `light-dark(${cssTokenValue(lightToken, ctx)}, ${cssTokenValue(darkToken, ctx)})`;
 }
 
 /* ------------------------------------------------------------------ *

@@ -1,8 +1,10 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import {
+  act,
   render,
   screen,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DModal from '.';
@@ -314,6 +316,154 @@ describe('<DModal />', () => {
       const footer = container.querySelector('.df-overlay-footer');
       expect(footer).toHaveAttribute('data-align', 'end');
     });
+  });
+});
+
+/**
+ * Where focus goes when the panel closes.
+ *
+ * `showModal()` restores focus to the opener by itself, but only on the
+ * browser's own way out: `close()`, Escape, a click on the backdrop. The way
+ * this library's panels are usually dismissed is none of those — a Cancel
+ * button calls `closePortal()` and the `<dialog>` is unmounted while it is
+ * still open. No `close` event fires for a node that is simply removed, so
+ * there was nothing to restore from and a keyboard user landed back at the top
+ * of the document.
+ *
+ * jsdom implements none of the native behaviour (see `tests/setup.ts`), so
+ * these move focus by hand where the browser would have moved it, and check
+ * what `useOverlayDialog` does on top of it.
+ */
+describe('<DModal /> focus return', () => {
+  it('should return focus to the opener when the panel is unmounted while open', async () => {
+    const { rerender } = render(
+      <button type="button" data-testid="trigger">Open</button>,
+    );
+
+    // The opener has focus before the panel exists, which is the whole point:
+    // the hook reads it on the frame it calls `showModal()`.
+    const trigger = screen.getByTestId('trigger');
+    trigger.focus();
+
+    rerender(
+      <>
+        <button type="button" data-testid="trigger">Open</button>
+        <DModal name="unmounted">
+          <DModal.Body>
+            <button type="button" data-testid="inside">Inside</button>
+          </DModal.Body>
+        </DModal>
+      </>,
+    );
+
+    // What `showModal()` does for itself in a browser.
+    screen.getByTestId('inside').focus();
+
+    // What `closePortal()` does: the entry is popped and the panel goes with
+    // it, `open` attribute and all — no `close` event anywhere.
+    rerender(
+      <button type="button" data-testid="trigger">Open</button>,
+    );
+
+    await waitFor(() => expect(trigger).toHaveFocus());
+  });
+
+  it('should return focus to the opener when the dialog closes itself', async () => {
+    const { rerender } = render(
+      <button type="button" data-testid="trigger">Open</button>,
+    );
+
+    const trigger = screen.getByTestId('trigger');
+    trigger.focus();
+
+    rerender(
+      <>
+        <button type="button" data-testid="trigger">Open</button>
+        <DModal name="closed">
+          <DModal.Body>
+            <button type="button" data-testid="inside">Inside</button>
+          </DModal.Body>
+        </DModal>
+      </>,
+    );
+
+    screen.getByTestId('inside').focus();
+
+    // Escape, a click on the backdrop and an explicit `close()` all arrive here.
+    act(() => {
+      (document.getElementById('closed') as HTMLDialogElement).close();
+    });
+
+    await waitFor(() => expect(trigger).toHaveFocus());
+  });
+
+  /*
+   * Somebody moved focus on purpose while the panel was closing — a second
+   * panel opened on top, a field the close revealed. Restoring would be taking
+   * it back off them. It is also what the browser's own restoration looks like
+   * when it lands first, which is why the native path needs no special case.
+   */
+  it('should leave focus alone when it has already moved somewhere else', async () => {
+    const { rerender } = render(
+      <>
+        <button type="button" data-testid="trigger">Open</button>
+        <button type="button" data-testid="elsewhere">Elsewhere</button>
+      </>,
+    );
+
+    screen.getByTestId('trigger').focus();
+
+    rerender(
+      <>
+        <button type="button" data-testid="trigger">Open</button>
+        <button type="button" data-testid="elsewhere">Elsewhere</button>
+        <DModal name="deliberate">
+          <DModal.Body>Body</DModal.Body>
+        </DModal>
+      </>,
+    );
+
+    rerender(
+      <>
+        <button type="button" data-testid="trigger">Open</button>
+        <button type="button" data-testid="elsewhere">Elsewhere</button>
+      </>,
+    );
+
+    const elsewhere = screen.getByTestId('elsewhere');
+    elsewhere.focus();
+
+    await act(async () => { await Promise.resolve(); });
+    expect(elsewhere).toHaveFocus();
+  });
+
+  /*
+   * A panel opened from a control the panel itself replaces. `focus()` on a
+   * detached node moves focus to `<body>` — worse than not trying, and it
+   * would overwrite whatever the browser had managed to do.
+   */
+  it('should not chase a trigger that is no longer in the document', async () => {
+    const { rerender } = render(
+      <button type="button" data-testid="trigger">Open</button>,
+    );
+
+    screen.getByTestId('trigger').focus();
+
+    rerender(
+      <DModal name="gone">
+        <DModal.Body>
+          <button type="button" data-testid="inside">Inside</button>
+        </DModal.Body>
+      </DModal>,
+    );
+
+    const inside = screen.getByTestId('inside');
+    inside.focus();
+
+    rerender(<p>closed</p>);
+
+    await act(async () => { await Promise.resolve(); });
+    expect(document.body).toHaveFocus();
   });
 });
 

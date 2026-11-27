@@ -24,8 +24,8 @@ import {
   loadModel, ROOT, modeIndexFor,
 } from './lib/model.mjs';
 import {
-  cssDeclaration, cssValue, cssVarName, cssVarRef, scssVarName,
-  figmaType, figmaValue, figmaName, camel,
+  cssDeclaration, cssLightDarkValue, cssValue, cssVarName, cssVarRef, scssVarName,
+  figmaType, figmaValue, figmaName, camel, LIGHT_DARK_SUPPORTS,
 } from './lib/emit.mjs';
 
 const OUT_DIR = resolve(ROOT, 'dist/tokens');
@@ -65,6 +65,70 @@ const baseBlocks = model.collections.map((col) => ({ col, mode: defaultMode(col)
  * CSS
  * ------------------------------------------------------------------ */
 
+/**
+ * The light/dark pair of a collection, when it has exactly one of each.
+ *
+ * Declared in the manifest as `colorScheme` on the mode rather than inferred
+ * from the mode's name: the Breakpoint collection planned in `tokens/README.md`
+ * will have `sm`/`md`/`lg` modes that are not a scheme pair at all, and it has
+ * to fall through to the per-mode blocks without anyone remembering to make it.
+ *
+ * `names` is restricted to colour tokens, because `light-dark()` is a
+ * `<color>` function. Today every mode-varying token is a colour, so the list
+ * is the whole set — but a non-colour one appearing later must not silently
+ * produce an invalid declaration, so it is filtered here and picked up by the
+ * fallback blocks instead.
+ */
+function lightDarkPair(col, changed) {
+  const light = col.modes.find((m) => m.colorScheme === 'light');
+  const dark = col.modes.find((m) => m.colorScheme === 'dark');
+  if (!light || !dark || col.modes.length !== 2) return null;
+  if (!light.selector || !dark.selector) return null;
+
+  const byName = {
+    light: new Map(light.tokens.map((t) => [t.name, t])),
+    dark: new Map(dark.tokens.map((t) => [t.name, t])),
+  };
+
+  const names = [...changed].filter((name) => {
+    const l = byName.light.get(name);
+    const d = byName.dark.get(name);
+    return l && d && l.type === 'color' && d.type === 'color';
+  });
+
+  return names.length ? {
+    light, dark, byName, names,
+  } : null;
+}
+
+/** One block per mode: the `prefers-color-scheme` default and each selector. */
+function emitModeBlocks(lines, col, changed, pad) {
+  for (const mode of col.modes) {
+    const decls = mode.tokens
+      .filter((t) => changed.has(t.name))
+      .map((t) => cssDeclaration(t, ctx));
+    if (!decls.length) continue;
+
+    if (mode.prefersColorScheme) {
+      lines.push('');
+      lines.push(`${pad}  /* ${col.name} — mode "${mode.name}", following the OS */`);
+      lines.push(`${pad}  @media (prefers-color-scheme: ${mode.prefersColorScheme}) {`);
+      lines.push(`${pad}    :root:not([data-${prefix}-theme="light"]) {`);
+      for (const d of decls) lines.push(`${pad}      ${d}`);
+      lines.push(`${pad}    }`);
+      lines.push(`${pad}  }`);
+    }
+
+    if (mode.selector) {
+      lines.push('');
+      lines.push(`${pad}  /* ${col.name} — mode "${mode.name}", explicit; any subtree */`);
+      lines.push(`${pad}  ${mode.selector} {`);
+      for (const d of decls) lines.push(`${pad}    ${d}`);
+      lines.push(`${pad}  }`);
+    }
+  }
+}
+
 function emitCss() {
   const lines = [banner('design tokens')];
 
@@ -79,24 +143,54 @@ function emitCss() {
     lines.push('  }');
   }
 
-  // Mode blocks.
-  //
-  // A theme must be switchable on a SUBTREE, not only on the document — a dark
-  // panel inside a light page is an ordinary requirement, and a Storybook sheet
-  // showing both modes at once is the case that surfaced it. So the selectors
-  // are plain attribute selectors rather than `:root[...]`, and EVERY mode gets
-  // one, the default included: a light subtree inside a dark page has to
-  // re-assert the tokens dark changed, because it cannot inherit them from the
-  // `:root` block that dark already overrode further up the tree.
-  //
-  // Each block carries only the tokens that actually DIFFER between modes.
-  // `semantic/shared.json` feeds every mode — type roles, shape, stroke,
-  // elevation and motion are all mode-invariant — so re-declaring them would
-  // repeat about a fifth of the file per mode and bury the colours that change.
-  //
-  // The `prefers-color-scheme` block stays root-scoped and guarded with
-  // `:not([data-df-theme="light"])`: it is the default "system" state, which is
-  // what most visitors have, and an explicit light choice must beat a dark OS.
+  /*
+   * Mode blocks.
+   *
+   * A theme must be switchable on a SUBTREE, not only on the document — a dark
+   * panel inside a light page is an ordinary requirement, and a Storybook
+   * sheet showing both modes at once is the case that surfaced it. So the
+   * selectors are plain attribute selectors rather than `:root[...]`.
+   *
+   * ## Why there are two emissions
+   *
+   * Plain per-mode blocks only half-work on a subtree, and the half that fails
+   * is invisible until someone measures it. A custom property is substituted
+   * where it is DECLARED: the Components collection has one mode, so
+   * `--df-card-bg: var(--df-bg-surface)` resolves on `:root` to the light hex
+   * and that HEX is what inherits down. Redefining `--df-bg-surface` on a
+   * `[data-df-theme="dark"]` further in changes nothing for it, while the text
+   * on top — painted by a rule on the element itself — does flip. Measured on
+   * the shipped bundle, `.df-text-muted` inside a `.df-card` inside a dark
+   * subtree sat at 2.38:1 against the card it was on. 197 of the 575 component
+   * declarations have that shape.
+   *
+   * `light-dark()` fixes it at the root cause rather than per layer: the token
+   * carries both values, travels through any number of `var()` hops as an
+   * unresolved token stream, and the browser picks a side from the
+   * `color-scheme` of the element that finally paints it. One declaration
+   * instead of four, and every layer follows a zone for free. See the note on
+   * `cssLightDarkValue` in `lib/emit.mjs`.
+   *
+   * The per-mode blocks stay, behind `@supports not`, for browsers below
+   * Chrome 123 / Safari 17.5 / Firefox 120. There they behave exactly as they
+   * did before this change — zones included, which means still half-broken.
+   * That branch is the thing to delete when the floor rises; nothing else here
+   * depends on it.
+   *
+   * `color-scheme` itself is emitted unconditionally: it is what `light-dark()`
+   * reads, and on its own it is also the handshake that makes scrollbars and
+   * native form controls match. It used to live in `src/css/base/document.css`
+   * scoped to `html`, which is one element — a zone needs it on any.
+   *
+   * Each block carries only the tokens that actually DIFFER between modes.
+   * `semantic/shared.json` feeds every mode — type roles, shape, stroke,
+   * elevation and motion are all mode-invariant — so re-declaring them would
+   * repeat about a fifth of the file per mode and bury the colours that change.
+   *
+   * The `prefers-color-scheme` block stays root-scoped and guarded with
+   * `:not([data-df-theme="light"])`: it is the default "system" state, which is
+   * what most visitors have, and an explicit light choice must beat a dark OS.
+   */
   for (const col of model.collections) {
     if (col.modes.length < 2) continue;
 
@@ -114,30 +208,56 @@ function emitCss() {
     }
     if (!changed.size) continue;
 
-    for (const mode of col.modes) {
-      const decls = mode.tokens
-        .filter((t) => changed.has(t.name))
-        .map((t) => cssDeclaration(t, ctx));
-      if (!decls.length) continue;
+    const pair = lightDarkPair(col, changed);
 
-      if (mode.prefersColorScheme) {
-        lines.push('');
-        lines.push(`  /* ${col.name} — mode "${mode.name}", following the OS */`);
-        lines.push(`  @media (prefers-color-scheme: ${mode.prefersColorScheme}) {`);
-        lines.push(`    :root:not([data-${prefix}-theme="light"]) {`);
-        for (const d of decls) lines.push(`      ${d}`);
-        lines.push('    }');
-        lines.push('  }');
+    if (pair) {
+      lines.push('');
+      lines.push(`  /* ${col.name} — the colour-scheme handshake, on any subtree */`);
+      lines.push(`  :root { color-scheme: ${pair.light.colorScheme} ${pair.dark.colorScheme}; }`);
+      for (const mode of [pair.light, pair.dark]) {
+        lines.push(`  ${mode.selector} { color-scheme: ${mode.colorScheme}; }`);
       }
 
-      if (mode.selector) {
-        lines.push('');
-        lines.push(`  /* ${col.name} — mode "${mode.name}", explicit; any subtree */`);
-        lines.push(`  ${mode.selector} {`);
-        for (const d of decls) lines.push(`    ${d}`);
-        lines.push('  }');
+      lines.push('');
+      lines.push(`  /* ${col.name} — both modes in one declaration, resolved where used */`);
+      lines.push(`  @supports (${LIGHT_DARK_SUPPORTS}) {`);
+      lines.push('    :root {');
+      for (const name of pair.names) {
+        lines.push(`      --${prefix}-${name}: ${cssLightDarkValue(
+          pair.byName.light.get(name),
+          pair.byName.dark.get(name),
+          ctx,
+        )};`);
       }
+      lines.push('    }');
+      lines.push('  }');
     }
+
+    const fallbackNames = pair
+      ? [...changed].filter((name) => !pair.names.includes(name))
+      : [...changed];
+
+    // Nothing left for the legacy path: every mode-varying token collapsed.
+    if (pair && !fallbackNames.length) {
+      lines.push('');
+      lines.push('  /* The pre-light-dark() path, for browsers without it. Values only —');
+      lines.push('     a subtree still gets the component layer resolved at :root there, which');
+      lines.push('     is the limitation this whole block exists to leave behind. */');
+      lines.push(`  @supports not (${LIGHT_DARK_SUPPORTS}) {`);
+      emitModeBlocks(lines, col, changed, '  ');
+      lines.push('  }');
+      continue;
+    }
+
+    if (pair) {
+      lines.push('');
+      lines.push(`  @supports not (${LIGHT_DARK_SUPPORTS}) {`);
+      emitModeBlocks(lines, col, changed, '  ');
+      lines.push('  }');
+      continue;
+    }
+
+    emitModeBlocks(lines, col, changed, '');
   }
 
   lines.push('}');

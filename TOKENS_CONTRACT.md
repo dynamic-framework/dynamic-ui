@@ -159,25 +159,74 @@ correct result in dark mode with no extra rule.
 
 ## 4. Colour modes
 
-The Semantic collection has two modes. `dynamic.tokens.css` emits them so that
-all three viewer states resolve correctly:
+The Semantic collection has two modes, and every token that differs between
+them is emitted **once**, carrying both values:
 
 ```css
-:root                    { /* light — the complete palette */ }
+:root                    { color-scheme: light dark; }
+[data-df-theme="light"]  { color-scheme: light; }
+[data-df-theme="dark"]   { color-scheme: dark; }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-df-theme="light"]) { /* dark, following the OS */ }
+@supports (color: light-dark(#000, #fff)) {
+  :root {
+    --df-bg-surface: light-dark(var(--df-color-white), var(--df-color-neutral-800));
+    /* …one line per mode-varying token */
+  }
 }
-
-:root[data-df-theme="dark"]          { /* dark, chosen explicitly */ }
 ```
 
 - Set **nothing** to follow the OS. This is the default and what most visitors get.
-- Set `data-df-theme="dark"` or `="light"` on `<html>` to force a mode; an
-  explicit choice beats the OS in both directions.
+- Set `data-df-theme="dark"` or `="light"` on **any element** to force a mode
+  for it and everything inside it; an explicit choice beats the OS in both
+  directions.
 
 Every semantic token is defined in both modes — CI enforces it — so there is no
 partial-theme state where one mode's text lands on the other mode's ground.
+
+### A mode applies to a subtree, at every layer
+
+`data-df-theme` is not restricted to `<html>`. A dark band on a light page, a
+light card on a dark page, two modes side by side in one document: all of them
+are one attribute.
+
+That used to be only three-quarters true, and the missing quarter was invisible
+until measured. A custom property is substituted **where it is declared**. The
+Components collection has one mode, so `--df-card-bg: var(--df-bg-surface)` was
+resolved on `:root` and the resulting *hex* is what inherited down the tree —
+redefining `--df-bg-surface` further in changed nothing for it, while the text
+on top, painted by a rule on the element itself, did flip. 197 of the 575
+component declarations had that shape; `.df-text-muted` on a `.df-card` inside a
+dark subtree measured **2.38:1**.
+
+`light-dark()` moves the decision from substitution time to **used-value** time.
+The pair travels through any number of `var()` hops as an unresolved token
+stream, and the browser picks a side from the `color-scheme` of the element that
+finally paints it. A component token declared once on `:root` therefore lands
+correctly inside a zone, with nothing for a component author to remember.
+
+Three consequences worth knowing:
+
+- **`color-scheme` is part of the contract now,** not just a scrollbar
+  handshake. Set it if you introduce a themed scope of your own; the attribute
+  selectors above already do.
+- **Reading a semantic token in JavaScript needs a paint.**
+  `getComputedStyle(el).getPropertyValue('--df-fg-default')` returns the literal
+  string `light-dark(#15151a, #f0f0ef)`, because a custom property's computed
+  value is substituted but not resolved. Assign it to a real property and read
+  that back instead:
+
+  ```js
+  const probe = document.createElement('span');
+  probe.style.color = 'var(--df-fg-default)';
+  el.appendChild(probe);
+  const painted = getComputedStyle(probe).color;  // rgb(…), resolved for this element
+  probe.remove();
+  ```
+
+- **Below Chrome 123 / Safari 17.5 / Firefox 120** an `@supports not` block
+  carries the previous per-mode emission. Those browsers get the same light and
+  dark they always did at the document level, and the same partial behaviour in
+  a subtree.
 
 ---
 
@@ -226,9 +275,25 @@ not need to parse CSS, and you should not.
 - To rebrand: rewrite values in the **Semantic** collection, or regenerate the
   primitive ramps from seeds. Do not write literals into Semantic — it breaks
   mode switching, because a literal cannot differ between `light` and `dark`.
+- To override one semantic token **in CSS**, write a `light-dark()` pair on
+  `:root` rather than a value under `[data-df-theme="dark"]`. A pair is what
+  the token layer emits, and it is the form that also reaches a themed subtree
+  — see § 4.
+
+  ```css
+  :root {
+    --df-role-primary-base: light-dark(var(--df-color-blue-500), var(--df-color-blue-300));
+  }
+  ```
 - `$extensions["dev.dynamicframework.ramp"]` on each colour family records its
   `seed`, `anchorStep` and `method`, which is what you need to regenerate a ramp
-  rather than guess at one.
+  rather than guess at one. **Known gap:** it is present in the authored
+  `tokens/primitives/color.json` and currently stripped from the published
+  `dynamic.tokens.json`, because the emitter rebuilds the tree from leaf tokens
+  and group-level `$extensions` are lost. Read the method here until that is
+  fixed: eleven steps in OKLCh from one seed, which is step 500 exactly.
+- Contrast is **not** re-checked at runtime. If you change values, re-check the
+  pairs — reading a semantic token needs a paint, see § 4.
 
 Contrast is asserted in CI for Dynamic's own values only. If you change values,
 re-check the pairs listed in `scripts/tokens/validate.mjs`.
