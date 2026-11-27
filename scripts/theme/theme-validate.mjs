@@ -1018,7 +1018,8 @@ if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
   // que declara la variable: un theme que rompe el par en `.nav-pills` y lo
   // corrige en `.nav-pills .nav-link.active` no enseña ningún pill roto. Cada
   // pill se mide una vez por contexto, aunque varios bloques declaren sobre él,
-  // y lo reporta el del enlace si lo hay: es quien lo pinta.
+  // y lo reporta el del enlace si lo hay: es quien lo pinta. Si no, el bloque
+  // cuyo texto gana la cascada en el elemento.
   const pending = [];
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-nav-pills-link-active-color');
@@ -1062,13 +1063,16 @@ if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
   for (const { key, rank } of pending) claims.set(key, Math.max(claims.get(key) ?? 0, rank));
   const measured = new Set();
   for (const {
-    ctx, elements, key, rank, where, line,
+    ctx, elements, key, rank, ...first
   } of pending) {
     // El pill, no el bloque: varios bloques declaran sobre el mismo y la
     // medición es una sola.
     if (rank < claims.get(key) || measured.has(key)) continue;
     measured.add(key);
     const element = ctx.element(...elements);
+    const winner = element.get('--bs-nav-pills-link-active-color');
+    const { where, line } = pending.find((other) => other.key === key && other.rank === rank
+      && winner?.source !== 'defecto' && other.line === winner?.line) ?? first;
     const fg = measureSide(ctx, element, '--bs-nav-pills-link-active-color');
     const bg = measureSide(ctx, element, '--bs-nav-pills-link-active-bg', { background: true });
     noteLiteral(element, fg, `${where} --bs-nav-pills-link-active-color`);

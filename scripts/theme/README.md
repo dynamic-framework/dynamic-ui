@@ -573,7 +573,9 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   `.nav-pills .nav-link.active` también arregla los pills de
   `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca los
   de fuera de la barra. Cada pill se reporta una vez por contexto, por el bloque
-  del enlace si lo hay. Sin fondo propio, el pill activo usa el de la librería,
+  del enlace si lo hay y, si no, por el que gana la cascada en el texto del pill
+  (`[data-bs-theme="z"].nav-pills` antes que un `[data-bs-theme="z"] .nav-pills`
+  anterior). Sin fondo propio, el pill activo usa el de la librería,
   `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara

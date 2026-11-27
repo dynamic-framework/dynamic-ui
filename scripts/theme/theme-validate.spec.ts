@@ -3370,6 +3370,27 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
+    it('lo reporta el bloque pegado a la zona cuando es el que gana la cascada', () => {
+      // `[z] .nav-pills` y `[z].nav-pills` pesan igual y el segundo va después:
+      // el par roto es el suyo y el hallazgo tiene que apuntar a su línea.
+      const css = expandCss({
+        ...MINIMAL_THEME,
+        components: [
+          { selector: '[data-bs-theme="oscura"] .nav-pills', vars: { [color]: B, [bg]: W } },
+          { selector: '[data-bs-theme="oscura"].nav-pills', vars: { [color]: W, [bg]: W } },
+        ],
+        zones: { oscura: { vars: { '--bs-heading-color': B } } },
+      });
+      const lines = css.split('\n');
+      const attached = lines.findIndex((l) => l.startsWith('[data-bs-theme="oscura"].nav-pills {')) + 2;
+      const result = validateStrict(css);
+      expect(findings(result, 'contraste-nav-pills')).toEqual([
+        expect.stringMatching(/^error contraste-nav-pills: Pill activo en "\[data-bs-theme="oscura"\]\.nav-pills( dentro de \[data-bs-theme="oscura"\])?": 1\.00:1/),
+      ]);
+      expect(result.stderr).toMatch(new RegExp(`\\.css:${attached} {2}\\[contraste-nav-pills\\]`));
+      expect(result.status).toBe(1);
+    });
+
     it('un par que sigue roto en el enlace se detecta una sola vez', () => {
       // El enlace repite el blanco del contenedor sobre fondo blanco: 1:1 en
       // Chromium. Lo reporta el enlace, que es quien pinta el pill.
