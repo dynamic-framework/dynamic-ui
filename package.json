@@ -215,7 +215,21 @@
     "react-i18next": ">=16 <17"
   },
   "overrides": {
-    "glob@>=9.0.0 <14.0.2": "^14.0.6",
-    "minimatch@>=7.0.0 <11.0.1": "^11.0.9"
+    "@jest/reporters": {
+      "glob": "^14.0.6"
+    },
+    "jest-config": {
+      "glob": "^14.0.6"
+    },
+    "jest-runtime": {
+      "glob": "^14.0.6"
+    },
+    "@joshwooding/vite-plugin-react-docgen-typescript": {
+      "glob": "^14.0.6"
+    },
+    "test-exclude": {
+      "glob": "^14.0.6",
+      "minimatch": "^11.0.9"
+    }
   }
 }
