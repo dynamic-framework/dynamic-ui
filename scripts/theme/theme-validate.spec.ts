@@ -940,7 +940,7 @@ describe('theme-validate — reglas de las secciones extendidas', () => {
     expect(result.stderr).toContain('WCAG 2.x AA');
   });
 
-  it('atrapa una pill activo ilegible sobre su propio fondo', () => {
+  it('atrapa un pill activo ilegible sobre su propio fondo', () => {
     const css = expandCss({
       ...SECTIONED_THEME,
       components: [
@@ -3413,7 +3413,7 @@ describe('theme-validate — las zonas se resuelven como en el navegador (#1295)
       expect(result.status).toBe(0);
     });
 
-    it('el enlace de otro contenedor no corrige el pill genérica', () => {
+    it('el enlace de otro contenedor no corrige el pill genérico', () => {
       // `.sidebar .nav-pills .nav-link.active` sólo arregla los pills de
       // la barra lateral; las de fuera siguen rotas.
       const css = expandCss({
