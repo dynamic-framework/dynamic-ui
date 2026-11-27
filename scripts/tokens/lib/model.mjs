@@ -128,8 +128,25 @@ function inheritedFigma(path) {
   return merged;
 }
 
-/** Pre-pass: record group-level `$extensions` so leaves can inherit them. */
-function indexGroups(node, path) {
+/**
+ * Pre-pass: record group-level `$extensions`.
+ *
+ * Two things come out of it, and conflating them is what lost one of them.
+ *
+ * `groupMeta` holds the BUILD-TIME directives — the emitted unit, the Figma
+ * publish flags — which leaves inherit so an emitter never has to walk back up
+ * the tree.
+ *
+ * `into` collects the extensions VERBATIM, keyed by group path, so the DTCG
+ * emitter can put them back where it found them. The model flattens to leaf
+ * tokens and `emitDtcg` rebuilds the tree from those leaves, so anything that
+ * lived on a group and not on a leaf simply vanished from the published
+ * document. That is how `dev.dynamicframework.ramp` — the seed, anchor step
+ * and method, which `TOKENS_CONTRACT.md` § 6 tells agents to read — was
+ * present 19 times in `tokens/primitives/color.json` and 0 times in
+ * `dist/tokens/dynamic.tokens.json`.
+ */
+function indexGroups(node, path, into) {
   const ext = node.$extensions ?? {};
   if (ext[EXT_CSS] || ext[EXT_FIGMA]) {
     groupMeta.set(path.join('.'), {
@@ -138,10 +155,15 @@ function indexGroups(node, path) {
       figma: ext[EXT_FIGMA],
     });
   }
+  // The root object's `$extensions`, if any, belongs to the file and not to a
+  // group, so only a non-empty path is recorded.
+  if (into && path.length && Object.keys(ext).length) {
+    into.set(path.join('.'), ext);
+  }
   for (const [key, child] of Object.entries(node)) {
     if (RESERVED.has(key)) continue;
     if (child === null || typeof child !== 'object' || Array.isArray(child)) continue;
-    indexGroups(child, [...path, key]);
+    indexGroups(child, [...path, key], into);
   }
 }
 
@@ -157,7 +179,12 @@ export function loadManifest() {
  *   manifest: object,
  *   collections: Array<{
  *     name: string, layer: string, figma: object,
- *     modes: Array<{ name: string, tokens: Array<object>, [k:string]: any }>
+ *     modes: Array<{
+ *       name: string,
+ *       tokens: Array<object>,
+ *       groupExtensions: Map<string, object>,
+ *       [k:string]: any
+ *     }>
  *   }>,
  *   byName: Map<string, object>,
  *   byId: Map<string, object>,
@@ -175,9 +202,10 @@ export function loadModel() {
     modes: col.modes.map((mode) => {
       const sources = mode.sources.flatMap(expandSource);
       const tokens = [];
+      const groupExtensions = new Map();
       for (const rel of sources) {
         const doc = readJson(resolve(TOKENS_DIR, rel));
-        indexGroups(doc, []);
+        indexGroups(doc, [], groupExtensions);
         walk(doc, [], undefined, rel, tokens);
       }
       for (const t of tokens) {
@@ -188,7 +216,9 @@ export function loadModel() {
         if (!t.cssUnit) t.cssUnit = inheritedCssUnit(t.path);
         if (t.keepZeroUnit === undefined) t.keepZeroUnit = inheritedKeepZeroUnit(t.path);
       }
-      return { ...mode, sources, tokens };
+      return {
+        ...mode, sources, tokens, groupExtensions,
+      };
     }),
   }));
 

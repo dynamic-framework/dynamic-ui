@@ -365,6 +365,31 @@ function emitDtcg() {
         if (t.description) leaf.$description = t.description;
         node[t.path[t.path.length - 1]] = leaf;
       }
+
+      /*
+       * Group-level `$extensions`, put back where they were authored.
+       *
+       * The model is flat and this function rebuilds the tree from leaves, so
+       * anything attached to a GROUP rather than to a token had nowhere to
+       * come from and was silently dropped. `dev.dynamicframework.ramp` — the
+       * seed, anchor step and method for each colour family — is the one that
+       * mattered: `TOKENS_CONTRACT.md` § 6 tells agents to read it out of this
+       * file, and it was in the source 19 times and in the output zero.
+       *
+       * Written after the leaves so a group node already exists; a group whose
+       * path no token reached is skipped rather than conjured, because an
+       * `$extensions` with no tokens under it describes nothing.
+       */
+      for (const [path, extensions] of mode.groupExtensions) {
+        let node = modeNode;
+        const segments = path.split('.');
+        const missing = segments.some((seg) => {
+          node = node?.[seg];
+          return !node || typeof node !== 'object';
+        });
+        if (!missing) node.$extensions = extensions;
+      }
+
       colNode[mode.name] = modeNode;
     }
     doc[col.name] = colNode;

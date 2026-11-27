@@ -17,7 +17,7 @@ import DProgress from '../../src/components/DProgress/DProgress';
 import DTabs from '../../src/components/DTabs/DTabs';
 
 import {
-  BRANDS, CONTRAST_PAIRS, brandCss, cssVar, seedCss, type Brand,
+  BRANDS, CONTRAST_PAIRS, FAMILY_ROLE, brandCss, cssVar, seedCss, tally, type Brand,
 } from './themes';
 
 /* The extension is part of the path — see the note in `themes.ts`. */
@@ -133,6 +133,29 @@ function useStylesheet(id: string, css: string) {
     document.head.appendChild(element);
     return () => element.remove();
   }, [id, css]);
+}
+
+/**
+ * The brand's web fonts, in the document only while the brand is on.
+ *
+ * A `<link>` rather than an `@import` inside the theme sheet: an `@import`
+ * inside an injected `<style>` is fetched after that sheet parses, which puts
+ * the font request behind everything instead of alongside it.
+ *
+ * Every family lands in the token with its fallbacks — see `Brand.fonts`. If
+ * the request fails, the stack is what renders, and the only thing lost is the
+ * face. A theme whose type disappears offline would be worse than one that
+ * never asked for a font.
+ */
+function useWebFont(href: string | undefined) {
+  useInsertionEffect(() => {
+    if (!href) return undefined;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, [href]);
 }
 
 /* ------------------------------------------------------------------ *
@@ -551,7 +574,10 @@ function Product({ mode, idPrefix }: { mode: 'light' | 'dark'; idPrefix: string 
         border: '1px solid var(--df-border-default)',
         display: 'grid',
         gap: 'var(--df-size-5)',
+        /* The three body type roles, so a brand that retunes them shows it. */
         fontFamily: 'var(--df-text-body-font-family)',
+        fontSize: 'var(--df-text-body-font-size)',
+        lineHeight: 'var(--df-text-body-line-height)',
       }}
     >
       <header style={{ display: 'flex', alignItems: 'center', gap: 'var(--df-size-3)' }}>
@@ -566,6 +592,40 @@ function Product({ mode, idPrefix }: { mode: 'light' | 'dark'; idPrefix: string 
           <DBadge color="success" variant="soft" text="Al día" />
         </span>
       </header>
+
+      {/*
+        * An editorial block, purely so the type roles have somewhere to show.
+        * Heading family, heading weight, heading leading, body size, body
+        * leading and the small rung are six separate tokens, and a brand that
+        * moves them is unreadable from a button alone.
+        */}
+      <div style={{ display: 'grid', gap: 'var(--df-size-2)' }}>
+        <h3
+          style={{
+            margin: 0,
+            fontFamily: 'var(--df-text-heading-font-family)',
+            fontWeight: 'var(--df-text-heading-font-weight)',
+            lineHeight: 'var(--df-text-heading-line-height)',
+            fontSize: 'var(--df-text-heading-3-font-size)',
+          }}
+        >
+          Tu resumen de marzo
+        </h3>
+        <p style={{ margin: 0 }}>
+          Revisa los movimientos del mes y programa la próxima transferencia. Nada de
+          este texto sabe qué marca está puesta: toma familia, tamaño e interlineado
+          de los roles de tipografía.
+        </p>
+        <span
+          style={{
+            color: 'var(--df-fg-muted)',
+            fontSize: 'var(--df-text-body-sm-font-size)',
+            lineHeight: 'var(--df-text-body-sm-line-height)',
+          }}
+        >
+          Actualizado hace 4 minutos
+        </span>
+      </div>
 
       <DCard>
         <DCard.Header>Cuenta corriente</DCard.Header>
@@ -731,6 +791,84 @@ function ModePalette({ mode, nonce }: { mode: 'light' | 'dark'; nonce: string })
 }
 
 /**
+ * How much of the system this brand actually moves.
+ *
+ * Worth printing, because the interesting number is small and the page is
+ * large. Four seeds become 44 committed palette steps through `buildRamp`;
+ * everything else is one declaration per role. A reader who only sees the
+ * result has no way to tell whether that took fifty lines or five hundred.
+ */
+function Tally({ brand, counts }: { brand: Brand; counts: ReturnType<typeof tally> }) {
+  if (brand.id === 'dynamic') return null;
+
+  const chip = (label: string, value: string) => (
+    <span
+      key={label}
+      style={{
+        display: 'inline-flex',
+        gap: 'var(--df-size-2)',
+        alignItems: 'baseline',
+        padding: 'var(--df-size-1) var(--df-size-3)',
+        background: 'var(--df-bg-surface)',
+        border: '1px solid var(--df-border-default)',
+        borderRadius: 'var(--df-shape-control)',
+        fontSize: 'var(--df-text-body-sm-font-size)',
+      }}
+    >
+      <strong style={{ fontFamily: MONO }}>{value}</strong>
+      <span style={{ color: 'var(--df-fg-muted)' }}>{label}</span>
+    </span>
+  );
+
+  return (
+    <div style={{ display: 'grid', gap: 'var(--df-size-3)', maxWidth: '70ch' }}>
+      <div style={{ display: 'flex', gap: 'var(--df-size-2)', flexWrap: 'wrap' }}>
+        {chip(`seeds → ${counts.primitives} pasos de paleta`, String(counts.families))}
+        {chip('roles semánticos', String(counts.semantic))}
+        {counts.groups.map((g) => chip(g.label, String(g.count)))}
+      </div>
+
+      <div style={{ display: 'grid', gap: 'var(--df-size-1)' }}>
+        {Object.entries(brand.seeds).map(([family, seed]) => (
+          <div
+            key={family}
+            style={{
+              display: 'flex', gap: 'var(--df-size-2)', alignItems: 'center', flexWrap: 'wrap',
+            }}
+          >
+            <span
+              aria-hidden
+              style={{
+                width: '1rem',
+                height: '1rem',
+                background: seed,
+                borderRadius: 'var(--df-shape-control-sm)',
+                border: '1px solid var(--df-border-strong)',
+              }}
+            />
+            <Mono>{`color.${family}.500 = ${seed}`}</Mono>
+            <span style={{ color: 'var(--df-fg-muted)', fontSize: 'var(--df-text-body-xs-font-size)' }}>
+              {FAMILY_ROLE[family] ?? 'decorative'}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {brand.fonts && (
+        <div style={{ display: 'grid', gap: 'var(--df-size-1)' }}>
+          <span style={{ fontFamily: 'var(--df-text-heading-font-family)', fontSize: 'var(--df-text-heading-5-font-size)' }}>
+            {`Títulos — ${brand.fonts.heading.split(',')[0].replace(/"/g, '')}`}
+          </span>
+          <span style={{ fontFamily: 'var(--df-text-body-font-family)' }}>
+            {`Cuerpo — ${brand.fonts.body.split(',')[0].replace(/"/g, '')}`}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
  * The gate, run against the document rather than against `tokens/`.
  *
  * `npm run tokens:validate` checks these pairs in Node, for Dynamic's own
@@ -803,6 +941,9 @@ function Studio() {
   const css = useMemo(() => brandCss(brand, remedy), [brand, remedy]);
 
   useStylesheet('df-brand-demo', css);
+  useWebFont(brand.fonts?.href);
+
+  const counts = useMemo(() => tally(brand), [brand]);
 
   /* What the readers below key their re-measurement on. The sheet is replaced
      wholesale per brand, so one string covers every value it could change. */
@@ -816,12 +957,12 @@ function Studio() {
   return (
     <Page>
       <Section
-        title="Four brands, two hexes each"
+        title="Four brands, a few dozen tokens each"
         hint={(
           <>
-            Every row below changes with the picker, in both colour modes at once, and the
-            only input is the two seeds plus a handful of radius and type reassignments.
-            Nothing in the component tree knows which brand is on.
+            Everything below changes with the picker, in both colour modes at once — colour,
+            type, radius, border weight, shadow and motion. Nothing in the component tree
+            knows which brand is on, and no component takes a brand prop.
           </>
         )}
       >
@@ -855,6 +996,8 @@ function Studio() {
             {brand.note}
           </span>
         </div>
+
+        <Tally brand={brand} counts={counts} />
       </Section>
 
       <>

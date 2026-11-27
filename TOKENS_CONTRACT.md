@@ -287,11 +287,9 @@ not need to parse CSS, and you should not.
   ```
 - `$extensions["dev.dynamicframework.ramp"]` on each colour family records its
   `seed`, `anchorStep` and `method`, which is what you need to regenerate a ramp
-  rather than guess at one. **Known gap:** it is present in the authored
-  `tokens/primitives/color.json` and currently stripped from the published
-  `dynamic.tokens.json`, because the emitter rebuilds the tree from leaf tokens
-  and group-level `$extensions` are lost. Read the method here until that is
-  fixed: eleven steps in OKLCh from one seed, which is step 500 exactly.
+  rather than guess at one: eleven steps in OKLCh from one seed, which is step
+  500 exactly. Group-level `$extensions` are published on the group node, the
+  same place they are authored.
 - Contrast is **not** re-checked at runtime. If you change values, re-check the
   pairs — reading a semantic token needs a paint, see § 4.
 
