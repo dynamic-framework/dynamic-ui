@@ -908,7 +908,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         if (!name) continue;
         let end = start + name.length - 1;
         if (compound[end + 1] === '(') end = closing(compound, end + 1);
-        if (char === '.') classes.push(name);
+if (char === '.' && compound[end + 1] !== '\\') classes.push(name);
         i = end;
       }
     }
