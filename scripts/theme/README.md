@@ -587,7 +587,9 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   se mide contra los valores por defecto de la librería, igual que una zona de
   un theme completo que no redefine esas variables en `:root`. Así se puede
   mantener una zona en un archivo aparte sin repetir el raíz.
-- `contraste-zona` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` de la zona.
+- `contraste-cuerpo` — `--bs-body-color-rgb` sobre `--bs-body-bg-rgb` del raíz.
+  Es el par del que cuelga todo el texto del documento.
+- `contraste-zona` — el mismo par, medido dentro de una zona que lo cambia.
 - `ciclo` — error cuando una declaración del raíz o de una zona se referencia a
   sí misma con `var()`: el navegador descarta la variable.
 - `wrapper-faltante-zona` — aviso por cada triplete `--bs-X-rgb` que una zona
@@ -629,6 +631,18 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   un theme no declara. Se miden en el raíz y dentro de cada zona, porque una
   zona que mueve la superficie los cambia sin tocar ninguno. Son error, salvo
   `.text-bg-secondary`, que es advertencia por no ser corregible desde el theme.
+
+Una zona sólo reporta un par **cuando lo cambia**. Si resuelve los mismos dos
+colores que el raíz, el hallazgo ya salió arriba y repetirlo por zona no añade
+ningún problema: multiplicaría la cuenta y mandaría el arreglo al sitio
+equivocado, pidiendo declarar algo dentro de la zona cuando lo que hay que tocar
+es el raíz. La comparación es por el color que cada contexto **resuelve**, no por
+lo que declara: una zona que reescribe el token y llega al mismo color tampoco
+repite. Vale para `contraste-horneado` y para el par del cuerpo.
+
+Importa porque una zona existe en cuanto un selector de componente la nombra: un
+`[data-bs-theme="<zona>"] .card` que sólo toca el borde ya crea la zona, y antes
+eso bastaba para duplicar el raíz entero.
 - `contraste-enlace-zona` — `--bs-link-color-rgb` sobre el fondo de la zona.
   Entre 3:1 y 4.5:1 es aviso, no error: el enlace se distingue del fondo pero su
   texto no llega a AA.

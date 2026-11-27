@@ -1710,13 +1710,33 @@ describe('theme-validate — pares horneados', () => {
         },
       },
     });
-    // Sin la variable, el par falla en el raíz y en la zona: el texto se
-    // hereda del role por defecto en los dos contextos.
+    // Sin la variable el par falla, pero esta zona no toca el triplete del role:
+    // resuelve lo mismo que el raíz, así que sale una vez y sin sufijo de zona.
+    // Repetirlo por zona sería la duplicación de #1387.
     const broken = css.replace(/\n\s*--bs-primary-text-bg-color: [^;]+;/, '');
     const result = validate(broken);
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('.text-bg-primary dentro de [data-bs-theme="oscura"]');
+    expect(result.stderr).toContain('".text-bg-primary"');
+    expect(result.stderr).not.toContain('.text-bg-primary dentro de [data-bs-theme="oscura"]');
     expect(validate(css).stderr).not.toContain('.text-bg-primary');
+  });
+
+  /*
+   * El fondo de `.text-bg-<role>` es la excepción de los pares horneados: la
+   * clase lee `--bs-<role>-rgb` en el propio elemento, así que una zona que
+   * mueva el triplete sí cambia el par y tiene que reportarlo por su cuenta.
+   */
+  it('mide .text-bg-<role> en la zona que mueve el triplete del role', () => {
+    const css = expandCss({
+      ...MINIMAL_THEME,
+      root: { '--bs-primary-text-bg-color': 'var(--bs-white)' },
+      zones: { clara: { vars: { '--bs-primary-rgb': '190, 230, 215' } } },
+    });
+    const result = validate(css);
+    // El raíz contrasta; el blanco heredado sobre el primary claro de la zona, no.
+    expect(result.stderr).toContain('.text-bg-primary dentro de [data-bs-theme="clara"]');
+    expect(result.stderr).not.toContain('".text-bg-primary":');
+    expect(result.status).toBe(1);
   });
 
   it('no culpa al theme de un par que ya viene roto en la librería', () => {
@@ -4565,6 +4585,83 @@ describe('theme-validate — los componentes que una zona no arrastra (#1375)', 
         '.btn-outline-info', '.btn-outline-warning', '.btn-outline-danger',
       ].map((component) => expect.stringMatching(baked(component))),
     ]);
+    expect(result.status).toBe(1);
+  });
+});
+
+/*
+ * Una zona que no mueve ningún par no añade problemas: repetir en ella los
+ * hallazgos del raíz multiplica la cuenta y manda el arreglo al sitio
+ * equivocado. Desde #1380 basta con que un selector de componente nombre la
+ * zona para que exista, así que cualquier `[data-bs-theme="x"] .card` la creaba
+ * y duplicaba el raíz entero.
+ */
+describe('theme-validate — una zona que no cambia nada no repite el raíz (#1387)', () => {
+  /** Raíz con el cuerpo ilegible y las zonas que se le pidan, sin tocar color. */
+  const withZones = (...zones: string[]) => [
+    ':root,',
+    '[data-bs-theme="dynamic"] {',
+    '  --bs-body-bg-rgb: 255, 255, 255;',
+    '  --bs-body-bg: rgb(var(--bs-body-bg-rgb));',
+    '  --bs-body-color-rgb: 230, 230, 230;',
+    '  --bs-body-color: rgb(var(--bs-body-color-rgb));',
+    '  --bs-border-color: rgb(var(--bs-gray-100-rgb));',
+    '}',
+    ...zones.map((zone) => `\n[data-bs-theme="${zone}"] .card {\n  --bs-card-border-color: rgb(0, 0, 255);\n}`),
+  ].join('\n');
+
+  it('el raíz reporta lo mismo haya una zona, tres o ninguna', () => {
+    const counts = [
+      withZones(),
+      withZones('azul'),
+      withZones('azul', 'verde', 'roja'),
+    ].map((css) => findings(validateStrict(css)).length);
+    expect(counts[0]).toBeGreaterThan(0);
+    expect(counts).toEqual([counts[0], counts[0], counts[0]]);
+  });
+
+  it('ningún hallazgo lleva el sufijo de una zona que no cambia nada', () => {
+    const result = validateStrict(withZones('azul', 'verde'));
+    expect(result.stderr).not.toContain('[data-bs-theme="azul"]');
+    expect(result.stderr).not.toContain('[data-bs-theme="verde"]');
+  });
+
+  /*
+   * La comparación es por lo que la zona RESUELVE, no por lo que declara: una
+   * zona puede reescribir el triplete y llegar al mismo color, y eso tampoco es
+   * un hallazgo nuevo.
+   */
+  it('una zona que redeclara el mismo color tampoco repite', () => {
+    const css = `${withZones()}\n[data-bs-theme="igual"] {\n`
+      + '  --bs-body-color-rgb: 230, 230, 230;\n'
+      + '  --bs-body-color: rgb(var(--bs-body-color-rgb));\n}';
+    const result = validateStrict(css);
+    expect(result.stderr).not.toContain('[data-bs-theme="igual"]');
+  });
+
+  it('una zona que sí cambia el par conserva sus hallazgos', () => {
+    const css = `${withZones('quieta')}\n[data-bs-theme="oscura"] {\n`
+      + '  --bs-body-bg-rgb: 17, 24, 39;\n'
+      + '  --bs-body-bg: rgb(var(--bs-body-bg-rgb));\n'
+      + '  --bs-body-color-rgb: var(--bs-white-rgb);\n'
+      + '  --bs-body-color: rgb(var(--bs-body-color-rgb));\n'
+      + '  color: var(--bs-body-color);\n  background-color: var(--bs-body-bg);\n}';
+    const result = validateStrict(css);
+    expect(result.stderr).toContain('[data-bs-theme="oscura"]');
+    expect(result.stderr).not.toContain('[data-bs-theme="quieta"]');
+  });
+
+  /*
+   * Antes el par cuerpo/fondo sólo se medía dentro de las zonas, así que un
+   * raíz ilegible no se reportaba por sí mismo: lo delataba cada zona que lo
+   * heredaba, repetido y señalando el sitio equivocado. Ahora sale una vez,
+   * donde está el arreglo.
+   */
+  it('el par cuerpo/fondo del raíz se reporta aunque no haya ninguna zona', () => {
+    const result = validateStrict(withZones());
+    expect(findings(result)).toContainEqual(
+      expect.stringMatching(/^error contraste-cuerpo: El cuerpo del documento: 1\.\d\d:1 entre --bs-body-color-rgb y --bs-body-bg-rgb/),
+    );
     expect(result.status).toBe(1);
   });
 });
