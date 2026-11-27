@@ -235,7 +235,7 @@ comprueba es la forma.
 - **`zones`** — cada zona es un `[data-bs-theme="<nombre>"]` con su paleta. Si
   trae `nav`, sus variables se reparten en dos bloques hijos según el prefijo:
   las `--bs-nav-pills-*` van a `.nav-pills` y el resto a `.nav`, porque montar
-  las de pastilla sobre `.nav` no las alcanza. Y si trae `components`, con la
+  las de pill sobre `.nav` no las alcanza. Y si trae `components`, con la
   misma forma que la sección global, cada bloque sale como
   `[data-bs-theme="<nombre>"] <selector>`, después de `vars` y de `nav`: dentro
   del subárbol pisa tanto a las variables de la zona como al bloque global del
@@ -559,8 +559,24 @@ selector que alcanzaría al componente por otra vía (`.sidebar :is(.nav-pills)`
   estado se mide contra ella. `--bs-btn-outline-<role>-hover-bg` existe en
   `:root`, pero ningún selector lo lee y no cuenta.
 - `contraste-nav-pills` — `--bs-nav-pills-link-active-color` sobre
-  `--bs-nav-pills-link-active-bg`, en el bloque donde se declaren. Sin fondo
-  propio, la pastilla activa usa el de la librería, `--bs-gray-50`.
+  `--bs-nav-pills-link-active-bg`, medidos en el elemento que pinta el pill
+  activo —el enlace dentro del contenedor, con la capa del contenedor y la del
+  enlace— y no en el bloque donde se declaren. Un par que `.nav-pills` deja roto
+  y que un bloque del enlace corrige no es un hallazgo: no se ve ningún pill
+  mal. Cuenta como enlace el que cuelga del contenedor por descendiente o `>`,
+  con compuestos de la cadena de la barra (`.nav-item`, `.nav-link`,
+  `.active`), el último nombrando el enlace y sin pedir nada más —ni estado, ni
+  atributo, ni id, ni `:not()`, ni pseudoelemento—: es lo que escribe
+  theme-expand. Fuera de esa forma, a qué enlaces llega el bloque depende del
+  HTML, que el validador no ve, así que no corrige nada y el par del contenedor
+  se mide sin él. Un bloque del enlace vale en los contenedores que nombra:
+  `.nav-pills .nav-link.active` también arregla los pills de
+  `.sidebar .nav-pills`, pero `.sidebar .nav-pills .nav-link.active` no toca los
+  de fuera de la barra. Cada pill se reporta una vez por contexto, por el bloque
+  del enlace si lo hay y, si no, por el que gana la cascada en el texto del pill
+  (`[data-bs-theme="z"].nav-pills` antes que un `[data-bs-theme="z"] .nav-pills`
+  anterior). Sin fondo propio, el pill activo usa el de la librería,
+  `--bs-gray-50`.
 - `superficie-faltante` — error por cada una de `--bs-body-bg-rgb`,
   `--bs-body-color-rgb` y `--bs-border-color` que falte en un theme que declara
   `--bs-body-bg-rgb` o `--bs-body-color-rgb`.
