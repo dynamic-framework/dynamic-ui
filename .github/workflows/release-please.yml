@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - master
-  # Regenera el draft sobre master después de borrarlo a mano.
-  workflow_dispatch:
   release:
     types: [published]
 
@@ -17,13 +15,14 @@ permissions:
 jobs:
   draft:
     name: Draft release
-    if: github.event_name != 'release' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     concurrency:
       group: release-draft
-      cancel-in-progress: true
+      # Sin cancelar: cortar un run entre la edición y la relectura saltaría la restauración.
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
 
@@ -31,32 +30,27 @@ jobs:
         id: version
         run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
 
-      # Una release existente no se edita ni se borra: alguien puede publicarla
-      # entre la lectura y la escritura.
       - name: Check existing release
         id: existing
         env:
           GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
           TAG: v${{ steps.version.outputs.version }}
         run: |
-          read -r IS_DRAFT TARGET <<< "$(gh release view "$TAG" --json isDraft,targetCommitish \
-            --jq '"\(.isDraft) \(.targetCommitish)"' 2>/dev/null || true)"
+          read -r IS_DRAFT ID TARGET <<< "$(gh release view "$TAG" --json isDraft,databaseId,targetCommitish \
+            --jq '"\(.isDraft) \(.databaseId) \(.targetCommitish)"' 2>/dev/null || true)"
           if [ "$IS_DRAFT" = "false" ]; then
-            echo "$TAG ya está publicado: no se crea draft."
+            echo "$TAG ya está publicado: no se toca."
           elif [ "$TARGET" = "$GITHUB_SHA" ]; then
             echo "El draft $TAG ya apunta a $GITHUB_SHA."
-          elif [ "$IS_DRAFT" = "true" ]; then
-            echo "::error::El draft $TAG apunta a $TARGET, no a $GITHUB_SHA. Bórralo sin publicarlo y ejecuta este workflow desde master (Run workflow)."
-            exit 1
           else
-            echo "create=true" >> "$GITHUB_OUTPUT"
+            echo "write=true" >> "$GITHUB_OUTPUT"
+            echo "id=$ID" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Find previous stable version
         id: prev
-        if: steps.existing.outputs.create == 'true'
-        # Solo alimenta el comando de diff del CSS: si falla, el draft se crea sin él.
+        if: steps.existing.outputs.write == 'true'
+        # Solo alimenta el comando de diff del CSS: si falla, el draft queda sin él.
         continue-on-error: true
         env:
           VERSION: ${{ steps.version.outputs.version }}
@@ -66,14 +60,15 @@ jobs:
             | sort -uV | grep -x -B1 "$VERSION" | head -n -1)
           echo "version=$PREV" >> "$GITHUB_OUTPUT"
 
-      - name: Create draft release
-        if: steps.existing.outputs.create == 'true'
+      - name: Create or refresh draft release
+        if: steps.existing.outputs.write == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           TAG: v${{ steps.version.outputs.version }}
           VERSION: ${{ steps.version.outputs.version }}
           PREV: ${{ steps.prev.outputs.version }}
+          ID: ${{ steps.existing.outputs.id }}
         run: |
           NOTES="$RUNNER_TEMP/release-notes.md"
           gh api "repos/$GH_REPO/releases/generate-notes" \
@@ -92,8 +87,28 @@ jobs:
           else
             echo "::warning::No hay versión estable anterior a $VERSION; no se agrega el comando de diff."
           fi
-          # --target: la rama por defecto es develop; el tag tiene que quedar en master.
-          gh release create "$TAG" --draft --title "$TAG" --target "$GITHUB_SHA" --notes-file "$NOTES"
+
+          if [ -z "$ID" ]; then
+            # --target: la rama por defecto es develop; el tag tiene que quedar en master.
+            gh release create "$TAG" --draft --title "$TAG" --target "$GITHUB_SHA" --notes-file "$NOTES"
+            exit 0
+          fi
+
+          # Draft de un push anterior. La API no tiene escritura condicional: se edita,
+          # se relee y, si alguien lo publicó en el intervalo, se restaura.
+          RELEASE="repos/$GH_REPO/releases/$ID"
+          gh api "$RELEASE" > "$RUNNER_TEMP/previous.json"
+          if [ "$(jq -r .draft "$RUNNER_TEMP/previous.json")" != "true" ]; then
+            echo "$TAG se publicó antes de regenerarlo: no se toca."
+            exit 0
+          fi
+          jq -n --rawfile body "$NOTES" --arg target "$GITHUB_SHA" '{body: $body, target_commitish: $target}' \
+            | gh api -X PATCH "$RELEASE" --input - --silent
+          if [ "$(gh api "$RELEASE" --jq .draft)" != "true" ]; then
+            jq '{body, target_commitish}' "$RUNNER_TEMP/previous.json" | gh api -X PATCH "$RELEASE" --input - --silent
+            echo "::error::$TAG se publicó mientras se regeneraba el draft: se restauraron sus notas. $GITHUB_SHA no quedó en la release."
+            exit 1
+          fi
 
   publish:
     name: Publish to npm
