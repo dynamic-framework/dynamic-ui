@@ -1,0 +1,896 @@
+{
+  "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
+  "schemaVersion": "1.2.0",
+  "packageVersion": "2.12.1",
+  "repository": "https://github.com/dynamic-framework/dynamic-ui",
+  "generatedAt": "2026-11-23T00:00:00.000Z",
+  "components": {
+    "DButtonIcon": {
+      "description": "",
+      "sourcePath": "src/components/DButtonIcon/DButtonIcon.tsx",
+      "forwardedProps": {
+        "target": "button",
+        "type": "ButtonHTMLAttributes<HTMLButtonElement>"
+      },
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "disabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "id": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "rel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "color": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "primary",
+          "description": ""
+        },
+        "aria-label": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+        },
+        "onClick": {
+          "type": "MouseEventHandler<HTMLButtonElement> | ((event: MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "icon": {
+          "type": "string",
+          "required": true,
+          "defaultValue": null,
+          "description": ""
+        },
+        "size": {
+          "type": "undefined | \"sm\" | \"lg\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconSize": {
+          "type": "string | Partial<Record<\"sm\" | \"lg\" | \"xs\" | \"md\" | \"xl\" | \"xxl\", string>> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Size of the icon glyph, forwarded to `DIcon` (e.g. `\"1.5rem\"`, or a\nresponsive object such as `{ xs: '1rem', lg: '2rem' }`, which follows\nviewport changes). Without it the glyph follows the button's font size,\nwhich changes with `size`."
+        },
+        "variant": {
+          "type": "undefined | \"link\" | \"solid\" | \"outline\" | \"soft\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "state": {
+          "type": "undefined | \"disabled\" | \"focus-visible\" | \"hover\" | \"active\"",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loading": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "loadingAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "stopPropagationEnabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": true,
+          "description": ""
+        },
+        "href": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "target": {
+          "type": "HTMLAttributeAnchorTarget | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      },
+      "types": {
+        "DataAttributes": {
+          "description": "",
+          "type": "{ [x: `data-${string}`]: string | number | boolean | null | undefined; }"
+        }
+      }
+    },
+    "DInputCheck": {
+      "description": "",
+      "sourcePath": "src/components/DInputCheck/DInputCheck.tsx",
+      "forwardedProps": {
+        "target": "input",
+        "type": "InputHTMLAttributes<HTMLInputElement>"
+      },
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "checked": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Checked state of the control.\n\nPassed together with `onChange` the control is fully controlled: when the\nparent rejects a change the DOM snaps back to this value.\n\nPassed on its own it is taken as the starting value and the control keeps\ntoggling by itself — the historical behaviour. Prefer `defaultChecked` for\nthat, it says so out loud."
+        },
+        "disabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "name": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "type": {
+          "type": "\"checkbox\" | \"radio\"",
+          "required": true,
+          "defaultValue": null,
+          "description": ""
+        },
+        "value": {
+          "type": "string | number | readonly string[] | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onChange": {
+          "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | ((event: ChangeEvent<HTMLInputElement, Element>) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "defaultChecked": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Starting checked state for uncontrolled usage."
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "id": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "label": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "The label of the control. Any node is accepted, so it can carry a link, an\ninfo trigger or other markup — the terms-and-conditions pattern.\n\nText doubles as the control's accessible name. A richer label does not, so\npass `ariaLabel` alongside it; a development-only warning says so when it\nis missing."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Accessible name of the control, needed when `label` is not plain text.\nWithout it the name becomes whatever the label subtree computes to, which\nfor a label carrying a link or an icon reads as the wrong name or as none."
+        },
+        "inputClassName": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "invalid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "valid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "hint": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "indeterminate": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Only applies when `type` is `checkbox`; ignored for `radio`."
+        }
+      },
+      "types": {
+        "DataAttributes": {
+          "description": "",
+          "type": "{ [x: `data-${string}`]: string | number | boolean | null | undefined; }"
+        }
+      }
+    },
+    "DSelect": {
+      "description": "",
+      "sourcePath": "src/components/DSelect/DSelect.tsx",
+      "forwardedProps": {
+        "target": "Select",
+        "type": "Omit<PublicBaseSelectProps<Option, IsMulti, Group>, StateManagedPropKeys> & Partial<PublicBaseSelectProps<Option, IsMulti, Group>> & StateManagerAdditionalProps<Option>"
+      },
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Sets a className attribute on the outer component"
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStart": {
+          "type": "IconValue | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartDisabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartTabIndex": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconStartMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEnd": {
+          "type": "IconValue | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndDisabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndFamilyClass": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndFamilyPrefix": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndAriaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndTabIndex": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "iconEndMaterialStyle": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "ariaLiveMessages": {
+          "type": "AriaLiveMessages<Option, IsMulti, Group> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Customise the messages used by the aria-live component"
+        },
+        "components": {
+          "type": "Partial<SelectComponents<Option, IsMulti, Group>> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "This complex object includes all the compositional components that are used\nin `react-select`. If you wish to overwrite a component, pass in an object\nwith the appropriate namespace.\n\nIf you only wish to restyle a component, we recommend using the `styles` prop\ninstead. For a list of the components that can be passed in, and the shape\nthat will be passed to them, see [the components docs](/components)"
+        },
+        "id": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "The id to set on the SelectContainer component."
+        },
+        "inputId": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "The id of the search input"
+        },
+        "placeholder": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "Placeholder for the select value"
+        },
+        "defaultValue": {
+          "type": "PropsValue<Option> | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "label": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "The label of the control. Any node is accepted, so it can carry a link, an\ninfo trigger or other markup.\n\nText doubles as the control's accessible name. A richer label does not, so\npass `ariaLabel`, or `aria-labelledby` pointing at a text element, alongside\nit; a development-only warning says so when both are missing. A rich label\nalso does not fit `floatingLabel`, whose layout animates a single line of\ntext."
+        },
+        "ariaLabel": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Accessible name of the control. It outranks the `label` in the accessible\nname computation, so use it to name a control with a non-text label or to\nreplace the name a text label gives.\n\nWithout a `label` or an `aria-labelledby` it falls back to a generic\nstring, so an unlabelled select is never nameless. With either there is no\nfallback: a generic `aria-label` would override the label and make every\nselect announce the same name."
+        },
+        "hint": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "invalid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "valid": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "menuWithMaxContent": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "floatingLabel": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": ""
+        },
+        "onIconStartClick": {
+          "type": "((value?: PropsValue<Option> | undefined) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "onIconEndClick": {
+          "type": "((value?: PropsValue<Option> | undefined) => void) | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "disabled": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "clearable": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "loading": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "rtl": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "searchable": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "multi": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        }
+      },
+      "types": {
+        "DataAttributes": {
+          "description": "",
+          "type": "{ [x: `data-${string}`]: string | number | boolean | null | undefined; }"
+        },
+        "IconValue": {
+          "description": "",
+          "type": "string | IconComponent"
+        },
+        "IconComponent": {
+          "description": "",
+          "type": "ComponentClass<SVGProps<SVGSVGElement>, any> | FunctionComponent<SVGProps<SVGSVGElement>>"
+        }
+      }
+    },
+    "DTooltip": {
+      "description": "Tooltip is an abstraction component that wraps any element (`Component`) and displays\nfloating contextual content (`children`) positioned relative to it using Floating UI.\nUse it to add short, non-critical hints or descriptions triggered by hover, focus, or\nclick, without altering the surrounding layout.",
+      "sourcePath": "src/components/DTooltip/DTooltip.tsx",
+      "props": {
+        "style": {
+          "type": "CSSProperties | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "className": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "dataAttributes": {
+          "type": "DataAttributes | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": ""
+        },
+        "childrenClassName": {
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "CSS class applied to the wrapper element that surrounds `Component` (the trigger)."
+        },
+        "offSet": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "ARROW_HEIGHT + GAP",
+          "description": "Distance in pixels between the trigger and the floating tooltip.\nDefaults to arrow height + gap."
+        },
+        "padding": {
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": null,
+          "description": "Virtual padding, in pixels, used to keep the tooltip within the viewport boundaries."
+        },
+        "withHover": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": true,
+          "description": "When true, the tooltip opens when the pointer hovers over the trigger element."
+        },
+        "withFocus": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": "When true, the tooltip opens when the trigger element receives keyboard focus\n(recommended for accessibility)."
+        },
+        "withClick": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": "When true, the tooltip toggles open/closed when the trigger element is clicked."
+        },
+        "open": {
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": false,
+          "description": "Controls the initial open state of the tooltip."
+        },
+        "size": {
+          "type": "undefined | \"sm\" | \"lg\"",
+          "required": false,
+          "defaultValue": null,
+          "description": "Size of the tooltip content. Omit for the default size."
+        },
+        "placement": {
+          "type": "undefined | \"top\" | \"right\" | \"bottom\" | \"left\" | \"top-start\" | \"top-end\" | \"right-start\" | \"right-end\" | \"bottom-start\" | \"bottom-end\" | \"left-start\" | \"left-end\"",
+          "required": false,
+          "defaultValue": "top",
+          "description": "Preferred position of the tooltip relative to the trigger element.\nFlips automatically if there isn't enough space."
+        },
+        "Component": {
+          "type": "ReactNode",
+          "required": true,
+          "defaultValue": null,
+          "description": "Element that triggers the tooltip. It is rendered inside a wrapper `<div>`\nthat holds the Floating UI reference and the interaction handlers, so the\ntrigger area is that wrapper rather than this node itself. Style it with\n`childrenClassName`."
+        },
+        "children": {
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": null,
+          "description": "Floating content rendered inside the tooltip body. Keep it short and\nnon-critical: the tooltip is only visible while it is open."
+        }
+      },
+      "types": {
+        "DataAttributes": {
+          "description": "",
+          "type": "{ [x: `data-${string}`]: string | number | boolean | null | undefined; }"
+        }
+      }
+    }
+  },
+  "hooks": {},
+  "contexts": {
+    "DContextProvider": {
+      "source": "src/contexts/DContext.tsx",
+      "kind": "component",
+      "description": "Root context provider for Dynamic UI. Wrap your application with this\ncomponent to configure icons, currency, language, and portal settings\nfor all descendant Dynamic UI components.\n\nTo enable confirmation modals you must also mount `DConfirmModalContainer`\nsomewhere inside this provider (typically right before the closing tag of\nyour root layout), similar to how `DToastContainer` works:\n\n```tsx\n// Default: portalName=\"d-portal\"\n<DContextProvider>\n  <App />\n  <DConfirmModalContainer nodeId=\"d-portal\" />\n</DContextProvider>\n```\n\nIf you customize `portalName`, match it in `DConfirmModalContainer.nodeId`:\n\n```tsx\n// Custom portalName\n<DContextProvider portalName=\"my-custom-portal\">\n  <App />\n  <DConfirmModalContainer nodeId=\"my-custom-portal\" />\n</DContextProvider>\n```",
+      "requires": [],
+      "signature": "DContextProvider<T extends Record<string, unknown>>({ language?, currency?, icon?, iconRegistry?, iconMap?, breakpoints?, portalName?, availablePortals?, children? }) => JSX.Element",
+      "props": {
+        "language": {
+          "description": "",
+          "required": false,
+          "type": "string"
+        },
+        "currency": {
+          "description": "",
+          "required": false,
+          "type": "CurrencyProps"
+        },
+        "icon": {
+          "description": "",
+          "required": false,
+          "type": "IconProps"
+        },
+        "iconRegistry": {
+          "description": "",
+          "required": false,
+          "type": "Record<string, IconComponent>"
+        },
+        "iconMap": {
+          "description": "",
+          "required": false,
+          "type": "IconMapProps"
+        },
+        "breakpoints": {
+          "description": "@deprecated No effect since 2.11.0: breakpoints are read from the --bs-breakpoint-* custom properties",
+          "required": false,
+          "type": "BreakpointProps"
+        },
+        "portalName": {
+          "description": "DOM element id used as the portal mount point.",
+          "required": false,
+          "type": "string"
+        },
+        "availablePortals": {
+          "description": "Map of portal name to the component that renders it.",
+          "required": false,
+          "type": "PortalAvailableList<T>"
+        },
+        "children": {
+          "description": "",
+          "required": false,
+          "type": "ReactNode"
+        }
+      },
+      "types": {
+        "CurrencyProps": {
+          "description": "Currency formatting configuration used by `DContextProvider`.",
+          "type": "object",
+          "fields": {
+            "symbol": {
+              "type": "string",
+              "required": true,
+              "description": "Currency symbol (e.g. `\"$\"`, `\"€\"`)."
+            },
+            "precision": {
+              "type": "number",
+              "required": true,
+              "description": "Number of decimal places (e.g. `2`)."
+            },
+            "separator": {
+              "type": "string",
+              "required": true,
+              "description": "Thousands separator character (e.g. `\",\"`)."
+            },
+            "decimal": {
+              "type": "string",
+              "required": true,
+              "description": "Decimal separator character (e.g. `\".\"`)."
+            }
+          }
+        },
+        "IconProps": {
+          "description": "Icon-font fallback used by `DIcon`. It only applies to icon names that are\nneither registered in `iconRegistry` nor exported by lucide-react: those\nrender as `<i class=\"{familyClass} {familyPrefix}{name}\">`. The default\nfamily is Bootstrap Icons (`\"bi\"` / `\"bi-\"`); Lucide icons do not use it.",
+          "type": "object",
+          "fields": {
+            "familyClass": {
+              "type": "string",
+              "required": true,
+              "description": "CSS class of the icon-font family for fallback icons (default `\"bi\"`)."
+            },
+            "familyPrefix": {
+              "type": "string",
+              "required": true,
+              "description": "Prefix prepended to the icon name to build its font class (default `\"bi-\"`)."
+            },
+            "materialStyle": {
+              "type": "boolean",
+              "required": true,
+              "description": "When `true`, string icons skip lucide-react and render as the text of the\nicon-font element (Material Symbols ligatures). Default `false`."
+            }
+          }
+        },
+        "IconMapProps": {
+          "description": "Icon names that Dynamic UI components use for their built-in icons (close,\nchevrons, alerts, inputs…). Each value is an icon name that `DIcon`\nresolves in order: `iconRegistry`, then a PascalCase lucide-react export,\nthen the icon-font fallback configured in `icon`. The defaults are\nlucide-react names (e.g. `\"X\"`, `\"ChevronDown\"`, `\"AlertTriangle\"`).",
+          "type": "object",
+          "fields": {
+            "x": {
+              "type": "string",
+              "required": true,
+              "description": "Generic close/dismiss icon (default `\"X\"`)."
+            },
+            "xLg": {
+              "type": "string",
+              "required": true,
+              "description": "Large close/dismiss icon (default `\"X\"`)."
+            },
+            "chevronDown": {
+              "type": "string",
+              "required": true,
+              "description": "Chevron-down icon (default `\"ChevronDown\"`)."
+            },
+            "chevronUp": {
+              "type": "string",
+              "required": true,
+              "description": "Chevron-up icon (default `\"ChevronUp\"`)."
+            },
+            "chevronLeft": {
+              "type": "string",
+              "required": true,
+              "description": "Chevron-left icon (default `\"ChevronLeft\"`)."
+            },
+            "chevronRight": {
+              "type": "string",
+              "required": true,
+              "description": "Chevron-right icon (default `\"ChevronRight\"`)."
+            },
+            "alert": {
+              "type": "object",
+              "fields": {
+                "success": {
+                  "type": "string",
+                  "required": true
+                },
+                "danger": {
+                  "type": "string",
+                  "required": true
+                },
+                "warning": {
+                  "type": "string",
+                  "required": true
+                },
+                "info": {
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "required": true,
+              "description": "Per-state alert icon names (one per `ComponentStateColor` value)."
+            },
+            "upload": {
+              "type": "string",
+              "required": true,
+              "description": "Upload/attach icon (default `\"Upload\"`)."
+            },
+            "calendar": {
+              "type": "string",
+              "required": true,
+              "description": "Calendar/date-picker icon (default `\"Calendar\"`)."
+            },
+            "check": {
+              "type": "string",
+              "required": true,
+              "description": "Checkmark icon (default `\"Check\"`)."
+            },
+            "input": {
+              "type": "object",
+              "fields": {
+                "search": {
+                  "type": "string",
+                  "required": true,
+                  "description": "Search/magnifier icon (default `\"Search\"`)."
+                },
+                "show": {
+                  "type": "string",
+                  "required": true,
+                  "description": "Show password icon (default `\"Eye\"`)."
+                },
+                "hide": {
+                  "type": "string",
+                  "required": true,
+                  "description": "Hide password icon (default `\"EyeOff\"`)."
+                },
+                "decrease": {
+                  "type": "string",
+                  "required": true,
+                  "description": "Numeric decrease icon (default `\"Minus\"`)."
+                },
+                "increase": {
+                  "type": "string",
+                  "required": true,
+                  "description": "Numeric increase icon (default `\"Plus\"`)."
+                }
+              },
+              "required": true,
+              "description": "Icon names for text input adornments."
+            }
+          }
+        },
+        "BreakpointProps": {
+          "description": "CSS breakpoint pixel values resolved from Bootstrap CSS variables at runtime.\nThese are populated automatically by `DContextProvider` on mount.",
+          "type": "object",
+          "fields": {
+            "xs": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-xs` value (usually `\"0px\"`)."
+            },
+            "sm": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-sm` value (usually `\"576px\"`)."
+            },
+            "md": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-md` value (usually `\"768px\"`)."
+            },
+            "lg": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-lg` value (usually `\"992px\"`)."
+            },
+            "xl": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-xl` value (usually `\"1200px\"`)."
+            },
+            "xxl": {
+              "type": "string",
+              "required": true,
+              "description": "`--bs-breakpoint-xxl` value (usually `\"1400px\"`)."
+            }
+          }
+        }
+      },
+      "name": "DContextProvider"
+    }
+  }
+}

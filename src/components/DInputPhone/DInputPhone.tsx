@@ -191,12 +191,13 @@ function DInputPhone(
         'is-invalid': invalid,
         'is-valid': valid,
       })}
-      disabled={disabled || loading}
+      disabled={disabled}
       value={inputValue}
       onChange={handlePhoneValueChange}
       inputMode="tel"
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...loading && { 'aria-busy': true }}
       {...inputProps}
     />
   ), [
@@ -268,7 +269,7 @@ function DInputPhone(
           selectedCountry={country.iso2}
           onSelect={({ iso2 }) => setCountry(iso2)}
           countries={countries}
-          disabled={disabled || loading}
+          disabled={disabled}
           className={classNames(
             'input-group-text',
             countrySelectorProps?.className,

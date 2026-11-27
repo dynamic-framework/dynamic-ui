@@ -50,11 +50,13 @@ import {
   RFS_MEDIA_STEPS,
   DEFAULT_GRAYS,
   ROLES,
+  SOLID_STATE_PAIRS,
   THEME_SELECTOR,
   ZONE_NAME_RE,
   colorAlpha,
   deriveRamp,
   formatRem,
+  holdsBareTriplet,
   inheritsParent,
   libraryWrapper,
   normalizeCssValue,
@@ -396,21 +398,34 @@ export function readTheme(theme) {
       );
     }
   };
-  for (const { name, value } of root) checkRefs(value, `root.${name}`);
+  // Misma regla que `triplete-sin-envolver` en theme-validate.
+  const checkUnwrapped = (name, value, where) => {
+    if (!name.startsWith('--bs-') || name.endsWith('-rgb') || !holdsBareTriplet(value)) return;
+    push(
+      `\`${where}\`: "${value}" deja un triplete en una variable de color. Las variables que `
+      + 'no terminan en -rgb se consumen como color completo; envuelve el triplete, '
+      + 'rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+    );
+  };
+  const checkVar = (name, value, where) => {
+    checkRefs(value, where);
+    checkUnwrapped(name, value, where);
+  };
+  for (const { name, value } of root) checkVar(name, value, `root.${name}`);
   for (const { selector, vars, declarations } of components) {
-    for (const { name, value } of vars) checkRefs(value, `components["${selector}"].${name}`);
+    for (const { name, value } of vars) checkVar(name, value, `components["${selector}"].${name}`);
     for (const { property, value } of declarations) {
       checkRefs(value, `components["${selector}"].${property}`);
     }
   }
   for (const zone of zones) {
-    for (const { name, value } of zone.vars) checkRefs(value, `zones.${zone.name}.${name}`);
+    for (const { name, value } of zone.vars) checkVar(name, value, `zones.${zone.name}.${name}`);
     for (const { name, value } of [...(zone.nav?.link ?? []), ...(zone.nav?.pills ?? [])]) {
-      checkRefs(value, `zones.${zone.name}.nav.${name}`);
+      checkVar(name, value, `zones.${zone.name}.nav.${name}`);
     }
     for (const { selector, vars, declarations } of zone.components) {
       for (const { name, value } of vars) {
-        checkRefs(value, `zones.${zone.name}.components["${selector}"].${name}`);
+        checkVar(name, value, `zones.${zone.name}.components["${selector}"].${name}`);
       }
       for (const { property, value } of declarations) {
         checkRefs(value, `zones.${zone.name}.components["${selector}"].${property}`);
@@ -519,6 +534,82 @@ function withWrappers(vars) {
 
 const section = (title) => `\n  /* ${title} */`;
 const decl = (name, value) => `  --bs-${name}: ${value};`;
+
+const SOLID_BUTTON = new RegExp(`^\\.btn-(${ROLES.join('|')})$`);
+
+/**
+ * Notas para cada `.btn-<role>` sólido que fija el texto de hover o de active
+ * sin su fondo: debajo queda el relleno de la librería. No se deriva el fondo
+ * porque elegir el paso es una decisión de diseño. En una zona cuenta también
+ * el fondo que declare el bloque global del mismo selector.
+ *
+ * El relleno se puede fijar por dos caminos, y los dos cuentan:
+ *
+ *   - la variable genérica `--bs-btn-<estado>-bg`, que sólo vale declarada
+ *     sobre el propio botón: `df-button-variant-mapper` la redeclara en
+ *     `.btn-<role>`, así que una que venga del raíz o de la zona la pierde;
+ *   - el token del role, `--bs-btn-<role>-<estado>-bg`, que es justo lo que esa
+ *     redeclaración lee. Vale desde donde alcance al botón: el raíz, las
+ *     variables de la zona o el bloque del propio botón.
+ */
+function solidButtonNotes(components, zones, root) {
+  const declared = (blocks) => {
+    const byPart = new Map();
+    for (const { selector, vars } of blocks) {
+      for (const part of selector.split(',').map((p) => p.trim())) {
+        if (!SOLID_BUTTON.test(part)) continue;
+        const names = byPart.get(part) ?? new Set();
+        for (const { name } of vars) names.add(name);
+        byPart.set(part, names);
+      }
+    }
+    return byPart;
+  };
+  const global = declared(components);
+  // Las variables que el botón hereda sin que nadie las declare sobre él. El
+  // raíz llega a todas partes; las de la zona, sólo dentro de ella.
+  const varNames = (vars) => new Set(vars.map(({ name }) => name));
+  const rootNames = varNames(root);
+  const scopes = [
+    {
+      prefix: '', own: global, inherited: new Map(), inherits: rootNames,
+    },
+    ...zones.map((zone) => ({
+      prefix: `${zoneSelector(zone.name)} `,
+      own: declared(zone.components),
+      inherited: global,
+      inherits: new Set([...rootNames, ...varNames(zone.vars)]),
+    })),
+  ];
+
+  const notes = [];
+  for (const {
+    prefix, own, inherited, inherits,
+  } of scopes) {
+    for (const [part, names] of own) {
+      const role = part.match(SOLID_BUTTON)[1];
+      const onButton = (name) => names.has(name) || Boolean(inherited.get(part)?.has(name));
+      const hasBg = (state) => onButton(`--bs-btn-${state}-bg`)
+        || onButton(`--bs-btn-${role}-${state}-bg`)
+        || inherits.has(`--bs-btn-${role}-${state}-bg`);
+      const states = ['hover', 'active']
+        .filter((state) => names.has(`--bs-btn-${state}-color`) && !hasBg(state));
+      if (states.length === 0) continue;
+
+      const fill = (state) => {
+        const { kind, step } = SOLID_STATE_PAIRS[role][state].bg;
+        return `${kind === 'gray' ? `--bs-gray-${step}` : `--bs-${role}-${step}`} en ${state}`;
+      };
+      notes.push(
+        `${prefix}${part} fija el texto de ${states.join(' y ')} sin su fondo: debajo queda el `
+        + `relleno de la librería, ${states.map(fill).join(' y ')}. Declara `
+        + `${states.map((state) => `--bs-btn-${state}-bg`).join(' y ')}, o confirma el `
+        + 'contraste con theme-validate.',
+      );
+    }
+  }
+  return notes;
+}
 
 /**
  * Construye el CSS completo a partir de un theme ya normalizado.
@@ -733,6 +824,7 @@ export function expandTheme(input) {
   };
 
   const componentBlocks = theme.components.map((entry) => componentBlock(entry));
+  notes.push(...solidButtonNotes(theme.components, theme.zones, theme.root));
 
   // Zonas. Cada una es un subárbol con su propia paleta; `nav` se reparte en
   // dos bloques porque .nav y .nav-pills leen variables distintas y montar las

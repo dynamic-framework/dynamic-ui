@@ -165,13 +165,14 @@ function DInput(
         'is-invalid': invalid,
         'is-valid': valid,
       })}
-      disabled={disabled || loading}
+      disabled={disabled}
       readOnly={readonly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...invalid && { 'aria-invalid': true }}
+      {...loading && { 'aria-busy': true }}
       {...inputProps}
     />
   ), [

@@ -477,7 +477,7 @@ const doc = {
     note: 'Vars the code REFERENCES but does NOT define anywhere in the compiled CSS (R - Dall). suspected=false only for the regular family-hue semantic-follower pattern; the rest are candidates to verify (theme slot, Bootstrap runtime, or dead reference). Malformed typos go in denylist, not here.',
     vars: slotVars,
     denylist,
-    denylistNote: 'Malformed refs (double prefix --bs-bs- or leading dash --bs--). These are source typos, not slots. Known: --bs---bs-ref-spacer-4 (_d-carousel.scss:53), --bs-bs-gray-400 (_forms.scss:3). Report as separate CSS bugs.',
+    denylistNote: 'Malformed refs the scan found (double prefix --bs-bs- or leading dash --bs--). These are source typos, not slots: report them as CSS bugs, do not theme them. Normally empty, because scripts/check-css-vars.mjs fails CI if a malformed name reaches the compiled CSS.',
   },
 
   gaps,

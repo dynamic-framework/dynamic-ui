@@ -49,28 +49,28 @@ $form-check-min-height: $form-check-input-width !default;
 $form-check-padding-start: $form-check-input-width !default;
 $form-check-input-focus-box-shadow: var(--#{$prefix}form-check-input-focus-box-shadow) !default;
 $form-check-input-focus-border: var(--#{$prefix}form-check-input-focus-border-color) !default;
-$form-check-input-checked-bg-image: url("data:image/svg+xml, <svg viewBox='-4 -6 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M14.294 0.594229C14.3863 0.498719 14.4966 0.422536 14.6186 0.370127C14.7406 0.317718 14.8719 0.290132 15.0046 0.288978C15.1374 0.287824 15.2691 0.313126 15.392 0.363407C15.5149 0.413688 15.6265 0.487941 15.7204 0.581833C15.8143 0.675726 15.8886 0.787378 15.9389 0.910275C15.9891 1.03317 16.0144 1.16485 16.0133 1.29763C16.0121 1.43041 15.9846 1.56163 15.9321 1.68363C15.8797 1.80564 15.8036 1.91598 15.708 2.00823L6.70804 11.0082C6.52051 11.1957 6.26621 11.301 6.00104 11.301C5.73588 11.301 5.48157 11.1957 5.29404 11.0082L0.293041 6.00723C0.110883 5.81863 0.0100885 5.56602 0.0123669 5.30383C0.0146453 5.04163 0.119815 4.79082 0.305223 4.60541C0.490631 4.42 0.741443 4.31483 1.00364 4.31255C1.26584 4.31028 1.51844 4.41107 1.70704 4.59323L6.00104 8.88723L14.294 0.594229V0.594229Z' fill='#{$white}'/></svg>") !default;
-$form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$white}'/></svg>") !default;
+$form-check-input-checked-bg-image: var(--#{$prefix}form-check-icon-checkbox) !default;
+$form-check-radio-checked-bg-image: var(--#{$prefix}form-check-icon-radio) !default;
 
-$form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$white}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>") !default;
+$form-check-input-indeterminate-bg-image: var(--#{$prefix}form-check-icon-indeterminate) !default;
 // scss-docs-end form-check-variables
 
 // scss-docs-start form-switch-variables
 $form-switch-color: var(--#{$prefix}white) !default;
 $form-switch-width: 2em !default;
 $form-switch-padding-start: $form-switch-width !default;
-$form-switch-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$gray-300}'/></svg>") !default;
+$form-switch-bg-image: var(--#{$prefix}form-switch-icon) !default;
 $form-switch-focus-color: $component-focus-border-color !default;
 $form-switch-border-radius: $form-switch-width !default;
-$form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$secondary-300}'/></svg>") !default;
+$form-switch-focus-bg-image: var(--#{$prefix}form-switch-icon-focus) !default;
 
 // custom form-switch-variables
-$form-switch-valid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$success}'/></svg>") !default;
-$form-switch-invalid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$danger}'/></svg>") !default;
+$form-switch-valid-bg-image: var(--#{$prefix}form-switch-icon-valid) !default;
+$form-switch-invalid-bg-image: var(--#{$prefix}form-switch-icon-invalid) !default;
 // end custom form-switch-variables
 
 $form-switch-checked-color: var(--#{$prefix}white) !default;
-$form-switch-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$white}'/></svg>") !default;
+$form-switch-checked-bg-image: var(--#{$prefix}form-switch-icon-checked) !default;
 // scss-docs-end form-switch-variables
 
 // scss-docs-start input-group-variables
@@ -88,7 +88,7 @@ $form-select-disabled-color: $input-disabled-color !default;
 $form-select-bg-size: 20px !default; // In pixels because image dimensions
 $form-select-bg-opacity: 0 !default;
 $form-select-indicator-color: var(--#{$prefix}gray-500) !default;
-$form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$gray-500}' stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='m2 5 6 6 6-6'/></svg>") !default;
+$form-select-indicator: var(--#{$prefix}form-select-icon) !default;
 
 $form-select-box-shadow: none !default;
 // scss-docs-end form-select-variables

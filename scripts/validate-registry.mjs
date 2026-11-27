@@ -220,7 +220,7 @@ report(missingProps, 'props propias o desestructuradas por el componente que fal
 report(extraProps, 'props en api.json que el filtro descarta (atributos de node_modules que el componente no maneja)');
 report(unresolvedTypes, 'alias de tipo del proyecto sin definición en el componente');
 
-// Tipos publicados (dist/types/): exports, subcomponentes, required y type
+// Tipos publicados (dist/types/): exports, subcomponentes, required, type y
 // truncados (#1341, #1306).
 let typesComparison;
 try {
@@ -229,10 +229,11 @@ try {
   process.stderr.write(`Error: ${err.message}\n`);
   process.exit(1);
 }
-report(typesComparison.missingExports, 'exports D* del índice sin entrada en components ni en contexts');
+report(typesComparison.missingExports, 'componentes exportados por el índice sin entrada en components ni en contexts');
 report(typesComparison.orphanEntries, 'entradas de components que no son exports del índice y no llevan parent y accessor');
 report(typesComparison.badAccessors, 'accessors que no resuelven a un miembro del padre en dist/types');
 report(typesComparison.requiredMismatches, 'props cuyo required difiere de su opcionalidad en dist/types');
+report(typesComparison.typeMismatches, 'props cuyo type difiere del de dist/types');
 report(typesComparison.unresolvedProps, 'props cuyo required no se puede comprobar contra dist/types');
 report(typesComparison.truncatedTypes, 'tipos truncados con "... N more ..."');
 

@@ -99,6 +99,54 @@ export const SOLID_PAIRS = {
   dark: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 900 } },
 };
 
+/**
+ * Los mismos pares, pero en hover y en active. La librería los hornea igual que
+ * el de reposo: el fondo es un paso más oscuro de la rampa (600 en hover, 700
+ * en active, salvo los roles que `_root.scss` llama con pasos propios) y el
+ * texto es el `color-contrast()` que Sass calculó contra ese paso. Un theme que
+ * mueve la rampa no los recalcula, y un bloque que sólo cambia el texto de
+ * reposo deja estos dos estados con el par horneado.
+ */
+export const SOLID_STATE_PAIRS = {
+  primary: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // `_root.scss` le da a secondary los pasos 100/100: hover y active comparten
+  // relleno, y el texto es el 700 del role en los dos.
+  secondary: {
+    hover: { fg: { kind: 'role', step: 700 }, bg: { kind: 'role', step: 100 } },
+    active: { fg: { kind: 'role', step: 700 }, bg: { kind: 'role', step: 100 } },
+  },
+  success: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  info: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // El amarillo del 600 todavía pide texto negro; el 700 ya pide blanco.
+  warning: {
+    hover: { fg: { kind: 'black' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  danger: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'role', step: 600 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'role', step: 700 } },
+  },
+  // light y dark van por la rampa de grises, con los pasos que `_root.scss`
+  // pasa al mixin: no son el 600 y el 700 del role.
+  light: {
+    hover: { fg: { kind: 'gray', step: 700 }, bg: { kind: 'gray', step: 50 } },
+    active: { fg: { kind: 'black' }, bg: { kind: 'gray', step: 300 } },
+  },
+  dark: {
+    hover: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 800 } },
+    active: { fg: { kind: 'white' }, bg: { kind: 'gray', step: 700 } },
+  },
+};
+
 /** Pares `--bs-<role>-text-emphasis` sobre `--bs-<role>-bg-subtle`. */
 export const SUBTLE_PAIRS = {
   primary: { fg: { kind: 'role', step: 600 }, bg: { kind: 'role', step: 100 } },
@@ -502,6 +550,17 @@ function parseWrapper(raw) {
   return parseVarCall(inner.slice(0, end).trim());
 }
 
+/** Triplete literal, `var()` a una `-rgb`, o un respaldo que termina en uno de los dos. */
+export function holdsBareTriplet(value) {
+  // Sin comentarios ni `!important`: no son parte del valor.
+  const raw = String(value).replace(/\/\*[\s\S]*?\*\//g, ' ').trim().replace(/\s*!\s*important$/i, '');
+  if (parseTriplet(raw)) return true;
+  const call = parseVarCall(raw);
+  if (!call) return false;
+  if (call.name.endsWith('-rgb')) return true;
+  return call.fallback !== undefined && holdsBareTriplet(call.fallback);
+}
+
 /**
  * Resuelve una custom property a un color tal como la ve un subárbol (una zona,
  * o un componente dentro de ella) que redefine algunas variables sobre su padre.
@@ -530,6 +589,8 @@ function parseWrapper(raw) {
  * e `invalidFormat` nombra la variable `-rgb` cuyo valor no es un triplete. Un
  * resultado lleva `kind`: 'triplet' si sale de un triplete y 'color' si sale de
  * un wrapper o un literal.
+ * `unwrappedIn` nombra la primera variable sin `-rgb` que recibe un triplete sin
+ * envolver.
  */
 export function resolveInherited(name, own, resolveParent, seen = new Set()) {
   if (!own.has(name)) return resolveParent(name);
@@ -572,13 +633,20 @@ function resolveOwn(name, own, resolveParent, path) {
         invalidFormat: name,
       };
     }
+    if (!isTriplet && resolved.rgb && resolved.kind === 'triplet' && !resolved.unwrappedIn) {
+      return { ...resolved, unwrappedIn: name };
+    }
     return resolved;
   };
 
   function resolveValue(value) {
     const raw = String(value).trim();
     const triplet = parseTriplet(raw);
-    if (triplet) return { rgb: triplet, source, token: name, kind: 'triplet' };
+    if (triplet) {
+      return {
+        rgb: triplet, source, token: name, kind: 'triplet', ...(!isTriplet && { unwrappedIn: name }),
+      };
+    }
 
     const call = parseVarCall(raw);
     if (call) return follow(call);
@@ -596,7 +664,9 @@ function resolveOwn(name, own, resolveParent, path) {
             reason: `${name} envuelve en rgb() a ${wrapped.name}, que ya vale un color completo`,
           };
         }
-        return { ...resolved, kind: 'color' };
+        // Envuelto en rgb(): ya es un color válido.
+        const { unwrappedIn, ...wrappedColor } = resolved;
+        return { ...wrappedColor, kind: 'color' };
       }
       // `transparent` no es un color sobre el que medir: lo que se ve es lo que
       // haya detrás, y eso lo decide quien mide.
@@ -679,6 +749,7 @@ export const DEFAULT_TRIPLETS = (() => {
 /** Una referencia de un par a la variable que lo resuelve: `var(--bs-gray-700)`. */
 const specVar = (spec, role) => {
   if (spec.kind === 'white') return 'var(--bs-white)';
+  if (spec.kind === 'black') return 'var(--bs-black)';
   if (spec.kind === 'gray') return `var(--bs-gray-${spec.step})`;
   return `var(--bs-${role}-${spec.step})`;
 };
@@ -686,8 +757,8 @@ const specVar = (spec, role) => {
 /**
  * Variables de color que la librería declara en `:root` y que leen los pares
  * horneados: el texto y el fondo de `.alert-<role>`, el texto de
- * `.text-bg-<role>`, los de `.btn-<role>`, y los textos y los rellenos de
- * hover y de active de `.btn-outline-<role>`.
+ * `.text-bg-<role>`, los de `.btn-<role>` en sus tres estados, y los textos y
+ * los rellenos de hover y de active de `.btn-outline-<role>`.
  * Todas son alias de un wrapper, y por
  * eso se calculan en el raíz: una zona que sólo cambia el triplete al que
  * apuntan no las mueve.
@@ -701,6 +772,12 @@ export const LIBRARY_ROOT_COLORS = (() => {
     if (role !== 'secondary') map.set(`--bs-${role}-text-bg-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-color`, specVar(SOLID_PAIRS[role].fg, role));
     map.set(`--bs-btn-${role}-bg`, specVar(SOLID_PAIRS[role].bg, role));
+    // Hover y active del botón sólido. Sin esto el validador no sabe qué pinta
+    // la librería en esos estados y sólo puede medir el reposo.
+    for (const [state, pair] of Object.entries(SOLID_STATE_PAIRS[role])) {
+      map.set(`--bs-btn-${role}-${state}-color`, specVar(pair.fg, role));
+      map.set(`--bs-btn-${role}-${state}-bg`, specVar(pair.bg, role));
+    }
     for (const [state, spec] of Object.entries(OUTLINE_COLORS[role])) {
       map.set(`--bs-btn-outline-${role}-${state}`, specVar(spec, role));
     }
@@ -709,6 +786,10 @@ export const LIBRARY_ROOT_COLORS = (() => {
     map.set(`--bs-btn-outline-${role}-hover-bg`, 'transparent');
     map.set(`--bs-btn-outline-${role}-active-bg`, 'transparent');
   }
+  // La etiqueta de formulario lee `--bs-label-color`, que la librería declara
+  // en el raíz apuntando al gris 700. Una zona que oscurece el fondo no la
+  // mueve: el alias ya se resolvió arriba con la rampa del tema claro.
+  map.set('--bs-label-color', 'var(--bs-gray-700)');
   return map;
 })();
 
@@ -744,9 +825,26 @@ export const LIBRARY_ELEMENT_VARS = new Map([
     ['--bs-nav-pills-link-active-color', 'var(--bs-primary-500)'],
     ['--bs-nav-pills-link-active-bg', 'var(--bs-gray-50)'],
   ])],
+  // El enlace de navegación en reposo. La librería lo declara en `.nav`, no en
+  // el raíz, así que un bloque del theme sobre `.nav` lo pisa.
+  ['.nav', new Map([
+    ['--bs-nav-link-color', 'var(--bs-gray-900)'],
+  ])],
+  // La tarjeta pinta su propio fondo y no lo deriva de ninguna superficie del
+  // theme: dentro de una zona sigue siendo blanco.
+  ['.card', new Map([
+    ['--bs-card-bg', 'var(--bs-white)'],
+  ])],
+  // `df-button-variant-mapper` cablea las variables genéricas del botón a las
+  // del role, estado por estado. El theme pisa las genéricas en su bloque; lo
+  // que no pise se resuelve aquí.
   ...ROLES.map((role) => [`.btn-${role}`, new Map([
     ['--bs-btn-color', `var(--bs-btn-${role}-color)`],
     ['--bs-btn-bg', `var(--bs-btn-${role}-bg)`],
+    ['--bs-btn-hover-color', `var(--bs-btn-${role}-hover-color)`],
+    ['--bs-btn-hover-bg', `var(--bs-btn-${role}-hover-bg)`],
+    ['--bs-btn-active-color', `var(--bs-btn-${role}-active-color)`],
+    ['--bs-btn-active-bg', `var(--bs-btn-${role}-active-bg)`],
   ])]),
   ...ROLES.map((role) => [`.btn-outline-${role}`, new Map(
     [...Object.keys(OUTLINE_COLORS[role]), 'hover-bg', 'active-bg'].map((state) => [
@@ -944,11 +1042,33 @@ export function splitZone(prelude) {
 export function buildContexts(blocks, root) {
   const inRoot = (name) => resolve(name, root);
   const zones = new Map();
+  const touch = (name, line) => {
+    if (!zones.has(name)) zones.set(name, { zone: name, own: new Map(), line });
+    return zones.get(name);
+  };
   for (const block of blocks) {
+    // Una zona existe en cuanto un selector la nombra, aunque el theme no le dé
+    // un bloque propio: `[data-bs-theme="z"] .list-group` ya crea el contexto
+    // en el que se mide esa lista. Sin esto, una hoja que sólo lleva bloques de
+    // componente dentro de la zona no se medía en ninguna parte.
+    for (const alternative of splitSelectorList(block.prelude)) {
+      const { zone, bare } = splitZone(alternative);
+      // `dynamic` tampoco es una zona: es el alias del raíz de Dynamic.
+      if (!zone || zone === 'dynamic') continue;
+      // En un bloque raíz, el selector de zona a secas es otro nombre para el
+      // raíz y sus declaraciones ya están en `root`: así emite Bootstrap el
+      // modo claro (`:root, [data-bs-theme="light"]`). Lo delata no tener
+      // parte de componente. Una alternativa que sí la tiene nombra una zona
+      // de verdad, aunque la lista lleve `:root` delante.
+      if (block.isRoot && bare === '') continue;
+      touch(zone, block.line);
+    }
+    // Sólo el bloque de la zona declara sobre el elemento que la lleva. Lo que
+    // declara un bloque de componente cae sobre el componente, y de eso se
+    // encarga `layerFor`.
     if (!block.zone) continue;
-    const zone = zones.get(block.zone) ?? { zone: block.zone, own: new Map(), line: block.line };
+    const zone = touch(block.zone, block.line);
     for (const [name, entry] of block.decls) cascadeSet(zone.own, name, entry);
-    zones.set(block.zone, zone);
   }
 
   /**
@@ -961,17 +1081,75 @@ export function buildContexts(blocks, root) {
   const layerFor = (zone, selectors) => {
     const wanted = new Set(selectors.map(normalizeSelector));
     const candidates = [];
+    // ¿Alguna regla pone la zona en este mismo elemento
+    // (`[data-bs-theme="z"].btn-primary`)? Entonces el elemento ES la zona: lo
+    // que la zona declara cae aquí y compite en la cascada con lo que la
+    // librería y el theme ponen sobre el componente, en vez de heredarse ya
+    // resuelto desde un ancestro.
+    //
+    // `sameElement` sólo dice que el prefijo va pegado al PRIMER compuesto del
+    // selector. El elemento que lleva la zona es ese compuesto, y hay que
+    // comprobar que sea el de ESTA capa:
+    //
+    //   [z].btn-primary                      → la zona es el botón
+    //   [z].sidebar .nav-pills               → la zona es la barra, ancestro
+    //                                          de la pastilla: le llega heredado
+    //   [z].nav-pills .nav-link.active       → la zona es el contenedor
+    //   [z].nav-pills + .nav-pills .nav-link → la zona es el HERMANO del
+    //                                          contenedor, y entre hermanos no
+    //                                          se hereda nada
+    //
+    // No basta con mirar si el primer compuesto está en `wanted`: la capa
+    // reconoce también el alias suelto (`.nav-pills`), que casa con cualquier
+    // posición del selector. Lo que identifica al elemento de la capa es su
+    // ruta cualificada, el prefijo MÁS LARGO de `bare` que la capa reconoce
+    // (`.nav-pills + .nav-pills`). La zona está en este elemento sólo si esa
+    // ruta es exactamente el primer compuesto.
+    // Dónde cae la zona respecto del elemento de esta capa: en él, en un
+    // ancestro suyo, o fuera de su rama. Lo tercero pasa con un combinador
+    // hermano, y es distinto de las otras dos: entre hermanos no se hereda
+    // nada, así que el elemento medido está FUERA de la zona y lo que no
+    // declare le llega del raíz, no del contexto de la zona.
+    const zoneRelation = (bare) => {
+      const pieces = splitCompounds(normalizeSelector(bare));
+      for (let k = (pieces.length - 1) / 2; k >= 0; k -= 1) {
+        if (!wanted.has(normalizeSelector(pieces.slice(0, 2 * k + 1).join('')))) continue;
+        if (k === 0) return 'same';
+        // Solo cuenta el combinador que sale de la zona: un `+` posterior relaciona hijos suyos.
+        return /^\s*>?\s*$/.test(pieces[1]) ? 'ancestor' : 'sibling';
+      }
+      return null;
+    };
+    let attached = false;
+    let sibling = false;
+    for (const block of blocks) {
+      for (const alternative of splitSelectorList(block.prelude)) {
+        const { zone: altZone, bare, sameElement } = splitZone(alternative);
+        if (!sameElement || altZone !== zone) continue;
+        const relation = zoneRelation(bare);
+        if (relation === 'same') attached = true;
+        if (relation === 'sibling') sibling = true;
+      }
+    }
+
     for (const selector of selectors) {
       for (const [name, value] of LIBRARY_ELEMENT_VARS.get(selector) ?? []) {
         candidates.push({ name, entry: { value, source: 'defecto' }, weight: specificity(selector) });
       }
     }
     for (const block of blocks) {
-      if (block.zone) continue;
+      // El bloque de la zona declara sobre el elemento que la lleva: cuando la
+      // zona va pegada, ese elemento es el componente. `[data-bs-theme="z"]`
+      // es un atributo, así que pesa como una clase.
+      if (block.zone) {
+        if (!attached || block.zone !== zone) continue;
+        for (const [name, entry] of block.decls) {
+          candidates.push({ name, entry, weight: SPECIFICITY_CLASS });
+        }
+        continue;
+      }
       // Los bloques raíz también cuentan: una regla `:root, .nav-pills` declara
-      // sobre el componente. Es la alternativa que casa la que decide. Una
-      // alternativa con la zona pegada (`[data-bs-theme="z"].x`) se trata como
-      // si la zona fuera un ancestro; la regla `zona-pegada` lo avisa.
+      // sobre el componente. Es la alternativa que casa la que decide.
       let weight = -1;
       for (const alternative of splitSelectorList(block.prelude)) {
         const { zone: altZone, bare } = splitZone(alternative);
@@ -986,7 +1164,10 @@ export function buildContexts(blocks, root) {
     // sort es estable: a igual peso se conserva el orden de aparición.
     candidates.sort((a, b) => (Number(Boolean(a.entry.important)) - Number(Boolean(b.entry.important)))
       || (a.weight - b.weight));
-    return new Map(candidates.map(({ name, entry }) => [name, entry]));
+    const layer = new Map(candidates.map(({ name, entry }) => [name, entry]));
+    layer.attached = attached;
+    layer.sibling = sibling;
+    return layer;
   };
 
   // Cada grupo de selectores es un elemento: los del mismo grupo se funden, y
@@ -996,6 +1177,11 @@ export function buildContexts(blocks, root) {
     const layers = groups.map((selectors) => layerFor(zone, selectors));
     return {
       layers,
+      // El padre de la cadena está fuera de la zona en dos casos: si la zona
+      // va pegada a alguno de los elementos —lo que declara ya entró en su
+      // capa— o si está en un hermano, y entonces el elemento medido nunca
+      // estuvo dentro.
+      attached: layers.some((layer) => layer.attached || layer.sibling),
       has: (name) => layers.some((layer) => layer.has(name)),
       get: (name) => [...layers].reverse().find((layer) => layer.has(name))?.get(name),
     };
@@ -1008,7 +1194,7 @@ export function buildContexts(blocks, root) {
       if (!element) return resolveHere(name);
       const resolveInElement = element.layers.reduce(
         (parent, layer) => (inherited) => resolveInherited(inherited, layer, parent),
-        resolveHere,
+        element.attached ? inRoot : resolveHere,
       );
       return resolveInElement(name);
     },
@@ -1039,11 +1225,95 @@ export function buildContexts(blocks, root) {
  * sobre ellos, en la librería o en el theme, forma la capa de ese elemento. Lo
  * que declara el ítem no cambia lo que su ancestro ya resolvió.
  *
- * `noCorregible` marca los pares que ninguna declaración del theme puede
+ * `notFixable` marca los pares que ninguna declaración del theme puede
  * cambiar, porque el color no viaja por una variable. Esos se reportan como
  * advertencia: un error pediría un arreglo que no existe.
  */
 export const BAKED_PAIRS = [
+  /*
+   * Componentes con fondo propio. No heredan la superficie de la zona: la
+   * pintan ellos, con un color que la librería fija y que el rebrand no toca.
+   * El texto sí lo heredan, así que una zona que lo aclara deja texto claro
+   * sobre el fondo claro del componente — los pares de 1.00:1 del informe.
+   */
+  {
+    component: '.card',
+    fix: 'Declara --bs-card-bg sobre `.card` dentro de la zona: la librería lo fija en el propio selector, y ahí no llega lo que declare el bloque de la zona.',
+    why: 'la tarjeta pinta --bs-card-bg y hereda el texto del cuerpo, que la zona aclara',
+    owners: [['.card']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-card-bg' },
+  },
+  {
+    // El fondo no sale de una variable de componente: `_forms.scss` escribe
+    // `background-color: var(--bs-white)` en el propio selector. Por eso el
+    // arreglo es declarar el texto sobre `.form-control`, no el fondo.
+    component: '.form-control',
+    fix: 'Declara --bs-body-color sobre `.form-control` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el campo pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-control']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+  {
+    component: '.form-select',
+    fix: 'Declara --bs-body-color sobre `.form-select` dentro de la zona: el fondo lo pinta la librería y no sale de ninguna variable que el theme pueda mover.',
+    why: 'el select pinta el blanco de la librería y hereda el texto del cuerpo',
+    owners: [['.form-select']],
+    fg: { variable: '--bs-body-color' },
+    bg: { variable: '--bs-white' },
+  },
+
+  /*
+   * Textos atados a un alias que la librería calcula en `:root`. La zona cambia
+   * el fondo bajo ellos, pero el color ya se resolvió arriba con la rampa del
+   * tema claro y se hereda calculado, así que no se mueve.
+   */
+  {
+    // `_label.scss` pinta --bs-label-color sobre `label` y `.label`, no sobre
+    // la clase de formulario: el arreglo vale declarado en cualquiera de los
+    // tres, y el de la etiqueta misma cubre de paso el de la casilla.
+    component: '.form-label',
+    why: 'la etiqueta lee --bs-label-color, que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-label', 'label', '.label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    // La etiqueta de la casilla es otro `label` con el mismo color, y va como
+    // par aparte porque se arregla en su propio selector: un bloque sobre
+    // `.form-label` la deja igual de ilegible.
+    component: '.form-check-label',
+    why: 'la etiqueta de la casilla es un `label` y lee el mismo --bs-label-color, '
+      + 'que el raíz resuelve a var(--bs-gray-700)',
+    owners: [['.form-check-label'], ['label'], ['.label']],
+    fg: { variable: '--bs-label-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.form-text',
+    fix: 'Declara --bs-gray-500 sobre `.form-text` dentro de la zona: el texto de ayuda lee el token global, así que re-apuntarlo en el bloque de la zona movería la rampa entera.',
+    why: 'el texto de ayuda está atado a var(--bs-gray-500), un token global y no una variable suya',
+    owners: [['.form-text']],
+    fg: { variable: '--bs-gray-500' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.nav-link',
+    fix: 'Declara --bs-nav-link-color sobre `.nav` dentro de la zona: la librería lo fija ahí, y lo del elemento gana sobre lo que herede de la zona.',
+    why: 'el enlace de navegación lee --bs-nav-link-color, que `.nav` resuelve a var(--bs-gray-900)',
+    owners: [['.nav'], ['.nav-link']],
+    fg: { variable: '--bs-nav-link-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+  {
+    component: '.text-body-secondary',
+    why: 'la clase lee --bs-secondary-color, que el raíz calcula sobre el texto del cuerpo del raíz',
+    owners: [['.text-body-secondary']],
+    fg: { variable: '--bs-secondary-color' },
+    bg: { variable: '--bs-body-bg' },
+  },
+
   {
     component: '.list-group-item',
     why: 'la lista hereda el texto de --bs-list-group-color, que apunta al role dark',
@@ -1094,7 +1364,7 @@ export function bakedRolePairs(role) {
         fg: { variable: '--bs-secondary-700' },
         bg: { variable: '--bs-secondary-50' },
         role,
-        noCorregible: true,
+        notFixable: true,
       }
       : {
         // El texto lee --bs-<role>-text-bg-color, que la librería resuelve en
@@ -1121,6 +1391,47 @@ export function bakedRolePairs(role) {
     });
   }
 
+  // El botón con contorno en reposo. La librería no le pinta fondo —lo deja
+  // transparente en los tres estados—, así que detrás se ve la superficie del
+  // contexto y el par es su texto contra ella. El texto sale de
+  // `--bs-btn-outline-<role>-color`, un alias que el raíz resuelve con la rampa
+  // de arriba: una zona que sólo oscurece el fondo no lo mueve, y ahí es donde
+  // el botón se apaga sin que el theme haya declarado nada.
+  //
+  // `light` y `dark` se quedan fuera: no son roles semánticos sino de
+  // superficie, y cada uno existe para el fondo contrario —`outline-light` da
+  // 12.39:1 sobre oscuro y 1.13:1 sobre claro, y `outline-dark` al revés—. El
+  // validador no lee el HTML, así que medirlos contra el cuerpo del contexto
+  // sólo delataría al que está usándose en el lado para el que se hizo, y el
+  // aviso pediría un arreglo que rompería la variante.
+  if (OUTLINE_COLORS[role] && role !== 'light' && role !== 'dark') {
+    pairs.push({
+      component: `.btn-outline-${role}`,
+      stateLabel: 'en reposo',
+      why: 'el botón con contorno no pinta fondo y conserva el '
+        + '--bs-btn-outline-<role>-color que la librería resolvió en Sass',
+      // El genérico —declarar --bs-btn-color en el bloque de la zona— no vale:
+      // `df-button-variant-mapper` lo redeclara en `.btn-outline-<role>`, y lo
+      // del elemento gana sobre lo heredado. El token por-role sí llega, porque
+      // la variante lo lee con var() y eso se resuelve ya en el botón.
+      fix: `Declara --bs-btn-outline-${role}-color dentro de la zona: la variante `
+        + 'redeclara --bs-btn-color en el propio botón, así que declararlo en el bloque '
+        + 'de la zona no le llegaría.',
+      owners: [['.btn', `.btn-outline-${role}`]],
+      fg: { variable: '--bs-btn-color' },
+      bg: { variable: '--bs-body-bg' },
+      role,
+      // Dynamic ya pinta varios de estos contornos rozando el umbral sobre su
+      // propio fondo. Ese caso se calla en vez de avisar: no lo introduce el
+      // theme, y un aviso por theme dejaría --strict sin salida 0 posible.
+      quietWhenPreexisting: true,
+      // Con un bloque propio lo mide R10, que conoce el bloque y los tres
+      // estados. Se compara por componente: un `.btn-<role>` sólido no lleva
+      // el contorno a R10, así que no puede apagar este par.
+      onlyWithoutOverride: true,
+    });
+  }
+
   // El relleno de hover y de active de `.btn-outline-<role>` sale de
   // `--bs-btn-outline-<role>-<estado>-bg`, que la variante cablea a
   // `--bs-btn-<estado>-bg`. Por defecto es transparente y se ve la superficie,
@@ -1132,7 +1443,7 @@ export function bakedRolePairs(role) {
       pairs.push({
         component: `.btn-outline-${role}`,
         // El texto del estado como sale en el mensaje, igual que en R10.
-        estado: `en ${state}`,
+        stateLabel: `en ${state}`,
         why: `el botón con contorno conserva el --bs-btn-outline-<role>-${state}-color que la librería resolvió en Sass`,
         owners: [['.btn', `.btn-outline-${role}`]],
         fg: { variable: `--bs-btn-${state}-color` },

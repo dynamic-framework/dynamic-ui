@@ -287,13 +287,38 @@ describe('<DInputPhone />', () => {
       expect(input).toHaveClass('is-valid');
     });
 
-    it('renders with loading state', () => {
+    it('renders with loading state, without disabling the field', () => {
       render(
         <DContextProvider>
           <DInputPhone label="Phone" loading />
         </DContextProvider>,
       );
       expect(screen.getByRole('status', { hidden: true })).toBeInTheDocument();
+      const input = screen.getByLabelText('Phone');
+      expect(input).toBeEnabled();
+      expect(input).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('keeps the number typed while loading', async () => {
+      const user = userEvent.setup();
+      render(
+        <DContextProvider>
+          <DInputPhone label="Phone" loading />
+        </DContextProvider>,
+      );
+
+      // Los nueve dígitos llegan: deshabilitado sólo entraba el primero.
+      await user.type(screen.getByLabelText('Phone'), '912345678');
+
+      expect(screen.getByLabelText('Phone')).toHaveValue('+56 912345678');
+    });
+
+    it('is still disabled by `disabled`, with or without loading', () => {
+      render(
+        <DContextProvider>
+          <DInputPhone label="Phone" disabled loading />
+        </DContextProvider>,
+      );
       expect(screen.getByLabelText('Phone')).toBeDisabled();
     });
 

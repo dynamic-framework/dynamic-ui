@@ -1,0 +1,246 @@
+/**
+ * Tests de check-css-vars.
+ *
+ * El script se ejercita por CLI, como check-docs-manifest, para validar
+ * también el código de salida y el mensaje.
+ *
+ * El fixture `pre-1117.css` es el CSS que se compilaba antes de #1117
+ * (bc491ab5e^), con las dos erratas reales: `--bs-bs-gray-400` en .form-text y
+ * `--bs---bs-ref-spacer-4` en el carrusel. Si el script lo aceptara, el check
+ * no serviría de nada. `post-1117.css` es el mismo recorte del CSS de hoy.
+ */
+
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
+const ROOT = path.resolve(__dirname, '..');
+const CHECK = path.join(ROOT, 'scripts/check-css-vars.mjs');
+const FIXTURES = path.join(ROOT, 'scripts/fixtures/check-css-vars');
+const PRE = path.join(FIXTURES, 'pre-1117.css');
+const POST = path.join(FIXTURES, 'post-1117.css');
+
+let workdir: string;
+
+beforeAll(() => {
+  workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'dynamic-css-vars-'));
+});
+
+afterAll(() => {
+  fs.rmSync(workdir, { recursive: true, force: true });
+});
+
+type Run = { status: number; stdout: string; stderr: string };
+
+function run(args: string[]): Run {
+  const spawned = spawnSync('node', [CHECK, ...args], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  return { status: spawned.status ?? -1, stdout: spawned.stdout, stderr: spawned.stderr };
+}
+
+function write(name: string, content: string): string {
+  const file = path.join(workdir, name);
+  fs.writeFileSync(file, content, 'utf8');
+  return file;
+}
+
+describe('check-css-vars', () => {
+  it('falla con el CSS anterior a #1117 y nombra las dos erratas', () => {
+    const { status, stderr } = run([PRE]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('--bs-bs-gray-400');
+    expect(stderr).toContain('--bs---bs-ref-spacer-4');
+    expect(stderr).toContain('2 nombre(s) de custom property mal formado(s) en 1 de 1 archivo(s)');
+  });
+
+  it('propone el nombre bien formado para cada errata', () => {
+    const { stderr } = run([PRE]);
+
+    expect(stderr).toContain('[prefijo-duplicado]  --bs-bs-gray-400: lleva el prefijo --bs- dos veces; probablemente se quería --bs-gray-400');
+    expect(stderr).toContain('[segmento-vacio]  --bs---bs-ref-spacer-4: lleva un segmento vacío; probablemente se quería --bs-ref-spacer-4');
+  });
+
+  it('pasa con el CSS de hoy', () => {
+    const { status, stdout } = run([POST]);
+
+    expect(status).toBe(0);
+    expect(stdout).toContain('sin custom properties mal formadas');
+  });
+
+  describe('no falla con texto que imita un nombre mal formado', () => {
+    it.each([
+      ['una clase BEM con doble guion', '.react-datepicker__header--time--only { color: red; }'],
+      ['los modificadores BEM de splide, bajo DCarousel', '.splide__arrow--prev:hover > .splide__track--ttb { color: red; }'],
+      ['los modificadores BEM de react-select, bajo DSelect', '.d-select__option--is-focused:not(.d-select__option--is-selected) { color: red; }'],
+      ['un modificador BEM en un selector de atributo', '[class*="--is-selected"] { color: red; }'],
+      ['un selector de clase, no una declaración', '.--bs-bs-gray-400:hover { color: red; }'],
+      ['una cadena entre comillas dobles', '.a::before { content: "var(--bs-bs-gray-400)"; }'],
+      ['una cadena entre comillas simples', ".a::before { content: 'var(--bs-bs-gray-400)'; }"],
+      ['un comentario', '/* historical var(--bs-bs-gray-400) */\n.a { color: red; }'],
+      ['un url() sin comillas', '.a { background: url(data:image/svg+xml,var(--bs-bs-gray-400)); }'],
+    ])('%s', (_, css) => {
+      const file = write(`${_.replace(/\W+/g, '-')}.css`, `${css}\n`);
+      const { status, stderr } = run([file]);
+
+      expect(stderr).toBe('');
+      expect(status).toBe(0);
+    });
+  });
+
+  it('sí ve el nombre mal formado dentro de una regla con clase BEM', () => {
+    // El selector se ignora, el cuerpo no: si no, el check sería ciego justo
+    // en los componentes de terceros (splide, react-select) que usan BEM.
+    const file = write('bem-body.css', [
+      '.splide__arrow--prev { padding: var(--bs---bs-ref-spacer-1); }',
+      '.d-select__option--is-focused { --bs-bs-option-bg: #eee; }',
+    ].join('\n'));
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('--bs---bs-ref-spacer-1');
+    expect(stderr).toContain('--bs-bs-option-bg');
+  });
+
+  it('sigue viendo la declaración que va detrás de un comentario', () => {
+    const file = write('after-comment.css', ':root { /* gris */ --bs-bs-gray-400: #ccc; }\n');
+
+    expect(run([file]).status).toBe(1);
+  });
+
+  describe('reporta la línea del nombre, no la del inicio del match', () => {
+    it('en una declaración que va detrás de un `;` en otra línea', () => {
+      const file = write('multiline-semicolon.css', [
+        ':root {',
+        '  --bs-primary: #000;',
+        '  --bs-bs-gray-400: #ccc;',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-semicolon.css:3');
+    });
+
+    it('en la primera declaración del bloque, detrás del `{`', () => {
+      const file = write('multiline-brace.css', [
+        ':root {',
+        '  --bs-bs-gray-400: #ccc;',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-brace.css:2');
+    });
+
+    it('en un var() partido en dos líneas', () => {
+      const file = write('multiline-var.css', [
+        '.a {',
+        '  color: var(',
+        '    --bs-bs-gray-400',
+        '  );',
+        '}',
+      ].join('\n'));
+
+      expect(run([file]).stderr).toContain('multiline-var.css:3');
+    });
+  });
+
+  it('blanquea el texto sin desplazar los números de línea', () => {
+    // El comentario ocupa dos líneas y lleva dentro un nombre mal formado: el
+    // que se reporta es el de la línea 4, no el del comentario.
+    const file = write('offsets.css', [
+      '/* histórico:',
+      '   var(--bs-bs-gray-400) */',
+      '.a {',
+      '  color: var(--bs---bs-ref-spacer-4);',
+      '}',
+    ].join('\n'));
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).not.toContain('--bs-bs-gray-400');
+    expect(stderr).toContain('offsets.css:4');
+  });
+
+  it('detecta el nombre mal formado tanto en la declaración como en var()', () => {
+    const declaration = write('decl.css', ':root { --bs-bs-gray-400: #ccc; }\n');
+    const reference = write('ref.css', '.a { color: var(--bs-bs-gray-400); }\n');
+
+    expect(run([declaration]).status).toBe(1);
+    expect(run([reference]).status).toBe(1);
+  });
+
+  it('detecta el nombre mal formado aunque var() tenga respaldo', () => {
+    // Con respaldo la regla no se rompe, pero usa un valor que no es el que
+    // se quería: la errata sigue siendo una errata.
+    const file = write('fallback.css', '.a { margin-top: var(--bs---bs-ref-spacer-4, 0); }\n');
+
+    expect(run([file]).status).toBe(1);
+  });
+
+  it('detecta el nombre mal formado en el CSS comprimido, sin saltos de línea', () => {
+    const file = write('min.css', '.a{color:var(--bs-bs-gray-400)}.b{margin-top:var(--bs---bs-ref-spacer-4)}');
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('--bs-bs-gray-400');
+    expect(stderr).toContain('--bs---bs-ref-spacer-4');
+  });
+
+  it('cuenta una vez cada nombre, no cada aparición', () => {
+    const file = write('repeated.css', [
+      ':root { --bs-bs-gray-400: #ccc; }',
+      '.a { color: var(--bs-bs-gray-400); }',
+      '.b { color: var(--bs-bs-gray-400); }',
+    ].join('\n'));
+
+    expect(run([file]).stderr).toContain('1 nombre(s) de custom property mal formado(s)');
+  });
+
+  it('cuenta una vez el nombre que se repite en varios archivos', () => {
+    // El caso real: el .css y el .min.css llevan la misma errata.
+    const expanded = write('twice.css', '.a {\n  color: var(--bs-bs-gray-400);\n}\n');
+    const minified = write('twice.min.css', '.a{color:var(--bs-bs-gray-400)}');
+    const clean = write('clean.css', '.a { color: var(--bs-gray-400); }\n');
+
+    expect(run([expanded, minified, clean]).stderr)
+      .toContain('1 nombre(s) de custom property mal formado(s) en 2 de 3 archivo(s)');
+  });
+
+  describe('no distingue mayúsculas donde CSS no las distingue', () => {
+    it.each([
+      ['VAR() en mayúsculas', '.a { color: VAR(--bs-bs-gray-400); }'],
+      ['el prefijo duplicado en mayúsculas', '.a { color: var(--BS-BS-gray-400); }'],
+      ['el prefijo duplicado mixto', ':root { --bs-BS-gray-400: #ccc; }'],
+    ])('%s', (_, css) => {
+      const file = write(`${_.replace(/\W+/g, '-')}.css`, `${css}\n`);
+      const { status, stderr } = run([file]);
+
+      expect(status).toBe(1);
+      expect(stderr).toContain('probablemente se quería --bs-gray-400');
+    });
+  });
+
+  it('detecta el nombre mal formado en @property', () => {
+    const file = write('at-property.css', '@property --bs-bs-gray-400 { syntax: "<color>"; inherits: true; initial-value: #ccc; }\n');
+
+    expect(run([file]).status).toBe(1);
+  });
+
+  it('aplica segmento-vacio también a custom properties de terceros', () => {
+    const file = write('third-party.css', ':root { --swiper--x: 1px; }\n');
+    const { status, stderr } = run([file]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('[segmento-vacio]  --swiper--x');
+  });
+
+  it('falla si el CSS no está compilado', () => {
+    const { status, stderr } = run([path.join(workdir, 'no-existe.css')]);
+
+    expect(status).toBe(1);
+    expect(stderr).toContain('npm run build:scss');
+  });
+});

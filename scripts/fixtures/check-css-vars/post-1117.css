@@ -1,0 +1,25 @@
+/* Extracto literal del CSS que compila src/style/dynamic-ui.scss hoy: las
+ * dos reglas que llevaban las erratas de #1117, ya corregidas, y una clase
+ * BEM con doble guion que el check no debe confundir con el nombre de una
+ * custom property mal formada. */
+
+.form-text {
+  margin-top: var(--bs-ref-spacer-1);
+  font-size: var(--bs-fs-small);
+  color: var(--bs-gray-500);
+}
+
+.d-carousel .d-carousel-pagination {
+  bottom: var(--bs-carousel-pagination-bottom);
+  position: relative;
+  margin-top: var(--bs-ref-spacer-4);
+  width: fit-content;
+  padding: var(--bs-ref-spacer-2) var(--bs-ref-spacer-4);
+  border-radius: var(--bs-border-radius-lg);
+  margin: auto;
+  gap: var(--bs-ref-spacer-2);
+}
+
+.react-datepicker__header--time:not(.react-datepicker__header--time--only) {
+  border-top-left-radius: 0;
+}

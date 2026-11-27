@@ -18,6 +18,9 @@ const FIXTURE = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-api.
 // api.json de develop antes de #1282, #1283 y #1281, con 8 componentes y los
 // 25 hooks (sin types).
 const FIXTURE_B = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-b-api.json');
+// api.json de develop después de #1350, reducido a DButtonIcon, DInputCheck,
+// DSelect, DTooltip y los contexts.
+const FIXTURE_C = path.join(ROOT, 'scripts/fixtures/validate-registry/develop-c-api.json');
 
 // El validador arma un programa de TypeScript sobre src/index.ts.
 jest.setTimeout(120000);
@@ -73,7 +76,8 @@ function listedUnder(stderr: string, header: string): string[] {
   return [...block.matchAll(/^ {2}- (.+)$/gm)].map(([, line]) => line);
 }
 
-const MISSING_EXPORTS = 'exports D* del índice sin entrada en components ni en contexts';
+const MISSING_EXPORTS = 'componentes exportados por el índice sin entrada en components ni en contexts';
+const TYPE_MISMATCHES = 'props cuyo type difiere del de dist/types';
 
 /** Entrada mínima de components: sin sourcePath, no se compara con el código. */
 function stubComponent(props: Record<string, unknown> = {}) {
@@ -286,6 +290,9 @@ describe('validate-registry', () => {
     test('el api.json de develop sin entradas de componentes lista los exports D* que faltan', () => {
       const missing = listedUnder(run(FIXTURE).stderr, MISSING_EXPORTS);
       expect(missing).toEqual(expect.arrayContaining(['DConfirmModalContainer', 'DSelect', 'DToast']));
+      // También los que no empiezan por D (#1351).
+      expect(missing).toEqual(expect.arrayContaining(['EmptyState', 'ErrorState', 'LoadingState']));
+      expect(missing).not.toContain('CORE_LUCIDE_ICONS');
       // Exclusión explícita: es el objeto de createContext.
       expect(missing).not.toContain('DContext');
       // Los subcomponentes que no se exportan sueltos no se exigen.
@@ -328,6 +335,44 @@ describe('validate-registry', () => {
       expect(listedUnder(stderr, 'tipos truncados con "... N more ..."')).toEqual([
         '$.components.DInputCheck.props.type.type',
       ]);
+    });
+
+    test('el api.json de develop tras #1350 falla por los type que difieren del .d.ts (#1351)', () => {
+      const develop = JSON.parse(fs.readFileSync(FIXTURE_C, 'utf8'));
+      const api = completeApi();
+      delete api.components.DContextProvider;
+      Object.assign(api.components, develop.components);
+      api.contexts = develop.contexts;
+
+      const { status, stderr } = write('api-types-1351.json', api);
+      expect(status).toBe(1);
+      expect(listedUnder(stderr, TYPE_MISMATCHES).map((line) => line.split(':')[0])).toEqual([
+        'DButtonIcon.onClick',
+        'DInputCheck.value',
+        'DInputCheck.onChange',
+        'DSelect.multi',
+        'DContextProvider.language',
+        'DContextProvider.currency',
+        'DContextProvider.icon',
+        'DContextProvider.iconRegistry',
+        'DContextProvider.iconMap',
+        'DContextProvider.breakpoints',
+        'DContextProvider.portalName',
+        'DContextProvider.availablePortals',
+      ]);
+      // El alias de librería expandido (Placement) es equivalente.
+      expect(stderr).not.toContain('DTooltip.placement');
+    });
+
+    test('el orden de las uniones no cuenta como diferencia de type', () => {
+      const api = completeApi();
+      api.components.DInputCheck = stubComponent({
+        type: stubProp('"radio" | "checkbox"', true),
+        checked: stubProp('undefined | boolean', false),
+      });
+
+      const { stderr } = write('api-types-order.json', api);
+      expect(listedUnder(stderr, TYPE_MISMATCHES)).toEqual([]);
     });
 
     test('falla si una entrada que no es export no lleva parent y accessor', () => {

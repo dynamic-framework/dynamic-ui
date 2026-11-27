@@ -24,6 +24,7 @@ import {
   buildContexts,
   cascadeSet,
   contrast,
+  holdsBareTriplet,
   inheritsParent,
   isRootPrelude,
   libraryWrapper,
@@ -38,6 +39,10 @@ import {
   zoneFromPrelude,
   zoneSelector,
 } from './theme-tokens.mjs';
+
+// Contraste máximo entre dos superficies para tratarlas como la misma: un
+// blanco roto contra el blanco da ~1.05, una zona oscura contra él pasa de 10.
+const SAME_SURFACE_MAX = 1.5;
 
 // -- Lectura del CSS --------------------------------------------------------
 
@@ -76,13 +81,13 @@ export function readCss(css) {
     const value = important ? match[2].replace(/\s*!\s*important$/i, '') : match[2];
     const entry = { value, line: endLine, ...(important && { important }) };
 
-    if (inWideMedia()) {
-      cascadeSet(wide, match[1], entry);
+    const block = currentBlock();
+    if (inAnyMedia()) {
+      if (block) cascadeSet(block.mediaDecls, match[1], entry); // Solo para R1d.
+      if (inWideMedia()) cascadeSet(wide, match[1], entry);
       return;
     }
-    if (inAnyMedia()) return;
 
-    const block = currentBlock();
     if (block) cascadeSet(block.decls, match[1], entry);
     if (block && block.isRoot) cascadeSet(root, match[1], entry);
   };
@@ -101,6 +106,7 @@ export function readCss(css) {
           isRoot: isRootPrelude(prelude),
           zone: zoneFromPrelude(prelude),
           decls: new Map(),
+          mediaDecls: new Map(),
           line,
         };
         blocks.push(block);
@@ -199,7 +205,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   const warn = (rule, message, line = null) => warnings.push({ rule, message, line });
   const note = (rule, message, line = null) => notes.push({ rule, message, line });
 
-  if (root.size === 0 && wide.size === 0) {
+  // Una hoja de sólo zonas es legítima: quien mantiene un theme puede añadir
+  // una zona en un archivo aparte sin repetir el bloque raíz. Se mide contra
+  // los valores por defecto de la librería, igual que una zona de un theme
+  // completo que no redefine esas variables en `:root`: `resolve` cae a
+  // `libraryRootValue` cuando el raíz no la declara. Por eso la condición mira
+  // todos los bloques y no sólo el raíz.
+  const declaresBs = (decls) => [...decls.keys()].some((name) => name.startsWith('--bs-'));
+  if (!declaresBs(wide) && !blocks.some((block) => declaresBs(block.decls))) {
     fail('vacio', 'El archivo no declara ninguna custom property --bs-*.');
     return { errors, warnings, notes };
   }
@@ -234,6 +247,34 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
+  // R1d — una variable sin -rgb se consume como color: un triplete ahí no se
+  // pinta. En el raíz, R2 y R4 ya cubren el wrapper y --bs-border-color.
+  const unwrapped = new Set();
+  const isUnwrapped = (name, value) => name.startsWith('--bs-') && !name.endsWith('-rgb')
+    && holdsBareTriplet(value);
+  for (const block of blocks) {
+    const where = block.isRoot ? '' : ` en "${block.prelude.replace(/\s+/g, ' ')}"`;
+    const failUnwrapped = (name, value, line) => fail(
+      'triplete-sin-envolver',
+      `${name}${where}: "${value}" deja un triplete en una variable de color. Las variables `
+      + 'que no terminan en -rgb se consumen como color completo, así que aquí el navegador '
+      + 'recibe "R, G, B", descarta la propiedad y el elemento hereda el color del padre. '
+      + 'Envuelve el triplete: rgb(var(--bs-…-rgb)), o apunta al wrapper var(--bs-…).',
+      line,
+    );
+    for (const [name, { value, line }] of block.decls) {
+      if (!isUnwrapped(name, value)) continue;
+      unwrapped.add(name);
+      if (block.isRoot && wrapperName(name)) continue;
+      if (block.isRoot && name === '--bs-border-color' && parseTriplet(value)) continue;
+      failUnwrapped(name, value, line);
+    }
+    // R2 y R4 no miran @media: aquí no hay excepciones.
+    for (const [name, { value, line }] of block.mediaDecls) {
+      if (isUnwrapped(name, value)) failUnwrapped(name, value, line);
+    }
+  }
+
   /**
    * ¿Ya explicó R1 por qué no se puede medir este par? Es así cuando lo que
    * falla es una variable -rgb mal escrita en el raíz o en la zona: avisar
@@ -241,6 +282,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * Una declarada en el bloque de un componente no la revisa R1, y se avisa.
    */
   const explainedByR1 = (ctx, element, ...sides) => sides.some((side) => {
+    if (side.unwrapped) return unwrapped.has(side.unwrapped); // R1d
     const name = side.invalidFormat;
     if (!name || element?.has(name)) return false;
     // La declaración que ve el contexto: la de la zona o, si no la tiene, la
@@ -511,17 +553,42 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // Un theme puede corregir el par de un botón redefiniendo su color de texto en
-  // un bloque propio (`.btn-<role> { --bs-btn-color: … }`). Cuando lo hace, el
-  // par horneado ya no es el que se ve y lo mide la regla de botones.
-  const overriddenButtons = new Set(
-    blocks
-      .filter((block) => !block.isRoot && block.decls.has('--bs-btn-color'))
-      .flatMap((block) => splitSelectorList(block.prelude))
-      .map((part) => part.trim().replace(/^\[data-bs-theme=["']?[\w-]+["']?\]\s*/, ''))
-      .map((sel) => sel.match(new RegExp(`^\\.btn-(?:outline-)?(${ROLES.join('|')})$`))?.[1])
-      .filter(Boolean),
-  );
+  // Las dos variables que gobiernan cada estado de un botón, en el orden en que
+  // R10 arma sus casos: reposo, hover y active.
+  const BUTTON_STATE_VARS = [
+    ['--bs-btn-color', '--bs-btn-bg'],
+    ['--bs-btn-hover-color', '--bs-btn-hover-bg'],
+    ['--bs-btn-active-color', '--bs-btn-active-bg'],
+  ];
+
+  // Un bloque de botón que toque cualquiera de esas variables lleva ese botón a
+  // R10, que mide también el reposo: en los contextos donde R10 lo mide, el par
+  // horneado del mismo botón no se mide aparte. Un bloque global los cubre
+  // todos; uno de zona, sólo esa zona.
+  //
+  // La cuenta va por variante, no por role: `.btn-primary` y
+  // `.btn-outline-primary` son dos botones distintos con dos pares distintos, y
+  // un bloque sobre uno no lleva el otro a R10. Compartir la clave haría las dos
+  // cosas mal a la vez —callar el contorno porque el theme declaró el sólido, y
+  // reportarlo dos veces cuando declara el contorno—, así que la clave es el
+  // selector de la variante, el mismo `component` que lleva el par.
+  const BUTTON_VARIANT = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
+  const overriddenButtons = new Map();
+  for (const block of blocks) {
+    if (block.isRoot) continue;
+    if (!BUTTON_STATE_VARS.flat().some((variable) => block.decls.has(variable))) continue;
+    for (const { zone, bare } of alternatives(block)) {
+      const variant = bare.trim().match(BUTTON_VARIANT);
+      if (!variant) continue;
+      const component = `.btn-${variant[1] ?? ''}${variant[2]}`;
+      if (!overriddenButtons.has(component)) overriddenButtons.set(component, new Set());
+      overriddenButtons.get(component).add(zone ?? '*');
+    }
+  }
+  const measuredByR10 = (component, ctx) => {
+    const zones = overriddenButtons.get(component);
+    return Boolean(zones && (zones.has('*') || (ctx.zone && zones.has(ctx.zone))));
+  };
 
   // Contextos en los que se mide un componente y también los pares horneados:
   // el bloque raíz y, además, cada zona declarada en el archivo. Un
@@ -538,14 +605,23 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
    * la variable en cuestión: ahí manda el específico y medir el global sería
    * reportar algo que nunca se ve.
    */
-  const contextsFor = (zone, bare, variable) => {
+  const redefinedInZone = (zoneName, bare, variable) => blocks.some(
+    (other) => other.decls.has(variable)
+      && alternatives(other).some((alt) => alt.zone === zoneName
+        && normalizeSelector(alt.bare) === normalizeSelector(bare)),
+  );
+
+  const contextsFor = (zone, bare, variables) => {
     if (zone) return contexts.filter((ctx) => ctx.zone === zone);
+    const declared = [variables].flat();
     return contexts.filter((ctx) => {
       if (!ctx.zone) return true;
-      const overridden = blocks.some((other) => other.decls.has(variable)
-        && alternatives(other).some((alt) => alt.zone === ctx.zone
-          && normalizeSelector(alt.bare) === normalizeSelector(bare)));
-      return !overridden;
+      // El bloque global deja de verse en la zona en cuanto ésta tiene su
+      // propio bloque para el mismo selector que toque alguna de estas
+      // variables: los dos medirían el mismo par, porque los dos leen la capa
+      // ya fundida del elemento, y el hallazgo saldría dos veces. Manda el
+      // específico.
+      return !declared.some((variable) => redefinedInZone(ctx.zone, bare, variable));
     });
   };
 
@@ -569,6 +645,15 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // Un texto transparente no se ve, sea cual sea el fondo.
       if (!background) return { rgb: null, reason: `${name} es transparente: el texto no se ve`, variable: name };
       return { ...ctx.lookup('--bs-body-bg-rgb'), name: '--bs-body-bg-rgb', variable: name };
+    }
+    // No se pinta: no hay par que medir.
+    if (resolved.unwrappedIn) {
+      return {
+        rgb: null,
+        reason: `${resolved.unwrappedIn} vale un triplete sin envolver en rgb(), que no es un color`,
+        unwrapped: resolved.unwrappedIn,
+        variable: name,
+      };
     }
     return { ...resolved, name: describe(name, resolved), variable: name };
   };
@@ -636,24 +721,6 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     }
   }
 
-  // R9 — zona pegada al selector. `[data-bs-theme="x"].btn-primary` pone la
-  // zona en el mismo elemento que el componente, y entonces lo que declara la
-  // zona compite en la cascada con lo que se declara sobre él. El validador no
-  // modela ese caso: lo mide como si la zona fuera un ancestro
-  // (`[data-bs-theme="x"] .btn-primary`) y lo avisa para que se revise.
-  for (const block of blocks) {
-    for (const alt of alternatives(block)) {
-      if (!alt.sameElement) continue;
-      warn(
-        'zona-pegada',
-        `${zoneSelector(alt.zone)}${alt.bare}: el prefijo de zona va pegado al selector, así que `
-        + 'la zona está en el mismo elemento que el componente. El validador lo mide como si la '
-        + `zona fuera un ancestro (${zoneSelector(alt.zone)} ${alt.bare}); revisa este caso en la preview.`,
-        block.line,
-      );
-    }
-  }
-
   // Las variables genéricas cuya presencia en un bloque de botón dispara R10.
   // R13 las consulta para no medir dos veces el mismo botón con contorno.
   const R10_BUTTON_VARS = [
@@ -665,8 +732,10 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // R10 — botones que el theme redefine por selector. Bootstrap resuelve el
   // color de texto de `.btn-<role>` con color-contrast() en Sass, así que el
   // par real es el que quede después de estos overrides, no el que la librería
-  // calculó. `.btn-outline-<role>` se mide en reposo, en hover y en active, cada
-  // uno con su texto y sobre el fondo que de verdad se pinta.
+  // calculó. Sólido y con contorno se miden en reposo, en hover y en active,
+  // cada uno con su texto y sobre el fondo que de verdad se pinta: un bloque
+  // que sólo aclara el fondo de reposo y oscurece el texto deja los otros dos
+  // estados con el texto oscuro sobre el relleno oscuro de la librería.
   const BUTTON_SELECTOR = new RegExp(`^\\.btn-(outline-)?(${ROLES.join('|')})$`);
   for (const block of blocks) {
     const fgDecl = block.decls.get('--bs-btn-color');
@@ -683,7 +752,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       const outline = Boolean(match[1]);
       const role = match[2];
 
-      for (const ctx of contextsFor(altZone, part, fgDecl ? '--bs-btn-color' : '--bs-btn-bg')) {
+      for (const ctx of contextsFor(altZone, part, BUTTON_STATE_VARS.flat())) {
         // Lo que se declara sobre el botón dentro de este contexto: lo que pone
         // la librería en `.btn-<role>` y los bloques del theme, globales y de
         // la zona, para el mismo selector.
@@ -691,8 +760,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         const label = `${part.trim()}${inContext(ctx)}`;
 
         /*
-         * Un botón sólido enseña un único par: su texto sobre el fondo del role.
-         * Uno con contorno enseña tres, uno por estado. El relleno de hover y
+         * Cada botón enseña tres pares, uno por estado. En el sólido los tres
+         * rellenos los pinta la librería (`--bs-btn-<role>-{hover,active}-bg`,
+         * los pasos 600 y 700 del role), así que se miden siempre: el theme
+         * declara lo que quiera pisar y el resto sale de ahí.
+         * En el de contorno, el relleno de hover y
          * de active sale de `--bs-btn-outline-<role>-{hover,active}-bg`, que la
          * librería cablea en `.btn-outline-<role>` y deja transparentes: si
          * nadie los declara, lo que se ve detrás es la superficie del contexto
@@ -715,21 +787,21 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         const cases = outline
           ? [
             {
-              estado: 'en reposo',
+              stateLabel: 'en reposo',
               decl: fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: surface(),
               themeFg: fromTheme('--bs-btn-color'),
             },
             {
-              estado: 'en hover',
+              stateLabel: 'en hover',
               decl: hoverDecl ?? hoverBgDecl ?? fgDecl,
               fg: measureSide(ctx, element, '--bs-btn-hover-color'),
               bg: fill('--bs-btn-hover-bg'),
               themeFg: fromTheme('--bs-btn-hover-color'),
             },
             {
-              estado: 'en active',
+              stateLabel: 'en active',
               decl: activeDecl ?? activeBgDecl ?? fgDecl,
               fg: measureSide(ctx, element, '--bs-btn-active-color'),
               bg: fill('--bs-btn-active-bg'),
@@ -738,17 +810,31 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
           ]
           : [
             {
-              estado: null,
+              stateLabel: null,
               decl: fgDecl ?? bgDecl,
               fg: measureSide(ctx, element, '--bs-btn-color'),
               bg: measureSide(ctx, element, '--bs-btn-bg', { background: true }),
               themeFg: Boolean(fgDecl),
             },
+            {
+              stateLabel: 'en hover',
+              decl: hoverDecl ?? hoverBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-hover-color'),
+              bg: measureSide(ctx, element, '--bs-btn-hover-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-hover-color'),
+            },
+            {
+              stateLabel: 'en active',
+              decl: activeDecl ?? activeBgDecl ?? fgDecl ?? bgDecl,
+              fg: measureSide(ctx, element, '--bs-btn-active-color'),
+              bg: measureSide(ctx, element, '--bs-btn-active-bg', { background: true }),
+              themeFg: fromTheme('--bs-btn-active-color'),
+            },
           ];
 
-        for (const caso of cases) {
-          const where = caso.estado ? `${label}, ${caso.estado}` : label;
-          const { fg, bg } = caso;
+        for (const buttonCase of cases) {
+          const where = buttonCase.stateLabel ? `${label}, ${buttonCase.stateLabel}` : label;
+          const { fg, bg } = buttonCase;
           noteLiteral(element, fg, `${where} color de texto`);
           noteLiteral(element, bg, `${where} fondo`);
           if (!fg.rgb || !bg.rgb) {
@@ -756,7 +842,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
             warn(
               'contraste-irresoluble',
               `No se pudo medir "${where}": ${fg.reason ?? bg.reason}.`,
-              caso.decl?.line ?? null,
+              buttonCase.decl?.line ?? null,
             );
             continue;
           }
@@ -770,11 +856,11 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
               ? `El botón se declara una sola vez, pero dentro de la zona "${ctx.zone}" alguna de `
                 + 'las variables de las que depende vale otra cosa. Dale a la zona su propio '
                 + `bloque \`${zoneSelector(ctx.zone)} ${part.trim()}\`.`
-              : (caso.themeFg
+              : (buttonCase.themeFg
                 ? 'El theme fija ese color de texto: o se aclara el fondo, o se oscurece el texto.'
                 : `El theme no lo fija, así que el botón conserva el que Bootstrap horneó `
                   + `para "${role}".`)),
-            caso.decl?.line ?? null,
+            buttonCase.decl?.line ?? null,
           );
         }
       }
@@ -1039,15 +1125,22 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       }
     }
 
+    /*
+     * El enlace se mide declare la zona su color o no. Lo que hereda del raíz
+     * es un color ya resuelto contra la paleta clara, así que la zona que sólo
+     * oscurece el fondo lo deja igual: ése es justo el caso que hay que
+     * reportar. Condicionarlo a la declaración haría que la regla sólo
+     * revisara los themes que ya habían pensado en el enlace.
+     */
     const linkDecl = ctx.own.get('--bs-link-color-rgb');
-    if (!linkDecl || !bg.rgb) continue;
+    if (!bg.rgb) continue;
     const link = ctx.lookup('--bs-link-color-rgb');
     if (!link.rgb) {
       if (explainedByR1(ctx, null, link)) continue;
       warn(
         'contraste-irresoluble',
         `No se pudo medir el enlace de la zona "${ctx.zone}": ${link.reason}.`,
-        linkDecl.line,
+        linkDecl?.line ?? ctx.line,
       );
       continue;
     }
@@ -1060,14 +1153,14 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         'contraste-enlace-zona',
         `${detail} Pasa el 3:1 de componente gráfico, así que el enlace se distingue del `
         + 'fondo, pero su texto no llega a AA. Revísalo con diseño antes de darlo por bueno.',
-        linkDecl.line,
+        linkDecl?.line ?? ctx.line,
       );
       continue;
     }
     fail(
       'contraste-enlace-zona',
       `${detail} Ni siquiera llega al 3:1 mínimo para distinguirse del fondo.`,
-      linkDecl.line,
+      linkDecl?.line ?? ctx.line,
     );
   }
 
@@ -1091,15 +1184,19 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
   // `--bs-gray-700`, `--bs-black`), y un theme o una zona que sólo cambia uno
   // de ellos lo mueve sin declarar nada del role.
   const isTextBg = (pair) => pair.component === `.text-bg-${pair.role}`;
+  // El contorno en reposo tampoco depende del role: una zona que oscurece la
+  // superficie lo deja ilegible sin que el theme declare nada de él.
+  const isOutlineRest = (pair) => pair.component === `.btn-outline-${pair.role}` && !pair.outline;
   // Los pares de `.btn-outline-<role>` se generan para todos los roles; qué
   // estado se mide y en qué contexto lo decide el bucle, que mira si el relleno
   // está declarado donde se está midiendo.
   const bakedPairs = [
     ...BAKED_PAIRS,
     ...pairRoles.flatMap((role) => bakedRolePairs(role)
-      .filter((pair) => !isTextBg(pair) && !pair.outline)),
+      .filter((pair) => !isTextBg(pair) && !pair.outline && !isOutlineRest(pair))),
     ...ROLES.flatMap((role) => bakedRolePairs(role).filter(isTextBg)),
-    ...ROLES.flatMap((role) => bakedRolePairs(role).filter((pair) => pair.outline)),
+    ...ROLES.flatMap((role) => bakedRolePairs(role)
+      .filter((pair) => pair.outline || isOutlineRest(pair))),
   ];
 
   // El mismo par con la paleta por defecto, sin nada del theme: la referencia
@@ -1110,7 +1207,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
     for (const ctx of contexts) {
       // Un botón con override propio no es un par horneado: lo mide R10, que
       // conoce el bloque concreto y el contexto en el que se ve.
-      if (pair.onlyWithoutOverride && overriddenButtons.has(pair.role)) continue;
+      if (pair.onlyWithoutOverride && measuredByR10(pair.component, ctx)) continue;
 
       // La capa del elemento reúne lo que se declara sobre los selectores del
       // componente (`.list-group` para una lista, `.alert-<role>` para una
@@ -1146,7 +1243,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       }
       const fg = measureSide(ctx, element, pair.fg.variable);
       const bg = measureSide(ctx, element, pair.bg.variable, { background: true });
-      const where = `${pair.component}${inContext(ctx)}${pair.estado ? `, ${pair.estado}` : ''}`;
+      const where = `${pair.component}${inContext(ctx)}${pair.stateLabel ? `, ${pair.stateLabel}` : ''}`;
 
       if (!fg.rgb || !bg.rgb) {
         if (explainedByR1(ctx, element, fg, bg)) continue;
@@ -1179,8 +1276,24 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
       // es relativa porque estos pares se mueven unas décimas al cambiar el
       // color y esa diferencia no es información para nadie. Los pares no
       // corregibles se saltan esto: su aviso explica mejor qué hacer.
-      if (!pair.noCorregible && baseline !== null && baseline < minContrast
-        && ratio >= baseline * 0.9) {
+      //
+      // Un par sin fondo propio se mide contra la superficie del contexto. Si
+      // el contexto la movió —una zona oscura—, el par ya no es el de la
+      // librería aunque el número se parezca: lo introdujo el theme.
+      const sameSurface = !pair.quietWhenPreexisting
+        || (baseBg.rgb && contrast(bg.rgb, baseBg.rgb) < SAME_SURFACE_MAX);
+      if (!pair.notFixable && baseline !== null && baseline < minContrast
+        && ratio >= baseline * 0.9 && sameSurface) {
+        /*
+         * Algunos pares vienen de fábrica rozando el umbral: Dynamic pinta el
+         * contorno de success, warning y danger entre 4.19 y 4.36 sobre su
+         * propio fondo. Avisar de eso en cada theme no le dice nada a nadie —no
+         * lo introdujo— y, como --strict se tiñe con cualquier aviso, dejaría a
+         * la herramienta sin salida 0 posible. Se callan, pero sólo mientras
+         * sigan como estaban: sobre la misma superficie y sin empeorar de
+         * verdad. Si no, caen como error.
+         */
+        if (pair.quietWhenPreexisting) continue;
         warn(
           'contraste-preexistente',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, bajo el `
@@ -1196,7 +1309,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
        * sería pedir un arreglo que no existe. Se avisa, se dice por qué, y la
        * salida del proceso no se tiñe por él.
        */
-      if (pair.noCorregible) {
+      if (pair.notFixable) {
         warn(
           'contraste-horneado',
           `"${where}": ${ratio.toFixed(2)}:1 entre ${fg.name} y ${bg.name}, por debajo del `
@@ -1210,7 +1323,12 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         continue;
       }
 
-      const arreglo = `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
+      // Un par puede traer su propia instrucción: la genérica —declarar el
+      // texto en el bloque de la zona— no sirve cuando la librería fija la
+      // variable en el selector del componente, porque lo del elemento gana
+      // sobre lo heredado y el arreglo no haría nada.
+      const fixText = pair.fix
+        ?? `Declara ${pair.fg.variable}${ctx.zone ? ` dentro de la zona "${ctx.zone}"` : ''} `
         + 'para que el componente deje de heredar el valor de la librería.';
 
       fail(
@@ -1219,7 +1337,7 @@ export function validate(css, { minContrast = AA_NORMAL_TEXT } = {}) {
         + `${minContrast}:1 que pide WCAG 2.x AA para texto normal`
         + (baseline !== null ? ` (con la paleta por defecto este par da ${baseline.toFixed(2)}:1)` : '')
         + `. Aquí ${pair.why}: es un par que la librería resuelve por su cuenta y que el `
-        + `rebrand no toca. ${arreglo}`,
+        + `rebrand no toca. ${fixText}`,
         line,
       );
     }

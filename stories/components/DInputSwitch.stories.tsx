@@ -52,6 +52,57 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
 | --${PREFIX_BS}form-switch-checked-bg-image          | .form-switch        | data url svg      | Checked image backgound    |
 | --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit    | Focus border color         |
 | --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow    | Focus box shadow           |
+
+### Icons
+
+The knob is an SVG served as a data URL, one per state. The variables above live on
+\`.form-switch\` and are good for a single switch; these live on \`:root\` and feed them, so
+overriding them there themes every switch at once.
+
+| Variable                                     | Class  | Type         | Description                                    |
+|----------------------------------------------|--------|--------------|------------------------------------------------|
+| --${PREFIX_BS}form-switch-icon               | :root  | data url svg | Knob at rest                                   |
+| --${PREFIX_BS}form-switch-icon-focus         | :root  | data url svg | Knob while the switch has focus                |
+| --${PREFIX_BS}form-switch-icon-checked       | :root  | data url svg | Knob while the switch is on                    |
+| --${PREFIX_BS}form-switch-icon-valid         | :root  | data url svg | Knob of an unchecked \`.is-valid\` switch       |
+| --${PREFIX_BS}form-switch-icon-invalid       | :root  | data url svg | Knob of an unchecked \`.is-invalid\` switch     |
+
+Rest, focus and checked also have a component-level variable on \`.form-switch\`
+(\`--${PREFIX_BS}form-switch-bg\`, \`--${PREFIX_BS}form-switch-focus-bg-image\`,
+\`--${PREFIX_BS}form-switch-checked-bg-image\`) for a one-off switch. The validation knobs have
+none, so \`:root\` is where you theme those.
+
+\`\`\`css
+/* After dynamic-ui.css */
+:root {
+  /* A smaller knob, in the brand gray */
+  --${PREFIX_BS}form-switch-icon:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2.5' fill='%23a7a7b4'/></svg>");
+
+  /* On: white, full size */
+  --${PREFIX_BS}form-switch-icon-checked:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='%23fff'/></svg>");
+
+  /* Validation knobs: swap these two for your brand's success and danger.
+     The values below are the defaults, written as rgb() so no escaping is needed. */
+  --${PREFIX_BS}form-switch-icon-valid:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='rgb(25 135 84)'/></svg>");
+  --${PREFIX_BS}form-switch-icon-invalid:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='rgb(220 53 69)'/></svg>");
+}
+\`\`\`
+
+Two things to keep in mind when writing the value:
+
++ **The color inside the SVG has to be a literal.** A \`var()\` there does not resolve: the browser
+renders an SVG used as an image as a separate document, which does not inherit the page's custom
+properties, so the fill falls back to its initial value. Write \`%23fff\`, \`rgb(255 255 255)\` or a
+named color — not \`var(--${PREFIX_BS}white)\`.
++ **Percent-encode \`#\`.** Inside a URL it starts a fragment, so a hex color has to be written as
+\`%23fff\`. Using \`rgb()\` or a named color avoids the question.
+
+The track behind the knob is not part of the icon: it is \`background-color\` on
+\`.form-check-input\`, and it follows the theme on its own.
         `,
       },
     },

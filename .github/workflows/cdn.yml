@@ -177,6 +177,43 @@ jobs:
             s3://dynamicframework-cdn/assets/latest/ui-react/tokens/token-overrides.json \
             --acl public-read \
             --cache-control "public, max-age=300, must-revalidate"
+      - name: Publish custom property diff to CDN
+        # Informativo: si falla, la versión sale sin tokens/changes.json y el resto
+        # de la publicación sigue.
+        continue-on-error: true
+        env:
+          SEMVER: ${{ steps.version.outputs.semver }}
+          IS_LATEST: ${{ steps.manifest.outputs.is_latest }}
+        run: |
+          # Sin esto, si el diff falla, latest/ seguiría sirviendo el de la versión anterior.
+          if [ "$IS_LATEST" = "true" ]; then
+            aws s3 rm s3://dynamicframework-cdn/assets/latest/ui-react/tokens/changes.json
+          fi
+          # Mayor versión estable del índice menor a esta (sin prerelease): en un
+          # backport, 2.11.1 compara contra 2.11.0; un 2.13.0-rc.1, contra 2.12.x.
+          BASE="${SEMVER%%[-+]*}"
+          PREV=$(jq -r '.versions | keys[]' /tmp/manifest-prev.json \
+            | { grep -xE '[0-9]+\.[0-9]+\.[0-9]+' || true; echo "$BASE"; } \
+            | sort -uV | grep -x -B1 "$BASE" | head -n -1)
+          if [ -z "$PREV" ]; then
+            echo "::warning::No hay versión estable anterior a $SEMVER en el índice; no se publica tokens/changes.json."
+            exit 0
+          fi
+          # Desde el bucket y no desde el CDN, por la misma razón que el índice.
+          curl -sf -o /tmp/theme-diff-prev.css \
+            "https://dynamicframework-cdn.s3.amazonaws.com/assets/$PREV/ui-react/css/dynamic-ui.css"
+          npm run theme:diff -- /tmp/theme-diff-prev.css dist/css/dynamic-ui.css --out /tmp/theme-diff.json
+          aws s3 cp /tmp/theme-diff.json \
+            "s3://dynamicframework-cdn/assets/$SEMVER/ui-react/tokens/changes.json" \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
+          if [ "$IS_LATEST" = "true" ]; then
+            aws s3 cp /tmp/theme-diff.json \
+              s3://dynamicframework-cdn/assets/latest/ui-react/tokens/changes.json \
+              --acl public-read \
+              --cache-control "public, max-age=300, must-revalidate"
+          fi
+          echo "Diff de custom properties y clases $PREV → $SEMVER publicado en tokens/changes.json (latest: $IS_LATEST)." >> "$GITHUB_STEP_SUMMARY"
       - name: Upload token-overrides JSON Schema to CDN
         run: |
           aws s3 cp registry/schema/token-overrides.v1.json \

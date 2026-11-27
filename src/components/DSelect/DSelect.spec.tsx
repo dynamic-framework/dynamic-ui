@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import * as warnLabelUsageModule from '../../utils/warnLabelUsage';
 import DSelect from './DSelect';
@@ -28,6 +29,39 @@ it('should render my component', () => {
   expect(selectComponent).toBeInTheDocument();
   expect(inputElement).toBeInTheDocument();
   expect(inputElement).toHaveAttribute('type', 'text');
+});
+
+describe('<DSelect /> loading', () => {
+  const options = [{ label: 'Chile', value: 'cl' }];
+
+  it('no deshabilita el buscador y marca el contenedor con aria-busy', () => {
+    const { container } = render(<DSelect label="Country" options={options} loading />);
+
+    // El caso típico de loading en un select es la búsqueda asíncrona: si el
+    // combobox se deshabilita, no se puede escribir lo que hay que buscar.
+    expect(screen.getByRole('combobox')).toBeEnabled();
+    expect(container.querySelector('.d-select')).toHaveAttribute('aria-busy', 'true');
+    expect(container.querySelector('.d-select')).not.toHaveClass('disabled');
+  });
+
+  it('acepta lo que se escribe para buscar mientras carga', async () => {
+    const user = userEvent.setup();
+    render(<DSelect label="Country" options={options} loading />);
+
+    await user.type(screen.getByRole('combobox'), 'chi');
+
+    expect(screen.getByRole('combobox')).toHaveValue('chi');
+  });
+
+  it('`disabled` sí lo deshabilita, con o sin loading', () => {
+    const { container } = render(
+      <DSelect label="Country" options={options} disabled loading />,
+    );
+
+    // react-select deshabilitado no renderiza el input de búsqueda.
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+    expect(container.querySelector('.d-select')).toHaveClass('disabled');
+  });
 });
 
 describe('<DSelect /> accessible name', () => {

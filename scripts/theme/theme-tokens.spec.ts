@@ -164,11 +164,11 @@ describe('resolveInherited — valores de respaldo de var()', () => {
     const zone = { '--bs-white-rgb': 'initial', '--bs-a-rgb': 'var(--bs-white-rgb, 0, 0, 0)' };
     expect(resolveInZone('--bs-a-rgb', { '--bs-white-rgb': '255, 255, 255' }, zone).rgb).toEqual({ r: 0, g: 0, b: 0 });
     // Sin respaldo, no hay nada que medir, y tampoco se cae al valor del raíz.
-    const sinRespaldo = resolveInZone('--bs-b-rgb', { '--bs-white-rgb': '255, 255, 255' }, {
+    const withoutFallback = resolveInZone('--bs-b-rgb', { '--bs-white-rgb': '255, 255, 255' }, {
       '--bs-white-rgb': 'initial', '--bs-b-rgb': 'var(--bs-white-rgb)',
     });
-    expect(sinRespaldo.rgb).toBeNull();
-    expect(sinRespaldo.reason).toContain('initial');
+    expect(withoutFallback.rgb).toBeNull();
+    expect(withoutFallback.reason).toContain('initial');
   });
 
   it.each(['inherit', 'unset', 'revert'])('una variable que vale %s toma el valor del padre', (keyword) => {
@@ -262,6 +262,77 @@ describe('buildContexts', () => {
       [['clara', '--bs-body-color-rgb']],
     );
     expect(result.resolved).toEqual([{ r: 21, g: 21, b: 26 }]);
+  });
+
+  describe('una zona que sólo nombra un selector de componente', () => {
+    /** Contextos a partir de bloques con su prelude, como los lee readCss. */
+    function fromPreludes(blocks: Array<{ prelude: string; isRoot?: boolean; decls?: Record<string, string> }>) {
+      return runTokens(`
+        const blocks = input.map((b, i) => ({
+          prelude: b.prelude,
+          isRoot: Boolean(b.isRoot),
+          zone: tokens.zoneFromPrelude(b.prelude),
+          decls: toMap(b.decls ?? {}),
+          line: i + 1,
+        }));
+        const ctxs = tokens.buildContexts(blocks, new Map());
+        process.stdout.write(JSON.stringify(
+          ctxs.filter((ctx) => ctx.zone).map((ctx) => ({ zone: ctx.zone, line: ctx.line, own: ctx.own.size })),
+        ));
+      `, blocks) as Array<{ zone: string; line: number; own: number }>;
+    }
+
+    it('crea el contexto aunque la zona no tenga bloque propio', () => {
+      // Sin esto, una hoja con sólo `[data-bs-theme="z"] .list-group` no se
+      // medía en ninguna parte: el contexto donde vive esa lista no existía.
+      expect(fromPreludes([
+        { prelude: '[data-bs-theme="z"] .list-group', decls: { '--bs-list-group-bg': '255, 255, 255' } },
+      ])).toEqual([{ zone: 'z', line: 1, own: 0 }]);
+    });
+
+    it('lo crea también con la zona pegada al selector', () => {
+      expect(fromPreludes([
+        { prelude: '[data-bs-theme="z"].list-group', decls: { '--bs-list-group-bg': '255, 255, 255' } },
+      ])).toEqual([{ zone: 'z', line: 1, own: 0 }]);
+    });
+
+    it('las declaraciones siguen siendo del componente, no de la zona', () => {
+      // `own` es lo que declara el elemento que lleva la zona. Un bloque de
+      // componente declara sobre el componente, y de eso se encarga layerFor.
+      const [zone] = fromPreludes([
+        { prelude: '[data-bs-theme="z"]', decls: { '--bs-body-bg-rgb': '0, 0, 0' } },
+        { prelude: '[data-bs-theme="z"] .list-group', decls: { '--bs-list-group-bg': '255, 255, 255' } },
+      ]);
+      expect(zone).toEqual({ zone: 'z', line: 1, own: 1 });
+    });
+
+    it('la nombra aunque la lista lleve `:root` delante', () => {
+      // `:root, [data-bs-theme="clara"] .list-group` es un bloque raíz, pero su
+      // segunda alternativa sí es una zona: lo que la distingue del alias es
+      // tener parte de componente.
+      expect(fromPreludes([
+        {
+          prelude: ':root,\n[data-bs-theme="clara"] .list-group',
+          isRoot: true,
+          decls: { '--bs-list-group-bg': '255, 255, 255' },
+        },
+      ])).toEqual([{ zone: 'clara', line: 1, own: 0 }]);
+    });
+
+    it('no confunde el alias del raíz con una zona', () => {
+      // Así emite Bootstrap el modo claro en el CSS compilado: el segundo
+      // selector es otro nombre para el raíz, y sus declaraciones ya están ahí.
+      expect(fromPreludes([
+        { prelude: ':root,\n[data-bs-theme=light]', isRoot: true, decls: { '--bs-body-bg-rgb': '255, 255, 255' } },
+        { prelude: ':root,\n[data-bs-theme=dynamic]', isRoot: true, decls: { '--bs-body-color-rgb': '0, 0, 0' } },
+      ])).toEqual([]);
+    });
+
+    it('no toma `dynamic` por una zona', () => {
+      expect(fromPreludes([
+        { prelude: '[data-bs-theme="dynamic"] .list-group', decls: { '--bs-list-group-bg': '255, 255, 255' } },
+      ])).toEqual([]);
+    });
   });
 });
 

@@ -171,10 +171,11 @@ export default function DInputSelect<T extends object = DefaultOption>(
         'is-valid': valid,
       })}
       aria-label={ariaLabel ?? (isTextLabel(label) ? String(label) : undefined)}
-      disabled={disabled || loading}
+      disabled={disabled}
       onChange={changeHandler}
       onBlur={blurHandler}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...loading && { 'aria-busy': true }}
       {...value && { value }}
     >
       {options.map((option) => (
